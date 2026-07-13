@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" data-static-game="true">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b0f10" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Ashes · 由烬至冠" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta
+      name="description"
+      content="A bilingual 1444–1836 mobile narrative card game set in post-Greentide Escann."
+    />
+    <link rel="icon" href="./favicon.svg" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link id="game-manifest" rel="manifest" href="./manifest-mobile-en.webmanifest" />
+    <title>Escann: Ashes to Crown | 东坎诺：由烬至冠</title>
+    <style>
+      html, body, #root { min-height: 100%; margin: 0; }
+      body { background: #0b0f10; color: #f0e8d4; }
+      .static-boot { min-height: 100vh; display: grid; place-content: center; gap: 12px; text-align: center; font-family: Georgia, serif; }
+      .static-boot span { width: 44px; height: 44px; margin: 0 auto; display: grid; place-items: center; border: 1px solid #c39b4a; border-radius: 50%; color: #d9b96e; }
+      .static-boot strong { letter-spacing: .14em; }
+      .static-boot small { color: #a99f8d; }
+    </style>
+    <script>
+      (function () {
+        var language = new URLSearchParams(location.search).get("lang");
+        document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
+        document.getElementById("game-manifest").href = language === "zh"
+          ? "./manifest-mobile-zh.webmanifest"
+          : "./manifest-mobile-en.webmanifest";
+      })();
+    </script>
+    <script type="module" crossorigin src="./assets/index-AyxTPHzT.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DvkTLjIG.css">
+  </head>
+  <body>
+    <div id="root">
+      <main class="static-boot" aria-live="polite">
+        <span>A</span>
+        <strong>ESCANN · 东坎诺</strong>
+        <small>Loading the chronicle… · 正在载入编年史……</small>
+      </main>
+    </div>
+    <noscript>This game requires JavaScript. 本游戏需要启用 JavaScript。</noscript>
+  </body>
+</html>

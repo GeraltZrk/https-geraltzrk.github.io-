@@ -1076,7 +1076,7 @@
           '<div class="split-legend"><span class="s">带 Skill</span><span class="t">差不多</span><span class="b">不带 Skill</span><span>右侧是「带 : 不带」的胜场比</span></div>' +
           caseLine(R) +
           (R.note ? '<p class="note">' + esc(R.note) + '</p>' : '') + '</figure>' +
-          (R.lock ? '<figure class="bars" style="margin-top:1.2rem"><figcaption>同一批输出，换三位评审，只给他们看这个位置上显示得出来的部分：' + count(R.lock.tally) + ' 次盲评</figcaption>' +
+          (R.lock ? '<figure class="bars" style="margin-top:1.2rem"><figcaption>同一批输出，换三位评审，只给他们看锁屏上或对话里显示得出来的部分：' + count(R.lock.tally) + ' 次盲评</figcaption>' +
             split(R.lock.tally, '合计') + groupRows(R.lock, R) +
             (R.lock.perJudge || []).map(function (j) { return split(j, JUDGE[j.judge - 1] || ('评审 ' + j.judge)); }).join('') +
             caseLine(R.lock) +

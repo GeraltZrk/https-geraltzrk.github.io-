@@ -1008,6 +1008,14 @@
       if (S.held_out) return split(S.held_out.tally, '新的 ' + S.held_out.n_cases + ' 条') + split(S.seen.tally, '旧的 ' + S.seen.n_cases + ' 条');
       return '';
     }
+    // 6 票出自同一个情境，不独立；所以另按情境数一遍，并说明差距像不像碰巧
+    function caseLine(S) {
+      var b = S && S.byCase;
+      if (!b) return '';
+      var pv = b.p < 0.001 ? 'p<0.001' : 'p≈' + b.p;
+      var verdict = b.p < 0.05 ? '这个差距不像是碰巧（符号检验 ' + pv + '）。' : '这个差距在噪声以内（符号检验 ' + pv + '）。';
+      return '<p class="note">按情境算：带 Skill 的占优 ' + b.skill + ' 个，不带的占优 ' + b.baseline + ' 个，持平 ' + b.even + ' 个。' + verdict + '</p>';
+    }
     function reasonList(rs, lead) {
       return rs.length ? '<b style="color:var(--ink)">' + lead + '</b><ul class="bullets" style="margin-top:.4rem">' + rs.map(function (r) {
         return '<li>' + esc(JUDGE[r.judge - 1] || '') + '选了<b style="color:var(--ink)">' + ({ skill: '带 Skill 的', baseline: '不带 Skill 的', tie: '差不多' }[r.winner]) + '</b>：' + esc(r.reason) + '</li>';
@@ -1055,10 +1063,12 @@
           split(R.tally, '合计') + groupRows(R, R) +
           (R.perJudge || []).map(function (j) { return split(j, JUDGE[j.judge - 1] || ('评审 ' + j.judge)); }).join('') +
           '<div class="split-legend"><span class="s">带 Skill</span><span class="t">差不多</span><span class="b">不带 Skill</span><span>右侧是「带 : 不带」的胜场比</span></div>' +
+          caseLine(R) +
           (R.note ? '<p class="note">' + esc(R.note) + '</p>' : '') + '</figure>' +
           (R.lock ? '<figure class="bars" style="margin-top:1.2rem"><figcaption>同一批输出，换三位评审，只给他们看这个位置上显示得出来的部分：' + count(R.lock.tally) + ' 次盲评</figcaption>' +
             split(R.lock.tally, '合计') + groupRows(R.lock, R) +
             (R.lock.perJudge || []).map(function (j) { return split(j, JUDGE[j.judge - 1] || ('评审 ' + j.judge)); }).join('') +
+            caseLine(R.lock) +
             '<p class="note">锁屏按标题 20、正文 50 个字宽截断，按钮不显示；对话按 24 和 120 截断。' +
             (R.lock.cut ? '两边各 ' + R.lock.cut.total + ' 条输出里，显示不全的：带 Skill ' + R.lock.cut.skill + ' 条，不带 Skill ' + R.lock.cut.baseline + ' 条。' : '') + '</p></figure>' : '');
       }

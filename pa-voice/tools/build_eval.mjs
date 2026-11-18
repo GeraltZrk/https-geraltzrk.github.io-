@@ -77,6 +77,23 @@ const votes = {};
 for (const v of R.votes || []) (votes[v.pair] = votes[v.pair] || []).push(v);
 
 // ---------- 汇总（全部 / 没见过的用例 / 见过的用例） ----------
+// 一个情境有 6 票（2 遍 × 3 位评审），这 6 票不独立。所以另按情境算一次：哪边票多就算哪边占优，再做符号检验（双侧）。
+function byCase(subset, voteList) {
+  const net = {};
+  for (const c of subset) net[c.id] = 0;
+  for (const v of voteList || []) {
+    const id = v.pair.split('#')[0];
+    if (!(id in net)) continue;
+    net[id] += v.winner === 'skill' ? 1 : v.winner === 'baseline' ? -1 : 0;
+  }
+  const r = { skill: 0, baseline: 0, even: 0 };
+  for (const d of Object.values(net)) r[d > 0 ? 'skill' : d < 0 ? 'baseline' : 'even']++;
+  const n = r.skill + r.baseline, k = Math.min(r.skill, r.baseline);
+  let p = 0, c = 1; // 二项分布 B(n, 0.5) 的双侧尾概率
+  for (let i = 0; i <= k; i++) { p += c; c = c * (n - i) / (i + 1); }
+  r.p = n ? Math.min(1, Math.round(p / Math.pow(2, n) * 2 * 1000) / 1000) : 1;
+  return r;
+}
 function tallyVotes(subset, voteList) {
   const idset = new Set(subset.map((c) => c.id));
   const tally = { skill: 0, baseline: 0, tie: 0 }, perJudge = {}, fails = { skill: {}, baseline: {} };
@@ -87,7 +104,7 @@ function tallyVotes(subset, voteList) {
     pj[v.winner]++;
     for (const cond of CONDS) for (const d of (v.fails && v.fails[cond]) || []) fails[cond][d] = (fails[cond][d] || 0) + 1;
   }
-  return { n_cases: subset.length, tally, perJudge: Object.values(perJudge).sort((a, b) => a.judge - b.judge), fails };
+  return { n_cases: subset.length, tally, byCase: byCase(subset, voteList), perJudge: Object.values(perJudge).sort((a, b) => a.judge - b.judge), fails };
 }
 function summarize(subset) {
   const { tally, perJudge: pjList, fails } = tallyVotes(subset, R.votes);
@@ -117,7 +134,7 @@ function summarize(subset) {
     c.median_len = median(lens);
     checks[cond] = c;
   }
-  return { n_cases: subset.length, tally, perJudge: Object.values(perJudge).sort((a, b) => a.judge - b.judge), fails, checks };
+  return { n_cases: subset.length, tally, byCase: byCase(subset, R.votes), perJudge: Object.values(perJudge).sort((a, b) => a.judge - b.judge), fails, checks };
 }
 
 const all = summarize(cases);
@@ -181,7 +198,7 @@ writeFileSync(file, JSON.stringify(E, null, 1), 'utf8');
 
 const show = (name, s) => {
   const t = s.tally, n = t.skill + t.baseline + t.tie;
-  console.log(`${name}（${s.n_cases} 条用例，${n} 次盲评）：带 Skill ${t.skill}，不带 ${t.baseline}，差不多 ${t.tie}`);
+  console.log(`${name}（${s.n_cases} 条用例，${n} 次盲评）：带 Skill ${t.skill}，不带 ${t.baseline}，差不多 ${t.tie}；按情境 ${s.byCase.skill} / ${s.byCase.baseline} / ${s.byCase.even}（p≈${s.byCase.p}）`);
   for (const cond of CONDS) console.log('  ' + cond, JSON.stringify(s.checks[cond]));
   console.log('  各维度没过', JSON.stringify(s.fails));
 };
@@ -190,7 +207,7 @@ show('全部', all);
 if (out.held_out) { show('没见过的用例', out.held_out); show('见过的用例', out.seen); }
 if (out.groups) for (const g of out.groups) show('第一次用来测 ' + g.added + ' 的那一批', g);
 if (out.lock) {
-  const lt = (s) => `带 Skill ${s.tally.skill}，不带 ${s.tally.baseline}，差不多 ${s.tally.tie}`;
+  const lt = (s) => `带 Skill ${s.tally.skill}，不带 ${s.tally.baseline}，差不多 ${s.tally.tie}；按情境 ${s.byCase.skill} / ${s.byCase.baseline} / ${s.byCase.even}（p≈${s.byCase.p}）`;
   console.log('锁屏视图 全部：' + lt(out.lock) + '；显示不全的输出 ' + JSON.stringify(out.lock.cut));
   if (out.lock.held_out) console.log('锁屏视图 没见过的：' + lt(out.lock.held_out) + '；见过的：' + lt(out.lock.seen));
 }

@@ -326,7 +326,7 @@
   }
 
   /* ---------- 证据角标 ---------- */
-  var CHECK_LABEL = { fetch: '已核对原文', local: '已对照本地原文', search: '仅见搜索摘要', memory: '凭既有知识，未核' };
+  var CHECK_LABEL = { fetch: '已核对原文', local: '已对照本地原文', abstract: '已核对论文摘要', search: '仅见搜索摘要', memory: '凭既有知识，未核' };
   function checkTag(e) {
     var k = e.check || (e.verified ? 'fetch' : 'search');
     return '<span class="tag chk-' + k + '">' + CHECK_LABEL[k] + '</span>';
@@ -403,7 +403,7 @@
       if (ledgerState.ch !== 'all' && (e.chapters || []).indexOf(ledgerState.ch) === -1) return false;
       if (ledgerState.kind !== 'all' && e.kind !== ledgerState.kind) return false;
       if (ledgerState.check === 'verified' && e.check !== 'fetch' && e.check !== 'local') return false;
-      if ((ledgerState.check === 'search' || ledgerState.check === 'memory') && e.check !== ledgerState.check) return false;
+      if ((ledgerState.check === 'abstract' || ledgerState.check === 'search' || ledgerState.check === 'memory') && e.check !== ledgerState.check) return false;
       if (words.length) {
         var hay = (e.id + ' ' + e.claim + ' ' + e.source + ' ' + (e.data || '') + ' ' + (e.caveat || '') + ' ' + (e.so || '')).toLowerCase();
         for (var i = 0; i < words.length; i++) if (hay.indexOf(words[i]) === -1) return false;
@@ -439,7 +439,7 @@
   }
   function initLedger() {
     if (!$('#ledgerList')) return;
-    var ev = D.evidence || [], kinds = {}, checks = { fetch: 0, local: 0, search: 0, memory: 0 };
+    var ev = D.evidence || [], kinds = {}, checks = { fetch: 0, local: 0, abstract: 0, search: 0, memory: 0 };
     ev.forEach(function (e) { kinds[e.kind] = (kinds[e.kind] || 0) + 1; checks[e.check] = (checks[e.check] || 0) + 1; });
     var kindRows = Object.keys(kinds).map(function (k) { return [k, kinds[k]]; }).sort(function (a, b) { return b[1] - a[1]; });
     var stats = $('#ledgerStats');
@@ -451,7 +451,7 @@
         }).join('') + '</figure>';
       };
       stats.innerHTML = bars('按证据类型（条）', kindRows) +
-        bars('按核对程度（条）', [['已核对原文', checks.fetch + checks.local], ['仅见搜索摘要', checks.search], ['未核对', checks.memory]]);
+        bars('按核对程度（条）', [['已核对原文', checks.fetch + checks.local], ['已核对论文摘要', checks.abstract], ['仅见搜索摘要', checks.search], ['未核对', checks.memory]].filter(function (r) { return r[1] > 0; }));
     }
     var kb = $('#ledgerKind');
     if (kb) {
@@ -1260,17 +1260,17 @@
 
   /* ---------- 统计数字、法规表、幽默表 ---------- */
   function initCounts() {
-    var ev = D.evidence || [], by = { fetch: 0, local: 0, search: 0, memory: 0 };
+    var ev = D.evidence || [], by = { fetch: 0, local: 0, abstract: 0, search: 0, memory: 0 };
     ev.forEach(function (e) { by[e.check] = (by[e.check] || 0) + 1; });
     var msgs = 0;
     (D.scenarios || []).forEach(function (s) { s.thread.forEach(function (t) { msgs += Object.keys(t.variants || { n: 1 }).length; }); });
     var stat = {
-      evidence: ev.length, verified: by.fetch + by.local, search: by.search, memory: by.memory,
+      evidence: ev.length, verified: by.fetch + by.local, abstract: by.abstract, search: by.search, memory: by.memory,
       lexicon: (D.lexicon || []).length, scenarios: (D.scenarios || []).length, messages: msgs,
       skillFiles: Object.keys(SK).length,
       evalRounds: ((D.eval || {}).rounds || []).length,
       evalCases: (function () { var r = ((D.eval || {}).rounds || []).slice(-1)[0]; return r ? r.n_cases : 0; })(),
-      cited: (D.meta || {}).cited, citedVerified: (D.meta || {}).citedVerified, citedSearch: (D.meta || {}).citedSearch
+      cited: (D.meta || {}).cited, citedVerified: (D.meta || {}).citedVerified, citedAbstract: (D.meta || {}).citedAbstract, citedSearch: (D.meta || {}).citedSearch
     };
     $$('[data-stat]').forEach(function (n) { var k = n.getAttribute('data-stat'); if (stat[k] !== undefined && stat[k] !== 0) n.textContent = String(stat[k]); });
   }

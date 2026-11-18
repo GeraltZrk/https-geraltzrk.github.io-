@@ -608,6 +608,7 @@ footer.end { margin-top: 5rem; padding-top: 1.5rem; border-top: 1.5px solid var(
 
 /* 证据的核对方式 */
 .tag.chk-fetch, .tag.chk-local { border-color: var(--do); color: var(--do); }
+.tag.chk-abstract { border-style: dashed; border-color: var(--do); color: var(--do); }
 .tag.chk-search { border-color: var(--line-2); color: var(--ink-3); }
 .tag.chk-memory { border-style: dashed; border-color: var(--dont); color: var(--dont); }
 

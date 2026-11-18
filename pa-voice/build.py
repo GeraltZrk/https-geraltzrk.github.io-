@@ -58,6 +58,7 @@ def main() -> None:
     data["meta"] = {
         "cited": len(checks),
         "citedVerified": sum(1 for c in checks if c in ("fetch", "local")),
+        "citedAbstract": sum(1 for c in checks if c == "abstract"),
         "citedSearch": sum(1 for c in checks if c == "search"),
         "citedMemory": sum(1 for c in checks if c == "memory"),
         "citedMissing": sorted(i for i in cited if i not in by_id),

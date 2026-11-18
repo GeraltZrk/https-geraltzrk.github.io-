@@ -151,7 +151,16 @@
         if (m.title && tl > s.title) out.push(mk('LEN', tl > s.titleHard ? 'error' : 'warn', 'title', { index: truncate(m.title, s.title).shown.length, text: '' },
           '标题 ' + tl + ' 字，「' + s.name + '」建议 ' + s.title + ' 字以内' + (tl > s.titleHard ? '，硬上限 ' + s.titleHard + ' 字' : ''), '一行说完一个完整的事：对象、变化、数字'));
         if (bl > s.body) out.push(mk('LEN', bl > s.bodyHard ? 'error' : 'warn', 'body', { index: truncate(m.body, s.body).shown.length, text: '' },
-          '正文 ' + bl + ' 字，「' + s.name + '」建议 ' + s.body + ' 字以内' + (bl > s.bodyHard ? '，硬上限 ' + s.bodyHard + ' 字' : ''), '只留边界条件和「不操作会怎样」，其余放进明细'));
+          '正文 ' + bl + ' 字，「' + s.name + '」建议 ' + s.body + ' 字以内' + (bl > s.bodyHard ? '，硬上限 ' + s.bodyHard + ' 字' : ''), '只留要用户做的那一步和「不操作会怎样」，其余的事实放进展开层（detail），不要删'));
+        // 展开层：一行一个事实，最多 6 行
+        if (m.detail) {
+          var lines = m.detail.split(/\n+/).filter(function (x) { return x.trim(); });
+          ctx.metrics.detailLines = lines.length;
+          ctx.metrics.detailChars = visualLen(m.detail);
+          if (lines.length > 6) out.push(mk('LEN', 'warn', 'detail', null, '展开层有 ' + lines.length + ' 行', '最多 6 行；只留做决定用得上的事实'));
+          var longest = lines.reduce(function (a, x) { return Math.max(a, visualLen(x)); }, 0);
+          if (longest > 40) out.push(mk('LEN', 'info', 'detail', null, '展开层有一行 ' + longest + ' 字', '一行只放一个事实，长了就拆'));
+        }
         return out;
       }
     },
@@ -525,6 +534,7 @@
     var m = {
       title: String(message.title || '').trim(),
       body: String(message.body || '').trim(),
+      detail: String(message.detail || '').trim(), // 展开后才显示的那一层，不占锁屏预算
       actions: (message.actions || []).map(function (s) { return String(s).trim(); }).filter(Boolean)
     };
     var ctx = {

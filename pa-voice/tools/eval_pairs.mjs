@@ -7,7 +7,7 @@
 //
 // 目录里的约定：
 //   cases.input.json、cases.a.json、cases.b.json      给写的一方和评审看的情境（没有预期）
-//   <baseline|skill>-<1|2>.<a|b>.json                 四组生成结果，{ outputs: [{id, send, title, body, actions, note}] }
+//   <baseline|skill>-<1|2>.<a|b>.json                 四组生成结果，{ outputs: [{id, send, title, body, detail?, actions, note}] }
 //   pairs/<full|lock>.j<1-3>.<a|b>.json               评审要读的成对候选
 //   keys/…                                            对照表：每一对里 X、Y 各是哪一边（不给评审看）
 //   judged/<full|lock>.j<1-3>.<a|b>.json              评审交回的 { judgments: [{pair, better, x_fails, y_fails, reason}] }
@@ -72,7 +72,12 @@ if (cmd === 'input') {
     if (surface === 'chat') r.actions = o.actions || [];
     return r;
   };
-  const full = (o) => ({ send: o.send, title: o.title || '', body: o.body || '', actions: o.actions || [] });
+  // 完整视图：标题、正文、按钮，以及展开后才显示的那一层（有才带）
+  const full = (o) => {
+    const r = { send: o.send, title: o.title || '', body: o.body || '', actions: o.actions || [] };
+    if ((o.detail || '').trim()) r.detail = o.detail;
+    return r;
+  };
   mkdirSync(path.join(dir, 'pairs'), { recursive: true });
   mkdirSync(path.join(dir, 'keys'), { recursive: true });
   let n = 0;

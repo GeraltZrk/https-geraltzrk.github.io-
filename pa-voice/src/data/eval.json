@@ -103,7 +103,9 @@
      "lint_warns": 30,
      "title_ok": 17,
      "sent": 28,
-     "median_len": 66.5
+     "median_len": 66.5,
+     "detail_used": 0,
+     "median_len_all": 66.5
     },
     "skill": {
      "send_ok": 34,
@@ -115,7 +117,9 @@
      "lint_warns": 7,
      "title_ok": 29,
      "sent": 29,
-     "median_len": 48.8
+     "median_len": 48.8,
+     "detail_used": 0,
+     "median_len_all": 48.8
     }
    },
    "held_out": null,
@@ -2257,7 +2261,9 @@
      "lint_warns": 51,
      "title_ok": 28,
      "sent": 49,
-     "median_len": 59.3
+     "median_len": 59.3,
+     "detail_used": 0,
+     "median_len_all": 59.3
     },
     "skill": {
      "send_ok": 56,
@@ -2269,7 +2275,9 @@
      "lint_warns": 18,
      "title_ok": 48,
      "sent": 48,
-     "median_len": 51.3
+     "median_len": 51.3,
+     "detail_used": 0,
+     "median_len_all": 51.3
     }
    },
    "held_out": {
@@ -2328,7 +2336,9 @@
       "lint_warns": 21,
       "title_ok": 13,
       "sent": 20,
-      "median_len": 63.2
+      "median_len": 63.2,
+      "detail_used": 0,
+      "median_len_all": 63.2
      },
      "skill": {
       "send_ok": 23,
@@ -2340,7 +2350,9 @@
       "lint_warns": 12,
       "title_ok": 20,
       "sent": 20,
-      "median_len": 54.3
+      "median_len": 54.3,
+      "detail_used": 0,
+      "median_len_all": 54.3
      }
     }
    },
@@ -2401,7 +2413,9 @@
       "lint_warns": 30,
       "title_ok": 15,
       "sent": 29,
-      "median_len": 58.8
+      "median_len": 58.8,
+      "detail_used": 0,
+      "median_len_all": 58.8
      },
      "skill": {
       "send_ok": 33,
@@ -2413,7 +2427,9 @@
       "lint_warns": 6,
       "title_ok": 28,
       "sent": 28,
-      "median_len": 48.8
+      "median_len": 48.8,
+      "detail_used": 0,
+      "median_len_all": 48.8
      }
     }
    },
@@ -5893,7 +5909,9 @@
      "lint_warns": 91,
      "title_ok": 42,
      "sent": 78,
-     "median_len": 72.9
+     "median_len": 72.9,
+     "detail_used": 0,
+     "median_len_all": 72.9
     },
     "skill": {
      "send_ok": 82,
@@ -5905,7 +5923,9 @@
      "lint_warns": 40,
      "title_ok": 71,
      "sent": 76,
-     "median_len": 53.4
+     "median_len": 53.4,
+     "detail_used": 0,
+     "median_len_all": 53.4
     }
    },
    "held_out": {
@@ -5967,7 +5987,9 @@
       "lint_warns": 42,
       "title_ok": 15,
       "sent": 28,
-      "median_len": 84.8
+      "median_len": 84.8,
+      "detail_used": 0,
+      "median_len_all": 84.8
      },
      "skill": {
       "send_ok": 25,
@@ -5979,7 +6001,9 @@
       "lint_warns": 24,
       "title_ok": 24,
       "sent": 28,
-      "median_len": 56.5
+      "median_len": 56.5,
+      "detail_used": 0,
+      "median_len_all": 56.5
      }
     }
    },
@@ -6044,7 +6068,9 @@
       "lint_warns": 49,
       "title_ok": 27,
       "sent": 50,
-      "median_len": 65.3
+      "median_len": 65.3,
+      "detail_used": 0,
+      "median_len_all": 65.3
      },
      "skill": {
       "send_ok": 57,
@@ -6056,7 +6082,9 @@
       "lint_warns": 16,
       "title_ok": 47,
       "sent": 48,
-      "median_len": 51.8
+      "median_len": 51.8,
+      "detail_used": 0,
+      "median_len_all": 51.8
      }
     }
    },
@@ -6121,7 +6149,9 @@
        "lint_warns": 26,
        "title_ok": 17,
        "sent": 30,
-       "median_len": 65
+       "median_len": 65,
+       "detail_used": 0,
+       "median_len_all": 65
       },
       "skill": {
        "send_ok": 34,
@@ -6133,7 +6163,9 @@
        "lint_warns": 6,
        "title_ok": 27,
        "sent": 28,
-       "median_len": 50.6
+       "median_len": 50.6,
+       "detail_used": 0,
+       "median_len_all": 50.6
       }
      }
     },
@@ -6194,7 +6226,9 @@
        "lint_warns": 23,
        "title_ok": 10,
        "sent": 20,
-       "median_len": 67.7
+       "median_len": 67.7,
+       "detail_used": 0,
+       "median_len_all": 67.7
       },
       "skill": {
        "send_ok": 23,
@@ -6206,7 +6240,9 @@
        "lint_warns": 10,
        "title_ok": 20,
        "sent": 20,
-       "median_len": 53.3
+       "median_len": 53.3,
+       "detail_used": 0,
+       "median_len_all": 53.3
       }
      }
     },
@@ -6270,7 +6306,9 @@
        "lint_warns": 42,
        "title_ok": 15,
        "sent": 28,
-       "median_len": 84.8
+       "median_len": 84.8,
+       "detail_used": 0,
+       "median_len_all": 84.8
       },
       "skill": {
        "send_ok": 25,
@@ -6282,7 +6320,9 @@
        "lint_warns": 24,
        "title_ok": 24,
        "sent": 28,
-       "median_len": 56.5
+       "median_len": 56.5,
+       "detail_used": 0,
+       "median_len_all": 56.5
       }
      }
     }
@@ -14025,7 +14065,9 @@
      "lint_warns": 149,
      "title_ok": 68,
      "sent": 108,
-     "median_len": 77.2
+     "median_len": 77.2,
+     "detail_used": 0,
+     "median_len_all": 77.2
     },
     "skill": {
      "send_ok": 112,
@@ -14037,7 +14079,9 @@
      "lint_warns": 79,
      "title_ok": 98,
      "sent": 106,
-     "median_len": 57.5
+     "median_len": 57.5,
+     "detail_used": 0,
+     "median_len_all": 57.5
     }
    },
    "held_out": {
@@ -14098,7 +14142,9 @@
       "lint_warns": 52,
       "title_ok": 20,
       "sent": 30,
-      "median_len": 96.3
+      "median_len": 96.3,
+      "detail_used": 0,
+      "median_len_all": 96.3
      },
      "skill": {
       "send_ok": 30,
@@ -14110,7 +14156,9 @@
       "lint_warns": 28,
       "title_ok": 29,
       "sent": 30,
-      "median_len": 60.9
+      "median_len": 60.9,
+      "detail_used": 0,
+      "median_len_all": 60.9
      }
     }
    },
@@ -14172,7 +14220,9 @@
       "lint_warns": 97,
       "title_ok": 48,
       "sent": 78,
-      "median_len": 70.8
+      "median_len": 70.8,
+      "detail_used": 0,
+      "median_len_all": 70.8
      },
      "skill": {
       "send_ok": 82,
@@ -14184,7 +14234,9 @@
       "lint_warns": 51,
       "title_ok": 69,
       "sent": 76,
-      "median_len": 56.2
+      "median_len": 56.2,
+      "detail_used": 0,
+      "median_len_all": 56.2
      }
     }
    },
@@ -14247,7 +14299,9 @@
        "lint_warns": 27,
        "title_ok": 17,
        "sent": 30,
-       "median_len": 66.3
+       "median_len": 66.3,
+       "detail_used": 0,
+       "median_len_all": 66.3
       },
       "skill": {
        "send_ok": 33,
@@ -14259,7 +14313,9 @@
        "lint_warns": 4,
        "title_ok": 28,
        "sent": 28,
-       "median_len": 50.4
+       "median_len": 50.4,
+       "detail_used": 0,
+       "median_len_all": 50.4
       }
      }
     },
@@ -14316,7 +14372,9 @@
        "lint_warns": 27,
        "title_ok": 11,
        "sent": 20,
-       "median_len": 65.3
+       "median_len": 65.3,
+       "detail_used": 0,
+       "median_len_all": 65.3
       },
       "skill": {
        "send_ok": 24,
@@ -14328,7 +14386,9 @@
        "lint_warns": 16,
        "title_ok": 17,
        "sent": 20,
-       "median_len": 58.2
+       "median_len": 58.2,
+       "detail_used": 0,
+       "median_len_all": 58.2
       }
      }
     },
@@ -14390,7 +14450,9 @@
        "lint_warns": 43,
        "title_ok": 20,
        "sent": 28,
-       "median_len": 85.9
+       "median_len": 85.9,
+       "detail_used": 0,
+       "median_len_all": 85.9
       },
       "skill": {
        "send_ok": 25,
@@ -14402,7 +14464,9 @@
        "lint_warns": 31,
        "title_ok": 24,
        "sent": 28,
-       "median_len": 59.6
+       "median_len": 59.6,
+       "detail_used": 0,
+       "median_len_all": 59.6
       }
      }
     },
@@ -14465,7 +14529,9 @@
        "lint_warns": 52,
        "title_ok": 20,
        "sent": 30,
-       "median_len": 96.3
+       "median_len": 96.3,
+       "detail_used": 0,
+       "median_len_all": 96.3
       },
       "skill": {
        "send_ok": 30,
@@ -14477,7 +14543,9 @@
        "lint_warns": 28,
        "title_ok": 29,
        "sent": 30,
-       "median_len": 60.9
+       "median_len": 60.9,
+       "detail_used": 0,
+       "median_len_all": 60.9
       }
      }
     }

@@ -491,14 +491,14 @@
   function initLinter() {
     var root = $('#linter');
     if (!root || !L) return;
-    var fTitle = $('#lintTitle'), fBody = $('#lintBody'), fActs = $('#lintActions'), fSubj = $('#lintSubject');
+    var fTitle = $('#lintTitle'), fBody = $('#lintBody'), fActs = $('#lintActions'), fSubj = $('#lintSubject'), fDetail = $('#lintDetail');
     var sSurface = $('#lintSurface'), sType = $('#lintType'), sStakes = $('#lintStakes');
     var out = $('#lintOut'), view = $('#lintView');
     Object.keys(L.SURFACES).forEach(function (k) { sSurface.appendChild(el('option', { value: k, text: L.SURFACES[k].name })); });
     Object.keys(L.TYPES).forEach(function (k) { sType.appendChild(el('option', { value: k, text: L.TYPES[k].name })); });
     function current() {
       return {
-        msg: { title: fTitle.value, body: fBody.value, actions: fActs.value.split(/\n|[|｜]/).map(function (s) { return s.trim(); }).filter(Boolean) },
+        msg: { title: fTitle.value, body: fBody.value, detail: fDetail ? fDetail.value : '', actions: fActs.value.split(/\n|[|｜]/).map(function (s) { return s.trim(); }).filter(Boolean) },
         o: { surface: sSurface.value, type: sType.value, stakes: sStakes.value, subject: fSubj && fSubj.value.trim() ? fSubj.value.trim().split(/[、，,\s]+/).filter(Boolean) : undefined }
       };
     }
@@ -509,6 +509,10 @@
       var left = el('div', { class: 'stack' });
       left.appendChild(renderPhone(r.message, { surface: c.o.surface, showCut: true }));
       left.appendChild(el('p', { class: 'specimen-cap', text: L.SURFACES[c.o.surface].name + '：' + L.SURFACES[c.o.surface].note + '。划掉的字是这个位置看不到的。' }));
+      if ((c.msg.detail || '').trim()) {
+        left.appendChild(el('div', { class: 'callout', style: 'font-size:var(--t-sm)' }, '<b>展开后才显示</b>' +
+          c.msg.detail.split(/\n+/).filter(function (x) { return x.trim(); }).map(function (x) { return esc(x); }).join('<br>')));
+      }
       view.appendChild(left);
       out.innerHTML = '';
       out.appendChild(renderReceipt(r, o));
@@ -518,13 +522,14 @@
       out.appendChild(mw);
       out.appendChild(renderFindings(r));
     }
-    [fTitle, fBody, fActs, fSubj].forEach(function (f) { if (f) f.addEventListener('input', run); });
+    [fTitle, fBody, fActs, fSubj, fDetail].forEach(function (f) { if (f) f.addEventListener('input', run); });
     [sSurface, sType, sStakes].forEach(function (f) { f.addEventListener('change', run); });
     var presets = (D.presets && D.presets.linter) || [];
     var pbox = $('#lintPresets');
     function load(p) {
       fTitle.value = p.title || ''; fBody.value = p.body || ''; fActs.value = (p.actions || []).join('\n');
       if (fSubj) fSubj.value = [].concat(p.subject || []).join('、');
+      if (fDetail) fDetail.value = p.detail || '';
       sSurface.value = p.surface || 'lock'; sType.value = p.type || 'opportunity'; sStakes.value = p.stakes || 'mid';
       run();
     }
@@ -1033,6 +1038,10 @@
         var noti = renderNoti(m, { surface: surface, showCut: true });
         noti.style.border = '1px solid var(--line)';
         box.appendChild(noti);
+        if ((o.detail || '').trim()) {
+          box.appendChild(el('div', { class: 'callout', style: 'font-size:var(--t-sm)' }, '<b>展开后才显示</b>' +
+            o.detail.split(/\n+/).filter(function (x) { return x.trim(); }).map(function (x) { return esc(x); }).join('<br>')));
+        }
         var r = L.lint(m, { type: c.type, stakes: c.stakes, surface: surface, allowNin: c.address === '您' });
         box.appendChild(el('div', { class: 'note' }, '体检：<span class="vd v-' + r.verdict + '">' + r.verdictText + '</span> ' + r.counts.error + ' 处必改 · ' + r.counts.warn + ' 处建议 · 共 ' + r.metrics.chars + ' 字'));
         var hits = (c.expect.must_not || []).filter(function (w) { return (o.title + o.body + (o.actions || []).join('')).indexOf(w) !== -1; });
@@ -1069,7 +1078,7 @@
             split(R.lock.tally, '合计') + groupRows(R.lock, R) +
             (R.lock.perJudge || []).map(function (j) { return split(j, JUDGE[j.judge - 1] || ('评审 ' + j.judge)); }).join('') +
             caseLine(R.lock) +
-            '<p class="note">锁屏按标题 20、正文 50 个字宽截断，按钮不显示；对话按 24 和 120 截断。' +
+            '<p class="note">锁屏按标题 20、正文 50 个字宽截断，按钮' + (R.checks && (R.checks.skill.detail_used || R.checks.baseline.detail_used) ? '和展开层都' : '') + '不显示；对话按 24 和 120 截断。' +
             (R.lock.cut ? '两边各 ' + R.lock.cut.total + ' 条输出里，显示不全的：带 Skill ' + R.lock.cut.skill + ' 条，不带 Skill ' + R.lock.cut.baseline + ' 条。' : '') + '</p></figure>' : '');
       }
       if (ck && R.checks) {
@@ -1082,6 +1091,8 @@
           row('体检有「必改」', cb.lint_error_msgs + ' / ' + cb.sent, cs.lint_error_msgs + ' / ' + cs.sent, '分母是发出的条数') +
           row('标题在字数预算内', cb.title_ok + ' / ' + cb.sent, cs.title_ok + ' / ' + cs.sent, '') +
           row('标题加正文的中位长度', cb.median_len + ' 字', cs.median_len + ' 字', '') +
+          (cs.detail_used || cb.detail_used ? row('用了展开层的', cb.detail_used + ' / ' + cb.sent, cs.detail_used + ' / ' + cs.sent, '展开通知后才显示的那一层') +
+            row('连展开层在内的中位长度', cb.median_len_all + ' 字', cs.median_len_all + ' 字', '') : '') +
           '</tbody></table></div>';
       }
       if (dims && E.dims) {

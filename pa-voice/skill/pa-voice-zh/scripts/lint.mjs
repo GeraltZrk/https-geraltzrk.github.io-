@@ -44,11 +44,13 @@ function normalize(m) {
   const goal = m.goal || {};
   const title = m.title ?? copy.title ?? '';
   const body = m.body ?? copy.body ?? '';
+  const detail = m.detail ?? copy.detail ?? '';
   const facts = Array.isArray(m.facts) ? m.facts : null;
   return {
     msg: {
       title,
       body,
+      detail: detail || '',
       actions: (m.actions || []).map((a) => (typeof a === 'string' ? a : a.label)).filter(Boolean),
     },
     options: {
@@ -62,7 +64,7 @@ function normalize(m) {
     skip: m.decision && ['none', 'digest', 'hold'].includes(m.decision.send) && !title && !body,
     // 文案里的每个数字都应该能在 facts 里找到
     unmatched: facts
-      ? [...new Set((title + ' ' + body).match(/\d[\d,]*(?:\.\d+)?/g) || [])].filter((n) => {
+      ? [...new Set((title + ' ' + body + ' ' + (detail || '')).match(/\d[\d,]*(?:\.\d+)?/g) || [])].filter((n) => {
           const hay = JSON.stringify(facts).replace(/,/g, '');
           return !hay.includes(n.replace(/,/g, ''));
         })

@@ -22,7 +22,9 @@ node tools/eval_pairs.mjs input --cases skill/pa-voice-zh/evals/cases.json --out
 > 情境文件：`<cases.a.json>`（JSON 数组，共 N 个情境。每个情境含：goal 用户建目标时的原话与授权；event 这次发生了什么；facts 你确知的事实；context 当前时间、用户上一条消息、关系阶段、这个目标最近已发的消息；profile 用户的称呼与预设；surface 消息出现的位置，lock 是锁屏通知，chat 是对话）。
 > 对每个情境，决定要不要给用户发一条主动消息、用什么强度发，并写出这条消息。
 > send 的可选值：none = 不发；digest = 并入周期小结，不单独打扰；hold = 现在不发，晚些再发；quiet = 轻提示，不响铃；push = 标准推送；urgent = 时效推送，可穿透勿扰。
-> 每个情境输出：id、send、title（标题，即第一行）、body（正文）、actions（按钮文字数组，可为空数组）、note（一句话说明为什么这样决定）。send 为 none、digest 或 hold 且此刻不需要文案时，title 和 body 留空字符串。
+> 每个情境输出：id、send、title（标题，即第一行）、body（正文）、detail（展开通知或点开之后才显示的补充内容；没有就留空字符串）、actions（按钮文字数组，可为空数组）、note（一句话说明为什么这样决定）。send 为 none、digest 或 hold 且此刻不需要文案时，title、body 和 detail 留空字符串。
+
+`detail` 这个字段是第五轮加的，两边都给。前四轮的输出只有标题、正文和按钮。
 
 带 Skill 的一方再加一段：
 
@@ -32,7 +34,7 @@ node tools/eval_pairs.mjs input --cases skill/pa-voice-zh/evals/cases.json --out
 
 > 除了上面的情境文件，不要读取任何其他文件，不要搜索，也不要查看任何目录。凭你自己对「好的主动消息」的判断来写。
 
-每组的输出存成 `runs/r1/<组名>.<块>.json`，格式是 `{"outputs": [{id, send, title, body, actions, note}, …]}`。
+每组的输出存成 `runs/r1/<组名>.<块>.json`，格式是 `{"outputs": [{id, send, title, body, detail, actions, note}, …]}`。
 
 ## 3. 配对：打乱左右，做两种视图
 
@@ -44,8 +46,8 @@ node tools/eval_pairs.mjs pairs --dir runs/r1
 
 两种视图各出一套：
 
-- `full`：标题、正文、按钮的完整文字。
-- `lock`：只留这个位置上显示得出来的部分。锁屏通知按标题 20、正文 50 个字宽截断，截断处写「…」，按钮不给；对话按 24 和 120 截断，按钮照给。
+- `full`：标题、正文、按钮的完整文字，加上展开层（`detail`，有才带）。评审提示词里多一句：「候选里的 detail（如果有）是展开通知或点开之后才显示的内容：用户先看到标题和正文，想细看时再展开。请把它当成这条消息的一部分一起评。」
+- `lock`：只留这个位置上显示得出来的部分，不带展开层。锁屏通知按标题 20、正文 50 个字宽截断，截断处写「…」，按钮不给；对话按 24 和 120 截断，按钮照给。
 
 ## 4. 评审：三个视角，各判全部
 

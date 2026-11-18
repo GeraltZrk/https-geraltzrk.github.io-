@@ -111,7 +111,8 @@ function summarize(subset) {
   const perJudge = Object.fromEntries(pjList.map((j) => [j.judge, j]));
   const checks = {};
   for (const cond of CONDS) {
-    const c = { send_ok: 0, send_total: 0, include_ok: 0, include_total: 0, must_not_hits: 0, lint_error_msgs: 0, lint_warns: 0, title_ok: 0, sent: 0, median_len: 0 };
+    const c = { send_ok: 0, send_total: 0, include_ok: 0, include_total: 0, must_not_hits: 0, lint_error_msgs: 0, lint_warns: 0, title_ok: 0, sent: 0, median_len: 0, detail_used: 0, median_len_all: 0 };
+    const lensAll = [];
     const lens = [];
     for (const run of RUNS) for (const cs of subset) {
       const o = (R.outputs[cond + '-' + run] || {})[cs.id];
@@ -121,17 +122,22 @@ function summarize(subset) {
       const text = (o.title || '') + (o.body || '');
       if (!text.trim()) continue;
       c.sent++;
-      const all = text + (o.actions || []).join('');
-      if ((cs.expect.must_include || []).length) { c.include_total++; if (cs.expect.must_include.every((w) => text.includes(w))) c.include_ok++; }
+      const detail = (o.detail || '').trim();
+      if (detail) c.detail_used++;
+      const all = text + detail + (o.actions || []).join('');
+      // 该出现的数字：锁屏层或展开层里有就算
+      if ((cs.expect.must_include || []).length) { c.include_total++; if (cs.expect.must_include.every((w) => (text + detail).includes(w))) c.include_ok++; }
       if ((cs.expect.must_not || []).some((w) => all.includes(w))) c.must_not_hits++;
       const surface = cs.surface === 'chat' ? 'chat' : 'lock';
-      const r = L.lint({ title: o.title || '', body: o.body || '', actions: o.actions || [] }, { type: typeOf(cs), stakes: cs.goal.stakes, surface, allowNin: cs.profile.address === '您' });
+      const r = L.lint({ title: o.title || '', body: o.body || '', detail, actions: o.actions || [] }, { type: typeOf(cs), stakes: cs.goal.stakes, surface, allowNin: cs.profile.address === '您' });
       if (r.counts.error) c.lint_error_msgs++;
       c.lint_warns += r.counts.warn;
       if (L.visualLen(o.title || '') <= L.SURFACES[surface].title) c.title_ok++;
       lens.push(r.metrics.chars);
+      lensAll.push(r.metrics.chars + L.visualLen(detail));
     }
     c.median_len = median(lens);
+    c.median_len_all = median(lensAll);
     checks[cond] = c;
   }
   return { n_cases: subset.length, tally, byCase: byCase(subset, R.votes), perJudge: Object.values(perJudge).sort((a, b) => a.judge - b.judge), fails, checks };

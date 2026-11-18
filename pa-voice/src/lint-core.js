@@ -42,12 +42,12 @@
    * 数值是「设计预算」而非系统硬限制；来源见手册第 2 章与证据台账。
    */
   var SURFACES = {
-    lock:    { name: '锁屏通知',         title: 14, titleHard: 20, body: 40, bodyHard: 50, note: '默认字号一行约 17–20 字；调大字号后约 12–14 字' },
-    android: { name: '安卓通知（折叠）', title: 14, titleHard: 20, body: 20, bodyHard: 50, note: '标题恒为 1 行，正文默认也只有 1 行' },
+    lock:    { name: '锁屏通知',         title: 16, titleHard: 20, body: 40, bodyHard: 50, note: '默认字号一行约 17–20 字；调大字号后约 12–14 字' },
+    android: { name: '安卓通知（折叠）', title: 16, titleHard: 20, body: 20, bodyHard: 50, note: '标题恒为 1 行，正文默认也只有 1 行' },
     wechat:  { name: '微信服务通知',     title: 20, titleHard: 20, body: 20, bodyHard: 20, note: '模板字段，一格约 20 个字符，超长会发送失败' },
     watch:   { name: '手表',             title: 9,  titleHard: 11, body: 24, bodyHard: 36, note: '抬腕只看到标题这一行，约 5 秒' },
     island:  { name: '灵动岛 / 实况窗',  title: 4,  titleHard: 6,  body: 3,  bodyHard: 6,  note: '只放得下一个状态词和一个数字' },
-    chat:    { name: '对话气泡',         title: 18, titleHard: 24, body: 80, bodyHard: 120, note: '会话内可以稍长，仍然先说结论' }
+    chat:    { name: '对话气泡',         title: 20, titleHard: 24, body: 80, bodyHard: 120, note: '会话内可以稍长，仍然先说结论' }
   };
 
   /* ---------- 消息类型 ---------- */
@@ -168,6 +168,20 @@
         if (best === undefined) return [mk('ANCHOR', 'warn', 'title', null, '整条消息里找不到一个数字或状态词，扫一眼不知道发生了什么', '第一行写清「到了哪一步、值多少」')];
         if (best > ctx.anchorWithin) return [mk('ANCHOR', 'warn', 'title', null, '第一个有用的信息出现在第 ' + Math.floor(best + 1) + ' 字，前 ' + ctx.anchorWithin + ' 字都在铺垫', '把金额、时间或状态挪到最前面')];
         if (best > ctx.anchorIdeal) return [mk('ANCHOR', 'info', 'title', null, '第一个数字或状态出现在第 ' + Math.floor(best + 1) + ' 字，还能再靠前', '最紧的容器只露前 ' + ctx.anchorIdeal + ' 个字')];
+        return [];
+      }
+    },
+    {
+      id: 'SUBJECT', name: '标题里的对象', ref: 'R04',
+      run: function (m, ctx) {
+        // 调用方给出 subject（目标短名或几个关键词）时才查：标题里要认得出说的是哪件事
+        if (!ctx.subject || !m.title) return [];
+        var keys = [].concat(ctx.subject).filter(Boolean);
+        if (!keys.length) return [];
+        var pos = -1;
+        keys.forEach(function (k) { var i = m.title.indexOf(k); if (i !== -1 && (pos === -1 || i < pos)) pos = i; });
+        if (pos === -1) return [mk('SUBJECT', 'warn', 'title', null, '标题里没说这是哪件事（' + keys.slice(0, 3).join(' / ') + '）', '把对象放进标题：「东京直飞降到 ¥2,360」。锁屏上一排通知，先要认得出是哪一件')];
+        if (visualIndex(m.title, pos) > ctx.anchorWithin) return [mk('SUBJECT', 'info', 'title', null, '对象出现得太靠后，调大字号时会被截掉', '对象和结果都放进前 ' + ctx.anchorWithin + ' 个字宽')];
         return [];
       }
     },
@@ -494,7 +508,7 @@
   /* ---------- 主入口 ---------- */
   var DEFAULTS = {
     surface: 'lock', type: 'opportunity', stakes: 'mid',
-    anchorIdeal: 6,     // 前 6 个字宽：结果词 + 数字
+    anchorIdeal: 6,     // 前 6 个字宽：最紧的容器只露这么多
     anchorWithin: 12,   // 前 12 个字宽：一个完整的命题
     clauseMax: 22,      // 一截（两个标点之间）
     sentenceMax: 34,    // 一句
@@ -513,7 +527,7 @@
       surface: SURFACES[o.surface] || SURFACES.lock,
       typeId: TYPES[o.type] ? o.type : 'opportunity',
       type: TYPES[o.type] || TYPES.opportunity,
-      stakes: o.stakes, anchorWithin: o.anchorWithin, anchorIdeal: o.anchorIdeal, clauseMax: o.clauseMax, sentenceMax: o.sentenceMax, allowNin: o.allowNin,
+      stakes: o.stakes, subject: o.subject, anchorWithin: o.anchorWithin, anchorIdeal: o.anchorIdeal, clauseMax: o.clauseMax, sentenceMax: o.sentenceMax, allowNin: o.allowNin,
       metrics: {}
     };
     var findings = [];

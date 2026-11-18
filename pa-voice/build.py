@@ -45,6 +45,24 @@ def main() -> None:
     for p in sorted((SRC / "data").glob("*.json")):
         data[p.stem] = json.loads(p.read_text(encoding="utf-8"))
 
+    # 正文实际引用到了哪些证据、各核对到哪一步：构建时数一遍，页面上的数字就不会和正文脱节
+    import re
+    cited = set(re.findall(r'data-ev="([^"]+)"', body))
+    for name, value in data.items():
+        if name in ("evidence", "scenarios", "eval", "review"):
+            continue
+        for m in re.finditer(r'"ev":\s*\[([^\]]*)\]', json.dumps(value, ensure_ascii=False)):
+            cited.update(re.findall(r'"([^"]+)"', m.group(1)))
+    by_id = {e["id"]: e for e in data.get("evidence", [])}
+    checks = [by_id[i]["check"] for i in cited if i in by_id]
+    data["meta"] = {
+        "cited": len(checks),
+        "citedVerified": sum(1 for c in checks if c in ("fetch", "local")),
+        "citedSearch": sum(1 for c in checks if c == "search"),
+        "citedMemory": sum(1 for c in checks if c == "memory"),
+        "citedMissing": sorted(i for i in cited if i not in by_id),
+    }
+
     # 体检引擎只有一份源码：同步一份给 Skill 的命令行脚本用
     # （评测进行中时设 PA_NO_SKILL_SYNC=1，保证被测的 Skill 不在中途变化）
     core_dst = SKILL / "pa-voice-zh" / "scripts" / "lint-core.cjs"
@@ -89,6 +107,7 @@ def main() -> None:
     print(f"index.html            {len(standalone.encode('utf-8')) / 1024:.0f} KB")
     print(f"pa-voice-artifact.html {len(fragment.encode('utf-8')) / 1024:.0f} KB  -> {out_dir}")
     print(f"data sets: {', '.join(data) or '(none)'} | skill files: {len(skill_files)}")
+    print(f"cited evidence: {data['meta']}")
 
 
 if __name__ == "__main__":

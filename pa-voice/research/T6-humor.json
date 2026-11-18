@@ -135,11 +135,13 @@
    "source_title": "Kruger, Epley, Parker & Ng (2005) Egocentrism over e-mail: Can we communicate as well as we think? JPSP 89(6)",
    "source_url": "https://doi.org/10.1037/0022-3514.89.6.925",
    "year": "2005",
-   "key_data": "凭记忆：邮件组预期 78%、实际 56%；语音组实际 73%",
+   "key_data": "邮件组发件人预期约 78%、实际约 56%；语音组实际约 73%（二手报道；另有报道称发件人自评约 90%，APA 报道称语音组约 75%）",
    "verified_by_fetch": false,
    "confidence": "low",
    "pa_implication": "推送里不写反讽和阴阳怪气。按字面读一遍，若是指责或威胁就删。",
-   "caveat": "研究员背景知识，数字与 DOI 均未核对。美国大学生，2005 年的电子邮件情境。"
+   "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。基本同意第一位核查员判断为 partial，但我的检索比他多查到一点：AMA、Gigazine 的摘要给出语音组 73%（Gigazine 作 73.1%），所以 73% 有二手依据；不过 90% 应该是另一项测量（发件人对自己解读能力的估计），不一定和 78% 冲突。论文出处 JPSP 89(6), 925–936 已核实，原文结果部分没看到，APA/AMA/NYU 的页面在本环境都打不开。建议台账写 partial，数字标注「据二手报道」。（见：PubMed 16393025；AMA「The Miscommunication Medium」、APA Monitor 2006 年 2 月、Gigazine（检索摘要））",
+   "check_override": "search",
+   "verify_verdict": "partial"
   },
   {
    "id": "T6-11",

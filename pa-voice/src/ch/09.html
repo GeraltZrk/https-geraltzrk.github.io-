@@ -93,26 +93,28 @@
   </div>
 
   <div class="sub wide" id="eval">
-    <h3>有 Skill 和没有，差多少 <small><span data-if="eval">18 个情境 × 2 遍 × 3 位评审的盲评</span><span data-if-not="eval">评测办法；结果待跑</span></small></h3>
+    <h3>有 Skill 和没有，差多少 <small><span data-if="eval">两轮盲评：第一轮输了，改完再测</span><span data-if-not="eval">评测办法；结果待跑</span></small></h3>
     <div class="grid-2">
       <div class="col">
-        <p>评测按「同一批情境，带 Skill 和不带各写一遍，评审不知道哪个是哪个」的办法做<a class="ev" data-ev="T9-22"></a>。18 个情境里有 3 个的正确答案是「不发」或「晚点发」，其余覆盖机会、扣款提醒、求拍板、按授权已办、需要接管、延误、更正、放弃、里程碑、长辈模式、监控故障、定时提醒、缺比较基准和周报。</p>
-        <p>分三层判<a class="ev" data-ev="T9-20"></a>。发不发对不对、该出现的数字有没有出现、禁用说法有没有出现，这三项由代码判定。字数和格式由体检脚本判定。哪一条能让这位用户更快做出正确的决定，由三位评审盲评，他们分别扮演产品经理、中文文案编辑和合规审查。</p>
-        <div id="evalProse"></div>
-        <div class="callout bound" data-if-not="eval"><b>结果还没有</b>这一版手册发布时，盲评还没有跑完，所以这里只有办法，没有数字。18 个用例和评审量表都在 Skill 的 <code>evals/</code> 目录里，可以照上面的办法自己跑一遍。</div>
+        <p>评测按「同一批情境，带 Skill 和不带各写一遍，评审不知道哪个是哪个」的办法做<a class="ev" data-ev="T9-22"></a>。写的一方是同一个模型，区别只在读没读过这套 Skill。情境覆盖机会、扣款提醒、求拍板、按授权已办、需要接管、延误、更正、放弃、里程碑、长辈模式、监控故障、定时提醒、缺比较基准和周报，其中几条的正确答案是「不发」。用例里的金额、日期和商品，都不和 Skill 里的示例重复。</p>
+        <p>分三层判<a class="ev" data-ev="T9-20"></a>。发不发在不在预期之内、该出现的数字有没有出现、禁用说法有没有出现，由代码判定。字数和格式由体检脚本判定。哪一条能让这位用户更快做出正确的决定，由三位评审盲评，它们分别扮演产品经理、中文文案编辑和合规审查。</p>
+        <div id="evalStory" class="col"></div>
+        <div class="callout bound" data-if-not="eval"><b>结果还没有</b>这一版手册发布时，盲评还没有跑完，所以这里只有办法，没有数字。用例和评审量表都在 Skill 的 <code>evals/</code> 目录里，可以照上面的办法自己跑一遍。</div>
       </div>
-      <div class="stack">
+      <div class="stack" data-if="eval">
+        <div class="field"><span class="label">看哪一轮</span><div class="seg" id="evalRound" role="group" aria-label="评测轮次"></div></div>
         <div id="evalSummary"></div>
         <div id="evalChecks"></div>
       </div>
     </div>
     <div data-if="eval">
+    <div class="col" id="evalProse" style="margin-top:1.4rem"></div>
     <div class="tbl scroll-x" style="margin-top:1.4rem"><table id="evalDims"></table></div>
     <div class="tool" style="margin-top:1.4rem">
-      <div class="tool-head"><h4>逐个情境看两边写了什么</h4><span>左右顺序固定：左边不带 Skill，右边带 Skill</span></div>
+      <div class="tool-head"><h4>逐个情境看两边写了什么</h4><span>左边不带 Skill，右边带 Skill；括号里是「带 : 不带」的胜场</span></div>
       <div class="tool-body">
         <div class="controls">
-          <div class="field"><label for="evalCase">情境</label><select class="select" id="evalCase"></select></div>
+          <div class="field" style="flex:1 1 18rem"><label for="evalCase">情境</label><select class="select" id="evalCase"></select></div>
           <div class="field"><span class="label">第几遍</span>
             <div class="seg" id="evalRun" role="group" aria-label="第几遍生成">
               <button type="button" value="1" aria-pressed="true">第 1 遍</button>
@@ -125,12 +127,13 @@
           <div class="stack"><div class="note"><b style="color:var(--ink)">不带 Skill</b></div><div id="evalBase" class="stack"></div></div>
           <div class="stack"><div class="note"><b style="color:var(--ink)">带 Skill</b></div><div id="evalSkill" class="stack"></div></div>
         </div>
+        <p class="note">划掉的字，是这个位置上显示不出来的部分。评审看到的是完整的文字，不是截断之后的样子。</p>
         <div id="evalVotes" class="note"></div>
       </div>
     </div>
     <div class="grid-2" style="margin-top:1.4rem">
-      <div class="callout bound"><b>这个结果能说明什么</b>它能说明：在这 18 个情境上，带 Skill 的输出更符合这份规范，评审也更常选它。它是一次回归测试，证明 Skill 把规范传达到了。</div>
-      <div class="callout bound"><b>不能说明什么</b>写的和评的是同一家的模型，评审对自己这类文风有偏好<a class="ev" data-ev="T9-21"></a>；18 个情境是本手册自己出的；每个情境只有 2 遍。它不能替代真人评审和线上数据。写作风格这类主观的东西，官方工具也建议以人工定性评审为主<a class="ev" data-ev="T9-22"></a>。</div>
+      <div class="callout bound"><b>这类评测能说明什么</b>同一个模型、同一批情境，读没读过这套规范，写出来的消息差在哪、评审更常选哪一边。它是回归测试：规范哪里写错了，会在这里先露出来。第一轮的结果就直接改掉了规范里的一条。</div>
+      <div class="callout bound"><b>不能说明什么</b>写的和评的是同一个模型，评审是模型扮演的，不是用户，而且评审偏爱更长的回答这类偏差有据可查<a class="ev" data-ev="T9-21"></a>；情境是本手册自己出的；每个情境只写 2 遍。它不能替代真人评审和线上数据。写作风格这类主观的东西，官方工具也建议以人工定性评审为主<a class="ev" data-ev="T9-22"></a>。</div>
     </div>
     </div>
   </div>

@@ -491,7 +491,7 @@
   function initLinter() {
     var root = $('#linter');
     if (!root || !L) return;
-    var fTitle = $('#lintTitle'), fBody = $('#lintBody'), fActs = $('#lintActions');
+    var fTitle = $('#lintTitle'), fBody = $('#lintBody'), fActs = $('#lintActions'), fSubj = $('#lintSubject');
     var sSurface = $('#lintSurface'), sType = $('#lintType'), sStakes = $('#lintStakes');
     var out = $('#lintOut'), view = $('#lintView');
     Object.keys(L.SURFACES).forEach(function (k) { sSurface.appendChild(el('option', { value: k, text: L.SURFACES[k].name })); });
@@ -499,7 +499,7 @@
     function current() {
       return {
         msg: { title: fTitle.value, body: fBody.value, actions: fActs.value.split(/\n|[|｜]/).map(function (s) { return s.trim(); }).filter(Boolean) },
-        o: { surface: sSurface.value, type: sType.value, stakes: sStakes.value }
+        o: { surface: sSurface.value, type: sType.value, stakes: sStakes.value, subject: fSubj && fSubj.value.trim() ? fSubj.value.trim().split(/[、，,\s]+/).filter(Boolean) : undefined }
       };
     }
     function run() {
@@ -518,12 +518,13 @@
       out.appendChild(mw);
       out.appendChild(renderFindings(r));
     }
-    [fTitle, fBody, fActs].forEach(function (f) { f.addEventListener('input', run); });
+    [fTitle, fBody, fActs, fSubj].forEach(function (f) { if (f) f.addEventListener('input', run); });
     [sSurface, sType, sStakes].forEach(function (f) { f.addEventListener('change', run); });
     var presets = (D.presets && D.presets.linter) || [];
     var pbox = $('#lintPresets');
     function load(p) {
       fTitle.value = p.title || ''; fBody.value = p.body || ''; fActs.value = (p.actions || []).join('\n');
+      if (fSubj) fSubj.value = [].concat(p.subject || []).join('、');
       sSurface.value = p.surface || 'lock'; sType.value = p.type || 'opportunity'; sStakes.value = p.stakes || 'mid';
       run();
     }
@@ -870,29 +871,35 @@
     if (box) {
       var keys = Object.keys(R.by_lens || {}).sort(function (a, b) { return R.by_lens[b] - R.by_lens[a]; });
       var max = Math.max.apply(null, keys.map(function (k) { return R.by_lens[k]; }).concat([1]));
-      var a = R.applied || {}, s = R.by_sev || {};
+      var a = R.applied || {}, s = R.by_sev || {}, F = R.final;
       box.innerHTML = '<figure class="bars"><figcaption>评审对草稿提了 ' + R.total + ' 条意见，按视角分</figcaption>' +
         keys.map(function (k) {
           return '<div class="bar-row"><span>' + esc(LENS[k] || k) + '</span><i style="--w:' + (R.by_lens[k] / max * 100).toFixed(1) + '%"></i><b class="num">' + R.by_lens[k] + '</b></div>';
         }).join('') + '</figure>' +
         '<dl class="kv" style="margin-top:1rem">' +
-        '<dt>违反规范</dt><dd><b class="num">' + (s.must || 0) + '</b> 条' + (a.must != null ? '，定稿处理了 ' + a.must + ' 条' : '') + '</dd>' +
-        '<dt>明显可改</dt><dd><b class="num">' + (s.should || 0) + '</b> 条' + (a.should != null ? '，采纳 ' + a.should + ' 条' : '') + '</dd>' +
-        '<dt>小瑕疵</dt><dd><b class="num">' + (s.nit || 0) + '</b> 条' + (a.nit != null ? '，采纳 ' + a.nit + ' 条' : '') + '</dd>' +
-        (R.lint ? '<dt>定稿体检</dt><dd>必改 <b class="num">' + R.lint.errors + '</b> 处，建议 <b class="num">' + R.lint.warns + '</b> 处' + (R.lint.note ? '（' + esc(R.lint.note) + '）' : '') + '</dd>' : '') +
+        '<dt>违反规范</dt><dd><b class="num">' + (s.must || 0) + '</b> 条，处理了 ' + (a.must || 0) + ' 条</dd>' +
+        '<dt>明显可改</dt><dd><b class="num">' + (s.should || 0) + '</b> 条，采纳 ' + (a.should || 0) + ' 条</dd>' +
+        '<dt>小瑕疵</dt><dd><b class="num">' + (s.nit || 0) + '</b> 条，采纳 ' + (a.nit || 0) + ' 条</dd>' +
+        (F ? '<dt>最终定稿</dt><dd>按完整设定补回 <b class="num">' + F.restored + '</b> 处事实；验收时又改了 <b class="num">' + F.accept_fixed + '</b> 处</dd>' : '') +
         '</dl>';
+    }
+    var note = $('#scnReviewNote');
+    if (note && R.premise_issues) {
+      note.innerHTML = '<b>流程上的一处失误</b>评审这一道，交给评审的场景设定比交给写手的简略。评审提的意见里有 ' + R.premise_issues + ' 条涉及「设定里有没有这个事实」，其中一部分并不是写手多写了，而是评审手里的设定不全；相应的内容在修订时被删掉或写含糊了。' +
+        (R.final ? '最终定稿时把完整设定交给了编辑，这些事实已经按设定补回。' : '') + '下面的改动举例，只挑了和这件事无关的。';
+      note.hidden = false;
     }
     var list = $('#scnCatches');
     if (list && (R.catches || []).length) {
       var names = {};
       (D.scenarios || []).forEach(function (x) { names[x.id] = x.name; });
-      list.innerHTML = '<h4>改动举例 <small class="note" style="font-weight:400">每个场景包挑了最有代表性的几处</small></h4>';
+      list.innerHTML = '<h4>改动举例 <small class="note" style="font-weight:400">从评审这一道的改动里挑的 ' + R.catches.length + ' 处；「定稿」指那一道之后的写法，最终版本以上面的话术库为准</small></h4>';
       var grid = el('div', { class: 'grid-2' });
       R.catches.forEach(function (c) {
         grid.appendChild(el('article', { class: 'catch' },
           '<header><b>' + esc(names[c.scenario] || c.scenario) + '</b><span>' + esc(c.where || '') + '</span><i>' + esc(c.lens ? '谁抓到的：' + c.lens : '') + '</i></header>' +
-          '<div class="dodont"><div class="nosay" data-label="草稿">' + esc(c.before) + '</div><div class="say" data-label="定稿">' + esc(c.after) + '</div></div>' +
-          (c.why ? '<p class="note">' + esc(c.why) + '</p>' : '')));
+          '<div class="dodont"><div class="nosay" data-label="草稿">' + esc(c.before) + '</div><div class="say" data-label="评审后">' + esc(c.after) + '</div></div>' +
+          (c.why ? '<p class="note">' + linkRules(c.why) + '</p>' : '')));
       });
       list.appendChild(grid);
       if ((R.rejected || []).length) {
@@ -961,71 +968,46 @@
       '<td colspan="3" class="note">前三列是去掉空格后的字符数，这一行换成只数汉字。「自报总字数」是基础稿自己标在每条后面的数。后两列用的是本手册的规则，基础稿并没有承诺遵守。</td></tr></tfoot>';
   }
 
-  /* ---------- Skill 评测结果 ---------- */
+  /* ---------- Skill 评测结果（可多轮） ---------- */
   function initEval() {
     var sec = $('#eval');
     if (!sec) return;
     var E = D.eval;
-    if (!E || !L) return;
+    if (!E || !E.rounds || !E.rounds.length || !L) return;
     var SEND = { none: '不发', digest: '进小结', hold: '晚点再发', quiet: '轻提示', push: '推送', urgent: '时效推送' };
     var JUDGE = ['产品经理', '中文文案编辑', '合规审查'];
-    var total = E.tally.skill + E.tally.baseline + E.tally.tie;
+    var st = { r: E.rounds.length - 1, i: 0, run: '1' };
+    var roundSeg = $('#evalRound'), sum = $('#evalSummary'), ck = $('#evalChecks'), dims = $('#evalDims'), prose = $('#evalProse');
+    var sel = $('#evalCase'), runSeg = $('#evalRun'), info = $('#evalCaseInfo'), bBox = $('#evalBase'), sBox = $('#evalSkill'), votes = $('#evalVotes');
+    var story = $('#evalStory');
+    if (story && (E.story || []).length) story.innerHTML = E.story.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('');
+    if (roundSeg) {
+      E.rounds.forEach(function (r, i) {
+        roundSeg.appendChild(el('button', { type: 'button', value: String(i), 'aria-pressed': i === st.r ? 'true' : 'false', text: r.label }));
+      });
+      var rf = roundSeg.closest('.field');
+      if (rf && E.rounds.length < 2) rf.hidden = true;
+    }
+    function count(t) { return t.skill + t.baseline + t.tie; }
     function split(t, label) {
-      var sum = t.skill + t.baseline + t.tie || 1;
+      var n = count(t) || 1;
       function seg(cls, v, name) { return v ? '<i class="' + cls + '" style="flex:' + v + '" title="' + name + ' ' + v + '">' + v + '</i>' : ''; }
       return '<div class="split-row"><span>' + esc(label) + '</span><div class="split-bar" role="img" aria-label="' + esc(label) + '：带 Skill ' + t.skill + '，差不多 ' + t.tie + '，不带 Skill ' + t.baseline + '">' +
-        seg('s', t.skill, '带 Skill') + seg('t', t.tie, '差不多') + seg('b', t.baseline, '不带 Skill') + '</div><b class="num">' + Math.round(t.skill / sum * 100) + '%</b></div>';
+        seg('s', t.skill, '带 Skill') + seg('t', t.tie, '差不多') + seg('b', t.baseline, '不带 Skill') + '</div><b class="num">' + t.skill + ' : ' + t.baseline + '</b></div>';
     }
-    var sum = $('#evalSummary');
-    if (sum) {
-      sum.innerHTML = '<figure class="bars"><figcaption>' + total + ' 次盲评里，评审选了哪一边</figcaption>' +
-        split(E.tally, '合计') +
-        (E.perJudge || []).map(function (j) { return split(j, JUDGE[j.judge - 1] || ('评审 ' + j.judge)); }).join('') +
-        '<div class="split-legend"><span class="s">带 Skill</span><span class="t">差不多</span><span class="b">不带 Skill</span><span>右侧百分比是选「带 Skill」的占比</span></div></figure>';
-    }
-    var ck = $('#evalChecks');
-    if (ck && E.checks) {
-      var cs = E.checks.skill, cb = E.checks.baseline;
-      var row = function (name, b, s, hint) { return '<tr><th scope="row">' + name + (hint ? '<small>' + hint + '</small>' : '') + '</th><td class="num">' + b + '</td><td class="num">' + s + '</td></tr>'; };
-      ck.innerHTML = '<div class="tbl"><table style="min-width:0"><thead><tr><th>代码判定的几项</th><th>不带 Skill</th><th>带 Skill</th></tr></thead><tbody>' +
-        row('发不发判对了', cb.send_ok + ' / ' + cb.send_total, cs.send_ok + ' / ' + cs.send_total, '和用例里写的预期一致') +
-        row('该出现的数字都在', cb.include_ok + ' / ' + cb.include_total, cs.include_ok + ' / ' + cs.include_total, '只看决定要发的') +
-        row('出现了禁用说法', cb.must_not_hits + ' 条', cs.must_not_hits + ' 条', '如「全网」「温馨提示」、混用称呼') +
-        row('体检有「必改」', cb.lint_error_msgs + ' / ' + cb.sent, cs.lint_error_msgs + ' / ' + cs.sent, '条数，分母是发出的条数') +
-        row('标题在 14 字宽以内', cb.title_ok + ' / ' + cb.sent, cs.title_ok + ' / ' + cs.sent, '') +
-        row('标题加正文的中位长度', cb.median_len + ' 字', cs.median_len + ' 字', '') +
-        '</tbody></table></div>';
-    }
-    var dims = $('#evalDims');
-    if (dims && E.dims) {
-      var keys = Object.keys(E.dims), max = 1;
-      keys.forEach(function (k) { max = Math.max(max, E.fails.baseline[k] || 0, E.fails.skill[k] || 0); });
-      var bar = function (v, cls) { return '<div class="mini-bar ' + cls + '"><i style="width:' + ((v || 0) / max * 100).toFixed(1) + '%"></i><b class="num">' + (v || 0) + '</b></div>'; };
-      dims.innerHTML = '<thead><tr><th>维度</th><th>评审问的是</th><th>不带 Skill 没过的次数</th><th>带 Skill 没过的次数</th></tr></thead><tbody>' +
-        keys.map(function (k) {
-          return '<tr><th scope="row">' + esc(k) + ' ' + esc(E.dims[k][0]) + '</th><td>' + esc(E.dims[k][1]) + '</td><td>' + bar(E.fails.baseline[k], 'b') + '</td><td>' + bar(E.fails.skill[k], 's') + '</td></tr>';
-        }).join('') + '</tbody>' +
-        '<tfoot><tr><td colspan="4" class="note">每个输出被三位评审各看一次，所以每边最多 ' + total + ' 次。评审可以对同一个输出标多个维度。</td></tr></tfoot>';
-    }
-    var prose = $('#evalProse');
-    if (prose && (E.findings || []).length) prose.innerHTML = E.findings.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('');
-
-    var sel = $('#evalCase'), runSeg = $('#evalRun'), info = $('#evalCaseInfo'), bBox = $('#evalBase'), sBox = $('#evalSkill'), votes = $('#evalVotes');
-    if (!sel || !E.cases) return;
-    var st = { i: 0, run: '1' };
-    E.cases.forEach(function (c, i) { sel.appendChild(el('option', { value: String(i), text: c.id.replace(/^c(\d+)-.*/, '$1') + ' · ' + c.about })); });
     function outCard(o, c) {
       var box = el('div', { class: 'stack', style: 'gap:.6rem' });
       if (!o) { box.appendChild(el('div', { class: 'callout', text: '这一遍没有这个情境的输出。' })); return box; }
       var ok = c.expect.send.indexOf(o.send) !== -1;
       box.appendChild(el('div', { class: 'note' }, '决定：<span class="tag ' + (ok ? 'chk-fetch' : 'chk-memory') + '">' + esc(SEND[o.send] || o.send) + '</span> ' +
-        (ok ? '符合预期' : '不符合预期（预期：' + c.expect.send.map(function (x) { return SEND[x] || x; }).join(' 或 ') + '）')));
+        (ok ? '在预期之内' : '不在预期之内（预期：' + c.expect.send.map(function (x) { return SEND[x] || x; }).join(' 或 ') + '）')));
       if (o.title || o.body) {
         var m = { title: o.title, body: o.body, actions: o.actions || [] };
-        var noti = renderNoti(m, { surface: c.surface === 'chat' ? 'chat' : 'lock', showCut: false });
+        var surface = c.surface === 'chat' ? 'chat' : 'lock';
+        var noti = renderNoti(m, { surface: surface, showCut: true });
         noti.style.border = '1px solid var(--line)';
         box.appendChild(noti);
-        var r = L.lint(m, { type: c.type, stakes: c.stakes, surface: c.surface === 'chat' ? 'chat' : 'lock', allowNin: c.address === '您' });
+        var r = L.lint(m, { type: c.type, stakes: c.stakes, surface: surface, allowNin: c.address === '您' });
         box.appendChild(el('div', { class: 'note' }, '体检：<span class="vd v-' + r.verdict + '">' + r.verdictText + '</span> ' + r.counts.error + ' 处必改 · ' + r.counts.warn + ' 处建议 · 共 ' + r.metrics.chars + ' 字'));
         var hits = (c.expect.must_not || []).filter(function (w) { return (o.title + o.body + (o.actions || []).join('')).indexOf(w) !== -1; });
         if (hits.length) box.appendChild(el('div', { class: 'note', style: 'color:var(--dont)' }, '出现了这个情境里不该有的说法：' + hits.map(function (w) { return '「' + esc(w) + '」'; }).join('')));
@@ -1033,11 +1015,13 @@
       if (o.note) box.appendChild(el('p', { class: 'why', text: '它给的理由：' + o.note }));
       return box;
     }
-    function render() {
-      var c = E.cases[st.i];
-      info.innerHTML = '<b style="color:var(--ink)">发生了什么：</b>' + esc(c.event) + '　<b style="color:var(--ink)">此刻：</b>' + esc(c.now || '') +
-        (c.last ? '　<b style="color:var(--ink)">用户上一句：</b>「' + esc(c.last) + '」' : '') +
-        '　<b style="color:var(--ink)">预期：</b>' + c.expect.send.map(function (x) { return SEND[x] || x; }).join(' 或 ');
+    function renderCase() {
+      var R = E.rounds[st.r], c = R.cases[st.i];
+      if (!c) return;
+      info.innerHTML = '<b style="color:var(--ink)">用户的目标：</b>' + esc(c.goal || '') + '<br><b style="color:var(--ink)">发生了什么：</b>' + esc(c.event) +
+        '　<b style="color:var(--ink)">此刻：</b>' + esc(c.now || '') + (c.last ? '　<b style="color:var(--ink)">用户上一句：</b>「' + esc(c.last) + '」' : '') +
+        '　<b style="color:var(--ink)">预期：</b>' + c.expect.send.map(function (x) { return SEND[x] || x; }).join(' 或 ') +
+        (c.held_out ? '　<span class="tag chk-fetch">改规范时没见过</span>' : '');
       bBox.innerHTML = ''; sBox.innerHTML = '';
       bBox.appendChild(outCard(c.outputs['baseline-' + st.run], c));
       sBox.appendChild(outCard(c.outputs['skill-' + st.run], c));
@@ -1046,9 +1030,54 @@
         return '<li>' + esc(JUDGE[r.judge - 1] || '') + '选了<b style="color:var(--ink)">' + ({ skill: '带 Skill 的', baseline: '不带 Skill 的', tie: '差不多' }[r.winner]) + '</b>：' + esc(r.reason) + '</li>';
       }).join('') + '</ul>' : '';
     }
-    sel.addEventListener('change', function () { st.i = +sel.value; render(); });
-    segInit(runSeg, function (v) { st.run = v; render(); });
-    render();
+    function renderRound() {
+      var R = E.rounds[st.r], total = count(R.tally);
+      if (sum) {
+        sum.innerHTML = '<figure class="bars"><figcaption>' + esc(R.label) + '：' + total + ' 次盲评里，评审选了哪一边</figcaption>' +
+          split(R.tally, '合计') +
+          (R.held_out ? split(R.held_out.tally, '新用例 ' + R.held_out.n_cases + ' 条') + split(R.seen.tally, '旧用例 ' + R.seen.n_cases + ' 条') : '') +
+          (R.perJudge || []).map(function (j) { return split(j, JUDGE[j.judge - 1] || ('评审 ' + j.judge)); }).join('') +
+          '<div class="split-legend"><span class="s">带 Skill</span><span class="t">差不多</span><span class="b">不带 Skill</span><span>右侧是「带 : 不带」的胜场比</span></div>' +
+          (R.note ? '<p class="note">' + esc(R.note) + '</p>' : '') + '</figure>';
+      }
+      if (ck && R.checks) {
+        var cs = R.checks.skill, cb = R.checks.baseline;
+        var row = function (name, b, s, hint) { return '<tr><th scope="row">' + name + (hint ? '<small>' + hint + '</small>' : '') + '</th><td class="num">' + b + '</td><td class="num">' + s + '</td></tr>'; };
+        ck.innerHTML = '<div class="tbl"><table style="min-width:0"><thead><tr><th>代码判定的几项</th><th>不带 Skill</th><th>带 Skill</th></tr></thead><tbody>' +
+          row('发不发在预期之内', cb.send_ok + ' / ' + cb.send_total, cs.send_ok + ' / ' + cs.send_total, '预期是出用例时写下的') +
+          row('该出现的数字都在', cb.include_ok + ' / ' + cb.include_total, cs.include_ok + ' / ' + cs.include_total, '只看决定要发的') +
+          row('出现了禁用说法', cb.must_not_hits + ' 条', cs.must_not_hits + ' 条', '如「全网」「温馨提示」、混用称呼') +
+          row('体检有「必改」', cb.lint_error_msgs + ' / ' + cb.sent, cs.lint_error_msgs + ' / ' + cs.sent, '分母是发出的条数') +
+          row('标题在字数预算内', cb.title_ok + ' / ' + cb.sent, cs.title_ok + ' / ' + cs.sent, '') +
+          row('标题加正文的中位长度', cb.median_len + ' 字', cs.median_len + ' 字', '') +
+          '</tbody></table></div>';
+      }
+      if (dims && E.dims) {
+        var keys = Object.keys(E.dims), max = 1;
+        keys.forEach(function (k) { max = Math.max(max, R.fails.baseline[k] || 0, R.fails.skill[k] || 0); });
+        var bar = function (v, cls) { return '<div class="mini-bar ' + cls + '"><i style="width:' + ((v || 0) / max * 100).toFixed(1) + '%"></i><b class="num">' + (v || 0) + '</b></div>'; };
+        dims.innerHTML = '<thead><tr><th>维度</th><th>评审问的是</th><th>不带 Skill 没过的次数</th><th>带 Skill 没过的次数</th></tr></thead><tbody>' +
+          keys.map(function (k) {
+            return '<tr><th scope="row">' + esc(k) + ' ' + esc(E.dims[k][0]) + '</th><td>' + esc(E.dims[k][1]) + '</td><td>' + bar(R.fails.baseline[k], 'b') + '</td><td>' + bar(R.fails.skill[k], 's') + '</td></tr>';
+          }).join('') + '</tbody>' +
+          '<tfoot><tr><td colspan="4" class="note">每个输出被三位评审各看一次，所以每边最多 ' + total + ' 次。评审可以对同一个输出标多个维度。</td></tr></tfoot>';
+      }
+      if (prose) prose.innerHTML = (R.findings || []).map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('');
+      if (sel) {
+        sel.innerHTML = '';
+        R.cases.forEach(function (c, i) {
+          var v = c.votes || {};
+          sel.appendChild(el('option', { value: String(i), text: c.id.replace(/^[a-z](\d+)-.*/, '$1') + ' · ' + c.about + '（' + (v.skill || 0) + ' : ' + (v.baseline || 0) + (c.held_out ? '，新用例' : '') + '）' }));
+        });
+        if (st.i >= R.cases.length) st.i = 0;
+        sel.value = String(st.i);
+      }
+      renderCase();
+    }
+    segInit(roundSeg, function (v) { st.r = +v; renderRound(); });
+    if (sel) sel.addEventListener('change', function () { st.i = +sel.value; renderCase(); });
+    segInit(runSeg, function (v) { st.run = v; renderCase(); });
+    renderRound();
   }
 
   /* ---------- 注意力账本计算器 ---------- */
@@ -1193,7 +1222,8 @@
     var stat = {
       evidence: ev.length, verified: by.fetch + by.local, search: by.search, memory: by.memory,
       lexicon: (D.lexicon || []).length, scenarios: (D.scenarios || []).length, messages: msgs,
-      skillFiles: Object.keys(SK).length
+      skillFiles: Object.keys(SK).length,
+      cited: (D.meta || {}).cited, citedVerified: (D.meta || {}).citedVerified, citedSearch: (D.meta || {}).citedSearch
     };
     $$('[data-stat]').forEach(function (n) { var k = n.getAttribute('data-stat'); if (stat[k] !== undefined && stat[k] !== 0) n.textContent = String(stat[k]); });
   }

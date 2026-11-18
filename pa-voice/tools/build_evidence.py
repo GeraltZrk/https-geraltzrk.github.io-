@@ -33,6 +33,9 @@ def clean_url(raw: str) -> str:
 
 
 def check_of(f: dict) -> str:
+    # 后来又单独复核过的条目，以复核时做到的程度为准
+    if f.get("check_override") in ("fetch", "local", "search", "memory"):
+        return f["check_override"]
     # 本轮自己动手做的测量（没有外部链接、出处写明是自测或自采）算「对照本地原文」
     src = f.get("source_title", "") + f.get("source", "")
     if ("自测" in src or "自采" in src) and not clean_url(f.get("source_url", "")):

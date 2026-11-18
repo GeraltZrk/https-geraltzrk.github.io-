@@ -308,7 +308,9 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "可撤回的动作改成先做＋撤销窗口；回执里写清怎么撤、撤到何时",
-   "caveat": "Raskin 一文只看到搜索摘要；两组数字凭既有知识引用，本轮未打开原文；安全警告场景与消费确认不完全可比。"
+   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索摘要确认 Raskin（作者为 Aza Raskin，ALA 第 241 期）以习惯化为由主张用撤销代替警告，Akhawe & Felt 的 Chrome SSL 警告点击穿透率最高 70.2%、van der Sijs 等 2006 综述 17 篇研究得出 49%–96% 被忽略，均与条目一致；alistapart.com 和 pubmed 在本环境无法打开，原文未直接核对。（见：Alice in Warningland (USENIX Security 2013) / Overriding of Drug Safety Alerts in CPOE (JAMIA 2006) / Never Use a Warning When you Mean Undo）",
+   "check_override": "search",
+   "verify_verdict": "confirmed"
   },
   {
    "id": "T3-24",
@@ -347,7 +349,9 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "主动提醒默认给 1 个推荐加最多 2 个备选；用户主动问还有什么时可多给，但要同一维度排好序",
-   "caveat": "Scheibehenne 的数字由搜索摘要确认，未打开原文；Chernev 与希克定律部分凭既有知识。希克定律只适用于简单反应选择，不预测决策瘫痪。"
+   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。Scheibehenne 等 2010 的 63 个条件、50 个实验、N=5,036、平均效应几乎为零均在摘要中看到；Chernev 等 2015 摘要确认 99 个观测（N=7,202）及选项集复杂度、决策任务难度、偏好不确定性、决策目标四个调节因素，与条目的三种情形大致对应。（见：Can There Ever Be Too Many Options? A Meta-Analytic Review of Choice Overload (econbiz/unibas 摘要)；Choice overload: A conceptual review and meta-analysis (Kellogg)）",
+   "check_override": "search",
+   "verify_verdict": "confirmed"
   },
   {
    "id": "T3-27",
@@ -360,7 +364,9 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "一条消息里需要用户同时比较的变量不超过 3–4 个；超过就拆，或由 PA 先定下其中几个",
-   "caveat": "凭既有知识引用，未打开原文；容量估计依任务而异；认知负荷三分法的可测量性在学界有争议。"
+   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。Cowan 2001（BBS 24(1):87–114）摘要明确区分 Miller 的约 7 个组块与 3–5 个、平均约 4 个组块的容量上限，与条目一致；Sweller 1988 未在本轮核对。（见：The magical number 4 in short-term memory: A reconsideration of mental storage capacity (摘要)）",
+   "check_override": "search",
+   "verify_verdict": "confirmed"
   },
   {
    "id": "T3-28",
@@ -373,7 +379,9 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "论证少问时改用可测的依据：打断的时间成本、确认通过率、核对用时",
-   "caveat": "凭既有知识引用，未打开原文；复制失败针对特定实验范式，不等于疲劳不影响决策；「饥饿法官」研究也受方法学质疑。"
+   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。Hagger 等 2016 与 Vohs 等 2021（Psychological Science 32(10)）的实验室数、样本量与效应量均在摘要中看到，与条目完全一致；Vohs 一文的探索性分析在全样本中得到 d=0.08 的显著效应，可作补充说明。（见：A Multilab Preregistered Replication of the Ego-Depletion Effect；A Multisite Preregistered Paradigmatic Test of the Ego-Depletion Effect）",
+   "check_override": "search",
+   "verify_verdict": "confirmed"
   },
   {
    "id": "T3-29",
@@ -386,7 +394,9 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "结论后留一句真实工作量（比了 12 家），可展开看明细；结果不好时不炫过程",
-   "caveat": "凭既有知识引用，未打开原文；「结果差时展示努力会减分」是我对正文的记忆，需复核；研究对象是等待中的过程展示。"
+   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。摘要确认 5 个实验模拟在线旅行与在线交友服务、偏好等待更久的网站、以感知努力引发的回报心理为中介，与条目一致；caveat 中「结果差时展示努力会减分」未在摘要中看到，仍需看全文复核。（见：The Labor Illusion: How Operational Transparency Increases Perceived Value (摘要转载)）",
+   "check_override": "search",
+   "verify_verdict": "confirmed"
   },
   {
    "id": "T3-30",
@@ -403,16 +413,18 @@
   },
   {
    "id": "T3-31",
-   "claim": "概率词人人理解不同：IPCC 定义为 90% 以上的「很可能」，公众理解的中位数约 65%–75%；词加数字更一致",
+   "claim": "概率词人人理解不同：IPCC 把「很可能」定义为 90% 以上，但多数公众理解得明显偏低；词旁标上数字区间，理解更一致",
    "evidence_type": "实证研究",
    "source_title": "Budescu, Broomell & Por (2009) Improving Communication of Uncertainty in the Reports of the IPCC, Psychological Science",
    "source_url": "https://doi.org/10.1111/j.1467-9280.2009.02284.x",
    "year": "2009",
-   "key_data": "“very likely” 定义 >90%，受试者估计约 65%–75%；2014 年在 24 国 17 种语言重复出同样模式",
+   "key_data": "“very likely” 定义 >90%，但约四分之三受试者把它理解为低于 90%，近半数理解为低于 66%（二手转述）；词旁直接标数字区间的格式一致性优于只给对照表；2014 年 Budescu 等在 24 国 17 种语言（25 个样本）重复出同样模式",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "关键预测用「词＋频率」双写（多半不会再降，近 60 天 10 次里 8 次）；其余换成行动建议",
-   "caveat": "凭既有知识引用，未打开原文；中文「大概率／可能／预计」的专项研究本轮未查到，列为缺口。"
+   "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。同意第一位核查员的 partial。方向成立：Budescu 2009 让受试者给出下限、上限和最佳估计，只给词的对照组和只给对照表的翻译组偏差都大，词旁直接标数字的格式一致性最好。2014 年 NCC 论文覆盖 24 国 17 种语言 25 个样本，模式稳定。但我四次检索都没找到“中位数约 65%–75%”的原话。Mother Jones 写的是公众均值约 62%，但那篇也谈 Budescu 后来的研究，来源不确定；博客转述则是“25% 受试者的最佳估计低于 70%”。我打不开原文 PDF（moodle2.units.it 被网络拦截）。建议台账删去 65%–75%，改为下面的分布型表述，并注明二手转述、未见原文。（见：Communicating about Uncertainty in Climate Change, Part II（搜索摘要））",
+   "check_override": "search",
+   "verify_verdict": "partial"
   },
   {
    "id": "T3-32",

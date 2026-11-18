@@ -165,7 +165,9 @@
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "机会和截止类消息用“替你留到18:00”的所有权句式；同一节点最多两次；严肃事不抖机灵",
-   "caveat": "美国流感疫苗场景，迁移到购物出行属推论；“不出人意料、不随意、不互动”的括注和4.6个百分点凭记忆未核；“预留”必须属实。"
+   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索摘要（多家机构库转载 PNAS 摘要）确认 N=47,306、19 种短信、平均提高约 5%、最佳方案为提醒两次并告知疫苗已预留，且与患者对医生沟通预期相符的写法效果更好；PNAS 原页无法打开，4.6 个百分点未核。（见：A megastudy of text-based nudges encouraging patients to get vaccinated at an upcoming doctor's appointment（机构库摘要，搜索结果））",
+   "check_override": "search",
+   "verify_verdict": "confirmed"
   },
   {
    "id": "T4-13",
@@ -386,7 +388,9 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "结论后加一行真实工作量（比了12家、盯了6天），明细折叠；没办成时不拿它邀功",
-   "caveat": "实验室模拟网站；“结果差时展示劳动更糟”凭记忆未核；与折叠推理不矛盾——首屏只露一行。"
+   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索摘要确认 Management Science 57(9):1564–1579、在线旅行与婚恋 5 项实验、人们会偏好结果相同但展示工作过程的较慢网站；“结果差时展示劳动更糟”一句仍未查到依据，期刊页无法打开。（见：The Labor Illusion: How Operational Transparency Increases Perceived Value（搜索摘要））",
+   "check_override": "search",
+   "verify_verdict": "confirmed"
   },
   {
    "id": "T4-30",
@@ -438,7 +442,9 @@
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "PA提醒不低于法定线：提前5天和前1天各一次，用推送或短信，没被看到就换渠道再提醒",
-   "caveat": "条文据多家转述并凭记忆补全，未打开gov.cn原文；“显著方式”无统一定义，最高法典型案例认为仅站内信难谓显著（二手）。"
+   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索摘要中多家转述的第十八条原文与条目一致，含“接受服务前和自动展期、自动续费等日期前五日，以显著方式提请消费者注意”及“显著、简便的随时取消或者变更的选项”；gov.cn 原文无法打开，令号未直接核到。（见：国家市场监督管理总局《网络交易监督管理办法》相关转述（搜索结果摘要，含 gov.cn 条目））",
+   "check_override": "search",
+   "verify_verdict": "confirmed"
   },
   {
    "id": "T4-34",

@@ -1,31 +1,32 @@
 #!/usr/bin/env node
-// 把 Skill 评测的原始结果整理成页面用的 src/data/eval.json。
-// 用法：node tools/build_eval.mjs <评测结果.json> [评审日志 journal.jsonl]
+// 把一轮 Skill 评测的原始结果整理进页面用的 src/data/eval.json（按轮次存放，可多轮并存）。
 //
-// 评测结果.json：{ result: { tally, perJudge, fails, outputs: { 'baseline-1': {id: 输出}, 'skill-1': …, 'baseline-2': …, 'skill-2': … } } }
-// 评审日志（可选）：每位评审的逐对判断。有它就能给出每一对的投票和理由，并用来复核合计数。
+// 用法：node tools/build_eval.mjs --round v1.0 --label "第一轮 · Skill 1.0" --cases <这一轮用的用例.json> <评测结果.json>
+//
+// 评测结果.json：{ result: { tally, perJudge, fails, perCase, votes: [{pair, judge, winner, reason}],
+//                          outputs: { 'baseline-1': {id: 输出}, 'skill-1': …, 'baseline-2': …, 'skill-2': … } } }
+// 用例文件里每条可以带 "held_out": true，表示改规范时没有看过这条用例的评审意见；汇总时会单独算一栏。
 import { createRequire } from 'node:module';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 const require = createRequire(import.meta.url);
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const L = require(path.join(root, 'src', 'lint-core.js'));
-const cases = JSON.parse(readFileSync(path.join(root, 'skill', 'pa-voice-zh', 'evals', 'cases.json'), 'utf8'));
-const [resultPath, journalPath] = process.argv.slice(2);
-if (!resultPath) { console.error('用法：node tools/build_eval.mjs <评测结果.json> [journal.jsonl]'); process.exit(2); }
+
+const argv = process.argv.slice(2);
+const opt = (name, dflt) => { const i = argv.indexOf('--' + name); if (i === -1) return dflt; const v = argv[i + 1]; argv.splice(i, 2); return v; };
+const round = opt('round', 'v1.0');
+const label = opt('label', round);
+const casesPath = opt('cases', path.join(root, 'skill', 'pa-voice-zh', 'evals', 'cases.json'));
+const note = opt('note', '');
+const resultPath = argv[0];
+if (!resultPath) { console.error('用法：node tools/build_eval.mjs --round v1.0 --label "…" --cases <用例.json> <评测结果.json>'); process.exit(2); }
+const cases = JSON.parse(readFileSync(casesPath, 'utf8'));
 const raw = JSON.parse(readFileSync(resultPath, 'utf8'));
 const R = raw.result || raw;
 
-// 每个情境应有的消息类型（只用于体检时选规则）
-const TYPE = {
-  'c01-opportunity': 'opportunity', 'c02-no-change': 'progress', 'c03-night-small-drop': 'opportunity', 'c04-renewal-5d': 'deadline',
-  'c05-payment-approval': 'approval', 'c06-mandate-receipt': 'done', 'c07-captcha-handover': 'blocked', 'c08-delay-rushed': 'blocked',
-  'c09-pa-error': 'correction', 'c10-third-ignore': 'pause', 'c11-milestone-relaxed': 'milestone', 'c12-elder-bill': 'deadline',
-  'c13-monitor-broken': 'blocked', 'c14-scheduled': 'deadline', 'c15-missing-baseline': 'opportunity', 'c16-user-quits': 'done',
-  'c17-duplicate': 'opportunity', 'c18-weekly-report': 'progress',
-};
 const DIMS = {
   D1: ['首行可判', '只看标题，能同时知道发生了什么、对我值多少'],
   D2: ['事实保真', '数字、条件、确定程度和给定的事实一致，没有多出来的事实'],
@@ -36,85 +37,92 @@ const DIMS = {
   D7: ['该不该发', '发或不发、用什么强度发的决定是对的'],
 };
 const CONDS = ['baseline', 'skill'], RUNS = [1, 2];
-const ids = Object.keys(R.outputs['baseline-1']);
 const median = (a) => { if (!a.length) return 0; const s = a.slice().sort((x, y) => x - y); const m = s.length >> 1; return s.length % 2 ? s[m] : Math.round((s[m - 1] + s[m]) / 2 * 10) / 10; };
+// 每条用例对应的消息类型（只用于体检时选规则）：用例里写了 type 就用它，否则按 id 里的关键词猜
+const TYPE_BY_ID = [['no-change', 'progress'], ['weekly', 'progress'], ['renewal', 'deadline'], ['elder', 'deadline'], ['scheduled', 'deadline'],
+  ['payment', 'approval'], ['mandate', 'done'], ['quits', 'done'], ['captcha', 'blocked'], ['delay', 'blocked'], ['monitor', 'blocked'],
+  ['error', 'correction'], ['ignore', 'pause'], ['milestone', 'milestone']];
+const typeOf = (cs) => cs.type || (TYPE_BY_ID.find(([k]) => cs.id.includes(k)) || [0, 'opportunity'])[1];
 
-// ---------- 代码判定 ----------
-const checks = {};
-for (const cond of CONDS) {
-  const c = { send_ok: 0, send_total: 0, include_ok: 0, include_total: 0, must_not_hits: 0, lint_error_msgs: 0, lint_warns: 0, title_ok: 0, sent: 0, median_len: 0 };
-  const lens = [];
-  for (const run of RUNS) for (const cs of cases) {
-    const o = (R.outputs[cond + '-' + run] || {})[cs.id];
-    c.send_total++;
-    if (!o) continue;
-    if (cs.expect.send.includes(o.send)) c.send_ok++;
-    const text = (o.title || '') + (o.body || '');
-    if (!text.trim()) continue;
-    c.sent++;
-    const all = text + (o.actions || []).join('');
-    if ((cs.expect.must_include || []).length) { c.include_total++; if (cs.expect.must_include.every((w) => text.includes(w))) c.include_ok++; }
-    if ((cs.expect.must_not || []).some((w) => all.includes(w))) c.must_not_hits++;
-    const surface = cs.surface === 'chat' ? 'chat' : 'lock';
-    const r = L.lint({ title: o.title || '', body: o.body || '', actions: o.actions || [] }, { type: TYPE[cs.id], stakes: cs.goal.stakes, surface, allowNin: cs.profile.address === '您' });
-    if (r.counts.error) c.lint_error_msgs++;
-    c.lint_warns += r.counts.warn;
-    if (L.visualLen(o.title || '') <= L.SURFACES[surface].title) c.title_ok++;
-    lens.push(r.metrics.chars);
-  }
-  c.median_len = median(lens);
-  checks[cond] = c;
-}
+// ---------- 逐对投票 ----------
+const votes = {};
+for (const v of R.votes || []) (votes[v.pair] = votes[v.pair] || []).push(v);
 
-// ---------- 逐对投票（从评审日志还原） ----------
-const votes = {}; // pair -> [{judge, winner, reason, fails:{skill:[],baseline:[]}}]
-let recount = null;
-if (journalPath) {
-  const label = {}, results = {};
-  for (const line of readFileSync(journalPath, 'utf8').split('\n').filter(Boolean)) {
-    const e = JSON.parse(line);
-    if (e.type === 'started') label[e.agentId] = e.label;
-    if (e.type === 'result' && e.result && e.result.judgments) results[label[e.agentId]] = e.result.judgments;
+// ---------- 汇总（全部 / 没见过的用例 / 见过的用例） ----------
+function summarize(subset) {
+  const idset = new Set(subset.map((c) => c.id));
+  const tally = { skill: 0, baseline: 0, tie: 0 }, perJudge = {}, fails = { skill: {}, baseline: {} };
+  for (const v of R.votes || []) {
+    if (!idset.has(v.pair.split('#')[0])) continue;
+    tally[v.winner]++;
+    const pj = (perJudge[v.judge] = perJudge[v.judge] || { judge: v.judge, skill: 0, baseline: 0, tie: 0 });
+    pj[v.winner]++;
+    for (const cond of CONDS) for (const d of (v.fails && v.fails[cond]) || []) fails[cond][d] = (fails[cond][d] || 0) + 1;
   }
-  recount = { skill: 0, baseline: 0, tie: 0 };
-  for (const j of [0, 1, 2]) {
-    const js = results['judge:' + (j + 1)];
-    if (!js) continue;
-    const key = {};
-    for (const run of RUNS) ids.forEach((id, i) => { const flip = (i + run + j) % 2 === 1; key[id + '#' + run] = { X: flip ? 'skill' : 'baseline', Y: flip ? 'baseline' : 'skill' }; });
-    for (const g of js) {
-      const k = key[g.pair]; if (!k) continue;
-      const winner = g.better === 'tie' ? 'tie' : k[g.better];
-      recount[winner]++;
-      (votes[g.pair] = votes[g.pair] || []).push({ judge: j + 1, winner, reason: g.reason, fails: { [k.X]: g.x_fails || [], [k.Y]: g.y_fails || [] } });
+  const checks = {};
+  for (const cond of CONDS) {
+    const c = { send_ok: 0, send_total: 0, include_ok: 0, include_total: 0, must_not_hits: 0, lint_error_msgs: 0, lint_warns: 0, title_ok: 0, sent: 0, median_len: 0 };
+    const lens = [];
+    for (const run of RUNS) for (const cs of subset) {
+      const o = (R.outputs[cond + '-' + run] || {})[cs.id];
+      c.send_total++;
+      if (!o) continue;
+      if (cs.expect.send.includes(o.send)) c.send_ok++;
+      const text = (o.title || '') + (o.body || '');
+      if (!text.trim()) continue;
+      c.sent++;
+      const all = text + (o.actions || []).join('');
+      if ((cs.expect.must_include || []).length) { c.include_total++; if (cs.expect.must_include.every((w) => text.includes(w))) c.include_ok++; }
+      if ((cs.expect.must_not || []).some((w) => all.includes(w))) c.must_not_hits++;
+      const surface = cs.surface === 'chat' ? 'chat' : 'lock';
+      const r = L.lint({ title: o.title || '', body: o.body || '', actions: o.actions || [] }, { type: typeOf(cs), stakes: cs.goal.stakes, surface, allowNin: cs.profile.address === '您' });
+      if (r.counts.error) c.lint_error_msgs++;
+      c.lint_warns += r.counts.warn;
+      if (L.visualLen(o.title || '') <= L.SURFACES[surface].title) c.title_ok++;
+      lens.push(r.metrics.chars);
     }
+    c.median_len = median(lens);
+    checks[cond] = c;
   }
-  const t = R.tally;
-  if (recount.skill !== t.skill || recount.baseline !== t.baseline || recount.tie !== t.tie) {
-    console.error('警告：从日志还原的合计与工作流汇总不一致', recount, t);
-  }
+  return { n_cases: subset.length, tally, perJudge: Object.values(perJudge).sort((a, b) => a.judge - b.judge), fails, checks };
 }
 
+const all = summarize(cases);
+const held = cases.filter((c) => c.held_out);
 const out = {
-  n_cases: ids.length, runs: RUNS.length, judges: R.judges,
-  tally: R.tally, perJudge: (R.perJudge || []).slice().sort((a, b) => a.judge - b.judge), fails: R.fails, dims: DIMS, checks,
-  perCase: R.perCase,
-  cases: cases.map((cs) => ({
-    id: cs.id, about: cs.about, event: cs.event, now: cs.context.now, last: cs.context.user_last_message,
-    expect: cs.expect, surface: cs.surface, type: TYPE[cs.id], stakes: cs.goal.stakes, address: cs.profile.address,
-    goal: cs.goal.title,
-    outputs: Object.fromEntries(CONDS.flatMap((c) => RUNS.map((r) => [c + '-' + r, (R.outputs[c + '-' + r] || {})[cs.id] || null]))),
-    reasons: RUNS.flatMap((r) => (votes[cs.id + '#' + r] || []).map((v) => ({ run: r, judge: v.judge, winner: v.winner, reason: v.reason }))),
-  })),
-  findings: [],
+  id: round, label, note, model: R.model || '', n_cases: cases.length, runs: RUNS.length, judges: R.judges || 3,
+  ...all,
+  held_out: held.length ? summarize(held) : null,
+  seen: held.length ? summarize(cases.filter((c) => !c.held_out)) : null,
+  cases: cases.map((cs) => {
+    const pc = { skill: 0, baseline: 0, tie: 0 };
+    for (const r of RUNS) for (const v of votes[cs.id + '#' + r] || []) pc[v.winner]++;
+    return {
+      id: cs.id, about: cs.about, event: cs.event, now: cs.context.now, last: cs.context.user_last_message,
+      expect: cs.expect, surface: cs.surface, type: typeOf(cs), stakes: cs.goal.stakes, address: cs.profile.address, goal: cs.goal.title,
+      held_out: !!cs.held_out, votes: pc,
+      outputs: Object.fromEntries(CONDS.flatMap((c) => RUNS.map((r) => [c + '-' + r, (R.outputs[c + '-' + r] || {})[cs.id] || null]))),
+      reasons: RUNS.flatMap((r) => (votes[cs.id + '#' + r] || []).map((v) => ({ run: r, judge: v.judge, winner: v.winner, reason: v.reason }))),
+    };
+  }),
 };
-// 保留手写的结论段落（重跑脚本时不覆盖）
-try { const prev = JSON.parse(readFileSync(path.join(root, 'src', 'data', 'eval.json'), 'utf8')); if (prev.findings && prev.findings.length) out.findings = prev.findings; } catch (e) { /* 第一次生成 */ }
-writeFileSync(path.join(root, 'src', 'data', 'eval.json'), JSON.stringify(out, null, 1), 'utf8');
 
-const total = R.tally.skill + R.tally.baseline + R.tally.tie;
-console.log(`盲评 ${total} 次：带 Skill ${R.tally.skill}，不带 ${R.tally.baseline}，差不多 ${R.tally.tie}` + (recount ? '（已用日志复核）' : ''));
-for (const cond of CONDS) console.log(cond, JSON.stringify(checks[cond]));
-console.log('各维度没过的次数', JSON.stringify(R.fails));
-const split = cases.map((cs) => { const p = R.perCase[cs.id] || {}; return `${cs.id.slice(0, 3)} S${p.skill || 0}/B${p.baseline || 0}/T${p.tie || 0}`; });
-console.log(split.join('  '));
+const file = path.join(root, 'src', 'data', 'eval.json');
+let E = { dims: DIMS, story: [], rounds: [] };
+if (existsSync(file)) { try { const prev = JSON.parse(readFileSync(file, 'utf8')); if (Array.isArray(prev.rounds)) E = prev; } catch (e) { /* 重新生成 */ } }
+E.dims = DIMS;
+const prevRound = E.rounds.find((r) => r.id === round);
+if (prevRound && prevRound.findings) out.findings = prevRound.findings; // 手写的结论段落，重跑时保留
+E.rounds = E.rounds.filter((r) => r.id !== round).concat([out]).sort((a, b) => a.id.localeCompare(b.id));
+writeFileSync(file, JSON.stringify(E, null, 1), 'utf8');
+
+const show = (name, s) => {
+  const t = s.tally, n = t.skill + t.baseline + t.tie;
+  console.log(`${name}（${s.n_cases} 条用例，${n} 次盲评）：带 Skill ${t.skill}，不带 ${t.baseline}，差不多 ${t.tie}`);
+  for (const cond of CONDS) console.log('  ' + cond, JSON.stringify(s.checks[cond]));
+  console.log('  各维度没过', JSON.stringify(s.fails));
+};
+console.log(`轮次 ${round}（${label}）`);
+show('全部', all);
+if (out.held_out) { show('没见过的用例', out.held_out); show('见过的用例', out.seen); }
+console.log(out.cases.map((c) => `${c.id.slice(0, 3)}${c.held_out ? '*' : ''} S${c.votes.skill}/B${c.votes.baseline}/T${c.votes.tie}`).join('  '));

@@ -59,6 +59,8 @@ def main() -> int:
                 t["typeName"] = type_name[t["type"]]  # 类型名以手册为准
             if t.get("surface") not in ("lock", "chat"):
                 t["surface"] = "chat" if t.get("type") == "approval" else "lock"
+            if "subject" in t and isinstance(t["subject"], str):
+                t["subject"] = [t["subject"]]
             for k in ("stateName", "when", "why"):
                 if not t.get(k):
                     warns.append(f"{where}: 缺 {k}")
@@ -75,6 +77,8 @@ def main() -> int:
                 text = x["title"] + x["body"] + "".join(x["actions"])
                 if other in text:
                     errors.append(f"{where}.{m}: 称呼混用，出现了「{other}」")
+                if t.get("subject") and not any(k in x["title"] for k in t["subject"]):
+                    warns.append(f"{where}.{m}: 标题里没有对象（{'/'.join(t['subject'])}）：{x['title']}")
                 for mo, d, wd in re.findall(r"(\d{1,2})\s?月\s?(\d{1,2})\s?日（周([一二三四五六日])）", text):
                     want = WEEKDAY.get((int(mo), int(d)))
                     if want and want != wd:

@@ -152,7 +152,9 @@
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "语气优化不能只看即时好评，须加入撤销率、屏蔽率、留存与实际节省金额。",
-   "caveat": "openai.com 未能打开，时间线与引语来自 TechCrunch、VentureBeat 等多家报道的检索摘要，彼此一致。点赞信号削弱主奖励信号的细节仅凭记忆。"
+   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索摘要显示更新在 4 月 24–25 日上线，4 月 28 日开始回滚，全量回滚约用 24 小时；那句引语、「因用户正向信号决定上线」以及用户反馈奖励信号削弱主奖励信号都能看到；也有报道写测试没有专门衡量谄媚。有一处出入：部分媒体把回滚日期写成 4 月 29 日。openai.com 无法打开。（见：OpenAI, Expanding on what we missed with sycophancy（搜索摘要）；TechCrunch；VentureBeat）",
+   "check_override": "search",
+   "verify_verdict": "confirmed"
   },
   {
    "id": "T8-12",
@@ -334,7 +336,9 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "禁用打字节奏、语音语调等信号推断情绪；职场与学习类目标只用事件和显式设置。",
-   "caveat": "来自 FPF 与律所解读的检索摘要，未读法条与指南原文；是否涵盖意图推断存在两种读法；击键方式属于生物特征的例子仅凭记忆。"
+   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。第5(1)(f)条只管工作和教育场景、只管基于生物特征数据的推断、医疗与安全用途除外、书面文本不在禁令内，这几点在 FPF 和多家律所摘要中都能看到；击键属于行为生物特征的例子也在摘要中出现。是否涵盖意图推断，FPF 与 Freshfields（转述委员会指南）说法相反。fpf.org 无法打开。（见：FPF Red Lines under EU AI Act（搜索摘要）；CMS、Lewis Silkin、Freshfields 解读）",
+   "check_override": "search",
+   "verify_verdict": "confirmed"
   },
   {
    "id": "T8-26",
@@ -382,11 +386,13 @@
    "source_title": "Easterbrook, The effect of emotion on cue utilization and the organization of behavior, Psychological Review 66(3)",
    "source_url": "https://doi.org/10.1037/h0047707",
    "year": "1959",
-   "key_data": "线索利用假说；另见 Payne、Bettman、Johnson 1988：时间压力下加速、筛选、换策略",
+   "key_data": "线索利用假说；另见 Payne、Bettman、Johnson 1988（JEP:LMC 14(3), 534–552）：时间压力下加速处理、搜索的信息变少、转向按属性的简单策略",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "高压时刻只发一条关键信息加一个动作；幽默、寒暄、背景都是会被丢掉的外围线索。",
-   "caveat": "经典实验室研究，凭研究员既有知识写入，本轮没有联网核对；该假说后续有修正。"
+   "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。同意第一位核查员判断为 partial：Easterbrook 1959 的出处和「唤醒收窄线索」的结论成立；Payne 等 1988 的加速、少搜信息、改用按属性策略都有检索依据，但「筛选（filtration）」在摘要里没有原话（原文摘要页在本环境打不开，没有读到）。建议台账写 partial，把「筛选」改成「搜索的信息变少/更有选择」，并补上卷期页码。（见：PubMed 13658305；Duke 学者库（Payne, Bettman & Johnson 1988, JEP:LMC 14(3), 534–552）；Cambridge 章节检索摘要）",
+   "check_override": "search",
+   "verify_verdict": "partial"
   },
   {
    "id": "T8-30",
@@ -429,16 +435,18 @@
   },
   {
    "id": "T8-33",
-   "claim": "工信部适老化通用设计规范对适老版 App 的字号、点击区域、操作时间与诱导式按键作出限制。",
+   "claim": "工信部《移动互联网应用（App）适老化通用设计规范》（2021年4月发布）对适老版 App 的字号作了下限规定，并禁止广告内容及插件和诱导式按键；点击区域、操作时间的具体条款还需对照原文核实。",
    "evidence_type": "法规",
    "source_title": "工业和信息化部《移动互联网应用（APP）适老化通用设计规范》（工信厅信管函〔2021〕67 号附件）",
    "source_url": "https://www.miit.gov.cn/",
    "year": "2021",
-   "key_data": "主要文字不小于 18 dp/pt；点击区域不小于 60×60 dp/pt；禁止广告插件与诱导式按键（凭记忆，待核）",
+   "key_data": "适老版界面及单独适老版 App 中，主要文字信息不小于 18 dp/pt；严禁广告内容及插件（含广告弹窗），不得有诱导下载、诱导付款等诱导式按键。点击区域 60×60 的数值和操作时间条款在已检索到的材料中没有出现，待核原文。文号：搜索摘要显示工信厅信管函〔2021〕67号是2021年4月12日的专项行动实施通知，它与这两项规范的附件关系待核。",
    "verified_by_fetch": false,
    "confidence": "low",
    "pa_implication": "长辈模式消息用完整句、一条一事、不设倒计时、无诱导按钮，大额操作二次确认。",
-   "caveat": "条文与数值凭研究员记忆，没能打开原文；链接只是发布机关主页，需按文号检索原文后再引用。"
+   "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。我同意第一位核查员判为 partial。搜索摘要能证实三点：规范2021年4月7日发布；适老版界面和单独适老版 App 严禁广告弹窗；不得有诱导下载、诱导付款等按键。另有一份网站版规范的摘要提到 18dp/pt 大字体。查不到的有三项：点击区域 60×60 的数值，我用了两次专门检索都没有找到；操作时间相关的条款没有找到；搜索摘要提到〔2021〕67号是工信部办公厅4月12日发的《关于进一步抓好互联网应用适老化及无障碍改造专项行动实施工作的通知》，但这两项规范是不是它的附件，没有得到确认。原文所在的 ithome、sheitc、smejs 都被网络拦截，打不开。建议台账写法：保留字号、广告、诱导式按键三项限制；删去60×60和操作时间，或者标为“待核原文”；出处写“工信部2021年4月7日发布的《移动互联网应用（App）适老化通用设计规范》”，文号另行核实后再加。（见：IT之家：工信部发布《互联网网站适老化通用设计规范》和《移动互联网应用(App)适老化通用设计规范》（搜索摘要））",
+   "check_override": "search",
+   "verify_verdict": "partial"
   }
  ],
  "design_rules": [

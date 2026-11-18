@@ -240,24 +240,28 @@
    "source_title": "Nielsen: How Users Read on the Web（NN/g）",
    "source_url": "https://www.nngroup.com/articles/how-users-read-on-the-web/",
    "year": "1997",
-   "key_data": "79% 扫读、16% 逐字读；简洁 +58%、可扫读 +47%、客观语气 +27%、三者合计 +124%",
+   "key_data": "79% 扫读、16% 逐字读；简洁 +58%、可扫读 +47%、客观语气 +27%、三者合计 +124%（样本量未核实）",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "可以引用方向（用户默认不会读完），不能把 124% 说成通知场景的提升幅度。",
-   "caveat": "本次未能打开原文，数字凭记忆且与基础稿一致；1997 年、桌面网页、单一网站改写、样本约 51 人。"
+   "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。79%/16%、简洁 +58%、可扫读 +47%、客观 +27%、合计 +124% 都在搜索摘要里看到了，这次连客观语气的 27% 也核到了；但两次检索都没找到「约 51 人」这个样本量，而且 nngroup.com 和 deusto 转载页在这个环境里都打不开。我同意第一位核查员判 partial。建议台账保留条目原文和全部数字，改为 search 级核实，把 caveat 里的「样本约 51 人」删掉或标成未核实。（见：Jakob Nielsen's Alertbox for October 1, 1997（转载）；Concise, SCANNABLE, and Objective（Morkes & Nielsen 1997，搜索摘要））",
+   "check_override": "search",
+   "verify_verdict": "partial"
   },
   {
    "id": "T1-19",
-   "claim": "NN/g：扫列表时用户通常只看每项的前 2 个词（约 11 个字符）；多行以相同的词开头时，人会故意跳过行首（绕过型）。",
+   "claim": "NN/g：扫列表时用户最初往往只看每项开头 2 个词左右（测试中用前 11 个字符模拟，11 是为统一标准截取的长度，不是实测值）；多行以相同的词开头时，人会故意跳过行首（绕过型）。",
    "evidence_type": "实证研究",
    "source_title": "Nielsen: First 2 Words: A Signal for the Scanning Eye；Pernice: Text Scanning Patterns: Eyetracking Evidence（NN/g）",
    "source_url": "https://www.nngroup.com/articles/first-2-words-a-signal-for-scanning/",
    "year": "2009 / 2019",
-   "key_data": "前 2 个词、约 11 个字符；bypassing pattern：多行以相同词开头时读者跳过行首",
+   "key_data": "前 2 个词左右；测试截取前 11 个字符（研究者定的长度，非观测值），35% 的链接只看前 11 个字符时完全猜不出去向；bypassing pattern：多行以相同词开头时读者跳过行首",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "前 6 个字宽必须自带信息；禁用「【PA】」「温馨提示」这类固定前缀，否则用户会学会跳过开头。",
-   "caveat": "凭记忆写入，未核原文；英文网页列表场景，11 个字符约合 5–6 个汉字是折算。"
+   "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。NN/g 原文的说法是「大多数列表项用户看到 2 个词左右，开头词短就多看一点，长就只看第一个词」。11 个字符是研究者为了统一标准选的截取长度，原文明说不是每次都正好看 11 个字符。绕过型的定义核到了。我同意第一位核查员判 partial，也同意他的更正，建议台账采用他的 corrected_claim。另外这篇的年份没核到，有二手来源写的是 2006，台账里的 2009 建议标成待核。（见：First 2 Words: A Signal for the Scanning Eye（NN/g，搜索摘要）；Reading Pattern（NN/g Alertbox））",
+   "check_override": "search",
+   "verify_verdict": "partial"
   },
   {
    "id": "T1-20",
@@ -270,7 +274,9 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "「一眼」约等于 4 个字、2 个词。结果词和数字要挤进开头 4–6 个字。",
-   "caveat": "凭记忆写入，未核原文；实验室里读整句，推到被打断时读通知属于外推。"
+   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。多篇综述在搜索结果里转述 Inhoff & Liu 1998：知觉广度为左 1 字、右 2–3 字（最多 3 字），中文向前眼跳约 2.6 字；后续研究认为右侧最多可到 4 字、左侧可能更宽。（见：The perceptual span in traditional Chinese（Cambridge）等综述）",
+   "check_override": "search",
+   "verify_verdict": "confirmed"
   },
   {
    "id": "T1-21",
@@ -279,24 +285,28 @@
    "source_title": "Trauzettel-Klosinski & Dietz: IReST（IOVS 2012）；Sun, Morita & Stark 1985；Brysbaert 2019 元分析",
    "source_url": "https://doi.org/10.1167/iovs.11-8284",
    "year": "1985–2019",
-   "key_data": "IReST 中文朗读 255±29 字/分钟；Sun 等 1985 默读约 580 字/分钟；Brysbaert 2019 英文默读非虚构 238 词/分钟",
+   "key_data": "IReST 中文朗读 255±29 字/分钟（二手转引；2018 年的中文 IReST 研究测得年轻读者约 295–315 字/分钟）；Sun 等 1985 默读约 580 字/分钟（经 Yen 等 2011 转引）；Brysbaert 2019 英文默读非虚构 238 词/分钟（已核）",
    "verified_by_fetch": false,
    "confidence": "low",
    "pa_implication": "2 秒约读 14 个字，5 秒约 35 个字；播报 20 个字要 4–5 秒。字数预算按这个换算。",
-   "caveat": "全部凭记忆，未核原文；Brysbaert 论文里中文的具体速率没有把握，未引用；每秒 7 字是研究员推算，被打断时只会更慢。"
+   "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。这次比第一位核查员多核到两项：Brysbaert 2019 英文默读非虚构 238 词/分钟（190 项研究）在摘要里看到了；Sun 等 1985 默读约 580 字/分钟只在 Yen 等 2011 的转引里看到，原文没核到。IReST 中文 255±29 字/分钟仍然只有 IRIS Reading 这个二手来源；另有一项 2018 年的中文 IReST 研究测得年轻读者约 295–315 字/分钟，比 255 快。我同意第一位核查员判 partial。建议台账写明 238 已核到；580 和 255 都是二手转引，并标注 255 是 IReST 给的常模，年轻中文读者实测可能更快。每秒 7 字、每秒 4–4.5 字仍然只是推算。（见：Yen 等 2011（转引 Sun, Morita & Stark 1985，搜索摘要）；Brysbaert 2019 摘要；IRIS Reading（转引 IReST））",
+   "check_override": "search",
+   "verify_verdict": "partial"
   },
   {
    "id": "T1-22",
-   "claim": "中文没有词间空格：给熟练读者按词加空格并不更快，切错位置反而更慢；交集型歧义串（如「改签到」）会引起回视重读。",
+   "claim": "中文没有词间空格：给熟练读者按词加空格并不更快，切错位置反而更慢；交集型歧义串（如「改签到」）的切分靠相邻词按词频竞争决定，会给加工增加负担。",
    "evidence_type": "实证研究",
    "source_title": "Bai, Yan, Liversedge, Zang & Rayner 2008（JEP:HPP 34(5)）；Ma, Li & Rayner 2014",
    "source_url": "https://doi.org/10.1037/0096-1523.34.5.1277",
    "year": "2008 / 2014",
-   "key_data": "按词加空格与无空格的阅读速度无差别；按字或在错误位置加空格更慢；歧义串切错后回视增加",
+   "key_data": "按词加空格与无空格一样好读；按字或切成非词加空格，阅读时间更长；Ma 等 2014：歧义串切分符合竞争假说，受词频影响（回视增加的证据出自后续研究，不是 Ma 等 2014）",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "避开「改签到」「已退款项」「本周日程」这类歧义串；截止时间不写「5 日前」，写到具体时刻。",
-   "caveat": "凭记忆写入，未核原文；歧义串例子是研究员构造的，不是论文材料。"
+   "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。Bai 等 2008 的摘要支持前半句：按词加空格和无空格一样好读，切成非词或每个字都加空格时阅读时间更长。Ma, Li & Rayner 2014（JEP:HPP 40(3)）的摘要只说歧义串的切分符合词频竞争假说，没提到切错后回视增加；关于回视的证据出自后来引用它的研究。我同意第一位核查员判 partial，也同意他的更正，建议台账采用他的 corrected_claim。（见：Reading spaced and unspaced Chinese text: Evidence from eye movements（Lancashire / Southampton 存档，搜索摘要）；Word segmentation of overlapping ambiguous strings during Chinese reading（Ma, Li & Rayner 2014，搜索摘要））",
+   "check_override": "search",
+   "verify_verdict": "partial"
   },
   {
    "id": "T1-23",
@@ -352,29 +362,33 @@
   },
   {
    "id": "T1-27",
-   "claim": "微信小程序订阅消息的模板字段有硬上限：thing 类 20 个字符、phrase 类 5 个汉字，超长即发送失败。",
+   "claim": "微信订阅消息的模板字段有硬上限：thing 类 20 个字符、phrase 类 5 个汉字，参数不合规即发送失败（第三方文章报错误码 47003 或 data.xxx.value invalid）。",
    "evidence_type": "官方规范",
    "source_title": "微信开放文档：小程序订阅消息 subscribeMessage.send（参数值内容限制）",
    "source_url": "https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.send.html",
    "year": "版本未核",
-   "key_data": "thing 20 个以内字符；phrase 5 个以内汉字；name 10 个以内汉字；character_string 32 位以内",
+   "key_data": "thing 20 个以内字符；phrase 5 个以内汉字；name 10 个以内纯汉字（或 20 个以内纯字母/符号）；character_string 32 位以内（官方文档搜索级佐证，phrase 与报错码 47003 来自第三方转述）",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "微信版要单独写：结论放进第一个 thing 字段并控制在 20 字符内，状态词放 phrase，不能直接塞推送原文。",
-   "caveat": "凭记忆写入，官方页面打不开，地址为旧版路径；同项目 T7b 笔记有搜索级佐证（thing 20 字符）。"
+   "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。不同意第一位核查员“thing/character_string 原话未核到”的说法：搜索摘要显示微信官方订阅消息发送接口文档写着 thing 20 字符以内、character_string 32 位以内，name 10 个汉字的说法也有搜索级佐证。但 phrase 5 个汉字、超长报错（47003 / data.xxx.value invalid）只在第三方文章里看到，而且官方页面打不开（developers.weixin.qq.com 在本环境被拦截），看到的也是服务号文档，不是小程序 subscribeMessage.send 页面。同意判 partial，台账建议写“四项限制有搜索级佐证，phrase 和失败行为来自第三方转述，待用官方页面复核”。（见：Send a subscription notification（微信服务号 sendNewSubscribeMsg 文档，搜索摘要））",
+   "check_override": "search",
+   "verify_verdict": "partial"
   },
   {
    "id": "T1-28",
-   "claim": "国内安卓厂商推送对长度有硬限制，其中 vivo 最紧：标题最多 20 个汉字、内容最多 50 个汉字。",
+   "claim": "国内安卓厂商推送对长度有硬限制，其中 vivo 最紧：标题最多 20 个汉字、内容最多 50 个汉字（官方 2.7.0 版文档，按 1 汉字=2 字符计），须以厂商最新文档为准。",
    "evidence_type": "官方规范",
    "source_title": "vivo 开放平台推送服务端 API（单推接口）；小米、OPPO、魅族推送服务端文档",
    "source_url": "https://dev.vivo.com.cn/documentCenter/doc/362",
    "year": "版本未核",
-   "key_data": "vivo 标题 20 汉字、内容 50 汉字；小米 title<50、description<128；OPPO title≤50、content≤200；魅族 title≤32、content≤100",
+   "key_data": "vivo 标题 20 汉字、内容 50 汉字（官方 2.7.0 版文档，1 汉字=2 字符，即 40/100 字符）；小米 title 50、description 128；OPPO title 32（DCloud 转述，官方未核）、content 200；魅族 title 32、content 100",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "想一份文案通吃国内通道，就按标题 20 字、正文 50 字封顶；Skill 的字数检查要按通道分别实现。",
-   "caveat": "全部凭记忆，厂商文档打不开且可能已更新，地址未核；计数口径不同（vivo 一个汉字算 2 个字符，小米、OPPO 算 1 个）。"
+   "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。不同意第一位核查员“vivo 内容 50 汉字没有查到”的说法：搜索摘要显示 vivo 官方 PUSH-UPS API 2.7.0 版写着“通知内容最大 50 个汉字（即最大不超过 100 个英文字符）”，标题 20 个汉字，原条目的 vivo 数字成立（腾讯云 128、阿里云 100 是第三方转述，场景或版本不同）。小米 50/128、魅族 32/100 与 DCloud 转述一致；但 OPPO 标题 DCloud 写的是 32 字，没有找到 50 的依据（OPPO 官方 PDF 的摘要里没有字段限制）。所以仍判 partial，台账建议保留 vivo 20/50 汉字（注明 2019 年 2.7.0 版），OPPO 标题改为“32（第三方转述，官方未核）”。（见：vivo PUSH UPS API接口文档 2.7.0版（PDF，搜索摘要））",
+   "check_override": "search",
+   "verify_verdict": "partial"
   },
   {
    "id": "T1-29",

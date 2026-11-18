@@ -5,32 +5,121 @@
   "description": "PA 在目标状态变化时产出的一条主动消息。事实由调用方写入 facts 和 evidence，模型只读；模型负责 decision、tone 和 copy。字数上限写在各字段的 description 里，由 scripts/lint.mjs 检查（结构化输出不保证长度约束）。",
   "type": "object",
   "additionalProperties": false,
-  "required": ["goal", "type", "decision", "facts", "tone", "copy", "actions", "evidence", "missing"],
+  "required": [
+    "goal",
+    "type",
+    "decision",
+    "facts",
+    "tone",
+    "copy",
+    "actions",
+    "evidence",
+    "missing"
+  ],
   "properties": {
     "goal": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "title", "stakes"],
+      "required": [
+        "id",
+        "title",
+        "stakes"
+      ],
       "properties": {
-        "id": { "type": "string", "description": "稳定、可读的目标 ID，如 watch-tokyo-flight" },
-        "title": { "type": "string", "description": "用户创建目标时的原话，原样保留。之后的提醒可以回指这句约定" },
-        "stakes": { "type": "string", "enum": ["low", "mid", "high"], "description": "涉及扣款、行程、对外发送、不可逆、健康法律证件时为 high" }
+        "id": {
+          "type": "string",
+          "description": "稳定、可读的目标 ID，如 watch-tokyo-flight"
+        },
+        "title": {
+          "type": "string",
+          "description": "用户创建目标时的原话，原样保留。之后的提醒可以回指这句约定"
+        },
+        "stakes": {
+          "type": "string",
+          "enum": [
+            "low",
+            "mid",
+            "high"
+          ],
+          "description": "涉及扣款、行程、对外发送、不可逆、健康法律证件时为 high"
+        },
+        "label": {
+          "type": "string",
+          "description": "目标短名，2–6 个字，建目标时定下来，如「东京直飞」「视频会员」「猫粮」。标题里要出现它，用户才认得出这条消息说的是哪件事；体检脚本会检查。"
+        }
       }
     },
     "type": {
       "type": "string",
-      "enum": ["ack", "need_info", "progress", "opportunity", "approval", "done", "deadline", "blocked", "nudge", "correction", "rescope", "pause", "milestone", "digest"],
+      "enum": [
+        "ack",
+        "need_info",
+        "progress",
+        "opportunity",
+        "approval",
+        "done",
+        "deadline",
+        "blocked",
+        "nudge",
+        "correction",
+        "rescope",
+        "pause",
+        "milestone",
+        "digest"
+      ],
       "description": "消息类型，定义见 references/message-types.md"
     },
     "decision": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["send", "handling", "reason", "hold_until"],
+      "required": [
+        "send",
+        "handling",
+        "reason",
+        "hold_until"
+      ],
       "properties": {
-        "send": { "type": "string", "enum": ["none", "digest", "hold", "quiet", "push", "urgent", "live"], "description": "none=不发（合法输出）；digest=进周期小结；hold=安静时段后再发；quiet=轻提示不响铃；push=标准推送；urgent=时效推送，仅限 1 小时内会错过；live=更新实况窗" },
-        "handling": { "type": "string", "enum": ["inform", "do", "do_with_undo", "mandate_receipt", "ask", "secure_then_ask", "handover"], "description": "inform=只告知；do=已直接办；do_with_undo=已办并留撤销口；mandate_receipt=按预授权已办的回执；ask=先问再办；secure_then_ask=先做可撤的保全动作再问；handover=交还用户本人完成" },
-        "reason": { "type": "string", "description": "一句话，写进日志和评测，不展示给用户" },
-        "hold_until": { "anyOf": [{ "type": "string", "format": "date-time" }, { "type": "null" }] }
+        "send": {
+          "type": "string",
+          "enum": [
+            "none",
+            "digest",
+            "hold",
+            "quiet",
+            "push",
+            "urgent",
+            "live"
+          ],
+          "description": "none=不发（合法输出）；digest=进周期小结；hold=安静时段后再发；quiet=轻提示不响铃；push=标准推送；urgent=时效推送，仅限 1 小时内会错过；live=更新实况窗"
+        },
+        "handling": {
+          "type": "string",
+          "enum": [
+            "inform",
+            "do",
+            "do_with_undo",
+            "mandate_receipt",
+            "ask",
+            "secure_then_ask",
+            "handover"
+          ],
+          "description": "inform=只告知；do=已直接办；do_with_undo=已办并留撤销口；mandate_receipt=按预授权已办的回执；ask=先问再办；secure_then_ask=先做可撤的保全动作再问；handover=交还用户本人完成"
+        },
+        "reason": {
+          "type": "string",
+          "description": "一句话，写进日志和评测，不展示给用户"
+        },
+        "hold_until": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
       }
     },
     "facts": {
@@ -39,38 +128,155 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["key", "value", "display"],
+        "required": [
+          "key",
+          "value",
+          "display"
+        ],
         "properties": {
-          "key": { "type": "string" },
-          "value": { "type": "string", "description": "机器值，如 640、2026-11-25T23:59:00+08:00" },
-          "display": { "type": "string", "description": "展示串，如 ¥640、11 月 25 日（周三）23:59 前" }
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string",
+            "description": "机器值，如 640、2026-11-25T23:59:00+08:00"
+          },
+          "display": {
+            "type": "string",
+            "description": "展示串，如 ¥640、11 月 25 日（周三）23:59 前"
+          }
         }
       }
     },
     "tone": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["F", "W", "H", "V", "A", "C", "E", "clamped_by"],
+      "required": [
+        "F",
+        "W",
+        "H",
+        "V",
+        "A",
+        "C",
+        "E",
+        "clamped_by"
+      ],
       "properties": {
-        "F": { "type": "string", "enum": ["F0", "F1", "F2", "F3"], "description": "正式度，默认 F1" },
-        "W": { "type": "string", "enum": ["W0", "W1", "W2"], "description": "温度，默认 W1" },
-        "H": { "type": "string", "enum": ["H0", "H1", "H2", "H3"], "description": "幽默，默认 H0；stakes=high、坏消息、PA 出错、冷启动、长辈模式一律 H0" },
-        "V": { "type": "string", "enum": ["V1", "V2", "V3"], "description": "详略，默认 V2" },
-        "A": { "type": "string", "enum": ["A0", "A1", "A2", "A3"], "description": "主动度，默认 A2；A3 仅限用户授权过的类目和限额" },
-        "C": { "type": "string", "enum": ["C1", "C2", "C3"], "description": "直率度，默认 C2" },
-        "E": { "type": "string", "enum": ["E0", "E1", "E2"], "description": "表现力，默认 E0" },
-        "clamped_by": { "type": "array", "items": { "type": "string" }, "description": "哪些条件压低了档位，如 [\"stakes=high\", \"event=bad\"]" }
+        "F": {
+          "type": "string",
+          "enum": [
+            "F0",
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "description": "正式度，默认 F1"
+        },
+        "W": {
+          "type": "string",
+          "enum": [
+            "W0",
+            "W1",
+            "W2"
+          ],
+          "description": "温度，默认 W1"
+        },
+        "H": {
+          "type": "string",
+          "enum": [
+            "H0",
+            "H1",
+            "H2",
+            "H3"
+          ],
+          "description": "幽默，默认 H0；stakes=high、坏消息、PA 出错、冷启动、长辈模式一律 H0"
+        },
+        "V": {
+          "type": "string",
+          "enum": [
+            "V1",
+            "V2",
+            "V3"
+          ],
+          "description": "详略，默认 V2"
+        },
+        "A": {
+          "type": "string",
+          "enum": [
+            "A0",
+            "A1",
+            "A2",
+            "A3"
+          ],
+          "description": "主动度，默认 A2；A3 仅限用户授权过的类目和限额"
+        },
+        "C": {
+          "type": "string",
+          "enum": [
+            "C1",
+            "C2",
+            "C3"
+          ],
+          "description": "直率度，默认 C2"
+        },
+        "E": {
+          "type": "string",
+          "enum": [
+            "E0",
+            "E1",
+            "E2"
+          ],
+          "description": "表现力，默认 E0"
+        },
+        "clamped_by": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "哪些条件压低了档位，如 [\"stakes=high\", \"event=bad\"]"
+        }
       }
     },
     "copy": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["title", "body", "detail", "if_ignored"],
+      "required": [
+        "title",
+        "body",
+        "detail",
+        "if_ignored"
+      ],
       "properties": {
-        "title": { "type": "string", "description": "第一行：结果或变化，加上它值多少。前 10 个字内出现数字或状态。锁屏预算 16 字" },
-        "body": { "type": "string", "description": "边界条件、比较口径、能否撤销。锁屏预算 44 字；一句不超过 34 字" },
-        "detail": { "anyOf": [{ "type": "string" }, { "type": "null" }], "description": "点开才显示的算账和依据，可为空" },
-        "if_ignored": { "anyOf": [{ "type": "string" }, { "type": "null" }], "description": "用户不处理时会发生什么。求拍板、截止提醒、机会提醒必填，并应在 body 里体现" }
+        "title": {
+          "type": "string",
+          "description": "第一行：结果或变化，加上它值多少。前 10 个字内出现数字或状态。锁屏预算 16 字"
+        },
+        "body": {
+          "type": "string",
+          "description": "边界条件、比较口径、能否撤销。锁屏预算 44 字；一句不超过 34 字"
+        },
+        "detail": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "点开才显示的算账和依据，可为空"
+        },
+        "if_ignored": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "用户不处理时会发生什么。求拍板、截止提醒、机会提醒必填，并应在 body 里体现"
+        }
       }
     },
     "actions": {
@@ -79,13 +285,36 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["label", "kind", "effect", "reversible", "needs_confirmation"],
+        "required": [
+          "label",
+          "kind",
+          "effect",
+          "reversible",
+          "needs_confirmation"
+        ],
         "properties": {
-          "label": { "type": "string" },
-          "kind": { "type": "string", "enum": ["primary", "secondary", "dismiss"] },
-          "effect": { "type": "string", "description": "点了之后系统实际做什么" },
-          "reversible": { "type": "boolean" },
-          "needs_confirmation": { "type": "boolean", "description": "付款、对外发送、不可逆时为 true" }
+          "label": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "primary",
+              "secondary",
+              "dismiss"
+            ]
+          },
+          "effect": {
+            "type": "string",
+            "description": "点了之后系统实际做什么"
+          },
+          "reversible": {
+            "type": "boolean"
+          },
+          "needs_confirmation": {
+            "type": "boolean",
+            "description": "付款、对外发送、不可逆时为 true"
+          }
         }
       }
     },
@@ -95,20 +324,40 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["claim", "source", "observed_at", "scope"],
+        "required": [
+          "claim",
+          "source",
+          "observed_at",
+          "scope"
+        ],
         "properties": {
-          "claim": { "type": "string" },
-          "source": { "type": "string" },
-          "observed_at": { "type": "string", "format": "date-time" },
-          "scope": { "type": "string", "description": "比较范围与时间窗，如「近 30 天，京东自营」" }
+          "claim": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "scope": {
+            "type": "string",
+            "description": "比较范围与时间窗，如「近 30 天，京东自营」"
+          }
         }
       }
     },
     "missing": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "description": "写这条消息还缺哪些事实。缺了就列在这里，不要在 copy 里估一个"
     },
-    "dedupe_key": { "type": "string", "description": "同一事实只发一次：goal.id + type + 关键事实" }
+    "dedupe_key": {
+      "type": "string",
+      "description": "同一事实只发一次：goal.id + type + 关键事实"
+    }
   }
 }

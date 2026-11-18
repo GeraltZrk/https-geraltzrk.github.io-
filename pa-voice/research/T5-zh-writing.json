@@ -187,11 +187,13 @@
    "source_title": "Li, C. N. & Thompson, S. A. (1981). Mandarin Chinese: A Functional Reference Grammar. University of California Press",
    "source_url": "https://www.worldcat.org/isbn/9780520066106",
    "year": "1981",
-   "key_data": "原书列六个句末语气词：了、呢、吧、哦、啊/呀、吗，各对应一个核心语用功能",
+   "key_data": "原书第 7 章（pp.238–318）分节讨论五个句末语气词：了、呢、吧、哦、啊/呀，各对应一个核心语用功能（如啊表示 reduced forcefulness，pp.313–7）；吗列入 p.238 的清单，但放在第 18 章疑问句中讨论",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "建议用「吧」、缓和疑问用「呢」；不利消息用主动句写出施事，不写「你的订单被取消」。",
-   "caveat": "凭记忆引用，章节与术语未核，所给地址是 ISBN 检索入口。网络变体（哒、滴、哟、波浪号拖音）的社会感知没有找到可引用的研究。OpenHarmony 把「你已被踢出」列为反例一条已核。"
+   "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。同意第一位核查员的 partial。claim 本身基本成立：吧征求同意（Kendrick 转引 p.307）；啊表示 reduced forcefulness（Lin 2014 转引 pp.313–7）；哦是友好提醒、呢与回应预期相关，有 Huang 2007 的二手转述为据。问题在 data：“列六个句末语气词”不准确。第一位核查员查到第 7 章（pp.238–318）只分五节讨论了、呢、吧、哦、啊/呀；吗虽列在 p.238 的清单里，却放到第 18 章疑问句中讨论，这一点我这轮没有独立看到。原书我打不开（aclweb.org 被网络拦截）。建议台账 claim 保留，data 按下面的写法改。（见：Leiden University dissertation (Lin 2014)（搜索摘要））",
+   "check_override": "search",
+   "verify_verdict": "partial"
   },
   {
    "id": "T5-15",
@@ -234,16 +236,18 @@
   },
   {
    "id": "T5-18",
-   "claim": "国标《出版物上数字用法》：计量与编号用阿拉伯数字，概数用汉字；万、亿可与数字连用；范围两端都带单位。",
+   "claim": "国标《出版物上数字用法》：计量与编号用阿拉伯数字，概数用汉字；万、亿可与数字连用；数值范围两端单位相同时，前一个单位可以省略，但省略后会造成歧义的（如「亿」「%」）应两端都写。",
    "evidence_type": "官方规范",
    "source_title": "GB/T 15835-2011 出版物上数字用法",
    "source_url": "http://www.moe.gov.cn/ewebeditor/uploadfile/2015/01/13/20150113091154536.pdf",
    "year": "2011",
-   "key_data": "示例：「9亿～16亿」不写「9～16亿」；「15%～30%」不写「15～30%」；不写「4千」",
+   "key_data": "示例：「9亿～16亿」不写「9～16亿」；「15%～30%」不写「15～30%」（「不写4千」未核到原文）",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "「两三天」用汉字、「3 天」用数字；范围写「¥300～¥500」「15%～30%」。",
-   "caveat": "凭记忆引用，条款号与示例未核。PDF 地址取自 Ant Design 数据格式页的参考文献，本环境无法打开。阮一峰规范中「范围两端都加单位」一条已核。"
+   "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。同意第一位核查员判断为 partial：两个示例在检索摘要中可见，但标准原话是「不造成歧义时前一个单位可省略」，不是一律两端带单位；「4千」以及计量/编号/概数分工的条款原文都没有检索到（只看到 2011 版新增了「计量」「编号」「概数」这几个术语）；PKU、ecjtu 的 PDF 在本环境打不开。建议台账写 partial，改用更正后的表述，并删掉「不写4千」或标明未核实。（见：GBT 15835—2011 出版物上数字用法（搜索摘要，含规范问答））",
+   "check_override": "search",
+   "verify_verdict": "partial"
   },
   {
    "id": "T5-19",

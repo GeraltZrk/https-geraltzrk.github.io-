@@ -56,6 +56,7 @@ function normalize(m) {
       stakes: STAKES[m.stakes || goal.stakes] || 'mid',
       surface: m.surface || 'lock',
       allowNin: !!(m.profile && m.profile.address === '您') || m.address === '您',
+      subject: m.subject || goal.label || undefined,
     },
     id: m.id || goal.id || '',
     skip: m.decision && ['none', 'digest', 'hold'].includes(m.decision.send) && !title && !body,

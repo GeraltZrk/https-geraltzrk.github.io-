@@ -191,7 +191,9 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "时效级提醒必须稀缺且几乎每次都值得；给它设采纳率红线，低于红线就自动收紧触发条件。",
-   "caveat": "医疗场景类比，非消费通知；来自研究员既有知识，未在本次会话核对。"
+   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索结果给出了该综述的作者、JAMIA 2006;13(2):138–147（PMID 16357358），以及摘要原话“overridden in 49% to 96% of cases”；PMC 原文页在本环境打不开。（见：Overriding of Drug Safety Alerts in Computerized Physician Order Entry (PMC)）",
+   "check_override": "search",
+   "verify_verdict": "confirmed"
   },
   {
    "id": "T2-15",
@@ -360,7 +362,9 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "消息要能归入用户订阅的提醒、订单、出行、账务才有资格响铃；「我觉得你可能想…」类建议每天最多2条且无声。",
-   "caveat": "经搜索摘要核对，未能打开原页面；「静默展示」与华为 category 细分为记忆补充；小米公信限额各文档说法不一，荣耀未查；规则常变，上线前须逐家复核并申请消息自分类。"
+   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。阿里云、腾讯云文档的摘要都印证了：华为自 2023-01-05 起资讯营销类新闻 5 条/日、其他 2 条/日，服务与通讯类不限量；资讯营销类为静默通知，服务与通讯类带铃声和振动；vivo 运营消息 5/2；OPPO 公信总量为累计用户数×2（累计用户数<50000 时按 100000 计）。以上全是二手转述，没打开华为原页面。（见：阿里云移动推送：厂商通道限制与消息分类）",
+   "check_override": "search",
+   "verify_verdict": "confirmed"
   },
   {
    "id": "T2-28",
@@ -477,7 +481,9 @@
    "verified_by_fetch": false,
    "confidence": "low",
    "pa_implication": "通知要抗摘要：首句自成完整事实（什么事、多少钱、何时截止），不靠第二句补充否定或条件。",
-   "caveat": "来自研究员既有知识，未在本次会话核对，URL 需复核；Android 16 的 AI 通知摘要与自动归类同样未核。"
+   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。iClarified 转载的 iOS 18.3 官方更新说明和 MacRumors 等媒体都印证了：新闻与娱乐类 App 的通知摘要暂时不可用，起因是摘要生成了错误标题，摘要改用斜体与普通通知区分；Apple 原页面打不开，原条目里的 URL 未核实。（见：iOS 18.3 Release Notes (iClarified) / MacRumors）",
+   "check_override": "search",
+   "verify_verdict": "confirmed"
   }
  ],
  "design_rules": [

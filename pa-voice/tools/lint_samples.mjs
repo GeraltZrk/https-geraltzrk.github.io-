@@ -21,12 +21,12 @@ const fromLine = (text) => {
 };
 
 const life = data('lifecycle');
-life.states.forEach((s) => s.sample && add('lifecycle/' + s.id + ' ' + s.name, s.sample, { type: s.type, stakes: s.sample.stakes || 'mid', surface: s.type === 'approval' ? 'chat' : 'lock' }));
+life.states.forEach((s) => s.sample && add('lifecycle/' + s.id + ' ' + s.name, s.sample, { type: s.type, stakes: s.sample.stakes || 'mid', surface: s.type === 'approval' ? 'chat' : 'lock', subject: s.sample.subject }));
 
 const tone = data('tone');
 tone.examples.forEach((e, i) => add('tone/' + i + ' ' + JSON.stringify(e.when), e.msg, {
   type: e.when.event === 'bad' ? 'blocked' : e.when.event === 'good' ? (e.when.stakes === 'low' ? 'milestone' : 'done') : e.when.event === 'pa_error' ? 'correction' : (e.when.stakes === 'high' ? 'approval' : e.when.stakes === 'low' ? 'nudge' : 'deadline'),
-  stakes: e.when.stakes, surface: 'chat', allowNin: e.when.persona === 'elder' }));
+  stakes: e.when.stakes, surface: 'chat', allowNin: e.when.persona === 'elder', subject: e.msg.subject }));
 
 const presets = data('presets');
 add('presets/hero.after', presets.hero.after, presets.hero.options);
@@ -42,11 +42,11 @@ humor.levels.forEach((lv, i) => lv.examples.filter((x) => !x.bad).forEach((x, j)
 const rules = data('rules');
 rules.forEach((r) => r.say && add('rules/' + r.id + '.say', { title: '', body: r.say, actions: [] }, { type: 'progress', stakes: 'low', surface: 'chat', __soft: true }));
 
-data('basecheck').items.forEach((it) => add('basecheck/' + it.name + '.fixed', it.fixed, { type: it.type, stakes: it.stakes, surface: it.surface }));
+data('basecheck').items.forEach((it) => add('basecheck/' + it.name + '.fixed', it.fixed, { type: it.type, stakes: it.stakes, surface: it.surface, subject: it.subject }));
 
 if (existsSync(path.join(root, 'src', 'data', 'scenarios.json'))) {
   data('scenarios').forEach((s) => s.thread.forEach((t, i) => Object.entries(t.variants || {}).forEach(([mood, v]) =>
-    add(`scenarios/${s.id}#${i + 1}.${mood}`, v, { type: t.type, stakes: ['approval', 'blocked'].includes(t.type) && s.stakes !== 'low' ? 'high' : s.stakes, surface: t.surface || 'lock', allowNin: s.address === '您' }))));
+    add(`scenarios/${s.id}#${i + 1}.${mood}`, v, { type: t.type, stakes: ['approval', 'blocked'].includes(t.type) && s.stakes !== 'low' ? 'high' : s.stakes, surface: t.surface || 'lock', allowNin: s.address === '您', subject: t.subject || s.subject }))));
 }
 
 let bad = 0, total = 0;

@@ -1,164 +1,32 @@
 [
-  {
-    "id": "c01-opportunity", "about": "降到目标价以下，窗口当天有效",
-    "goal": { "title": "帮我盯杭州到三亚 1 月 20 日的直飞，低于 1600 告诉我", "stakes": "mid", "mandate": null },
-    "event": "监控发现价格降到目标价以下",
-    "facts": { "现价": "¥1,540", "目标价": "¥1,600", "航班": "海航 HU7208，1 月 20 日 13:05 杭州萧山 T3 出发", "行李": "含 20kg 托运", "退改": "出票后 2 小时内可免费退", "数据": "海航官网，11 月 18 日 10:02 查询", "近 30 天最低": "是（海航官网）" },
-    "context": { "now": "2026-11-18 10:05 周三", "user_last_message": null, "stage": "building", "history": [] },
-    "profile": { "address": "你", "preset": "default" }, "surface": "lock",
-    "expect": { "send": ["push", "urgent"], "must_include": ["1,540", "60"], "must_not": ["全网", "史低", "立省", "手慢无", "您"] }
-  },
-  {
-    "id": "c02-no-change", "about": "例行巡检，没有任何变化",
-    "goal": { "title": "帮我盯杭州到三亚 1 月 20 日的直飞，低于 1600 告诉我", "stakes": "mid", "mandate": null },
-    "event": "每 30 分钟一次的例行巡检，价格与上次相同",
-    "facts": { "现价": "¥1,780", "上次查询价": "¥1,780", "目标价": "¥1,600" },
-    "context": { "now": "2026-11-18 14:30 周三", "user_last_message": null, "stage": "building", "history": ["周日 20:00：本周最低 ¥1,780，离目标价还差 ¥180。11 月 22 日（周日）20:00 再报。"] },
-    "profile": { "address": "你", "preset": "default" }, "surface": "lock",
-    "expect": { "send": ["none"], "must_include": [], "must_not": [] }
-  },
-  {
-    "id": "c03-night-small-drop", "about": "深夜发现一笔小额降价，没有时限",
-    "goal": { "title": "这款降噪耳机降价了告诉我", "stakes": "low", "mandate": null },
-    "event": "耳机价格小幅下降",
-    "facts": { "现价": "¥1,187", "昨天价格": "¥1,199", "降幅": "¥12", "有效期": "商家未标注截止时间", "数据": "京东自营，11 月 18 日 23:38 查询" },
-    "context": { "now": "2026-11-18 23:40 周三", "user_last_message": null, "stage": "building", "history": [] },
-    "profile": { "address": "你", "preset": "default", "quiet_hours": "23:00–08:00", "money_min": 50 }, "surface": "lock",
-    "expect": { "send": ["none", "digest", "hold"], "must_include": [], "must_not": [] }
-  },
-  {
-    "id": "c04-renewal-5d", "about": "自动续费前 5 天的提醒",
-    "goal": { "title": "帮我盯着没在用的自动续费", "stakes": "mid", "mandate": null },
-    "event": "某音乐会员将在 5 天后自动续费，用户已 48 天没有打开",
-    "facts": { "扣费时间": "11 月 23 日（周一）10:00", "金额": "¥15", "未使用天数": "48 天", "停掉后": "已付的这一期照常用到 11 月 23 日 10:00，之后不再扣费" },
-    "context": { "now": "2026-11-18 10:00 周三", "user_last_message": null, "stage": "building", "history": [] },
-    "profile": { "address": "你", "preset": "default" }, "surface": "lock",
-    "expect": { "send": ["push"], "must_include": ["15", "11 月 23 日"], "must_not": ["明早", "立省", "温馨提示", "您"] }
-  },
-  {
-    "id": "c05-payment-approval", "about": "需要付款才能办成，没有预授权",
-    "goal": { "title": "大阪那家酒店降价了帮我重订", "stakes": "high", "mandate": null },
-    "event": "同房型含早降价；重订需要先付新订单，再取消旧订单",
-    "facts": { "新价": "¥820/晚 × 3 晚 = ¥2,460", "原订单": "¥2,970", "差额": "¥510", "旧单免费取消截止": "11 月 25 日（周三）18:00", "支付方式": "尾号 4471 的信用卡", "数据": "酒店官网，11 月 18 日 16:20 查询" },
-    "context": { "now": "2026-11-18 16:25 周三", "user_last_message": null, "stage": "building", "history": [] },
-    "profile": { "address": "你", "preset": "default" }, "surface": "chat",
-    "expect": { "send": ["push", "urgent"], "must_include": ["2,460", "510"], "must_not": ["已为你支付", "已重订", "已帮你订", "全网", "最划算"] }
-  },
-  {
-    "id": "c06-mandate-receipt", "about": "在预授权范围内已经办完，需要回执",
-    "goal": { "title": "北京到成都周六的直飞，900 以下直接订", "stakes": "high", "mandate": "¥900 以下直接订，有效期到 11 月 30 日" },
-    "event": "价格降到授权线以下，PA 已按授权出票",
-    "facts": { "成交价": "¥860", "航班": "周六 11 月 21 日 08:10 首都 T3 → 成都天府，直飞", "免费退截止": "11 月 19 日（周四）09:00", "支付": "尾号 4471 的信用卡，已扣款" },
-    "context": { "now": "2026-11-18 21:10 周三", "user_last_message": null, "stage": "familiar", "history": [] },
-    "profile": { "address": "你", "preset": "default" }, "surface": "lock",
-    "expect": { "send": ["push", "urgent"], "must_include": ["860", "09:00"], "must_not": ["要不要", "是否"] }
-  },
-  {
-    "id": "c07-captcha-handover", "about": "卡在只有用户能过的验证码",
-    "goal": { "title": "帮我候补周五晚上回杭州的高铁", "stakes": "mid", "mandate": null },
-    "event": "提交候补时 12306 要求登录验证码，PA 无法继续",
-    "facts": { "卡在": "12306 登录验证码", "之后": "验证通过后 PA 自动提交 G7381 次候补", "车次": "G7381，11 月 20 日（周五）18:42" },
-    "context": { "now": "2026-11-18 12:40 周三", "user_last_message": null, "stage": "building", "history": [] },
-    "profile": { "address": "你", "preset": "default" }, "surface": "lock",
-    "expect": { "send": ["push", "urgent"], "must_include": ["验证"], "must_not": ["执行失败", "任务失败", "抱歉"] }
-  },
-  {
-    "id": "c08-delay-rushed", "about": "航班延误，用户在赶时间，需要对外发通知",
-    "goal": { "title": "这趟出差的行程变动帮我盯着，有冲突帮我协调", "stakes": "high", "mandate": null },
-    "event": "航班延误 3 小时，赶不上 17:00 的客户演示；PA 已拟好顺延通知，尚未发送",
-    "facts": { "航班": "CA1857 延误 3 小时，预计 16:20 落地", "冲突": "17:00 客户演示（线下，从机场过去约 1 小时）", "方案": "4 位参会人 19:30 均有空，顺延通知草稿已备好", "备选": "落地后在机场线上参加" },
-    "context": { "now": "2026-11-18 11:20 周三", "user_last_message": "快点", "stage": "familiar", "history": [] },
-    "profile": { "address": "你", "preset": "genz", "humor_opt_in": "H3" }, "surface": "lock",
-    "expect": { "send": ["push", "urgent"], "must_include": ["3 小时", "19:30"], "must_not": ["哎呀", "坏消息", "已发送", "已通知", "打工人", "！"] }
-  },
-  {
-    "id": "c09-pa-error", "about": "PA 自己算错了价格，用户还没下单",
-    "goal": { "title": "洗衣液帮我凑个便宜的方案", "stakes": "mid", "mandate": null },
-    "event": "PA 20 分钟前报的到手价漏算了运费，需要更正",
-    "facts": { "之前报的": "到手 ¥89", "正确的": "到手 ¥95", "原因": "漏算运费 ¥6", "比直接买": "少 ¥25（直接买 ¥120）", "重新比较": "京东自营、天猫超市、拼多多 3 家里，天猫超市仍然最低", "数据": "11 月 18 日 15:05 查询" },
-    "context": { "now": "2026-11-18 15:06 周三", "user_last_message": null, "stage": "building", "history": ["14:46：洗衣液 3 袋加 1 张券，到手 ¥89，比直接买少 ¥31。[按这个下单] [看明细]"] },
-    "profile": { "address": "你", "preset": "family" }, "surface": "lock",
-    "expect": { "send": ["push"], "must_include": ["95", "6"], "must_not": ["哈哈", "非常抱歉", "敬请谅解", "全网"] }
-  },
-  {
-    "id": "c10-third-ignore", "about": "同一个提醒已经连续 3 次没有回应",
-    "goal": { "title": "每天晚上提醒我做 10 分钟拉伸", "stakes": "low", "mandate": null },
-    "event": "拉伸的轻推连续 3 次没有被点开；连续记录靠免打卡券保着，尚未断",
-    "facts": { "未回应次数": "3 次", "已连续": "9 天（最近 3 天用的是免打卡券）", "记录": "进度与连续记录都保留" },
-    "context": { "now": "2026-11-18 22:00 周三", "user_last_message": null, "stage": "building", "history": ["周日 22:00：拉伸 10 分钟，做完就满 7 天。", "周一 22:00：今天只做 3 分钟也算。", "周二 22:00：3 分钟拉伸，记录就不断。"] },
-    "profile": { "address": "你", "preset": "default" }, "surface": "lock",
-    "expect": { "send": ["push", "quiet", "digest"], "must_include": [], "must_not": ["没理我", "难过", "坚持就是胜利", "半途而废", "千万", "可惜"] }
-  },
-  {
-    "id": "c11-milestone-relaxed", "about": "轻松目标达成，用户先开了玩笑",
-    "goal": { "title": "帮我把每周外卖钱控制在 200 以内", "stakes": "low", "mandate": null },
-    "event": "连续 6 周没超预算",
-    "facts": { "连续周数": "6 周", "少花": "¥540（与设预算前 6 周的 ¥1,740 相比）", "心愿单": "机械键盘 ¥499" },
-    "context": { "now": "2026-11-15 20:00 周日", "user_last_message": "哈哈我居然忍住了", "stage": "familiar", "history": [] },
-    "profile": { "address": "你", "preset": "default", "humor_opt_in": "H3" }, "surface": "chat",
-    "expect": { "send": ["push", "quiet", "digest"], "must_include": ["540"], "must_not": ["你太棒了", "太厉害", "！！", "yyds", "绝绝子"] }
-  },
-  {
-    "id": "c12-elder-bill", "about": "长辈模式下的缴费提醒",
-    "goal": { "title": "水电燃气费到期了提醒我，帮我交", "stakes": "high", "mandate": null },
-    "event": "本月电费账单已出，尚未缴纳",
-    "facts": { "金额": "132 元", "缴费截止": "12 月 5 日", "支付方式": "尾号 3306 的储蓄卡" },
-    "context": { "now": "2026-11-18 09:30 周三", "user_last_message": null, "stage": "building", "history": [] },
-    "profile": { "address": "您", "preset": "elder" }, "surface": "chat",
-    "expect": { "send": ["push"], "must_include": ["132", "您"], "must_not": ["你", "戳", "秒办", "仅剩", "～", "！"] }
-  },
-  {
-    "id": "c13-monitor-broken", "about": "监控的数据源断了，自动重试已失败",
-    "goal": { "title": "帮我盯着这款扫地机的价格", "stakes": "low", "mandate": null },
-    "event": "比价数据源连续 2 小时无法访问，自动重试 3 次失败",
-    "facts": { "中断时长": "2 小时", "重试": "3 次，均失败", "影响": "这段时间的价格变化没有记录", "可选": "换成另一个数据源（只覆盖京东和天猫）" },
-    "context": { "now": "2026-11-18 16:00 周三", "user_last_message": null, "stage": "building", "history": [] },
-    "profile": { "address": "你", "preset": "default" }, "surface": "lock",
-    "expect": { "send": ["push", "quiet"], "must_include": ["2 小时"], "must_not": ["开小差", "稍后再试", "非常抱歉"] }
-  },
-  {
-    "id": "c14-scheduled", "about": "用户亲口约好的定时提醒，内容和上个月一样",
-    "goal": { "title": "每月 15 号 12 点提醒我给咪咪做外驱", "stakes": "low", "mandate": null },
-    "event": "到了约定的时间",
-    "facts": { "约定": "每月 15 日 12:00", "事项": "给咪咪做体外驱虫" },
-    "context": { "now": "2026-11-15 12:00 周日", "user_last_message": null, "stage": "familiar", "history": ["10 月 15 日 12:00：该给咪咪做外驱了。"] },
-    "profile": { "address": "你", "preset": "default" }, "surface": "lock",
-    "expect": { "send": ["push"], "must_include": ["咪咪"], "must_not": ["温馨提示"] }
-  },
-  {
-    "id": "c15-missing-baseline", "about": "只查了一个平台，缺少比较基准",
-    "goal": { "title": "猫砂帮我看看哪里买划算", "stakes": "mid", "mandate": null },
-    "event": "在一个平台上算出了凑单方案；其他平台的数据没有取到",
-    "facts": { "平台": "天猫超市", "方案": "4 袋叠 1 张券，到手 ¥156，合 ¥39/袋", "其他平台": "京东、拼多多的价格接口本次没有返回", "数据": "11 月 18 日 19:40 查询" },
-    "context": { "now": "2026-11-18 19:42 周三", "user_last_message": null, "stage": "building", "history": [] },
-    "profile": { "address": "你", "preset": "family" }, "surface": "lock",
-    "expect": { "send": ["push", "quiet", "digest"], "must_include": ["156"], "must_not": ["最低", "最划算", "最便宜", "全网", "宝妈"] }
-  },
-  {
-    "id": "c16-user-quits", "about": "用户明确说不要了",
-    "goal": { "title": "每天晚上提醒我夜跑", "stakes": "low", "mandate": null },
-    "event": "用户刚发来消息要求停止",
-    "facts": { "已连续": "9 天", "记录": "保留" },
-    "context": { "now": "2026-11-18 20:10 周三", "user_last_message": "别提醒我夜跑了", "stage": "building", "history": [] },
-    "profile": { "address": "你", "preset": "default" }, "surface": "chat",
-    "expect": { "send": ["push", "quiet"], "must_include": [], "must_not": ["真的", "确定", "可惜", "再考虑", "坚持", "？"] }
-  },
-  {
-    "id": "c17-duplicate", "about": "同一个事实两小时前已经通知过",
-    "goal": { "title": "帮我盯杭州到三亚 1 月 20 日的直飞，低于 1600 告诉我", "stakes": "mid", "mandate": null },
-    "event": "再次巡检，价格仍是两小时前已通知过的那个价",
-    "facts": { "现价": "¥1,540", "目标价": "¥1,600", "上次通知": "10:05，同一价格" },
-    "context": { "now": "2026-11-18 12:05 周三", "user_last_message": null, "stage": "building", "history": ["10:05：直飞降到 ¥1,540，比你的目标价低 ¥60。海航 1 月 20 日 13:05，含 20kg 托运。[订这班] [再等等]"] },
-    "profile": { "address": "你", "preset": "default" }, "surface": "lock",
-    "expect": { "send": ["none"], "must_include": [], "must_not": [] }
-  },
-  {
-    "id": "c18-weekly-report", "about": "约好的每周行情汇报，没有需要用户做的事",
-    "goal": { "title": "帮我盯杭州到三亚 1 月 20 日的直飞，低于 1600 告诉我", "stakes": "mid", "mandate": null },
-    "event": "到了约定的每周日 20:00 汇报时间；本周没有触达目标价",
-    "facts": { "本周最低": "¥1,780", "目标价": "¥1,600", "差额": "¥180", "比上周": "低 ¥90", "下次汇报": "11 月 22 日（周日）20:00" },
-    "context": { "now": "2026-11-15 20:00 周日", "user_last_message": null, "stage": "building", "history": [] },
-    "profile": { "address": "你", "preset": "default" }, "surface": "lock",
-    "expect": { "send": ["quiet", "digest", "push"], "must_include": ["1,780", "180"], "must_not": ["加油", "别着急", "！"] }
-  }
+  {"id": "c01-opportunity", "about": "降到目标价以下，窗口当天有效", "goal": {"title": "帮我盯杭州到三亚 1 月 20 日的直飞，低于 1600 告诉我", "stakes": "mid", "mandate": null}, "event": "监控发现价格降到目标价以下", "facts": {"现价": "¥1,540", "目标价": "¥1,600", "航班": "海航 HU7208，1 月 20 日 13:05 杭州萧山 T3 出发", "行李": "含 20kg 托运", "退改": "出票后 2 小时内可免费退", "数据": "海航官网，11 月 18 日 10:02 查询", "近 30 天最低": "是（海航官网）"}, "context": {"now": "2026-11-18 10:05 周三", "user_last_message": null, "stage": "building", "history": []}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["push", "urgent"], "must_include": ["1,540", "60"], "must_not": ["全网", "史低", "立省", "手慢无", "您"]}},
+  {"id": "c02-no-change", "about": "例行巡检，没有任何变化", "goal": {"title": "帮我盯杭州到三亚 1 月 20 日的直飞，低于 1600 告诉我", "stakes": "mid", "mandate": null}, "event": "每 30 分钟一次的例行巡检，价格与上次相同", "facts": {"现价": "¥1,780", "上次查询价": "¥1,780", "目标价": "¥1,600"}, "context": {"now": "2026-11-18 14:30 周三", "user_last_message": null, "stage": "building", "history": ["周日 20:00：本周最低 ¥1,780，离目标价还差 ¥180。11 月 22 日（周日）20:00 再报。"]}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["none"], "must_include": [], "must_not": []}},
+  {"id": "c03-night-small-drop", "about": "深夜发现一笔小额降价，没有时限", "goal": {"title": "这款降噪耳机降价了告诉我", "stakes": "low", "mandate": null}, "event": "耳机价格小幅下降", "facts": {"现价": "¥1,187", "昨天价格": "¥1,199", "降幅": "¥12", "有效期": "商家未标注截止时间", "数据": "京东自营，11 月 18 日 23:38 查询"}, "context": {"now": "2026-11-18 23:40 周三", "user_last_message": null, "stage": "building", "history": []}, "profile": {"address": "你", "preset": "default", "quiet_hours": "23:00–08:00", "money_min": 50}, "surface": "lock", "expect": {"send": ["none", "digest", "hold"], "must_include": [], "must_not": []}},
+  {"id": "c04-renewal-5d", "about": "自动续费前 5 天的提醒", "goal": {"title": "帮我盯着没在用的自动续费", "stakes": "mid", "mandate": null}, "event": "某音乐会员将在 5 天后自动续费，用户已 48 天没有打开", "facts": {"扣费时间": "11 月 23 日（周一）10:00", "金额": "¥15", "未使用天数": "48 天", "停掉后": "已付的这一期照常用到 11 月 23 日 10:00，之后不再扣费"}, "context": {"now": "2026-11-18 10:00 周三", "user_last_message": null, "stage": "building", "history": []}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["quiet", "push"], "must_include": ["15", "11 月 23 日"], "must_not": ["明早", "立省", "温馨提示", "您"]}},
+  {"id": "c05-payment-approval", "about": "需要付款才能办成，没有预授权", "goal": {"title": "大阪那家酒店降价了帮我重订", "stakes": "high", "mandate": null}, "event": "同房型含早降价；重订需要先付新订单，再取消旧订单", "facts": {"新价": "¥820/晚 × 3 晚 = ¥2,460", "原订单": "¥2,970", "差额": "¥510", "旧单免费取消截止": "11 月 25 日（周三）18:00", "支付方式": "尾号 4471 的信用卡", "数据": "酒店官网，11 月 18 日 16:20 查询"}, "context": {"now": "2026-11-18 16:25 周三", "user_last_message": null, "stage": "building", "history": []}, "profile": {"address": "你", "preset": "default"}, "surface": "chat", "expect": {"send": ["push", "urgent"], "must_include": ["2,460", "510"], "must_not": ["已为你支付", "已重订", "已帮你订", "全网", "最划算"]}},
+  {"id": "c06-mandate-receipt", "about": "在预授权范围内已经办完，需要回执", "goal": {"title": "北京到成都周六的直飞，900 以下直接订", "stakes": "high", "mandate": "¥900 以下直接订，有效期到 11 月 30 日"}, "event": "价格降到授权线以下，PA 已按授权出票", "facts": {"成交价": "¥860", "航班": "周六 11 月 21 日 08:10 首都 T3 → 成都天府，直飞", "免费退截止": "11 月 19 日（周四）09:00", "支付": "尾号 4471 的信用卡，已扣款"}, "context": {"now": "2026-11-18 21:10 周三", "user_last_message": null, "stage": "familiar", "history": []}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["push", "urgent"], "must_include": ["860", "09:00"], "must_not": ["要不要", "是否"]}},
+  {"id": "c07-captcha-handover", "about": "卡在只有用户能过的验证码", "goal": {"title": "帮我候补周五晚上回杭州的高铁", "stakes": "mid", "mandate": null}, "event": "提交候补时 12306 要求登录验证码，PA 无法继续", "facts": {"卡在": "12306 登录验证码", "之后": "验证通过后 PA 自动提交 G7381 次候补", "车次": "G7381，11 月 20 日（周五）18:42"}, "context": {"now": "2026-11-18 12:40 周三", "user_last_message": null, "stage": "building", "history": []}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["push", "urgent"], "must_include": ["验证"], "must_not": ["执行失败", "任务失败", "抱歉"]}},
+  {"id": "c08-delay-rushed", "about": "航班延误，用户在赶时间，需要对外发通知", "goal": {"title": "这趟出差的行程变动帮我盯着，有冲突帮我协调", "stakes": "high", "mandate": null}, "event": "航班延误 3 小时，赶不上 17:00 的客户演示；PA 已拟好顺延通知，尚未发送", "facts": {"航班": "CA1857 延误 3 小时，预计 16:20 落地", "冲突": "17:00 客户演示（线下，从机场过去约 1 小时）", "方案": "4 位参会人 19:30 均有空，顺延通知草稿已备好", "备选": "落地后在机场线上参加"}, "context": {"now": "2026-11-18 11:20 周三", "user_last_message": "快点", "stage": "familiar", "history": []}, "profile": {"address": "你", "preset": "genz", "humor_opt_in": "H3"}, "surface": "lock", "expect": {"send": ["push", "urgent"], "must_include": ["3 小时", "19:30"], "must_not": ["哎呀", "坏消息", "已发送", "已通知", "打工人", "！"]}},
+  {"id": "c09-pa-error", "about": "PA 自己算错了价格，用户还没下单", "goal": {"title": "洗衣液帮我凑个便宜的方案", "stakes": "mid", "mandate": null}, "event": "PA 20 分钟前报的到手价漏算了运费，需要更正", "facts": {"之前报的": "到手 ¥89", "正确的": "到手 ¥95", "原因": "漏算运费 ¥6", "比直接买": "少 ¥25（直接买 ¥120）", "重新比较": "京东自营、天猫超市、拼多多 3 家里，天猫超市仍然最低", "数据": "11 月 18 日 15:05 查询"}, "context": {"now": "2026-11-18 15:06 周三", "user_last_message": null, "stage": "building", "history": ["14:46：洗衣液 3 袋加 1 张券，到手 ¥89，比直接买少 ¥31。[按这个下单] [看明细]"]}, "profile": {"address": "你", "preset": "family"}, "surface": "lock", "expect": {"send": ["push"], "must_include": ["95", "6"], "must_not": ["哈哈", "非常抱歉", "敬请谅解", "全网"]}},
+  {"id": "c10-third-ignore", "about": "同一个提醒已经连续 3 次没有回应", "goal": {"title": "每天晚上提醒我做 10 分钟拉伸", "stakes": "low", "mandate": null}, "event": "拉伸的轻推连续 3 次没有被点开；连续记录靠免打卡券保着，尚未断", "facts": {"未回应次数": "3 次", "已连续": "9 天（最近 3 天用的是免打卡券）", "记录": "进度与连续记录都保留"}, "context": {"now": "2026-11-18 22:00 周三", "user_last_message": null, "stage": "building", "history": ["周日 22:00：拉伸 10 分钟，做完就满 7 天。", "周一 22:00：今天只做 3 分钟也算。", "周二 22:00：3 分钟拉伸，记录就不断。"]}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["push", "quiet", "digest"], "must_include": [], "must_not": ["没理我", "难过", "坚持就是胜利", "半途而废", "千万", "可惜"]}},
+  {"id": "c11-milestone-relaxed", "about": "轻松目标达成，用户先开了玩笑", "goal": {"title": "帮我把每周外卖钱控制在 200 以内", "stakes": "low", "mandate": null}, "event": "连续 6 周没超预算", "facts": {"连续周数": "6 周", "少花": "¥540（与设预算前 6 周的 ¥1,740 相比）", "心愿单": "机械键盘 ¥499"}, "context": {"now": "2026-11-15 20:00 周日", "user_last_message": "哈哈我居然忍住了", "stage": "familiar", "history": []}, "profile": {"address": "你", "preset": "default", "humor_opt_in": "H3"}, "surface": "chat", "expect": {"send": ["push", "quiet", "digest"], "must_include": ["540"], "must_not": ["你太棒了", "太厉害", "！！", "yyds", "绝绝子"]}},
+  {"id": "c12-elder-bill", "about": "长辈模式下的缴费提醒", "goal": {"title": "水电燃气费到期了提醒我，帮我交", "stakes": "high", "mandate": null}, "event": "本月电费账单已出，尚未缴纳", "facts": {"金额": "132 元", "缴费截止": "12 月 5 日", "支付方式": "尾号 3306 的储蓄卡"}, "context": {"now": "2026-11-18 09:30 周三", "user_last_message": null, "stage": "building", "history": []}, "profile": {"address": "您", "preset": "elder"}, "surface": "chat", "expect": {"send": ["push"], "must_include": ["132", "您"], "must_not": ["你", "戳", "秒办", "仅剩", "～", "！"]}},
+  {"id": "c13-monitor-broken", "about": "监控的数据源断了，自动重试已失败", "goal": {"title": "帮我盯着这款扫地机的价格", "stakes": "low", "mandate": null}, "event": "比价数据源连续 2 小时无法访问，自动重试 3 次失败", "facts": {"中断时长": "2 小时", "重试": "3 次，均失败", "影响": "这段时间的价格变化没有记录", "可选": "换成另一个数据源（只覆盖京东和天猫）"}, "context": {"now": "2026-11-18 16:00 周三", "user_last_message": null, "stage": "building", "history": []}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["push", "quiet"], "must_include": ["2 小时"], "must_not": ["开小差", "稍后再试", "非常抱歉"]}},
+  {"id": "c14-scheduled", "about": "用户亲口约好的定时提醒，内容和上个月一样", "goal": {"title": "每月 15 号 12 点提醒我给咪咪做外驱", "stakes": "low", "mandate": null}, "event": "到了约定的时间", "facts": {"约定": "每月 15 日 12:00", "事项": "给咪咪做体外驱虫"}, "context": {"now": "2026-11-15 12:00 周日", "user_last_message": null, "stage": "familiar", "history": ["10 月 15 日 12:00：该给咪咪做外驱了。"]}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["push"], "must_include": ["咪咪"], "must_not": ["温馨提示"]}},
+  {"id": "c15-missing-baseline", "about": "只查了一个平台，缺少比较基准", "goal": {"title": "猫砂帮我看看哪里买划算", "stakes": "mid", "mandate": null}, "event": "在一个平台上算出了凑单方案；其他平台的数据没有取到", "facts": {"平台": "天猫超市", "方案": "4 袋叠 1 张券，到手 ¥156，合 ¥39/袋", "其他平台": "京东、拼多多的价格接口本次没有返回", "数据": "11 月 18 日 19:40 查询"}, "context": {"now": "2026-11-18 19:42 周三", "user_last_message": null, "stage": "building", "history": []}, "profile": {"address": "你", "preset": "family"}, "surface": "lock", "expect": {"send": ["hold", "digest", "quiet", "push"], "must_include": ["156"], "must_not": ["最低", "最划算", "最便宜", "全网", "宝妈"]}},
+  {"id": "c16-user-quits", "about": "用户明确说不要了", "goal": {"title": "每天晚上提醒我夜跑", "stakes": "low", "mandate": null}, "event": "用户刚发来消息要求停止", "facts": {"已连续": "9 天", "记录": "保留"}, "context": {"now": "2026-11-18 20:10 周三", "user_last_message": "别提醒我夜跑了", "stage": "building", "history": []}, "profile": {"address": "你", "preset": "default"}, "surface": "chat", "expect": {"send": ["push", "quiet"], "must_include": [], "must_not": ["真的", "确定", "可惜", "再考虑", "坚持", "？"]}},
+  {"id": "c17-duplicate", "about": "同一个事实两小时前已经通知过", "goal": {"title": "帮我盯杭州到三亚 1 月 20 日的直飞，低于 1600 告诉我", "stakes": "mid", "mandate": null}, "event": "再次巡检，价格仍是两小时前已通知过的那个价", "facts": {"现价": "¥1,540", "目标价": "¥1,600", "上次通知": "10:05，同一价格"}, "context": {"now": "2026-11-18 12:05 周三", "user_last_message": null, "stage": "building", "history": ["10:05：直飞降到 ¥1,540，比你的目标价低 ¥60。海航 1 月 20 日 13:05，含 20kg 托运。[订这班] [再等等]"]}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["none"], "must_include": [], "must_not": []}},
+  {"id": "c18-weekly-report", "about": "约好的每周行情汇报，没有需要用户做的事", "goal": {"title": "帮我盯杭州到三亚 1 月 20 日的直飞，低于 1600 告诉我", "stakes": "mid", "mandate": null}, "event": "到了约定的每周日 20:00 汇报时间；本周没有触达目标价", "facts": {"本周最低": "¥1,780", "目标价": "¥1,600", "差额": "¥180", "比上周": "低 ¥90", "下次汇报": "11 月 22 日（周日）20:00"}, "context": {"now": "2026-11-15 20:00 周日", "user_last_message": null, "stage": "building", "history": []}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["quiet", "digest", "push"], "must_include": ["1,780", "180"], "must_not": ["加油", "别着急", "！"]}},
+  {"id": "h01-ticket-window", "about": "回流票出现，平台只保留 15 分钟，要付款", "held_out": true, "type": "approval", "goal": {"title": "周杰伦上海站有回流票帮我抢，680 那档两张", "stakes": "high", "mandate": null}, "event": "监控到 2 张 ¥680 档的回流票，平台为当前会话保留 15 分钟", "facts": {"档位": "¥680 × 2 张 = ¥1,360", "场次": "12 月 12 日（周六）19:30 上海体育场", "保留到": "今天 20:27", "支付方式": "尾号 4471 的信用卡", "退票": "平台规则：开演前 48 小时以上可退，收 20% 手续费", "数据": "票务平台，20:12 查询"}, "context": {"now": "2026-11-18 20:12 周三", "user_last_message": null, "stage": "building", "history": []}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["urgent"], "must_include": ["1,360", "20:27"], "must_not": ["已为你支付", "已下单", "已帮你抢到", "手慢无", "最后机会", "！"]}},
+  {"id": "h02-rate-no-change", "about": "例行巡检，汇率没变", "held_out": true, "type": "progress", "goal": {"title": "日元汇率跌破 4.6 告诉我", "stakes": "low", "mandate": null}, "event": "每小时一次的例行巡检，汇率与上次相同", "facts": {"现在": "100 日元 = ¥4.71", "上次": "100 日元 = ¥4.71", "目标": "4.60"}, "context": {"now": "2026-11-18 15:00 周三", "user_last_message": null, "stage": "building", "history": ["周一 09:00：日元 100 = ¥4.71，离你的线还差 0.11。跌破 4.60 马上告诉你，每周一 09:00 报一次。"]}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["none"], "must_include": [], "must_not": []}},
+  {"id": "h03-small-drop-daytime", "about": "白天的一笔小额降价，低于用户设的门槛", "held_out": true, "type": "opportunity", "goal": {"title": "这款空气炸锅降价了告诉我", "stakes": "low", "mandate": null}, "event": "价格小幅下降", "facts": {"现价": "¥389", "之前": "¥399", "降幅": "¥10", "有效期": "商家未标注截止时间", "数据": "天猫，11 月 18 日 14:20 查询"}, "context": {"now": "2026-11-18 14:22 周三", "user_last_message": null, "stage": "building", "history": []}, "profile": {"address": "你", "preset": "default", "money_min": 30}, "surface": "lock", "expect": {"send": ["none", "digest"], "must_include": [], "must_not": []}},
+  {"id": "h04-insurance-far", "about": "车险 12 天后到期，三家报价取齐了", "held_out": true, "type": "opportunity", "goal": {"title": "车险到期前帮我比价续保", "stakes": "high", "mandate": null}, "event": "同一保障方案的 3 家报价已取齐", "facts": {"到期": "11 月 30 日（周一）", "报价": "平安 ¥2,980、太保 ¥3,050、人保 ¥3,120（同一保障方案）", "去年": "人保 ¥3,260", "数据": "3 家官方渠道，11 月 18 日 15:30 查询", "报价有效期": "各家均为 7 天"}, "context": {"now": "2026-11-18 15:35 周三", "user_last_message": null, "stage": "building", "history": []}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["quiet", "digest", "push"], "must_include": ["2,980", "11 月 30 日"], "must_not": ["全网", "最划算", "已为你", "立省", "！"]}},
+  {"id": "h05-locker-fee", "about": "快递柜 2 小时后开始收超时费，金额很小", "held_out": true, "type": "deadline", "goal": {"title": "快递到了提醒我取", "stakes": "low", "mandate": null}, "event": "包裹离免费取件截止还有 2 小时", "facts": {"位置": "小区东门快递柜", "免费截止": "今天 22:00", "超时": "之后每 12 小时收 ¥1"}, "context": {"now": "2026-11-18 20:00 周三", "user_last_message": null, "stage": "building", "history": ["周二 21:50：快递到小区东门快递柜了，周三 22:00 前免费取。[看取件码]"]}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["quiet", "push"], "must_include": ["22:00"], "must_not": ["赶紧", "千万", "！", "温馨提示"]}},
+  {"id": "h06-train-approval", "about": "候补成功已占座，付款要用户确认", "held_out": true, "type": "approval", "goal": {"title": "帮我订周五晚上回杭州的高铁，二等座", "stakes": "high", "mandate": null}, "event": "候补成功，系统已占座，需要在保留时间内付款", "facts": {"车次": "G7381，11 月 20 日（周五）18:42 上海虹桥 → 杭州东", "座位": "二等座 07 车 12F", "票价": "¥73", "占座保留到": "今天 13:25", "支付方式": "尾号 4471 的信用卡", "退票": "按 12306 规则收手续费"}, "context": {"now": "2026-11-18 12:55 周三", "user_last_message": null, "stage": "building", "history": []}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["urgent", "push"], "must_include": ["73", "13:25"], "must_not": ["已支付", "已出票", "已为你订好", "手慢无"]}},
+  {"id": "h07-mandate-topup", "about": "按授权自动充了话费，这笔不能退", "held_out": true, "type": "done", "goal": {"title": "话费低于 20 自动帮我充 50", "stakes": "mid", "mandate": "余额低于 ¥20 自动充 ¥50，每月最多 2 次"}, "event": "余额降到 ¥18.6，PA 已按授权充值 ¥50", "facts": {"充值": "¥50，已到账", "现在余额": "¥68.6", "支付": "尾号 4471 的信用卡，已扣 ¥50", "本月": "第 1 次自动充值", "能否撤销": "话费充值不能退"}, "context": {"now": "2026-11-18 16:40 周三", "user_last_message": null, "stage": "familiar", "history": []}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["quiet", "push", "digest"], "must_include": ["50"], "must_not": ["要不要", "是否", "请确认"]}},
+  {"id": "h08-visa-photo", "about": "签证照片被退回，要用户重拍", "held_out": true, "type": "blocked", "goal": {"title": "帮我办日本签证，材料齐了提醒我", "stakes": "high", "mandate": null}, "event": "签证中心退回了照片", "facts": {"原因": "背景不是纯白", "需要": "重拍 1 张白底证件照并上传", "最晚": "11 月 24 日（周二）前上传；晚了，11 月 26 日（周四）的送签预约要改期", "其他材料": "都已通过"}, "context": {"now": "2026-11-18 10:30 周三", "user_last_message": null, "stage": "building", "history": []}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["push", "quiet"], "must_include": ["11 月 24 日"], "must_not": ["抱歉", "很遗憾", "务必", "！"]}},
+  {"id": "h09-pa-error-date", "about": "PA 把家长会的日期说错了，日历也记错了", "held_out": true, "type": "correction", "goal": {"title": "孩子学校的通知帮我盯着", "stakes": "mid", "mandate": null}, "event": "PA 昨天把家长会的日期报错了，需要更正", "facts": {"之前说的": "11 月 19 日（周四）18:30", "正确的": "11 月 20 日（周五）18:30", "地点": "三年级 2 班教室", "日历": "已改到周五；周四 18:30 的占位已删"}, "context": {"now": "2026-11-18 09:10 周三", "user_last_message": null, "stage": "building", "history": ["周二 17:05：家长会在 11 月 19 日（周四）18:30，三年级 2 班教室。已放进日历。"]}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["push"], "must_include": ["11 月 20 日", "18:30"], "must_not": ["哈哈", "非常抱歉", "敬请谅解", "！"]}},
+  {"id": "h10-said-brief", "about": "用户上周说过太啰嗦，这次是每周小结", "held_out": true, "type": "digest", "goal": {"title": "每周日晚上给我一份省钱小结", "stakes": "low", "mandate": null}, "event": "到了每周小结的时间", "facts": {"本周省钱": "¥146（3 笔，都已成交）", "最大一笔": "洗衣液凑单省 ¥62", "省时间": "约 40 分钟（估算）", "本周消息数": "5 条", "待办": "无"}, "context": {"now": "2026-11-22 20:00 周日", "user_last_message": null, "stage": "familiar", "history": []}, "profile": {"address": "你", "preset": "default", "said": "11 月 16 日：「太啰嗦了，以后简短点」"}, "surface": "lock", "expect": {"send": ["quiet", "digest", "push"], "must_include": ["146"], "must_not": ["加油", "继续保持", "！", "温馨提示", "太棒"]}},
+  {"id": "h11-monitor-broken-near", "about": "抢票监控断了，离开售不到 3 小时", "held_out": true, "type": "blocked", "goal": {"title": "周五 10:00 开售的演唱会门票帮我抢", "stakes": "high", "mandate": null}, "event": "票务平台接口从 07:05 起无法访问，自动重试 3 次失败", "facts": {"开售": "11 月 20 日（周五）10:00", "中断": "07:05 起，已 40 分钟", "重试": "3 次，均失败", "影响": "到 10:00 还没恢复的话，PA 抢不了", "可选": "用户自己在平台 App 里蹲守；PA 继续重试，恢复了马上说"}, "context": {"now": "2026-11-20 07:45 周五", "user_last_message": null, "stage": "building", "history": []}, "profile": {"address": "你", "preset": "default"}, "surface": "lock", "expect": {"send": ["push", "urgent"], "must_include": ["10:00"], "must_not": ["开小差", "稍后再试", "非常抱歉", "放心", "！"]}},
+  {"id": "h12-elder-medicine", "about": "长辈模式：药快吃完了，买药要确认付款", "held_out": true, "type": "approval", "goal": {"title": "降压药快吃完了帮我买", "stakes": "high", "mandate": null}, "event": "药还剩 5 天的量，常买的那种有货", "facts": {"药": "常买的那种降压药 2 盒", "金额": "96 元", "支付": "医保卡", "送达": "11 月 19 日（周四）送到"}, "context": {"now": "2026-11-18 10:00 周三", "user_last_message": null, "stage": "building", "history": []}, "profile": {"address": "您", "preset": "elder"}, "surface": "chat", "expect": {"send": ["push"], "must_include": ["96", "您"], "must_not": ["你", "戳", "秒办", "仅剩", "～", "！", "已为您下单", "已下单"]}}
 ]

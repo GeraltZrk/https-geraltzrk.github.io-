@@ -90,7 +90,7 @@
             "urgent",
             "live"
           ],
-          "description": "none=不发（合法输出）；digest=进周期小结；hold=安静时段后再发；quiet=轻提示不响铃；push=标准推送；urgent=时效推送，仅限 1 小时内会错过；live=更新实况窗"
+          "description": "none=不发（合法输出）；digest=进周期小结；hold=结论缺关键依据或在安静时段，补齐或到点后再发；quiet=轻提示不响铃；push=标准推送；urgent=时效推送，仅限正在发生或 1 小时内会错过；live=更新实况窗"
         },
         "handling": {
           "type": "string",
@@ -189,7 +189,7 @@
             "H2",
             "H3"
           ],
-          "description": "幽默，默认 H0；stakes=high、坏消息、PA 出错、冷启动、长辈模式一律 H0"
+          "description": "幽默，默认 H1；stakes=high、坏消息、PA 出错一律 H0；冷启动、长辈模式不开玩笑（H1 封顶）"
         },
         "V": {
           "type": "string",
@@ -281,7 +281,7 @@
     },
     "actions": {
       "type": "array",
-      "description": "0–3 个，恰好 1 个 primary。标签写「动词 + 对象」，约 6 个字；拒绝项用中性说法",
+      "description": "0–3 个；有按钮时恰好 1 个 primary。标签写「动词 + 对象」，两个时约 6 个字、三个时约 4 个字；拒绝项用中性说法",
       "items": {
         "type": "object",
         "additionalProperties": false,

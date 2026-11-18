@@ -995,6 +995,24 @@
       return '<div class="split-row"><span>' + esc(label) + '</span><div class="split-bar" role="img" aria-label="' + esc(label) + '：带 Skill ' + t.skill + '，差不多 ' + t.tie + '，不带 Skill ' + t.baseline + '">' +
         seg('s', t.skill, '带 Skill') + seg('t', t.tie, '差不多') + seg('b', t.baseline, '不带 Skill') + '</div><b class="num">' + t.skill + ' : ' + t.baseline + '</b></div>';
     }
+    var ORD = ['第一轮', '第二轮', '第三轮', '第四轮', '第五轮'];
+    // 一批用例第一次是拿来测哪一版规范的：这一轮才出的叫「全新」，其余按它最早出现的轮次叫
+    function batchLabel(added, R) {
+      if ('v' + added === R.id) return '全新';
+      var k = -1;
+      E.rounds.forEach(function (r, i) { if (r.id === 'v' + added) k = i; });
+      return (ORD[k] || added) + (k === 0 ? '的' : '加的');
+    }
+    function groupRows(S, R) {
+      if (S.groups) return S.groups.slice().reverse().map(function (g) { return split(g.tally, batchLabel(g.added, R) + ' ' + g.n_cases + ' 条'); }).join('');
+      if (S.held_out) return split(S.held_out.tally, '新的 ' + S.held_out.n_cases + ' 条') + split(S.seen.tally, '旧的 ' + S.seen.n_cases + ' 条');
+      return '';
+    }
+    function reasonList(rs, lead) {
+      return rs.length ? '<b style="color:var(--ink)">' + lead + '</b><ul class="bullets" style="margin-top:.4rem">' + rs.map(function (r) {
+        return '<li>' + esc(JUDGE[r.judge - 1] || '') + '选了<b style="color:var(--ink)">' + ({ skill: '带 Skill 的', baseline: '不带 Skill 的', tie: '差不多' }[r.winner]) + '</b>：' + esc(r.reason) + '</li>';
+      }).join('') + '</ul>' : '';
+    }
     function outCard(o, c) {
       var box = el('div', { class: 'stack', style: 'gap:.6rem' });
       if (!o) { box.appendChild(el('div', { class: 'callout', text: '这一遍没有这个情境的输出。' })); return box; }
@@ -1026,19 +1044,23 @@
       bBox.appendChild(outCard(c.outputs['baseline-' + st.run], c));
       sBox.appendChild(outCard(c.outputs['skill-' + st.run], c));
       var rs = (c.reasons || []).filter(function (r) { return String(r.run) === st.run; });
-      votes.innerHTML = rs.length ? '<b style="color:var(--ink)">三位评审怎么看这一对：</b><ul class="bullets" style="margin-top:.4rem">' + rs.map(function (r) {
-        return '<li>' + esc(JUDGE[r.judge - 1] || '') + '选了<b style="color:var(--ink)">' + ({ skill: '带 Skill 的', baseline: '不带 Skill 的', tie: '差不多' }[r.winner]) + '</b>：' + esc(r.reason) + '</li>';
-      }).join('') + '</ul>' : '';
+      var ls = ((c.lock && c.lock.reasons) || []).filter(function (r) { return String(r.run) === st.run; });
+      votes.innerHTML = reasonList(rs, '三位评审怎么看这一对（看到的是完整文字）：') +
+        (ls.length ? '<div style="margin-top:.9rem">' + reasonList(ls, '另外三位只看得到显示出来的部分（划掉的字他们看不到）：') + '</div>' : '');
     }
     function renderRound() {
       var R = E.rounds[st.r], total = count(R.tally);
       if (sum) {
         sum.innerHTML = '<figure class="bars"><figcaption>' + esc(R.label) + '：' + total + ' 次盲评里，评审选了哪一边</figcaption>' +
-          split(R.tally, '合计') +
-          (R.held_out ? split(R.held_out.tally, '新用例 ' + R.held_out.n_cases + ' 条') + split(R.seen.tally, '旧用例 ' + R.seen.n_cases + ' 条') : '') +
+          split(R.tally, '合计') + groupRows(R, R) +
           (R.perJudge || []).map(function (j) { return split(j, JUDGE[j.judge - 1] || ('评审 ' + j.judge)); }).join('') +
           '<div class="split-legend"><span class="s">带 Skill</span><span class="t">差不多</span><span class="b">不带 Skill</span><span>右侧是「带 : 不带」的胜场比</span></div>' +
-          (R.note ? '<p class="note">' + esc(R.note) + '</p>' : '') + '</figure>';
+          (R.note ? '<p class="note">' + esc(R.note) + '</p>' : '') + '</figure>' +
+          (R.lock ? '<figure class="bars" style="margin-top:1.2rem"><figcaption>同一批输出，换三位评审，只给他们看这个位置上显示得出来的部分：' + count(R.lock.tally) + ' 次盲评</figcaption>' +
+            split(R.lock.tally, '合计') + groupRows(R.lock, R) +
+            (R.lock.perJudge || []).map(function (j) { return split(j, JUDGE[j.judge - 1] || ('评审 ' + j.judge)); }).join('') +
+            '<p class="note">锁屏按标题 20、正文 50 个字宽截断，按钮不显示；对话按 24 和 120 截断。' +
+            (R.lock.cut ? '两边各 ' + R.lock.cut.total + ' 条输出里，显示不全的：带 Skill ' + R.lock.cut.skill + ' 条，不带 Skill ' + R.lock.cut.baseline + ' 条。' : '') + '</p></figure>' : '');
       }
       if (ck && R.checks) {
         var cs = R.checks.skill, cb = R.checks.baseline;
@@ -1067,7 +1089,7 @@
         sel.innerHTML = '';
         R.cases.forEach(function (c, i) {
           var v = c.votes || {};
-          sel.appendChild(el('option', { value: String(i), text: c.id.replace(/^[a-z](\d+)-.*/, '$1') + ' · ' + c.about + '（' + (v.skill || 0) + ' : ' + (v.baseline || 0) + (c.held_out ? '，新用例' : '') + '）' }));
+          sel.appendChild(el('option', { value: String(i), text: c.id.split('-')[0] + ' · ' + c.about + '（' + (v.skill || 0) + ' : ' + (v.baseline || 0) + (c.held_out ? '，新用例' : '') + '）' }));
         });
         if (st.i >= R.cases.length) st.i = 0;
         sel.value = String(st.i);
@@ -1223,6 +1245,8 @@
       evidence: ev.length, verified: by.fetch + by.local, search: by.search, memory: by.memory,
       lexicon: (D.lexicon || []).length, scenarios: (D.scenarios || []).length, messages: msgs,
       skillFiles: Object.keys(SK).length,
+      evalRounds: ((D.eval || {}).rounds || []).length,
+      evalCases: (function () { var r = ((D.eval || {}).rounds || []).slice(-1)[0]; return r ? r.n_cases : 0; })(),
       cited: (D.meta || {}).cited, citedVerified: (D.meta || {}).citedVerified, citedSearch: (D.meta || {}).citedSearch
     };
     $$('[data-stat]').forEach(function (n) { var k = n.getAttribute('data-stat'); if (stat[k] !== undefined && stat[k] !== 0) n.textContent = String(stat[k]); });

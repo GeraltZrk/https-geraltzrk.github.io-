@@ -168,6 +168,10 @@
         if (best === undefined) return [mk('ANCHOR', 'warn', 'title', null, '整条消息里找不到一个数字或状态词，扫一眼不知道发生了什么', '第一行写清「到了哪一步、值多少」')];
         if (best > ctx.anchorWithin) return [mk('ANCHOR', 'warn', 'title', null, '第一个有用的信息出现在第 ' + Math.floor(best + 1) + ' 字，前 ' + ctx.anchorWithin + ' 字都在铺垫', '把金额、时间或状态挪到最前面')];
         if (best > ctx.anchorIdeal) return [mk('ANCHOR', 'info', 'title', null, '第一个数字或状态出现在第 ' + Math.floor(best + 1) + ' 字，还能再靠前', '最紧的容器只露前 ' + ctx.anchorIdeal + ' 个字')];
+        // 机会提醒：标题有数、有余量，却没说跟什么比。预算是上限，不是越短越好。
+        if (ctx.typeId === 'opportunity' && m.title && RX.value.test(m.title) && !RX.baseline.test(m.title) && visualLen(m.title) <= ctx.surface.title - 4) {
+          return [mk('ANCHOR', 'info', 'title', null, '标题给了数，没说跟什么比，而且还有余量', '把跟用户的标准比差多少写进标题，例如「…，比目标低 ¥40」')];
+        }
         return [];
       }
     },

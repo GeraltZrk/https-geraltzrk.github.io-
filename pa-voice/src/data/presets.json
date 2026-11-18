@@ -1,125 +1,125 @@
 {
-  "hero": {
-    "options": {
-      "type": "deadline",
-      "stakes": "mid",
-      "surface": "lock",
-      "subject": [
-        "视频会员"
-      ]
-    },
-    "before": {
-      "title": "",
-      "body": "尊敬的用户您好，小助手检测到您的某视频会员将在明天自动续费 30 元，您最近一个月都没有打开过它，请问您需要我去帮您取消自动续费吗？",
-      "actions": []
-    },
-    "after": {
-      "title": "视频会员 11 月 23 日续费 ¥30",
-      "body": "08:00 自动扣。你 35 天没打开了；现在停，本期照常看到 23 日。",
-      "actions": [
-        "停掉续费",
-        "继续订"
-      ]
-    }
+ "hero": {
+  "options": {
+   "type": "deadline",
+   "stakes": "mid",
+   "surface": "lock",
+   "subject": [
+    "视频会员"
+   ]
   },
-  "surfaceDemo": {
-    "title": "东京直飞降到 ¥2,360",
-    "body": "比你的目标价低 ¥40。东航 5 月 1 日 09:20，含 23kg 托运；出票后 24 小时内可免费退。",
-    "actions": [
-      "订这班",
-      "再等等"
-    ]
+  "before": {
+   "title": "",
+   "body": "尊敬的用户您好，小助手检测到您的某视频会员将在明天自动续费 30 元，您最近一个月都没有打开过它，请问您需要我去帮您取消自动续费吗？",
+   "actions": []
   },
-  "linter": [
-    {
-      "name": "续费提醒 · 客服腔",
-      "type": "deadline",
-      "stakes": "mid",
-      "surface": "lock",
-      "title": "",
-      "body": "尊敬的用户您好，小助手检测到您的某视频会员将在明天自动续费 30 元，您最近一个月都没有打开过它，请问您需要我去帮您取消自动续费吗？",
-      "actions": [],
-      "subject": "视频会员"
-    },
-    {
-      "name": "续费提醒 · 改后",
-      "type": "deadline",
-      "stakes": "mid",
-      "surface": "lock",
-      "title": "视频会员 11 月 23 日续费 ¥30",
-      "body": "08:00 自动扣。你 35 天没打开了；现在停，本期照常看到 23 日。",
-      "actions": [
-        "停掉续费",
-        "继续订"
-      ],
-      "subject": "视频会员"
-    },
-    {
-      "name": "凑单 · 过度热情",
-      "type": "approval",
-      "stakes": "mid",
-      "surface": "lock",
-      "title": "",
-      "body": "太棒啦！我帮您算过了，如果您把购物车里的猫粮拆成两单，再去领一张品类券和跨店满减，总共可以比直接买便宜 86 块 5 毛钱哦！",
-      "actions": [],
-      "subject": "猫粮"
-    },
-    {
-      "name": "凑单 · 基础稿的「黄金话术」",
-      "type": "approval",
-      "stakes": "mid",
-      "surface": "lock",
-      "title": "已凑出最低价 · 多省 ¥86.5",
-      "body": "猫粮拆两单并叠加隐藏券，到手 ¥249（全网史低）。",
-      "actions": [
-        "按此方案锁单",
-        "看算账明细"
-      ],
-      "subject": "猫粮"
-    },
-    {
-      "name": "航班延误 · 渲染焦虑",
-      "type": "blocked",
-      "stakes": "high",
-      "surface": "lock",
-      "title": "",
-      "body": "哎呀，坏消息！您乘坐的航班延误了 2 小时，这可能会导致您赶不上下午 3 点的评审会了，您看要不要给参会人发个消息改一下时间？",
-      "actions": []
-    },
-    {
-      "name": "航班延误 · 改后",
-      "type": "approval",
-      "stakes": "high",
-      "surface": "lock",
-      "title": "航班延误 2 小时，赶不上 15:00 的会",
-      "body": "参会 6 人 17:00 都有空，顺延通知已写好。不发的话，会议按原时间开。",
-      "actions": [
-        "发顺延通知",
-        "改成线上参加"
-      ],
-      "subject": "航班"
-    },
-    {
-      "name": "打卡 · 说教",
-      "type": "nudge",
-      "stakes": "low",
-      "surface": "lock",
-      "title": "",
-      "body": "今天还没有背单词哦！距离今日目标结束只剩 1 小时了，坚持就是胜利，千万不要半途而废呀，快点开始吧！",
-      "actions": []
-    },
-    {
-      "name": "打卡 · 改后",
-      "type": "nudge",
-      "stakes": "low",
-      "surface": "lock",
-      "title": "今天背 5 个词，14 天就不断",
-      "body": "会多不想背也行，用一张免打卡券，记录照样在。",
-      "actions": [
-        "背 5 个",
-        "用免打卡券"
-      ],
-      "subject": "背"
-    }
+  "after": {
+   "title": "视频会员 11 月 23 日续费 ¥30",
+   "body": "08:00 自动扣。你 35 天没打开了；现在停就不再扣，本期照常看到 23 日。",
+   "actions": [
+    "停掉续费",
+    "继续订"
+   ]
+  }
+ },
+ "surfaceDemo": {
+  "title": "东京直飞 ¥2,360，比目标低 ¥40",
+  "body": "东航 MU523，5 月 1 日 09:20，含 23kg 托运；出票后 24 小时内可免费退。",
+  "actions": [
+   "订这班",
+   "再等等"
   ]
+ },
+ "linter": [
+  {
+   "name": "续费提醒 · 客服腔",
+   "type": "deadline",
+   "stakes": "mid",
+   "surface": "lock",
+   "title": "",
+   "body": "尊敬的用户您好，小助手检测到您的某视频会员将在明天自动续费 30 元，您最近一个月都没有打开过它，请问您需要我去帮您取消自动续费吗？",
+   "actions": [],
+   "subject": "视频会员"
+  },
+  {
+   "name": "续费提醒 · 改后",
+   "type": "deadline",
+   "stakes": "mid",
+   "surface": "lock",
+   "title": "视频会员 11 月 23 日续费 ¥30",
+   "body": "08:00 自动扣。你 35 天没打开了；现在停就不再扣，本期照常看到 23 日。",
+   "actions": [
+    "停掉续费",
+    "继续订"
+   ],
+   "subject": "视频会员"
+  },
+  {
+   "name": "凑单 · 过度热情",
+   "type": "approval",
+   "stakes": "mid",
+   "surface": "lock",
+   "title": "",
+   "body": "太棒啦！我帮您算过了，如果您把购物车里的猫粮拆成两单，再去领一张品类券和跨店满减，总共可以比直接买便宜 86 块 5 毛钱哦！",
+   "actions": [],
+   "subject": "猫粮"
+  },
+  {
+   "name": "凑单 · 基础稿的「黄金话术」",
+   "type": "approval",
+   "stakes": "mid",
+   "surface": "lock",
+   "title": "已凑出最低价 · 多省 ¥86.5",
+   "body": "猫粮拆两单并叠加隐藏券，到手 ¥249（全网史低）。",
+   "actions": [
+    "按此方案锁单",
+    "看算账明细"
+   ],
+   "subject": "猫粮"
+  },
+  {
+   "name": "航班延误 · 渲染焦虑",
+   "type": "blocked",
+   "stakes": "high",
+   "surface": "lock",
+   "title": "",
+   "body": "哎呀，坏消息！您乘坐的航班延误了 2 小时，这可能会导致您赶不上下午 3 点的评审会了，您看要不要给参会人发个消息改一下时间？",
+   "actions": []
+  },
+  {
+   "name": "航班延误 · 改后",
+   "type": "approval",
+   "stakes": "high",
+   "surface": "lock",
+   "title": "航班延误 2 小时，赶不上 15:00 的会",
+   "body": "参会 6 人 17:00 都有空，顺延通知已写好。不发的话，会议按原时间开。",
+   "actions": [
+    "发顺延通知",
+    "改成线上参加"
+   ],
+   "subject": "航班"
+  },
+  {
+   "name": "打卡 · 说教",
+   "type": "nudge",
+   "stakes": "low",
+   "surface": "lock",
+   "title": "",
+   "body": "今天还没有背单词哦！距离今日目标结束只剩 1 小时了，坚持就是胜利，千万不要半途而废呀，快点开始吧！",
+   "actions": []
+  },
+  {
+   "name": "打卡 · 改后",
+   "type": "nudge",
+   "stakes": "low",
+   "surface": "lock",
+   "title": "今天背 5 个词，14 天就不断",
+   "body": "会多不想背也行，用一张免打卡券，记录照样在。",
+   "actions": [
+    "背 5 个",
+    "用免打卡券"
+   ],
+   "subject": "背"
+  }
+ ]
 }

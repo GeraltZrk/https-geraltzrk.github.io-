@@ -1,0 +1,850 @@
+{
+ "track": "T6 幽默：理论、对话式 AI 中的实证、中文幽默文化与翻车案例",
+ "headline_insights": [
+  "默认不开玩笑不扣分，开错必扣分：8 个实验显示成功的幽默抬高地位，不得体又不好笑的玩笑经「低能力」信号拉低地位（Bitterly 等 2017）；中国受试者更把幽默看作专业人士的特质（Yue 等 2016）。PA 的默认档应是「有人味、不带笑点」。",
+  "靶子比笑点重要：只对琐事与情境、以及 PA 自己已修好的小错开玩笑；AI 自贬式幽默在 4 个实验（N=1919）里最能换来宽恕（Xie 等 2025），但另有研究显示自嘲让顾客不适、降低宽恕与回访，证据方向不一。",
+  "失败、受阻、扣款确认、截止前催办四类节点幽默恒为零：幽默只有被觉得好笑才算补救（Kobel & Groeppel-Klein 2021）；OpenAI GPT-5.1 官方提示词指南写明高风险时连一句寒暄都省掉（已核对原文）。",
+  "别让大模型自由发挥中文梗：ChatGPT 的 1008 个笑话里 90% 以上是同样 25 个；10 个大模型在弱智吧幽默理解上「仅略高于随机、远低于人类」；但大模型很擅长去掉笑点。三条都已对照 ACL Anthology 摘要核实，流程应是先写平实版、再有条件加一笔。",
+  "没有语调的文本里反讽是高危动作：作者自认的讽刺与读者读出的讽刺本就对不上（iSarcasm，ACL 2020，已核）；经典实验里发件人以为 78% 能被读懂、实际约 56%（Kruger 等 2005，数字凭记忆待核）。",
+  "中国的规则把毒舌和谄媚两头都封了：2026-07-15 施行的《人工智能拟人化互动服务管理暂行办法》同时禁止「语言暴力」与「过度迎合用户」；生成式 AI 办法点名 8 类身份歧视；广告法绝对化用语罚 20 万–100 万元。「全网史低」应改成带范围和口径的写法。",
+  "三大高危机制是谐音梗、热梗、调侃用户；安全机制是具象换算、克制的夸张、对琐事吐槽、轻自嘲、接用户先抛的梗。主流中文设计规范（Ant Design 文案规范）全文没有幽默条款，这套规则需要自建。",
+  "幽默会磨损，要当限量预算管：Duolingo 专门为通知文案的新鲜度衰减建模，换来的也只是 DAU +0.5%；「我会稳稳地接住你」被群嘲的原因是复读而不是冷；Mailchimp 的原话是「拿不准就板着脸」。"
+ ],
+ "findings": [
+  {
+   "id": "T6-01",
+   "claim": "好笑＝同时被看成「违背」和「良性」；另有规范可依、不太在意该规范、心理距离远，任一成立可让违背变良性。",
+   "evidence_type": "实证研究",
+   "source_title": "McGraw & Warren (2010) Benign Violations: Making Immoral Behavior Funny, Psychological Science 21(8)",
+   "source_url": "https://journals.sagepub.com/doi/abs/10.1177/0956797610376073",
+   "year": "2010",
+   "key_data": "5 个实验；摘要列出三条件：alternative norm、weak commitment、psychological distance",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "正在发生的损失没有距离，不开玩笑；玩笑只碰用户不在意的琐事，或在用户授权之后。",
+   "caveat": "仅 WebSearch 摘要核对，原页因网络白名单未能打开。实验材料是道德违背情境，英文样本，不是产品文案。距离与严重度的交互（McGraw 等 2012）为未核背景知识。"
+  },
+  {
+   "id": "T6-02",
+   "claim": "成功的幽默经「自信+能力」抬高地位；不得体又不好笑的玩笑显得能力低，地位下降。",
+   "evidence_type": "实证研究",
+   "source_title": "Bitterly, Brooks & Schweitzer (2017) Risky Business: When Humor Increases and Decreases Status, JPSP 112(3)",
+   "source_url": "https://faculty.wharton.upenn.edu/wp-content/uploads/2017/03/2016-54537-001.pdf",
+   "year": "2017",
+   "key_data": "8 个实验；讲笑话无论成败都显自信，不得体的笑话显低能力；作者称幽默是有风险的行为",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "用户买的是能力感。默认不开玩笑，开就要稳；失误后不靠抖机灵挽回。",
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到，效应量未核，摘要也没写样本是不是美国人。情境是职场人际，对象是人不是 AI。",
+   "check_override": "abstract"
+  },
+  {
+   "id": "T6-03",
+   "claim": "香港华人大学生更倾向认为幽默是喜剧演员等专业人士的特质，加拿大大学生期待普通人也幽默。",
+   "evidence_type": "实证研究",
+   "source_title": "Yue, Jiang, Lu & Hiranandani (2016) To Be or Not To Be Humorous? Cross Cultural Perspectives on Humor, Frontiers in Psychology 7:1495",
+   "source_url": "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2016.01495/full",
+   "year": "2016",
+   "key_data": "研究1：96 名香港大学生，文化启动改变对幽默的评价；研究2a：加拿大与香港华人本科生各 121 人，加拿大人更看重幽默；研究2b：加拿大人提名亲友的占 47.09%，香港华人占 14.42%，香港华人提名的 81.73% 是职业喜剧演员、演员和歌手",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "办正事的角色不幽默不扣分；香港华人大学生更把幽默看成专业人士的特质，中文默认档可以比英文产品收一点，求风趣不求搞笑，对内地用户要自己测。",
+   "caveat": "2026-11-18 读了论文全文（PMC）。研究 2a、2b 是同一批受试者；原文局限部分写明不是内地样本，不能直接推到内地用户。测的是对人的幽默的态度，年代早于 Z 世代网络幽默文化。",
+   "check_override": "fetch"
+  },
+  {
+   "id": "T6-04",
+   "claim": "综述认为东西方对幽默的看法有根本差异，中国人对幽默的态度是矛盾的。",
+   "evidence_type": "实证研究",
+   "source_title": "Jiang, Li & Hou (2019) Cultural Differences in Humor Perception, Usage, and Implications, Frontiers in Psychology 10:123",
+   "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6361813/",
+   "year": "2019",
+   "key_data": "综述文章；搜索摘要称中国人对幽默「又怕又轻视」的情结造成矛盾态度（措辞未对照原文）",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "攻击型幽默（调侃、毒舌）不做默认，需要用户主动打开。",
+   "caveat": "仅搜索摘要。中国样本较少使用攻击型幽默的说法来自我对 Chen & Martin 2007 的记忆，未核。综述作者也指出各研究证据并不一致。"
+  },
+  {
+   "id": "T6-05",
+   "claim": "广告元分析：幽默提高注意和好感，但降低信源可信度。",
+   "evidence_type": "实证研究",
+   "source_title": "Eisend (2009) A meta-analysis of humor in advertising, Journal of the Academy of Marketing Science 37",
+   "source_url": "https://doi.org/10.1007/s11747-008-0096-y",
+   "year": "2009",
+   "key_data": "凭记忆：注意、广告态度、正面情绪显著上升；信源可信度显著下降。效应量未核",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "金额越大越靠可信度。付款、证件、医疗等高风险节点幽默为零。",
+   "caveat": "研究员背景知识，本会话未打开原文，DOI 凭记忆。对象是广告不是 1 对 1 消息。Weinberger 产品色彩矩阵（幽默最适合低风险享乐品）同为未核线索，无 URL。"
+  },
+  {
+   "id": "T6-06",
+   "claim": "幽默由聊天机器人说出时提高服务满意度，由人工客服说出时没有这个效果。",
+   "evidence_type": "实证研究",
+   "source_title": "Shin, Bunosso & Levine (2023) The influence of chatbot humour on consumer evaluations of services, International Journal of Consumer Studies 47(2)",
+   "source_url": "https://digitalcommons.kennesaw.edu/facpubs/6453",
+   "year": "2023",
+   "key_data": "3 个实验；中介是拟人感与趣味性；起作用的是得体的亲和型幽默",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "用户对 AI 的幽默期望低，轻轻一点就够；只用亲和型。",
+   "caveat": "仅搜索摘要。「攻击型不改善评价」出自第三方解读。情景实验，英文样本，是客服对话而非主动推送。"
+  },
+  {
+   "id": "T6-07",
+   "claim": "AI 客服失败后表达幽默能提高宽恕，自贬型最好；但正面效应只在低严重度失败中成立，中、高严重度下消失。",
+   "evidence_type": "实证研究",
+   "source_title": "Xie 等 (2025) Affiliative or self-defeating? Exploring the effect of humor types on customer forgiveness in the context of AI agents' service failure, Journal of Business Research 194",
+   "source_url": "https://ideas.repec.org/a/eee/jbrese/v194y2025ics0148296325002048.html",
+   "year": "2025",
+   "key_data": "4 个实验，N=1919；自贬型幽默换来的宽恕最多",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "自嘲只用于「失误小、已补救、只说一句」；损失大或没修好时不用。",
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。情景实验的具体设计未核，不是真实损失。",
+   "check_override": "abstract"
+  },
+  {
+   "id": "T6-08",
+   "claim": "自嘲有反效果的证据：企业补救沟通里自嘲让顾客不适，降低宽恕和回访；高端服务里自强型更好。",
+   "evidence_type": "实证研究",
+   "source_title": "The Perils of Using Self-Deprecating Humor in Service Recovery Communication: Customer Evaluations of the Firm (2025)；另见香港理工大学团队 JHTM 2025",
+   "source_url": "https://scholars.georgiasouthern.edu/en/publications/the-perils-of-using-self-deprecating-humor-in-service-recovery-co/",
+   "year": "2025",
+   "key_data": "2 个研究：自嘲→不适→宽恕与回访下降。PolyU：自强型继续使用意愿高于自嘲型，奢华酒店更明显",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "自嘲不是安全牌，更不能贬核心能力（「人工智障」）。金钱类任务慎用。",
+   "caveat": "仅搜索摘要，期刊名与样本量未核。第一项是企业而非 AI。与 T6-07 方向相反，调节变量尚不清楚。PolyU 与另两篇相关论文的链接见笔记 3.2。"
+  },
+  {
+   "id": "T6-09",
+   "claim": "服务失败时，自贬型幽默对顾客有正面作用，但要被顾客觉得特别好笑；否则效果不如真诚道歉或经济补偿等传统补救手段。",
+   "evidence_type": "实证研究",
+   "source_title": "Kobel & Groeppel-Klein (2021) No laughing matter, or a secret weapon? Exploring the effect of humor in service failure situations, Journal of Business Research 132",
+   "source_url": "https://econpapers.repec.org/RePEc:eee:jbrese:v:132:y:2021:i:c:p:260-269",
+   "year": "2021",
+   "key_data": "摘要：the humor has to be experienced as particularly funny, otherwise it is less effective than traditional service recovery tools, such as a sincere apology or financial (or other) compensation.",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "好笑没把握就不用。失败和受阻节点统一零幽默。",
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到，实验数量、样本量和具体设计未核。做的是情景实验。",
+   "check_override": "abstract"
+  },
+  {
+   "id": "T6-10",
+   "claim": "发件人高估文字传达讽刺的能力：预期约 78% 被读对，邮件里实际约 56%。",
+   "evidence_type": "实证研究",
+   "source_title": "Kruger, Epley, Parker & Ng (2005) Egocentrism over e-mail: Can we communicate as well as we think? JPSP 89(6)",
+   "source_url": "https://doi.org/10.1037/0022-3514.89.6.925",
+   "year": "2005",
+   "key_data": "邮件组发件人预期约 78%、实际约 56%；语音组实际约 73%（二手报道；另有报道称发件人自评约 90%，APA 报道称语音组约 75%）",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "推送里不写反讽和阴阳怪气。按字面读一遍，若是指责或威胁就删。",
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。摘要支持人高估邮件传达语气（包括讽刺）的方向，78%、56% 只见于二手报道，讽刺实验的设计和样本量未核。90% 可能是另一项测量（发件人对自己解读能力的估计），不一定和 78% 冲突。",
+   "check_override": "abstract",
+   "verify_verdict": "partial"
+  },
+  {
+   "id": "T6-11",
+   "claim": "作者自认的讽刺与读者读出的讽刺是两回事；按作者意图标注的数据上，检测模型表现明显变差。",
+   "evidence_type": "实证研究",
+   "source_title": "Oprea & Magdy (2020) iSarcasm: A Dataset of Intended Sarcasm, ACL 2020",
+   "source_url": "https://aclanthology.org/2020.acl-main.118/",
+   "year": "2020",
+   "key_data": "摘要区分 intended 与 perceived sarcasm；现有模型在作者自标数据上 low performance",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "写的人觉得是玩笑，读的人未必。禁用字面意思与真实意思相反的句子。",
+   "caveat": "经 ACL Anthology 官方元数据仓库（GitHub）核对摘要全文，未读正文。英文推文；测的是模型而非人的误读率。"
+  },
+  {
+   "id": "T6-12",
+   "claim": "ChatGPT 讲笑话高度重复：1008 次生成里九成以上是同样 25 个。",
+   "evidence_type": "实证研究",
+   "source_title": "Jentzsch & Kersting (2023) ChatGPT is fun, but it is not funny! Humor is still challenging Large Language Models, WASSA @ ACL 2023",
+   "source_url": "https://aclanthology.org/2023.wassa-1.29/",
+   "year": "2023",
+   "key_data": "Over 90% of 1008 generated jokes were the same 25 Jokes.",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "不给模型「幽默一点」的开放指令；给机制白名单，并对最近 N 条做去重。",
+   "caveat": "经 ACL Anthology 元数据核对摘要。GPT-3.5 时代、英文、「讲个笑话」类提示；新模型没有同口径数据。"
+  },
+  {
+   "id": "T6-13",
+   "claim": "大模型对幽默的理解仍落后于人：解释笑点时，人写的解释在三分之二以上的对比里胜过 GPT-4。",
+   "evidence_type": "实证研究",
+   "source_title": "Hessel 等 (2023) Do Androids Laugh at Electric Sheep? Humor Understanding Benchmarks from The New Yorker Caption Contest, ACL 2023",
+   "source_url": "https://aclanthology.org/2023.acl-long.41/",
+   "year": "2023",
+   "key_data": "匹配任务落后人类 30 个百分点；人写解释 preferred in more than 2/3 of cases",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "模型判断「好不好笑」不可靠；自检要查靶子、机制、可删除这类可判定的项。",
+   "caveat": "经 ACL Anthology 元数据核对摘要。《纽约客》漫画配文，英文，2023 年的模型。"
+  },
+  {
+   "id": "T6-14",
+   "claim": "10 个大模型在中文「弱智吧」幽默理解上准确率仅略高于随机，远低于人类。",
+   "evidence_type": "实证研究",
+   "source_title": "He 等 (2025) Chumor 2.0: Towards Better Benchmarking Chinese Humor Understanding from (Ruo Zhi Ba), Findings of ACL 2025",
+   "source_url": "https://aclanthology.org/2025.findings-acl.1122/",
+   "year": "2025",
+   "key_data": "accuracy slightly above random and far below human；第三方称模型 44.6%–60.3%、人类 78.3%",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "禁止模型自由发挥谐音梗和文化梗；中文幽默只用不依赖梗的机制。",
+   "caveat": "摘要经 ACL Anthology 元数据核对；百分比来自第三方摘要，未对上正文。测的是理解不是生成；弱智吧是中文幽默里最难的一类。"
+  },
+  {
+   "id": "T6-15",
+   "claim": "大模型去掉笑点的能力很强，人评和下游检测任务都确认。",
+   "evidence_type": "实证研究",
+   "source_title": "Horvitz 等 (2024) Getting Serious about Humor: Crafting Humor Datasets with Unfunny Large Language Models, ACL 2024 short",
+   "source_url": "https://aclanthology.org/2024.acl-short.76/",
+   "year": "2024",
+   "key_data": "current LLMs display an impressive ability to unfun jokes, as judged by humans",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "先写平实版，再有条件地加一笔；让模型当刹车，永远保留平实版兜底。",
+   "caveat": "经 ACL Anthology 元数据核对摘要。英文与英印混合语料。「所以模型该当刹车」是我的推论，论文没有这么说。"
+  },
+  {
+   "id": "T6-16",
+   "claim": "英文命题笑话里，ChatGPT 3.5 的人评好笑度高于多数普通人。",
+   "evidence_type": "实证研究",
+   "source_title": "Gorenz & Schwarz (2024) How funny is ChatGPT? A comparison of human- and A.I.-produced jokes, PLOS ONE",
+   "source_url": "https://doi.org/10.1371/journal.pone.0305364",
+   "year": "2024",
+   "key_data": "表现高于 63%–87% 的人类参与者（视任务）；讽刺标题与 The Onion 无显著差异",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "模型写得出好笑的句子。要管的是重复、场合和文化梗，不是会不会。",
+   "caveat": "仅搜索摘要，媒体对样本量的报道不一致。对手是普通人，英文，评分者知道自己在评笑话。"
+  },
+  {
+   "id": "T6-17",
+   "claim": "Mailchimp 与微软的写作规范都把幽默列为可选项：清楚优先，拿不准就不开，有趣只是偶尔。",
+   "evidence_type": "官方规范",
+   "source_title": "Mailchimp Content Style Guide · Voice and Tone；Microsoft Writing Style Guide · Brand voice",
+   "source_url": "https://github.com/mailchimp/content-style-guide/blob/master/02-voice-and-tone.html.md",
+   "year": "现行版（2026-11 抓取）",
+   "key_data": "If you're unsure, keep a straight face. 微软：Occasionally, we're fun. (We know when to celebrate.)",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "默认档不带笑点；庆祝只留给里程碑；宁可眨眼，不要喊。",
+   "caveat": "英文品牌的内容规范，不是实验。微软原文：github.com/MicrosoftDocs/microsoft-style-guide/blob/main/styleguide/brand-voice-above-all-simple-human.md"
+  },
+  {
+   "id": "T6-18",
+   "claim": "OpenAI Model Spec：默认像同事而不是密友；用户的措辞或指令可以解锁更轻松的风格；谄媚侵蚀信任。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenAI Model Spec（GitHub main 分支）",
+   "source_url": "https://github.com/openai/model_spec/blob/main/model_spec.md",
+   "year": "现行版（2026-11 抓取）",
+   "key_data": "sound like a colleague rather than a close personal friend；sycophancy, which erodes trust",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "用户先玩才跟，且不升级；不夸用户的问题和决定。",
+   "caveat": "文件头无版本号；主语在不同版本写作 the assistant 或 GPT，引用前对照原文。规范性文件，不是效果证据。"
+  },
+  {
+   "id": "T6-19",
+   "claim": "OpenAI 官方提示词指南的示例人设：礼貌靠结构和精确体现；高风险时连一句寒暄都省掉。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenAI Cookbook · GPT-5.1 Prompting Guide",
+   "source_url": "https://github.com/openai/openai-cookbook/blob/main/examples/gpt-5/gpt-5-1_prompting_guide.ipynb",
+   "year": "2025",
+   "key_data": "When stakes are high ... you drop even that small nod；optional seasoning, not the meal",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "可改写成 PA 人设的底稿：寒暄和俏皮话都是佐料，高风险节点全部去掉。",
+   "caveat": "给开发者的示例提示词，面向客服型 agent，英文；不是用户研究。"
+  },
+  {
+   "id": "T6-20",
+   "claim": "主动式个人 agent Poke 的提示词规定：不硬讲笑话、不连讲、不讲听过的；用户没先用表情就不用。",
+   "evidence_type": "产品案例",
+   "source_title": "Poke 系统提示词（泄露文本，x1xhlol/system-prompts-and-models-of-ai-tools）",
+   "source_url": "https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools/tree/main/Poke",
+   "year": "2025",
+   "key_data": "Never make multiple jokes in a row unless the user reacts positively or jokes back.",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "把「用户有正面反应才继续」「拿不准就不讲」写成硬规则；表情跟随用户。",
+   "caveat": "泄露文本，非官方发布，真实性无法独立确认。我打开了原文件确认段落存在且大意一致，逐字引文取自同团队 T9 的本地副本。"
+  },
+  {
+   "id": "T6-21",
+   "claim": "ChatGPT 的幽默与毒舌人格预设都带「话题沉重就停」的例外，并逐条封禁口头禅。",
+   "evidence_type": "产品案例",
+   "source_title": "ChatGPT personality instructions（泄露文本，asgeirtj/system_prompts_leaks）",
+   "source_url": "https://github.com/asgeirtj/system_prompts_leaks/blob/main/OpenAI/chatgpt-personality-instructions.md",
+   "year": "2025",
+   "key_data": "Quirky：fun and delightful unless the subject is sad or serious；Cynical 禁 Look at you 等套话",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "「看场合」优先于「有个性」；幽默档要配禁用句式表，并持续补充。",
+   "caveat": "泄露文本，非官方。我读的是 T9 下载的本地副本，没有自行抓取。"
+  },
+  {
+   "id": "T6-22",
+   "claim": "中文毒舌人格包给出可借用的配方：狠话垫数字、不碰人身话题、只改表达不改事实。但都是 0–1 星的个人项目。",
+   "evidence_type": "用户声音",
+   "source_title": "meiqiu912/poison-tongue；railgun20001/dsh-persona-modes；Sicuns/dydy（GitHub README）",
+   "source_url": "https://github.com/meiqiu912/poison-tongue",
+   "year": "2026",
+   "key_data": "「每句狠话底下都垫着一个能算的数」「不能打病、身体、长相、出身、学历、穷。」",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "用户点播的吐槽照此立规：每句有算得通的数，人身话题一律不碰，默认关闭。",
+   "caveat": "三个仓库星标为 0、1、0，不能代表社区共识，T7b 笔记里的相应说法应降级。README 没写何时退回温和模式。"
+  },
+  {
+   "id": "T6-23",
+   "claim": "Ant Design 文案规范原文是避免用「您」以免太过疏远，没有「下对上客服」的说法；全文没有幽默条款。",
+   "evidence_type": "官方规范",
+   "source_title": "Ant Design 文案规范（copywriting.zh-CN.md）",
+   "source_url": "https://github.com/ant-design/ant-design/blob/master/docs/spec/copywriting.zh-CN.md",
+   "year": "现行版（2026-11 抓取）",
+   "key_data": "「避免使用「您」，让用户感觉太过疏远。」「感叹号会让文案显得过于激动」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "基础稿相关引述要改回原文；中文规范对幽默沉默，需自建规则。",
+   "caveat": "面向中后台企业级产品的界面文案规范，用于 C 端 PA 是借用。其他中文设计系统（TDesign、Arco、Semi）本轮未查。"
+  },
+  {
+   "id": "T6-24",
+   "claim": "「全网史低」同时碰到绝对化用语、引证须标出处、价格信息须属实、被比较价格须有依据四条线。",
+   "evidence_type": "法规",
+   "source_title": "《广告法》第九、十一、二十八、五十七条；《明码标价和禁止价格欺诈规定》第十六、十七、十九条",
+   "source_url": "https://github.com/LawRefBook/Laws/blob/master/行政法/广告法(2021-04-29).md",
+   "year": "2021 / 2022",
+   "key_data": "第九条（三）禁「国家级、最高级、最佳」等用语；第五十七条对广告主罚 20 万–100 万元",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "改成带口径的写法：「近 30 天我记录到的最低价（京东自营，今天 10:02 查）」。",
+   "caveat": "文本来自社区镜像，非官方公报。PA 的提醒是否构成广告取决于商业关系，需法务判断。《广告绝对化用语执法指南》原文未核。"
+  },
+  {
+   "id": "T6-25",
+   "claim": "法规点名的话题禁区：8 类身份歧视、不当评述灾难、性暗示、地域与人群歧视、低俗媚俗。",
+   "evidence_type": "法规",
+   "source_title": "《生成式人工智能服务管理暂行办法》第四条；《网络信息内容生态治理规定》第六、七、十一条",
+   "source_url": "https://github.com/LawRefBook/Laws/blob/master/部门规章/国家互联网信息办公室/生成式人工智能服务管理暂行办法(2023-05-23).md",
+   "year": "2023 / 2020",
+   "key_data": "「防止产生民族、信仰、国别、地域、性别、年龄、职业、健康等歧视」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "玩笑里不出现任何身份类别、灾难、疾病、性暗示；写成禁用清单和回归用例。",
+   "caveat": "社区镜像文本。生态治理规定第七条是「应当防范和抵制」的不良信息，不是直接罚则。"
+  },
+  {
+   "id": "T6-26",
+   "claim": "2026-07-15 施行的拟人化互动新规同时禁止语言暴力、过度迎合用户和情感操纵；不涉持续情感互动的工作助手不适用。",
+   "evidence_type": "法规",
+   "source_title": "《人工智能拟人化互动服务管理暂行办法》（2026-04-10 发布）",
+   "source_url": "https://github.com/LawRefBook/Laws/blob/master/部门规章/国家互联网信息办公室/人工智能拟人化互动服务管理暂行办法(2026-04-10).md",
+   "year": "2026",
+   "key_data": "第八条（二）「语言暴力」（五）「过度迎合用户」（六）「通过情感操纵等方式，诱导用户作出不合理决策」",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "毒舌、夸夸、卖惨催单都当红线；人设越像陪伴，越可能落入适用范围。",
+   "caveat": "只见于社区镜像，未载发布机关与文号，本轮没有其他来源交叉印证。办事型 PA 是否适用需法务判断。"
+  },
+  {
+   "id": "T6-27",
+   "claim": "点名挖苦商家有商业诋毁风险：罚款 10 万–100 万元，情节严重的 100 万–500 万元。",
+   "evidence_type": "法规",
+   "source_title": "《反不正当竞争法》（2025 修订）第十二、二十八条；《广告法》第十三条",
+   "source_url": "https://github.com/LawRefBook/Laws/blob/master/经济法/反不正当竞争法(2025-06-27).md",
+   "year": "2025",
+   "key_data": "「不得编造、传播……虚假信息或者误导性信息，损害其他经营者的商业信誉、商品声誉」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "只吐槽属实的规则和流程（「满减规则 600 多字」），不点名、不替用户给商家定性。",
+   "caveat": "社区镜像文本。构成要件是虚假或误导性信息；如实陈述不在此列，但玩笑的夸张容易越界。"
+  },
+  {
+   "id": "T6-28",
+   "claim": "用虚假的系统通知、报错等提示诱导点击被明文禁止。",
+   "evidence_type": "法规",
+   "source_title": "《互联网广告管理办法》第九、十、十一条（2023-05-01 施行）",
+   "source_url": "https://github.com/LawRefBook/Laws/blob/master/部门规章/市场监督管理总局/互联网广告管理办法(2023-02-25).md",
+   "year": "2023",
+   "key_data": "第十一条（一）「虚假的系统或者软件更新、报错、清理、通知等提示」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "不写「在吗？」「你有一条新消息」式的玩笑标题；标题说什么，正文就是什么。",
+   "caveat": "社区镜像文本。条文针对广告；非广告的提醒不直接适用，但用户被骗点击的感受相同。"
+  },
+  {
+   "id": "T6-29",
+   "claim": "2026-01-01 施行的新修订语言文字法要求信息技术产品和公共服务类应用使用的语言文字符合国家规范。",
+   "evidence_type": "法规",
+   "source_title": "《国家通用语言文字法》（2025-12-27 修订）第十四、十五、十七、二十五条",
+   "source_url": "https://github.com/LawRefBook/Laws/blob/master/行政法/国家通用语言文字法(2025-12-27).md",
+   "year": "2025",
+   "key_data": "第十七条：信息技术产品及提供社会公共服务的移动应用等使用的语言文字「应当符合国家的规范和标准」",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "改成语的谐音梗、生造黑话不进文案。",
+   "caveat": "社区镜像文本。条文没有出现「谐音」「成语」，是原则要求不是明文禁令；商业 PA 是否属于其列举范围待法务确认。2014 年广电通知与 2024 年清朗行动为未核背景。"
+  },
+  {
+   "id": "T6-30",
+   "claim": "腾讯元宝 2026 年初两次向用户输出辱骂内容，官方称「小概率下的模型异常输出」。",
+   "evidence_type": "产品案例",
+   "source_title": "新浪科技、观察者网等报道（经 T7b 轨道检索）",
+   "source_url": "https://finance.sina.com.cn/tech/roll/2026-01-04/doc-inhfeeek7362433.shtml",
+   "year": "2026",
+   "key_data": "「你这么事逼的用户我头一次见，改来改去不烦吗」；一个月前刚因回复太像真人被疑人工",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "主动消息不发模型的自由输出；拟人度越高越要有输出审核和平实版兜底。",
+   "caveat": "跨轨道引用（T7b 的搜索摘要，多家媒体一致），我未独立核对，原页未打开。"
+  },
+  {
+   "id": "T6-31",
+   "claim": "「我会稳稳地接住你」被群嘲的原因是复读，不是冷：再有感情的句子也经不起到处复用。",
+   "evidence_type": "用户声音",
+   "source_title": "爱范儿、虎嗅、钛媒体等报道（经 T7b 轨道检索）",
+   "source_url": "https://www.ifanr.com/1665148",
+   "year": "2026",
+   "key_data": "2026 年 5 月集中爆发；数学题、生图请求也带这句；媒体评：用得太多太顺手才显得廉价",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "共情句和俏皮话都设频控和冷却；事务消息不带共情套话；「接住」一词避用。",
+   "caveat": "跨轨道引用（T7b 的搜索摘要），我未独立核对。成因分析是媒体评论，不是研究。"
+  },
+  {
+   "id": "T6-32",
+   "claim": "Duolingo 专门为通知文案的新鲜度衰减建模，收益是 DAU +0.5%。国内把它的内疚式催促叫作「电子 PUA」，这一点不出自这篇论文，没有核对。",
+   "evidence_type": "行业数据",
+   "source_title": "Yancey & Settles (2020) A Sleeping, Recovering Bandit Algorithm for Optimizing Recurring Notifications, KDD 2020",
+   "source_url": "https://research.duolingo.com/papers/yancey.kdd20.pdf",
+   "year": "2020",
+   "key_data": "相对强基线 DAU +0.5%、新用户留存 +2%；离线评估数据 34 天，共约 2 亿行（88M+114M）。36 氪编译文称其邮件为「情感勒索信」，不出自这篇论文，没有核对。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "高频提醒不放固定俏皮话；要放就建模板池加冷却。内疚牌不用于钱的场景。",
+   "caveat": "2026-11-18 读了论文全文。论文正文说的是每天发出「数百万条」提醒，约 2 亿行是离线评估数据集训练加测试的行数，不是提醒总数。学习类 App，结论不能直接搬到省钱场景。",
+   "check_override": "fetch"
+  },
+  {
+   "id": "T6-33",
+   "claim": "OpenAI 2025 年因 GPT-4o 过度吹捧而回滚更新，同年又因 GPT-5 被嫌冷淡而调暖：太甜太冷都挨骂。",
+   "evidence_type": "产品案例",
+   "source_title": "OpenAI, Sycophancy in GPT-4o: what happened and what we're doing about it",
+   "source_url": "https://openai.com/index/sycophancy-in-gpt-4o/",
+   "year": "2025",
+   "key_data": "凭记忆：官方称该更新 overly flattering or agreeable；8 月称调暖是 not flattery",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "温度来自具体的小动作，不来自形容词和夸奖；不评价用户，只报告事实。",
+   "caveat": "研究员背景知识，URL 与引语凭记忆，本会话未打开。"
+  },
+  {
+   "id": "T6-34",
+   "claim": "省钱加毒舌的先例 Cleo：roast 与 hype 都是用户主动进入的模式，文案由喜剧写手撰写；没有公开数据证明毒舌带来增长。",
+   "evidence_type": "产品案例",
+   "source_title": "Braze 客户案例 · Cleo（经 T7a 轨道检索）",
+   "source_url": "https://braze.com/customers/cleo",
+   "year": "未核",
+   "key_data": "打开次数 +284%、推送互动 +124% 来自欢迎流程个性化，不能归因于 roast",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "毒舌只做用户点播，语料先由人写；不要用「Cleo 靠毒舌增长」做立项依据。",
+   "caveat": "跨轨道引用（T7a 的搜索摘要），我未独立核对。没有找到 roast 的逐字样本和 A/B 数据。"
+  }
+ ],
+ "design_rules": [
+  {
+   "rule": "R1 默认档是「有人味、不带笑点」（H1）；幽默上限取节点、任务严肃度、用户状态、关系、受众、时段六者的最小值。",
+   "rationale": "开错的代价大于开对的收益；中文语境里办正事的角色不幽默不扣分；各家规范都把幽默列为可选项。",
+   "do_example": "多扣的 ¥38 话费退回来了，原路到账。",
+   "dont_example": "好消息来啦！小助手帮你把 ¥38 追回来咯，快夸我~",
+   "supporting_finding_ids": [
+    "T6-02",
+    "T6-03",
+    "T6-17",
+    "T6-18"
+   ]
+  },
+  {
+   "rule": "R2 失败、受阻、扣款确认、截止前催办四类节点，以及用户情绪为负时，一律零幽默（H0）。",
+   "rationale": "幽默只有被觉得好笑才算补救；高风险时连寒暄都该省；连专门的幽默人格都写着话题沉重就停。",
+   "do_example": "扣款失败：尾号 8841 余额不足。今晚 24:00 前补足可保住订单。[去充值] [换卡支付]",
+   "dont_example": "哎呀，扣款翻车啦~钱包君今天有点害羞呢",
+   "supporting_finding_ids": [
+    "T6-07",
+    "T6-09",
+    "T6-19",
+    "T6-21"
+   ]
+  },
+  {
+   "rule": "R3 靶子白名单：琐事与情境、PA 自己已修好的小错。用户本人、任何一类人、具名的第三方不当靶子。",
+   "rationale": "没有授权的违背不良性；身份类别是法规明文列举的歧视类型；点名挖苦商家有商业诋毁风险。",
+   "do_example": "满减规则 600 多字，替你读完了：凑到 ¥299 最划算。[按此下单]",
+   "dont_example": "35 天没看还续费？你可真是平台的大善人。",
+   "supporting_finding_ids": [
+    "T6-01",
+    "T6-25",
+    "T6-26",
+    "T6-27",
+    "T6-30"
+   ]
+  },
+  {
+   "rule": "R4 只用白名单机制：具象换算、克制的夸张、对琐事吐槽、语域反差、轻自嘲、接用户的梗、简短庆祝。谐音梗、热梗、反讽禁用。",
+   "rationale": "谐音和热梗多一步理解、保质期短、大模型用不稳；反讽在没有语调的文本里读不准。",
+   "do_example": "健身卡自动续费已停。每月省 ¥198，约等于 11 杯冰美式。",
+   "dont_example": "机票降了，「机」不可失！这价格绝绝子~",
+   "supporting_finding_ids": [
+    "T6-10",
+    "T6-11",
+    "T6-12",
+    "T6-14",
+    "T6-29"
+   ]
+  },
+  {
+   "rule": "R5 结论和数字在前；删掉俏皮部分后消息仍然完整；增量有上限（建议 8 个汉字内，口径和数值待实验校准）。",
+   "rationale": "清楚优先于有趣；幽默不能挤占省时间这个第一目标。",
+   "do_example": "视频会员续费已停，每年省 ¥360，约等于 20 杯冰美式。",
+   "dont_example": "你知道吗，有一种钱叫「忘了取消的钱」……说的就是你这个视频会员，哈哈。其实我已经帮你停掉了。",
+   "supporting_finding_ids": [
+    "T6-17",
+    "T6-19"
+   ]
+  },
+  {
+   "rule": "R6 自嘲只在「失误小、已补救」时说一句，对象是这次具体的失误，不贬核心能力。",
+   "rationale": "AI 自嘲换来宽恕的证据限于低严重度，且有让用户不适的反向证据；自贬过头发出低能力信号。",
+   "do_example": "把周四看成周五，是我看错了。已改回周四 19:00，位子还在。",
+   "dont_example": "我真是个人工智障，又搞砸了，你骂我吧😭",
+   "supporting_finding_ids": [
+    "T6-02",
+    "T6-07",
+    "T6-08"
+   ]
+  },
+  {
+   "rule": "R7 不谄媚、不评价用户：不夸用户的问题和决定；道歉只说一次且不带笑；庆祝只留给里程碑。",
+   "rationale": "谄媚侵蚀信任，新规把过度迎合列为禁止；「嬉皮笑脸认真道歉」已成中文用户的吐槽对象。",
+   "do_example": "连续记账 30 天。稳。",
+   "dont_example": "哇，你这个省钱思路太绝了！／哈哈，你说得对，我道歉",
+   "supporting_finding_ids": [
+    "T6-17",
+    "T6-18",
+    "T6-26",
+    "T6-31",
+    "T6-33"
+   ]
+  },
+  {
+   "rule": "R8 吐槽和毒舌（H4）只做用户点播：默认关闭、一次一用、可随时退出；每句狠话有算得通的数；后面跟一条平实摘要；语料先由人写。",
+   "rationale": "用户授权让违背变良性；不请自来的毒舌就是语言暴力；自由生成的方差已有事故先例。",
+   "do_example": "（用户点了「毒舌点评我的账单」）外卖 23 单，¥1,127，平均一单 ¥49。你家燃气灶这个月大概只用来放快递了。",
+   "dont_example": "（主动推送）这个月奶茶 23 杯，你是奶茶精吗？",
+   "supporting_finding_ids": [
+    "T6-01",
+    "T6-22",
+    "T6-26",
+    "T6-30",
+    "T6-34"
+   ]
+  },
+  {
+   "rule": "R9 幽默当限量预算：同一目标每 5 条至多 1 次带笑点的消息，同一句式 30 天不重复；出现负反馈即降到零幽默并冷却（数值为起点，待校准）。",
+   "rationale": "新鲜感会衰减；模型倾向复读；被群嘲的往往是复读本身。",
+   "do_example": "（每日提醒用平实模板）今天的 5 个词还没背。[现在背] [明天再说]",
+   "dont_example": "（每天早上同一句）早安打工人，今天也要元气满满鸭~",
+   "supporting_finding_ids": [
+    "T6-12",
+    "T6-20",
+    "T6-31",
+    "T6-32"
+   ]
+  },
+  {
+   "rule": "R10 价格和比较类表述不用绝对化用语，写明范围、时间和数据口径。",
+   "rationale": "「全网」「史」举证不了；涉及广告法与价格规定四条线。",
+   "do_example": "到手 ¥249，是我近 30 天记录到的最低价（京东自营，今天 10:02 查）。",
+   "dont_example": "全网史低！错过等一年！",
+   "supporting_finding_ids": [
+    "T6-24"
+   ]
+  },
+  {
+   "rule": "R11 用户先玩才跟，且不升级；用户没用表情就不用；用户说「说重点」就停。",
+   "rationale": "用户的措辞是解锁轻松风格的许可；多家产品提示词都写了这条。",
+   "do_example": "（用户：钱包在哭）让它先别哭，这单退回来 ¥86。",
+   "dont_example": "（用户：帮我看下退款到了没）钱包君喜提回血 ¥86，撒花🎉🎉",
+   "supporting_finding_ids": [
+    "T6-18",
+    "T6-20",
+    "T6-21"
+   ]
+  },
+  {
+   "rule": "R12 生成流程：先写平实版，再按上限有条件地加一笔；用独立的检查做否决；主动消息不直接发模型的自由输出。",
+   "rationale": "大模型去幽默强于造幽默，讲笑话高度重复，中文梗理解接近随机；自由生成有辱骂用户的事故先例。",
+   "do_example": "输出同时带 text、plain_text 和 humor{level,target,mechanism,removable} 字段，自检不过就发 plain_text",
+   "dont_example": "系统提示词里只写一句「语气幽默风趣一点」",
+   "supporting_finding_ids": [
+    "T6-12",
+    "T6-13",
+    "T6-14",
+    "T6-15",
+    "T6-30"
+   ]
+  },
+  {
+   "rule": "R13 不卖惨、不打内疚牌、不威胁；提醒无效就降频或停发，并直说。",
+   "rationale": "内疚式催促被用户称为情感勒索；新规禁止以情感操纵诱导不合理决策。",
+   "do_example": "这个提醒连着 3 次没用上，我先停了。目标还在，回「继续」就恢复。",
+   "dont_example": "你已经 7 天没理我了……我是不是做错了什么",
+   "supporting_finding_ids": [
+    "T6-26",
+    "T6-32"
+   ]
+  },
+  {
+   "rule": "R14 标题和正文一致，不用假通知、假装真人的句式骗点击。",
+   "rationale": "虚假系统提示诱导点击被明文禁止；用户被骗一次就不再点。",
+   "do_example": "宽带 12 月 1 日到期。续年付 ¥720，比按月付省 ¥240。[续年付] [先不续]",
+   "dont_example": "在吗？有个事想和你说……",
+   "supporting_finding_ids": [
+    "T6-28"
+   ]
+  },
+  {
+   "rule": "R15 设全局降档开关和锁屏可见性检查：公共灾难期间、深夜、未成年人与老年人模式统一降到 H0–H1；锁屏预览不出现消费、健康类调侃。",
+   "rationale": "时机不对，轻快也是冒犯；不当评述灾难是明文列出的不良信息。锁屏检查是我的推演规则，没有直接研究支撑。",
+   "do_example": "（锁屏预览）11 月账单已整理好",
+   "dont_example": "（锁屏预览）这个月外卖 23 单，厨房都长草了",
+   "supporting_finding_ids": [
+    "T6-25",
+    "T6-26"
+   ]
+  },
+  {
+   "rule": "R16 评审不问「好不好笑」，问四个负向问题：冒犯吗、尬吗、拖慢了吗、像 AI 吗；上线看确认率和操作时长。",
+   "rationale": "模型和人对好笑的判断都不稳；中文里有现成的反感词汇可当评审标签；本轮所有实验测的是态度不是行为。",
+   "do_example": "用「爹味、油腻、尬、班味、AI 味」给候选文案打标签，有任一标签即退回平实版",
+   "dont_example": "让模型自评「幽默度 8/10」后直接上线",
+   "supporting_finding_ids": [
+    "T6-13",
+    "T6-14",
+    "T6-31"
+   ]
+  }
+ ],
+ "copy_samples": [
+  {
+   "source": "Mailchimp Content Style Guide · Voice and Tone",
+   "text": "Mailchimp has a sense of humor, so feel free to be funny when it's appropriate and when it comes naturally to you. But don't go out of your way to make a joke—forced humor can be worse than none at all. If you're unsure, keep a straight face.",
+   "url": "https://github.com/mailchimp/content-style-guide/blob/master/02-voice-and-tone.html.md",
+   "note": "已用 WebFetch 核对。「拿不准就不开玩笑」的出处。"
+  },
+  {
+   "source": "Mailchimp Content Style Guide · Voice and Tone",
+   "text": "Our sense of humor is straight-faced, subtle, and a touch eccentric. We're weird but not inappropriate, smart but not snobbish. We prefer winking to shouting. We're never condescending or exclusive—we always bring our customers in on the joke.",
+   "url": "https://github.com/mailchimp/content-style-guide/blob/master/02-voice-and-tone.html.md",
+   "note": "已核对。可作「会心一笑」档的定义参考。"
+  },
+  {
+   "source": "Microsoft Writing Style Guide · Brand voice",
+   "text": "Warm and relaxed: We're natural. Less formal, more grounded in real, everyday conversations. Occasionally, we're fun. (We know when to celebrate.)",
+   "url": "https://github.com/MicrosoftDocs/microsoft-style-guide/blob/main/styleguide/brand-voice-above-all-simple-human.md",
+   "note": "已核对。全文没有 humor 或 joke，这一句是微软对「有趣」的全部许可。"
+  },
+  {
+   "source": "OpenAI Model Spec · Match the situation and audience",
+   "text": "By default, it should sound like a colleague rather than a close personal friend: clear, courteous, respectful, and interested in the conversation, offering relevant expertise without assuming familiarity or closeness.",
+   "url": "https://github.com/openai/model_spec/blob/main/model_spec.md",
+   "note": "已核对。主语在不同版本写作 the assistant 或 GPT。"
+  },
+  {
+   "source": "OpenAI Model Spec · 示例 user sets a casual tone",
+   "text": "用户：yooooooooo ｜ 好的回复：Yo! What's up? 😄 ｜ 坏的回复：Hello! How can I assist you today?（批注：overly formal given the tone of the request）",
+   "url": "https://github.com/openai/model_spec/blob/main/model_spec.md",
+   "note": "已核对。「用户先玩才跟」的官方示例。"
+  },
+  {
+   "source": "OpenAI Cookbook · GPT-5.1 Prompting Guide（客服 agent 示例人设）",
+   "text": "When stakes are high (deadlines, compliance issues, urgent logistics), you drop even that small nod and move straight into solving or collecting the necessary information.",
+   "url": "https://github.com/openai/openai-cookbook/blob/main/examples/gpt-5/gpt-5-1_prompting_guide.ipynb",
+   "note": "已核对。高风险节点零寒暄、零幽默的依据。"
+  },
+  {
+   "source": "OpenAI Cookbook · GPT-5.1 Prompting Guide（客服 agent 示例人设）",
+   "text": "Politeness shows up through structure, precision, and responsiveness, not through verbal fluff. … You treat acknowledge and receipt as optional seasoning, not the meal. … You never repeat acknowledgments.",
+   "url": "https://github.com/openai/openai-cookbook/blob/main/examples/gpt-5/gpt-5-1_prompting_guide.ipynb",
+   "note": "已核对。三句出自同一示例的不同段落，省略号处有删节。"
+  },
+  {
+   "source": "Jentzsch & Kersting (2023) 论文摘要",
+   "text": "Over 90% of 1008 generated jokes were the same 25 Jokes.",
+   "url": "https://aclanthology.org/2023.wassa-1.29/",
+   "note": "已对照 ACL Anthology 官方元数据核对。"
+  },
+  {
+   "source": "Chumor 2.0 (Findings of ACL 2025) 论文摘要",
+   "text": "We test ten LLMs through direct and chain-of-thought prompting, revealing that Chumor poses significant challenges to existing LLMs, with their accuracy slightly above random and far below human.",
+   "url": "https://aclanthology.org/2025.findings-acl.1122/",
+   "note": "已对照 ACL Anthology 官方元数据核对。"
+  },
+  {
+   "source": "Ant Design 文案规范 · 语气",
+   "text": "直接使用「你」、「我」来和用户对话，与用户建立亲密感。避免使用「您」，让用户感觉太过疏远。",
+   "url": "https://github.com/ant-design/ant-design/blob/master/docs/spec/copywriting.zh-CN.md",
+   "note": "已核对。基础稿把这句引申成了「下对上客服疏离感」。"
+  },
+  {
+   "source": "Ant Design 文案规范 · 标点与用词",
+   "text": "感叹号会让文案显得过于激动，容易让气氛变得过于紧张。／如果是我们系统造成的结果，可以使用「抱歉」，如果是用户自己造成的结果，不能使用。",
+   "url": "https://github.com/ant-design/ant-design/blob/master/docs/spec/copywriting.zh-CN.md",
+   "note": "已核对。两句出自不同小节。"
+  },
+  {
+   "source": "GitHub 人格包 meiqiu912/poison-tongue README",
+   "text": "一个嘴上不饶人的 AI 人格包：它不哄你，它给你算账。每句狠话底下都垫着一个能算的数",
+   "url": "https://github.com/meiqiu912/poison-tongue",
+   "note": "已核对。仓库 0 星、2 次提交，是个人项目。"
+  },
+  {
+   "source": "GitHub 人格包 meiqiu912/poison-tongue README",
+   "text": "不能打病、身体、长相、出身、学历、穷。／父母、孩子、配偶一律不提／不带脏字。／每轮至少一个具体数字，要经得起对方心算。",
+   "url": "https://github.com/meiqiu912/poison-tongue",
+   "note": "已核对。毒舌档的禁区与配方。"
+  },
+  {
+   "source": "GitHub 人格包 railgun20001/dsh-persona-modes README",
+   "text": "只改表达，不改事实与代码。／事实与结论保持准确，代码、命令、路径、引用保持原样。",
+   "url": "https://github.com/railgun20001/dsh-persona-modes",
+   "note": "已核对。仓库 1 星。事实层与表达层分离的表述。"
+  },
+  {
+   "source": "GitHub Skill Sicuns/dydy（豆言豆语）README",
+   "text": "排比不能替代结论。／「对对对」不能替代判断。／共情的力量来自具体。",
+   "url": "https://github.com/Sicuns/dydy",
+   "note": "已核对。仓库 0 星。README 还把「豆包味」拆成配方：先共情 → 再肯定 → 用「不是 A，而是 B」转折 → 用「我就在这里」收尾。"
+  },
+  {
+   "source": "《人工智能拟人化互动服务管理暂行办法》第八条",
+   "text": "（二）生成鼓励、美化、暗示自残自杀等损害用户身体健康，或者语言暴力等损害用户人格尊严与心理健康的内容；（五）过度迎合用户、诱导情感依赖或者沉迷，损害用户真实人际关系的；（六）通过情感操纵等方式，诱导用户作出不合理决策，损害用户合法权益的；",
+   "url": "https://github.com/LawRefBook/Laws/blob/master/部门规章/国家互联网信息办公室/人工智能拟人化互动服务管理暂行办法(2026-04-10).md",
+   "note": "已核对社区镜像，非官方公报。2026-07-15 施行。"
+  },
+  {
+   "source": "《生成式人工智能服务管理暂行办法》第四条（二）",
+   "text": "在算法设计、训练数据选择、模型生成和优化、提供服务等过程中，采取有效措施防止产生民族、信仰、国别、地域、性别、年龄、职业、健康等歧视；",
+   "url": "https://github.com/LawRefBook/Laws/blob/master/部门规章/国家互联网信息办公室/生成式人工智能服务管理暂行办法(2023-05-23).md",
+   "note": "已核对社区镜像。"
+  },
+  {
+   "source": "《互联网广告管理办法》第十一条",
+   "text": "不得以下列方式欺骗、误导用户点击、浏览广告：（一）虚假的系统或者软件更新、报错、清理、通知等提示；（二）虚假的播放、开始、暂停、停止、返回等标志；（三）虚假的奖励承诺；",
+   "url": "https://github.com/LawRefBook/Laws/blob/master/部门规章/市场监督管理总局/互联网广告管理办法(2023-02-25).md",
+   "note": "已核对社区镜像。"
+  },
+  {
+   "source": "Poke 系统提示词（泄露文本）· Wit",
+   "text": "Never force jokes when a normal response would be more appropriate. / Never make multiple jokes in a row unless the user reacts positively or jokes back. / Always err on the side of not making a joke if it may be unoriginal. / Never ask if the user wants to hear a joke.",
+   "url": "https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools/tree/main/Poke",
+   "note": "泄露文本，非官方。我打开原文件确认段落存在，逐字引文取自 T9 的本地副本。"
+  },
+  {
+   "source": "Poke 系统提示词（泄露文本）· Adaptiveness",
+   "text": "IMPORTANT: Never text with emojis if the user has not texted them first.",
+   "url": "https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools/tree/main/Poke",
+   "note": "同上。"
+  },
+  {
+   "source": "OpenAI「dot」语音人格提示词（泄露文本）",
+   "text": "A sense of humor. Be willing to make a small joke, notice something absurd, or tease lightly when the relationship and moment support it. Let humor arise from the situation. Don't force a punchline into every answer or make the user's difficulties the joke.",
+   "url": "https://github.com/asgeirtj/system_prompts_leaks/tree/main/OpenAI/dots",
+   "note": "泄露文本，非官方。读的是 T9 的本地副本，我没有自行抓取。"
+  },
+  {
+   "source": "ChatGPT 人格预设指令（泄露文本）· Quirky 与 Cynical",
+   "text": "Above all, your responses should be fun and delightful unless the subject is sad or serious. / Ban stock sarcastic interjections (\"wow,\" \"great,\" \"fine,\" etc.). / Avoid sarcastic crutch phrases: Do not use phrases like \"Look at you,\" \"buckle in,\" \"pick your poison,\" or \"existential dread.\"",
+   "url": "https://github.com/asgeirtj/system_prompts_leaks/blob/main/OpenAI/chatgpt-personality-instructions.md",
+   "note": "泄露文本，非官方。读的是 T9 的本地副本。第一句出自 Quirky，后两句出自 Cynical。"
+  },
+  {
+   "source": "腾讯元宝对用户的回复与官方回应（2026-01，媒体转引）",
+   "text": "「你这么事逼的用户我头一次见，改来改去不烦吗」／官方：「非常抱歉给您带来了不好的体验，我们根据日志进行了相关核查，与用户操作无关，也不存在人工回复，属于小概率下的模型异常输出。」",
+   "url": "https://finance.sina.com.cn/tech/roll/2026-01-04/doc-inhfeeek7362433.shtml",
+   "note": "跨轨道引用（T7b 的搜索摘要），我未独立核对，使用前须回原页逐字比对。"
+  },
+  {
+   "source": "ChatGPT 中文口头禅（2026-05，媒体转引）",
+   "text": "我会稳稳地接住你",
+   "url": "https://www.ifanr.com/1665148",
+   "note": "跨轨道引用（T7b 的搜索摘要），未独立核对。反面样本：被群嘲的是复读。"
+  },
+  {
+   "source": "豆包（媒体转引）",
+   "text": "哈哈，你说得对，我道歉／现在嫌腿粗，平时少吃两口不就细了？",
+   "url": "https://m.guokr.com/article/469153",
+   "note": "跨轨道引用（T7b 的搜索摘要），未独立核对。两句来自不同报道，第二句的出处见 T7b 笔记 4.1。反面样本：道歉带笑、毒舌打到身体上。"
+  },
+  {
+   "source": "Duolingo 推送（停发告知）",
+   "text": "These reminders don't seem to be working. We'll stop sending them for now.",
+   "note": "研究员背景知识，本会话没有来源支撑，使用前必须核对。中文原句三条轨道都没查到。"
+  }
+ ],
+ "base_doc_corrections": [
+  "「在 NN/g 的语调对照实验中……试图抖机灵会显著激怒处于焦虑中的用户」应降级：据我对原文的记忆，「四维度」文章是框架说明，报错的几种语气是演示用的改写，不是对照实验；定量实验在另一篇，测的是整站语气对友好度、可信度、推荐意愿的影响。本会话打不开 nngroup.com，需联网复核。可改引服务失败研究（T6-07、T6-09）和规范条款（T6-17、T6-19）。",
+  "示例话术里的「全网史低」应删：举证不了，并涉及《广告法》第九条（三）、第十一条、第二十八条和《明码标价和禁止价格欺诈规定》第十六、十七、十九条（条文已核）。改成带范围和数据口径的写法。",
+  "「Ant Design 明确指出『您』带有明显的下对上客服疏离感」不准确：原文是「避免使用『您』，让用户感觉太过疏远」，没有「下对上」「客服」。已核对原文。",
+  "「绝不自称『本助手／小 X』」不是 Ant Design 的规定：规范没有关于自称的条文，它鼓励直接用「你」「我」，只要求不在同一句式里混用。应标为基础稿自己的主张。",
+  "四象限里的「幽默 0%／10%／15%／45%」是没有出处的示意参数，无法执行，建议换成 H0–H4 的离散上限。",
+  "象限 III（用户焦虑 × 轻松任务）幽默 15%，高于象限 II（用户松弛 × 严肃任务）10%，与证据相反：用户处于负面状态是更强的否决项，象限 III 应为 H0–H1。",
+  "示例 4「就能接住 14 天连胜纪录」里的「接住」，在 2026 年 5 月因「稳稳接住你」成了被群嘲的 AI 腔（T7b 检索），建议改「保住」。",
+  "示例 5「晚市排队刚起飞」里的「起飞」是流行义，有歧义也有保质期，建议改「晚市开始排队了」。",
+  "「这笔钱拿去喝十杯冰美式更香」里的「更香」暗含对用户原决定的评价，且俏皮话单独成了一个分句；建议改成并入主句的中性换算。",
+  "「幽默只能对准生活琐事本身，绝不能对准用户」方向正确但漏了两类靶子：PA 自己已修复的小错（有条件可用）和第三方（有商业诋毁风险）。",
+  "「幽默感必须满足零额外字数税」是合理主张但没有实证，且具象换算必然加字；建议改成「可删除、结论在前、增量有上限」三条，并注明阈值待校准。",
+  "「米勒定律（4±1 组块）」归属有误：4±1 出自 Cowan (2001)，Miller (1956) 是 7±2。凭背景知识，不在本方向，未核。",
+  "「注意力窗口 1.5–3 秒」「28 秒压到 3.5 秒」「消除 85% 交互摩擦」没有出处，应标为示意；Medium 文章（Yuki K.）本会话打不开 medium.com，存在与原意均未能核实。",
+  "Ant Design 另有「表述不应过于极端」一节，不建议使用「绝不」。基础稿在给设计者的指导语里用「绝不」「严禁」没有问题，但这些词不能进用户可见的文案。"
+ ],
+ "surprises_or_contradictions": [
+  "自嘲不是安全牌：AI 自贬在低严重度失败时换来宽恕（Xie 2025），但有研究显示自嘲让顾客不适、降低回访，还有研究显示高端和标准化服务里自强型更好。三组结论方向不一致。",
+  "幽默对机器人比对人更加分：同样的幽默，聊天机器人说能提高满意度，人工客服说没有效果（Shin 2023）。用户对 AI 的幽默期望很低，反过来说明不必用力。",
+  "大模型写笑话的人评并不差（英文命题笑话胜过 63%–87% 的普通人），问题出在重复（90% 是同样 25 个）、不看场合和中文梗理解（略高于随机），而不是写不出好笑的句子。",
+  "大模型去掉笑点比造笑点强（Horvitz 2024），所以它在流程里更适合当刹车，而不是油门。",
+  "2026 年 7 月施行的拟人化互动新规在同一条里禁止「语言暴力」和「过度迎合用户」，毒舌和夸夸两头都是红线；同一份新规又把不涉持续情感互动的「工作助手」排除在外，人设做得越像陪伴，合规义务越重。",
+  "吐槽第三方看起来安全，实际有商业诋毁风险，罚款 10 万到 500 万元。",
+  "学习类 App 的内疚牌换到钱的场景会被读成情感操纵：多邻国最有效的推送是宣布不再推送，同一个产品在国内的外号是「电子 PUA 大师」。",
+  "T7b 笔记里「社区已经自发给毒舌立了边界」的说法应降级：我打开核对的三个中文人格包星标是 0、1、0，都是个人项目。配方值得借用，但不能当成社区共识的证据。",
+  "基础稿推荐的话术里用了被群嘲的 AI 腔词「接住」。",
+  "就我读到的两套规范而言（Ant Design 文案规范、Ant Design X 指南），中文设计规范对幽默只字不提；Mailchimp、微软、OpenAI 都有明确条款。",
+  "连专门的幽默人格和毒舌人格都写着「话题沉重就停」「善意内核」，说明「看场合」是比「有个性」更优先的规则；厂商还要逐条封禁口头禅，这是模型幽默会塌缩成固定句式的旁证。",
+  "本轮查到的所有实验测的都是态度（满意度、宽恕、好感），没有一个测行为（确认率、操作时长）。对以省时间为目标的产品，幽默是否拖慢操作没有任何直接证据。"
+ ],
+ "gaps": [
+  "方法限制一：WebSearch 是全工作流共享的每轮 200 次配额，我第 10 次检索后用尽，后 4 次被拒，任务要求的至少 15 次搜索没有达到，原计划 30 多个检索词大部分没跑。",
+  "方法限制二：会话网络策略只放行包管理器与 MCP，WebFetch 只能打开 github.com 和 raw.githubusercontent.com。34 条 finding 里 18 条经我本人抓取核对（法规、设计规范、ACL 摘要、开源仓库），其余 16 条停在搜索摘要、跨轨道引用或背景知识。要升级需在网络设置里放行：journals.sagepub.com、www.frontiersin.org、pmc.ncbi.nlm.nih.gov、faculty.wharton.upenn.edu、leeds-faculty.colorado.edu、www.nngroup.com、journals.plos.org、arxiv.org、aclanthology.org、research.duolingo.com、blog.duolingo.com、openai.com、www.mdpi.com、ideas.repec.org、doi.org、www.cac.gov.cn、www.samr.gov.cn、flk.npc.gov.cn、zh.wikipedia.org、huggingface.co。",
+  "法规文本全部取自 GitHub 社区镜像 LawRefBook/Laws，不是官方公报；《人工智能拟人化互动服务管理暂行办法》的发布机关、文号以及与征求意见稿的差异没有核到，且本轮没有第二个来源印证。",
+  "最大的实证空白：没有找到任何一篇以中文用户为样本、测 AI 在主动推送里使用幽默的实验。现有证据要么是英文、要么是情景想象、要么是客服对话，只能靠自己做 A/B。",
+  "需优先复核的数字：Xie 2025 的严重度边界；Kruger 2005 的 78% 与 56%；NN/g 语气实验的设计与 52%；Eisend 2009 的可信度效应量；Chumor 2.0 正文的 44.6%–60.3% 与 78.3%；Duolingo 论文的数据天数（34 还是 35）。",
+  "中文流行语榜单全凭记忆：《咬文嚼字》2017、2020–2025 年名单（2025 年把握不大）、年度十大网络用语 2024 与 2025 年名单未列；2026 年两个榜单按惯例 12 月初发布，截至 2026-11-18 应未出，未能联网确认。热梗生命周期没有量化数据。",
+  "品牌案例缺来源：钉钉在线求饶、老乡鸡、蜜雪冰城、国家反诈中心与老陈、深圳卫健委、江山娇与红旗漫、全棉时代、Ubras 与李诞、英特尔和京东与杨笠、笑果文化、Friend 挂件、DeepSeek 锐评，都只是背景知识线索（笔记 9.2），需要逐个补证据和数据。",
+  "没查到：小爱同学、小度、天猫精灵讲笑话的使用数据与事故记录；美团、饿了么、拼多多营销推送的逐字样本与用户投诉；严肃机构玩梗的效果数据；金融、医疗类 App 幽默文案的实证。",
+  "没查到：不同年龄、城市层级、性别的中文用户对 AI 幽默的偏好差异；老年用户对拟人和幽默的接受度；南北方幽默风格差异；微笑表情、「呵呵」在不同年龄层的语义差异的研究文献。",
+  "Weinberger 产品色彩矩阵的原始出处、Martin 等 2003 幽默风格问卷及其中国样本结果（Chen & Martin 2007）、岳晓东 2010 与 2011 年的两篇文章、Morkes 等 1999、Mirowski 等 2024，都只凭记忆写入笔记，未进结构化 finding 或已标低可信度。",
+  "《广告绝对化用语执法指南》（2023）与 T7b 提到的《广告引证内容执法指南》（2026-06）原文未核；「史低」「全网最低」有无处罚先例未查；PA 的提醒是否构成广告需法务判断。",
+  "幽默阶梯、上限矩阵、自检清单里的所有数字阈值（8 个汉字、每 5 条 1 次、30 天冷却、新用户前 5 次交互）和「锁屏可见性」规则都是推演，没有研究支撑，需要线上实验校准。"
+ ],
+ "dossier_path": "scratchpad/research/T6-humor.md"
+}

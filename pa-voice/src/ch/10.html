@@ -1,0 +1,111 @@
+<section class="ch" id="rollout">
+  <header class="ch-head">
+    <div class="ch-no">10</div>
+    <h2>怎么上线，怎么知道它真的在省</h2>
+    <p class="ch-answer"><b>目标看两件事：用户有没有更快做对决定，省下的钱和时间对不对得上账。</b>护栏看四件事：静音、忽略、撤销、一句「别发了」。只看点击和好评，语气会滑向讨好。</p>
+    <ul class="ch-meta"><li>拓展：度量与落地</li><li>阶段划分与阈值为设计提案</li><li>附待验证清单</li></ul>
+  </header>
+
+  <div class="facts wide">
+    <div class="fact"><b class="num">71<small>%</small> → 53<small>%</small></b><span>Android 应用的推送许可率中位数，2023 到 2025 年。发通知的资格在变贵</span><cite>厂商基准报告<a class="ev" data-ev="T2-15"></a></cite></div>
+    <div class="fact"><b class="num">10<small>倍</small></b><span>一项募捐邮件实验里，提醒提高了捐款，也提高了退订；不算这笔成本，提醒给捐赠者带来的福利会被高估这么多</span><cite><a class="ev" data-ev="T4-15"></a></cite></div>
+    <div class="fact"><b class="num">8.7 → 1.4</b><span>助推的平均效果（百分点）：期刊里的小样本研究，对比大规模实测</span><cite><a class="ev" data-ev="T4-13"></a></cite></div>
+    <div class="fact"><b class="num">几天</b><span>一次只看到正向信号的语气更新，上线几天就因为讨好被全量回滚</span><cite>多家报道<a class="ev" data-ev="T8-11"></a></cite></div>
+  </div>
+
+  <div class="sub col">
+    <h3>别只量点击</h3>
+    <p>主动消息最容易量的是打开率，可它偏偏最会骗人。一条写得好的消息，用户在锁屏上看完就够了，根本不用点开；一条制造紧迫感的消息，点击率反而高。一项比较政府助推团队大样本实测与期刊文献的研究发现：效果有，但比文献里看起来的小<a class="ev" data-ev="T4-13"></a>。另一项募捐提醒实验发现，成本也有，只是不在同一张表上<a class="ev" data-ev="T4-15"></a>。</p>
+    <p>所以度量要回到用户请 PA 的本意：这条消息有没有让他少花钱、少花时间，以及为此借走了他多少注意力。</p>
+  </div>
+
+  <div class="sub wide">
+    <h3>一张看板上该有的数</h3>
+    <div class="tbl scroll-x">
+      <table>
+        <thead><tr><th>类别</th><th>指标</th><th>怎么算</th><th>读法</th></tr></thead>
+        <tbody>
+          <tr><th scope="row" rowspan="3">目标</th><td>主动作完成率</td><td>带按钮的消息里，用户点了主动作或明确选了另一项的比例</td><td>两种都算做了决定。「没反应」才是失败</td></tr>
+          <tr><td>从送达到决定的时长</td><td>中位数，按消息类型分开看</td><td>求拍板类应该以秒计；变长说明信息没给够，或者选项太多</td></tr>
+          <tr><td>能对账的节省</td><td>已成交的差额合计；省时间按动作数乘以约定的估算值，单独标「约」</td><td>只算已经发生的。没成交的「能省」不进账</td></tr>
+          <tr><th scope="row" rowspan="4">护栏</th><td>静音与关闭通知率</td><td>按目标、按消息类型</td><td>最重的一票。某一类升了，先停这一类</td></tr>
+          <tr><td>忽略率</td><td>送达后既没点也没在别处处理的比例</td><td>进展播报天然高，求拍板高了才是问题</td></tr>
+          <tr><td>撤销率</td><td>PA 先办后报的动作里被用户撤回的比例</td><td>高了说明授权范围画大了，退回「先问」</td></tr>
+          <tr><td>负反馈率</td><td>「别发了」「太啰嗦」「说人话」这类回复，和按钮式的「少提醒」</td><td>逐条读，不只数数</td></tr>
+          <tr><th scope="row" rowspan="3">诊断</th><td>每个目标的消息数</td><td>从接单到办妥，一共发了几条、几条需要决定</td><td>同一类目标之间比，找出话多的那一类</td></tr>
+          <tr><td>更正率</td><td>发过「我说错了」的消息占比</td><td>事实层的质量。说错比任何语气问题都先伤信任</td></tr>
+          <tr><td>体检退回率</td><td>模型写的第一稿在体检中被退回的比例，按规则分</td><td>哪条规则总在退，就回去改 Skill 里那一条的写法</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="tool wide sub" id="calc">
+    <div class="tool-head"><h3>注意力账本</h3><span>填你们自己的数，看一个用户一周下来是借得多还是还得多</span></div>
+    <div class="tool-body">
+      <div class="tool-split w-3-2">
+        <div class="stack">
+          <div class="controls">
+            <div class="field"><label for="calcMsgs">每周主动消息数</label><input class="input" id="calcMsgs" type="number" min="0" max="200" step="1" value="6" inputmode="numeric"></div>
+            <div class="field"><label for="calcAsk">其中要用户做决定的</label><input class="input" id="calcAsk" type="number" min="0" max="200" step="1" value="2" inputmode="numeric"></div>
+          </div>
+          <div class="controls">
+            <div class="field"><label for="calcGlance">看一眼一条（秒）</label><input class="input" id="calcGlance" type="number" min="1" max="120" step="1" value="5" inputmode="numeric"></div>
+            <div class="field"><label for="calcDecide">做一次决定（秒）</label><input class="input" id="calcDecide" type="number" min="1" max="600" step="1" value="20" inputmode="numeric"></div>
+            <div class="field"><label for="calcSwitch">被打断的额外代价（秒/条）</label><input class="input" id="calcSwitch" type="number" min="0" max="1200" step="5" value="30" inputmode="numeric"></div>
+          </div>
+          <div class="controls">
+            <div class="field"><label for="calcMoney">每周已成交的节省（元）</label><input class="input" id="calcMoney" type="number" min="0" max="100000" step="1" value="60" inputmode="decimal"></div>
+            <div class="field"><label for="calcTime">每周替用户省下的时间（分钟）</label><input class="input" id="calcTime" type="number" min="0" max="10000" step="1" value="40" inputmode="numeric"></div>
+          </div>
+          <p class="note">「看一眼」的默认值取自手表交互约 5 秒的设计指标<a class="ev" data-ev="T1-06"></a>；其余默认值都是为了演示随手填的，没有实证来源。「被打断的额外代价」没有可以直接套用的手机场景数字：桌面办公的实地研究里，一次提醒引发的绕路以分钟计<a class="ev" data-ev="T3-18"></a>，而手机通知可以一瞥划走。请换成你们自己的日志数据。</p>
+        </div>
+        <div class="stack">
+          <div class="receipt" id="calcOut" aria-live="polite"></div>
+          <p class="note" id="calcNote"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub wide">
+    <h3>分四步放开 <small>每一步都有退回条件</small></h3>
+    <div class="flow" style="--flow-cols:4">
+      <div><small>第一步 · 影子模式</small><b>只生成，不发送</b><span>把模型的「发不发」和文案记下来，人工每天抽 30 条对照量表看。过关线：体检「必改」为 0；抽检里「不该发却想发」低于一成。</span></div>
+      <div><small>第二步 · 只开四类</small><b>求拍板、到点提醒、受阻、已办告知</b><span>这四类都由代码里的硬条件触发，价值最确定。语气锁在默认档，幽默最高 H1。看主动作完成率和静音率。</span></div>
+      <div><small>第三步 · 放开进展与小结</small><b>开始调频率</b><span>进展播报默认进小结。频率上限从第 4 章的起点值开始，按护栏指标往下收，不往上放。</span></div>
+      <div><small>第四步 · 开放预设</small><b>语气预设和 H2 交给用户选</b><span>默认档不变。用户自己打开的才生效，一句「别贫」立即关掉。每个预设单独看护栏。</span></div>
+    </div>
+    <p class="note" style="margin-top:.7rem">退回条件对每一步都一样：某一类消息的静音率或负反馈率明显高于其他类，就先停这一类，查清是该不该发的问题还是怎么说的问题。四步的划分和过关线是本手册的提案；可以借鉴的先例是：一款开源个人 agent 的控制台推送默认只开审批类，其余类别要用户自己打开<a class="ev" data-ev="T7a-06"></a>。</p>
+  </div>
+
+  <div class="sub wide">
+    <h3>这份手册没能回答的八件事 <small>上线前要自己测</small></h3>
+    <div class="tbl scroll-x">
+      <table>
+        <thead><tr><th>问题</th><th>现在的依据</th><th>建议怎么测</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">默认用「你」还是「您」</th><td>没有共识：设计规范建议用「你」<a class="ev" data-ev="T5-01"></a>，产品文案里两者各占一半<a class="ev" data-ev="T5-08"></a>，真人扮演助理时多数用「您」<a class="ev" data-ev="T5-10"></a></td><td>建目标时让用户选一次；对没选的人做两组对比，看负反馈率和完成率</td></tr>
+          <tr><th scope="row">六个画像预设对不对</th><td>没有拿到可核对的中国人群数据，是设计假设</td><td>每个画像找 8–12 人，同一事件给三种语气，问偏好并测理解</td></tr>
+          <tr><th scope="row">每天、每周最多几条</th><td>起点值来自平台规则和海外产品的做法<a class="ev" data-ev="T2-21"></a><a class="ev" data-ev="T7a-20"></a></td><td>按护栏指标往下收；按目标类型分别定，不设全局一个数</td></tr>
+          <tr><th scope="row">H2 的俏皮话有没有人要</th><td>幽默研究多来自广告和客服场景，没有 PA 提醒的直接证据</td><td>只对自己打开预设的用户做；看同一个梗第二次出现时的负反馈</td></tr>
+          <tr><th scope="row">国内各机型到底露几个字</th><td>字数预算按系统规范和字号表推算，定制系统的实现各不相同<a class="ev" data-ev="T2-23"></a>。这个数直接决定规范值多少：盲评里按标题 20、正文 50 个字宽截断、只看显示得出来的部分时，带 Skill 的一直占优；消息分层之前，评审读一整段完整文字时，除第一轮落后外两边接近（<a href="#eval">第 9 章</a>）</td><td>拿主力机型逐一截图：默认字号、最大字号、锁屏、横幅、胶囊；再按实测的字数重跑一遍「只看显示部分」的盲评</td></tr>
+          <tr><th scope="row">小结放在什么时候</th><td>一项两周的现场实验里，每天三次批量送达的效果最好<a class="ev" data-ev="T2-11"></a>；周日晚是本手册的假设</td><td>让用户自己选时刻；默认值做两三个时点的对比</td></tr>
+          <tr><th scope="row">多少钱以内可以先办后报</th><td>海外厂商和咨询机构的问卷里，只有约 5%–9% 的人接受不经确认就付款<a class="ev" data-ev="T4-31"></a>；授权应该由用户事先给，并写明价格上限、时限这类条件，超出条件就回来问<a class="ev" data-ev="T3-13"></a></td><td>不设默认授权。同类事办成三次后问一次，记录用户给的上限分布</td></tr>
+          <tr><th scope="row">「省了多少时间」怎么算才可信</th><td>没有公认口径。一项欧美调查里，每月花钱请人代做不喜欢的日常杂事的只有 28.2%；换一种更宽的问法，另一组美国在职成年人里是一半<a class="ev" data-ev="T4-26"></a></td><td>先只报动作数（「比了 12 家」「填了 9 张票」），时间估算标「约」，访谈里问用户认不认</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sub wide">
+    <h3>读这份手册时要记得的四条边界</h3>
+    <div class="grid-2">
+      <div class="callout bound"><b>规则多数是推演</b>有直接实证的是「人怎么读」「打扰的代价」「确认疲劳」这些底层现象。从现象到「标题 16 字宽」「最多提醒两次」这样的具体数值，中间是设计判断。每条规则后面的角标能看到它靠的是哪一种。</div>
+      <div class="callout bound"><b>很多研究不是在手机通知上做的</b>阅读研究多在桌面网页，打断研究多在办公室，助推研究多在政府信件和短信。方向可以借，数字不要直接套。</div>
+      <div class="callout bound"><b>中国用户的一手数据很少</b>中文部分最扎实的是平台规范、法规条文和本轮自己统计的语料；用户偏好方面基本是空白。</div>
+      <div class="callout bound"><b>正文引用的证据，仍有近两成只核到搜索摘要</b>调研时的网络环境只放行了少数站点。收尾时又放行了 20 个来源网站，把取得到的逐条对了一遍原文，每条由两位核对者先后各核一次。<span data-stat="evidence">325</span> 条证据里，<span data-stat="verified">173</span> 条读了原文，<span data-stat="abstract">30</span> 条是论文、只读到出版方登记的摘要，其余停在搜索摘要或既有知识一级，台账里逐条标了。正文引用到的 <span data-stat="cited">196</span> 条里，<span data-stat="citedVerified">129</span> 条读了原文，<span data-stat="citedAbstract">30</span> 条读了论文摘要，<span data-stat="citedSearch">37</span> 条仍然只核到检索摘要（多数是新闻报道和厂商页面，原站没有放行），没有完全没核过的。</div>
+      <div class="callout fix"><b>对上原文之后改了什么</b>收尾这一轮取到了 58 条引用的原文或论文摘要，其中 25 条的说法有出入，正文跟着改了二十来处。最要紧的一处：vivo 推送的现行官方文档写的是标题 40、内容 100 个字符，手册原先据检索摘要写的「标题上限 20 个汉字、内容 50 个汉字」不对；标题 20、正文 50 现在只是本手册按显示宽度定的预算，要不要放宽等真机实测。其余多是说得比原文满：幽默研究里的「中国受试者」其实是香港的华人大学生；「继续道歉会拉低满意度」，原文说的是在拉近关系和表达情绪上用力过多会削弱解决问题的效果；「花钱买时间的价值被低估」，原文没有测人们怎么估值，只报告了多少人这么做；「人和人判断情绪只有中等一致」换成了原数据集里的数。每条改了什么，记在台账各条的「边界」里。</div>
+    </div>
+  </div>
+</section>

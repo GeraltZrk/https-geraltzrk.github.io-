@@ -1,0 +1,55 @@
+<section class="ch" id="ledger">
+  <header class="ch-head">
+    <div class="ch-no">11</div>
+    <h2>证据台账</h2>
+    <p class="ch-answer"><b>正文里的每个小角标，都指向这里的一行。</b>每条写了它说明什么、关键数据、出处、适用边界，以及本轮核对到了哪一步。</p>
+    <ul class="ch-meta"><li><span data-stat="evidence">325</span> 条</li><li>10 路调研</li><li>可筛选、可检索、可导出</li></ul>
+  </header>
+
+  <div class="sub wide">
+    <div class="grid-2">
+      <div class="col">
+        <h3 style="font-size:var(--t-xl);font-weight:700">怎么读这张表</h3>
+        <p><b>类型</b>说的是证据的性质：实证研究、官方规范、法规、行业数据、产品案例、专家观点、用户声音。同样一句结论，靠一项实验和靠一篇博客，分量不同。</p>
+        <p><b>把握</b>是调研时对「这条结论在 PA 场景下靠不靠得住」的判断，分高、中、低。研究本身再扎实，场景离得远，把握也只给到中。</p>
+        <p><b>核对</b>说的是本轮做到了哪一步。「已核对原文」指打开了原始页面或文件并找到了对应的话；「已核对论文摘要」指只读到出版方登记的摘要，摘要里没有的数字没法核，各条的「边界」里写了是哪些；「仅见搜索摘要」指只在检索结果里看到转述；「凭既有知识，未核」指检索额度用完之后补的，引用前请自己查一遍。</p>
+      </div>
+      <div class="stack" id="ledgerStats"></div>
+    </div>
+  </div>
+
+  <div class="sub wide">
+    <div class="stack">
+      <div class="ledger-tools">
+        <div class="field" style="flex:1 1 16rem"><label for="ledgerQ">检索</label><input class="input" id="ledgerQ" type="search" placeholder="搜结论、出处或编号，例如 续费、Apple、T5-09" autocomplete="off"></div>
+        <button class="btn ghost sm" id="ledgerSave" type="button">导出台账（JSON）</button>
+      </div>
+      <div class="field"><span class="label">按章节</span>
+        <div class="chips" id="ledgerCh" role="group" aria-label="按章节筛选">
+          <button class="chip" type="button" value="all" aria-pressed="true">全部</button>
+          <button class="chip" type="button" value="life" aria-pressed="false">01 目标的一生</button>
+          <button class="chip" type="button" value="read" aria-pressed="false">02 人怎么读</button>
+          <button class="chip" type="button" value="cost" aria-pressed="false">03 理解成本</button>
+          <button class="chip" type="button" value="timing" aria-pressed="false">04 何时打扰</button>
+          <button class="chip" type="button" value="wording" aria-pressed="false">05 中文用词</button>
+          <button class="chip" type="button" value="tone" aria-pressed="false">06 语气</button>
+          <button class="chip" type="button" value="humor" aria-pressed="false">07 开玩笑</button>
+          <button class="chip" type="button" value="skill" aria-pressed="false">09 让 AI 照着写</button>
+        </div>
+      </div>
+      <div class="field"><span class="label">按类型</span><div class="chips" id="ledgerKind" role="group" aria-label="按证据类型筛选"></div></div>
+      <div class="field"><span class="label">按核对程度</span>
+        <div class="chips" id="ledgerCheck" role="group" aria-label="按核对程度筛选">
+          <button class="chip" type="button" value="all" aria-pressed="true">全部</button>
+          <button class="chip" type="button" value="verified" aria-pressed="false">已核对原文</button>
+          <button class="chip" type="button" value="abstract" aria-pressed="false">已核对论文摘要</button>
+          <button class="chip" type="button" value="search" aria-pressed="false">仅见搜索摘要</button>
+          <button class="chip" type="button" value="memory" aria-pressed="false">未核</button>
+        </div>
+      </div>
+      <div class="ledger-count" id="ledgerCount" aria-live="polite"></div>
+    </div>
+    <div class="ledger-list" id="ledgerList" style="margin-top:.6rem"></div>
+    <div style="margin-top:1rem"><button class="btn ghost" id="ledgerMore" type="button" hidden>再显示 60 条</button></div>
+  </div>
+</section>

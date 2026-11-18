@@ -1,0 +1,723 @@
+{
+ "track": "T1 以人为维度的阅读习惯与注意力（含中文阅读特性与各通知表面的可见字数）",
+ "dossier_path": "scratchpad/research/T1-reading.md",
+ "headline_insights": [
+  "官方预算比基础稿更紧：Apple 要求通知标题「通常只有两三个词」，Android 要求标题不超过 30 个字符、正文不超过 40 个字符（拉丁口径，约合 15 和 20 个汉字），且标题恒为一行【已核】。",
+  "默认字号下通知一行约 17–20 个汉字，系统标准档最大字号降到 12–14 个，无障碍最大字号只剩 5–6 个；这是用 Apple 字号表和 AOSP 模板尺寸做的推算，尚未实测。",
+  "最紧的容器只有 3–6 个字：Android 16 Live Update 胶囊最宽 96dp、只保证少于 7 个字符完整显示；灵动岛紧凑态每侧 52.33×36.67pt，最小态要放进直径 28pt 的圆【已核】。",
+  "一次注意只有 2–5 秒：Apple 公开的手表交互内部指标是「约 5 秒或更短」【已核】；按默读每秒约 7 个字估算，2 秒读 14 字、5 秒读 35 字。基础稿的「1.5–3 秒」量级接近但没有出处。",
+  "通知到达后是「几分钟内」才被看到（15 人、1 周、日均 63.5 条，仅搜索摘要核对），所以回应窗口短于 5 分钟的节点不能发待确认，只能事前授权、事后告知。",
+  "用户把通知当「知晓」而不是「指令」：两周实地研究的摘要如此【已核摘要】；Apple HIG 也明确反对重复发同一件事、反对发「去 App 里做某事」的通知【已核】。",
+  "字数预算建议：前 6 个字宽给结果词和数字，前 12 个字宽说完一个完整命题，标题建议 14 字宽以内、硬上限 20 字，正文首句 18 字宽以内，全文硬上限 50 字（全角算 1、半角算 0.5）。",
+  "本方向的学术数字几乎都没能联网核对：检索额度只用上 2 次就耗尽，NN/g、ACM、微信和国内厂商文档都打不开；平台规范部分则有 48 次成功抓取、约 40 个页面逐字核对。"
+ ],
+ "findings": [
+  {
+   "id": "T1-01",
+   "claim": "Android 官方规范：通知标题不超过 30 个字符、正文不超过 40 个字符；标题展开后也只有一行，正文默认截成一行。",
+   "evidence_type": "官方规范",
+   "source_title": "Android Developers: Notifications design guide（Style > Clear and concise text）",
+   "source_url": "https://developer.android.com/design/ui/mobile/guides/home-screen/notifications",
+   "year": "现行版（2026-11 访问）",
+   "key_data": "\"truncates content titles to a single line (even when expanded)\"；\"Doesn't exceed 30 characters\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "30/40 是拉丁字符口径，约合 15/20 个汉字；标题一行说完结论，正文第一行必须能独立成立。",
+   "caveat": "官方没有给 CJK 口径，折算为研究员估计；国内各厂商系统皮肤的折叠行数和字号不同，需实测。"
+  },
+  {
+   "id": "T1-02",
+   "claim": "AOSP 通知模板标题和正文都是 14sp；按边距推算，原生安卓折叠态一行约 14–22 个汉字，字体放大 2 倍后只剩 7–11 个。",
+   "evidence_type": "官方规范",
+   "source_title": "AOSP frameworks/base core/res/res/values/dimens.xml（aosp-mirror master 分支）",
+   "source_url": "https://raw.githubusercontent.com/aosp-mirror/platform_frameworks_base/master/core/res/res/values/dimens.xml",
+   "year": "现行版（2026-11 访问）",
+   "key_data": "title_text_size 14sp；text_size 14sp；content_margin_start 52dp（2025 版 72dp）；content_margin_end 16dp",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "把第一行预算定在 12 个字宽，才能在调大字号的安卓机上不折行、不被截断。",
+   "caveat": "尺寸已核；每行字数是研究员推算（假设通知栏左右各留 16dp、汉字宽等于字号），国产系统皮肤必须实测。"
+  },
+  {
+   "id": "T1-03",
+   "claim": "Apple 官方要求通知标题「通常只有两三个词」；Apple Watch 的 short look 只显示标题这一行；副标题不保证显示。",
+   "evidence_type": "官方规范",
+   "source_title": "Apple Developer Documentation: UNMutableNotificationContent.title / subtitle；Generating a remote notification",
+   "source_url": "https://developer.apple.com/documentation/usernotifications/unmutablenotificationcontent/title",
+   "year": "现行版（2026-11 访问）",
+   "key_data": "\"usually only a couple of words\"；\"Subtitles aren't displayed in all cases.\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "标题前两三个词（约 4–6 个汉字）要自带结果；关键信息不要放在副标题里。",
+   "caveat": "「两三个词」是英文口径，折算汉字数是研究员估计。"
+  },
+  {
+   "id": "T1-04",
+   "claim": "Apple 不给通知字数上限，由系统自动截断；用户隐藏预览时，锁屏只显示 App 图标和默认标题「通知」或类别占位文案。",
+   "evidence_type": "官方规范",
+   "source_title": "Apple HIG: Notifications；UNNotificationCategory.hiddenPreviewsBodyPlaceholder",
+   "source_url": "https://developer.apple.com/design/human-interface-guidelines/notifications",
+   "year": "现行版（2026-11 访问）",
+   "key_data": "\"don't truncate your message\"；\"only your app icon and the default title Notification\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "锁屏可见字数的下限是 0。每类消息都设占位文案，如「1 条降价提醒」；金额是否上锁屏交给用户。",
+   "caveat": "Face ID 机型默认「解锁后才显示预览」是研究员记忆，未核。"
+  },
+  {
+   "id": "T1-05",
+   "claim": "iOS 通知字号可从默认 15pt 调到 21pt（标准档最大）、49pt（无障碍最大），推算每行汉字从 19 个降到 14 个、6 个。",
+   "evidence_type": "官方规范",
+   "source_title": "Apple HIG: Typography（Dynamic Type 字号表）；Android 14 features（Non-linear font scaling to 200%）",
+   "source_url": "https://developer.apple.com/design/human-interface-guidelines/typography",
+   "year": "现行版（2026-11 访问）",
+   "key_data": "Subhead：Large 15pt、xxxLarge 21pt、AX1 25pt、AX5 49pt；\"the system supports font scaling up to 200%\"",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "「前 12 个字宽说完命题、前 6 个字宽给结果」这两个预算主要是为调大字号的用户留的。",
+   "caveat": "字号表已核；每行字数为推算，假设通知用 Subhead 样式、正文宽约等于屏宽减 94pt，未实机验证。"
+  },
+  {
+   "id": "T1-06",
+   "claim": "Apple 设计团队公开的 Apple Watch 交互内部指标是「约 5 秒或更短」；Wear OS 的原则是「几秒内完成任务」。",
+   "evidence_type": "专家观点",
+   "source_title": "WWDC15 Session 802: Designing for Apple Watch；Wear OS Design principles",
+   "source_url": "https://developer.apple.com/videos/play/wwdc2015/802/",
+   "year": "2015",
+   "key_data": "\"Our internal metric for interaction times is about five seconds or less.\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "一条主动消息的阅读预算按 5 秒封顶，按每秒 7 个字估算约 35 个字，全文控制在 40 字以内。",
+   "caveat": "这是厂商的内部设计指标，不是公开实验；2015 年、手表场景；每秒 7 字是研究员估计。"
+  },
+  {
+   "id": "T1-07",
+   "claim": "灵动岛紧凑态左右各只有 52.33×36.67pt，最小态要放进直径 28pt 的圆；实时活动最长 8 小时，且不应与推送重复发同一更新。",
+   "evidence_type": "官方规范",
+   "source_title": "Apple HIG: Live Activities",
+   "source_url": "https://developer.apple.com/design/human-interface-guidelines/live-activities",
+   "year": "现行版（2026-11 访问）",
+   "key_data": "393×852 机型 compact 52.33×36.67pt；\"fit inside a 28pt-diameter circle\"；\"don't exceed eight hours\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "岛上只放一个状态词或一个数字，约 3 个字宽；只给「执行中」的短时任务用，更新不再另发推送。",
+   "caveat": "尺寸已核；「约 3–4 个汉字或 5–6 个半角数字」是按 15–16pt 字号的推算。"
+  },
+  {
+   "id": "T1-08",
+   "claim": "安卓 16 Live Update 状态栏胶囊最宽 96dp，只保证少于 7 个字符完整显示；广告、提醒、日历事件、包裹追踪不够格使用。",
+   "evidence_type": "官方规范",
+   "source_title": "Android Developers: Live update notifications",
+   "source_url": "https://developer.android.com/develop/ui/compose/notifications/live-update",
+   "year": "2025",
+   "key_data": "\"The chip has a maximum width of 96dp.\" \"If less than 7 characters, show the whole text.\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "胶囊文案控制在 3 个字宽左右，如「5min」「排队中」；多日的盯价不能进胶囊，只能留在通知和卡片里。",
+   "caveat": "7 个字符是拉丁口径，约合 4 个汉字是推算；厂商可以另加准入条件。"
+  },
+  {
+   "id": "T1-09",
+   "claim": "Apple HIG 反对为同一件事重复发通知（即使对方没回应），也反对发「去 App 里做某事」的通知，理由是人划走后记不住指示。",
+   "evidence_type": "官方规范",
+   "source_title": "Apple HIG: Notifications（Best practices / Notification actions）",
+   "source_url": "https://developer.apple.com/design/human-interface-guidelines/notifications",
+   "year": "现行版（2026-11 访问）",
+   "key_data": "\"Avoid sending multiple notifications for the same thing, even if someone hasn't responded.\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "没回应就更新原通知，不重发；要用户操作就给 2–3 个写明结果的按钮，不写「请前往…」。",
+   "caveat": "这是平台设计规范，不是实验结论；通知详情视图最多 4 个按钮，安卓展开后最多 3 个。"
+  },
+  {
+   "id": "T1-10",
+   "claim": "「最重要的信息放最前」是 Apple、安卓、Ant Design、微软四家规范的共识；Apple 还指出人并不按顺序读屏幕上的字。",
+   "evidence_type": "官方规范",
+   "source_title": "Apple HIG: Writing；WWDC22 Writing for interfaces；Ant Design 文案规范；Microsoft Writing Style Guide",
+   "source_url": "https://developer.apple.com/design/human-interface-guidelines/writing",
+   "year": "现行版（2026-11 访问）",
+   "key_data": "\"put the most important information first\"；\"people don't always read the text on screen in order\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "结论先行有官方背书：先写结果和数字，再写是哪一件事，最后写截止时间。",
+   "caveat": "都是规范性建议；针对通知的「结论先行」没有找到对照实验。"
+  },
+  {
+   "id": "T1-11",
+   "claim": "Ant Design 文案规范写明用户对数字的感知速度更快，应使用阿拉伯数字；并建议省略不必要的标点、避免用「您」、慎用感叹号。",
+   "evidence_type": "官方规范",
+   "source_title": "Ant Design 文案规范（docs/spec/copywriting.zh-CN.md 源文件）",
+   "source_url": "https://ant.design/docs/spec/copywriting-cn/",
+   "year": "现行版（2026-11 访问）",
+   "key_data": "「用户对于数字的感知速度更快，使用数字而非文字表述会更加有效。」「避免使用「您」，让用户感觉太过疏远。」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "金额、时间、数量一律用阿拉伯数字；一条消息最多 2 个数字，数字少了才是视觉斑点。",
+   "caveat": "规范面向企业级中后台产品，不是实验；对大众消费场景和老年用户是否适用没有证据。"
+  },
+  {
+   "id": "T1-12",
+   "claim": "W3C《中文排版需求》规定汉字与西文字母、数字之间用不多于四分之一个汉字宽的间距；Ant Design 和《中文文案排版指北》也要求加空格。",
+   "evidence_type": "官方规范",
+   "source_title": "W3C Requirements for Chinese Text Layout 中文排版需求（w3c/clreq 源文件）",
+   "source_url": "https://www.w3.org/TR/clreq/",
+   "year": "现行版（2026-11 访问）",
+   "key_data": "「原则上，汉字与西文字母、数字间使用不多于四分之一个汉字宽的字距或空白。」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "推送和卡片里汉字与数字之间留一个半角空格并全篇统一；短信、微信字段、胶囊字数紧张时可省。",
+   "caveat": "这是排版规范。没有找到「加空格能加快扫读」的实验；记忆中的 Bai 等 2008 反而显示熟练读者不靠空格分词。"
+  },
+  {
+   "id": "T1-13",
+   "claim": "WCAG 把 CJK 文本行宽上限定为 40 个字（西文 80 个字符），理由是 CJK 字符约为西文两倍宽；并建议文本不超过初中阅读水平。",
+   "evidence_type": "官方规范",
+   "source_title": "W3C WCAG 2.x SC 1.4.8 Visual Presentation / 3.1.5 Reading Level（含 Understanding 文档，w3c/wcag 源文件）",
+   "source_url": "https://www.w3.org/TR/WCAG22/#visual-presentation",
+   "year": "现行版（2026-11 访问）",
+   "key_data": "\"Lines should not exceed 80 characters or glyphs (40 if CJK).\" \"lower secondary education level\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "英文规范里的字符数除以 2 就是汉字预算；用词按初中毕业能懂来写。",
+   "caveat": "两条都是 AAA 级（最高级、非强制）准则。"
+  },
+  {
+   "id": "T1-14",
+   "claim": "语音场景：Apple 规定时效性通知默认会被播报；Siri 准则要求回应尽量短、不要尝试幽默、脱离画面也能听懂、不重复 App 名。",
+   "evidence_type": "官方规范",
+   "source_title": "Apple HIG: Siri（Editorial guidelines）；WWDC21 Session 10091",
+   "source_url": "https://developer.apple.com/design/human-interface-guidelines/siri",
+   "year": "2021 / 现行版",
+   "key_data": "\"…Time Sensitive notifications will be announced by default.\"；\"Avoid… attempts at humor\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "标成时效性的消息要另备播报版：每句 20 字以内、先说事再说数、去掉符号、不玩梗。",
+   "caveat": "各 TTS 引擎对「¥」「/」「【】」的读法未实测；Android Auto 只朗读即时通讯类消息。"
+  },
+  {
+   "id": "T1-15",
+   "claim": "实地研究显示，用户主要把通知当作被动保持知晓的手段，而不是切换任务的信号；关掉通知后，一部分人反而更频繁地自己去查。",
+   "evidence_type": "实证研究",
+   "source_title": "Iqbal & Horvitz: Notifications and Awareness: A Field Study of Alert Usage and Preferences（微软研究院技术报告 MSR-TR-2009-67；记忆中亦刊于 CSCW 2010）",
+   "source_url": "https://www.microsoft.com/en-us/research/publication/notifications-and-awareness-a-field-study-of-alert-usage-and-preferences/",
+   "year": "2010",
+   "key_data": "两周实地记录；用户视通知为被动知晓手段；关闭通知后部分用户更频繁自查邮件、部分更专注（据微软研究院页面摘要）",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "看一眼不点开是正常分诊。标题要让人直接判断现在办、稍后办还是不用管，别只用点击率评价话术。",
+   "caveat": "只核到摘要，未读全文；桌面邮件通知、2009 年前后、摘要页未给样本量。"
+  },
+  {
+   "id": "T1-16",
+   "claim": "实地研究：用户人均每天处理 63.5 条通知，通常在几分钟内查看，手机是否静音差别不大。",
+   "evidence_type": "实证研究",
+   "source_title": "Pielot, Church & de Oliveira: An In-Situ Study of Mobile Phone Notifications（MobileHCI 2014）",
+   "source_url": "https://doi.org/10.1145/2628363.2628364",
+   "year": "2014",
+   "key_data": "15 名用户、1 周；日均 63.5 条，主要来自即时通讯和邮件；通常几分钟内被查看",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "回应窗口短于 5 分钟的节点不能发「待确认」，要在创建目标时拿授权，事后告知。",
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。受试人群（西欧信息工作者）摘要里没有写，未核。样本仅 15 人、一周，2014 年的数据。",
+   "check_override": "abstract"
+  },
+  {
+   "id": "T1-17",
+   "claim": "NN/g 复查认为 F 型扫视在手机上仍然存在，但它是没有强视觉线索时的默认模式，好的排版会削弱它。",
+   "evidence_type": "实证研究",
+   "source_title": "Pernice: F-Shaped Pattern of Reading on the Web: Misunderstood, But Still Relevant (Even on Mobile)（NN/g）",
+   "source_url": "https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content/",
+   "year": "2017",
+   "key_data": "F 型在桌面和手机上都存在；是缺少强视觉线索时的默认扫视模式（据搜索摘要）",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "一两行的短消息谈不上 F 型，要用的是它的局部规律：第一行和每行最左几个词得到的注视最多。",
+   "caveat": "只经搜索摘要核对，www.nngroup.com 在本会话网络里打不开；研究对象是网页不是通知。"
+  },
+  {
+   "id": "T1-18",
+   "claim": "NN/g 1997 年研究：79% 的用户扫读网页，16% 逐字读；简洁、可扫读、客观三项改写合计把可用性提高 124%。",
+   "evidence_type": "实证研究",
+   "source_title": "Nielsen: How Users Read on the Web（NN/g）",
+   "source_url": "https://www.nngroup.com/articles/how-users-read-on-the-web/",
+   "year": "1997",
+   "key_data": "79% 扫读、16% 逐字读；简洁 +58%、可扫读 +47%、客观语气 +27%、三者合计 +124%（样本量未核实）",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "可以引用方向（用户默认不会读完），不能把 124% 说成通知场景的提升幅度。",
+   "caveat": "2026-11-18 读了原文。58%、47%、27%、124% 都是相对推销式写法的对照版而言。研究对象是 1997 年的桌面网页，不是通知场景。",
+   "check_override": "fetch",
+   "verify_verdict": "partial"
+  },
+  {
+   "id": "T1-19",
+   "claim": "NN/g：扫列表时用户最初往往只看每项开头 2 个词左右（测试中用前 11 个字符模拟，11 是为统一标准截取的长度，不是实测值）；多行以相同的词开头时，人会故意跳过行首（绕过型）。",
+   "evidence_type": "实证研究",
+   "source_title": "Nielsen: First 2 Words: A Signal for the Scanning Eye；Pernice: F-Shaped Pattern of Reading on the Web: Misunderstood, But Still Relevant (Even on Mobile)（NN/g）",
+   "source_url": "https://www.nngroup.com/articles/first-2-words-a-signal-for-scanning/",
+   "year": "2009 / 2017",
+   "key_data": "前 2 个词左右；测试截取前 11 个字符（研究者定的长度，非观测值），35% 的链接只看前 11 个字符时完全猜不出去向；bypassing pattern：多行以相同词开头时读者跳过行首",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "前 6 个字宽必须自带信息；禁用「【PA】」「温馨提示」这类固定前缀，否则用户会学会跳过开头。",
+   "caveat": "2026-11-18 读了两篇原文。绕过型出自 Pernice 2017 年讲 F 型阅读的那篇，不是 2019 年那篇。结论来自英文网页列表，不是中文通知场景，只能借鉴方向。",
+   "check_override": "fetch",
+   "verify_verdict": "partial"
+  },
+  {
+   "id": "T1-20",
+   "claim": "中文阅读的知觉广度不对称：从注视的字往左 1 个字、往右 3 个字；向右的眼跳约 2–2.5 个字，相邻两次注视的范围稍有重叠。",
+   "evidence_type": "实证研究",
+   "source_title": "Inhoff & Liu: The perceptual span and oculomotor activity during the reading of Chinese sentences（JEP:HPP 24(1)）",
+   "source_url": "https://doi.org/10.1037/0096-1523.24.1.20",
+   "year": "1998",
+   "key_data": "左 1 字、右 3 字；向右眼跳约 2–2.5 个字",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "一次注视大约能看清注视点往右 3 个字，结果词和数字要放在开头几个字里。",
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。另有后续研究认为右侧最多可到 4 个字、左侧可能更宽，这一说法只见于检索摘要，未核。",
+   "check_override": "abstract",
+   "verify_verdict": "confirmed"
+  },
+  {
+   "id": "T1-21",
+   "claim": "成人读中文：朗读约 255 字/分钟，默读的经典估计约 580 字/分钟。工作估计取默读每秒 7 个字、播报每秒 4–4.5 个字。",
+   "evidence_type": "实证研究",
+   "source_title": "Trauzettel-Klosinski & Dietz: IReST（IOVS 2012）；Sun, Morita & Stark 1985；Brysbaert 2019 元分析",
+   "source_url": "https://doi.org/10.1167/iovs.11-8284",
+   "year": "1985–2019",
+   "key_data": "IReST 中文朗读 255±29 字/分钟（二手转引；2018 年的中文 IReST 研究测得年轻读者约 295–315 字/分钟）；Sun 等 1985 默读约 580 字/分钟（经 Yen 等 2011 转引）；Brysbaert 2019 英文默读非虚构 238 词/分钟（已核）",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "2 秒约读 14 个字，5 秒约 35 个字；播报 20 个字要 4–5 秒。字数预算按这个换算。",
+   "caveat": "2026-11-18 读了 IReST 和 Brysbaert 2019 的摘要，238 词/分钟对上了。IReST 摘要只给 17 种语言的平均值，中文 255±29、Sun 等 1985 的 580、2018 年研究的 295–315 都没核到。每秒 7 字和每秒 4–4.5 字是推算。IReST 受试为 18–35 岁，测的是朗读。",
+   "check_override": "search",
+   "verify_verdict": "partial"
+  },
+  {
+   "id": "T1-22",
+   "claim": "中文没有词间空格：给熟练读者按词加空格并不更快，切错位置反而更慢；交集型歧义串（如「改签到」）的切分靠相邻词按词频竞争决定，会给加工增加负担。",
+   "evidence_type": "实证研究",
+   "source_title": "Bai, Yan, Liversedge, Zang & Rayner 2008（JEP:HPP 34(5)）；Ma, Li & Rayner 2014",
+   "source_url": "https://doi.org/10.1037/0096-1523.34.5.1277",
+   "year": "2008 / 2014",
+   "key_data": "按词加空格与无空格一样好读；按字或切成非词加空格，阅读时间更长；Ma 等 2014：歧义串切分符合竞争假说，受词频影响（回视增加的证据出自后续研究，不是 Ma 等 2014）",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "避开「改签到」「已退款项」「本周日程」这类歧义串；截止时间不写「5 日前」，写到具体时刻。",
+   "caveat": "2026-11-18 读了 Bai 等 2008 的全文（PMC），前半句逐点对上，实验 1 受试是 16 名天津师范大学本科生。后半句出自 Ma 等 2014，只核到书目信息，交集型歧义串、词频竞争、增加加工负担和「改签到」这个例子都没核到。",
+   "check_override": "fetch",
+   "verify_verdict": "partial"
+  },
+  {
+   "id": "T1-23",
+   "claim": "手机使用以秒计：约 40% 的应用启动不到 15 秒；移动情境下对手机的连续注意被切成 4–8 秒一段；看一次手表平均约 6.7 秒。",
+   "evidence_type": "实证研究",
+   "source_title": "Ferreira 等 MobileHCI 2014；Oulasvirta 等 CHI 2005；Pizza 等 CHI 2016",
+   "source_url": "https://doi.org/10.1145/1054972.1055101",
+   "year": "2005–2016",
+   "key_data": "约 40% 的应用启动短于 15 秒；注意爆发 4–8 秒（实验室 16 秒以上）；手表单次使用均值约 6.7 秒",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "注意预算分三档：2 秒一瞥、5 秒一次微交互、15 秒是点进去之后；落地页也要一屏内做完决定。",
+   "caveat": "全部凭记忆，未核原文，Ferreira 与 Pizza 两篇的 DOI 未确认；样本都不大，年代较早。"
+  },
+  {
+   "id": "T1-24",
+   "claim": "大规模日志研究（4 万多用户、近 2 亿条通知）显示，用户最看重即时通讯类以及与「人」和「事件」有关的通知。",
+   "evidence_type": "实证研究",
+   "source_title": "Sahami Shirazi 等: Large-Scale Assessment of Mobile Notifications（CHI 2014）",
+   "source_url": "https://doi.org/10.1145/2556288.2557189",
+   "year": "2014",
+   "key_data": "4 万多名用户、近 2 亿条通知；被看重的通知与人和事件相关",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "PA 不是「人」，只能靠「事件」被看重：标题写清是哪件事、现在变成了什么状态。",
+   "caveat": "凭记忆写入，未核原文；2014 年安卓用户，应用生态已变化。"
+  },
+  {
+   "id": "T1-25",
+   "claim": "「手机上阅读难两倍」没有被复现：2011 年的研究显示手机上理解得分减半，但 NN/g 2016 年重做后总体没有实质差别。",
+   "evidence_type": "实证研究",
+   "source_title": "NN/g: Mobile Content Is Twice as Difficult（2011）；Reading Content on Mobile Devices（2016）",
+   "source_url": "https://www.nngroup.com/articles/mobile-content/",
+   "year": "2011 / 2016",
+   "key_data": "2011：完形填空理解得分 桌面 39.18%、手机 18.93%；2016：总体无实质差别，只有难内容在手机上更吃力",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "别用「手机难两倍」论证精简；真正该折叠到二级页的是规则、算式这类难内容。",
+   "caveat": "凭记忆写入，未核原文；两项研究的材料和设备都不同。"
+  },
+  {
+   "id": "T1-26",
+   "claim": "结论先行（BLUF）的经典实证：把官样备忘录改成结论先行后，海军军官的阅读时间少 17%–23%，理解更好。",
+   "evidence_type": "实证研究",
+   "source_title": "Suchan & Colucci: An analysis of communication efficiency between high-impact and bureaucratic written communication（Management Communication Quarterly）",
+   "source_url": "https://doi.org/10.1177/0893318989002004002",
+   "year": "1989",
+   "key_data": "阅读时间减少 17%–23%",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "结论先行能省读者时间有实证，但来自纸面公文；复盘、周报这类长消息不必机械套用倒金字塔。",
+   "caveat": "凭记忆写入，数字和 DOI 均未核；1989 年、英文、纸面、军官样本。新闻学里倒金字塔与叙事结构的对比结果并不一致。"
+  },
+  {
+   "id": "T1-27",
+   "claim": "微信订阅消息的模板字段有硬上限：thing 类 20 个以内字符、phrase 类 5 个以内汉字，参数不符合规则时接口返回错误码 47003（参数错误）。",
+   "evidence_type": "官方规范",
+   "source_title": "微信开放文档：小程序 服务端 API「发送订阅消息」（sendMessage / subscribeMessage.send，注意事项中的订阅消息参数值内容限制说明），页面最后编辑于 2026-04-08",
+   "source_url": "https://developers.weixin.qq.com/miniprogram/dev/server/API/mp-message-management/subscribe-message/api_sendmessage.html",
+   "year": "2026",
+   "key_data": "thing 20个以内字符；phrase 5个以内汉字；name 10个以内纯汉字或20个以内纯字母或符号；character_string 32位以内数字、字母或符号；47003 参数错误（以上均见官方「发送订阅消息」页；第三方文章另称会报「data.xxx.value invalid」，官方页没有这句）",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "微信版要单独写：结论放进第一个 thing 字段并控制在 20 字符内，状态词放 phrase，不能直接塞推送原文。",
+   "caveat": "2026-11-18 读了官方原文。原网址已经失效，这里换成了迁移后的页面。限制适用于小程序订阅消息的发送接口。",
+   "check_override": "fetch",
+   "verify_verdict": "partial"
+  },
+  {
+   "id": "T1-28",
+   "claim": "国内安卓厂商推送对长度有硬限制。vivo 现行服务端 API 文档（2.9.4 版）规定：通知标题最大 40 个字符、通知内容最大 100 个字符，按 Java String.length() 计算长度。各家以厂商最新文档为准。",
+   "evidence_type": "官方规范",
+   "source_title": "vivo 开放平台：服务端API接口文档（documentCenter/doc/362，当前版本 2.9.4）；小米、OPPO、魅族推送服务端文档",
+   "source_url": "https://dev.vivo.com.cn/documentCenter/doc/362",
+   "year": "年份未核",
+   "key_data": "vivo 标题最大 40 个字符、内容最大 100 个字符（官方服务端API接口文档 2.9.4 版，按 Java String.length() 计算长度）；小米 title 50、description 128；OPPO title 32（DCloud 转述，官方未核）、content 200；魅族 title 32、content 100（小米、OPPO、魅族本次未核）",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "各通道上限不同，Skill 的字数检查要按通道分别实现并以厂商最新文档为准，vivo 现行是标题 40、内容 100 个字符（按 String.length() 计）。",
+   "caveat": "2026-11-18 读了 vivo 现行官方文档（2.9.4 版）。此前据搜索摘要，2.7.0 版写的是标题 20、内容 50 个汉字，旧版原文这次没有取到。照现行文档，vivo 标题 40 个字符，比转述的 OPPO、魅族的 32 还宽；内容 100 个字符，和转述的魅族相同（其他三家的数字未核）。",
+   "check_override": "fetch",
+   "verify_verdict": "partial"
+  },
+  {
+   "id": "T1-29",
+   "claim": "含中文的短信按 UCS-2 编码，拆成多段时每段只有 67 个字符。",
+   "evidence_type": "行业数据",
+   "source_title": "Twilio message-segment-calculator README（短信分段规则说明）",
+   "source_url": "https://raw.githubusercontent.com/TwilioDevEd/message-segment-calculator/main/README.md",
+   "year": "现行版（2026-11 访问）",
+   "key_data": "\"Multi-segment messages carry 153 characters per segment for GSM-7 and 67 for UCS-2.\"",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "短信版按 70 个字符一条来写（含签名和空格），前 20 个字说完结果和数字，不要拆成两条。",
+   "caveat": "页面只写了多段时的 67；单条 70 个字符是 UCS-2 短信的标准容量，签名计入是国内通道惯例，这两点凭记忆未核。"
+  },
+  {
+   "id": "T1-30",
+   "claim": "人群差异：适老化规范要求主要文字不小于 18dp/pt；全国 15 岁以上人口平均受教育 9.91 年；老年中文读者读得更慢、回视更多。",
+   "evidence_type": "官方规范",
+   "source_title": "工信部《移动互联网应用（APP）适老化通用设计规范》（2021）；第七次全国人口普查公报；Wang 等 2018（J Gerontol B）",
+   "source_url": "https://www.gov.cn/zhengce/zhengceku/2021-04/13/content_5599225.htm",
+   "year": "2020–2021",
+   "key_data": "主要文字不小于 18dp/pt、行距至少 1.3 倍、点击区域不小于 60×60dp/pt；平均受教育年限 9.91 年",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "第一行按 12 个字宽设计；用初中毕业能懂的词；需要决定的事不能只放在会自动消失的横幅里。",
+   "caveat": "全部凭记忆，原文打不开，政府网地址未核；适老化规范针对 App 界面，没有专门规定推送文案。"
+  }
+ ],
+ "design_rules": [
+  {
+   "rule": "前 6 个字宽给出结果词和数字（全角算 1、半角算 0.5）。",
+   "rationale": "最紧的表面只露出这么多：Apple 要求标题只有两三个词且手表 short look 只显示标题；安卓胶囊只保证少于 7 个字符；最大无障碍字号下第一行只剩 5–6 个汉字；中文一次注视约 4 个字。",
+   "do_example": "机票降 ¥420，现价 ¥1,280",
+   "dont_example": "【小助手温馨提示】您关注的机票价格有新变化",
+   "supporting_finding_ids": [
+    "T1-03",
+    "T1-05",
+    "T1-08",
+    "T1-19",
+    "T1-20",
+    "T1-27"
+   ]
+  },
+  {
+   "rule": "前 12 个字宽说完一个完整命题（对象、变化、量）；标题建议不超过 14 个字宽，硬上限 20 个字。",
+   "rationale": "系统标准档最大字号下一行约 12–14 个汉字；安卓官方建议标题不超过 30 个拉丁字符，约合 15 个汉字；一次 2 秒的瞥视约读 14 个字；vivo 通道标题上限 20 个汉字（未核）。",
+   "do_example": "已退订，每月省 ¥30",
+   "dont_example": "关于您上周设置的视频会员自动续费管理目标的最新进展",
+   "supporting_finding_ids": [
+    "T1-01",
+    "T1-02",
+    "T1-05",
+    "T1-21",
+    "T1-28",
+    "T1-30"
+   ]
+  },
+  {
+   "rule": "不用固定前缀，不重复 App 名；同一批消息的开头各不相同。",
+   "rationale": "多行以相同的词开头时，读者会学会跳过行首；系统已在标题上方显示 App 图标和名称，安卓和 Apple 的规范都要求标题里不要再放 App 名。",
+   "do_example": "三条消息分别以「机票降」「明早扣」「改签没成」开头",
+   "dont_example": "三条消息都以「PA 提醒：」开头",
+   "supporting_finding_ids": [
+    "T1-19",
+    "T1-01",
+    "T1-04"
+   ]
+  },
+  {
+   "rule": "金额、时间、数量用阿拉伯数字加单位，一条消息最多 2 个数字；汉字与数字之间留半角空格，短信、微信字段和胶囊字数紧张时可省。",
+   "rationale": "Ant Design 写明用户对数字的感知更快；数字在汉字里是视觉斑点，但多了就不再显眼；中文排版需求规定汉字与数字之间留不超过四分之一字宽的间距。",
+   "do_example": "周四 08:05 直飞，降 ¥420",
+   "dont_example": "周四早上八点零五分的直飞航班比原价一千七百元便宜了四百二十元，折合约七五折",
+   "supporting_finding_ids": [
+    "T1-11",
+    "T1-12",
+    "T1-19"
+   ]
+  },
+  {
+   "rule": "两个标点之间不超过 12–15 个字宽；避开交集歧义串；截止时间写到具体时刻。",
+   "rationale": "一行只有 17–20 个汉字，一次瞥视约 14 个字，一个标点句最好不跨行；中文没有词间空格，歧义串切错后要回视重读；「X 日前」既可以是截止时间也可以是几天前。",
+   "do_example": "请在 11 月 5 日 24:00 前确认。免费改签至 16:30 航班",
+   "dont_example": "请在 5 日前确认改签到新航班",
+   "supporting_finding_ids": [
+    "T1-22",
+    "T1-20",
+    "T1-02"
+   ]
+  },
+  {
+   "rule": "不发「去 App 里做某事」的通知；能在通知上完成的，给 2–3 个按钮，第一个放最常用的非破坏性操作，按钮用动词写出结果。",
+   "rationale": "Apple HIG 指出人划走通知后记不住指示；实地研究显示用户把通知当作知晓手段而不是切换任务的信号；安卓展开后最多 3 个按钮。",
+   "do_example": "明早扣 ¥30：视频会员续费。按钮：「停掉续费」「照常续」",
+   "dont_example": "请前往 App「我的 > 订阅管理 > 自动续费」中关闭。按钮：「查看详情」",
+   "supporting_finding_ids": [
+    "T1-09",
+    "T1-15"
+   ]
+  },
+  {
+   "rule": "同一件事只发一条；没回应就更新原通知，不重发；2 分钟内不连发。",
+   "rationale": "Apple HIG 明确反对为同一件事重复发通知，即使对方没回应；安卓 15 会把短时间连发的通知降声降振最长 2 分钟，同一 App 连发 4 条以上会被自动成组。",
+   "do_example": "把原通知更新为「机票再降 ¥60，现价 ¥1,220」",
+   "dont_example": "一小时内连发「机票降价了」「还没看吗」「再不看就涨回去了」",
+   "supporting_finding_ids": [
+    "T1-09"
+   ]
+  },
+  {
+   "rule": "回应窗口短于 5 分钟的节点，在创建目标时拿授权，事后告知；不发「待确认」。",
+   "rationale": "通知到达后通常要几分钟才被看到；一次注意只有几秒。靠推送加确认，抢号、抢票这类节点必然错过。",
+   "do_example": "创建时问：「到号后直接帮你取号，可以吗」；事后告知：「已取到 A12 号，前面 3 桌」",
+   "dont_example": "到你了，30 秒内确认是否取号",
+   "supporting_finding_ids": [
+    "T1-16",
+    "T1-23"
+   ]
+  },
+  {
+   "rule": "执行中的短时任务用岛、胶囊或实况窗，只放一个状态词或一个数字，目标 3 个字宽、上限 4 个字宽；同一更新不再发推送。",
+   "rationale": "灵动岛紧凑态每侧只有 52.33pt 宽，安卓胶囊最宽 96dp 且只保证少于 7 个字符完整显示；Apple 要求实时活动与推送不重复发同一更新；提醒和包裹追踪不够格使用。",
+   "do_example": "胶囊：「前面12人」",
+   "dont_example": "胶囊：「您的排队进度已更新，请点击查看」",
+   "supporting_finding_ids": [
+    "T1-07",
+    "T1-08"
+   ]
+  },
+  {
+   "rule": "按大字号设计第一行；需要用户决定的事不能只活在横幅上，通知中心和 App 内目标卡片都要留一份。",
+   "rationale": "字体放大后第一行只剩 12 个字左右，第二行可能不显示；Apple 无障碍准则指出定时自动消失的界面对需要更长时间处理信息的人不友好。",
+   "do_example": "标题 12 个字宽内自成一句；目标卡片保留同样的待办",
+   "dont_example": "把关键限制条件写在正文第三行",
+   "supporting_finding_ids": [
+    "T1-05",
+    "T1-02",
+    "T1-30"
+   ]
+  },
+  {
+   "rule": "可能被播报的消息另备「念得通」的版本：每句不超过 20 个字，最多 2 句，先说事再说数，去掉括号和符号，不玩梗。",
+   "rationale": "Apple 规定时效性通知默认会被播报；Siri 准则要求尽量短、不要尝试幽默、脱离画面也能听懂；听的速度约为看的一半，而且不能跳读。",
+   "do_example": "你盯的周四去上海的机票降了 420 元。今晚 12 点前有效。",
+   "dont_example": "【降价】机票 ↓¥420（-25%）→ ¥1,280，手慢无～",
+   "supporting_finding_ids": [
+    "T1-14",
+    "T1-21"
+   ]
+  },
+  {
+   "rule": "按容器分别写、分别检查字数：推送标题 20 字、正文 50 字；微信 thing 字段 20 字符；短信 70 字符含签名。",
+   "rationale": "各通道的硬上限和计数口径都不同：vivo 一个汉字算 2 个字符，小米和 OPPO 算 1 个，微信字段和短信每个字符算 1 个，安卓官方的 30/40 是拉丁字符。",
+   "do_example": "同一事件生成推送版、微信字段版、短信版三份文案",
+   "dont_example": "把 40 字的推送原文直接塞进微信模板字段",
+   "supporting_finding_ids": [
+    "T1-27",
+    "T1-28",
+    "T1-29",
+    "T1-01"
+   ]
+  },
+  {
+   "rule": "给每类消息设锁屏占位文案；「省了多少」可以上锁屏，余额、订单总额、收款方默认不上或交给用户开关。",
+   "rationale": "预览被隐藏时锁屏只显示 App 图标和「通知」或类别占位文案；安卓的 private 级别通知在安全锁屏上只显示 App 名和图标，可另给公开版本。",
+   "do_example": "预览隐藏时显示「1 条降价提醒」",
+   "dont_example": "预览隐藏时只显示「通知」",
+   "supporting_finding_ids": [
+    "T1-04"
+   ]
+  },
+  {
+   "rule": "用初中毕业能懂的词；行业词第一次出现时带半句解释。",
+   "rationale": "WCAG 建议文本不超过初中阅读水平；全国 15 岁以上人口平均受教育 9.91 年（未核）；Ant Design 要求使用用户熟悉的语言。",
+   "do_example": "排到你了（候补成功）",
+   "dont_example": "候补订单已兑现",
+   "supporting_finding_ids": [
+    "T1-13",
+    "T1-30",
+    "T1-11"
+   ]
+  },
+  {
+   "rule": "系统通知里标题是唯一的加粗行，数字靠位置而不是靠样式被看见；App 内卡片一张只高亮一处。",
+   "rationale": "iOS 通知正文是纯文本，走厂商通道的推送也基本是纯文本；Ant Design 把高亮列为突出重要信息的手段，但高亮多了就没有哪一处突出。",
+   "do_example": "卡片里只有「¥420」加粗",
+   "dont_example": "金额、日期、航班号、按钮全部加粗标色",
+   "supporting_finding_ids": [
+    "T1-11",
+    "T1-10"
+   ]
+  }
+ ],
+ "copy_samples": [
+  {
+   "source": "Apple HIG: Notifications（预览隐藏时的占位正文示例）",
+   "text": "\"Friend request,\" \"New comment,\" \"Reminder,\" or \"Shipment\"",
+   "url": "https://developer.apple.com/design/human-interface-guidelines/notifications",
+   "note": "官方建议的类别级占位文案：说明是什么类型，不泄露细节。"
+  },
+  {
+   "source": "Apple HIG: Writing（错误提示的推荐写法）",
+   "text": "Unable to load content",
+   "url": "https://developer.apple.com/design/human-interface-guidelines/writing",
+   "note": "对照的反例是 \"We're having trouble loading this content.\"；Apple 建议不用 we。"
+  },
+  {
+   "source": "Apple HIG: Writing（可操作的错误提示）",
+   "text": "Choose a password with at least 8 characters",
+   "url": "https://developer.apple.com/design/human-interface-guidelines/writing",
+   "note": "对照的反例是 \"That password is too short\"。"
+  },
+  {
+   "source": "Apple HIG: Writing（Apple Watch 活动记录消息，页面图片说明文字）",
+   "text": "you set a personal record for your longest daily Move streak, 35 days!",
+   "url": "https://developer.apple.com/design/human-interface-guidelines/writing",
+   "note": "祝贺类消息里用感叹号的例子；来自图片替代文本，不是完整原句。"
+  },
+  {
+   "source": "Apple HIG: Siri（追问的推荐写法）",
+   "text": "Which soup?",
+   "url": "https://developer.apple.com/design/human-interface-guidelines/siri",
+   "note": "对照的反例是 \"Which one?\"。"
+  },
+  {
+   "source": "Apple HIG: Siri（失败提示的推荐写法）",
+   "text": "Sorry, we're out of chicken noodle soup",
+   "url": "https://developer.apple.com/design/human-interface-guidelines/siri",
+   "note": "对照的反例是 \"Sorry, we can't complete your order.\"；说清具体原因。"
+  },
+  {
+   "source": "Apple WWDC15 Session 802 讲稿（设计师口述）",
+   "text": "No one in their right mind wants to read a thousand word article on their wrist.",
+   "url": "https://developer.apple.com/videos/play/wwdc2015/802/",
+   "note": "谈手表上的文字量。"
+  },
+  {
+   "source": "Apple WWDC21 Session 10091 示例代码",
+   "text": "title: \"Passive\"；body: \"I’m a passive notification, so I won’t interrupt you.\"",
+   "url": "https://developer.apple.com/videos/play/wwdc2021/10091/",
+   "note": "被动级别通知的演示文案。"
+  },
+  {
+   "source": "Android Developers: Notifications design guide（不该发的通知）",
+   "text": "Haven't seen you in a while!",
+   "url": "https://developer.android.com/design/ui/mobile/guides/home-screen/notifications",
+   "note": "官方列为反例：只为拉回访、没有直接价值。"
+  },
+  {
+   "source": "Android Developers: Expandable notifications（InboxStyle 示例代码）",
+   "text": "标题 \"5 New mails from Frank\"；正文 \"Check them out\"",
+   "url": "https://developer.android.com/develop/ui/compose/notifications/expanded",
+   "note": "示例代码里的占位文案。"
+  },
+  {
+   "source": "Android Developers: Live update notifications（胶囊与占位文本）",
+   "text": "5min；Thinking...；Rerouting...",
+   "url": "https://developer.android.com/develop/ui/compose/notifications/live-update",
+   "note": "胶囊里的相对时间写法；ETA 未算出时不留空的占位文本。"
+  },
+  {
+   "source": "Android Developers: Time-sensitive notifications（示例代码）",
+   "text": "标题 \"HIGH PRIORITY\"；正文 \"Check this dog puppy video NOW!\"",
+   "url": "https://developer.android.com/develop/ui/views/notifications/time-sensitive",
+   "note": "官方示例代码里的占位文案，全大写加感叹号，恰好是话术上的反面教材；不代表官方推荐写法。"
+  },
+  {
+   "source": "Ant Design 文案规范（可以用「我们」的语境）",
+   "text": "我们将会审核你的申诉",
+   "url": "https://ant.design/docs/spec/copywriting-cn/",
+   "note": "用户向后台反馈、申诉时用「我们」是合理的。"
+  },
+  {
+   "source": "Ant Design 文案规范（可以用感叹号的语境）",
+   "text": "欢迎回到社区！",
+   "url": "https://ant.design/docs/spec/copywriting-cn/",
+   "note": "问候或祝贺时可以用感叹号。"
+  },
+  {
+   "source": "中文文案排版指北（中文与数字之间加空格的正例）",
+   "text": "今天出去买菜花了 5000 元。",
+   "url": "https://github.com/sparanoid/chinese-copywriting-guidelines",
+   "note": "对照的反例是「今天出去买菜花了5000元。」"
+  }
+ ],
+ "base_doc_corrections": [
+  "「Miller's Law (4±1 Chunks)」归属错误：Miller 1956 是 7±2；约 4 个组块出自 Cowan 2001（Behavioral and Brain Sciences 24(1)）。应改为「工作记忆容量约 4 个组块（Cowan 2001）」。本条凭教科书级知识判断，未联网核对；基础稿引的 LogRocket 页面也未能打开。",
+  "「注意力窗口通常只有 1.5 至 3 秒」没有出处，应降级为推演。可替换为有出处的两档：2 秒（单次瞥视上限，NHTSA 驾驶分心指南，未核）和 5 秒（Apple 公开的手表交互内部指标，已核）。",
+  "「28 秒压到 3.5 秒」「节省 87.5%」「消除约 85% 交互摩擦」都是模型推演，不是测量。按每秒 7 个字粗算，62 个字约 9 秒、31 个字约 4.4 秒，光靠删字只能省一半左右；其余要靠按钮代替打字，这部分没有数据。图表应标注「示意」。",
+  "79%、16%、+124% 数字本身与记忆一致，但语境被换了：原研究是 1997 年的桌面网页，样本约 51 人。「可将该场景可用性提升 124%」里的「该场景」应删去，并写明年代和对象。本次未能打开 NN/g 原文。",
+  "F 型不是「通知的最差退化态」：NN/g 研究的是网页；其 2017 年复查的说法是 F 型是没有强视觉线索时的默认模式（搜索摘要核对）。对一两行的短消息，起作用的是首词效应和绕过型扫视。",
+  "「把金额锚定在首行前 8 个汉字」的 8 没有依据。建议改为「前 6 个字宽给结果和数字、前 12 个字宽说完命题」，并加锁屏隐私例外：预览隐藏时锁屏一个字都不显示。",
+  "「严格锁死在 40 个汉字以内」要按容器拆：安卓官方的 30/40 是拉丁字符，约合 15/20 个汉字（已核）；Apple 不给字数（已核）；vivo 是 20/50 个汉字、微信字段是 20 字符（均未核）；胶囊只有 3–6 个字。",
+  "Ant Design 关于「你/您」的原文是：「直接使用「你」、「我」来和用户对话，与用户建立亲密感。避免使用「您」，让用户感觉太过疏远。」基础稿的「下对上客服疏离感」是加工过的说法；「绝不自称本助手/小X」不在该规范里；规范鼓励用「你」「我」，只是不要在同一句式里混用，「隐去主语」是基础稿的延伸。该规范面向企业级中后台产品。",
+  "「遵循 Ant Design 按钮规范，用精准动词加结果名词」在 Ant Design 文案规范里找不到，该规范只有「操作的名称和目标页面标题的名称保持一致」。更贴切的出处是 Apple HIG：按钮用简短的词或短语清楚描述操作结果，且最好用动词（已核）。",
+  "「全网史低」：Ant Design 同一规范有「表述不应过于极端」一节，反例说明是「「绝不」过于绝对，让用户感到不适」（已核）；《广告法》第九条第（三）项禁止「最高级」「最佳」等用语（未核原文）。建议换成可验证的范围，如「近 30 天最低（我盯的 5 个平台）」。",
+  "Medium 文章「AI Agent UX: How to Reduce Cognitive Load and User Fatigue」（Yuki K.，标注 2026 年 10 月）：medium.com 不在可访问范围，检索额度也已耗尽，没能确认文章是否存在及其原意。核实之前，「检查、打断、盯梢三大认知税」只能当框架性观点，不能当实证引用。",
+  "SR Research 页面未能打开；它给的「左 1 字、右 2–3 字」与 Inhoff 和 Liu 1998 一致（凭记忆），建议把出处换成原始论文。",
+  "「Layer-cake 是除逐字精读外最有效的扫视模式」：NN/g 原文未能打开，没有核到这句话的原始措辞，建议标为待核。"
+ ],
+ "surprises_or_contradictions": [
+  "Apple 官方对通知标题的要求是「两三个词」，比基础稿的 10 个字还短；同时 Apple 从不给字数上限，态度是你写短、截断交给系统。",
+  "安卓官方明说「追踪包裹」不够格用 Live Update，提醒和日历事件也不够格。PA 的「盯价」「监控中」进不了岛和胶囊。",
+  "Apple HIG 明确反对「没回应就再发一遍」，很多产品的催办做法正好相反。",
+  "Apple HIG 明确反对在通知里指路（去 App 里做某事）。常见的「点击查看」「去完成」都属于这一类。",
+  "通知是「知晓」不是「指令」：看一眼不点开在实地研究里是常态。用点击率衡量 PA 消息会误判，更合适的指标是看完后是否还需要再打开 App 确认。",
+  "「手机上读东西难两倍」没有被复现：NN/g 2016 年自己重做，总体没有实质差别（凭记忆，未核）。",
+  "F 型扫视对一两行的短通知基本不适用；该防的是绕过型：固定前缀会让用户学会跳过开头。",
+  "给中文加词间空格并不让熟练读者读得更快（凭记忆）。盘古之白有 W3C 规范支持，但没有找到「加快扫读」的实证。",
+  "语音场景里 Apple 直接写了「不要尝试幽默」，理由是重复听会烦。这与基础稿「高频提醒严禁固定俏皮话」方向一致，并给了官方出处。",
+  "时效性（Time Sensitive）消息默认会被念出来。把一条消息标成高优先级，等于同时选择了可能在地铁上被耳机读出来。",
+  "锁屏上可能一个字都露不出来：预览隐藏时只有 App 图标和「通知」两个字。锁屏可见字数的下限是 0，占位文案是唯一能控制的东西。",
+  "安卓官方示例代码自己用了「HIGH PRIORITY」和「Check this dog puppy video NOW!」。官方文档里的占位文案不等于官方推荐的话术。"
+ ],
+ "gaps": [
+  "联网检索只成功 2 次：整个工作流共享的 WebSearch 额度（每轮 200 次）已耗尽，任务要求的至少 15 次搜索没有做到；2025–2026 年的新研究和新规范因此没有检索。需要更多检索时，可在本轮结束后发后续消息继续，或调高 CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION。",
+  "WebFetch 受会话网络策略限制，只能访问 developer.apple.com、developer.android.com、raw.githubusercontent.com、github.com、www.microsoft.com。www.nngroup.com 和 ic.unicamp.br 解析失败，需要在会话网络设置里放行后才能补核；同时建议放行：doi.org、dl.acm.org、pmc.ncbi.nlm.nih.gov、www.interruptions.net、developers.weixin.qq.com、dev.vivo.com.cn、dev.mi.com、open.oppomobile.com、developer.huawei.com、www.miit.gov.cn、www.gov.cn、www.cnnic.cn、www.stats.gov.cn、www.sr-research.com、medium.com、blog.logrocket.com。",
+  "所有标为未核的学术数字都要回原文核对，尤其是：Brysbaert 2019 里中文的阅读速率、Sun 等 1985 的 580 字/分钟、Pizza 等 2016 的 6.7 秒、Suchan 与 Colucci 1989 的 17%–23%、老年中文读者的知觉广度；部分 DOI 也是凭记忆写的。",
+  "各表面的可见中文字数没有实测，全部是推算。国内安卓各家系统皮肤（HyperOS、ColorOS、OriginOS、HarmonyOS、MagicOS）的折叠行数、字号、锁屏样式完全没有数据。笔记 5.6 节给了实机校准方法。",
+  "国内厂商的岛和实况（鸿蒙实况窗、小米超级岛、vivo 原子岛、OPPO 流体云、荣耀胶囊）的文本规范没有核到一手文档；同项目 T7b 记的鸿蒙两组口径互相不一致。",
+  "厂商推送长度限制（vivo 20/50、小米 50/128、OPPO 50/200、魅族 32/100）和微信订阅消息字段限制都凭记忆，文档可能已更新。",
+  "没有找到针对中文手机通知的眼动研究；中文知觉广度、歧义切分的研究都是实验室里读整句，推到通知场景属于外推。",
+  "中文句长与可读性的阈值没有可靠出处；「一个标点句 12–15 个字宽」是设计推演。",
+  "数字在汉字中的显著性、汉字与数字之间加空格是否加快扫读，都没有找到直接的中文实验。",
+  "iOS 和安卓的系统级 AI 摘要会不会改写或重排 PA 的消息、对首句有什么影响，没有检索。",
+  "语音播报的实际行为没有实测：播报时念不念 App 名和标题，各 TTS 引擎怎么读「¥」「/」「【】」。",
+  "车载场景：记得日本汽车工业会（JAMA）的车载显示指南把行驶中一次显示的文字限制在约 30 个字（30 还是 31 没有把握），值得核对；这是已知唯一针对汉字假名的瞥视安全字数。",
+  "行业数据：记得 Localytics 2016 年前后有「10 个词以内的推送点击率最高」的统计，未核，没有写入结论。",
+  "基础稿引用的 Medium 文章（Yuki K.）和 LogRocket 文章未能核实是否存在及原意。"
+ ]
+}

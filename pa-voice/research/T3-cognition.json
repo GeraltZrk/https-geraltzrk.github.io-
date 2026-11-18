@@ -1,0 +1,909 @@
+{
+ "track": "T3 降低理解成本：Agent 交互中的决策简化、确认与信任",
+ "headline_insights": [
+  "问得越多并不越安全：Anthropic 数据显示用户对逐条权限弹窗的接受率达 93%（审批疲劳），2026 年其默认模式已改为「边界内放手＋分类器拦截」，并明言有效监督不需要逐条批准。",
+  "该不该问有理论骨架：Horvitz 1999 把决策分成三区间，把握低不动、中等就问、高就做，两个阈值随「做错的代价」和「打断的代价」移动。",
+  "打断很贵且被当事人低估：27 人、2,267 小时的实地研究显示，一次提醒引发的切换平均离开 8–10 分钟，回来再花 10–16 分钟恢复，27% 超过 2 小时才回来。",
+  "必须事前确认的清单各家高度一致：付款下单、对外发送或发布、共享个人信息、同意条款、不可逆删除；其余可逆小事应先做、再说、留撤销口。",
+  "问得少但问得准收益很大：Magentic-UI 只在 10% 的任务里向模拟用户求助，完成率就从 30.3% 升到 51.9%。",
+  "解释提高的是通过率不是正确率：解释让用户更愿意采纳 AI 建议而「不论对错」；有效的是降低核对成本的证据（自我批评多发现 50% 错误；背景证据把错误采纳从 61% 降到 47%）和第一人称不确定表达（N=404）。",
+  "把握度别报百分比：Apple 规范点名价格预测场景，用「现在适合买／建议再等」比显示百分比更有用，且主动功能应设「低于阈值就不发」。",
+  "基础稿需更正：4±1 出自 Cowan (2001) 而非 Miller（7±2）；选择过载元分析平均效应约为零（50 个实验、N=5,036）；自我损耗两次多中心复制 d 约 0.04 与 0.06；「全网史低」触碰《广告法》第九条（罚 20–100 万元）；所引 Medium 文章未能证实。"
+ ],
+ "findings": [
+  {
+   "id": "T3-01",
+   "claim": "该不该问可按期望效用分三区间：把握低不动、中等就问、高就做，阈值随出错代价与用户注意力移动",
+   "evidence_type": "专家观点",
+   "source_title": "Horvitz (1999) Principles of Mixed-Initiative User Interfaces, CHI '99",
+   "source_url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/11/chi99horvitz-1.pdf",
+   "year": "1999",
+   "key_data": "12 条原则；“considering the costs of potentially bothering a user needlessly”；两个行动阈值",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "每次状态变化先评三项：把握度、做错代价、打断代价；「问」只用于中间地带，两头都不问",
+   "caveat": "1999 年的桌面日程助手，单一任务；原则可迁移，具体阈值不可照搬。"
+  },
+  {
+   "id": "T3-02",
+   "claim": "微软 18 条人机交互准则经 49 位从业者对 20 款产品验证，时机、易关闭、易纠正、拿不准就缩小范围最贴主动消息",
+   "evidence_type": "实证研究",
+   "source_title": "Amershi et al. (2019) Guidelines for Human-AI Interaction, CHI 2019",
+   "source_url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2019/01/Guidelines-for-Human-AI-Interaction-camera-ready.pdf",
+   "year": "2019",
+   "key_data": "G3 “Time services based on context”；G8 易关闭；G9 易纠正；G10 “Scope services when in doubt”",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "每条主动消息过五项检查：时机对不对、能否一键不要、能否改一下、拿不准有没有缩小动作、依据有没有一句",
+   "caveat": "验证对象是 2018 年前后的推荐、语音助手等 AI 功能，不含能代人花钱的 Agent。"
+  },
+  {
+   "id": "T3-03",
+   "claim": "微软 2024 报告给出事前确认的四个判据：花资源、不可逆、可能违背偏好、会让用户意外；都不沾就直接做",
+   "evidence_type": "专家观点",
+   "source_title": "Bansal et al. (2024) Challenges in Human-Agent Communication, MSR-TR-2024-53",
+   "source_url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2024/12/HCAI_Agents.pdf",
+   "year": "2024",
+   "key_data": "对“expensive”的动作先取得许可（花资源、不可逆、可能违背偏好），否则 “just go ahead”",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "四个判据写进 Skill 的硬门槛；更新太多会稀释注意力，状态同步类消息并入汇总",
+   "caveat": "立场与综述性质的技术报告，12 个挑战来自作者做多 Agent 系统的经验，没有量化实验。"
+  },
+  {
+   "id": "T3-04",
+   "claim": "Apple 规范：不要自动执行破坏性或难撤销的动作（如代人购买），代人做重大动作前一般应先确认",
+   "evidence_type": "官方规范",
+   "source_title": "Apple Human Interface Guidelines · Generative AI",
+   "source_url": "https://developer.apple.com/design/human-interface-guidelines/generative-ai",
+   "year": "2025–2026",
+   "key_data": "“Avoid automating… actions that are hard to undo, like making a purchase on a person's behalf.”",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "代付、删除默认事前确认；状态文案写具体在做什么，出错时用大白话说发生了什么并给下一步",
+   "caveat": "平台设计指南，面向 App 内的生成式功能，没有确认文案模板；内容经页面的 JSON 数据接口读取。"
+  },
+  {
+   "id": "T3-05",
+   "claim": "Apple 规范点名价格预测：用「现在适合买／建议再等」这类行动建议表达把握度，比显示百分比更有用",
+   "evidence_type": "官方规范",
+   "source_title": "Apple Human Interface Guidelines · Machine learning（Confidence 一节）",
+   "source_url": "https://developer.apple.com/design/human-interface-guidelines/machine-learning",
+   "year": "2026 抓取",
+   "key_data": "“This is a good time to buy,” / “Consider waiting for a better price.”；主动功能设置信度阈值，低于不发",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "预测类把握度写成「建议＋一条依据」；把握低的线索不主动推送；多个选项时最可能的放第一个",
+   "caveat": "指南没有给出实验数据；同页也说天气、赛事等用户本来就期待数字的场景可以给数值。"
+  },
+  {
+   "id": "T3-06",
+   "claim": "微软与苹果的确认框规范一致：频繁确认会被不看就点；常见可撤销动作不该确认；按钮写具体动词，高风险默认安全项",
+   "evidence_type": "官方规范",
+   "source_title": "Windows UX Guide · Confirmations（另见 Apple HIG · Alerts、Semi Design Modal 文案规范）",
+   "source_url": "https://github.com/MicrosoftDocs/win32/blob/docs/desktop-src/uxguide/mess-confirm.md",
+   "year": "2026 抓取",
+   "key_data": "“users learn to respond without thinking”；“Never use OK and Cancel for confirmations.”",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "确认只留给后果重大的动作；按钮用「动词＋对象」，不用确定／取消；危险项不设默认高亮",
+   "caveat": "桌面软件对话框规范，成文较早；Semi Design 的示例是英文按钮；取自官方 GitHub 源文件而非站点页面。"
+  },
+  {
+   "id": "T3-07",
+   "claim": "Anthropic：用户对逐条权限弹窗的接受率达 93%，形成审批疲劳；2026 年默认改为分类器把关的自动模式",
+   "evidence_type": "行业数据",
+   "source_title": "Anthropic Engineering · Claude Code auto mode (2026-03-25)",
+   "source_url": "https://www.anthropic.com/engineering/claude-code-auto-mode",
+   "year": "2026",
+   "key_data": "“users accept 93% of them anyway”；沙箱使弹窗减少 84%；分类器漏拦率 17%（n=52）、误拦率 0.4%",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "同类确认通过率长期超九成，就该降级为「先做可撤销」或并入预授权；确认不能当免责",
+   "caveat": "开发者写代码场景的数据；二手报道称后来为 97%，官方页面未找到；向消费场景外推只取方向。"
+  },
+  {
+   "id": "T3-08",
+   "claim": "Anthropic 实测：有经验的用户全自动批准的会话从约 20% 升到 40% 以上，同时打断率从 5% 升到约 9%",
+   "evidence_type": "行业数据",
+   "source_title": "Anthropic · Measuring AI agent autonomy in practice (2026-02-18)",
+   "source_url": "https://www.anthropic.com/research/measuring-agent-autonomy",
+   "year": "2026",
+   "key_data": "73% 工具调用有人在回路；0.8% 动作不可逆；“effective oversight doesn't require approving every action”",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "自主度应随信任逐步上调并由用户决定；监督的形态是随时能叫停，不是每步点头",
+   "caveat": "样本是 Claude Code 与 API 的开发者用户，任务为编程；比例不可照搬到消费级 PA。"
+  },
+  {
+   "id": "T3-09",
+   "claim": "Anthropic 主张把监督从逐步批准上移到计划级确认，并按动作类型分「总是允许／需批准／禁止」三档",
+   "evidence_type": "官方规范",
+   "source_title": "Anthropic · Trustworthy agents in practice (2026-04-09)；另见 2025-08 框架与 Claude's Constitution",
+   "source_url": "https://www.anthropic.com/research/trustworthy-agents",
+   "year": "2026",
+   "key_data": "“Claude shows the user its intended plan of action up-front.”；“users sometimes tune them out”",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "建目标时一次谈清授权边界和计划，过程中不逐步问；有顾虑在动手前说，别做到一半停",
+   "caveat": "厂商自述的设计原则，没有对照实验；Constitution 约束的是模型行为，不是界面文案。"
+  },
+  {
+   "id": "T3-10",
+   "claim": "OpenAI 模型规范：澄清的收益要大于成本；琐碎问题应写成可纠正的假设；不确定性只在会影响用户行为时才说",
+   "evidence_type": "官方规范",
+   "source_title": "OpenAI Model Spec（GitHub 仓库）",
+   "source_url": "https://github.com/openai/model_spec/blob/main/model_spec.md",
+   "year": "2025–2026",
+   "key_data": "“The expected benefit of clarification should justify its cost.”；优先可逆做法；默认不量化不确定性",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "小事不问，把假设写出来让用户能改；优先选可逆做法；结论在前，明细按需展开",
+   "caveat": "规范针对通用助手与 Agent，不是消费级提醒场景；读的是仓库主分支，未记录版本号。"
+  },
+  {
+   "id": "T3-11",
+   "claim": "各家把同一批动作列为必须事前确认：付款下单、发布或对外发送、共享个人信息、同意条款；登录验证码交还用户",
+   "evidence_type": "产品案例",
+   "source_title": "Piloting Claude for Chrome (2025-08-25)；另见 computer use 文档、MCP 规范、Open-AutoGLM",
+   "source_url": "https://claude.com/blog/claude-for-chrome",
+   "year": "2025",
+   "key_data": "高风险动作先问：“publishing, purchasing, or sharing personal data”；注入攻击成功率 23.6% 降到 11.2%",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "把这份清单做成不可配置的硬门槛；卡在登录或验证码时说清卡在哪，用户做完 PA 接着办",
+   "caveat": "OpenAI Operator 的同类表述只看到搜索摘要，未打开原文；国内产品的真实确认文案未采集。"
+  },
+  {
+   "id": "T3-12",
+   "claim": "Magentic-UI 评测：只在 10% 的任务里向模拟用户求助，任务完成率就从 30.3% 升到 51.9%",
+   "evidence_type": "实证研究",
+   "source_title": "Microsoft Research Blog · Magentic-UI, an experimental human-centered web agent (2025-05-19)",
+   "source_url": "https://www.microsoft.com/en-us/research/blog/magentic-ui-an-experimental-human-centered-web-agent/",
+   "year": "2025",
+   "key_data": "GAIA 验证集 162 题；求助的任务里平均问 1.1 次；不可逆动作前须按 Accept 或 Deny",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "提问的价值在信息增量：只问 PA 自己查不到、又会改变结果的那一项，一次问清",
+   "caveat": "模拟用户而非真人，且模拟用户掌握额外信息；任务是通用网页任务，不是消费决策。"
+  },
+  {
+   "id": "T3-13",
+   "claim": "Google AP2 把代付授权分两种：人在场逐单确认；人不在场则事先签下价格上限、时限等条件，条件外拉回用户",
+   "evidence_type": "官方规范",
+   "source_title": "Google Cloud Blog · Announcing Agent Payments Protocol (AP2) (2025-09-16)；AP2 specification",
+   "source_url": "https://cloud.google.com/blog/products/ai-machine-learning/announcing-agents-to-payments-ap2-protocol",
+   "year": "2025",
+   "key_data": "事先签下 “price limits, timing, and other conditions”；“what you see is what you pay for”",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "盯价、抢票类目标在创建时问清上限、时限、范围；条件内直接办并回执，条件外回头问",
+   "caveat": "支付协议草案，讲签名与担责，不含界面文案；实际采用情况未查。"
+  },
+  {
+   "id": "T3-14",
+   "claim": "Ant Design X 中文规范分三档确认：显性、隐性、无需确认；不可逆操作与完成交易前显性确认必不可少",
+   "evidence_type": "官方规范",
+   "source_title": "Ant Design X 设计规范 · 确认（confirm.zh-CN.md）与追问（follow-up.zh-CN.md）",
+   "source_url": "https://github.com/ant-design/x/blob/main/packages/x/docs/spec/confirm.zh-CN.md",
+   "year": "2026 抓取",
+   "key_data": "「在执行可能导致不可逆后果的操作，例如删除用户数据或完成交易等关键步骤之前，显性确认是必不可少的。」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "三档确认与决策树同构，可作中文团队的共同术语；显性确认前先展示操作的具体细节",
+   "caveat": "设计体系文档，示例多为图片，未见实验依据；其追问示例用了「您」，与 Ant Design 文案规范不一致。"
+  },
+  {
+   "id": "T3-15",
+   "claim": "微软综述约 60 篇论文：解释会提高用户对 AI 建议的采纳，包括错误建议；越详细越容易过度依赖",
+   "evidence_type": "实证研究",
+   "source_title": "Passi & Vorvoreanu (2022) Overreliance on AI: Literature Review, Microsoft Aether",
+   "source_url": "https://www.microsoft.com/en-us/research/uploads/prod/2022/06/Aether-Overreliance-on-AI-Review-Final-6.21.22.pdf",
+   "year": "2022",
+   "key_data": "“Explanations increase user reliance on all AI recommendations.”；声称准确率仅 50% 也提升信任",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "解释只给能核对的事实，一句为限；不写说服性理由；长篇推理折叠到二级",
+   "caveat": "所综述实验多为英文、众包受试者、分类或问答任务；消费场景里钱是自己的，效应方向可能不同。"
+  },
+  {
+   "id": "T3-16",
+   "claim": "降低核对成本的证据和第一人称不确定表达能减少过度依赖：自我批评多发现 50% 错误，背景证据把错误采纳从 61% 降到 47%",
+   "evidence_type": "实证研究",
+   "source_title": "Passi, Dhanorkar & Vorvoreanu (2024) Appropriate reliance on GenAI: Research synthesis；Kim et al. (2024) FAccT",
+   "source_url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2024/03/GenAI_AppropriateReliance_Published2024-3-21.pdf",
+   "year": "2024",
+   "key_data": "Kim 等 N=404：“I'm not sure, but…” 降低同意倾向、提高准确率；模型自报信心与正确性不符",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "确认消息附一条一眼能核对的事实；拿不准的点用「我没查到…」直说；把握度基于可查事实而非模型自报",
+   "caveat": "综述明言所有解释都可能适得其反；第一人称表达会降低用户对系统的信心并拉长用时；任务为医疗问答等。"
+  },
+  {
+   "id": "T3-17",
+   "claim": "生成式 AI 把用户从生产者变成评估者：319 名知识工作者调查显示，对 AI 越有信心，批判性思考越少",
+   "evidence_type": "实证研究",
+   "source_title": "Lee et al. (2025) The Impact of Generative AI on Critical Thinking, CHI 2025；Simkute et al. (2024) Ironies of Generative AI",
+   "source_url": "https://www.microsoft.com/en-us/research/publication/the-impact-of-generative-ai-on-critical-thinking-self-reported-reductions-in-cognitive-effort-and-confidence-effects-from-a-survey-of-knowledge-workers/",
+   "year": "2025",
+   "key_data": "319 人、936 个案例；“a shift in users' roles from production to evaluation”（Simkute 等 2024）",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "每条消息都在给用户派评估工作，要压到一眼做完；基础稿的「检查税」可改引这两篇",
+   "caveat": "Lee 等为自我报告问卷，相关不等于因果；Simkute 等为综述论证，非实验；只核对了摘要页。"
+  },
+  {
+   "id": "T3-18",
+   "claim": "实地研究：提醒引发的任务切换平均在别处停留 8–10 分钟，回来后再花 10–16 分钟恢复，27% 超过 2 小时才回来",
+   "evidence_type": "实证研究",
+   "source_title": "Iqbal & Horvitz (2007) Disruption and Recovery of Computing Tasks, CHI 2007",
+   "source_url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/11/CHI_2007_Iqbal_Horvitz-1.pdf",
+   "year": "2007",
+   "key_data": "27 人、2,267 小时；邮件提醒离开 9 分 33 秒；“Users spend more time than they realize responding to alerts.”",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "不急的确认等用户空档并合并发送；只有不处理就失效的才即时打断",
+   "caveat": "2007 年桌面办公、单一公司、27 人；手机通知可一瞥即划走，具体分钟数不可外推。"
+  },
+  {
+   "id": "T3-19",
+   "claim": "在数字后加一句熟悉参照物的换算，能提升对数字的记忆、估计和纠错（3 个实验，超过 3,200 人）",
+   "evidence_type": "实证研究",
+   "source_title": "Barrio, Goldstein & Hofman (2016) Improving Comprehension of Numbers in the News, CHI 2016",
+   "source_url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/05/p2729-barrio.pdf",
+   "year": "2016",
+   "key_data": "一例中准确回忆率从 40% 升到近 55%；例句 “…is about 25 dollars for every person in the U.S.”",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "月度省钱汇报可加一个熟悉参照物（约等于 12 杯拿铁）；换算必须真实，一条只用一个",
+   "caveat": "材料是新闻里的大数字，测的是理解与记忆而非购买决定；用于消费金额属合理外推。"
+  },
+  {
+   "id": "T3-20",
+   "claim": "「全网最低」「史低」触碰《广告法》第九条（罚 20–100 万元）与价格比较须真实的规定，且 PA 无法验证",
+   "evidence_type": "法规",
+   "source_title": "《广告法》第八、九、五十七条；《明码标价和禁止价格欺诈规定》第十六、十七、十九条",
+   "source_url": "https://github.com/LawRefBook/Laws/blob/master/行政法/广告法(2021-04-29).md",
+   "year": "2021／2022",
+   "key_data": "第九条（三）：使用「国家级」「最高级」「最佳」等用语；第五十七条：处二十万元以上一百万元以下的罚款",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "省钱结论写成「比了哪几家、多长时间窗内最低」；每个省多少都带真实基线，口径可展开",
+   "caveat": "条文取自 GitHub 法规镜像，非官方站；PA 消息是否构成广告取决于商业模式，需法务判断；《广告绝对化用语执法指南》未核对。"
+  },
+  {
+   "id": "T3-21",
+   "claim": "中国法规对确认设计有四条硬约束：搭售不得默认同意、提交前可更正、自动续费提前五日提醒、信息须通俗易懂",
+   "evidence_type": "法规",
+   "source_title": "《电子商务法》第十九、五十条；《网络交易监督管理办法》第十七、十八条；《消保法实施条例》第九、十条；《个保法》第二十四条",
+   "source_url": "https://github.com/LawRefBook/Laws",
+   "year": "2019–2024",
+   "key_data": "「不得将搭售商品或者服务作为默认同意的选项」；「日期前五日，以显著方式提请消费者注意」；「通俗易懂」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "加购、保险、会员不做默认；确认消息留「改一下」；续费提醒不晚于扣费前 5 天；每类主动消息能一步关掉",
+   "caveat": "条文取自 GitHub 法规镜像；义务主体是经营者，PA 是否适用需法务判断，但可直接当写作底线。"
+  },
+  {
+   "id": "T3-22",
+   "claim": "英国政府设计系统：一页只问一个问题；提交前的核对页能增强信心、降低错误率；完成页必须说明接下来会发生什么",
+   "evidence_type": "官方规范",
+   "source_title": "GOV.UK Design System · Question pages / Check answers / Confirmation pages",
+   "source_url": "https://github.com/alphagov/govuk-design-system/tree/main/src/patterns",
+   "year": "2026 抓取",
+   "key_data": "核对页 “reduce error rates as users are given a second chance to notice and correct errors”",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "一条消息只拍一个板；多项用核对清单逐项可改；完成回执写办了什么、结果、接下来何时发生什么",
+   "caveat": "政务表单场景；规范称基于用户研究，但页面未给量化数据；取自官方 GitHub 源文件。"
+  },
+  {
+   "id": "T3-23",
+   "claim": "能撤销就别用确认：人会因习惯化一路点「好」；浏览器安全警告与用药警示的大规模数据显示警告常被略过",
+   "evidence_type": "专家观点",
+   "source_title": "Raskin (2007) Never Use a Warning When You Mean Undo, A List Apart；数据另见 Akhawe & Felt (2013)（Chrome SSL 警告）和 van der Sijs 等 (2006) JAMIA 13(2)（用药警示）",
+   "source_url": "https://alistapart.com/article/neveruseawarning/",
+   "year": "2007",
+   "key_data": "Chrome SSL 警告点击穿透率 70.2%（Akhawe & Felt 2013）；用药安全警报被医生跳过（override）49%–96%，不含高级别过量警报（van der Sijs 等 2006）",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "可撤回的动作改成先做＋撤销窗口；回执里写清怎么撤、撤到何时",
+   "caveat": "2026-11-18 读了 Raskin 原文，习惯化会让人一路点「好」、用撤销代替警告的论点都对得上；后半句的大规模数据不出自这篇，出自另外两篇论文。Chrome SSL 警告点击穿透率 70.2%（Akhawe & Felt 2013，是最高值）没有核对原文。49%–96% 出自 van der Sijs 等 2006 综述（纳入 17 篇文献，这个范围来自其中 8 项研究），读该综述全文时核到，原文说的是警示被 override，不含高级别过量警报。",
+   "check_override": "fetch",
+   "verify_verdict": "confirmed"
+  },
+  {
+   "id": "T3-24",
+   "claim": "四个分支在人因工程的自动化等级里早有对应：批准后执行、限时否决、执行后告知、问起才告知",
+   "evidence_type": "专家观点",
+   "source_title": "Parasuraman, Sheridan & Wickens (2000) A model for types and levels of human interaction with automation",
+   "source_url": "https://doi.org/10.1109/3468.844354",
+   "year": "2000",
+   "key_data": "10 级量表的第 5、6、7、8 级；Feng 等 2025 按用户角色分操作者、协作者、顾问、审批者、观察者",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "自主度按动作类型和后果分别设档，不搞全局一个开关；用现成等级命名，方便团队对齐",
+   "caveat": "凭既有知识引用，未打开原文；Smashing Magazine 2026 年文章的六个模式与指标阈值只见搜索摘要，未核实。"
+  },
+  {
+   "id": "T3-25",
+   "claim": "默认选项影响巨大：器官捐献实验中默认同意时 82% 同意，需主动选择时 42%；元分析平均效应 d=0.68",
+   "evidence_type": "实证研究",
+   "source_title": "Johnson & Goldstein (2003) Do Defaults Save Lives?, Science；Jachimowicz et al. (2019) 元分析",
+   "source_url": "https://doi.org/10.1126/science.1091721",
+   "year": "2003",
+   "key_data": "选择加入 42%、选择退出 82%、强制选择 79%；元分析 58 项研究、N=73,675、d=0.68",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "高亮的推荐项就是事实上的默认：必须是对用户最省的那个，并说明为什么是它",
+   "caveat": "凭既有知识引用，未打开原文；元分析显示研究间差异很大；器官捐献情境与消费决策不同。"
+  },
+  {
+   "id": "T3-26",
+   "claim": "选择过载并不稳定：50 个实验的元分析平均效应约为零，偏好不明、选项难比、想省力时更容易出现",
+   "evidence_type": "实证研究",
+   "source_title": "Scheibehenne, Greifeneder & Todd (2010) Can There Ever Be Too Many Options?, Journal of Consumer Research",
+   "source_url": "https://doi.org/10.1086/651235",
+   "year": "2010",
+   "key_data": "63 个条件、50 个实验、N=5,036，平均效应量几乎为零；Chernev 等 2015 找到四个调节因素（99 个观测）",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "主动提醒默认给 1 个推荐加最多 2 个备选；用户主动问还有什么时可多给，但要同一维度排好序",
+   "caveat": "2026-11-18 读了两篇论文的摘要，全文没有读到。Chernev 等的 99 个观测共 N=7,202，四个调节因素是选项集复杂度、任务难度、偏好不确定和省力目标。Scheibehenne 等称没有找到充分条件，Chernev 等则称计入调节因素后总体效应显著。",
+   "check_override": "abstract",
+   "verify_verdict": "confirmed"
+  },
+  {
+   "id": "T3-27",
+   "claim": "工作记忆约 4 个组块出自 Cowan (2001)；Miller (1956) 的数字是 7±2，基础稿把两者拼在了一起",
+   "evidence_type": "实证研究",
+   "source_title": "Cowan (2001) The magical number 4 in short-term memory, Behavioral and Brain Sciences",
+   "source_url": "https://doi.org/10.1017/S0140525X01003922",
+   "year": "2001",
+   "key_data": "Cowan：成人约 3–5 个组块；Miller：7±2；Sweller (1988) 认知负荷理论",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "一条消息里需要用户同时比较的变量不超过 3–4 个；超过就拆，或由 PA 先定下其中几个",
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。摘要说 Miller 总结的是约 7 个组块，「7±2」这个写法没有核对；摘要没有限定「成人」；Sweller (1988) 认知负荷理论没有核对。",
+   "check_override": "abstract",
+   "verify_verdict": "confirmed"
+  },
+  {
+   "id": "T3-28",
+   "claim": "自我损耗（决策疲劳的理论基础）在两次多中心预注册复制中效应接近零，不宜当作少问用户的科学依据",
+   "evidence_type": "实证研究",
+   "source_title": "Hagger et al. (2016) A Multilab Preregistered Replication of the Ego-Depletion Effect, Perspectives on Psychological Science",
+   "source_url": "https://doi.org/10.1177/1745691616652873",
+   "year": "2016",
+   "key_data": "23 个实验室、N=2,141、d=0.04 [−0.07, 0.15]；Vohs 等 2021：36 个实验室、N=3,531、d=0.06",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "论证少问时改用可测的依据：打断的时间成本、确认通过率、核对用时",
+   "caveat": "2026-11-18 读了 Hagger 等 2016 的摘要和 Vohs 等 2021 的预印本摘要，全文没有读到。Vohs 一文正式发表在 Psychological Science 32(10) 这一点没有核对。Vohs 等的验证性检验不显著，探索性全样本分析得到 d=0.08 的显著效应，可作补充。",
+   "check_override": "abstract",
+   "verify_verdict": "confirmed"
+  },
+  {
+   "id": "T3-29",
+   "claim": "劳动错觉：服务展示它在做的工作时，人们更看重它，甚至偏好要等的网站；但研究测的是感知价值而非决策质量",
+   "evidence_type": "实证研究",
+   "source_title": "Buell & Norton (2011) The Labor Illusion: How Operational Transparency Increases Perceived Value, Management Science",
+   "source_url": "https://doi.org/10.1287/mnsc.1110.1376",
+   "year": "2011",
+   "key_data": "5 个实验，在线旅行与在线交友的模拟服务；机制为感知努力引发的回报心理",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "结论后留一句真实工作量（比了 12 家），可展开看明细；结果不好时不炫过程",
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。摘要只说探讨了边界条件，没有细节，「结果差时展示努力会减分」没有核到，所以建议里「结果不好时不炫过程」只是手册的推论。「而非决策质量」是手册加的提醒，摘要测的是服务价值感知。",
+   "check_override": "abstract",
+   "verify_verdict": "confirmed"
+  },
+  {
+   "id": "T3-30",
+   "claim": "人看到算法出错后会弃用它，但只要能稍作修改就更愿意用；系统能力下降时信任掉得多，恢复时涨得少",
+   "evidence_type": "实证研究",
+   "source_title": "Dietvorst, Simmons & Massey (2018) Overcoming Algorithm Aversion, Management Science",
+   "source_url": "https://doi.org/10.1287/mnsc.2016.2643",
+   "year": "2018",
+   "key_data": "信任 “goes down by a relatively large amount when system capability decreases”（微软 2022 综述）",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "每条确认都给「改一下」；出错后的那条消息要认真写，并自动把同类动作收紧一级",
+   "caveat": "Dietvorst 与 Logg 的原文未打开；信任不对称一句已在微软 2022 综述中核对；实验多为预测任务。"
+  },
+  {
+   "id": "T3-31",
+   "claim": "概率词人人理解不同：IPCC 把「很可能」定义为 90% 以上，但多数公众理解得明显偏低；词旁标上数字区间，理解更一致",
+   "evidence_type": "实证研究",
+   "source_title": "Budescu, Broomell & Por (2009) Improving Communication of Uncertainty in the Reports of the IPCC, Psychological Science",
+   "source_url": "https://doi.org/10.1111/j.1467-9280.2009.02284.x",
+   "year": "2009",
+   "key_data": "“very likely” 定义 >90%，但约四分之三受试者把它理解为低于 90%，近半数理解为低于 66%（二手转述）；词旁直接标数字区间的格式一致性优于只给对照表；2014 年 Budescu 等在 24 国 17 种语言（25 个样本）重复出同样模式",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "关键预测用「词＋频率」双写（多半不会再降，近 60 天 10 次里 8 次）；其余换成行动建议",
+   "caveat": "2026-11-18 读了 2009 年论文摘要，只说受试者拿到对照表仍明显偏离 IPCC 指南，没有数字。>90% 的定义、四分之三低于 90%、近半数低于 66%、偏低的方向、词旁标区间优于对照表都没有核到。2014 年研究（Nature Climate Change）只核到书目信息，24 国、17 种语言、25 个样本没有核对。",
+   "check_override": "abstract",
+   "verify_verdict": "partial"
+  },
+  {
+   "id": "T3-32",
+   "claim": "省钱表述的经典效应多是卖方技巧：100 法则、按天拆分让花费显小、精确数字显得更可信；PA 应反着用",
+   "evidence_type": "实证研究",
+   "source_title": "Gourville (1998) Pennies-a-Day: The Effect of Temporal Reframing on Transaction Evaluation, Journal of Consumer Research",
+   "source_url": "https://doi.org/10.1086/209517",
+   "year": "1998",
+   "key_data": "计算器问题：为省 5 美元多走 20 分钟，原价 15 美元时 68% 愿意，125 美元时 29%（Tversky & Kahneman 1981）",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "绝对值在前、基线紧跟、百分比可选；花费报总价，节省报累计；钱和时间冲突时写出交换比例",
+   "caveat": "凭既有知识引用，未打开原文；100 法则以美元计，人民币阈值无依据；「PA 应反着用」是我的推演，不是论文结论。"
+  },
+  {
+   "id": "T3-33",
+   "claim": "通俗语言有国际标准（ISO 24495-1:2023 四原则），在中国「通俗易懂」是行政法规写明的经营者义务",
+   "evidence_type": "官方规范",
+   "source_title": "ISO 24495-1:2023 Plain language — Part 1: Governing principles and guidelines；《消费者权益保护法实施条例》第九条",
+   "source_url": "https://www.iso.org/standard/78907.html",
+   "year": "2023",
+   "key_data": "四原则：相关、可找到、可理解、可用；条例第九条：「应当采用通俗易懂的方式，真实、全面地」提供信息",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "候补、展期、凑单门槛等术语第一次出现时用大白话或加半句括注",
+   "caveat": "ISO 条文未打开，凭既有知识；条例第九条已在法规镜像核对；通俗语言对决策速度的量化证据本轮未找到可核实来源。"
+  },
+  {
+   "id": "T3-34",
+   "claim": "AI 产出把核对成本转嫁给接收者：HBR 调查称 40% 的员工一个月内收到过 workslop，每次平均花近 2 小时处理",
+   "evidence_type": "行业数据",
+   "source_title": "Niederhoffer et al. (2025) AI-Generated “Workslop” Is Destroying Productivity, Harvard Business Review",
+   "source_url": "https://hbr.org/2025/09/ai-generated-workslop-is-destroying-productivity",
+   "year": "2025",
+   "key_data": "1,150 名美国全职员工；每次 1 小时 56 分钟；约 186 美元／人／月；METR 2025：开发者慢 19% 却自以为快 20%",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "消息必须自带核对结论，不让用户自己去查；省时间用真实时长度量，不靠用户自我感觉",
+   "caveat": "凭既有知识引用，未打开原文；HBR 一文是厂商参与的问卷调查；职场文档场景与消费提醒不同。"
+  }
+ ],
+ "design_rules": [
+  {
+   "rule": "决策树总则：每次目标状态变化，先给动作打五个标（做错的代价、是否在预授权内、把握度、时效、是否需要用户决定），再按固定顺序落到五个出口之一：交还接管、只汇总不打扰、先问再做、做了可撤销、直接做并告知。",
+   "rationale": "Horvitz 的三区间决策与自动化等级 5–8 级给出了骨架；各家规范对硬门槛的清单一致；逐条都问会退化成橡皮图章，逐条都不问会越权。",
+   "do_example": "酒店降价重订（要付款）→ 先问；夜跑改拉伸（可改回）→ 先做可撤销；价格没变 → 进周汇总；卡在验证码 → 交还用户。",
+   "dont_example": "所有状态变化一律推送，并且都以「要不要……？」结尾。",
+   "supporting_finding_ids": [
+    "T3-01",
+    "T3-03",
+    "T3-24",
+    "T3-07",
+    "T3-11"
+   ]
+  },
+  {
+   "rule": "R1 先判红线，再判把握：付款下单、对外发送或发布、不可逆、交出个人信息、同意条款、超出授权范围、会让用户意外，必须事前确认。",
+   "rationale": "Apple、Anthropic、微软、Ant Design X、Open-AutoGLM 把同一批动作列为必须确认；Bansal 2024 给出四个判据。",
+   "do_example": "东京酒店降到 ¥1,280/晚，比你原来那单少 ¥640。重订要先付 ¥3,840，旧单周三前免费取消。[重订并取消旧单] [先不订]",
+   "dont_example": "已为你重新预订并支付 ¥3,840，旧订单已取消。",
+   "supporting_finding_ids": [
+    "T3-03",
+    "T3-04",
+    "T3-11",
+    "T3-14"
+   ]
+  },
+  {
+   "rule": "R2 建目标时一次谈好授权边界（金额上限、时限、范围）；条件内不再问，条件外回头问。",
+   "rationale": "AP2 的「人不在场」模式就是事先签下条件；Anthropic 把监督从逐步批准上移到计划级；逐条确认的接受率 93% 说明事中再问价值很低。",
+   "do_example": "建目标时问：降到多少我直接订？上限 ¥____，有效到 12 月 20 日。超过这个数我先问你。",
+   "dont_example": "每次降价都推一条：降价了，要订吗？",
+   "supporting_finding_ids": [
+    "T3-13",
+    "T3-09",
+    "T3-07"
+   ]
+  },
+  {
+   "rule": "R3 可撤回的小事：先做，再说，留撤销口。",
+   "rationale": "微软与苹果的规范都反对对常见可撤销动作弹确认；OpenAI 模型规范要求优先可逆做法；习惯化使确认形同虚设。",
+   "do_example": "今晚夜跑已改成 15 分钟拉伸，连续打卡照算。[改回 5 公里]",
+   "dont_example": "检测到你今天日程较满，是否需要将今晚的跑步计划调整为拉伸？",
+   "supporting_finding_ids": [
+    "T3-06",
+    "T3-23",
+    "T3-10"
+   ]
+  },
+  {
+   "rule": "R4 一条消息只拍一个板；确实涉及多项时用核对清单，逐项可改。",
+   "rationale": "英国政府设计系统的一页一问与提交前核对页；工作记忆约 4 个组块；选择过载在偏好不明、想省力时最明显。",
+   "do_example": "周四改签：G7 次 08:00，二等座靠窗，补差 ¥0。[就这样改] [换时间] [换座位]",
+   "dont_example": "请确认日期、座位偏好、发票抬头、是否用积分、是否买保险。",
+   "supporting_finding_ids": [
+    "T3-22",
+    "T3-27",
+    "T3-26"
+   ]
+  },
+  {
+   "rule": "R5 待确认消息写齐五项：要你定什么、关键事实（对象、到手总价、时间）、代价与可逆性、不回会怎样、出口；声称省钱时加基线，含预测时加依据与不确定点。",
+   "rationale": "微软规范要求提供足以明智作答的信息；AP2 要求用户看到确切的商品和价格；Ant Design X 要求确认前展示操作细节；Apple 要求考虑不可逆的后果。",
+   "do_example": "东京酒店降了，要重订吗？新价 ¥1,280/晚 × 3 晚，比原来那单少 ¥640；要先付 ¥3,840，旧单周三 18:00 前可免费取消；今晚 22:00 前不回我就不动。[重订并取消旧单] [改一下] [先不订]",
+   "dont_example": "有个更便宜的方案，要不要换？",
+   "supporting_finding_ids": [
+    "T3-06",
+    "T3-13",
+    "T3-14",
+    "T3-04"
+   ]
+  },
+  {
+   "rule": "R6 按钮写「动词＋对象」，让人只看按钮也知道后果；危险项不设默认高亮；不用确定、取消、好的。",
+   "rationale": "Apple 警告框与微软确认框规范、Semi Design 文案规范都要求按钮用与标题呼应的具体动词。",
+   "do_example": "[停掉自动续费] [保留会员]",
+   "dont_example": "[确定] [取消]",
+   "supporting_finding_ids": [
+    "T3-06"
+   ]
+  },
+  {
+   "rule": "R7 写明不回会怎样和有效期；高风险动作的默认结果是不执行。",
+   "rationale": "Horvitz 要求为猜错设计超时与退场；微软规范规定高风险确认的默认回应是不继续或安全选项。",
+   "do_example": "今晚 23:00 前不回，我就不动，会员下周一照常续费 ¥30。",
+   "dont_example": "请尽快确认哦～",
+   "supporting_finding_ids": [
+    "T3-01",
+    "T3-06"
+   ]
+  },
+  {
+   "rule": "R8 省了多少：绝对值在前，基线紧跟，说清比了哪几家和多长时间窗；不写「全网最低」「史低」「最划算」。",
+   "rationale": "《广告法》第九条与价格比较真实性规定；PA 无法验证「全网」与「史」；参照物换算能提升对数字的理解。",
+   "do_example": "到手 ¥249，比你购物车现价少 ¥86.5（拆 2 单 + 1 张品类券）。我比了 3 个平台，这是近 30 天最低。",
+   "dont_example": "全网史低！立省 26%！",
+   "supporting_finding_ids": [
+    "T3-20",
+    "T3-32",
+    "T3-19"
+   ]
+  },
+  {
+   "rule": "R9 把握度写成「建议＋一条依据」；预测不带小数点百分比；通篇都拿不准就不发。",
+   "rationale": "Apple 规范点名价格预测用行动建议而非百分比，并要求主动功能设阈值；OpenAI 模型规范默认不量化不确定性；概率词人人理解不同。",
+   "do_example": "建议现在订：这条线近 60 天只出现过 2 次更低价。",
+   "dont_example": "模型预测 87.3% 概率为最低价。",
+   "supporting_finding_ids": [
+    "T3-05",
+    "T3-10",
+    "T3-31"
+   ]
+  },
+  {
+   "rule": "R10 拿不准就用第一人称说清哪一点拿不准，不用含糊的免责套话。",
+   "rationale": "第一人称不确定表达（N=404）降低盲目同意、提高准确率，非人称表达效果弱且不显著；模型自报信心不可靠，要落到具体缺什么。",
+   "do_example": "我没查到这家的退改规则，下单前建议你点进去看一眼。",
+   "dont_example": "可能大概也许会有退改限制，仅供参考。",
+   "supporting_finding_ids": [
+    "T3-16",
+    "T3-15"
+   ]
+  },
+  {
+   "rule": "R11 解释只给能核对的事实，一句为限，其余折叠；不写说服性理由。",
+   "rationale": "解释会提高采纳率而不论对错，越详细越容易过度依赖；降低核对成本的证据才真正帮用户判断。",
+   "do_example": "推荐 A 家：同款同规格，含运费 ¥249；B 家 ¥262。[看截图]",
+   "dont_example": "经过我的深度分析和全网智能比对，A 是最适合你的选择。",
+   "supporting_finding_ids": [
+    "T3-15",
+    "T3-16"
+   ]
+  },
+  {
+   "rule": "R12 过程只留一句真实的工作量，放在结论后面，可展开看明细；结果不好时不炫过程。",
+   "rationale": "劳动错觉提升的是感知价值；过度沟通会稀释注意力；用户已被迫从生产转向评估，过程文字越多核对越累。",
+   "do_example": "直飞里这班最便宜（比了 12 家）。[看比价]",
+   "dont_example": "我先打开了携程，然后比较了去哪儿，接着又查了三家航司官网……",
+   "supporting_finding_ids": [
+    "T3-29",
+    "T3-03",
+    "T3-17"
+   ]
+  },
+  {
+   "rule": "R13 不需要用户决定的事不单独推送，并入日汇总或周汇总；把握低的线索不发。",
+   "rationale": "Apple 规范反对只为告知而打断，并要求主动功能设阈值；Bansal 2024 记录了更新过多导致漏看关键信息；打断有连锁时间成本。",
+   "do_example": "本周：要你定 1 件 · 已替你办 2 件 · 还在盯 2 件",
+   "dont_example": "机票价格今日无变化～",
+   "supporting_finding_ids": [
+    "T3-05",
+    "T3-03",
+    "T3-18"
+   ]
+  },
+  {
+   "rule": "R14 不急的确认等用户空档，可合并成一条；只有现在不处理就失效或受损的才即时打断。",
+   "rationale": "提醒引发的切换平均占用十几到二十几分钟且被当事人低估；Horvitz 与 Amershi 都把注意力状态列为时机判据。",
+   "do_example": "（午休时）有 2 件事等你点头，都不急，今晚 22:00 前有效。",
+   "dont_example": "用户开会时连推 3 条待确认。",
+   "supporting_finding_ids": [
+    "T3-18",
+    "T3-01",
+    "T3-02"
+   ]
+  },
+  {
+   "rule": "R15 条件不满足时回头问，把差多少说清楚；不替用户放宽条件。",
+   "rationale": "AP2 规定约束未满足时把用户拉回流程；超出授权属于事前确认的判据；开源手机 Agent 的提示词允许自行放宽价格区间，对省钱型 PA 是反例。",
+   "do_example": "¥1,200 以下的票没了，现在最低 ¥1,340，比你的上限高 ¥140。[按 ¥1,340 订] [再等到周五] [不订了]",
+   "dont_example": "已为你订了最接近的 ¥1,340。",
+   "supporting_finding_ids": [
+    "T3-13",
+    "T3-03",
+    "T3-11"
+   ]
+  },
+  {
+   "rule": "R16 登录、验证码、支付密码交还用户：说清卡在哪，用户做完 PA 接着办。",
+   "rationale": "Open-AutoGLM 与 Operator 都把登录与验证环节定义为人工接管；Apple 规范要求出错时说清发生了什么并给下一步。",
+   "do_example": "卡在 12306 的登录验证码，需要你点一下。完成后我接着排候补。[去验证]",
+   "dont_example": "执行失败，请重试。",
+   "supporting_finding_ids": [
+    "T3-11",
+    "T3-04"
+   ]
+  },
+  {
+   "rule": "R17 同类确认被连续原样通过后，问一次要不要以后直接办（带上限和有效期）；被撤销、否决或办错后自动收紧一级。",
+   "rationale": "有经验用户的放手比例从约 20% 升到 40% 以上；确认通过率过高说明确认已失效；信任掉得快、涨得慢。连续几次算够没有文献依据，建议从 3 次起步用数据校准。",
+   "do_example": "这类续费提醒你已连续 3 次选了停掉。以后超过 30 天没用的订阅我直接停，停完告诉你？[好，直接停] [还是先问我]",
+   "dont_example": "永远每次都问；或者不打招呼就自己把权限升了。",
+   "supporting_finding_ids": [
+    "T3-08",
+    "T3-07",
+    "T3-30",
+    "T3-03"
+   ]
+  },
+  {
+   "rule": "R18 完成回执写三样：办了什么、结果数字、接下来何时会发生什么（含怎么撤）。",
+   "rationale": "英国政府设计系统要求完成页写明接下来发生什么、何时；Bansal 2024 把「目标达成了吗」「有没有副作用」列为必须回答的问题。",
+   "do_example": "已停掉 XX 视频的自动续费。会员用到 12 月 3 日，之后不再扣 ¥30/月。想恢复随时说。",
+   "dont_example": "操作成功！",
+   "supporting_finding_ids": [
+    "T3-22",
+    "T3-03"
+   ]
+  },
+  {
+   "rule": "R19 推荐项必须是对用户最省的那个并说明原因；加购、保险、会员不做默认，也不因为上次选过就这次默认。",
+   "rationale": "默认效应很强，高亮项就是事实上的默认；《电子商务法》第十九条与《网络交易监督管理办法》第十七条禁止把搭售和以往选择设为默认。",
+   "do_example": "不含保险 ¥560。要加延误险 ¥30 吗？[不加] [加上]",
+   "dont_example": "一键下单里默认勾着延误险，因为用户上次买过。",
+   "supporting_finding_ids": [
+    "T3-21",
+    "T3-25"
+   ]
+  },
+  {
+   "rule": "R20 术语第一次出现用大白话或加半句括注；省钱和省时间冲突时写出交换比例，不替用户假定哪个更重要。",
+   "rationale": "通俗易懂在中国是法规义务；写的人知道得太多，容易高估读者；相对思维研究显示人对小额与大额的同一笔节省判断不一致。",
+   "do_example": "已排上候补（有人退票就自动买）。／便宜 ¥5，但要多等 2 天。",
+   "dont_example": "候补订单已提交兑现队列。／已为你选择最低价方案。",
+   "supporting_finding_ids": [
+    "T3-33",
+    "T3-21",
+    "T3-32"
+   ]
+  }
+ ],
+ "copy_samples": [
+  {
+   "source": "Apple Human Interface Guidelines · Machine learning",
+   "text": "“This is a good time to buy,” or “Consider waiting for a better price.”",
+   "url": "https://developer.apple.com/design/human-interface-guidelines/machine-learning",
+   "note": "价格预测的把握度写法：行动建议替代百分比"
+  },
+  {
+   "source": "Apple Human Interface Guidelines · Machine learning",
+   "text": "“high chance” and “low chance”",
+   "url": "https://developer.apple.com/design/human-interface-guidelines/machine-learning",
+   "note": "旅行价格预测的语义分级"
+  },
+  {
+   "source": "Apple Human Interface Guidelines · Machine learning",
+   "text": "“Suggest less pop music,” “Suggest more thrillers,” and “Mute politics for a week.”",
+   "url": "https://developer.apple.com/design/human-interface-guidelines/machine-learning",
+   "note": "反馈选项写后果，不写「不喜欢」"
+  },
+  {
+   "source": "Apple Human Interface Guidelines · Generative AI",
+   "text": "instead of “Processing…”, say “Finding substitutions for ingredients” or “Summarizing key themes from your notes.”",
+   "url": "https://developer.apple.com/design/human-interface-guidelines/generative-ai",
+   "note": "状态文案写具体在做什么"
+  },
+  {
+   "source": "Apple Human Interface Guidelines · Generative AI（Image Playground）",
+   "text": "“Unable to use that description.”",
+   "url": "https://developer.apple.com/design/human-interface-guidelines/generative-ai",
+   "note": "拒绝文案：不指责用户"
+  },
+  {
+   "source": "Apple Human Interface Guidelines · Alerts",
+   "text": "“View All,” “Reply,” or “Ignore” ／ “Erase,” “Convert,” “Clear,” or “Delete”",
+   "url": "https://developer.apple.com/design/human-interface-guidelines/alerts",
+   "note": "按钮用与正文呼应的动词"
+  },
+  {
+   "source": "Horvitz 1999 · LookOut 日程助手（图 2）",
+   "text": "“Should I go ahead and schedule that?”",
+   "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/11/chi99horvitz-1.pdf",
+   "note": "1999 年的确认问句；系统接受 “yes,” “yeah,” “sure,” “do it.”，拒绝可说 “no,” “not now,” “nah,” “go away”"
+  },
+  {
+   "source": "OpenAI Model Spec · Control and communicate side effects",
+   "text": "“Should I reserve all five, or book the best-looking site now?”",
+   "url": "https://github.com/openai/model_spec/blob/main/model_spec.md",
+   "note": "有副作用的动作前，把两种做法摆给用户选"
+  },
+  {
+   "source": "Google Cloud Blog · AP2",
+   "text": "“Buy concert tickets the moment they go on sale”",
+   "url": "https://cloud.google.com/blog/products/ai-machine-learning/announcing-agents-to-payments-ap2-protocol",
+   "note": "人不在场的委托示例，需事先签下价格上限、时限等条件"
+  },
+  {
+   "source": "Google Cloud Blog · AP2",
+   "text": "“I really want this jacket in green, and I'm willing to pay up to 20% more for it.”",
+   "url": "https://cloud.google.com/blog/products/ai-machine-learning/announcing-agents-to-payments-ap2-protocol",
+   "note": "用户用自然语言给出价格条件"
+  },
+  {
+   "source": "Microsoft Magentic-UI",
+   "text": "“Accept” ／ “Deny”",
+   "url": "https://www.microsoft.com/en-us/research/blog/magentic-ui-an-experimental-human-centered-web-agent/",
+   "note": "不可逆动作前的两个按钮；属于基础稿反对的空泛按钮，可对照"
+  },
+  {
+   "source": "Anthropic · Trustworthy agents in practice",
+   "text": "“always allow, needs approval, block”",
+   "url": "https://www.anthropic.com/research/trustworthy-agents",
+   "note": "分动作授权的三档"
+  },
+  {
+   "source": "LangChain Agent Inbox",
+   "text": "accept ／ edit ／ response ／ ignore",
+   "url": "https://github.com/langchain-ai/agent-inbox",
+   "note": "人对一次中断的四种回应：照办、改了再办、回一句话、不理"
+  },
+  {
+   "source": "Kim et al. (2024) 实验材料",
+   "text": "“I'm not sure, but…” ／ “It's not clear, but…”",
+   "url": "https://www.microsoft.com/en-us/research/publication/im-not-sure-but-examining-the-impact-of-large-language-models-uncertainty-expression-on-user-reliance-and-trust/",
+   "note": "第一人称与非人称的不确定表达，前者效果更强"
+  },
+  {
+   "source": "Barrio, Goldstein & Hofman (2016) 实验材料",
+   "text": "“To put this into perspective, 7.9 billion dollars annual revenue is about 25 dollars for every person in the U.S.”",
+   "url": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/05/p2729-barrio.pdf",
+   "note": "参照物换算句式"
+  },
+  {
+   "source": "GOV.UK Design System · Check answers",
+   "text": "“Change” ／ “Not provided”",
+   "url": "https://github.com/alphagov/govuk-design-system/blob/main/src/patterns/check-answers/index.md",
+   "note": "核对页每项旁的修改链接与未填占位"
+  },
+  {
+   "source": "Semi Design（抖音前端）· Modal 文案规范",
+   "text": "推荐标题 “Delete form？”、按钮 “Edit”；不推荐 “Are you sure you want to delete form?”",
+   "url": "https://github.com/DouyinFE/semi-design/blob/main/content/show/modal/index.md",
+   "note": "标题用「动词 + 名词」，按钮复用标题里的动词"
+  },
+  {
+   "source": "Ant Design 文案规范",
+   "text": "我们将会审核你的申诉",
+   "url": "https://github.com/ant-design/ant-design/blob/master/docs/spec/copywriting.zh-CN.md",
+   "note": "规范认可的「我们」用法：用户反馈、申诉语境"
+  },
+  {
+   "source": "Ant Design 文案规范",
+   "text": "欢迎回到社区！",
+   "url": "https://github.com/ant-design/ant-design/blob/master/docs/spec/copywriting.zh-CN.md",
+   "note": "规范认可的感叹号用法：问候或祝贺"
+  },
+  {
+   "source": "Ant Design X 设计规范 · 追问",
+   "text": "您需要在这里住多久？",
+   "url": "https://github.com/ant-design/x/blob/main/packages/x/docs/spec/follow-up.zh-CN.md",
+   "note": "酒店预订的追问示例；注意用了「您」，与 Ant Design 文案规范「避免使用您」不一致"
+  },
+  {
+   "source": "智谱 Open-AutoGLM · README",
+   "text": "系统还内置敏感操作确认机制，并支持在登录或验证码场景下进行人工接管。",
+   "url": "https://github.com/zai-org/Open-AutoGLM",
+   "note": "国内开源手机 Agent 的人在回路说明"
+  },
+  {
+   "source": "智谱 Open-AutoGLM · README 示例代码",
+   "text": "请手动完成: {message} ／ 完成后按回车继续...",
+   "url": "https://github.com/zai-org/Open-AutoGLM",
+   "note": "人工接管回调的提示语"
+  },
+  {
+   "source": "智谱 Open-AutoGLM · 中文系统提示词",
+   "text": "Take_over是接管操作，表示在登录和验证阶段需要用户协助。",
+   "url": "https://github.com/zai-org/Open-AutoGLM/blob/main/phone_agent/config/prompts_zh.py",
+   "note": "接管动作的定义"
+  },
+  {
+   "source": "智谱 Open-AutoGLM · 中文系统提示词",
+   "text": "Interact是当有多个满足条件的选项时而触发的交互操作，询问用户如何选择。",
+   "url": "https://github.com/zai-org/Open-AutoGLM/blob/main/phone_agent/config/prompts_zh.py",
+   "note": "多个候选时才问用户"
+  },
+  {
+   "source": "智谱 Open-AutoGLM · 中文系统提示词",
+   "text": "遇到价格区间、时间区间等筛选条件，如果没有完全符合的，可以放宽要求。",
+   "url": "https://github.com/zai-org/Open-AutoGLM/blob/main/phone_agent/config/prompts_zh.py",
+   "note": "反例：允许 Agent 自行放宽价格条件，省钱型 PA 应改为回头问用户"
+  }
+ ],
+ "base_doc_corrections": [
+  "「米勒定律 (4±1 Chunks)」归属错误：7±2 出自 Miller (1956)，约 4 个组块（3–5）出自 Cowan (2001)。应改为「工作记忆约 4 个组块（Cowan, 2001）」。基础稿所引 LogRocket 为二手来源。（本轮未能打开原文，依据既有知识。）",
+  "「注意力窗口通常只有 1.5 至 3 秒」没有出处：基础稿所引来源不含该数字，本轮核实的任何来源里也没有。应降级为设计假设或删去。",
+  "「28 秒压缩到 3.5 秒」「节省 87.5%」「消除约 85% 交互摩擦」是推演而非测量：四段耗时拆解（6s、9s、8s、5s）同样无来源。应明确标注为示意模型、待 A/B 验证，不要用实验图表的样式呈现。",
+  "Medium 文章（Yuki K., AI Agent UX: How to Reduce Cognitive Load and User Fatigue）未能证实：两组关键词搜索均未命中，medium.com 在本会话打不开；文章标注日期距今约一个月，可能尚未被索引，所以既不能证实也不能证伪。即使存在也是个人博客，不应写成「研究者将……拆解为三大根源」；「税」字很可能是基础稿自己的包装。建议改引可核实来源：Simkute 等 2024（生产转评估）、Lee 等 2025、Iqbal & Horvitz 2007（打断成本）、Bansal 等 2024（X3 与 A3）。",
+  "Ant Design 关于「你／您」的原文是：「直接使用「你」、「我」来和用户对话，与用户建立亲密感。避免使用「您」，让用户感觉太过疏远。」及「建议不要使用「您」，太过客气，让用户感觉有些疏远。」基础稿有三处走样：「下对上客服疏离感」是发挥；「绝不自称本助手／小 X」不在该规范里；「隐去主语最省时间」是基础稿的推论（原文只要求不在同一句式混用你和我，并认可反馈、申诉语境用「我们」）。另外 Ant Design X 的追问示例写的是「您需要在这里住多久？」，同一体系内部都不统一，不宜当铁律。",
+  "「遵循 Ant Design 按钮规范，用精准动词 + 结果名词」是误引：Ant Design 文案规范没有按钮动词一节，只规定按钮和标题不用句号、操作名称与目标页标题一致。可核实的出处是 Apple HIG Alerts、Windows UX Guide 确认框一节、Semi Design Modal 文案规范。",
+  "「全网史低」有三重问题：《广告法》第九条第三项禁用「最高级」「最佳」等用语，第五十七条罚 20–100 万元（PA 消息是否构成广告需法务判断）；《明码标价和禁止价格欺诈规定》要求被比较价格真实准确；PA 根本无法验证「全网」和「史」。同类表述还有「已凑出最低价」「已锁定直飞最低价」「现在重订最划算」。应改为限定范围和时间窗的事实陈述。",
+  "希克定律被用过头：它描述的是简单选择反应时与选项数的对数关系，不预测「分析瘫痪」。选择过载元分析（50 个实验、N=5,036）平均效应约为零，只在偏好不明、选项难比、想省力等条件下成立。「选项过多直接引发分析瘫痪」应加条件限定。",
+  "渐进披露的出处用的是一篇 2026 年医疗社工领域的 Medium 文章。建议改引 Nielsen (2006)，并补上本轮核实到的同义规范：OpenAI Model Spec 的「要点在前、审计明细按需提供」与 Ant Design X 的「可展开／收起」。",
+  "订阅退订示例「立省 ¥30/月 · 明早扣费」只提前一天。《网络交易监督管理办法》第十八条要求在自动续费日期前五日以显著方式提醒；PA 至少应不晚于这个时点。",
+  "示例中有先斩后奏的写法：「已免费锁好 16:30 东航直飞……[立即出票]」若「锁」是可免费释放的占位，属于正确的保全动作，但必须写明占位时限和不出票会怎样；「已锁定直飞最低价，立省 ¥420」则没说清是否已下单。",
+  "「信用极好买家」是无法核对的评价，应换成平台给出的可查标签或事实（成交笔数、平台信用等级），或删去。",
+  "象限 IV 示例把省下的钱导向新消费（「净省 ¥380——刚好够换……演出票 [去锁座]」），与省钱目标相悖；若链接带佣金，按《互联网广告管理办法》第九条须显著标明「广告」。",
+  "结尾金句「让用户……觉得这个精明的决定完全是自己做出的」把目标设成了制造自己做主的感觉。过度依赖研究与各家 Agent 准则的方向相反：要让用户真的能在一秒内看懂并否决。建议改写立意。",
+  "「所有消息锁死在 40 个汉字以内」与高风险确认的最小信息集冲突：涉及付款的待确认消息要写清对象、到手总价、可逆性、不回会怎样，通常需要 60–90 字。建议按消息类型分级，而不是一刀切。（字数区间是建议值，无实证依据。）",
+  "「以结论 + 单一闭环动作替代开放式追问」需补一句：单一动作按钮若不配「改一下」和「不要」，就是在制造橡皮图章（确认接受率 93% 的教训）。",
+  "基础稿把「补充信息消除核实成本」当作纯收益。证据显示解释会提高采纳率而不论对错；补充的信息必须是用户一眼能核对的事实，否则只是让用户更放心地不核实。"
+ ],
+ "surprises_or_contradictions": [
+  "审批提示不等于监督：用户对逐条权限弹窗的接受率 93%，Anthropic 的应对是减少确认；更有经验的用户放手更多（约 20% 升到 40% 以上），同时打断也更多（5% 升到约 9%）。",
+  "解释提高的是通过率，不是正确率：解释让用户更愿意采纳 AI 建议而不论对错；连「准确率 50%」这种等于没说的信息都能提高信任。",
+  "选择过载的元分析平均效应约为零，「少即是多」只在特定条件下成立。",
+  "「决策疲劳」所依赖的自我损耗效应在两次多中心预注册复制中接近零（d 约 0.04 与 0.06），它在产品圈却被当作常识。",
+  "只在 10% 的任务里提问，完成率就能从 30.3% 升到 51.9%：提问的价值在信息增量，不在频次。",
+  "Apple 明确反对在价格预测里显示百分比，与基础稿「数字前置」并不矛盾但要分清：事实（金额、时间）用数字，把握度用行动建议。",
+  "第一人称的「我不确定」比客观口吻的「尚不清楚」更能让人留神，与很多品牌语气指南「避免显得没把握」的直觉相反；代价是用户对系统的信心下降、用时变长。",
+  "Ant Design 文案规范说避免用「您」，同属蚂蚁体系的 Ant Design X 示例却用了「您需要在这里住多久？」。",
+  "「每天只要几毛钱」是让花费显小的卖方话术；站在用户一边的 PA 应反着用：花费报总价，节省报累计。（这一条是我的推演。）",
+  "用户把提醒当作「知道一下」，实际却被它带走十几分钟且自己没意识到，所以用户口头说「不介意多提醒」不能全信。",
+  "模型自报的信心与输出是否正确不相符，PA 的把握度要建立在可检查的事实上（比了几家、数据是几点的）。",
+  "开源手机 Agent 的中文提示词允许在条件不满足时自行放宽价格区间；对省钱型 PA，这正是必须回头问的地方。",
+  "在中国，「通俗易懂」写进了行政法规（《消费者权益保护法实施条例》第九条），不只是体验问题。",
+  "呼吁人工监督可能制造虚假的安全感：用户点过确认不能当作产品免责的理由。",
+  "行业前沿在 2025–2026 年的方向是「事先定边界」而不是「事中多确认」：AP2 的预授权、Claude 的计划级确认与沙箱、分类器把关的自动模式都指向这一点。"
+ ],
+ "gaps": [
+  "本轮搜索只完成 12 次（目标至少 15 次）：全团队共享的搜索额度用完，之后只能直接打开已知网址。",
+  "本会话网络白名单拦截了多个关键站点，需放行后补核：medium.com、nngroup.com、smashingmagazine.com、alistapart.com、openai.com、arxiv.org、ant.design、pair.withgoogle.com、erichorvitz.com、interruptions.net、modelcontextprotocol.io、docs.cloud.google.com，以及各期刊站点。",
+  "基础稿引用的 Medium 文章（Yuki K.）是否存在、作者身份、原文对三种负担的表述，均未能核实。",
+  "Smashing Magazine 2026 年 2 月 Victor Yocco 文章的六个模式（Intent Preview、Autonomy Dial、Explainable Rationale、Confidence Signal、Action Audit、Escalation Pathway）只见搜索摘要；二手页面提到的指标阈值（如接受率大于 85%）未对原文，不建议引用。",
+  "NN/g 关于 Agent 体验、确认框、渐进披露的文章，Google PAIR Guidebook，Aza Raskin 原文与确切发布日期，均未打开。",
+  "OpenAI Operator、ChatGPT agent、Gemini Agent、Manus 的官方确认与接管说明原文未打开；Operator 的表述仅来自搜索摘要。",
+  "默认效应、选择过载、劳动错觉、算法厌恶、价格表述、自我损耗、Miller、Cowan、Budescu 等经典论文的数字全部凭既有知识引用，发布前需按 DOI 逐条复核；劳动错觉「结果差时会减分」的边界条件尤其需要对原文。",
+  "HBR workslop 与 METR 的数字未核实。",
+  "ISO 24495-1:2023 条文未打开；中国是否已等同采用为国家标准未查。",
+  "《广告绝对化用语执法指南》原文及其例外情形未核对；PA 的主动消息在什么商业模式下构成「广告」或使 PA 成为「经营者」，需要法务意见。",
+  "中文里「大概率／很可能／预计／有望」对应的主观概率区间，没有查到中文受试者的专项研究（待核线索：Harris, Corner, Xu & Du 2013, Climatic Change，比较中英受试者对 IPCC 概率词的理解）。",
+  "国内产品（豆包手机助手、千问、支付宝的 AI 支付、荣耀 YOYO、小米、微信等）在付款、发消息节点的真实确认文案未采集，需要截图级一手样本。",
+  "国内 2025–2026 年关于智能体敏感操作确认的标准或监管文件未检索。",
+  "撤销窗口的合理时长（几秒、几分钟、到某个时点）没有找到针对 Agent 代办动作的实证。",
+  "「同类确认连续通过几次后可提议升级自主度」的阈值、「每个目标或每周的确认预算」的数值都没有文献依据，需用自己的数据校准。",
+  "通俗语言对理解与决策速度的量化实证（带数字的原始研究）本轮没有可核实来源；美国联邦通俗语言官网的好处页不含任何数字。",
+  "手机通知场景下打断成本的实测缺失：Iqbal & Horvitz 是 2007 年桌面办公数据。",
+  "消费场景里（钱是自己的）解释与不确定表达对用户判断的影响缺少直接证据，现有实验多是众包问答任务。",
+  "法规条文取自 GitHub 上的 LawRefBook 镜像，《明码标价和禁止价格欺诈规定》第十六至二十条为转述而非逐字，正式引用需对照官方文本。"
+ ],
+ "dossier_path": "scratchpad/research/T3-cognition.md"
+}

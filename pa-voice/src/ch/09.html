@@ -1,0 +1,197 @@
+<section class="ch" id="skill">
+  <header class="ch-head">
+    <div class="ch-no">09</div>
+    <h2>怎么让 AI 也照着这套规矩写</h2>
+    <p class="ch-answer"><b>把规范拆给三方：代码管事实和发不发，规则检查管字数和红线，模型只管措辞。</b>三样东西打包成一个 Skill，人读的和模型加载的是同一批文件。</p>
+    <ul class="ch-meta"><li>委托问题 ⑤ 让 AI 同步理解的方式</li><li>规则 R47–R51</li><li>附可下载的 Skill<span data-if="eval">与评测结果</span><span data-if-not="eval">与评测用例</span></li></ul>
+  </header>
+
+  <div class="facts wide">
+    <div class="fact"><b class="num">不保证<small>字数</small></b><span>结构化输出能保证字段和枚举，不支持「最多多少字」这类约束</span><cite><a class="ev" data-ev="T9-19"></a></cite></div>
+    <div class="fact"><b class="num">31<small>个检查点</small></b><span>一套流行的中文「去 AI 味」规则后来取消了机械替换和自评分：改顺了，意思却变了</span><cite><a class="ev" data-ev="T9-07"></a></cite></div>
+    <div class="fact"><b class="num">3<small>条起</small></b><span>官方写法建议：先有评测用例，再写规范正文</span><cite><a class="ev" data-ev="T9-02"></a></cite></div>
+    <div class="fact"><b class="num">±14<small>个百分点</small></b><span>25 条用例跑 2 遍能分辨的最小差距；小于它不要下结论</span><cite><a class="ev" data-ev="T9-21"></a></cite></div>
+  </div>
+
+  <div class="sub col">
+    <h3>一段提示词为什么不够</h3>
+    <p>把这份手册整段贴进提示词，模型会写得更像样，但有三类事它做不稳。第一类是事实：让模型把几条来源揉成一句话，Apple 的通知摘要就出过把新闻通知改写成假标题的事故<a class="ev" data-ev="T7a-22"></a>。第二类是字数和禁用说法：模型数不准字，结构化输出也不提供长度约束<a class="ev" data-ev="T9-19"></a>。第三类是「发不发」：2024 年的一项公开评测里，GPT-4o 等模型主动开口的误报率在一半上下<a class="ev" data-ev="T2-31"></a>。</p>
+    <p>已经在线上跑的个人 agent 给出的做法很一致：负责执行的部分只转述事实，负责说话的部分只管措辞，不值得说就等（据一份泄露的提示词，厂商未确认）<a class="ev" data-ev="T9-14"></a>；后台任务和用户之间加一道闸，只放行能行动的信息，闸出错时默认不通知<a class="ev" data-ev="T7a-16"></a>；没有新内容就只回一个约定的静默标记<a class="ev" data-ev="T7a-12"></a>。</p>
+    <p>所以这套规范落成三层，每层交给最擅长它的一方。</p>
+  </div>
+
+  <div class="sub wide">
+    <div class="flow" style="--flow-cols:5">
+      <div><small>① 代码</small><b>事件进来，先过闸</b><span>有没有新变化、是否在授权内、频率上限、安静时段。多数事件在这一步变成「不发」或「进小结」。</span></div>
+      <div><small>② 代码</small><b>写入事实槽位</b><span>金额、时间、比较基准、来源、查询时刻。模型只读，不能改，也不能自己算出新的数。</span></div>
+      <div><small>③ 模型 + Skill</small><b>选类型、定档位、写</b><span>14 种消息类型选一种；七个语气参数按情境定档；先写只报事实的一版，再有条件地加一笔。锁屏那一层装决定，装不下的事实放进展开层。</span></div>
+      <div><small>④ 代码</small><b>体检</b><span>22 项规则检查，外加逐个核对文案里的数字都在事实槽位里。有「必改」就退回重写，最多两轮。</span></div>
+      <div><small>⑤ 代码</small><b>发出，或降级</b><span>两轮都没过，就发按模板拼出来的事实版。付款和对外发送永远等用户点。</span></div>
+    </div>
+    <p class="note" style="margin-top:.7rem">这张流程图是本手册的设计，不是某个产品的实现。其中「模型只管措辞」「闸出错时默认不发」「没有新内容就静默」三点有线上系统的先例，见上面的角标。</p>
+  </div>
+
+  <div class="tool wide sub" id="baseCheck">
+    <div class="tool-head"><h3>拿基础稿的六条「黄金话术」试一下</h3><span>人写的规范，自己的例子也会出界。所以要让机器查。</span></div>
+    <div class="tool-body">
+      <p class="note">基础稿给每条消息定了四个上限：锚点 10 个字以内，上下文 22 个字以内，每个按钮 5 个字以内，整条 40 个汉字以内。下面先按它自己的上限数一遍，再过一遍本手册的体检；右边是按手册改后的版本，过的是同一套检查。</p>
+      <div class="chips" id="baseChips" role="group" aria-label="六条黄金话术"></div>
+      <div class="tool-split">
+        <div class="stack">
+          <div class="note"><b style="color:var(--dont)">基础稿的写法</b></div>
+          <div id="baseBefore" class="stack"></div>
+        </div>
+        <div class="stack">
+          <div class="note"><b style="color:var(--do)">按手册改后</b></div>
+          <div id="baseAfter" class="stack"></div>
+        </div>
+      </div>
+      <div class="tbl scroll-x"><table id="baseTable"></table></div>
+      <div class="callout"><b>规则检查只抓得住一部分</b>它查得出字数、绝对化用语、相对时间、促销腔和缩写。它查不出「会议已预调」其实只是备好了草稿，也查不出「高于均价 ¥80」里的均价是哪段时间的。前一类问题交给代码，每条都查；后一类要靠评审量表里的「事实保真」和「不操纵」两个维度，模型先筛，人来定。</div>
+    </div>
+  </div>
+
+  <div class="sub wide">
+    <h3>Skill 包里有什么 <small>pa-voice-zh · <span data-stat="skillFiles">17</span> 个文件</small></h3>
+    <div class="grid-2" style="margin-bottom:1.4rem">
+      <div class="col">
+        <p>Skill 是一种开放的打包格式：一个文件夹，里面有一份带元信息的 <code>SKILL.md</code>，加上按需读取的参考文件和脚本<a class="ev" data-ev="T9-01"></a>。模型平时只看见一句描述，判断用得上才读正文，正文再指向更细的文件。这样规范可以分层写，又不会每次都占满上下文<a class="ev" data-ev="T9-01"></a><a class="ev" data-ev="T9-26"></a>。</p>
+        <p>这个包按官方写法组织<a class="ev" data-ev="T9-02"></a>：正文只写模型原本不知道的东西；每条规则带一句原因和一组正反例<a class="ev" data-ev="T9-08"></a>；能用代码判定的都放进脚本。</p>
+      </div>
+      <div class="tbl scroll-x">
+        <table style="min-width:0">
+          <thead><tr><th>文件</th><th>管什么</th><th>谁在用</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">SKILL.md</th><td>五步流程、类型表、写法、输出格式、任何档位都不做的事</td><td>模型，每次</td></tr>
+            <tr><th scope="row">references/</th><td>发送策略、14 种类型的模板、语气档位、幽默阶梯、词表、容器预算、全部规则</td><td>模型，按需</td></tr>
+            <tr><th scope="row">assets/</th><td>消息和用户档案的结构定义；场景话术库（示例）</td><td>代码与模型</td></tr>
+            <tr><th scope="row">scripts/</th><td>体检脚本，和本页的体检器是同一份代码</td><td>代码，每次</td></tr>
+            <tr><th scope="row">evals/</th><td><span data-stat="evalCases">78</span> 条回归用例、评审量表、评测用的提示词和配对办法</td><td>改规范、换模型时</td></tr>
+            <tr><th scope="row">CHANGELOG.md</th><td>每一版改了什么，是哪一轮评测逼出来的</td><td>改规范的人</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="files" id="skillFiles">
+      <div class="files-list" role="group" aria-label="Skill 文件"></div>
+      <div class="files-view">
+        <div class="files-bar"><span class="name"></span>
+          <span class="acts">
+            <button class="btn ghost sm" id="skillCopy" type="button">复制这个文件</button>
+            <button class="btn ghost sm" id="skillSave" type="button">下载这个文件</button>
+            <button class="btn ghost sm" id="skillCopyAll" type="button">复制整套</button>
+            <button class="btn sm" id="skillZip" type="button">下载整套（.zip）</button>
+          </span>
+        </div>
+        <pre class="code" tabindex="0"></pre>
+      </div>
+    </div>
+    <div class="grid-3" style="margin-top:1.4rem">
+      <div class="callout"><b>用法一：直接装成 Skill</b>把 <code>pa-voice-zh/</code> 文件夹放进支持 Agent Skills 的工具（例如项目的 <code>.claude/skills/</code> 目录）。模型遇到写主动消息的任务时会自己加载。</div>
+      <div class="callout"><b>用法二：接进自己的生成链路</b><code>SKILL.md</code> 作为系统提示词，按消息类型从示例库里取 3–5 条放进上下文，输出按 <code>message.schema.json</code> 约束，生成后跑 <code>lint.mjs</code>。</div>
+      <div class="callout"><b>用法三：只用体检</b>不换模型、不改提示词，只把 <code>node scripts/lint.mjs</code> 接在现有文案的发布流程后面，先把字数、称呼混用、绝对化用语拦下来。</div>
+    </div>
+  </div>
+
+  <div class="sub wide" id="eval">
+    <h3>有 Skill 和没有，差多少 <small><span data-if="eval"><span data-stat="evalRounds">5</span> 轮盲评：前四轮读完整文字时没赢，分成两层之后占优</span><span data-if-not="eval">评测办法；结果待跑</span></small></h3>
+    <div class="grid-2">
+      <div class="col">
+        <p>评测按「同一批情境，带 Skill 和不带各写两遍，评审不知道哪个是哪个」的办法做<a class="ev" data-ev="T9-22"></a>。写的一方是同一个模型，区别只在读没读过这套 Skill。情境覆盖机会、扣款提醒、求拍板、按授权已办、需要接管、延误、更正、放弃、里程碑、长辈模式、监控故障、定时提醒、缺比较基准和周报，其中几条的正确答案是「不发」。用例里的金额、日期和商品，都不和 Skill 里的示例重复。每改一次规范就补一批新用例；第三轮起，新用例由没看过规范改动的模型出题，另一个模型核对日期和算术。</p>
+        <p>分三层判<a class="ev" data-ev="T9-20"></a>。发不发在不在预期之内、该出现的数字有没有出现、禁用说法有没有出现，由代码判定。字数和格式由体检脚本判定。哪一条能让这位用户更快做出正确的决定，由三位评审盲评，它们分别扮演产品经理、中文文案编辑和合规审查。第三轮起同一批输出看两遍：一遍给评审完整的文字，一遍只给锁屏上或对话里显示得出来的部分。提示词、配对规则和汇总脚本都放在 Skill 的 <code>evals/prompts.md</code> 里，换模型或改规范之后可以原样重跑。</p>
+        <div id="evalStory" class="col"></div>
+        <div class="callout bound" data-if-not="eval"><b>结果还没有</b>这一版手册发布时，盲评还没有跑完，所以这里只有办法，没有数字。用例和评审量表都在 Skill 的 <code>evals/</code> 目录里，可以照上面的办法自己跑一遍。</div>
+      </div>
+      <div class="stack" data-if="eval">
+        <div class="field"><span class="label">看哪一轮</span><div class="seg" id="evalRound" role="group" aria-label="评测轮次"></div></div>
+        <div id="evalSummary"></div>
+        <div id="evalChecks"></div>
+      </div>
+    </div>
+    <div data-if="eval">
+    <div class="col" id="evalProse" style="margin-top:1.4rem"></div>
+    <div class="tbl scroll-x" style="margin-top:1.4rem"><table id="evalDims"></table></div>
+    <div class="tool" style="margin-top:1.4rem">
+      <div class="tool-head"><h4>逐个情境看两边写了什么</h4><span>左边不带 Skill，右边带 Skill；括号里是「带 : 不带」的胜场</span></div>
+      <div class="tool-body">
+        <div class="controls">
+          <div class="field" style="flex:1 1 18rem"><label for="evalCase">情境</label><select class="select" id="evalCase"></select></div>
+          <div class="field"><span class="label">第几遍</span>
+            <div class="seg" id="evalRun" role="group" aria-label="第几遍生成">
+              <button type="button" value="1" aria-pressed="true">第 1 遍</button>
+              <button type="button" value="2" aria-pressed="false">第 2 遍</button>
+            </div>
+          </div>
+        </div>
+        <div id="evalCaseInfo" class="note"></div>
+        <div class="tool-split">
+          <div class="stack"><div class="note"><b style="color:var(--ink)">不带 Skill</b></div><div id="evalBase" class="stack"></div></div>
+          <div class="stack"><div class="note"><b style="color:var(--ink)">带 Skill</b></div><div id="evalSkill" class="stack"></div></div>
+        </div>
+        <p class="note">划掉的字，是这个位置上显示不出来的部分：锁屏按标题 20、正文 50 个字宽算。读完整文字的三位评审看得到划掉的字和展开层；只看显示部分的三位看不到。</p>
+        <div id="evalVotes" class="note"></div>
+      </div>
+    </div>
+    <div class="grid-2" style="margin-top:1.4rem">
+      <div class="callout bound"><b>这类评测能说明什么</b>同一个模型、同一批情境，读没读过这套规范，写出来的消息差在哪、评审更常选哪一边。它是回归测试：规范哪里写错了，会在这里先露出来。每一轮的结果都直接改了规范，有一次还改出了新毛病，下一轮又被它抓了出来。</div>
+      <div class="callout bound"><b>不能说明什么</b>写的和评的是同一个模型，评审是模型扮演的，不是用户，而且评审偏爱更长的回答这类偏差有据可查<a class="ev" data-ev="T9-21"></a>；情境是模型出的；每个情境每边只写两遍，单条的胜负晃得厉害，只能看合计。它不能替代真人评审和线上数据。写作风格这类主观的东西，官方工具也建议以人工定性评审为主<a class="ev" data-ev="T9-22"></a>。</div>
+    </div>
+    </div>
+  </div>
+
+  <div class="tool wide sub" id="live">
+    <div class="tool-head"><h3>现场改写</h3><span>贴一条现有的话术，按这套 Skill 改一遍，再自动过体检</span></div>
+    <div class="tool-body">
+      <div id="liveOff" class="callout" hidden><b>这里用不了</b>现场改写要在 Claude 里打开这份手册才能用（它会在你点击后请 Claude 改写）。在别处打开时，可以把上面的 Skill 复制进任何一个大模型，再把话术贴到第 3 章的体检器里检查。</div>
+      <div id="liveOn" class="stack" hidden>
+        <div class="tool-split w-2-3">
+          <div class="stack">
+            <div class="field"><label for="liveInput">要改的话术</label>
+              <textarea class="textarea" id="liveInput" rows="6">尊敬的用户您好，小助手检测到您关注的上海飞东京航班出现了降价哦！现在只要 2360 元，比您设定的目标价还要低 40 元，全网最低，手慢无！请问需要我帮您预订吗？</textarea>
+            </div>
+            <div class="controls">
+              <div class="field"><label for="liveType">消息类型</label><select class="select" id="liveType"></select></div>
+              <div class="field"><label for="liveStakes">严肃度</label>
+                <select class="select" id="liveStakes"><option value="low">低</option><option value="mid" selected>中</option><option value="high">高</option></select></div>
+              <div class="field"><label for="liveMood">用户状态</label>
+                <select class="select" id="liveMood"><option value="rushed">赶时间</option><option value="neutral" selected>平常</option><option value="relaxed">松弛</option></select></div>
+            </div>
+            <div class="controls">
+              <button class="btn" id="liveRun" type="button">按 Skill 改写</button>
+              <button class="btn ghost" id="liveStop" type="button" hidden>停止</button>
+            </div>
+            <p class="live-status" id="liveStatus" role="status">点击后会把这条话术和 Skill 正文发给 Claude。草稿里没有的事实，它会列出来，不会替你编。</p>
+          </div>
+          <div class="live-out stack" id="liveOut"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub wide">
+    <h3>以后怎么改这套规范 <small>一处改，四处生效</small></h3>
+    <div class="grid-2">
+      <div class="col">
+        <p>这份手册、Skill、体检器和场景库出自同一批数据文件：规则表、词表、消息类型表、语气档位表、场景话术。页面读它们来渲染，Skill 的参考文件由它们生成，体检器的引擎在页面和命令行里是同一份代码。改一条规则，只改一个地方。</p>
+        <ol class="steps" style="margin-top:1rem">
+          <li><div><b>先把失败做成用例。</b>看到一条写坏了的消息，先把它的情境加进 <code>evals/cases.json</code>，确认现在确实会错。</div></li>
+          <li><div><b>再改规则或词表。</b>能用代码判定的写进体检，不能的写成「规则、原因、正反例」三件套<a class="ev" data-ev="T9-08"></a>。</div></li>
+          <li><div><b>重新生成、重跑。</b>运行生成脚本更新 Skill 的参考文件，把手册里的全部示例和用例再过一遍体检。</div></li>
+          <li><div><b>看对比再合并。</b>提交里带着改前改后的输出对比。语气类的改动找两个人各看一遍。</div></li>
+        </ol>
+      </div>
+      <div class="stack">
+        <div class="callout"><b>用户的偏好不放进 Skill</b>称呼、要不要玩笑、安静时段，属于每个用户的档案，放在记忆层。只记用户明说的和显式设置的，区分「他说的」和「我们推断的」，推断不能覆盖明说<a class="ev" data-ev="T9-25"></a>。</div>
+        <div class="callout"><b>长对话里人设会漂</b>有研究在八轮对话之内就观察到语气明显偏离设定<a class="ev" data-ev="T9-24"></a>。主动消息每条都是单独生成的，这反而是优势：每次都从同一份 Skill 和同一份档案出发。</div>
+        <div class="callout"><b>词表会过期，结构不会</b>模型的口癖每一代都在变，结构上的毛病更持久<a class="ev" data-ev="T9-06"></a>。词表当检查线索用，不当黑名单用；每换一代模型，重跑用例，重看一遍哪些词还在冒出来。</div>
+        <div class="callout"><b>定时任务不会自己推断语言</b>有的 agent 框架明确写了：后台任务不会从渠道或历史里推断回复语言，语言规则必须写进任务提示词<a class="ev" data-ev="T7a-09"></a>。中文规范要显式加载。</div>
+        <div class="callout bound"><b>已知、还没处理的</b>一，第五轮还输的那些情境：把「明晚」写成日期；用户当天必须做的事放进了展开层；按钮写成「处理某某」，没说点了会怎样。二，类型表里「怎么送达」一栏还留着「即时推送」「普通推送」这些旧叫法，没有和第 4 章的送达层级（S0 到 S4）逐一对齐。三，要用户动手、但期限还远的事，规范按期限用轻提示；出题的模型多数认为该推送，评审在这件事上没有一致的倾向，要靠线上的静音率和完成率来定。四，第五轮测完之后又按一次独立复核改了 20 处前后不一致的例子和说明，收尾时再改了 4 处措辞（合为 1.4.1），这些改动没有再测。五，锁屏「标题 20、正文 50 个字宽」的硬上限少了一条依据：对原文之后发现，厂商推送接口的上限比这宽（vivo 现行文档是标题 40、内容 100 个字符）。它现在只是按显示宽度定的预算，超出不会发送失败，只会在锁屏上被截断；要不要放宽，等主力机型的真机截图，放宽之后「只看锁屏」那组盲评也要重跑。每一版改了什么，记在 Skill 的 <code>CHANGELOG.md</code> 里。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub wide">
+    <h3>这一章的规则</h3>
+    <div data-rules="skill"></div>
+  </div>
+</section>

@@ -62,7 +62,7 @@
     blocked:     { name: '受阻求助',   needsAction: true,  needsDefault: false, allowExclaim: 0 },
     nudge:       { name: '轻推',       needsAction: true,  needsDefault: false, allowExclaim: 0 },
     milestone:   { name: '里程碑',     needsAction: false, needsDefault: false, allowExclaim: 1 },
-    digest:      { name: '复盘小结',   needsAction: false, needsDefault: false, allowExclaim: 0 },
+    digest:      { name: '周期小结',   needsAction: false, needsDefault: false, allowExclaim: 0 },
     rescope:     { name: '建议调整',   needsAction: true,  needsDefault: false, allowExclaim: 0 },
     correction:  { name: '更正',       needsAction: false, needsDefault: false, allowExclaim: 0 },
     pause:       { name: '停止提醒',   needsAction: true,  needsDefault: false, allowExclaim: 0 }

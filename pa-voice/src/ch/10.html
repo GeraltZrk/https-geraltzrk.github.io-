@@ -10,12 +10,12 @@
     <div class="fact"><b class="num">71<small>%</small> → 53<small>%</small></b><span>Android 应用的推送许可率中位数，2023 到 2025 年。发通知的资格在变贵</span><cite>厂商基准报告<a class="ev" data-ev="T2-15"></a></cite></div>
     <div class="fact"><b class="num">10<small>倍</small></b><span>一项募捐邮件实验里，提醒提高了捐款，也提高了退订；不算这笔成本，净收益会被高估这么多</span><cite><a class="ev" data-ev="T4-15"></a></cite></div>
     <div class="fact"><b class="num">8.7 → 1.4</b><span>助推的平均效果（百分点）：期刊里的小样本研究，对比大规模实测</span><cite><a class="ev" data-ev="T4-13"></a></cite></div>
-    <div class="fact"><b class="num">几天</b><span>一次只看到正向信号的语气更新，上线后因为讨好被全量回滚</span><cite>多家报道<a class="ev" data-ev="T8-11"></a></cite></div>
+    <div class="fact"><b class="num">几天</b><span>一次只看到正向信号的语气更新，上线几天就因为讨好被全量回滚</span><cite>多家报道<a class="ev" data-ev="T8-11"></a></cite></div>
   </div>
 
   <div class="sub col">
     <h3>别只量点击</h3>
-    <p>主动消息最容易量的是打开率，可它偏偏最会骗人。一条写得好的消息，用户在锁屏上看完就够了，根本不用点开；一条制造紧迫感的消息，点击率反而高。一项比较政府助推团队大样本实测与期刊文献的研究发现：效果有，但比文献里看起来的小<a class="ev" data-ev="T4-13"></a>；成本也有，只是不在同一张表上<a class="ev" data-ev="T4-15"></a>。</p>
+    <p>主动消息最容易量的是打开率，可它偏偏最会骗人。一条写得好的消息，用户在锁屏上看完就够了，根本不用点开；一条制造紧迫感的消息，点击率反而高。一项比较政府助推团队大样本实测与期刊文献的研究发现：效果有，但比文献里看起来的小<a class="ev" data-ev="T4-13"></a>。另一项募捐提醒实验发现，成本也有，只是不在同一张表上<a class="ev" data-ev="T4-15"></a>。</p>
     <p>所以度量要回到用户请 PA 的本意：这条消息有没有让他少花钱、少花时间，以及为此借走了他多少注意力。</p>
   </div>
 
@@ -33,8 +33,8 @@
           <tr><td>撤销率</td><td>PA 先办后报的动作里被用户撤回的比例</td><td>高了说明授权范围画大了，退回「先问」</td></tr>
           <tr><td>负反馈率</td><td>「别发了」「太啰嗦」「说人话」这类回复，和按钮式的「少提醒」</td><td>逐条读，不只数数</td></tr>
           <tr><th scope="row" rowspan="3">诊断</th><td>每个目标的消息数</td><td>从接单到办妥，一共发了几条、几条需要决定</td><td>同一类目标之间比，找出话多的那一类</td></tr>
-          <tr><td>更正率</td><td>发过「我说错了」的消息占比</td><td>事实层的质量。它比任何语气指标都先伤信任</td></tr>
-          <tr><td>体检退回率</td><td>模型写的第一稿被规则检查退回的比例，按规则分</td><td>哪条规则总在退，就回去改 Skill 里那一条的写法</td></tr>
+          <tr><td>更正率</td><td>发过「我说错了」的消息占比</td><td>事实层的质量。说错比任何语气问题都先伤信任</td></tr>
+          <tr><td>体检退回率</td><td>模型写的第一稿在体检中被退回的比例，按规则分</td><td>哪条规则总在退，就回去改 Skill 里那一条的写法</td></tr>
         </tbody>
       </table>
     </div>
@@ -58,7 +58,7 @@
             <div class="field"><label for="calcMoney">每周已成交的节省（元）</label><input class="input" id="calcMoney" type="number" min="0" max="100000" step="1" value="60" inputmode="decimal"></div>
             <div class="field"><label for="calcTime">每周替用户省下的时间（分钟）</label><input class="input" id="calcTime" type="number" min="0" max="10000" step="1" value="40" inputmode="numeric"></div>
           </div>
-          <p class="note">「看一眼」的默认值取自手表交互约 5 秒的设计指标<a class="ev" data-ev="T1-06"></a>；其余默认值都是为了演示随手填的，没有实证来源。「被打断的额外代价」没有可以直接套用的手机场景数字：桌面办公的实地研究里，一次提醒引发的绕路以分钟计<a class="ev" data-ev="T3-18"></a>，手机通知可以一瞥划走。请换成你们自己的日志数据。</p>
+          <p class="note">「看一眼」的默认值取自手表交互约 5 秒的设计指标<a class="ev" data-ev="T1-06"></a>；其余默认值都是为了演示随手填的，没有实证来源。「被打断的额外代价」没有可以直接套用的手机场景数字：桌面办公的实地研究里，一次提醒引发的绕路以分钟计<a class="ev" data-ev="T3-18"></a>，而手机通知可以一瞥划走。请换成你们自己的日志数据。</p>
         </div>
         <div class="stack">
           <div class="receipt" id="calcOut" aria-live="polite"></div>
@@ -72,7 +72,7 @@
     <h3>分四步放开 <small>每一步都有退回条件</small></h3>
     <div class="flow" style="--flow-cols:4">
       <div><small>第一步 · 影子模式</small><b>只生成，不发送</b><span>把模型的「发不发」和文案记下来，人工每天抽 30 条对照量表看。过关线：体检「必改」为 0；抽检里「不该发却想发」低于一成。</span></div>
-      <div><small>第二步 · 只开四类</small><b>求拍板、到点提醒、受阻、已办回执</b><span>这四类都由代码里的硬条件触发，价值最确定。语气锁在默认档，幽默最高 H1。看主动作完成率和静音率。</span></div>
+      <div><small>第二步 · 只开四类</small><b>求拍板、到点提醒、受阻、已办告知</b><span>这四类都由代码里的硬条件触发，价值最确定。语气锁在默认档，幽默最高 H1。看主动作完成率和静音率。</span></div>
       <div><small>第三步 · 放开进展与小结</small><b>开始调频率</b><span>进展播报默认进小结。频率上限从第 4 章的起点值开始，按护栏指标往下收，不往上放。</span></div>
       <div><small>第四步 · 开放预设</small><b>语气预设和 H2 交给用户选</b><span>默认档不变。用户自己打开的才生效，一句「别贫」立即关掉。每个预设单独看护栏。</span></div>
     </div>
@@ -101,7 +101,7 @@
   <div class="sub wide">
     <h3>读这份手册时要记得的四条边界</h3>
     <div class="grid-2">
-      <div class="callout bound"><b>规则多数是推演</b>有直接实证的是「人怎么读」「打扰的代价」「确认疲劳」这些底层现象。从现象到「标题 16 字」「最多提醒两次」这样的具体数值，中间是设计判断。每条规则后面的角标能看到它靠的是哪一种。</div>
+      <div class="callout bound"><b>规则多数是推演</b>有直接实证的是「人怎么读」「打扰的代价」「确认疲劳」这些底层现象。从现象到「标题 16 字宽」「最多提醒两次」这样的具体数值，中间是设计判断。每条规则后面的角标能看到它靠的是哪一种。</div>
       <div class="callout bound"><b>很多研究不是在手机通知上做的</b>阅读研究多在桌面网页，打断研究多在办公室，助推研究多在政府信件和短信。方向可以借，数字不要直接套。</div>
       <div class="callout bound"><b>中国用户的一手数据很少</b>中文部分最扎实的是平台规范、法规条文和本轮自己统计的语料；用户偏好方面基本是空白。</div>
       <div class="callout bound"><b>核对到原文的不到一半</b>本轮的网络环境只放行了少数站点。<span data-stat="evidence">325</span> 条证据里，<span data-stat="verified">148</span> 条核对了原文，其余停在搜索摘要或既有知识一级，台账里逐条标了。正文引用到的 <span data-stat="cited">196</span> 条里，<span data-stat="citedVerified">104</span> 条核对了原文，<span data-stat="citedSearch">92</span> 条核到检索摘要，没有完全没核过的。</div>

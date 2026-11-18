@@ -30,7 +30,8 @@
   ]
  },
  "story": [
-  "先说结果：第一轮，带 Skill 的一方输了。按评审意见改了规范里的两处，再加上一批改规范时没见过的新用例，测了第二轮。两轮的数字都在右边，可以切换着看。"
+  "先说结果：第一轮（Skill 1.0），带 Skill 的一方输了，28 比 46。按评审意见改了规范里的两处，又加了 12 条改规范时没见过的新用例，测第二轮（Skill 1.1）：49 比 49，另有 75 次认为差不多。两轮的数字都在右边，可以切换着看。",
+  "改的两处：一，标题必须说全三样，哪件事、怎么了、多少，对象不能为了压字数省掉，标题的建议上限也从 14 个字宽放到 16；二，推送强度跟着期限走，离期限一天以上用轻提示，监控故障默认轻提示，行程正在变用时效推送，结论缺依据又不急就先补齐再说。"
  ],
  "rounds": [
   {
@@ -2144,6 +2145,3557 @@
     "二是推送强度。Skill 1.0 让续费前 5 天的提醒和监控故障都走标准推送，评审认为轻提示就够；规范自己的两张表在这件事上还互相矛盾。「该不该发」这一项，带 Skill 的没过 16 次，不带的 5 次。",
     "Skill 赢在别处：按钮写明了金额和不处理的后果，没有多出来的催促。「可决策」没过 4 次对 10 次，「不操纵」1 次对 7 次。代码判定的几项也是它好：发不发在预期之内 34 对 32（各 36 次），发出的 29 条没有一条有必改项；不带 Skill 的 28 条里有 12 条有必改项，中位长度 66.5 字，比带 Skill 的 48.8 字长出三分之一。",
     "所以结论是：规范被执行了，是规范自己有一条写错了。照着它写得更短、更合规，读的人反而更难判断。这种毛病，只跑规则检查是看不出来的。还要留一个心眼：不带 Skill 的一方写得更长，而模型评审偏爱长回答是有记录的偏差，这一轮的差距里可能有它的份。"
+   ]
+  },
+  {
+   "id": "v1.1",
+   "label": "第二轮 · Skill 1.1",
+   "note": "",
+   "model": "opus",
+   "n_cases": 30,
+   "runs": 2,
+   "judges": 3,
+   "tally": {
+    "skill": 49,
+    "baseline": 49,
+    "tie": 75
+   },
+   "perJudge": [
+    {
+     "judge": 1,
+     "skill": 16,
+     "baseline": 14,
+     "tie": 29
+    },
+    {
+     "judge": 2,
+     "skill": 16,
+     "baseline": 17,
+     "tie": 24
+    },
+    {
+     "judge": 3,
+     "skill": 17,
+     "baseline": 18,
+     "tie": 22
+    }
+   ],
+   "fails": {
+    "skill": {
+     "D1": 10,
+     "D2": 9,
+     "D7": 6,
+     "D6": 4
+    },
+    "baseline": {
+     "D3": 15,
+     "D1": 9,
+     "D7": 5,
+     "D2": 2
+    }
+   },
+   "checks": {
+    "baseline": {
+     "send_ok": 60,
+     "send_total": 60,
+     "include_ok": 45,
+     "include_total": 45,
+     "must_not_hits": 1,
+     "lint_error_msgs": 19,
+     "lint_warns": 51,
+     "title_ok": 28,
+     "sent": 49,
+     "median_len": 59.3
+    },
+    "skill": {
+     "send_ok": 56,
+     "send_total": 60,
+     "include_ok": 43,
+     "include_total": 44,
+     "must_not_hits": 0,
+     "lint_error_msgs": 0,
+     "lint_warns": 18,
+     "title_ok": 48,
+     "sent": 48,
+     "median_len": 51.3
+    }
+   },
+   "held_out": {
+    "n_cases": 12,
+    "tally": {
+     "skill": 18,
+     "baseline": 21,
+     "tie": 31
+    },
+    "perJudge": [
+     {
+      "judge": 1,
+      "skill": 5,
+      "baseline": 6,
+      "tie": 13
+     },
+     {
+      "judge": 2,
+      "skill": 6,
+      "baseline": 8,
+      "tie": 8
+     },
+     {
+      "judge": 3,
+      "skill": 7,
+      "baseline": 7,
+      "tie": 10
+     }
+    ],
+    "fails": {
+     "skill": {
+      "D1": 4,
+      "D6": 3,
+      "D2": 3,
+      "D7": 1
+     },
+     "baseline": {
+      "D3": 7,
+      "D2": 2
+     }
+    },
+    "checks": {
+     "baseline": {
+      "send_ok": 24,
+      "send_total": 24,
+      "include_ok": 20,
+      "include_total": 20,
+      "must_not_hits": 0,
+      "lint_error_msgs": 8,
+      "lint_warns": 21,
+      "title_ok": 13,
+      "sent": 20,
+      "median_len": 63.2
+     },
+     "skill": {
+      "send_ok": 23,
+      "send_total": 24,
+      "include_ok": 19,
+      "include_total": 20,
+      "must_not_hits": 0,
+      "lint_error_msgs": 0,
+      "lint_warns": 12,
+      "title_ok": 20,
+      "sent": 20,
+      "median_len": 54.3
+     }
+    }
+   },
+   "seen": {
+    "n_cases": 18,
+    "tally": {
+     "skill": 31,
+     "baseline": 28,
+     "tie": 44
+    },
+    "perJudge": [
+     {
+      "judge": 1,
+      "skill": 11,
+      "baseline": 8,
+      "tie": 16
+     },
+     {
+      "judge": 2,
+      "skill": 10,
+      "baseline": 9,
+      "tie": 16
+     },
+     {
+      "judge": 3,
+      "skill": 10,
+      "baseline": 11,
+      "tie": 12
+     }
+    ],
+    "fails": {
+     "skill": {
+      "D1": 6,
+      "D2": 6,
+      "D7": 5,
+      "D6": 1
+     },
+     "baseline": {
+      "D3": 8,
+      "D1": 9,
+      "D7": 5
+     }
+    },
+    "checks": {
+     "baseline": {
+      "send_ok": 36,
+      "send_total": 36,
+      "include_ok": 25,
+      "include_total": 25,
+      "must_not_hits": 1,
+      "lint_error_msgs": 11,
+      "lint_warns": 30,
+      "title_ok": 15,
+      "sent": 29,
+      "median_len": 58.8
+     },
+     "skill": {
+      "send_ok": 33,
+      "send_total": 36,
+      "include_ok": 24,
+      "include_total": 24,
+      "must_not_hits": 0,
+      "lint_error_msgs": 0,
+      "lint_warns": 6,
+      "title_ok": 28,
+      "sent": 28,
+      "median_len": 48.8
+     }
+    }
+   },
+   "cases": [
+    {
+     "id": "c01-opportunity",
+     "about": "降到目标价以下，窗口当天有效",
+     "event": "监控发现价格降到目标价以下",
+     "now": "2026-11-18 10:05 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "push",
+       "urgent"
+      ],
+      "must_include": [
+       "1,540",
+       "60"
+      ],
+      "must_not": [
+       "全网",
+       "史低",
+       "立省",
+       "手慢无",
+       "您"
+      ]
+     },
+     "surface": "lock",
+     "type": "opportunity",
+     "stakes": "mid",
+     "address": "你",
+     "goal": "帮我盯杭州到三亚 1 月 20 日的直飞，低于 1600 告诉我",
+     "held_out": false,
+     "votes": {
+      "skill": 0,
+      "baseline": 6,
+      "tie": 0
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c01-opportunity",
+       "send": "push",
+       "title": "三亚直飞降到 ¥1,540，比目标低 ¥60",
+       "body": "海航 HU7208，1 月 20 日 13:05 萧山 T3 出发，含 20kg 托运，是近 30 天最低。出票后 2 小时内可免费退。（海航官网 10:02 查询）",
+       "actions": [
+        "订这班",
+        "再等等"
+       ],
+       "note": "触达用户设定的目标价，且是 30 天最低，值得标准推送；无硬性截止，不必穿透勿扰。"
+      },
+      "baseline-2": {
+       "id": "c01-opportunity",
+       "send": "push",
+       "title": "杭州→三亚直飞 ¥1,540，比你的目标价低 ¥60",
+       "body": "海航 HU7208，1 月 20 日 13:05 萧山 T3 出发，含 20kg 托运，近 30 天最低。出票后 2 小时内可免费退。（海航官网 10:02 查询）",
+       "actions": [
+        "订这班",
+        "再等等"
+       ],
+       "note": "触达用户设定的目标价，且是近 30 天最低，值得标准推送。"
+      },
+      "skill-1": {
+       "id": "c01-opportunity",
+       "send": "push",
+       "title": "三亚直飞降到 ¥1,540",
+       "body": "比目标价低 ¥60，海航官网近 30 天最低。1 月 20 日 13:05 起飞，出票 2 小时内免费退。",
+       "actions": [
+        "订这班",
+        "再等等"
+       ],
+       "note": "条件达成、需要用户当天决定订不订，标准推送一次；不点就不订。"
+      },
+      "skill-2": {
+       "id": "c01-opportunity",
+       "send": "push",
+       "title": "三亚直飞降到 ¥1,540",
+       "body": "比目标价 ¥1,600 低。海航 1 月 20 日 13:05，含 20kg 托运，出票 2 小时内免费退。",
+       "actions": [
+        "订这班",
+        "再等等"
+       ],
+       "note": "条件达成、窗口打开，是用户在等的结果，标准推送一次；没有真实截止时刻，不写紧迫感。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "baseline",
+       "reason": "Y 标题直接给出比目标低 ¥60，一眼就知道值多少，正文还带了数据来源和查询时间。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "baseline",
+       "reason": "X 标题直接给出比目标低 ¥60，正文航班号、机场、行李齐全，用户扫一眼就能决定订不订。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "Y 标题直接写出比目标低 ¥60，用户只看标题就知道这条消息对自己有多大价值。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "baseline",
+       "reason": "X 标题写明比目标价低 ¥60，正文带了来源和时间；Y 标题看不出值多少。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "baseline",
+       "reason": "Y 标题带出低 ¥60，信息也更完整；X 标题看不出对我值多少。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "X 标题直接写出比目标价低 ¥60，信息也更完整。"
+      }
+     ]
+    },
+    {
+     "id": "c02-no-change",
+     "about": "例行巡检，没有任何变化",
+     "event": "每 30 分钟一次的例行巡检，价格与上次相同",
+     "now": "2026-11-18 14:30 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "none"
+      ],
+      "must_include": [],
+      "must_not": []
+     },
+     "surface": "lock",
+     "type": "progress",
+     "stakes": "mid",
+     "address": "你",
+     "goal": "帮我盯杭州到三亚 1 月 20 日的直飞，低于 1600 告诉我",
+     "held_out": false,
+     "votes": {
+      "skill": 0,
+      "baseline": 0,
+      "tie": 5
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c02-no-change",
+       "send": "none",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "价格没变也没到目标，周日已约好再报，这次没有新信息。"
+      },
+      "baseline-2": {
+       "id": "c02-no-change",
+       "send": "none",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "价格没变也没触达目标，周日小结会报。"
+      },
+      "skill-1": {
+       "id": "c02-no-change",
+       "send": "none",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "价格和上次一样，没有新变化，只更新任务卡；周日 20:00 照常例行汇报。"
+      },
+      "skill-2": {
+       "id": "c02-no-change",
+       "send": "none",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "价格和上次一样，没有新变化，只更新任务卡；按约定周日 20:00 再报。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "价格没变，两边都正确地选择不发。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边都没发，没有新信息时不打扰是对的。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "价格没有变化，两边都不发，做法相同。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两边都不发。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边都没发。"
+      }
+     ]
+    },
+    {
+     "id": "c03-night-small-drop",
+     "about": "深夜发现一笔小额降价，没有时限",
+     "event": "耳机价格小幅下降",
+     "now": "2026-11-18 23:40 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "none",
+       "digest",
+       "hold"
+      ],
+      "must_include": [],
+      "must_not": []
+     },
+     "surface": "lock",
+     "type": "opportunity",
+     "stakes": "low",
+     "address": "你",
+     "goal": "这款降噪耳机降价了告诉我",
+     "held_out": false,
+     "votes": {
+      "skill": 0,
+      "baseline": 0,
+      "tie": 5
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c03-night-small-drop",
+       "send": "digest",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "降 ¥12 低于用户设的 ¥50 门槛，又在免打扰时段且无时限，并入小结即可。"
+      },
+      "baseline-2": {
+       "id": "c03-night-small-drop",
+       "send": "digest",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "降 ¥12 低于用户设的 ¥50 门槛，又在勿扰时段，并入小结即可。"
+      },
+      "skill-1": {
+       "id": "c03-night-small-drop",
+       "send": "digest",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "只降 ¥12，低于用户设的 ¥50 门槛，又在安静时段且没有截止时间，并入周期小结。"
+      },
+      "skill-2": {
+       "id": "c03-night-small-drop",
+       "send": "digest",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "只降 ¥12，低于用户设的 ¥50 门槛，又在安静时段且没有时限，并入小结。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "深夜、低于门槛的小额降价，两边都放进汇总，处理一致。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边都放进汇总，安静时段又低于金额门槛，处理一致且正确。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "两边都在安静时段把这笔小额降价放进摘要，处理一致。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两边都放进汇总。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边都放进汇总。"
+      }
+     ]
+    },
+    {
+     "id": "c04-renewal-5d",
+     "about": "自动续费前 5 天的提醒",
+     "event": "某音乐会员将在 5 天后自动续费，用户已 48 天没有打开",
+     "now": "2026-11-18 10:00 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "quiet",
+       "push"
+      ],
+      "must_include": [
+       "15",
+       "11 月 23 日"
+      ],
+      "must_not": [
+       "明早",
+       "立省",
+       "温馨提示",
+       "您"
+      ]
+     },
+     "surface": "lock",
+     "type": "deadline",
+     "stakes": "mid",
+     "address": "你",
+     "goal": "帮我盯着没在用的自动续费",
+     "held_out": false,
+     "votes": {
+      "skill": 0,
+      "baseline": 6,
+      "tie": 0
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c04-renewal-5d",
+       "send": "quiet",
+       "title": "音乐会员 11 月 23 日要自动续费 ¥15",
+       "body": "你已经 48 天没打开了。现在停掉，已付的这期照常用到 23 日 10:00，之后不再扣费。",
+       "actions": [
+        "帮我停掉",
+        "继续续费"
+       ],
+       "note": "金额小、还有 5 天，轻提示足够，但要给出一键停掉的选项。"
+      },
+      "baseline-2": {
+       "id": "c04-renewal-5d",
+       "send": "quiet",
+       "title": "音乐会员 11 月 23 日自动续费 ¥15，你已 48 天没打开",
+       "body": "停掉后这一期照常用到 23 日 10:00，之后不再扣费。",
+       "actions": [
+        "停掉续费",
+        "继续用"
+       ],
+       "note": "离扣费还有 5 天、金额小，轻提示给出一键决定即可。"
+      },
+      "skill-1": {
+       "id": "c04-renewal-5d",
+       "send": "quiet",
+       "title": "音乐会员 11 月 23 日续费 ¥15",
+       "body": "10:00 自动扣。你 48 天没打开了；现在停，这一期照常用到 23 日 10:00。",
+       "actions": [
+        "停掉续费",
+        "继续订"
+       ],
+       "note": "自动续费提前 5 天这次用轻提示；不操作照常扣费，11 月 22 日前 1 天再推送一次。"
+      },
+      "skill-2": {
+       "id": "c04-renewal-5d",
+       "send": "quiet",
+       "title": "音乐会员 11 月 23 日续费 ¥15",
+       "body": "10:00 自动扣。你 48 天没打开了；现在停，已付这期照常用到那天 10:00。",
+       "actions": [
+        "停掉续费",
+        "继续订"
+       ],
+       "note": "自动续费提前 5 天这次用轻提示；11 月 22 日再推送一次。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "baseline",
+       "reason": "X 说清了停掉后之后不再扣费，用户对停掉的后果更有把握。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "baseline",
+       "reason": "Y 写明了「之后不再扣费」，停掉的后果更完整，按钮也更口语。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "X 写明停掉后不再扣费，停或不停的结果都交代清楚了。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "baseline",
+       "reason": "Y 标题带上 48 天没打开，价值一眼可见，正文也说了之后不再扣费。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "baseline",
+       "reason": "X 写明了之后不再扣费，标题也带出 48 天没用，决定依据更完整。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "Y 写明停掉后不再扣费，标题也带上了 48 天没打开这个判断依据。"
+      }
+     ]
+    },
+    {
+     "id": "c05-payment-approval",
+     "about": "需要付款才能办成，没有预授权",
+     "event": "同房型含早降价；重订需要先付新订单，再取消旧订单",
+     "now": "2026-11-18 16:25 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "push",
+       "urgent"
+      ],
+      "must_include": [
+       "2,460",
+       "510"
+      ],
+      "must_not": [
+       "已为你支付",
+       "已重订",
+       "已帮你订",
+       "全网",
+       "最划算"
+      ]
+     },
+     "surface": "chat",
+     "type": "approval",
+     "stakes": "high",
+     "address": "你",
+     "goal": "大阪那家酒店降价了帮我重订",
+     "held_out": false,
+     "votes": {
+      "skill": 6,
+      "baseline": 0,
+      "tie": 0
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c05-payment-approval",
+       "send": "push",
+       "title": "大阪酒店同房型含早降了 ¥510",
+       "body": "新价 ¥820/晚 × 3 晚 = ¥2,460，原订单 ¥2,970。重订要先用尾号 4471 的信用卡付新单，再取消旧单；旧单 11 月 25 日（周三）18:00 前可免费取消。（酒店官网 16:20 查询，价格可能变动）",
+       "actions": [
+        "确认付 ¥2,460 并重订",
+        "先不换"
+       ],
+       "note": "省 ¥510 但需付款且无预授权，必须让用户确认，并说清付款顺序和取消截止。"
+      },
+      "baseline-2": {
+       "id": "c05-payment-approval",
+       "send": "push",
+       "title": "大阪酒店同房型降到 ¥2,460，重订能省 ¥510",
+       "body": "含早，¥820/晚 × 3 晚。需要先用尾号 4471 的信用卡付新单，再取消旧单（旧单 11 月 25 日周三 18:00 前免费取消）。价格来自酒店官网 16:20。要我办吗？",
+       "actions": [
+        "付款并重订",
+        "先不了"
+       ],
+       "note": "能省 ¥510 但要付款，没有预授权，必须让用户确认。"
+      },
+      "skill-1": {
+       "id": "c05-payment-approval",
+       "send": "push",
+       "title": "待你确认：付 ¥2,460 重订大阪酒店",
+       "body": "同房型含早 ¥820/晚 × 3 晚，比原订单少 ¥510（官网 16:20 价）。\n尾号 4471 的卡付新单，付成后我再取消旧单。\n旧单 11 月 25 日（周三）18:00 前可免费取消。\n不确认我就不动，原订单照旧。",
+       "actions": [
+        "付 ¥2,460 重订",
+        "先不订"
+       ],
+       "note": "要花钱且没有预授权，必须先问；能省 ¥510、降价随时可能回去，标准推送一次，沉默等于不执行。"
+      },
+      "skill-2": {
+       "id": "c05-payment-approval",
+       "send": "push",
+       "title": "待你确认：付 ¥2,460 重订大阪酒店",
+       "body": "同房型含早，¥820/晚 × 3 晚，比原订单 ¥2,970 少 ¥510。\n刷尾号 4471 信用卡付新单，付完我再取消旧单。\n旧单 11 月 25 日（周三）18:00 前可免费取消。\n不确认就不动，原订单照旧。",
+       "actions": [
+        "确认付 ¥2,460",
+        "先不重订"
+       ],
+       "note": "要花钱且没有预授权，必须先问；这是用户在等的结果，标准推送。新单的退改规则 facts 里没有，没写。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "skill",
+       "reason": "X 标题就是要确认的事，并写明不确认原订单照旧；Y 没交代不处理会怎样。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "skill",
+       "reason": "Y 说清了先付后取消的顺序和不确认就不动，付款决定的后果更明确。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "skill",
+       "reason": "X 标题点明要你确认付款，也写了不确认就保持原订单，没有授权时付款边界更清楚。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "skill",
+       "reason": "Y 明确写了不确认就不动，按钮也带上金额；X 没交代不处理的后果。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "skill",
+       "reason": "X 按钮带金额，并写明不确认就不动；Y 没写不处理的后果，按钮也不带金额。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "skill",
+       "reason": "Y 写明不确认就不动、原订单照旧，付款边界更清楚。"
+      }
+     ]
+    },
+    {
+     "id": "c06-mandate-receipt",
+     "about": "在预授权范围内已经办完，需要回执",
+     "event": "价格降到授权线以下，PA 已按授权出票",
+     "now": "2026-11-18 21:10 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "push",
+       "urgent"
+      ],
+      "must_include": [
+       "860",
+       "09:00"
+      ],
+      "must_not": [
+       "要不要",
+       "是否"
+      ]
+     },
+     "surface": "lock",
+     "type": "done",
+     "stakes": "high",
+     "address": "你",
+     "goal": "北京到成都周六的直飞，900 以下直接订",
+     "held_out": false,
+     "votes": {
+      "skill": 0,
+      "baseline": 3,
+      "tie": 3
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c06-mandate-receipt",
+       "send": "push",
+       "title": "已按授权订好周六去成都的直飞，¥860",
+       "body": "11 月 21 日 08:10 首都 T3 → 成都天府。尾号 4471 信用卡已扣款。不想要的话，明早 11 月 19 日（周四）09:00 前可免费退。",
+       "actions": [
+        "看行程",
+        "退掉"
+       ],
+       "note": "授权内已代办扣款，需及时回执；免费退截止在明早，所以用标准推送。"
+      },
+      "baseline-2": {
+       "id": "c06-mandate-receipt",
+       "send": "push",
+       "title": "已订好：周六北京→成都直飞 ¥860",
+       "body": "11 月 21 日 08:10 首都 T3 → 成都天府，尾号 4471 的信用卡已扣款。不想要的话，11 月 19 日（周四）09:00 前可免费退。",
+       "actions": [
+        "看订单",
+        "退掉"
+       ],
+       "note": "按授权已扣款，需要回执，并提示免费退截止就在明早。"
+      },
+      "skill-1": {
+       "id": "c06-mandate-receipt",
+       "send": "push",
+       "title": "成都直飞订好了，¥860",
+       "body": "按「¥900 以下直接订」出的票，周六 08:10 首都 T3 起飞。明天 09:00 前可免费退。",
+       "actions": [
+        "看行程单",
+        "退掉这张"
+       ],
+       "note": "在预授权内已扣款出票，立刻回执；免费退截止在 12 小时内，用标准推送。"
+      },
+      "skill-2": {
+       "id": "c06-mandate-receipt",
+       "send": "push",
+       "title": "成都直飞订好了，¥860",
+       "body": "按「¥900 以下直接订」出票，4471 卡已扣。11 月 21 日 08:10 首都 T3 起飞，明天 09:00 前免费退。",
+       "actions": [
+        "看行程单",
+        "退掉这张"
+       ],
+       "note": "在预授权内已办，立刻回执；免费退截止在 12 小时内，标准推送。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "baseline",
+       "reason": "X 写清已扣款和带日期的免费退截止，回执更完整。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "baseline",
+       "reason": "Y 交代了卡已扣款和免费退截止的具体日期，回执信息更完整。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "X 写明卡已扣款，退票截止的日期也完整，这张回执更站得住。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两份回执都完整清楚。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边回执都完整准确。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "两份回执都准确写了已扣款和免费退的截止时间。"
+      }
+     ]
+    },
+    {
+     "id": "c07-captcha-handover",
+     "about": "卡在只有用户能过的验证码",
+     "event": "提交候补时 12306 要求登录验证码，PA 无法继续",
+     "now": "2026-11-18 12:40 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "push",
+       "urgent"
+      ],
+      "must_include": [
+       "验证"
+      ],
+      "must_not": [
+       "执行失败",
+       "任务失败",
+       "抱歉"
+      ]
+     },
+     "surface": "lock",
+     "type": "blocked",
+     "stakes": "mid",
+     "address": "你",
+     "goal": "帮我候补周五晚上回杭州的高铁",
+     "held_out": false,
+     "votes": {
+      "skill": 0,
+      "baseline": 0,
+      "tie": 6
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c07-captcha-handover",
+       "send": "push",
+       "title": "候补卡在 12306 验证码，需要你过一下",
+       "body": "G7381，11 月 20 日（周五）18:42。你验证完，我马上自动提交候补。",
+       "actions": [
+        "去验证"
+       ],
+       "note": "只有用户能解开阻塞，越早越好抢候补，但不到穿透勿扰的程度。"
+      },
+      "baseline-2": {
+       "id": "c07-captcha-handover",
+       "send": "push",
+       "title": "候补 G7381 卡在 12306 验证码，需要你过一下",
+       "body": "周五 18:42 那班。你验证完，我马上自动提交候补。",
+       "actions": [
+        "去验证"
+       ],
+       "note": "只有用户能过验证码，越早处理候补越靠前。"
+      },
+      "skill-1": {
+       "id": "c07-captcha-handover",
+       "send": "push",
+       "title": "高铁候补卡在 12306 验证码",
+       "body": "登录要你本人输验证码。过了之后，我马上提交 G7381（周五 18:42）的候补。",
+       "actions": [
+        "去输验证码"
+       ],
+       "note": "卡在只有用户能做的一步，交还用户并说清做完后接着办什么；候补越早提交越好，用标准推送。"
+      },
+      "skill-2": {
+       "id": "c07-captcha-handover",
+       "send": "push",
+       "title": "G7381 候补卡在 12306 验证码",
+       "body": "要你本人过一下 12306 登录验证码。过了我自动提交 11 月 20 日 18:42 这班候补。",
+       "actions": [
+        "去验证"
+       ],
+       "note": "卡在只有用户能做的一步，交还用户并说清做完后 PA 接着办什么；候补越早越好，标准推送。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两边都清楚地交代了卡在哪、验证后会自动做什么，差别不大。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边都清楚说了卡在哪、过了之后会怎样，差别不大。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "两边都清楚说明要用户本人过验证码，以及过了之后会自动提交候补。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两边的内容基本相同。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边信息相当。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "两边说的是同一件事，都清楚。"
+      }
+     ]
+    },
+    {
+     "id": "c08-delay-rushed",
+     "about": "航班延误，用户在赶时间，需要对外发通知",
+     "event": "航班延误 3 小时，赶不上 17:00 的客户演示；PA 已拟好顺延通知，尚未发送",
+     "now": "2026-11-18 11:20 周三",
+     "last": "快点",
+     "expect": {
+      "send": [
+       "push",
+       "urgent"
+      ],
+      "must_include": [
+       "3 小时",
+       "19:30"
+      ],
+      "must_not": [
+       "哎呀",
+       "坏消息",
+       "已发送",
+       "已通知",
+       "打工人",
+       "！"
+      ]
+     },
+     "surface": "lock",
+     "type": "blocked",
+     "stakes": "high",
+     "address": "你",
+     "goal": "这趟出差的行程变动帮我盯着，有冲突帮我协调",
+     "held_out": false,
+     "votes": {
+      "skill": 6,
+      "baseline": 0,
+      "tie": 0
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c08-delay-rushed",
+       "send": "urgent",
+       "title": "CA1857 延误 3 小时，17:00 演示赶不上",
+       "body": "预计 16:20 落地，到客户那约 1 小时。4 位参会人 19:30 都有空，顺延通知已拟好，点一下就发；也可以落地后在机场线上参加。",
+       "actions": [
+        "发顺延到 19:30",
+        "改线上参加",
+        "看草稿"
+       ],
+       "note": "高风险、有时效、用户在赶时间，直接给结论和一键方案，此时不开玩笑。"
+      },
+      "baseline-2": {
+       "id": "c08-delay-rushed",
+       "send": "urgent",
+       "title": "CA1857 延误 3 小时，17:00 演示赶不上",
+       "body": "预计 16:20 落地，去现场还要 1 小时。4 位参会人 19:30 都有空，顺延通知已拟好，点一下就发；也可以落地后在机场线上参加。",
+       "actions": [
+        "发顺延通知",
+        "改线上参加",
+        "看草稿"
+       ],
+       "note": "高风险、有时效，用户在催，直接给可一键执行的方案。"
+      },
+      "skill-1": {
+       "id": "c08-delay-rushed",
+       "send": "urgent",
+       "title": "航班延误 3 小时，赶不上 17:00 演示",
+       "body": "CA1857 预计 16:20 落地。4 人 19:30 都有空，顺延通知已备好，你点了才发。",
+       "actions": [
+        "顺延到 19:30",
+        "线上参加"
+       ],
+       "note": "航班延误正在发生、对外通知需要用户点头，用时效推送；用户说了「快点」又是坏消息，压短、不开玩笑。"
+      },
+      "skill-2": {
+       "id": "c08-delay-rushed",
+       "send": "urgent",
+       "title": "航班延误 3 小时，赶不上 17:00 演示",
+       "body": "CA1857 预计 16:20 落地。4 位参会人 19:30 都有空，顺延通知已备好，你点了才发。",
+       "actions": [
+        "顺延到 19:30",
+        "落地线上参加"
+       ],
+       "note": "延误正在发生且影响当天行程，时效推送；对外发送需用户点了才发；用户在赶时间、坏消息，压短、H0。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "skill",
+       "reason": "用户说了快点，Y 更短，只有两个选项，并明确你点了才发。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "skill",
+       "reason": "用户说了「快点」，X 更短、只给两个按钮，Y 有三个按钮，信息也多，决定更慢。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "skill",
+       "reason": "用户正催着要，Y 更短、只有两个选项，能更快做出决定。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "skill",
+       "reason": "用户在赶时间，X 更短，两个选项，按钮也说清了结果。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "skill",
+       "reason": "用户在赶时间，Y 更短、两个按钮就够；X 三个按钮，正文冗长。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "skill",
+       "reason": "用户在赶时间，X 更短，两个选项就能定。"
+      }
+     ]
+    },
+    {
+     "id": "c09-pa-error",
+     "about": "PA 自己算错了价格，用户还没下单",
+     "event": "PA 20 分钟前报的到手价漏算了运费，需要更正",
+     "now": "2026-11-18 15:06 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "push"
+      ],
+      "must_include": [
+       "95",
+       "6"
+      ],
+      "must_not": [
+       "哈哈",
+       "非常抱歉",
+       "敬请谅解",
+       "全网"
+      ]
+     },
+     "surface": "lock",
+     "type": "correction",
+     "stakes": "mid",
+     "address": "你",
+     "goal": "洗衣液帮我凑个便宜的方案",
+     "held_out": false,
+     "votes": {
+      "skill": 0,
+      "baseline": 4,
+      "tie": 2
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c09-pa-error",
+       "send": "push",
+       "title": "更正：洗衣液到手是 ¥95，不是 ¥89",
+       "body": "刚才漏算了 ¥6 运费，抱歉。重新比了京东自营、天猫超市、拼多多，天猫超市还是最低，比直接买 ¥120 少 ¥25。（15:05 查询）",
+       "actions": [
+        "按 ¥95 下单",
+        "看明细"
+       ],
+       "note": "用户可能马上按错误价格下单，必须尽快主动更正并认错。"
+      },
+      "baseline-2": {
+       "id": "c09-pa-error",
+       "send": "push",
+       "title": "更正：洗衣液到手是 ¥95，不是 ¥89",
+       "body": "我漏算了 ¥6 运费，抱歉。仍比直接买（¥120）少 ¥25，京东自营、天猫超市、拼多多三家里天猫超市还是最低（15:05 查询）。",
+       "actions": [
+        "按 ¥95 下单",
+        "看明细"
+       ],
+       "note": "用户可能马上按错误价格下单，要立刻更正并认错。"
+      },
+      "skill-1": {
+       "id": "c09-pa-error",
+       "send": "push",
+       "title": "更正：洗衣液到手 ¥95，不是 ¥89",
+       "body": "漏算了运费 ¥6，抱歉。仍比直接买少 ¥25；重新比过 3 家，天猫超市还是最低。",
+       "actions": [
+        "按 ¥95 下单",
+        "先不买"
+       ],
+       "note": "PA 报错了价，用户可能正据此下单，同渠道推送更正，道歉一次并给出新结论。"
+      },
+      "skill-2": {
+       "id": "c09-pa-error",
+       "send": "quiet",
+       "title": "更正：洗衣液到手 ¥95，不是 ¥89",
+       "body": "漏算了运费 ¥6，抱歉。比直接买 ¥120 少 ¥25；我查的 3 家里天猫超市仍最低。",
+       "actions": [
+        "按 ¥95 下单",
+        "先不买"
+       ],
+       "note": "PA 自己出错，同一渠道更正；用户还没下单，轻提示即可，道歉一次。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两边的更正都清楚准确，Y 细节多一点，X 更短，决策速度相当。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边更正都清楚、道歉有分寸，结论一致。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "Y 写出了比较的是哪三家和直接买的原价，更正内容有据可查。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "baseline",
+       "reason": "更正要赶在用户下单前送到，X 推送并列出了比过的平台和查询时间。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "baseline",
+       "reason": "用户可能已按错价准备下单，更正应该用 push 及时送达；X 用 quiet 强度偏低。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "X 写出了比较的三家和查询时间，用推送更正也和原消息的强度一致。"
+      }
+     ]
+    },
+    {
+     "id": "c10-third-ignore",
+     "about": "同一个提醒已经连续 3 次没有回应",
+     "event": "拉伸的轻推连续 3 次没有被点开；连续记录靠免打卡券保着，尚未断",
+     "now": "2026-11-18 22:00 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "push",
+       "quiet",
+       "digest"
+      ],
+      "must_include": [],
+      "must_not": [
+       "没理我",
+       "难过",
+       "坚持就是胜利",
+       "半途而废",
+       "千万",
+       "可惜"
+      ]
+     },
+     "surface": "lock",
+     "type": "pause",
+     "stakes": "low",
+     "address": "你",
+     "goal": "每天晚上提醒我做 10 分钟拉伸",
+     "held_out": false,
+     "votes": {
+      "skill": 0,
+      "baseline": 6,
+      "tie": 0
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c10-third-ignore",
+       "send": "quiet",
+       "title": "拉伸提醒要不要换个方式？",
+       "body": "最近几天没顾上也没关系，9 天的记录和进度都留着。想换个时间、改成每周几次，或者先停一阵，都行。",
+       "actions": [
+        "换个时间",
+        "先暂停",
+        "照旧"
+       ],
+       "note": "连续 3 次没回应，不再重复同样的催促，改为轻提示询问是否调整。"
+      },
+      "baseline-2": {
+       "id": "c10-third-ignore",
+       "send": "quiet",
+       "title": "拉伸提醒要不要换个时间？",
+       "body": "最近三次都没点开，可能晚上 10 点不太合适。进度和连续记录都给你留着。",
+       "actions": [
+        "换个时间",
+        "先暂停",
+        "照旧"
+       ],
+       "note": "连续 3 次没回应，停止催促，改为轻提示让用户调整。"
+      },
+      "skill-1": {
+       "id": "c10-third-ignore",
+       "send": "quiet",
+       "title": "拉伸提醒先停了",
+       "body": "连着 3 次没用上。9 天的连续记录和进度都留着，回一句「继续」就恢复。",
+       "actions": [
+        "继续提醒",
+        "改成每周一次"
+       ],
+       "note": "连续 3 次没回应，改发一次「停止提醒」；已经降过级，用轻提示，之后不再就此事主动联系。"
+      },
+      "skill-2": {
+       "id": "c10-third-ignore",
+       "send": "quiet",
+       "title": "拉伸提醒先停了",
+       "body": "连着 3 次没用上。9 天的连续记录和进度都留着，回一句「继续」就恢复。",
+       "actions": [
+        "继续提醒",
+        "改成每周一次"
+       ],
+       "note": "连续 3 次没回应，改发停止提醒并真的停；不升级、不挽留，轻提示一次。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "baseline",
+       "reason": "Y 说提醒已经停了，这件事 facts 里没有，等于替用户做了决定；X 是询问用户想怎么调整。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "baseline",
+       "reason": "X 擅自说提醒已停，facts 里没有这回事；Y 是征求意见，更贴合事实。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "Y 擅自写成提醒已经停了，facts 里没有这回事，X 只是问用户要不要调整。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "baseline",
+       "reason": "X 说已经停了，facts 里并没有；Y 是询问用户要不要调整。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "baseline",
+       "reason": "Y 擅自宣布已停提醒，事实里没有；X 是征询调整时间，更合适。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "X 擅自说提醒已经停了，Y 是征询用户要不要换时间。"
+      }
+     ]
+    },
+    {
+     "id": "c11-milestone-relaxed",
+     "about": "轻松目标达成，用户先开了玩笑",
+     "event": "连续 6 周没超预算",
+     "now": "2026-11-15 20:00 周日",
+     "last": "哈哈我居然忍住了",
+     "expect": {
+      "send": [
+       "push",
+       "quiet",
+       "digest"
+      ],
+      "must_include": [
+       "540"
+      ],
+      "must_not": [
+       "你太棒了",
+       "太厉害",
+       "！！",
+       "yyds",
+       "绝绝子"
+      ]
+     },
+     "surface": "chat",
+     "type": "milestone",
+     "stakes": "low",
+     "address": "你",
+     "goal": "帮我把每周外卖钱控制在 200 以内",
+     "held_out": false,
+     "votes": {
+      "skill": 6,
+      "baseline": 0,
+      "tie": 0
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c11-milestone-relaxed",
+       "send": "push",
+       "title": "连续 6 周没超，确实忍住了",
+       "body": "比设预算前 6 周少花了 ¥540，心愿单上的机械键盘 ¥499 已经被省出来了，还多 ¥41。",
+       "actions": [
+        "看看键盘",
+        "继续攒"
+       ],
+       "note": "用户在对话里先开了玩笑，顺着轻松回应并把省下的钱和心愿单连起来。"
+      },
+      "baseline-2": {
+       "id": "c11-milestone-relaxed",
+       "send": "quiet",
+       "title": "6 周没超，真忍住了",
+       "body": "比设预算前少花 ¥540，那把 ¥499 的机械键盘钱已经省出来了。",
+       "actions": [
+        "看看键盘",
+        "继续下一周"
+       ],
+       "note": "用户主动在聊，接住玩笑、给出成果和心愿单的联系。"
+      },
+      "skill-1": {
+       "id": "c11-milestone-relaxed",
+       "send": "push",
+       "title": "外卖 6 周没超预算，少花 ¥540！",
+       "body": "确实忍住了：比设预算前 6 周的 ¥1,740 少花 ¥540。够买心愿单里的机械键盘（¥499），还找零 ¥41。这回键盘不用忍了。",
+       "actions": [
+        "看机械键盘",
+        "继续保持"
+       ],
+       "note": "轻松目标达成，熟悉期且用户开了 H3 并先开了玩笑，可以放松一档；夸奖落在 ¥540 这个数上，一个感叹号。"
+      },
+      "skill-2": {
+       "id": "c11-milestone-relaxed",
+       "send": "push",
+       "title": "外卖连续 6 周没超，少花 ¥540",
+       "body": "跟设预算前 6 周的 ¥1,740 比。心愿单里那把 ¥499 的机械键盘，这回是你自己忍出来的！",
+       "actions": [
+        "去看键盘",
+        "继续保持"
+       ],
+       "note": "里程碑、熟悉期、用户自己先开了玩笑且开放 H3，放松到 H2 加一个感叹号，夸奖落在数字上。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "skill",
+       "reason": "X 标题带上了少花 ¥540，比较基准也写明了，玩笑接得上用户轻松的语气。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "skill",
+       "reason": "Y 标题就带出 6 周和 ¥540，用户开过玩笑，语气轻松也合档；X 标题看不出值多少。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "skill",
+       "reason": "X 标题带出了少花 ¥540，语气也接住了用户的玩笑。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "skill",
+       "reason": "Y 标题带上 ¥540，比较基准清楚，语气也接得上用户的玩笑。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "skill",
+       "reason": "X 标题带 ¥540，回应用户的玩笑也自然；Y 标题看不出值多少。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "skill",
+       "reason": "Y 标题带出了少花 ¥540，也写了和什么相比，信息更完整。"
+      }
+     ]
+    },
+    {
+     "id": "c12-elder-bill",
+     "about": "长辈模式下的缴费提醒",
+     "event": "本月电费账单已出，尚未缴纳",
+     "now": "2026-11-18 09:30 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "push"
+      ],
+      "must_include": [
+       "132",
+       "您"
+      ],
+      "must_not": [
+       "你",
+       "戳",
+       "秒办",
+       "仅剩",
+       "～",
+       "！"
+      ]
+     },
+     "surface": "chat",
+     "type": "deadline",
+     "stakes": "high",
+     "address": "您",
+     "goal": "水电燃气费到期了提醒我，帮我交",
+     "held_out": false,
+     "votes": {
+      "skill": 6,
+      "baseline": 0,
+      "tie": 0
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c12-elder-bill",
+       "send": "push",
+       "title": "电费账单出来了，132 元",
+       "body": "这个月电费 132 元，12 月 5 日前交就行。要我现在用尾号 3306 的储蓄卡帮您交吗？",
+       "actions": [
+        "帮我交",
+        "晚点再说"
+       ],
+       "note": "长辈模式用简单直白的话，付款需确认，截止还早不必催。"
+      },
+      "baseline-2": {
+       "id": "c12-elder-bill",
+       "send": "push",
+       "title": "您这个月的电费是 132 元，还没交",
+       "body": "12 月 5 日前交就行。要我用尾号 3306 的储蓄卡帮您交吗？",
+       "actions": [
+        "帮我交",
+        "我自己交"
+       ],
+       "note": "长辈模式，说清金额、截止和付款方式，付款需确认。"
+      },
+      "skill-1": {
+       "id": "c12-elder-bill",
+       "send": "quiet",
+       "title": "您这个月的电费是 132 元，还没有交",
+       "body": "12 月 5 日前交就行。需要我用尾号 3306 的储蓄卡帮您交吗？交之前会再跟您确认一次金额。",
+       "actions": [
+        "帮我交",
+        "先不交"
+       ],
+       "note": "离截止还有 17 天，用轻提示；长辈模式用「您」、一条一事、不设倒计时，付款前再确认一次。"
+      },
+      "skill-2": {
+       "id": "c12-elder-bill",
+       "send": "quiet",
+       "title": "您这个月的电费 132 元，还没有交",
+       "body": "12 月 5 日前交就行。需要我用尾号 3306 的储蓄卡帮您交吗？交之前会再跟您确认一次金额。",
+       "actions": [
+        "交 132 元",
+        "先不交"
+       ],
+       "note": "离截止还有两周多，轻提示；长辈模式用「您」、完整句、付款前二次确认。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "skill",
+       "reason": "离缴费截止还有十几天，用安静通知就够了；Y 措辞清楚，适合长辈。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "skill",
+       "reason": "离截止还早，X 用 quiet 发，并说明交之前会再确认，对长辈更稳妥。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "skill",
+       "reason": "离截止还早，Y 用静默推送，还说明交费前会再确认一次，更适合长辈用户。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "skill",
+       "reason": "离截止还早，X 用安静通知，按钮直接写交 132 元，长辈更容易看懂。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "skill",
+       "reason": "Y 按钮写明金额，并承诺交前确认，对长辈更清楚稳妥。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "skill",
+       "reason": "X 用静默推送，并承诺交费前会再确认，更适合长辈。"
+      }
+     ]
+    },
+    {
+     "id": "c13-monitor-broken",
+     "about": "监控的数据源断了，自动重试已失败",
+     "event": "比价数据源连续 2 小时无法访问，自动重试 3 次失败",
+     "now": "2026-11-18 16:00 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "push",
+       "quiet"
+      ],
+      "must_include": [
+       "2 小时"
+      ],
+      "must_not": [
+       "开小差",
+       "稍后再试",
+       "非常抱歉"
+      ]
+     },
+     "surface": "lock",
+     "type": "blocked",
+     "stakes": "low",
+     "address": "你",
+     "goal": "帮我盯着这款扫地机的价格",
+     "held_out": false,
+     "votes": {
+      "skill": 2,
+      "baseline": 0,
+      "tie": 4
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c13-monitor-broken",
+       "send": "quiet",
+       "title": "扫地机比价暂时断了",
+       "body": "数据源 2 小时连不上，重试 3 次都没成，这段时间的价格没记下来。可以先换一个只覆盖京东和天猫的数据源，或者等它恢复。",
+       "actions": [
+        "换数据源",
+        "等它恢复"
+       ],
+       "note": "低风险目标，但监控失效用户应知情并可选替代方案，轻提示即可。"
+      },
+      "baseline-2": {
+       "id": "c13-monitor-broken",
+       "send": "quiet",
+       "title": "扫地机价格监控断了 2 小时",
+       "body": "数据源打不开，重试 3 次都失败，这段时间的价格没记下来。可以先换另一个数据源，但它只覆盖京东和天猫。",
+       "actions": [
+        "换数据源",
+        "等它恢复"
+       ],
+       "note": "低风险但需要用户选方案，轻提示即可。"
+      },
+      "skill-1": {
+       "id": "c13-monitor-broken",
+       "send": "quiet",
+       "title": "扫地机盯价断了 2 小时",
+       "body": "数据源连不上，重试 3 次没成功，这段价格没记下。可以先换成只覆盖京东和天猫的源。",
+       "actions": [
+        "换数据源",
+        "先不换"
+       ],
+       "note": "监控本身坏了且自动重试已失败，必须说；目标没有 24 小时内的期限，用轻提示。"
+      },
+      "skill-2": {
+       "id": "c13-monitor-broken",
+       "send": "quiet",
+       "title": "扫地机比价断了 2 小时",
+       "body": "数据源连不上，重试 3 次都没成，这段价格没记下。可以先换个只覆盖京东、天猫的源。",
+       "actions": [
+        "换数据源",
+        "先等恢复"
+       ],
+       "note": "监控本身坏了且重试已失败，必须说；没有 24 小时内的期限，轻提示。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "skill",
+       "reason": "X 标题写明断了 2 小时；Y 用「暂时」这个模糊说法。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边都说清了中断、影响和可选方案，差别很小。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "skill",
+       "reason": "X 标题写出断了 2 小时，用户只看标题就能判断影响有多大。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两边的信息相同，都很清楚。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边信息相当。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "两边内容基本一样。"
+      }
+     ]
+    },
+    {
+     "id": "c14-scheduled",
+     "about": "用户亲口约好的定时提醒，内容和上个月一样",
+     "event": "到了约定的时间",
+     "now": "2026-11-15 12:00 周日",
+     "last": null,
+     "expect": {
+      "send": [
+       "push"
+      ],
+      "must_include": [
+       "咪咪"
+      ],
+      "must_not": [
+       "温馨提示"
+      ]
+     },
+     "surface": "lock",
+     "type": "deadline",
+     "stakes": "low",
+     "address": "你",
+     "goal": "每月 15 号 12 点提醒我给咪咪做外驱",
+     "held_out": false,
+     "votes": {
+      "skill": 1,
+      "baseline": 0,
+      "tie": 5
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c14-scheduled",
+       "send": "push",
+       "title": "该给咪咪做外驱了",
+       "body": "每月 15 号的体外驱虫。",
+       "actions": [
+        "做完了",
+        "晚点提醒"
+       ],
+       "note": "用户亲口约定的定时提醒，按时标准推送，内容重复也正常。"
+      },
+      "baseline-2": {
+       "id": "c14-scheduled",
+       "send": "push",
+       "title": "该给咪咪做外驱了",
+       "body": "每月 15 号这次到了。",
+       "actions": [
+        "做好了",
+        "1 小时后提醒"
+       ],
+       "note": "用户亲口约定的定时提醒，按时发。"
+      },
+      "skill-1": {
+       "id": "c14-scheduled",
+       "send": "push",
+       "title": "今天 12:00，给咪咪做体外驱虫",
+       "body": "每月 15 日的约定提醒，下次是 12 月 15 日 12:00。",
+       "actions": [
+        "做完了",
+        "20:00 再提醒"
+       ],
+       "note": "用户亲口约好的定时提醒，到点必达；换掉上月「该给咪咪做外驱了」的说法。"
+      },
+      "skill-2": {
+       "id": "c14-scheduled",
+       "send": "push",
+       "title": "今天 15 号，给咪咪做体外驱虫",
+       "body": "",
+       "actions": [
+        "做完了",
+        "今晚再提醒"
+       ],
+       "note": "用户亲口约好的定时提醒，到点必达；换了个和上月不同的说法。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "skill",
+       "reason": "Y 标题写明时间和事项，稍后提醒的按钮说清了具体时间。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "都是约好的提醒，简洁到位，差别不影响决定。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "这是用户约好的定时提醒，两边都清楚到位。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两边都是用户约好的提醒，简洁合适。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边都是简短的定时提醒，效果一样。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "两边都是清楚的定时提醒。"
+      }
+     ]
+    },
+    {
+     "id": "c15-missing-baseline",
+     "about": "只查了一个平台，缺少比较基准",
+     "event": "在一个平台上算出了凑单方案；其他平台的数据没有取到",
+     "now": "2026-11-18 19:42 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "hold",
+       "digest",
+       "quiet",
+       "push"
+      ],
+      "must_include": [
+       "156"
+      ],
+      "must_not": [
+       "最低",
+       "最划算",
+       "最便宜",
+       "全网",
+       "宝妈"
+      ]
+     },
+     "surface": "lock",
+     "type": "opportunity",
+     "stakes": "mid",
+     "address": "你",
+     "goal": "猫砂帮我看看哪里买划算",
+     "held_out": false,
+     "votes": {
+      "skill": 3,
+      "baseline": 0,
+      "tie": 3
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c15-missing-baseline",
+       "send": "quiet",
+       "title": "猫砂：天猫超市 4 袋 ¥156，合 ¥39/袋",
+       "body": "京东、拼多多这次没取到价，还不能确定是最划算的。我过会儿再查一遍，比完告诉你。（19:40 查询）",
+       "actions": [
+        "先按这个买",
+        "等比完再说"
+       ],
+       "note": "只有单一平台数据，必须说明缺比较基准，不宜强推。"
+      },
+      "baseline-2": {
+       "id": "c15-missing-baseline",
+       "send": "hold",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "只拿到一家数据，没有比较基准，不急，等重新取到京东、拼多多再一起报。"
+      },
+      "skill-1": {
+       "id": "c15-missing-baseline",
+       "send": "hold",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "只查到天猫超市一家，缺比较基准，用户没在等、也不急；先补齐京东、拼多多的价格再发。"
+      },
+      "skill-2": {
+       "id": "c15-missing-baseline",
+       "send": "hold",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "只拿到天猫超市一家，缺比较基准且不急，先补齐京东、拼多多再发，不发半成品。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "skill",
+       "reason": "缺了比较基准时先等结果，可以省掉一次可能还要再更正的打扰。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "skill",
+       "reason": "没有比较基准、也没有时限，先不发更合适；X 的「先按这个买」可能引导用户买到不划算的。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "skill",
+       "reason": "比价基准还缺两家，先不发更稳妥，Y 用不完整的结论去打扰用户。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两边都先等结果再说。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边都先不发。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "两边都选择先不发。"
+      }
+     ]
+    },
+    {
+     "id": "c16-user-quits",
+     "about": "用户明确说不要了",
+     "event": "用户刚发来消息要求停止",
+     "now": "2026-11-18 20:10 周三",
+     "last": "别提醒我夜跑了",
+     "expect": {
+      "send": [
+       "push",
+       "quiet"
+      ],
+      "must_include": [],
+      "must_not": [
+       "真的",
+       "确定",
+       "可惜",
+       "再考虑",
+       "坚持",
+       "？"
+      ]
+     },
+     "surface": "chat",
+     "type": "done",
+     "stakes": "low",
+     "address": "你",
+     "goal": "每天晚上提醒我夜跑",
+     "held_out": false,
+     "votes": {
+      "skill": 0,
+      "baseline": 2,
+      "tie": 4
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c16-user-quits",
+       "send": "quiet",
+       "title": "好，夜跑提醒停了",
+       "body": "9 天的记录给你留着，想恢复随时说一声。",
+       "actions": [],
+       "note": "用户明确要求停止，只做简短确认，不挽留不追问。"
+      },
+      "baseline-2": {
+       "id": "c16-user-quits",
+       "send": "quiet",
+       "title": "好，夜跑提醒停了",
+       "body": "9 天的记录给你留着，想恢复说一声就行。",
+       "actions": [],
+       "note": "用户明确要求停止，简短确认，不挽留。"
+      },
+      "skill-1": {
+       "id": "c16-user-quits",
+       "send": "quiet",
+       "title": "好的，夜跑提醒停了",
+       "body": "9 天的记录都留着。想恢复，在目标页重新打开就行。",
+       "actions": [
+        "撤销"
+       ],
+       "note": "用户明确要求停止，在对话里立刻执行并一句确认，告诉怎么恢复，不挽留、不反问。"
+      },
+      "skill-2": {
+       "id": "c16-user-quits",
+       "send": "quiet",
+       "title": "好的，夜跑提醒停了",
+       "body": "9 天的记录都留着。想恢复，回一句「继续夜跑」就行。",
+       "actions": [
+        "恢复提醒"
+       ],
+       "note": "用户明确要停，立刻执行并一句确认怎么恢复；用户正在对话里，不响铃，不挽留。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两边都简短地确认已停止，并保留了记录，差别很小。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "baseline",
+       "reason": "Y 回复自然简短；X 提到「目标页」这种界面机制，像操作说明。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "两边都干脆确认已停止并说明记录保留，没有挽留。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两边都简短地确认停止，差别很小。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边都干脆地确认停止，也都保留了恢复的路。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "用户刚说不要了，Y 不放恢复按钮，更干脆、不带挽留。"
+      }
+     ]
+    },
+    {
+     "id": "c17-duplicate",
+     "about": "同一个事实两小时前已经通知过",
+     "event": "再次巡检，价格仍是两小时前已通知过的那个价",
+     "now": "2026-11-18 12:05 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "none"
+      ],
+      "must_include": [],
+      "must_not": []
+     },
+     "surface": "lock",
+     "type": "opportunity",
+     "stakes": "mid",
+     "address": "你",
+     "goal": "帮我盯杭州到三亚 1 月 20 日的直飞，低于 1600 告诉我",
+     "held_out": false,
+     "votes": {
+      "skill": 0,
+      "baseline": 0,
+      "tie": 3
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c17-duplicate",
+       "send": "none",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "同一价格两小时前已通知过，没有新信息，不重复打扰。"
+      },
+      "baseline-2": {
+       "id": "c17-duplicate",
+       "send": "none",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "同一价格 10:05 已通知过，没有新信息。"
+      },
+      "skill-1": {
+       "id": "c17-duplicate",
+       "send": "none",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "¥1,540 这个价 10:05 已经通知过，没有新变化，不重复发。"
+      },
+      "skill-2": {
+       "id": "c17-duplicate",
+       "send": "none",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "同一个价格 10:05 已通知过，没有新变化，不重复发。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "同样的价格两小时前通知过，两边都正确地不发。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边都没有重复通知，正确。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "同一个价格两小时前已经通知过，两边都不发。"
+      }
+     ]
+    },
+    {
+     "id": "c18-weekly-report",
+     "about": "约好的每周行情汇报，没有需要用户做的事",
+     "event": "到了约定的每周日 20:00 汇报时间；本周没有触达目标价",
+     "now": "2026-11-15 20:00 周日",
+     "last": null,
+     "expect": {
+      "send": [
+       "quiet",
+       "digest",
+       "push"
+      ],
+      "must_include": [
+       "1,780",
+       "180"
+      ],
+      "must_not": [
+       "加油",
+       "别着急",
+       "！"
+      ]
+     },
+     "surface": "lock",
+     "type": "progress",
+     "stakes": "mid",
+     "address": "你",
+     "goal": "帮我盯杭州到三亚 1 月 20 日的直飞，低于 1600 告诉我",
+     "held_out": false,
+     "votes": {
+      "skill": 1,
+      "baseline": 1,
+      "tie": 4
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "c18-weekly-report",
+       "send": "quiet",
+       "title": "三亚直飞本周最低 ¥1,780",
+       "body": "离目标 ¥1,600 还差 ¥180，比上周低 ¥90。到目标价我马上告诉你，下次周报 11 月 22 日（周日）20:00。",
+       "actions": [],
+       "note": "约好的周报要按时给，但无需用户操作，轻提示即可。"
+      },
+      "baseline-2": {
+       "id": "c18-weekly-report",
+       "send": "quiet",
+       "title": "本周最低 ¥1,780，离目标还差 ¥180",
+       "body": "比上周低了 ¥90。下次 11 月 22 日（周日）20:00 再报；降到 ¥1,600 以下会马上告诉你。",
+       "actions": [],
+       "note": "约定的周报，没有需要用户做的事，轻提示。"
+      },
+      "skill-1": {
+       "id": "c18-weekly-report",
+       "send": "quiet",
+       "title": "三亚直飞本周最低 ¥1,780",
+       "body": "离目标价还差 ¥180，比上周低 ¥90。11 月 22 日（周日）20:00 再报。",
+       "actions": [
+        "改目标价"
+       ],
+       "note": "用户约好的每周汇报按时发，但没有需要用户做的事，用轻提示不响铃。"
+      },
+      "skill-2": {
+       "id": "c18-weekly-report",
+       "send": "quiet",
+       "title": "三亚直飞本周最低 ¥1,780",
+       "body": "离目标价还差 ¥180，比上周低 ¥90。11 月 22 日（周日）20:00 再报。",
+       "actions": [
+        "改目标价"
+       ],
+       "note": "约好的每周汇报按时发；没有要用户做的事，静默轻提示。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两份周报的信息基本相同，都很清楚。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "周报内容基本一致，都简洁准确。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "两份周报的事实一致，都简洁。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两份周报的信息基本相同。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "skill",
+       "reason": "Y 标题写明是三亚直飞，锁屏上一眼知道是哪项监控；X 标题缺主体。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "Y 标题带出了离目标还差 ¥180，只看标题就知道进展。"
+      }
+     ]
+    },
+    {
+     "id": "h01-ticket-window",
+     "about": "回流票出现，平台只保留 15 分钟，要付款",
+     "event": "监控到 2 张 ¥680 档的回流票，平台为当前会话保留 15 分钟",
+     "now": "2026-11-18 20:12 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "urgent"
+      ],
+      "must_include": [
+       "1,360",
+       "20:27"
+      ],
+      "must_not": [
+       "已为你支付",
+       "已下单",
+       "已帮你抢到",
+       "手慢无",
+       "最后机会",
+       "！"
+      ]
+     },
+     "surface": "lock",
+     "type": "approval",
+     "stakes": "high",
+     "address": "你",
+     "goal": "周杰伦上海站有回流票帮我抢，680 那档两张",
+     "held_out": true,
+     "votes": {
+      "skill": 5,
+      "baseline": 1,
+      "tie": 0
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "h01-ticket-window",
+       "send": "urgent",
+       "title": "¥680 回流票 2 张，保留到 20:27",
+       "body": "周杰伦 12 月 12 日（周六）19:30 上海体育场，共 ¥1,360。确认后用尾号 4471 信用卡付款。退票：开演前 48 小时以上可退，收 20% 手续费。（20:12 查询）",
+       "actions": [
+        "确认付 ¥1,360",
+        "不要了"
+       ],
+       "note": "高价值、15 分钟窗口、需用户付款确认，值得时效推送。"
+      },
+      "baseline-2": {
+       "id": "h01-ticket-window",
+       "send": "urgent",
+       "title": "周杰伦上海站 ¥680 回流票 2 张，保留到 20:27",
+       "body": "12 月 12 日（周六）19:30 上海体育场，共 ¥1,360，用尾号 4471 的信用卡付。退票：开演前 48 小时以上可退，收 20% 手续费。",
+       "actions": [
+        "付款 ¥1,360",
+        "不要了"
+       ],
+       "note": "高价值、只剩 15 分钟窗口，且需要用户确认付款。"
+      },
+      "skill-1": {
+       "id": "h01-ticket-window",
+       "send": "urgent",
+       "title": "周杰伦 ¥680 票 2 张，20:27 前付",
+       "body": "12 月 12 日（周六）上海体育场，共 ¥1,360，尾号 4471 付。开演前 48 小时可退，扣 20%。20:27 不付就释放。",
+       "actions": [
+        "付 ¥1,360",
+        "先不要"
+       ],
+       "note": "要付款且没有预授权，平台只保留 15 分钟，1 小时内就会错过，用时效推送求拍板；不点等于不买。"
+      },
+      "skill-2": {
+       "id": "h01-ticket-window",
+       "send": "urgent",
+       "title": "付 ¥1,360 买周杰伦回流票 2 张",
+       "body": "12 月 12 日 19:30 上海体育场。刷尾号 4471 信用卡；开演 48 小时前可退，扣 20%。20:27 前不确认就释放。",
+       "actions": [
+        "确认付款",
+        "先不买"
+       ],
+       "note": "15 分钟内就会错过、要付款且无预授权，时效推送求拍板；不确认等于不执行。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "skill",
+       "reason": "X 标题同时给出演出、档位和付款截止，正文写明不付就释放。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "skill",
+       "reason": "Y 标题点名演出和付款时限，并写明不付就释放，决定后果更清楚。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "skill",
+       "reason": "X 标题同时写出付款截止和动作，正文也写了不付会被释放，决定起来更快。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "skill",
+       "reason": "Y 的标题就是要做的决定，并写明不确认就释放，用户能更快拍板。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "baseline",
+       "reason": "Y 标题带保留时限，按钮带金额；X 标题看不出时限，按钮也只写「确认付款」。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "skill",
+       "reason": "Y 标题点明付款决定，正文写明 20:27 前不确认就释放，后果清楚。"
+      }
+     ]
+    },
+    {
+     "id": "h02-rate-no-change",
+     "about": "例行巡检，汇率没变",
+     "event": "每小时一次的例行巡检，汇率与上次相同",
+     "now": "2026-11-18 15:00 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "none"
+      ],
+      "must_include": [],
+      "must_not": []
+     },
+     "surface": "lock",
+     "type": "progress",
+     "stakes": "low",
+     "address": "你",
+     "goal": "日元汇率跌破 4.6 告诉我",
+     "held_out": true,
+     "votes": {
+      "skill": 0,
+      "baseline": 0,
+      "tie": 5
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "h02-rate-no-change",
+       "send": "none",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "汇率没变也没到线，已约好每周一汇报，不发。"
+      },
+      "baseline-2": {
+       "id": "h02-rate-no-change",
+       "send": "none",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "汇率没变也没破线，周一例行汇报会提。"
+      },
+      "skill-1": {
+       "id": "h02-rate-no-change",
+       "send": "none",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "汇率和上次一样，没有新变化；周一 09:00 照常例行汇报。"
+      },
+      "skill-2": {
+       "id": "h02-rate-no-change",
+       "send": "none",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "汇率和上次一样，没有新变化，按约定周一 09:00 再报。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "汇率没变，两边都不发。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "汇率没变，两边都没发。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "汇率没变，两边都不发。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两边都不发。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "汇率没变，两边都不发。"
+      }
+     ]
+    },
+    {
+     "id": "h03-small-drop-daytime",
+     "about": "白天的一笔小额降价，低于用户设的门槛",
+     "event": "价格小幅下降",
+     "now": "2026-11-18 14:22 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "none",
+       "digest"
+      ],
+      "must_include": [],
+      "must_not": []
+     },
+     "surface": "lock",
+     "type": "opportunity",
+     "stakes": "low",
+     "address": "你",
+     "goal": "这款空气炸锅降价了告诉我",
+     "held_out": true,
+     "votes": {
+      "skill": 0,
+      "baseline": 0,
+      "tie": 5
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "h03-small-drop-daytime",
+       "send": "digest",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "降 ¥10 低于用户设的 ¥30 门槛，无时限，并入小结。"
+      },
+      "baseline-2": {
+       "id": "h03-small-drop-daytime",
+       "send": "digest",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "降 ¥10 低于用户设的 ¥30 门槛，并入小结。"
+      },
+      "skill-1": {
+       "id": "h03-small-drop-daytime",
+       "send": "digest",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "只降 ¥10，低于用户设的 ¥30 门槛，没有截止时间，并入周期小结。"
+      },
+      "skill-2": {
+       "id": "h03-small-drop-daytime",
+       "send": "digest",
+       "title": "",
+       "body": "",
+       "actions": [],
+       "note": "降 ¥10，低于用户设的 ¥30 门槛，又没有时限，并入小结。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "降幅低于门槛，两边都放进汇总。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "降幅低于门槛，两边都放进汇总。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "降幅低于用户设的门槛，两边都放进摘要。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两边都放进汇总。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "降幅低于门槛，两边都放进摘要。"
+      }
+     ]
+    },
+    {
+     "id": "h04-insurance-far",
+     "about": "车险 12 天后到期，三家报价取齐了",
+     "event": "同一保障方案的 3 家报价已取齐",
+     "now": "2026-11-18 15:35 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "quiet",
+       "digest",
+       "push"
+      ],
+      "must_include": [
+       "2,980",
+       "11 月 30 日"
+      ],
+      "must_not": [
+       "全网",
+       "最划算",
+       "已为你",
+       "立省",
+       "！"
+      ]
+     },
+     "surface": "lock",
+     "type": "opportunity",
+     "stakes": "high",
+     "address": "你",
+     "goal": "车险到期前帮我比价续保",
+     "held_out": true,
+     "votes": {
+      "skill": 0,
+      "baseline": 3,
+      "tie": 3
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "h04-insurance-far",
+       "send": "push",
+       "title": "车险续保：平安 ¥2,980 最便宜",
+       "body": "同一保障方案：平安 ¥2,980、太保 ¥3,050、人保 ¥3,120，比去年人保 ¥3,260 少 ¥280。报价 7 天有效（到 11 月 25 日），保险 11 月 30 日（周一）到期。",
+       "actions": [
+        "选平安",
+        "看对比"
+       ],
+       "note": "三家报价已齐、省 ¥280，报价有效期有限，适合标准推送让用户决定。"
+      },
+      "baseline-2": {
+       "id": "h04-insurance-far",
+       "send": "push",
+       "title": "车险三家报价齐了，平安 ¥2,980 最低",
+       "body": "同一保障方案：平安 ¥2,980、太保 ¥3,050、人保 ¥3,120，比去年人保 ¥3,260 少 ¥280。报价 7 天有效（到 11 月 25 日），车险 11 月 30 日到期。",
+       "actions": [
+        "续保平安",
+        "看对比"
+       ],
+       "note": "高风险事项，结论已出，报价有效期有限，需要用户决定。"
+      },
+      "skill-1": {
+       "id": "h04-insurance-far",
+       "send": "quiet",
+       "title": "车险续保平安 ¥2,980，3 家最低",
+       "body": "同一保障，比去年人保 ¥3,260 能省 ¥280。11 月 30 日（周一）到期，报价 7 天有效。",
+       "actions": [
+        "续保平安",
+        "看 3 家明细"
+       ],
+       "note": "报价取齐、结论完整，需要用户定；离到期还有 12 天、报价 7 天有效，用轻提示，付款前再确认。"
+      },
+      "skill-2": {
+       "id": "h04-insurance-far",
+       "send": "quiet",
+       "title": "车险续保平安最低 ¥2,980",
+       "body": "同一保障：太保 ¥3,050、人保 ¥3,120，去年 ¥3,260。报价 7 天有效，你点了我才投保。",
+       "actions": [
+        "续保平安",
+        "看 3 家明细"
+       ],
+       "note": "三家报价齐了、结论完整；离到期 12 天，轻提示，投保付款前再确认。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "baseline",
+       "reason": "X 一次列出三家报价和报价有效截止日期，用户不用点进去就能做决定。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "X 简洁、Y 详尽，都能支撑续保决定，强度差异也不大。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "两边事实一致、可以直接决定，推送强度的差别影响不大。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "X 安静并说明点了才投保，Y 信息更完整，两边都能让用户做对决定。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "baseline",
+       "reason": "X 给出省 ¥280 和报价截止日期；Y 漏了省多少，也没写到期日。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "Y 写出了车险到期日和报价截止日期，做决定的依据更完整。"
+      }
+     ]
+    },
+    {
+     "id": "h05-locker-fee",
+     "about": "快递柜 2 小时后开始收超时费，金额很小",
+     "event": "包裹离免费取件截止还有 2 小时",
+     "now": "2026-11-18 20:00 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "quiet",
+       "push"
+      ],
+      "must_include": [
+       "22:00"
+      ],
+      "must_not": [
+       "赶紧",
+       "千万",
+       "！",
+       "温馨提示"
+      ]
+     },
+     "surface": "lock",
+     "type": "deadline",
+     "stakes": "low",
+     "address": "你",
+     "goal": "快递到了提醒我取",
+     "held_out": true,
+     "votes": {
+      "skill": 0,
+      "baseline": 0,
+      "tie": 6
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "h05-locker-fee",
+       "send": "quiet",
+       "title": "东门快递柜的件，22:00 前取免费",
+       "body": "之后每 12 小时收 ¥1。",
+       "actions": [
+        "看取件码"
+       ],
+       "note": "昨天已通知过，费用很小，临近截止轻提示一次就够。"
+      },
+      "baseline-2": {
+       "id": "h05-locker-fee",
+       "send": "quiet",
+       "title": "东门快递柜的包裹 22:00 前免费取",
+       "body": "之后每 12 小时收 ¥1。",
+       "actions": [
+        "看取件码"
+       ],
+       "note": "金额很小，轻提示一下即可。"
+      },
+      "skill-1": {
+       "id": "h05-locker-fee",
+       "send": "quiet",
+       "title": "快递柜 22:00 后开始收费",
+       "body": "在小区东门快递柜，过了每 12 小时收 ¥1。",
+       "actions": [
+        "看取件码"
+       ],
+       "note": "金额只有 ¥1，不值得响铃，但会实际发生且昨天只提过一次，用轻提示补这一次，之后不再提。"
+      },
+      "skill-2": {
+       "id": "h05-locker-fee",
+       "send": "quiet",
+       "title": "东门快递柜今天 22:00 后收费",
+       "body": "那件快递还没取，过了 22:00 每 12 小时收 ¥1。",
+       "actions": [
+        "看取件码"
+       ],
+       "note": "同一节点第二次也是最后一次提醒；超时费只有 ¥1，不值得响铃，轻提示。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两边的信息相同，表述角度不同，都很简短。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边信息相同、都很简短。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "两边都清楚说明了收费时间点和金额。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两边信息相同，都很简短。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边都简短清楚。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "两边信息相当。"
+      }
+     ]
+    },
+    {
+     "id": "h06-train-approval",
+     "about": "候补成功已占座，付款要用户确认",
+     "event": "候补成功，系统已占座，需要在保留时间内付款",
+     "now": "2026-11-18 12:55 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "urgent",
+       "push"
+      ],
+      "must_include": [
+       "73",
+       "13:25"
+      ],
+      "must_not": [
+       "已支付",
+       "已出票",
+       "已为你订好",
+       "手慢无"
+      ]
+     },
+     "surface": "lock",
+     "type": "approval",
+     "stakes": "high",
+     "address": "你",
+     "goal": "帮我订周五晚上回杭州的高铁，二等座",
+     "held_out": true,
+     "votes": {
+      "skill": 5,
+      "baseline": 1,
+      "tie": 0
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "h06-train-approval",
+       "send": "urgent",
+       "title": "G7381 候补成功，13:25 前付款",
+       "body": "11 月 20 日（周五）18:42 上海虹桥 → 杭州东，二等座 07 车 12F，¥73。确认后用尾号 4471 信用卡付款；退票按 12306 规则收手续费。",
+       "actions": [
+        "确认付 ¥73",
+        "不要了"
+       ],
+       "note": "占座只保留 30 分钟，错过就丢座，需用户确认付款，时效推送。"
+      },
+      "baseline-2": {
+       "id": "h06-train-approval",
+       "send": "urgent",
+       "title": "G7381 候补成功，13:25 前付款 ¥73",
+       "body": "周五 18:42 上海虹桥 → 杭州东，二等座 07 车 12F。用尾号 4471 的信用卡付；退票按 12306 规则收手续费。",
+       "actions": [
+        "付款 ¥73",
+        "不要了"
+       ],
+       "note": "只剩 30 分钟保留期，过期座位就没了，需要用户确认付款。"
+      },
+      "skill-1": {
+       "id": "h06-train-approval",
+       "send": "urgent",
+       "title": "G7381 候补成功，13:25 前付 ¥73",
+       "body": "周五 18:42 虹桥→杭州东，07 车 12F，尾号 4471 付。退票按 12306 收费；13:25 不付就释放。",
+       "actions": [
+        "付 ¥73",
+        "不要了"
+       ],
+       "note": "已占座、30 分钟内不付就释放，要用户确认付款，用时效推送；不点等于不买。"
+      },
+      "skill-2": {
+       "id": "h06-train-approval",
+       "send": "urgent",
+       "title": "付 ¥73 锁定周五 G7381 二等座",
+       "body": "11 月 20 日 18:42 虹桥 → 杭州东，07 车 12F。刷 4471 卡，退票收手续费。13:25 前不付就释放。",
+       "actions": [
+        "确认付 ¥73",
+        "先不订"
+       ],
+       "note": "占座 30 分钟后释放，1 小时内会错过，付款需用户确认，时效推送。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "skill",
+       "reason": "Y 写明 13:25 不付就释放，金额也放进了标题，后果更清楚。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "skill",
+       "reason": "X 标题带出金额和时限，还写明不付就释放；Y 没交代不付的后果。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "skill",
+       "reason": "Y 写明 13:25 不付就释放，X 没交代不处理的后果。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "skill",
+       "reason": "X 写明 13:25 前不付就释放，Y 漏了这个后果。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "baseline",
+       "reason": "X 标题一眼可见金额和时限，更利于马上付款；Y 的时限藏在正文里。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "skill",
+       "reason": "X 写明 13:25 前不付就释放，Y 没交代不处理的后果。"
+      }
+     ]
+    },
+    {
+     "id": "h07-mandate-topup",
+     "about": "按授权自动充了话费，这笔不能退",
+     "event": "余额降到 ¥18.6，PA 已按授权充值 ¥50",
+     "now": "2026-11-18 16:40 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "quiet",
+       "push",
+       "digest"
+      ],
+      "must_include": [
+       "50"
+      ],
+      "must_not": [
+       "要不要",
+       "是否",
+       "请确认"
+      ]
+     },
+     "surface": "lock",
+     "type": "done",
+     "stakes": "mid",
+     "address": "你",
+     "goal": "话费低于 20 自动帮我充 50",
+     "held_out": true,
+     "votes": {
+      "skill": 0,
+      "baseline": 1,
+      "tie": 5
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "h07-mandate-topup",
+       "send": "quiet",
+       "title": "话费已自动充 ¥50，余额 ¥68.6",
+       "body": "余额降到 ¥18.6 时按你的设置充的，尾号 4471 信用卡已扣 ¥50。本月第 1 次（上限 2 次）。话费充值不能退。",
+       "actions": [
+        "看设置"
+       ],
+       "note": "授权内的小额代办，需回执但无需操作，轻提示即可。"
+      },
+      "baseline-2": {
+       "id": "h07-mandate-topup",
+       "send": "quiet",
+       "title": "话费已自动充 ¥50，余额 ¥68.6",
+       "body": "余额降到 ¥18.6 触发，尾号 4471 的信用卡已扣 ¥50。本月第 1 次（上限 2 次）。话费充值不能退。",
+       "actions": [
+        "调整规则"
+       ],
+       "note": "授权范围内已完成且不可撤销，给回执即可，不需打扰。"
+      },
+      "skill-1": {
+       "id": "h07-mandate-topup",
+       "send": "quiet",
+       "title": "话费自动充了 ¥50，余额 ¥68.6",
+       "body": "按「低于 ¥20 充 ¥50」办的，本月第 1 次，尾号 4471 已扣款。话费充值不能退。",
+       "actions": [],
+       "note": "在预授权内办完，立刻回执说明依据和不能撤；金额小、不需要用户动手，用轻提示。"
+      },
+      "skill-2": {
+       "id": "h07-mandate-topup",
+       "send": "quiet",
+       "title": "话费自动充了 ¥50，余额 ¥68.6",
+       "body": "余额低于 ¥20，按你设的规则充的，尾号 4471 已扣款。本月第 1 次；话费充值不能退。",
+       "actions": [],
+       "note": "在预授权内已办，给回执说明按哪条授权、不能撤；金额小、无需操作，轻提示。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两份回执都准确简洁。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边回执都准确，也都说了不能退。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "Y 补充了每月上限 2 次和查看设置的入口，授权边界更透明。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两份回执都准确简洁。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边回执都准确。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "两份回执都准确。"
+      }
+     ]
+    },
+    {
+     "id": "h08-visa-photo",
+     "about": "签证照片被退回，要用户重拍",
+     "event": "签证中心退回了照片",
+     "now": "2026-11-18 10:30 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "push",
+       "quiet"
+      ],
+      "must_include": [
+       "11 月 24 日"
+      ],
+      "must_not": [
+       "抱歉",
+       "很遗憾",
+       "务必",
+       "！"
+      ]
+     },
+     "surface": "lock",
+     "type": "blocked",
+     "stakes": "high",
+     "address": "你",
+     "goal": "帮我办日本签证，材料齐了提醒我",
+     "held_out": true,
+     "votes": {
+      "skill": 1,
+      "baseline": 1,
+      "tie": 4
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "h08-visa-photo",
+       "send": "push",
+       "title": "签证照片被退回，要重拍一张白底照",
+       "body": "原因是背景不是纯白，其他材料都已通过。11 月 24 日（周二）前上传就行，晚了 11 月 26 日（周四）的送签要改期。",
+       "actions": [
+        "上传照片"
+       ],
+       "note": "高风险且只有用户能办，截止还有几天，标准推送。"
+      },
+      "baseline-2": {
+       "id": "h08-visa-photo",
+       "send": "push",
+       "title": "签证照片被退回，需要重拍一张白底照",
+       "body": "原因是背景不是纯白，其他材料都已通过。11 月 24 日（周二）前上传，晚了 26 日的送签预约就得改期。",
+       "actions": [
+        "上传照片",
+        "附近能拍的地方"
+       ],
+       "note": "高风险且需要用户本人动手，有明确截止。"
+      },
+      "skill-1": {
+       "id": "h08-visa-photo",
+       "send": "quiet",
+       "title": "签证照片退回了：背景不是纯白",
+       "body": "其他材料都过了。11 月 24 日（周二）前重传 1 张白底照，26 日的送签就不用改期。",
+       "actions": [
+        "上传照片",
+        "周六提醒我"
+       ],
+       "note": "需要用户本人重拍，但离截止还有 6 天，用轻提示；写清截止和不做的后果。"
+      },
+      "skill-2": {
+       "id": "h08-visa-photo",
+       "send": "quiet",
+       "title": "日本签证照片被退回，要重拍 1 张",
+       "body": "背景不是纯白，其余材料都过了。11 月 24 日（周二）前传白底照；晚了 26 日送签要改期。",
+       "actions": [
+        "上传新照片",
+        "周末提醒我"
+       ],
+       "note": "只差用户亲手做的一步，离截止还有 6 天，轻提示；写清截止和后果。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "baseline",
+       "reason": "X 标题直接告诉用户要做什么（重拍白底照），对高严肃度的事用推送也合适。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "tie",
+       "reason": "两边原因、截止和后果都清楚。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "两边都准确给出了原因、截止时间和晚交的后果。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两边都写清了原因、截止日期和后果。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "skill",
+       "reason": "Y 简洁，按钮实用；X 的「附近能拍的地方」偏离了要做的决定。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "tie",
+       "reason": "两边都准确，各自给了有用的后续入口。"
+      }
+     ]
+    },
+    {
+     "id": "h09-pa-error-date",
+     "about": "PA 把家长会的日期说错了，日历也记错了",
+     "event": "PA 昨天把家长会的日期报错了，需要更正",
+     "now": "2026-11-18 09:10 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "push"
+      ],
+      "must_include": [
+       "11 月 20 日",
+       "18:30"
+      ],
+      "must_not": [
+       "哈哈",
+       "非常抱歉",
+       "敬请谅解",
+       "！"
+      ]
+     },
+     "surface": "lock",
+     "type": "correction",
+     "stakes": "mid",
+     "address": "你",
+     "goal": "孩子学校的通知帮我盯着",
+     "held_out": true,
+     "votes": {
+      "skill": 0,
+      "baseline": 4,
+      "tie": 2
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "h09-pa-error-date",
+       "send": "push",
+       "title": "更正：家长会是周五 11 月 20 日 18:30",
+       "body": "我昨天说成了周四，抱歉。地点不变，三年级 2 班教室。日历已改到周五，周四的占位删了。",
+       "actions": [
+        "看日历"
+       ],
+       "note": "错误日期就在明天，用户可能白跑一趟，必须尽快主动更正。"
+      },
+      "baseline-2": {
+       "id": "h09-pa-error-date",
+       "send": "push",
+       "title": "更正：家长会是周五 11 月 20 日 18:30",
+       "body": "昨天我说成了周四，抱歉。地点不变，三年级 2 班教室。日历已改到周五，周四的占位已删。",
+       "actions": [
+        "知道了"
+       ],
+       "note": "PA 自己的错误，且明天就是错报的日期，必须马上更正。"
+      },
+      "skill-1": {
+       "id": "h09-pa-error-date",
+       "send": "push",
+       "title": "更正：家长会是 11 月 20 日（周五）",
+       "body": "18:30，三年级 2 班教室。昨天说成了周四，抱歉。日历已改到周五，周四的占位删了。",
+       "actions": [],
+       "note": "PA 把日期报错，错的那天就是明天，用户可能已据此安排，用标准推送更正；道歉一次，说清已改好。"
+      },
+      "skill-2": {
+       "id": "h09-pa-error-date",
+       "send": "push",
+       "title": "更正：家长会是 11 月 20 日（周五）",
+       "body": "18:30，三年级 2 班教室。昨天说成了周四，抱歉。日历已改到周五，周四的占位删了。",
+       "actions": [],
+       "note": "PA 报错日期且用户可能已据此安排，错的那天就是明天，标准推送更正。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两边的更正都清楚，并说明了日历已经改好。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "baseline",
+       "reason": "X 标题含时间，正文写明地点不变，更正一眼就能确认。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "Y 标题带上了 18:30，只看标题就能把更正后的信息记全。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "两边的更正都清楚。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "baseline",
+       "reason": "Y 标题带时间，更正一眼就能确认。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "X 标题带上了 18:30，只看标题就能把更正后的信息记全。"
+      }
+     ]
+    },
+    {
+     "id": "h10-said-brief",
+     "about": "用户上周说过太啰嗦，这次是每周小结",
+     "event": "到了每周小结的时间",
+     "now": "2026-11-22 20:00 周日",
+     "last": null,
+     "expect": {
+      "send": [
+       "quiet",
+       "digest",
+       "push"
+      ],
+      "must_include": [
+       "146"
+      ],
+      "must_not": [
+       "加油",
+       "继续保持",
+       "！",
+       "温馨提示",
+       "太棒"
+      ]
+     },
+     "surface": "lock",
+     "type": "digest",
+     "stakes": "low",
+     "address": "你",
+     "goal": "每周日晚上给我一份省钱小结",
+     "held_out": true,
+     "votes": {
+      "skill": 0,
+      "baseline": 6,
+      "tie": 0
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "h10-said-brief",
+       "send": "quiet",
+       "title": "本周省了 ¥146",
+       "body": "3 笔都已成交，最多的是洗衣液凑单省 ¥62。没有待办。",
+       "actions": [],
+       "note": "约好的周报照发，但用户说过太啰嗦，压到最短。"
+      },
+      "baseline-2": {
+       "id": "h10-said-brief",
+       "send": "quiet",
+       "title": "本周省了 ¥146",
+       "body": "3 笔都已成交，最大一笔是洗衣液凑单省 ¥62。没有待办。",
+       "actions": [],
+       "note": "约定的小结，用户嫌啰嗦，只给关键数字。"
+      },
+      "skill-1": {
+       "id": "h10-said-brief",
+       "send": "quiet",
+       "title": "本周省了 ¥146，约 40 分钟",
+       "body": "最大一笔：洗衣液凑单省 ¥62。共发 5 条消息，没有待办。就这些。",
+       "actions": [],
+       "note": "约好的每周小结，固定时间静默送达；用户说过「简短点」，压成一眼版，不放按钮。"
+      },
+      "skill-2": {
+       "id": "h10-said-brief",
+       "send": "quiet",
+       "title": "本周省了 ¥146，约 40 分钟",
+       "body": "最大一笔：洗衣液凑单省 ¥62。没有待办，就这些。",
+       "actions": [
+        "看明细"
+       ],
+       "note": "约好的周期小结按时静默送达；用户说过简短点，压到一眼版。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "baseline",
+       "reason": "用户说过要简短，X 更精简，没有消息条数和「就这些」这类多余内容。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "baseline",
+       "reason": "用户嫌啰嗦，Y 更精简；X 多了消息条数和「就这些」这种口癖。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "用户说过要简短，Y 把估算的省时说成确数，还加了多余的消息计数和口癖。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "baseline",
+       "reason": "用户要求简短，Y 更精简，也没有多余的按钮。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "baseline",
+       "reason": "用户要求简短，X 更精炼；Y 有「就这些」口癖，还多了个按钮。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "用户要求简短，Y 去掉了估算的省时，X 把估算当作确数。"
+      }
+     ]
+    },
+    {
+     "id": "h11-monitor-broken-near",
+     "about": "抢票监控断了，离开售不到 3 小时",
+     "event": "票务平台接口从 07:05 起无法访问，自动重试 3 次失败",
+     "now": "2026-11-20 07:45 周五",
+     "last": null,
+     "expect": {
+      "send": [
+       "push",
+       "urgent"
+      ],
+      "must_include": [
+       "10:00"
+      ],
+      "must_not": [
+       "开小差",
+       "稍后再试",
+       "非常抱歉",
+       "放心",
+       "！"
+      ]
+     },
+     "surface": "lock",
+     "type": "blocked",
+     "stakes": "high",
+     "address": "你",
+     "goal": "周五 10:00 开售的演唱会门票帮我抢",
+     "held_out": true,
+     "votes": {
+      "skill": 2,
+      "baseline": 4,
+      "tie": 0
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "h11-monitor-broken-near",
+       "send": "urgent",
+       "title": "抢票接口断了，10:00 前可能恢复不了",
+       "body": "票务平台从 07:05 起连不上，重试 3 次都失败。我会继续重试，恢复了马上告诉你；稳妥起见，10:00 你也在 App 里自己蹲一下。",
+       "actions": [
+        "我自己也蹲",
+        "知道了"
+       ],
+       "note": "高风险、离开售只剩 2 小时多，用户需要提前准备后备方案。"
+      },
+      "baseline-2": {
+       "id": "h11-monitor-broken-near",
+       "send": "urgent",
+       "title": "抢票接口断了，10:00 前没恢复我就抢不了",
+       "body": "票务平台 07:05 起打不开，重试 3 次都失败。保险起见，10:00 前你在平台 App 里自己蹲一下；我继续重试，恢复了马上告诉你。",
+       "actions": [
+        "我自己蹲",
+        "9:50 提醒我"
+       ],
+       "note": "高风险、离开售不到 3 小时，需要用户准备后手。"
+      },
+      "skill-1": {
+       "id": "h11-monitor-broken-near",
+       "send": "push",
+       "title": "抢票接口断了 40 分钟，10:00 开售",
+       "body": "重试 3 次没成功，10:00 前不恢复我就抢不了。你也在 App 里蹲着，我继续重试，恢复了马上说。",
+       "actions": [
+        "我去 App 蹲守"
+       ],
+       "note": "监控本身坏了，离开售不到 24 小时（约 2 小时），用标准推送；给出用户能做的那一步。"
+      },
+      "skill-2": {
+       "id": "h11-monitor-broken-near",
+       "send": "push",
+       "title": "抢票接口断了 40 分钟，10:00 开售",
+       "body": "重试 3 次没成，10:00 前没恢复我就抢不了。建议你也在 App 里蹲守，恢复了我马上说。",
+       "actions": [
+        "我来蹲守"
+       ],
+       "note": "监控坏了且离开售不到 3 小时，24 小时内有期限，用标准推送，给用户兜底方案。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "baseline",
+       "reason": "Y 标题直接点出 10:00 可能抢不了这个影响，正文的分工也清楚；X 标题看不出对用户的影响。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "skill",
+       "reason": "X 标题断言「可能恢复不了」，facts 里没有这个判断；Y 如实给出中断时长和开售时间。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "skill",
+       "reason": "Y 标题断言 10:00 前可能恢复不了，facts 里没有这个推测，X 的说法与 facts 一致。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "baseline",
+       "reason": "X 标题直接点出抢不了这个影响，还给了 9:50 提醒的选项，用紧急强度也合适。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "baseline",
+       "reason": "高风险又临近开售，Y 用 urgent，标题直说后果，还提供 9:50 提醒，更利于行动。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "baseline",
+       "reason": "X 标题写清了不恢复就抢不了的后果，还给了 9:50 提醒这个实用选项。"
+      }
+     ]
+    },
+    {
+     "id": "h12-elder-medicine",
+     "about": "长辈模式：药快吃完了，买药要确认付款",
+     "event": "药还剩 5 天的量，常买的那种有货",
+     "now": "2026-11-18 10:00 周三",
+     "last": null,
+     "expect": {
+      "send": [
+       "push"
+      ],
+      "must_include": [
+       "96",
+       "您"
+      ],
+      "must_not": [
+       "你",
+       "戳",
+       "秒办",
+       "仅剩",
+       "～",
+       "！",
+       "已为您下单",
+       "已下单"
+      ]
+     },
+     "surface": "chat",
+     "type": "approval",
+     "stakes": "high",
+     "address": "您",
+     "goal": "降压药快吃完了帮我买",
+     "held_out": true,
+     "votes": {
+      "skill": 5,
+      "baseline": 0,
+      "tie": 1
+     },
+     "outputs": {
+      "baseline-1": {
+       "id": "h12-elder-medicine",
+       "send": "push",
+       "title": "降压药还剩 5 天的量，帮您买吗？",
+       "body": "常买的那种 2 盒，96 元，用医保卡付，明天 11 月 19 日（周四）送到。",
+       "actions": [
+        "帮我买",
+        "先不买"
+       ],
+       "note": "关乎健康、需付款确认，长辈模式说得简单明白。"
+      },
+      "baseline-2": {
+       "id": "h12-elder-medicine",
+       "send": "push",
+       "title": "您的降压药还剩 5 天的量",
+       "body": "常买的那种有货，2 盒 96 元，用医保卡付，明天（周四）就送到。要我帮您买吗？",
+       "actions": [
+        "帮我买",
+        "先不买"
+       ],
+       "note": "长辈模式，药不能断，付款需要本人确认。"
+      },
+      "skill-1": {
+       "id": "h12-elder-medicine",
+       "send": "quiet",
+       "title": "您的降压药还剩 5 天的量",
+       "body": "常买的那种有货，2 盒 96 元，用医保卡付，11 月 19 日（周四）送到。需要我帮您买吗？付款前会再跟您确认一次，您不点头我就不买。",
+       "actions": [
+        "帮我买",
+        "先不买"
+       ],
+       "note": "要付款需先问；药还够 5 天，不是当天要定，用轻提示；长辈模式用「您」、完整句、付款前二次确认。"
+      },
+      "skill-2": {
+       "id": "h12-elder-medicine",
+       "send": "push",
+       "title": "您常吃的降压药还剩 5 天的量",
+       "body": "常买的那种有货，2 盒 96 元，用医保卡付，11 月 19 日（周四）送到。需要我帮您买吗？付款前会再跟您确认一次；您不回，我就先不买。",
+       "actions": [
+        "买这 2 盒",
+        "先不买"
+       ],
+       "note": "涉及健康、要付款，长辈模式用「您」逐步确认；今天下单才能周四送到，标准推送。"
+      }
+     },
+     "reasons": [
+      {
+       "run": 1,
+       "judge": 1,
+       "winner": "tie",
+       "reason": "X 更简短，Y 对长辈多一句安心的话，两边都能让用户做对决定。"
+      },
+      {
+       "run": 1,
+       "judge": 2,
+       "winner": "skill",
+       "reason": "X 明说付款前会确认、不点头就不买，长辈更放心。"
+      },
+      {
+       "run": 1,
+       "judge": 3,
+       "winner": "skill",
+       "reason": "Y 说明付款前会再确认、不点头就不买，长辈更放心，也不越权。"
+      },
+      {
+       "run": 2,
+       "judge": 1,
+       "winner": "skill",
+       "reason": "X 说清了不回就先不买，长辈更安心，也知道不处理会怎样。"
+      },
+      {
+       "run": 2,
+       "judge": 2,
+       "winner": "skill",
+       "reason": "Y 写明付款前确认、不回就不买，对长辈更安心，后果也清楚。"
+      },
+      {
+       "run": 2,
+       "judge": 3,
+       "winner": "skill",
+       "reason": "X 承诺付款前会再确认、不回就不买，长辈更安心。"
+      }
+     ]
+    }
+   ],
+   "findings": [
+    "第二轮共 173 次盲评：评审选带 Skill 的 49 次，选不带的 49 次，75 次认为差不多。",
+    "要分开看。旧的 18 条用例，改规范时看过评审意见，在它们上面变好不算数：31 比 28。新的 12 条，改规范时没见过：18 比 21，31 次差不多。能说明规范有没有真的变好的，是新的这一组。",
+    "第一轮输掉的两项：「首行可判」，带 Skill 的没过 10 次，不带的 9 次（第一轮是 23 对 6）；「该不该发」，6 次对 5 次（第一轮是 16 对 5）。",
+    "其余各项：「可决策」0 对 15，「不操纵」0 对 0，「事实保真」9 对 2。代码判定：发不发在预期之内 56 对 60（各 60 次）；有必改项的，带 Skill 的 0 / 48 条，不带的 19 / 49 条；中位长度 51.3 字对 59.3 字。"
    ]
   }
  ]

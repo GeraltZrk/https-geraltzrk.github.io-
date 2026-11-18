@@ -29,6 +29,8 @@ node tools/lint_samples.mjs
 python3 build.py
 # 5. 把页面上的交互都点一遍（需要 playwright）
 node tools/smoke.js
+# 6. 在 Claude 里才有的两项能力（请 Claude 改写、保存文件），用本地替身把代码路径走一遍
+node tools/smoke_claude.js
 ```
 
 ## 单独使用体检脚本
@@ -47,7 +49,11 @@ node skill/pa-voice-zh/scripts/lint.mjs message.json --json   # 给程序读
 | `tools/build_evidence.py` | 把 `research/*.json` 汇成证据台账 `src/data/evidence.json` |
 | `tools/build_scenarios.py` | 把逐个场景的话术文件拼成 `src/data/scenarios.json`，并校验结构、称呼和星期 |
 | `tools/build_review.py` | 汇总场景话术的评审记录 |
-| `tools/build_eval.mjs` | 把 Skill 评测的原始结果整理成页面用的数据，并做代码判定的几项检查 |
+| `tools/build_eval.mjs` | 把一轮 Skill 评测的原始结果整理进页面用的数据（可多轮并存），并做代码判定的几项检查 |
+
+## 评测做过两轮
+
+`skill/pa-voice-zh/evals/` 里有 30 条用例和评审量表。第一轮（Skill 1.0）带 Skill 的一方在盲评里输了：照规范写出的标题为了压字数省掉了「说的是哪件事」。据此把规范改到 1.1，再加 12 条改规范时没见过的用例测了第二轮。两轮的输出、投票和理由都在手册第 9 章，可以逐条对照。评审是模型扮演的，不能替代真人评审。
 
 ## 证据的核对程度
 

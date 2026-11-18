@@ -143,5 +143,62 @@
   "parents 第 2 条（结构 nit）说燃气费这条线没有收尾：没采纳。补一条缴费回执需要设定外的事实（缴费时间、结果），而且要保持每个场景 6 条。",
   "parents 第 2 条（E nit）提到「11 月 30 日前」分不清当天算不算：只统一了措辞。设定原文就是「前缴」，30 日当天算不算没有事实依据，不能自行补成「当天也来得及」。",
   "visa 第 5、6 条留下 6 条 lint 建议，没有消：已办告知的标题按 R04 加上「换护照」并保留星期，宽 18.3 字，超出 14 的建议值但在硬上限 20 以内；前一晚提醒是用户约好的提醒，没有真实的「不操作后果」可写，硬凑一句不但多余，还会超出 40 字预算。"
- ]
+ ],
+ "final": {
+  "packs": 6,
+  "restored": 44,
+  "restored_examples": [
+   "flight: the scenario's stakes is back to mid, as in the full setting. The previous round had raised it to high. Only the payment step (approval) is treated as high risk.",
+   "flight approval: all three variants say again to pay with the card ending 8812. The previous round had softened this to '解锁后核对' and listed it as missing.",
+   "flight rescope: the basis is back to '东航官网近 60 天最低 ¥2,580'. The previous round had changed it to '我盯的 60 天里'.",
+   "flight ack: the data source is back in the body as '看的是东航官网的价', and '上海出发' is stated explicitly.",
+   "flight rescope: the 'when' now gives the computable date, 2027 年 4 月 10 日（周六）, which is 21 days before 5 月 1 日 and matches the clock '周六'.",
+   "flight done relaxed: the draft's process phrase '总算等到这个价' is back, tied to the checkable '比目标低 ¥40'.",
+   "subs done relaxed: the draft's H2 line '剩下这 22 天，看它表现' is back. The 22 days can be checked as 11/22 to 12/14. '一年少扣 ¥360' (¥30×12) moved to neutral.",
+   "cart 第 4 条（已办妥）：补回「预计 11 月 20 日（周五）送达」。"
+  ],
+  "accept_fixed": 25,
+  "accept_fixed_examples": [
+   "subs 更正（correction）的 when：把健身卡日期报错的来源，从 11/22 的「其他订阅清单」改成 11/20（周五）那条健身卡扣费前 5 天提醒（轻提示）。原来的写法下，接单时承诺的「用得少的也在扣费前 5 天提醒」对健身卡没有兑现；而且 PA 当时以为是 25 日扣费，前 5 天提醒本该在 11/20 发出。",
+   "subs 周期小结（digest）的 when，以及 neutral、relaxed 两版正文里的条数：从「共发 6 条」改成「共发 7 条」，把 11/20 那条健身卡前 5 天提醒算进去（18、20、22 提醒、22 回执、23、25、30）。",
+   "cart 第 4 条（下单 done）：rushed 正文原来比 neutral 还长，已改短（29.8 对 35.8 字宽）。三版都改成「比直接买的 ¥343.5」，把比较基准说明白（R13）。relaxed 正文压到 39.8 字宽，在 40 的建议值以内。",
+   "cart 第 3 条（付款求拍板）：R17 要求常备「改一下」，三版按钮从「看明细」改成「付 ¥257 下单 / 改一下 / 先不买」，rushed 的 why 也同步改了。",
+   "cart 第 6 条（按授权价保）：正文从泛泛的「按你的授权」改成点明是哪条授权的「按你的价保授权办的」。neutral/relaxed 正文改完是 38.5 字宽，原先 46.5 超了锁屏 40 的建议值；why 里补了这条授权对应建目标时的哪句原话。",
+   "delay 第 6 条（落地 done）：rushed 和 neutral 原来完全一样。neutral/relaxed 补了半句「取行李的时间另算」，和第 5 条的「取行李时间紧」对上；rushed 保持最短，why 也重写了。",
+   "queue 第 3 条（progress）relaxed 版正文把「过半了」改成「走了一半」：12 桌走了 6 桌正好一半，不是过半；why 同步改。",
+   "queue 第 6 条（rescope）的 why 删掉了「恢复原定的 rescope：上一轮改成小结……」这段编辑过程记录，改为直接说明依据（连续 3 个周六等 90 分钟以上）和必含项。"
+  ],
+  "remaining": [
+   "lint 的「建议」为 0；另有 9 条最低一级的「可更好」ANCHOR 提示（flight progress，以及 subs 的第二次 deadline 和 digest），指第一个数字出现在第 7–9 字。这是 Skill 1.1 要求对象打头造成的：「东京直飞」「视频会员」「11 月订阅」放在标题最前面。对象和结果都在前 12 个字宽内，所以保留不改。",
+   "两条视频会员 deadline 标题里，金额 ¥30 落在 12.25–12.75 字宽，略超 12。对象「视频会员」和结果「续费」都在 12 以内，符合规范第 1 条「对象和结果」的要求，没有改。",
+   "subs digest 正文里「截至 18 日」去 1 次，这个日期是推出来的：设定只给了「本月只去了 1 次」，PA 把它当成今天（11/18）的数据。这样写算如实，但设定里没有明确说是哪天的数据。",
+   "when/clock 里有些时刻是上一位编辑补的，设定里没有：cart 的 14:40、14:52、15:09，11 月 19 日（周四）09:30 商家取消，11 月 23 日 10:20；delay 的 09:53、09:58。这些只在说明字段里，不进文案，但严格说都没法从设定核对。",
+   "cart 第 3 条求拍板没写用哪张卡或哪种支付方式（message-types 要求写），设定里没有，我没有补。",
+   "cart 第 5 条（商家取消一单）用的是轻提示。猫粮快吃完了，而且 message-types 说「影响资金的受阻用即时推送」，所以也可以改成标准推送。钱已经退回、没有明确期限，我保留了原判断。",
+   "lint 剩下的「可更好」提示我没有处理：ANCHOR 在 delay 第 2 条（标题以「待确认：」开头）和第 4 条（航班号在前）；BASELINE 在 cart 第 2 条（数字 3.6kg 不是在说省多少）和第 6 条（降价 ¥12 的基准就是订单价）。都不属于必改，也不属于建议。",
+   "queue：done 条按取号时的排队估「约 70 分钟的队」，rescope 又说这家「连续 3 个周六都要等 90 分钟以上」。如果这 3 个周六包括本周，两处数字有点对不上（本周实际 17:20 取号，18:32 叫号，过号后再顺延约 20 分钟，总计约 92 分钟）。设定没说明这 3 个周六是否包括本周，所以没有改。",
+   "clinic：approval 和 done 里写「付了以后 07:30 前取消也退 ¥50」，这是从「占号 30 分钟内可免费取消」推出来的。设定没有明说付款后这个窗口是否仍然有效。",
+   "clinic：deadline 设定要求提醒「几点出门」，但设定里没有住址和车程，文案只写了「明早按路况叫你出门」，没有给具体出门钟点。这样处理是对的，记作缺项。",
+   "lint 有 12 条「可更好」（ANCHOR，info 级，不计入「建议」）：clinic ack/deadline 和 queue ack/done 的标题把对象放在最前，第一个数字因此在第 9–11 字宽才出现。这是 1.1 要求对象打头的结果，对象和结果都在前 12 个字宽内，所以保留。",
+   "habit 第 2 条：设定里写的是 nudge 轻推，文件里用的是 deadline 到点提醒。我保留了 deadline，因为 Skill 自带的 assets/examples.json 里同一个场景也是 deadline，而且 R19 和到点提醒类型都说用户亲口约好的提醒属于这一类。如果设定里的类型 id 必须一字不差，就要改回 nudge / 轻推 / 拖着没动。",
+   "两个场景里 when/clock 用到的日期钟点是编排时排出来的，设定里没有：ack 11/16 10:12、受阻 11/24、到账 11/27、habit 的 08:00 回执、12/3 里程碑、12/7 停止提醒、12/21 建议调整。正文里只剩 habit 接单里承诺的「第二天 08:00 告诉你」，它属于 PA 自己的约定。",
+   "规范内部不一致：message-types 写 rescope 用「普通推送」，send-policy 写 PA 自己的建议用轻提示。文件里 rescope 用的是轻提示，我没有改。",
+   "habit 第 6 条的备选方案「每天 5 个」是 PA 提出的，设定里没有（设定只给了工作日每天 10 个）。规范要求给 2 个调整方案，所以留着了。",
+   "resale 接单里的「每周日 20:00 报进展」和 broadband 接单里的「11 月 19 日（周四）12:00 前给结果」是 PA 自己定的汇报时刻，设定里没有这两个钟点。R22 要求给一个固定汇报时刻，所以保留了，但它们不是由设定算出的数。",
+   "broadband 有机会的标题「宽带年付 ¥720，比按月付少 ¥240」里，差额 ¥240 落在 14.5 字宽处。对象和结论「年付 ¥720」在前 7 个字宽内，lint 也没报，所以没改。若严格要求「多少」也在前 12 字宽内，可以改成「宽带年付 ¥720，能省 ¥240」，同时把比较口径挪进正文。",
+   "broadband 的等你拍板、已办妥两条写了「退费规则没查到，按付了不退考虑」，设定里没有退费信息。这是如实说明缺这项信息，不是编造，但发布前需要确认产品能接受这种写法。",
+   "resale 补信息里写了要发给买家的原话「最低 ¥2,000」，用了「最低」一词。它指的是用户自己的底价，不是举不出证的比较，所以保留。",
+   "lint 还有 6 条「可更好」（info 级的 ANCHOR，不算建议），分别是 parents 第 5 条「降压药买好了，已付 168 元」和 visa 第 1 条接单标题。状态词「买好了」「到期」lint 没认出来，实际都落在前 12 个字宽里，所以没改。",
+   "parents 第 2 条燃气费期限「11 月 30 日前」在设定里本来就有两种理解（30 日当天算不算）。现在 when 按偏保守的 30 日 00:00 截止来解释，如果产品口径是含 30 日当天，就需要把第二次提醒改成轻提示或者挪到 30 日。",
+   "visa 第 6 条照片回执没通过，设定里没有说不重拍会怎样（比如能不能照常办理），所以文案没写不处理的后果，只给了「改预约时间」这条退路。"
+  ],
+  "verdicts": [
+   "pass",
+   "pass",
+   "pass",
+   "pass",
+   "pass",
+   "pass"
+  ]
+ }
 }

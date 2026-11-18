@@ -893,11 +893,11 @@
     if (list && (R.catches || []).length) {
       var names = {};
       (D.scenarios || []).forEach(function (x) { names[x.id] = x.name; });
-      list.innerHTML = '<h4>改动举例 <small class="note" style="font-weight:400">从评审这一道的改动里挑的 ' + R.catches.length + ' 处；「定稿」指那一道之后的写法，最终版本以上面的话术库为准</small></h4>';
+      list.innerHTML = '<h4>改动举例 <small class="note" style="font-weight:400">从评审这一道的改动里挑的 ' + R.catches.length + ' 处；最终版本以上面的话术库为准</small></h4>';
       var grid = el('div', { class: 'grid-2' });
       R.catches.forEach(function (c) {
         grid.appendChild(el('article', { class: 'catch' },
-          '<header><b>' + esc(names[c.scenario] || c.scenario) + '</b><span>' + esc(c.where || '') + '</span><i>' + esc(c.lens ? '谁抓到的：' + c.lens : '') + '</i></header>' +
+          '<header><b>' + esc(names[c.scenario] || c.scenario) + '</b><span>' + esc(String(c.where || '').replace(/neutral/g, '平常').replace(/rushed/g, '赶时间').replace(/relaxed/g, '松弛')) + '</span><i>' + esc(c.lens ? '谁抓到的：' + c.lens : '') + '</i></header>' +
           '<div class="dodont"><div class="nosay" data-label="草稿">' + esc(c.before) + '</div><div class="say" data-label="评审后">' + esc(c.after) + '</div></div>' +
           (c.why ? '<p class="note">' + linkRules(c.why) + '</p>' : '')));
       });

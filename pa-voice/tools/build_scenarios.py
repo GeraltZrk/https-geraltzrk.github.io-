@@ -6,6 +6,7 @@
 目录里每个场景一个 <id>.json（定稿）。加 --allow-draft 时，缺定稿的场景退回用 <id>.draft.json。
 校验不过的地方逐条打印；有结构性错误（缺字段、缺某种用户状态）时退出码为 1。
 """
+import datetime
 import json
 import pathlib
 import re
@@ -30,6 +31,7 @@ def main() -> int:
     allow_draft = "--allow-draft" in sys.argv
     life = json.loads((ROOT / "src/data/lifecycle.json").read_text(encoding="utf-8"))
     type_name = {t["id"]: t["name"] for t in life["types"]}
+    state_name = {s["type"]: s["name"] for s in life["states"]}
 
     out, errors, warns, used_draft = [], [], [], []
     for sid in ORDER:
@@ -56,7 +58,13 @@ def main() -> int:
             if t.get("type") not in TYPES:
                 errors.append(f"{where}: 未知的消息类型 {t.get('type')}")
             else:
-                t["typeName"] = type_name[t["type"]]  # 类型名以手册为准
+                t["typeName"] = type_name[t["type"]]  # 类型名、状态名都以手册第 2 章为准
+                # 场景文件里写在括号里的补充说明（如「按授权已办」）留着；称「您」的场景把状态名里的「你」也换掉
+                note = re.search(r"（[^）]+）$", t.get("stateName") or "")
+                base = state_name[t["type"]]
+                if s.get("address") == "您":
+                    base = base.replace("你", "您")
+                t["stateName"] = base + (note.group(0) if note else "")
             if t.get("surface") not in ("lock", "chat"):
                 t["surface"] = "chat" if t.get("type") == "approval" else "lock"
             if "subject" in t and isinstance(t["subject"], str):
@@ -79,10 +87,14 @@ def main() -> int:
                     errors.append(f"{where}.{m}: 称呼混用，出现了「{other}」")
                 if t.get("subject") and not any(k in x["title"] for k in t["subject"]):
                     warns.append(f"{where}.{m}: 标题里没有对象（{'/'.join(t['subject'])}）：{x['title']}")
-                for mo, d, wd in re.findall(r"(\d{1,2})\s?月\s?(\d{1,2})\s?日（周([一二三四五六日])）", text):
-                    want = WEEKDAY.get((int(mo), int(d)))
-                    if want and want != wd:
-                        errors.append(f"{where}.{m}: {mo} 月 {d} 日是周{want}，写成了周{wd}")
+                for yr, mo, d, wd in re.findall(r"(?:(\d{4})\s?年\s?)?(\d{1,2})\s?月\s?(\d{1,2})\s?日（周([一二三四五六日])）", text):
+                    try:
+                        want = "一二三四五六日"[datetime.date(int(yr or 2026), int(mo), int(d)).weekday()]
+                    except ValueError:
+                        errors.append(f"{where}.{m}: 没有 {mo} 月 {d} 日这一天")
+                        continue
+                    if want != wd:
+                        errors.append(f"{where}.{m}: {yr or 2026} 年 {mo} 月 {d} 日是周{want}，写成了周{wd}")
             if all(m in v for m in MOODS):
                 if len(v["rushed"]["title"] + v["rushed"]["body"]) > len(v["neutral"]["title"] + v["neutral"]["body"]) + 4:
                     warns.append(f"{where}: 赶时间版比平常版还长")

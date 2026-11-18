@@ -126,12 +126,12 @@ metadata:
     { "key": "charge_at", "value": "2026-11-23T08:00:00+08:00", "display": "11 月 23 日（周一）08:00" },
     { "key": "amount", "value": "30", "display": "¥30" },
     { "key": "days_unused", "value": "35", "display": "35 天" },
-    { "key": "valid_until", "value": "2026-12-14", "display": "12 月 14 日" }
+    { "key": "valid_until", "value": "2026-11-23", "display": "11 月 23 日" }
   ],
   "tone": { "F": "F1", "W": "W1", "H": "H1", "V": "V2", "A": "A2", "C": "C2", "E": "E0", "clamped_by": [] },
   "copy": {
     "title": "视频会员 11 月 23 日续费 ¥30",
-    "body": "08:00 自动扣。你 35 天没打开了；现在停，本期照常看到 12 月 14 日。",
+    "body": "08:00 自动扣。你 35 天没打开了；现在停，本期照常看到 23 日。",
     "detail": null,
     "if_ignored": "不操作则 11 月 23 日 08:00 照常扣 ¥30；11 月 22 日我再推送提醒一次。"
   },

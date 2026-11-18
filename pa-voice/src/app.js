@@ -181,8 +181,9 @@
     }
     var cls = o.surface === 'chat' ? 'noti chat' : 'noti';
     var html = '<div class="noti-head"><span>' + esc(o.app) + '</span><time>' + esc(o.when) + '</time></div>';
-    if (msg.title) html += '<div class="noti-title">' + cutText(msg.title, s.title, o.showCut) + '</div>';
-    if (msg.body) html += '<div class="noti-body">' + cutText(msg.body, s.body, o.showCut) + '</div>';
+    // hard：按硬上限截（评测的「只看显示得出来的部分」用的就是硬上限），否则按建议预算截
+    if (msg.title) html += '<div class="noti-title">' + cutText(msg.title, o.hard ? s.titleHard : s.title, o.showCut) + '</div>';
+    if (msg.body) html += '<div class="noti-body">' + cutText(msg.body, o.hard ? s.bodyHard : s.body, o.showCut) + '</div>';
     if (acts.length && o.actions !== false) html += '<div class="noti-actions">' + acts.slice(0, 3).map(function (a) { return '<span>' + esc(a) + '</span>'; }).join('') + '</div>';
     return el('div', { class: cls }, html);
   }
@@ -1035,7 +1036,7 @@
       if (o.title || o.body) {
         var m = { title: o.title, body: o.body, actions: o.actions || [] };
         var surface = c.surface === 'chat' ? 'chat' : 'lock';
-        var noti = renderNoti(m, { surface: surface, showCut: true });
+        var noti = renderNoti(m, { surface: surface, showCut: true, hard: true });
         noti.style.border = '1px solid var(--line)';
         box.appendChild(noti);
         if ((o.detail || '').trim()) {
@@ -1062,7 +1063,8 @@
       sBox.appendChild(outCard(c.outputs['skill-' + st.run], c));
       var rs = (c.reasons || []).filter(function (r) { return String(r.run) === st.run; });
       var ls = ((c.lock && c.lock.reasons) || []).filter(function (r) { return String(r.run) === st.run; });
-      votes.innerHTML = reasonList(rs, '三位评审怎么看这一对（看到的是完整文字）：') +
+      var withDetail = R.checks && (R.checks.skill.detail_used || R.checks.baseline.detail_used);
+      votes.innerHTML = reasonList(rs, '三位评审怎么看这一对（看到的是完整文字' + (withDetail ? '和展开层' : '') + '）：') +
         (ls.length ? '<div style="margin-top:.9rem">' + reasonList(ls, '另外三位只看得到显示出来的部分（划掉的字他们看不到）：') + '</div>' : '');
     }
     function renderRound() {

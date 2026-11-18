@@ -548,7 +548,7 @@
     RULES.forEach(function (r) {
       try { findings = findings.concat(r.run(m, ctx) || []); } catch (e) { /* 单条规则出错不影响其余 */ }
     });
-    var chars = visualLen(m.title) + visualLen(m.body);
+    var chars = Math.round((visualLen(m.title) + visualLen(m.body)) * 10) / 10;
     var counts = { error: 0, warn: 0, info: 0 };
     findings.forEach(function (f) { counts[f.level]++; });
     var verdict = counts.error ? 'block' : counts.warn > 1 ? 'revise' : counts.warn === 1 ? 'polish' : 'send';

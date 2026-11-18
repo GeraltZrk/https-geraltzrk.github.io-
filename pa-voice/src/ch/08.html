@@ -1,0 +1,73 @@
+<section class="ch" id="scenarios">
+  <header class="ch-head">
+    <div class="ch-no">08</div>
+    <h2>十二个目标，从接单到办妥怎么说</h2>
+    <p class="ch-answer"><b>单看一条看不出分寸，连起来看才看得出。</b>下面每个目标都有六条消息，覆盖从接单到办妥，中间包括出岔子和调整；每条都按用户的三种状态各写了一版。</p>
+    <ul class="ch-meta"><li>委托问题 ③④ 场景、人物、心情</li><li><span data-stat="scenarios">12</span> 个场景 · <span data-stat="messages">216</span> 条话术</li><li>按 Skill 写<span data-if="review">，五个读者视角评审后定稿</span><span data-if-not="review">，全部通过体检</span></li></ul>
+  </header>
+
+  <div class="sub col">
+    <h3>怎么读这个库</h3>
+    <p>左边选目标，上面切换用户此刻的状态。三种状态都只用看得见的信号来判断：「赶时间」指日历被占满、深夜，或者用户上一句是「快点」这类短命令；「松弛」指用户明说了开心、自己先开了玩笑，或者周末闲暇而且已经合作过多次；其余都算「平常」。</p>
+    <p>有两处值得留意。一是「赶时间」版只变短，不漏必要信息：金额、期限、不处理的后果还在。二是失败、付款确认、受阻以及健康和证件类的节点，三种状态下几乎一样，这是有意的；每条消息下面的灰字写了原因。</p>
+  </div>
+
+  <div class="tool wide sub">
+    <div class="tool-head"><h3>场景话术库</h3><span>选一个目标，看它一路上的六条消息</span></div>
+    <div class="tool-body">
+      <div class="controls">
+        <div class="field"><span class="label">用户此刻的状态</span>
+          <div class="seg" id="scnMood" role="group" aria-label="用户此刻的状态">
+            <button type="button" value="rushed" aria-pressed="false">赶时间 / 烦躁</button>
+            <button type="button" value="neutral" aria-pressed="true">平常</button>
+            <button type="button" value="relaxed" aria-pressed="false">松弛 / 心情好</button>
+          </div>
+        </div>
+        <div class="field"><span class="label">看什么</span>
+          <div class="seg" id="scnView" role="group" aria-label="显示方式">
+            <button type="button" value="one" aria-pressed="true">只看这一种状态</button>
+            <button type="button" value="diff" aria-pressed="false">三种状态并排</button>
+          </div>
+        </div>
+        <button class="btn ghost sm" id="scnExport" type="button">导出全部话术（JSON）</button>
+      </div>
+      <div class="tool-split w-2-3 scn-split">
+        <div class="scn-list" id="scnList" role="group" aria-label="场景"></div>
+        <div class="stack">
+          <div id="scnHead"></div>
+          <div class="thread" id="scnThread"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub wide" id="scnReview">
+    <h3>评审抓到了什么 <small>写的人自己看不出来的问题</small></h3>
+    <div class="grid-2">
+      <div class="col">
+        <p>这些话术不是一遍写成的。每个场景先由一位写手按 Skill 写出草稿并自己跑一遍体检，再交给一位评审，从五个读者的角度逐条挑错，最后由定稿编辑对照规范取舍。评审和定稿都是模型扮演的，五个读者是设定出来的角色，不是真人访谈；这个流程能抓住的是规范内部的不一致和明显的别扭，替代不了上线前的真人测试。</p>
+        <ul class="bullets" style="margin-top:1rem">
+          <li><b>28 岁的运营</b>：每天上百条通知，只看第一行，讨厌客服腔和废话。</li>
+          <li><b>35 岁的二孩妈妈</b>：只关心到手价、跟什么比、能不能退，对「立省」「最低」高度警惕。</li>
+          <li><b>22 岁的大学生</b>：对 AI 味、油腻、说教和过期的梗极度敏感。</li>
+          <li><b>63 岁的退休教师</b>：需要完整的句子，怕缩写和网络词，怕被催，怕点错扣钱。</li>
+          <li><b>合规与事实审计</b>：查绝对化用语、比较有没有基准、星期对不对、数字前后是否一致、有没有未经确认就花钱。</li>
+        </ul>
+      </div>
+      <div id="scnReviewStats"></div>
+    </div>
+    <div class="stack" id="scnCatches" style="margin-top:1.6rem"></div>
+  </div>
+
+  <div class="sub wide">
+    <h3>从这十二条线里能看到的规律</h3>
+    <div class="grid-3">
+      <div class="callout"><b>接单那一条定了后面所有的调子</b>把「什么情况下来找你、多久报一次、哪些事会先问你」在第一条里说清，后面的每条消息都可以更短，因为用户已经知道规则。</div>
+      <div class="callout"><b>提醒最多两次，第二次要说这是最后一次</b>订阅止损和报销两条线里，第二次提醒都写明了「之后不再提醒」以及不处理的后果，然后真的停。</div>
+      <div class="callout"><b>出岔子的那一条，先说钱和名额保住没有</b>被取消的订单先说「¥128.5 已原路退回」，没抢到的号先说「已转候补」，再给下一步。原因放在最后，或者不说。</div>
+      <div class="callout"><b>替用户办了，就给撤销口和期限</b>自动用掉的免打卡券、按授权申请的价保、先占上的号，每条都带「怎么撤」和「撤到什么时候」。</div>
+      <div class="callout"><b>长辈模式变的是句子，不是态度</b>全程用「您」、完整句、一条一件事、不设倒计时、付款前再确认一次。没有变的是事实的密度。</div>
+      <div class="callout"><b>幽默只出现在办成的轻松事上</b>十二个场景里有六个的幽默上限定在 H1 或 H0。排号、背单词这两条线里，俏皮话也只出现在办成和到里程碑的节点。</div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,874 @@
+{
+ "track": "T5 中文 UX 文案规范、语用学与法规红线",
+ "headline_insights": [
+  "「你/您」没有行业共识，真正的硬伤是混用：自采 19 款产品 74,531 条中文文案里，VS Code 的您:你为 22:379、Firefox 为 127:0，而 5 款国产 AI 产品全部混用，少数派占 29%～49%。",
+  "真人扮演助理时 26.5% 的发言用「您」、9.4% 用「你」，用户回话则 22.8% 用「你」；Ant Design 与 Semi Design 的「避免用您」是品牌语气选择而非语言事实，PA 应默认「你」并提供整档切换的「您」档。",
+  "修饰成分在三种语体里差两个数量级：句末语气词在界面文案中占 0.1%、真人助理 12.8%、普通用户 42.3%；界面文案含感叹号的仅 0.5%，「温馨提示」「亲」出现 0 次。",
+  "真人助理一句话的中位长度是 21 字（P75 为 34、P90 为 48），含「请」的只有 0.5%，这给「一条主动消息写多长」提供了来自真人行为的锚。",
+  "Unicode CLDR 把浅笑脸 U+1F642 的中文朗读名定为「呵呵」，并给出中文日段的钟点边界（凌晨 0–5 点、早上 5–8 点、晚上 19–24 点）以及大陆周一起始、港台周日起始；「明早」「下周三」「这周日」都必须改写成日期加钟点。",
+  "「全网史低」不能说、「立省」不宜说：《广告法》第九条第三项禁最高级用语（罚 20 万～100 万元），价格规章禁止「无依据或者无从比较的价格」并点名虚假「最低价」，还要求价格用阿拉伯数字标示。",
+  "自动续费的法定提醒窗口是扣费前 5 日，搭售不得默认勾选，带购买链接的推销须标「广告」，自动化推送须给便捷拒绝方式，这四条直接决定 PA 提醒的时点、默认项与卡片样式。",
+  "2026 年 7 月 15 日施行的拟人化互动办法把「不涉及持续性情感互动」的工作助手排除在外，同时禁止诱导情感依赖与情感操纵；Ant Design X「增加用户的依赖感和亲密感」的建议与之相抵，PA 越克制合规负担越轻。"
+ ],
+ "findings": [
+  {
+   "id": "T5-01",
+   "claim": "Ant Design 明确建议用「你」「我」与用户对话、避免「您」，并禁止在同一句式中混用「你」和「我」。",
+   "evidence_type": "官方规范",
+   "source_title": "Ant Design 设计规范·文案（docs/spec/copywriting.zh-CN.md）",
+   "source_url": "https://github.com/ant-design/ant-design/blob/master/docs/spec/copywriting.zh-CN.md",
+   "year": "现行（2026-11 抓取）",
+   "key_data": "「直接使用「你」、「我」来和用户对话，与用户建立亲密感。避免使用「您」，让用户感觉太过疏远。」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "默认称「你」；正文里 PA 可自称「我」，按钮与标签不带人称，避免「我」既指 PA 又指用户。",
+   "caveat": "核对的是官方仓库源文件，官网 ant.design 在本环境不可达。面向中后台产品，理由只有一句「太过客气」，没有实验数据。基础稿所说「下对上客服疏离感」「绝不自称」不是原文。"
+  },
+  {
+   "id": "T5-02",
+   "claim": "Semi Design 规定用「你」不用「您」，少道歉、少感叹号、避免 emoji、用 24 小时制，通知与按钮不加句号。",
+   "evidence_type": "官方规范",
+   "source_title": "Semi Design Content Guidelines 文案规范（字节跳动）",
+   "source_url": "https://github.com/DouyinFE/semi-design/blob/main/content/experience/content-guidelines/index.md",
+   "year": "现行（2026-11 抓取）",
+   "key_data": "「有且只有在非常严重的情况下使用“对不起”」「避免使用 emoji，选择用 icon 代替」「使用 24 小时制表示时刻」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "严肃档直接套用：零 emoji、最多一个感叹号、单句通知不加句号、时刻写成 21:00。",
+   "caveat": "规范自己的示例里出现「您的网站」，与其用词表矛盾。面向企业中后台，部分条目针对英文。零人称的示例「文件已上传」优于「你已经成功上传了文件」出自此页。"
+  },
+  {
+   "id": "T5-03",
+   "claim": "Ant Design 认为「无法完成」比「失败」客观，「抱歉」只用于系统自身的过错；感叹号易使气氛紧张，仅问候祝贺可用。",
+   "evidence_type": "官方规范",
+   "source_title": "Ant Design 设计规范·文案（报错、用词表、谨慎使用感叹号）",
+   "source_url": "https://github.com/ant-design/ant-design/blob/master/docs/spec/copywriting.zh-CN.md",
+   "year": "现行（2026-11 抓取）",
+   "key_data": "「相对于「失败」，「无法完成」是更加客观的结果」「感叹号会让文案显得过于激动，容易让气氛变得过于紧张」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "报忧首行写具体结果加下一步；只为 PA 自己的错道歉一次；警告与报错里不用感叹号。",
+   "caveat": "属规范作者的意见，没有对照实验。自采数据显示「失败」在真实产品文案里仍占 1.5%，并未被弃用。该页引用的标点标准是已被替代的 1995 年版。"
+  },
+  {
+   "id": "T5-04",
+   "claim": "Ant Design 数据格式：默认千分位，金额为「货币符号+数字」，大数可用万/亿，默认 24 小时制，通知类可用相对时间。",
+   "evidence_type": "官方规范",
+   "source_title": "Ant Design 设计规范·数据格式（docs/spec/data-format.zh-CN.md）",
+   "source_url": "https://github.com/ant-design/ant-design/blob/master/docs/spec/data-format.zh-CN.md",
+   "year": "现行（2026-11 抓取）",
+   "key_data": "例 ¥123.00、123,220；相对时间表：刚刚 / N 分钟前 / N 小时前 / 12-08 08:00",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "金额写 ¥2,100；刚发生的事可写「12 分钟前」，需要行动的截止时间必须写绝对时间。",
+   "caveat": "面向中后台表格与消息列表，相对时间表只覆盖过去时间，不涉及截止提醒。「统计数据使用阿拉伯数字」一条在文案页而非此页。"
+  },
+  {
+   "id": "T5-05",
+   "claim": "按钮必须用动词并写出真实操作，不用「是/否」；纯告知弹窗的唯一按钮推荐「知道了」，避免「确认」「好」。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenHarmony 应用 UX 设计规范·弹出框「界面写作原则」；Ant Design 按钮规范",
+   "source_url": "https://github.com/openharmony/docs/blob/master/zh-cn/design/ux-design/multimodal-dialog.md",
+   "year": "现行（2026-11 抓取）",
+   "key_data": "「操作按钮应使用真实的操作内容…不要使用“是”或“否”」「只有一个，例如“知道了”。避免使用“确认”、“好”」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "选择型按钮写「改签 / 不改」「支付 ¥1,280 / 先不付」；无需动作的告知用「知道了」。",
+   "caveat": "取自 OpenHarmony 开源文档，HarmonyOS 官方设计指南未能打开。Ant Design 按钮页（已核）原文为「必须使用动词」「描述任务结果」，没有「动词+结果名词」公式，也没有字数上限。"
+  },
+  {
+   "id": "T5-06",
+   "claim": "微软风格指南：please 仅在让用户做麻烦事或产品有错时用，sorry 仅用于严重问题，感叹号要省着用。",
+   "evidence_type": "官方规范",
+   "source_title": "Microsoft Writing Style Guide（please / sorry / exclamation points / periods）",
+   "source_url": "https://github.com/MicrosoftDocs/microsoft-style-guide/blob/main/styleguide/a-z-word-list-term-collections/s/sorry.md",
+   "year": "2018–2019",
+   "key_data": "「Use sorry only in error messages…about a serious problem」「Use exclamation points sparingly.」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "「请」「抱歉」「！」在中英规范里结论一致，可写成 Skill 的硬规则而不是风格偏好。",
+   "caveat": "这是英文规范，微软简体中文本地化风格指南原文未能打开。微软中文实际做法可见自采数据：VS Code 语言包「你」379 条、「您」22 条。"
+  },
+  {
+   "id": "T5-07",
+   "claim": "中文技术写作指南指出感叹句会让读者「感受到被责备」，反问句让人感觉被质疑，忌「亲爱的」这类称呼。",
+   "evidence_type": "专家观点",
+   "source_title": "《中文技术文档写作风格指南》语言风格·客观礼貌",
+   "source_url": "https://github.com/yikeke/zh-style-guide/blob/master/source/语言风格/客观礼貌.rst",
+   "year": "现行（2026-11 抓取）",
+   "key_data": "「感叹语气可能会让读者感受到被责备」「不要使用反问句，反问句容易让读者感觉被质疑和挑战」",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "校验、截止、失败消息禁用感叹号；挽留与确认不用反问句（「真的不要了吗？」）。",
+   "caveat": "社区编写的技术文档规范，不是对话产品规范，也没有实验支撑。同页还写「不要轻易使用“请”、“抱歉”，除非真的对读者造成了困扰」。"
+  },
+  {
+   "id": "T5-08",
+   "claim": "19 款产品 74,531 条中文文案里「您」「你」各占半壁；5 款国产 AI 产品全部混用，少数派占 29%～49%。",
+   "evidence_type": "行业数据",
+   "source_title": "自采：19 款开源产品简体中文语言包统计（VS Code、Firefox、Signal、LobeChat、扣子开源版等）",
+   "source_url": "https://github.com/microsoft/vscode-loc/tree/main/i18n/vscode-language-pack-zh-hans",
+   "year": "2026",
+   "key_data": "您:你——VS Code 22:379，Firefox 127:0，Bitwarden 362:0，LobeChat 136:336，扣子 171:268，FastGPT 30:29",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "「你」「您」任选其一都有先例，但必须机检一致性：同一条、同一会话不得混用。",
+   "caveat": "研究员自行下载各官方仓库主分支语言包并用脚本统计（2026-11-18 快照），按字符串计数、未按曝光加权，含设置与报错文案，不含微信、支付宝等闭源产品。AI 产品已剔除写给模型的提示词后复算。所给地址只是 19 个数据源之一，完整清单见笔记。"
+  },
+  {
+   "id": "T5-09",
+   "claim": "同一批 74,531 条文案中，含感叹号的仅 0.5%，含句末语气词的 0.1%，波浪号与 emoji 近 0，「温馨提示」「亲」为 0。",
+   "evidence_type": "行业数据",
+   "source_title": "自采：19 款开源产品简体中文语言包统计（修饰成分基线）",
+   "source_url": "https://github.com/coze-dev/coze-studio/blob/main/frontend/packages/arch/resources/studio-i18n-resource/src/locales/zh-CN.json",
+   "year": "2026",
+   "key_data": "感叹号 0.5%；语气词 0.1%；道歉词 0.1%；含「失败」1.5%；含「无法」2.1%；含「请」6.4%",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "功能型消息的默认档应接近零修饰；语气词、感叹号、emoji 都是需要理由才能用的例外。",
+   "caveat": "界面字符串不等于对话消息，反映的是行业现状而不是用户偏好。所给地址只是数据源之一。"
+  },
+  {
+   "id": "T5-10",
+   "claim": "真人扮演助理时 26.5% 的发言用「您」、9.4% 用「你」；用户对助理则 22.8% 用「你」、4.4% 用「您」。",
+   "evidence_type": "实证研究",
+   "source_title": "CrossWOZ 中文跨领域任务型对话语料（清华 CoAI），本次全量统计",
+   "source_url": "https://github.com/thu-coai/CrossWOZ",
+   "year": "2020（语料）/ 2026（统计）",
+   "key_data": "6,012 段对话、助理侧 50,813 句；出现第二人称的句子中助理 75.3% 用「您」，用户 84.0% 用「你」",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "「您」是中文服务语体的默认值而不是错误；应提供整档切换的「您」档。",
+   "caveat": "数字是研究员对公开语料的自行统计，不是论文结论。语料为 2019 年众包、打字、北京旅游咨询场景，反映人在扮演服务角色时的习惯，不代表用户更喜欢哪种称呼。论文出处（TACL 2020）未核。"
+  },
+  {
+   "id": "T5-11",
+   "claim": "真人助理一句话中位 21 字（P75 34、P90 48）；12.8% 带语气词（用户 42.3%），含「请」仅 0.5%，道歉 7.9%。",
+   "evidence_type": "实证研究",
+   "source_title": "CrossWOZ 中文跨领域任务型对话语料（清华 CoAI），本次全量统计",
+   "source_url": "https://github.com/thu-coai/CrossWOZ",
+   "year": "2020（语料）/ 2026（统计）",
+   "key_data": "字数中位 21；语气词 呢 4.4% / 吧 4.3% / 哦 2.0%；以句号结尾 87.7%；含感叹号 6.2%",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "正文单句约 20 字、整条不超过约 48 字；语气词优先「吧」「呢」；不必满口「请」。",
+   "caveat": "同上。长度分布来自问答式回复而非主动通知；众包打字任务的句号使用会高于真实聊天。真人助理的道歉多用在「查不到」上，按三家规范这恰恰不该道歉。"
+  },
+  {
+   "id": "T5-12",
+   "claim": "英文实验显示，一个词的短信回复加句号被评为更不真诚，手写便条无此效应；后续研究称其显得更生硬。",
+   "evidence_type": "实证研究",
+   "source_title": "Gunraj, Drumm-Hewitt, Dashow, Upadhyay & Klin (2016). Texting insincerely: The role of the period in text messaging. Computers in Human Behavior, 55, 1067–1075",
+   "source_url": "https://doi.org/10.1016/j.chb.2015.11.003",
+   "year": "2016",
+   "key_data": "126 名美国本科生；回复为 Okay / Sure / Yeah / Yup；后续为 Houghton 等 2018（同刊第 80 卷）",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "PA 不发「好的。」「收到。」这类一词加句号的回复；多句正文正常用句号。",
+   "caveat": "凭记忆引用，本次未能打开原文，样本量与页码需复核。英语、美国大学生、仅限一词回复，未找到中文复现。CrossWOZ 中真人助理 87.7% 的句子以句号结尾，说明此效应不能推到多句的服务消息上。"
+  },
+  {
+   "id": "T5-13",
+   "claim": "顾曰国提出汉语礼貌准则（贬己尊人、称呼、文雅、慷慨等），在中文里选哪个称呼本身就是一次礼貌行为。",
+   "evidence_type": "专家观点",
+   "source_title": "Gu, Yueguo (1990). Politeness phenomena in modern Chinese. Journal of Pragmatics, 14(2), 237–257",
+   "source_url": "https://doi.org/10.1016/0378-2166(90)90082-O",
+   "year": "1990",
+   "key_data": "1990 年英文论文四条准则；1992 年中文论文扩为五条，增加求同、德言行",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "称谓与自称是最先被感知的礼貌信号：先定称谓档，再定语气词与标点。",
+   "caveat": "凭记忆引用，未打开原文。属理论框架，基于上世纪语料，不涉及人机对话；它解释了为什么真人助理默认用「您」，但不能说明用户今天更喜欢哪种。"
+  },
+  {
+   "id": "T5-14",
+   "claim": "汉语句末语气词各有功能：吧=征求同意，呢=回应预期，啊/呀=降低强硬度，哦=友好提醒；「被」字句多表不如意。",
+   "evidence_type": "专家观点",
+   "source_title": "Li, C. N. & Thompson, S. A. (1981). Mandarin Chinese: A Functional Reference Grammar. University of California Press",
+   "source_url": "https://www.worldcat.org/isbn/9780520066106",
+   "year": "1981",
+   "key_data": "原书列六个句末语气词：了、呢、吧、哦、啊/呀、吗，各对应一个核心语用功能",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "建议用「吧」、缓和疑问用「呢」；不利消息用主动句写出施事，不写「你的订单被取消」。",
+   "caveat": "凭记忆引用，章节与术语未核，所给地址是 ISBN 检索入口。网络变体（哒、滴、哟、波浪号拖音）的社会感知没有找到可引用的研究。OpenHarmony 把「你已被踢出」列为反例一条已核。"
+  },
+  {
+   "id": "T5-15",
+   "claim": "Unicode CLDR 中文数据把 U+1F642（浅笑脸）的朗读名定为「呵呵」；合十表情同时对应感恩、拜托、祈祷、谢谢。",
+   "evidence_type": "官方规范",
+   "source_title": "Unicode CLDR common/annotations/zh.xml",
+   "source_url": "https://github.com/unicode-org/cldr/blob/main/common/annotations/zh.xml",
+   "year": "现行（2026-11 抓取）",
+   "key_data": "U+1F642 的关键词为「呵呵 | 开心 | 浅笑的脸 | 笑 | 脸」，tts 名为「呵呵」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "默认零 emoji；禁用浅笑脸、苦笑、合十等多义表情，状态改用界面图标表达。",
+   "caveat": "这是本地化命名数据，不是用户感知研究。微信「微笑」「狗头」的代际差异、Miller 等 2016 年的 emoji 歧义研究本次都未能打开核对。"
+  },
+  {
+   "id": "T5-16",
+   "claim": "CLDR：中文日段有明确钟点边界（凌晨 0–5 点、早上 5–8 点），大陆首选 24 小时制、一周从周一起，港台相反。",
+   "evidence_type": "官方规范",
+   "source_title": "Unicode CLDR supplemental/dayPeriods.xml 与 supplementalData.xml（weekData、timeData）",
+   "source_url": "https://github.com/unicode-org/cldr/blob/main/common/supplemental/dayPeriods.xml",
+   "year": "现行（2026-11 抓取）",
+   "key_data": "zh 日段：凌晨 00–05、早上 05–08、上午 08–12、中午 12–13、下午 13–19、晚上 19–24；firstDay mon 含 CN，sun 含 HK TW",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "「明早」「下周三」「这周日」一律改写成「11月25日（周三）08:00」；默认 24 小时制。",
+   "caveat": "这是软件区域数据的约定，不是对用户理解的测量。「下周三」「这周日」歧义有多严重是研究员推断，没有找到中文理解率调查。"
+  },
+  {
+   "id": "T5-17",
+   "claim": "CLDR 中文紧凑数字只有「万」「亿」两档，千位不缩写；人民币符号为「¥」。",
+   "evidence_type": "官方规范",
+   "source_title": "Unicode CLDR common/main/zh.xml（数字、货币、日期时间格式）",
+   "source_url": "https://github.com/unicode-org/cldr/blob/main/common/main/zh.xml",
+   "year": "现行（2026-11 抓取）",
+   "key_data": "1000→「0」，10000→「0万」，1 亿→「0亿」；CNY symbol「¥」；日期「y年M月d日」，时间「HH:mm」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "写「1.2 万」「¥2,100」，不写「12k」「1.2w」「2千」。",
+   "caveat": "区域数据约定。金额小数位与千分位的取舍还要结合产品规范（Ant 默认千分位；阮一峰规范认为四位数可选）。"
+  },
+  {
+   "id": "T5-18",
+   "claim": "国标《出版物上数字用法》：计量与编号用阿拉伯数字，概数用汉字；万、亿可与数字连用；范围两端都带单位。",
+   "evidence_type": "官方规范",
+   "source_title": "GB/T 15835-2011 出版物上数字用法",
+   "source_url": "http://www.moe.gov.cn/ewebeditor/uploadfile/2015/01/13/20150113091154536.pdf",
+   "year": "2011",
+   "key_data": "示例：「9亿～16亿」不写「9～16亿」；「15%～30%」不写「15～30%」；不写「4千」",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "「两三天」用汉字、「3 天」用数字；范围写「¥300～¥500」「15%～30%」。",
+   "caveat": "凭记忆引用，条款号与示例未核。PDF 地址取自 Ant Design 数据格式页的参考文献，本环境无法打开。阮一峰规范中「范围两端都加单位」一条已核。"
+  },
+  {
+   "id": "T5-19",
+   "claim": "W3C 中文排版需求：货币符号与数字、数字与百分号之间不得断行，数字不得拆成两行，点号不得出现在行首。",
+   "evidence_type": "官方规范",
+   "source_title": "W3C Requirements for Chinese Text Layout 中文排版需求（CLREQ）",
+   "source_url": "https://github.com/w3c/clreq",
+   "year": "现行编辑稿（2026-11 抓取）",
+   "key_data": "「货币符号与其相关的阿拉伯数字之间不能断行，包括前置货币符号（如人民币符号¥）」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "通知卡片里的「¥420」「35%」「16:30」要做不换行处理，并尽量落在首行。",
+   "caveat": "核对的是 w3c/clreq 仓库的源文件，不是 w3.org 正式发布页。面向排版引擎而非文案。该文档转述 GB/T 15834-2011：叹号叠用最多三个，浪纹线只是连接号。"
+  },
+  {
+   "id": "T5-20",
+   "claim": "《广告法》第九条第三项禁止「国家级」「最高级」「最佳」等用语，违者对广告主处 20 万～100 万元罚款。",
+   "evidence_type": "法规",
+   "source_title": "中华人民共和国广告法（2021 年修正）第二、八、九、十一、二十八、五十七条",
+   "source_url": "https://github.com/LawRefBook/Laws/blob/master/行政法/广告法(2021-04-29).md",
+   "year": "2021",
+   "key_data": "第九条（三）；第五十七条「处二十万元以上一百万元以下的罚款」；第十一条：引证内容应「表明出处」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "禁用「全网最低、史低、最划算、第一」；所有比较与数据都要带范围、来源、时间。",
+   "caveat": "核对的是 GitHub 上的法规文本镜像，不是官方数据库页面。PA 的价格播报是否构成「广告」取决于是否有佣金或自营推销，属研究员解读，需法务判断。"
+  },
+  {
+   "id": "T5-21",
+   "claim": "《广告绝对化用语执法指南》给出豁免：未指向所售商品，或限定具体时间地域并陈述销量等事实信息的，不适用禁令。",
+   "evidence_type": "法规",
+   "source_title": "市场监管总局《广告绝对化用语执法指南》（2023 年第 6 号公告）",
+   "source_url": "https://www.cirs-group.com/cn/food/guang-gao-jue-dui-hua-yong-yu-zhi-fa-zhi-nan",
+   "year": "2023",
+   "key_data": "第六条（六）：「在限定具体时间、地域等条件的情况下，表述时空顺序客观情况或者宣传产品销量、销售额、市场占有率等事实信息的」",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "「最低」只有带范围与时间并可举证时才可能安全，如「近 30 天最低（京东自营）」。",
+   "caveat": "只在检索摘要里看到条文片段，全文未打开，所给地址是检索结果中的转载页。价格并未出现在第六条的列举里；公告日期 2023-02-25，摘要另提到 3 月 20 日，是发布日还是施行日没有核清。"
+  },
+  {
+   "id": "T5-22",
+   "claim": "价格比较必须有真实基准：未说明的被比较价不得高于前七日最低成交价，禁止「无依据或者无从比较的价格」和虚假「最低价」。",
+   "evidence_type": "法规",
+   "source_title": "明码标价和禁止价格欺诈规定（市场监管总局令第 56 号）第九、十六、十七、十九、二十条",
+   "source_url": "https://github.com/LawRefBook/Laws/blob/master/部门规章/市场监督管理总局/明码标价和禁止价格欺诈规定(2022-04-14).md",
+   "year": "2022",
+   "key_data": "第九条「一般应当使用阿拉伯数字标明人民币金额」；第十九条（六）不得「显著弱化标示…不利的价格条件」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "每个「便宜了」都写明跟什么比；到手价带上券、会员、运费等条件；金额用阿拉伯数字。",
+   "caveat": "镜像文本。虚假「最低价」一语出自《侵害消费者权益行为处罚办法》第六条（五），核对的是 2015 年公布文本。规范对象是「经营者」，PA 作为代理转述价格时的责任边界需法务确认。"
+  },
+  {
+   "id": "T5-23",
+   "claim": "自动续费须在续费日前五日以显著方式提醒，并提供显著、简便的随时取消选项，违者可处 5 千～3 万元罚款。",
+   "evidence_type": "法规",
+   "source_title": "网络交易监督管理办法（市场监管总局令第 37 号）第十八、四十一条；消费者权益保护法实施条例第十条",
+   "source_url": "https://github.com/LawRefBook/Laws/blob/master/部门规章/市场监督管理总局/网络交易监督管理办法(2021-03-15).md",
+   "year": "2021 / 2024",
+   "key_data": "「自动展期、自动续费等日期前五日，以显著方式提请消费者注意，由消费者自主选择」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "退订止损类目标在扣费前 5 天首次提醒、前 1 天再提醒，写清日期、金额与关闭入口。",
+   "caveat": "镜像文本，该办法 2021 年之后是否修订未核。义务主体是商家；PA 自己的会员若自动续费同样适用。同办法第十七条、电子商务法第十九条禁止搭售默认勾选（已核）。"
+  },
+  {
+   "id": "T5-24",
+   "claim": "自动化决策推送须提供不针对个人特征的选项或便捷的拒绝方式；未经同意或请求不得发送商业性信息。",
+   "evidence_type": "法规",
+   "source_title": "个人信息保护法第二十四条；消费者权益保护法第二十九条；广告法第四十三条；算法推荐管理规定第十七条",
+   "source_url": "https://github.com/LawRefBook/Laws/blob/master/行政法/个人信息保护法(2021-08-20).md",
+   "year": "2021",
+   "key_data": "个保法第二十四条：「应当同时提供不针对其个人特征的选项，或者向个人提供便捷的拒绝方式」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "目标进展通知与商业推荐分开授权；每条主动消息都能一步设置「不再提醒这类」。",
+   "caveat": "镜像文本。「目标进展通知」与「商业营销」的界线是研究员解读，需法务确认。"
+  },
+  {
+   "id": "T5-25",
+   "claim": "附购买链接的推销内容须显著标明「广告」；弹出广告须一键关闭；不得用虚假的系统通知样式诱导点击。",
+   "evidence_type": "法规",
+   "source_title": "互联网广告管理办法（市场监管总局令第 72 号）第九、十、十一条",
+   "source_url": "https://github.com/LawRefBook/Laws/blob/master/部门规章/市场监督管理总局/互联网广告管理办法(2023-02-25).md",
+   "year": "2023",
+   "key_data": "第十条：不得「计时结束才能关闭广告」「关闭广告须经两次以上点击」；第十一条（一）虚假的系统…通知等提示",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "有佣金的推荐要标「广告」，不得套用目标提醒的卡片样式；关闭只需一步。",
+   "caveat": "镜像文本。PA 的推荐是否构成「广告发布」取决于商业模式。"
+  },
+  {
+   "id": "T5-26",
+   "claim": "弹窗推送规定要求告知推送形式、频次与取消渠道，科学规划频次，不得干扰关闭，并显著标明推送者身份。",
+   "evidence_type": "法规",
+   "source_title": "互联网弹窗信息推送服务管理规定（国家网信办等三部门，2022 年 9 月 30 日施行）",
+   "source_url": "https://www.cac.gov.cn/",
+   "year": "2022",
+   "key_data": "第五条第六项要点：告知「具体形式、内容频次、取消渠道」；「不得以任何形式干扰或者影响用户关闭弹窗」",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "创建目标时就说明会怎么提醒、多久一次、怎么关；每条推送标明来自哪个助手。",
+   "caveat": "凭记忆引用，原文与条款号都没有核对。所给地址只是发布机关首页，具体页面地址未核，引用前必须找到原文。"
+  },
+  {
+   "id": "T5-27",
+   "claim": "2026 年 7 月 15 日施行的拟人化互动办法把不涉及持续情感互动的「工作助手」排除在外，并禁止诱导情感依赖与情感操纵。",
+   "evidence_type": "法规",
+   "source_title": "人工智能拟人化互动服务管理暂行办法（国家网信办等五部门，2026-04-10 公布）",
+   "source_url": "https://github.com/LawRefBook/Laws/blob/master/部门规章/国家互联网信息办公室/人工智能拟人化互动服务管理暂行办法(2026-04-10).md",
+   "year": "2026",
+   "key_data": "第二条第三款；第八条（五）「过度迎合用户、诱导情感依赖或者沉迷」（六）「通过情感操纵等方式，诱导用户作出不合理决策」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "PA 保持工具属性：不起人名、不做陪伴；禁用内疚与恐惧话术；用户说停就停，不挽留。",
+   "caveat": "核对的是镜像全文 32 条；新华社发布稿（news.cn）只在检索结果里看到。习惯养成、打气陪伴类功能是否构成「持续性的情感互动」尚无执法口径，属研究员解读。第十九条要求便捷退出、不得阻碍。"
+  },
+  {
+   "id": "T5-28",
+   "claim": "模拟自然人的智能对话文本须显著标识；拟人化办法另要求提示用户正在与 AI 而非自然人互动，连续使用每超 2 小时提醒。",
+   "evidence_type": "法规",
+   "source_title": "互联网信息服务深度合成管理规定第十七条；人工智能拟人化互动服务管理暂行办法第十八条",
+   "source_url": "https://github.com/LawRefBook/Laws/blob/master/部门规章/国家互联网信息办公室/互联网信息服务深度合成管理规定(2022-11-03).md",
+   "year": "2023 / 2026",
+   "key_data": "深度合成规定第十七条（一）：「智能对话、智能写作等模拟自然人进行文本的生成或者编辑服务」应「显著标识」",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "对话界面常驻 AI 标识；站外通知的发送者名带 AI 身份；不用真人姓名和头像。",
+   "caveat": "所列两条已核（镜像）。《人工智能生成合成内容标识办法》（2025-09-01 施行）及配套国标原文未能打开，关于「文本起始、末尾或界面周边加提示」的说法来自记忆。PA 代用户发给第三方的消息如何标识没有查清。"
+  },
+  {
+   "id": "T5-29",
+   "claim": "有投资回报预期的商品或服务不得对未来收益作保证性承诺，不得明示或暗示保本、无风险、保收益。",
+   "evidence_type": "法规",
+   "source_title": "中华人民共和国广告法第二十五条",
+   "source_url": "https://github.com/LawRefBook/Laws/blob/master/行政法/广告法(2021-04-29).md",
+   "year": "2021",
+   "key_data": "「对未来效果、收益或者与其相关的情况作出保证性承诺，明示或者暗示保本、无风险或者保收益等」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "理财、保险、基金类目标不说「稳赚、保本、肯定涨」，也不对价格走势打包票。",
+   "caveat": "镜像文本。人民银行等部门关于金融营销宣传的通知未核。把「不对价格走势打包票」延伸到普通商品，是研究员基于准确性义务的推论。"
+  },
+  {
+   "id": "T5-30",
+   "claim": "Ant Design X 规定交易与不可逆操作前必须显性确认、避免过度道歉、须写明数据源；但又建议个人助理「增加用户的依赖感」。",
+   "evidence_type": "官方规范",
+   "source_title": "Ant Design X 设计规范（确认 / 结束 / 错误 / 会话设计 / 有人情味）",
+   "source_url": "https://github.com/ant-design/x/tree/main/packages/x/docs/spec",
+   "year": "现行（2026-11 抓取）",
+   "key_data": "「显性确认是必不可少的」「避免过度使用道歉，例如一直说“对不起”」「需要通过情感反馈增加用户的依赖感和亲密感」",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "确认强度按可逆性分档；引用它时绕开「有人情味」一页，该建议与 2026 年新规第八条相抵。",
+   "caveat": "这套规范的结构和措辞与 Google 对话设计指南高度相似，原始场景偏语音助手。它与新规冲突是研究员的判断，不是监管结论。同规范还写「除非会丢失重大进展，否则不要进行二次确认」。"
+  }
+ ],
+ "design_rules": [
+  {
+   "rule": "称谓先定档再全量一致：默认「你」，另设整档切换的「您」档；同一条消息、同一会话里不得同时出现「你」和「您」。",
+   "rationale": "Ant、Semi 取「你」，真人服务语体默认「您」，两者都有依据；真实产品里最常见的硬伤是混用，5 款国产 AI 产品少数派占 29%～49%。「您」档用于用户自己用「您」、金融政务等高严肃任务、或偏年长用户。",
+   "do_example": "你订的东京酒店降了 ¥640，11月25日（周三）前可免费重订",
+   "dont_example": "您订的酒店降价了，你要不要重新订一下？",
+   "supporting_finding_ids": [
+    "T5-01",
+    "T5-02",
+    "T5-08",
+    "T5-10",
+    "T5-13"
+   ]
+  },
+  {
+   "rule": "能不写人称就不写。PA 自称只用「我」且只出现在正文；按钮和标签不带任何人称代词。",
+   "rationale": "零人称最省字，首行直接是结果。Ant 禁止同一句式混用「你」「我」；按钮里的「帮我」指用户，正文里的「我」指 PA，会撞指代。第三人称自称（小X、本助手）是卖萌或客服腔。",
+   "do_example": "已改到 17:00，参会人都通知了。[撤销]",
+   "dont_example": "小助手已经为您把会议改到了 17:00 哦。[帮我撤销]",
+   "supporting_finding_ids": [
+    "T5-01",
+    "T5-02"
+   ]
+  },
+  {
+   "rule": "禁用称呼：亲、宝子、家人们、主人、亲爱的用户、尊敬的用户。",
+   "rationale": "这些称呼的来源语境是卖家招呼买家、主播招呼观众或主仆扮演，会把替用户管钱的工具变成推销者。74,531 条界面文案里「亲」作称呼出现 0 次，真人助理也只有 0.3%。",
+   "do_example": "优惠券今天 23:59 到期，还有 1 张 ¥20 的没用",
+   "dont_example": "亲，您的优惠券快到期啦～宝子快去用掉吧",
+   "supporting_finding_ids": [
+    "T5-07",
+    "T5-09",
+    "T5-10"
+   ]
+  },
+  {
+   "rule": "首行即结果：前 10 个字内给出金额、时间或状态变化，不用任何开场白。",
+   "rationale": "微软要求先说最重要的事并把关键词前置；Semi 要求开门见山。「温馨提示」在 74,531 条界面文案里出现 0 次。应答词「好的」只属于用户刚下指令的回合，PA 先开口时不用。",
+   "do_example": "东京酒店降了 ¥640，11月25日（周三）23:59 前可免费重订",
+   "dont_example": "温馨提示：好消息！我刚刚帮你查了一下之前关注的酒店价格……",
+   "supporting_finding_ids": [
+    "T5-02",
+    "T5-06",
+    "T5-09"
+   ]
+  },
+  {
+   "rule": "长度：正文单句约 20 字，整条不超过约 48 字；超出的部分折叠进「看明细」。",
+   "rationale": "真人助理一句话的字数中位数是 21，P75 为 34，P90 为 48。这是目前唯一来自真人行为的长度锚，可替代基础稿里没有出处的秒数推演。",
+   "do_example": "G102 没抢到。已改盯 G104（09:10 发车），有票马上告诉你",
+   "dont_example": "非常遗憾地通知您，您之前委托我监控的 G102 次列车经过多次尝试后仍然未能成功抢到车票，请问您是否需要我继续为您监控其他车次？",
+   "supporting_finding_ids": [
+    "T5-11"
+   ]
+  },
+  {
+   "rule": "句末语气词每条最多一个。扣款、失败、风险、截止类消息只允许「了」；轻松任务可用「吧」「呢」「啦」；不用「哒、滴、哟、呗」和拖音的「哦～」。",
+   "rationale": "语气词出现率：界面文案 0.1%，真人助理 12.8%，用户 42.3%。PA 该对标中间一档，且真人助理最常用的是「呢」「吧」。「吧」把祈使变成建议，是成本最低的缓和手段。",
+   "do_example": "今天连开 4 场会，夜跑先改成 15 分钟拉伸吧",
+   "dont_example": "检测到扣款没成功呢，要记得处理一下哦～",
+   "supporting_finding_ids": [
+    "T5-09",
+    "T5-11",
+    "T5-14"
+   ]
+  },
+  {
+   "rule": "感叹号只用于目标达成的庆祝和首次问候，每条最多一个；警告、报错、校验、截止提醒里为零；不叠用，不与问号连用。",
+   "rationale": "Ant、Semi、微软三家一致要求少用；中文写作指南指出感叹语气会让读者感到被责备。界面文案里含感叹号的只占 0.5%。",
+   "do_example": "连续 30 天达标！这个月咖啡少花了 ¥380",
+   "dont_example": "扣款失败！请立即处理！！",
+   "supporting_finding_ids": [
+    "T5-02",
+    "T5-03",
+    "T5-06",
+    "T5-07",
+    "T5-09"
+   ]
+  },
+  {
+   "rule": "句号：卡片标题、按钮、单句通知不加；两句及以上的正文正常加；PA 不发一个词加句号的回复。",
+   "rationale": "Semi 规定通知、按钮、标题不用句号；真人助理多句回复 87.7% 以句号结尾，说明句号在服务语体里正常；英文实验里显得不真诚的只是一词回复加句号。",
+   "do_example": "已记下，周五 18:00 提醒你",
+   "dont_example": "好的。",
+   "supporting_finding_ids": [
+    "T5-02",
+    "T5-06",
+    "T5-11",
+    "T5-12"
+   ]
+  },
+  {
+   "rule": "默认零 emoji。严肃任务禁用；轻松任务的庆祝节点最多一个、放句末、从白名单里选；禁用浅笑脸、苦笑、合十、狗头及微信表情代码。",
+   "rationale": "Unicode 中文数据把浅笑脸命名为「呵呵」，合十同时对应五种含义；Semi 要求用图标代替 emoji；界面文案里 emoji 接近 0。狗头是「别当真」的信号，要对金额负责的工具不能发。",
+   "do_example": "本月目标达成，少花了 ¥380",
+   "dont_example": "订单取消了[微笑] 下次早点付款哦[狗头]",
+   "supporting_finding_ids": [
+    "T5-02",
+    "T5-09",
+    "T5-15"
+   ]
+  },
+  {
+   "rule": "「请」只在要用户亲自出力且有时限时用；只为 PA 或系统自己的过错道歉，一次，并带补救。查不到、抢不到、商家拒绝都不道歉。",
+   "rationale": "Ant、Semi、微软、Ant Design X 四份规范结论一致。真人助理含「请」的发言只有 0.5%，说明「请」不是服务礼貌的必需品；真人 7.9% 的道歉多用在「查不到」上，PA 不应模仿。",
+   "do_example": "这次是我订错了日期，抱歉。已免费改回 11月25日",
+   "dont_example": "非常抱歉给您带来不便，没有查到符合条件的航班，敬请谅解",
+   "supporting_finding_ids": [
+    "T5-03",
+    "T5-06",
+    "T5-07",
+    "T5-11",
+    "T5-30"
+   ]
+  },
+  {
+   "rule": "报忧四步：具体结果、对用户的影响、PA 已做了什么、下一步选项。用主动句写出是谁做的，不责怪用户，不铺垫情绪。",
+   "rationale": "Ant 要求出错时不责怪用户并告知下一步；「被」字句在汉语里多表不如意，OpenHarmony 把「你已被踢出」列为反例；Ant Design X 要求错误描述清晰具体。",
+   "do_example": "商家取消了订单，¥268 今天内原路退回。[看其他店]",
+   "dont_example": "很遗憾，由于您未及时付款，您的订单已被取消",
+   "supporting_finding_ids": [
+    "T5-03",
+    "T5-14",
+    "T5-30"
+   ]
+  },
+  {
+   "rule": "确认强度按可逆性分档：可撤销且已授权的事后告知加撤销入口；有两个合理选项时用「要不要」并给出建议；付款与不可逆操作用带金额的显性确认。",
+   "rationale": "Ant Design X：交易与不可逆操作前显性确认必不可少，低错误成本用隐性确认，非必要不二次确认。OpenHarmony：按钮写真实操作，不用「是/否」。",
+   "do_example": "确认支付 ¥1,280？[支付 ¥1,280] [先不付]",
+   "dont_example": "是否继续？[是] [否]",
+   "supporting_finding_ids": [
+    "T5-05",
+    "T5-30"
+   ]
+  },
+  {
+   "rule": "按钮以动词开头、写出真实操作与后果；否定项也写清结果；纯告知用「知道了」；不带人称、不带「立即」、不加句号。",
+   "rationale": "Ant：必须使用动词、描述任务结果；OpenHarmony：与标题动词一致，单按钮用「知道了」，避免「确认」「好」。「取消」含义不清（取消操作还是取消订单）。",
+   "do_example": "[关闭续费] [保留会员]",
+   "dont_example": "[确定] [取消]",
+   "supporting_finding_ids": [
+    "T5-05"
+   ]
+  },
+  {
+   "rule": "催办只写三件事：截止时间、还差什么、做完的结果。不翻旧账、不说教、不用反问句；用户说不用了就停，不追问第二遍。",
+   "rationale": "反问句让人感觉被质疑；拟人化办法要求便捷退出、不得以持续互动阻碍；「不急，方便时看」只在真不急时用，否则不如直接写时限。",
+   "do_example": "11月20日 18:00 前补 1 张发票，就能提交报销",
+   "dont_example": "您已经 3 天没有上传发票了，请尽快处理。真的不打算报销了吗？",
+   "supporting_finding_ids": [
+    "T5-07",
+    "T5-11",
+    "T5-27"
+   ]
+  },
+  {
+   "rule": "金额写成「¥」加阿拉伯数字加千分位，符号与数字不换行；大数用万、亿；范围两端都带单位；先绝对额后百分比；一条消息只用一种货币写法。",
+   "rationale": "明码标价规定第九条要求阿拉伯数字；Ant 金额格式为货币符号加数字；CLDR 只有万、亿两档；CLREQ 要求货币符号与数字不断行。「块」只用于轻松任务的正文，扣款与支付确认里不用。",
+   "do_example": "能省 ¥420（约 26%），到手 ¥1,180",
+   "dont_example": "立省四百多块，直降26%，到手价1.18k",
+   "supporting_finding_ids": [
+    "T5-04",
+    "T5-17",
+    "T5-18",
+    "T5-19",
+    "T5-22"
+   ]
+  },
+  {
+   "rule": "凡需要用户行动或涉及钱的时间，写成「M月D日（周X）HH:mm」，默认 24 小时制；「今天」「明天」可代替日期但必须带钟点；截止时间写「前」并说明到点会怎样。",
+   "rationale": "CLDR：早上是 05:00–08:00，大陆一周从周一起而港台从周日起，「下周三」只是相对词，没有消歧机制。Ant 要求时间表述必须明确。",
+   "do_example": "11月25日（周三）23:59 前可免费取消，之后扣首晚房费",
+   "dont_example": "下周三前可免费取消，明早扣费",
+   "supporting_finding_ids": [
+    "T5-03",
+    "T5-04",
+    "T5-16"
+   ]
+  },
+  {
+   "rule": "说「最低」「便宜了」必须同时给出比较范围、数据来源和截至时间；到手价带上券、会员、运费等条件。禁用「全网、史低、第一、最划算、唯一」。",
+   "rationale": "广告法第九条第三项禁最高级用语；价格规定禁止无从比较的价格、禁止弱化不利条件；处罚办法点名虚假「最低价」；执法指南的豁免以限定时间地域并可举证为前提。最稳妥的基准是用户自己的目标价。",
+   "do_example": "近 30 天最低（京东自营，截至今天 10:00），到手 ¥249（需领 2 张券，含运费）",
+   "dont_example": "全网史低，到手仅 ¥249，手慢无",
+   "supporting_finding_ids": [
+    "T5-20",
+    "T5-21",
+    "T5-22"
+   ]
+  },
+  {
+   "rule": "未成交写「能省」「预计省」，成交后才写「省了」「已省」。不用「立省、直降、狂省、神价、捡漏」等促销词。",
+   "rationale": "广告法第八条要求价格表示准确、清楚、明白；把预期当成果属于误导。促销词把 PA 的身份从代理人变成卖家，也违背基础稿自己引用的「客观平实」原则。",
+   "do_example": "现在重订能省 ¥640",
+   "dont_example": "立省 ¥640",
+   "supporting_finding_ids": [
+    "T5-20",
+    "T5-22"
+   ]
+  },
+  {
+   "rule": "续费类目标在扣费前 5 天首次提醒、前 1 天再提醒，每次写清扣费日期、金额和关闭入口；代下单时不默认勾选任何附加项。",
+   "rationale": "网络交易监督管理办法第十八条规定的法定提醒窗口是续费日前五日；PA 的节奏对齐它，用户才有时间决定。同办法第十七条与电子商务法第十九条禁止搭售默认同意。",
+   "do_example": "视频会员 11月23日（周一）续费 ¥30，你已 35 天没看。[关闭续费] [保留会员]",
+   "dont_example": "您的会员将于明早自动续费，已为您保留，请知悉",
+   "supporting_finding_ids": [
+    "T5-23"
+   ]
+  },
+  {
+   "rule": "目标进展通知与商业推荐分开授权、分开样式。带购买链接且有佣金的内容标「广告」；每条主动消息都能一步关闭、一步「不再提醒这类」。",
+   "rationale": "个保法第二十四条要求便捷拒绝方式；未经同意不得发送商业性信息；互联网广告管理办法要求标明「广告」、一键关闭，且不得用虚假的系统通知样式诱导点击。",
+   "do_example": "广告 · 这款耳机比你关注的那款便宜 ¥200。[看看] [不再推荐]",
+   "dont_example": "目标提醒：发现一款超值耳机，点击查看",
+   "supporting_finding_ids": [
+    "T5-24",
+    "T5-25",
+    "T5-26"
+   ]
+  },
+  {
+   "rule": "PA 保持工具属性：不起人名、不设身世、不做陪伴；禁用内疚与恐惧话术；用户要退出时一句话确认并告知如何恢复。",
+   "rationale": "2026 年新规把不涉及持续情感互动的工作助手排除在外，并禁止诱导情感依赖和情感操纵。越拟人、越共情，越可能被拉进适用范围。Ant Design X「增加依赖感」的建议不可照搬。",
+   "do_example": "好的，不再提醒这个目标。想恢复时在目标页打开就行",
+   "dont_example": "你都三天没理我了，我会难过的……真的不再考虑一下吗？",
+   "supporting_finding_ids": [
+    "T5-27",
+    "T5-30"
+   ]
+  },
+  {
+   "rule": "AI 身份明示：对话界面常驻 AI 标识，站外通知的发送者名带 AI 身份，不用真人姓名和头像。",
+   "rationale": "深度合成规定第十七条要求对模拟自然人的智能对话文本作显著标识；拟人化办法第十八条要求提示用户正在与 AI 互动。",
+   "do_example": "XX 助手（AI）：东京酒店降了 ¥640",
+   "dont_example": "我是你的专属顾问小王，刚帮你盯到一个好价",
+   "supporting_finding_ids": [
+    "T5-28"
+   ]
+  },
+  {
+   "rule": "理财、保险、基金、贷款类目标只报事实与来源，不作收益或走势保证；普通商品的价格预测同样不打包票。",
+   "rationale": "广告法第二十五条禁止对未来收益作保证性承诺，禁止明示或暗示保本、无风险。",
+   "do_example": "近 30 天最低出现在周二上午，不代表之后还会降",
+   "dont_example": "现在入手稳赚，明天肯定涨回去",
+   "supporting_finding_ids": [
+    "T5-29"
+   ]
+  },
+  {
+   "rule": "用规范的口语：不用官腔（进行、予以、是否、该、尚未、请知悉、敬请谅解），也不用有保质期的网络梗和圈层黑话。",
+   "rationale": "Ant：间接、生僻、过于文雅的用词会增加认知负荷，并建议用「此」不用「该」。界面文案里这类套话本就稀少。网络梗对不同年龄层含义不一，且过期很快。",
+   "do_example": "这笔订单还没付款，要不要现在付？",
+   "dont_example": "该订单尚未进行支付，请知悉",
+   "supporting_finding_ids": [
+    "T5-01",
+    "T5-03",
+    "T5-09"
+   ]
+  },
+  {
+   "rule": "玩笑只出现在事情办成之后和空状态里；不放首行；删掉玩笑后信息必须完整；同一句俏皮话不重复出现；报错、扣款、隐私相关一律不开玩笑。",
+   "rationale": "中文写作指南：偶尔滑稽可取，但不能让读者不明所以。真实产品里落在报错上的玩笑（如「糟糕，请求打了个盹」）不解决用户此刻的问题。",
+   "do_example": "已关闭健身房续费，每月少花 ¥198",
+   "dont_example": "糟糕，请求打了个盹，稍后再来戳我吧",
+   "supporting_finding_ids": [
+    "T5-07",
+    "T5-09"
+   ]
+  },
+  {
+   "rule": "以上规则全部做成机检（称谓混用、绝对化词表、相对时间词、金额格式、感叹号计数等），不靠写作者自觉。",
+   "rationale": "写着「不推荐用您」的 Semi 规范自己的示例都用了「您」；5 款国产 AI 产品全部混用称谓。笔记第 13 节给出了 28 条可写成正则或字段校验的规则。",
+   "do_example": "生成后自动检查：同条出现「你」和「您」即阻断并重写",
+   "dont_example": "只在提示词里写一句「请保持称谓一致」",
+   "supporting_finding_ids": [
+    "T5-02",
+    "T5-08"
+   ]
+  }
+ ],
+ "copy_samples": [
+  {
+   "source": "Home Assistant 语音助手中文回复模板",
+   "text": "所有灯已打开",
+   "url": "https://github.com/home-assistant/intents/tree/main/responses/zh-CN",
+   "note": "零人称、「已+动词」的状态回执范本；同库还有「好的，已开始计时」「好的，已取消计时器」「没有计时器。」"
+  },
+  {
+   "source": "Semi Design 文案规范示例",
+   "text": "URL 不可用。可联系站点管理员帮助解决。",
+   "url": "https://github.com/DouyinFE/semi-design/blob/main/content/experience/content-guidelines/index.md",
+   "note": "「同情的」语调示例：不道歉，直接说问题和出路"
+  },
+  {
+   "source": "LobeChat 语言包",
+   "text": "你好，我是 Lobe 答疑助手。功能怎么用、哪里报错了、想给团队提建议，都可以直接告诉我。我是 AI，重要信息请再核实一下。",
+   "url": "https://github.com/lobehub/lobe-chat/tree/main/locales/zh-CN",
+   "note": "AI 自我介绍加身份披露加可靠性提醒，可作 PA 首次问候的参考"
+  },
+  {
+   "source": "NextChat 语言包",
+   "text": "有什么可以帮你的吗",
+   "url": "https://github.com/ChatGPTNextWeb/NextChat/blob/main/app/locales/cn.ts",
+   "note": "称「你」、无句末标点的问候"
+  },
+  {
+   "source": "RAGFlow 语言包",
+   "text": "你的 API 密钥无效。",
+   "url": "https://github.com/infiniflow/ragflow/blob/main/web/src/locales/zh.ts",
+   "note": "与下一条出自同一产品，构成称谓混用"
+  },
+  {
+   "source": "RAGFlow 语言包",
+   "text": "管理您的数据源和连接",
+   "url": "https://github.com/infiniflow/ragflow/blob/main/web/src/locales/zh.ts",
+   "note": "同一产品内「你」「您」并存；剔除提示词后该产品您:你为 59:45"
+  },
+  {
+   "source": "扣子开源版（Coze Studio）语言包",
+   "text": "好消息！您有 {freeCount} 条免费评测机会哦，当前剩余 {remaining_count} 条免费额度。",
+   "url": "https://github.com/coze-dev/coze-studio/blob/main/frontend/packages/arch/resources/studio-i18n-resource/src/locales/zh-CN.json",
+   "note": "反例：「好消息！」开场，敬称「您」配卖萌的「哦」，语体错位"
+  },
+  {
+   "source": "RAGFlow 语言包",
+   "text": "请输入模型类型！",
+   "url": "https://github.com/infiniflow/ragflow/blob/main/web/src/locales/zh.ts",
+   "note": "反例：感叹号落在表单校验上，读起来像呵斥"
+  },
+  {
+   "source": "FastGPT 语言包",
+   "text": "确认删除该API密钥？删除后该密钥立即失效，对应的对话日志不会删除，请确认！",
+   "url": "https://github.com/labring/FastGPT/tree/main/packages/web/i18n/zh-CN",
+   "note": "反例：信息完整但以「请确认！」收尾；「该」属官腔"
+  },
+  {
+   "source": "FastGPT 语言包",
+   "text": "还没有日志噢~",
+   "url": "https://github.com/labring/FastGPT/tree/main/packages/web/i18n/zh-CN",
+   "note": "空状态卖萌：语气词加波浪号；74,531 条里极少见的写法"
+  },
+  {
+   "source": "LobeChat 语言包",
+   "text": "很抱歉给您带来困扰！欢迎加入我们的 <0>Discord</0> 社区反馈该问题，我们会跟进处理。",
+   "url": "https://github.com/lobehub/lobe-chat/tree/main/locales/zh-CN",
+   "note": "反例：客服腔道歉，且该产品主体用「你」，此处用「您」"
+  },
+  {
+   "source": "LobeChat 语言包",
+   "text": "糟糕，请求打了个盹",
+   "url": "https://github.com/lobehub/lobe-chat/tree/main/locales/zh-CN",
+   "note": "反例：报错时抖机灵，没有原因也没有下一步"
+  },
+  {
+   "source": "VS Code 简体中文语言包（微软）",
+   "text": "很抱歉，上游模型提供程序目前面临的需求量较大。请在 {0} 后重试或考虑切换到“自动”。",
+   "url": "https://github.com/microsoft/vscode-loc/blob/main/i18n/vscode-language-pack-zh-hans/translations/main.i18n.json",
+   "note": "服务不可用时道歉一次、给原因、给两个出路，符合微软 sorry 规则"
+  },
+  {
+   "source": "VS Code 简体中文语言包（微软）",
+   "text": "很抱歉，我只能帮助处理与编程相关的问题。",
+   "url": "https://github.com/microsoft/vscode-loc/blob/main/i18n/vscode-language-pack-zh-hans/translations/main.i18n.json",
+   "note": "能力边界的拒绝话术；按 Ant Design X 可去掉道歉"
+  },
+  {
+   "source": "Firefox Android 简体中文字符串（Mozilla）",
+   "text": "快完成了！已完成 2 个步骤，还差 1 步。",
+   "url": "https://github.com/mozilla-l10n/android-l10n/blob/main/mozilla-mobile/fenix/app/src/main/res/values-zh-rCN/strings.xml",
+   "note": "进度鼓励：一个感叹号加具体数字；同库另有「6 个步骤中您已完成 2 个。进展神速！」"
+  },
+  {
+   "source": "Excalidraw 简体中文语言包",
+   "text": "慢点慢点，您的手速太快了！请稍候再试。",
+   "url": "https://github.com/excalidraw/excalidraw/blob/master/packages/excalidraw/locales/zh-CN.json",
+   "note": "限流提示里的玩笑：敬称「您」配口语「慢点慢点」，语体不一致"
+  },
+  {
+   "source": "Mastodon Web 简体中文语言包",
+   "text": "一扫而空！这里没有任何未读通知。当收到新的通知时，将根据你的设置显示在这里。",
+   "url": "https://github.com/mastodon/mastodon/blob/main/app/javascript/mastodon/locales/zh-CN.json",
+   "note": "空状态里的轻松语气，删掉第一句信息仍完整，属可接受的玩笑位置"
+  },
+  {
+   "source": "AFFiNE 简体中文语言包",
+   "text": "这篇文档尚未孕育出一丝历史的枝芽！",
+   "url": "https://github.com/toeverything/AFFiNE/blob/canary/packages/frontend/i18n/src/resources/zh-Hans.json",
+   "note": "反例：文艺腔空状态，读者要转一道弯才知道是「暂无历史版本」"
+  },
+  {
+   "source": "Signal Android 简体中文字符串",
+   "text": "%1$s现在可以接受付款啦",
+   "url": "https://github.com/signalapp/Signal-Android/blob/main/app/src/main/res/values-zh-rCN/strings.xml",
+   "note": "喜讯用「啦」；但涉及付款，按本规范应去掉语气词"
+  },
+  {
+   "source": "CrossWOZ 语料·真人扮演的助理",
+   "text": "推荐您去全聚德烤鸭店(清华园店)用餐。",
+   "url": "https://github.com/thu-coai/CrossWOZ",
+   "note": "真人服务语体的典型句：敬称「您」、句号结尾、18 个字"
+  },
+  {
+   "source": "CrossWOZ 语料·真人扮演的助理",
+   "text": "很抱歉，平西抗日纪念馆周边没有酒店。",
+   "url": "https://github.com/thu-coai/CrossWOZ",
+   "note": "真人习惯为「查不到」道歉；按 Ant、Semi、微软规范 PA 不应照搬"
+  },
+  {
+   "source": "CrossWOZ 语料·真人扮演的助理",
+   "text": "评分是4.6分哦。",
+   "url": "https://github.com/thu-coai/CrossWOZ",
+   "note": "真人助理的「哦」用法（占 2.0%）；同语料用户侧例句「收到，谢谢！」"
+  }
+ ],
+ "base_doc_corrections": [
+  "Ant Design 关于「你/您」的原文是「直接使用「你」、「我」来和用户对话，与用户建立亲密感。避免使用「您」，让用户感觉太过疏远」，图注为「太过客气，让用户感觉有些疏远」。基础稿的「带有明显的下对上客服疏离感」不是原文，应改回原话。",
+  "「绝不自称本助手/小X」「隐去主语」不是 Ant Design 的规定。Ant Design 恰恰建议用「我」对话，它禁止的是「在同一个句式中混用你和我」。零主语的依据应改引 Semi Design 的示例（「文件已上传」优于「你已经成功上传了文件」）。",
+  "「统计与金额一律采用阿拉伯数字」：Ant 文案页原文只有「统计数据使用阿拉伯数字」，金额格式在另一页「数据格式」。金额用阿拉伯数字更硬的依据是《明码标价和禁止价格欺诈规定》第九条。",
+  "「遵循 Ant Design 按钮规范，用精准动词 + 结果名词」：链接指向的文案页没有按钮小节；按钮页原文是「必须使用动词」「描述任务结果」「主要操作也为否定含义时，强调后果」，没有该公式，也没有「不超过 5 字」的规定。",
+  "「废除确定/取消/知道了等空洞按钮」与规范相左：Ant Design 组件默认就是「确定/取消」，OpenHarmony 明确推荐纯告知弹窗的唯一按钮用「知道了」。应改为：需要用户做选择时不用「确定/是/否」，纯告知时「知道了」是合规写法。",
+  "示例中的「（全网史低）」触碰《广告法》第九条第三项与价格规章，应删除；同一示例的「已凑出最低价」也需限定范围、来源和时间。",
+  "示例中的「立省 ¥185」「立省 ¥30/月」「重订省 ¥640」属促销腔，且在未成交时使用，与基础稿自己引用的「客观平实语言」原则相悖。建议未成交写「能省」，成交后写「省了」。",
+  "示例 1「明早扣费」有两处问题：「明早」没有钟点（CLDR 的「早上」是 05:00–08:00）；续费提醒放在扣费前一天，晚于法定的「前五日」提醒窗口。",
+  "示例「免费取消期至下周三」中「下周三」有歧义，应写成日期加星期加钟点，如「11月25日（周三）23:59 前」。",
+  "示例按钮「立即帮我取号」：「我」指用户，与正文里指 PA 的「我」撞指代，「立即」是促销腔，建议改为「取号」。",
+  "示例 6「信用极好买家」是无来源的绝对化评价，应改成可核对的事实（平台信用分、近期纠纷数等）。",
+  "「Miller 4±1 组块」归属有误：约 4 个组块出自 Cowan（2001），Miller（1956）是 7±2。此条凭记忆指出，未打开原文。",
+  "「注意力窗口 1.5 至 3 秒」「28 秒压到 3.5 秒」「消除约 85% 交互摩擦」没有给出来源，应降级标注为模型推演。本方向能提供的实测锚只有一个：真人助理一句话中位 21 字。",
+  "Medium 文章「AI Agent UX: How to Reduce Cognitive Load and User Fatigue」（Yuki K.）未能核实：搜索额度耗尽，medium.com 也不在本会话可访问范围内。核实之前，「检查税、打断税、盯梢税」应标注为未核实来源的框架。",
+  "「在 NN/g 的语调对照实验中……试图抖机灵（如哎呀，被你玩坏了！）会显著激怒处于焦虑中的用户」：印象中 NN/g 的语调研究是成对网站的品牌感知测试，不是报错场景实验，这句引语也不像原文。此条未核，建议由负责阅读行为方向的同事核对。",
+  "四象限里「幽默 45%、正式度 80%」这类百分比没有量表来源，属于示意，应注明。",
+  "基础稿把感叹号规则写成「除重大里程碑祝贺外一律用句号或省略」，Ant 原文的例外是「问候或祝贺」，并无「一律」之说；Semi 另规定通知、按钮、标题不加句号，可一并引用。"
+ ],
+ "surprises_or_contradictions": [
+  "设计规范说「避免用您」，但真人扮演助理时出现第二人称的句子里 75.3% 用「您」，被统计的开源产品里也有约一半以「您」为主。「用你」是定位选择，不是定论。",
+  "写着「您」不推荐的 Semi Design 规范，自己的示例里用了「您的网站」；5 款国产 AI 产品全部混用称谓。一致性只能靠机检。",
+  "Unicode 官方中文数据把浅笑脸 U+1F642 的朗读名定为「呵呵」，讽刺读法已经写进国际标准的本地化数据。",
+  "「像人一样说话」有三个差距悬殊的参照：语气词在界面文案里占 0.1%，真人助理 12.8%，普通用户 42.3%。对标用户就多了三倍。",
+  "「请」主要是用户说的（10.5%），真人助理几乎不说（0.5%）。PA 满口「请您」是公文感，不是礼貌。",
+  "真人助理 87.7% 的句子以句号结尾。「句号显得冷」只在一词回复的英文实验里成立，不能推到多句的服务消息上。",
+  "真人助理 7.9% 的发言带道歉，且多用于「查不到」，恰好是 Ant、Semi、微软三家规范都说不该道歉的情形。「像真人」与「省字、平视」在这里方向相反。",
+  "Ant Design X 建议个人助理「通过情感反馈增加用户的依赖感和亲密感」，而 2026 年 7 月施行的拟人化互动办法禁止「诱导情感依赖」。",
+  "新规把工作助手排除在外的条件是不做持续性情感互动，合规成本与克制站在同一边：话越少、越不拟人，监管负担越轻。",
+  "基础稿的「黄金话术」里有三处促销腔和一处绝对化用语，违背了它自己引用的「客观平实语言提升可用性」原则。",
+  "金额用阿拉伯数字有部门规章作依据（明码标价规定第九条），不只是可读性偏好。",
+  "OpenHarmony 推荐「知道了」作为纯告知弹窗的唯一按钮，与基础稿「废除知道了」正相反。",
+  "中国大陆一周从周一开始，港澳台从周日开始，「这周日」对两地用户可能差 7 天。",
+  "「失败」并没有被行业弃用：含「失败」的字符串占 1.5%，含「无法」的占 2.1%。Ant Design「用无法完成替代失败」是意见而非共识。",
+  "OpenHarmony 的技术文档规范要求「避免口语化」，Ant Design 要求避免「过于文雅」。两者针对的语体不同，引用时不能混。Ant Design 要求省略号用半角三点，也与现行国标的六点省略号不一致。"
+ ],
+ "gaps": [
+  "联网搜索额度在第 5 次查询后耗尽（整支团队共享每轮 200 次的上限），「至少 15 次搜索」的目标没有达到。如需补查，可在本轮之后追加一条消息继续，或调高 CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION。",
+  "本会话的网络白名单只放行 GitHub。以下主机需要在会话网络设置中放行后才能核对原文：ant.design、www.news.cn、www.cac.gov.cn、www.jetro.go.jp、w3c.github.io、zh.wikipedia.org；另有 cdn.jsdelivr.net、unpkg.com 被代理以 403 拒绝。samr.gov.cn、moe.gov.cn、w3.org、论文站点与 medium.com 未尝试，预计同样不可达。",
+  "Apple 与 Microsoft 简体中文风格指南对「你/您」和语气的原文规定没有打开。微软一项只能用 VS Code 语言包的实际用法（你 379 : 您 22）旁证。",
+  "HarmonyOS 官方设计指南的 UX 文案章节、Arco Design、TDesign、飞书、钉钉的文案规范是否存在、怎么写，没有查到。",
+  "GB/T 15834-2011、GB/T 15835-2011 原文条款号与示例未核；《广告绝对化用语执法指南》全文与施行日期、《互联网弹窗信息推送服务管理规定》原文、《人工智能生成合成内容标识办法》及配套国标对对话文本和站外通知的具体要求均未核。",
+  "全部语言学论文（Gunraj 2016、Houghton 2018、顾曰国 1990、Li 与 Thompson 1981、Lee-Wong 1994、Miller 2016、Cowan 2001）都是凭记忆引用，样本量、页码、DOI 需逐一复核。",
+  "中文聊天里句号、感叹号、「哦/嗯/好的/收到/OK」冷热感知的实验研究没有找到；「礼貌性感叹号」「文字讨好症」只有媒体讨论，没有核到调查数据。",
+  "微信「微笑」「狗头」表情的代际差异没有核到原始研究；「亲」「宝子」「家人们」「主人」的来源只凭记忆叙述。",
+  "「你/您」对中文用户信任感和转化率的对照实验（按年龄、地域、任务类型分层）没有找到；不同年龄层、不同心情状态下的语气偏好在本方向没有任何实证。",
+  "中文时间表达歧义（下周三、这周日、凌晨、明早）的理解率调查没有找到，歧义清单是研究员推断加 CLDR 数据。",
+  "12306、支付宝、微信支付、携程、飞猪、美团、滴滴、Keep、多邻国等头部闭源产品的真实推送文案样本没有采到；现有样本全部来自开源产品语言包和研究语料。",
+  "PA 代用户发给第三方的消息是否需要 AI 标识、标在哪；习惯养成与打气类功能是否构成「持续性的情感互动」；PA 的价格播报在何种商业模式下构成「广告」——三个法律适用问题都需要法务判断。",
+  "2025–2026 年是否有针对自动续费、互联网广告可识别性、AI 智能体代下单的新规或执法案例没有检索；《网络交易监督管理办法》2021 年之后是否修订、《侵害消费者权益行为处罚办法》2020 年修订后的条文也未核。",
+  "法规文本核对的是 GitHub 上的 LawRefBook 镜像，不是国家法律法规数据库或发布机关页面，正式引用前应以官方文本为准。",
+  "基础稿引用的 Medium 文章（Yuki K.）是否存在、原意如何，没能核实。"
+ ],
+ "dossier_path": "scratchpad/research/T5-zh-writing.md"
+}

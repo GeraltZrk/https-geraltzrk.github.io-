@@ -1,0 +1,55 @@
+<section class="ch" id="verdicts">
+  <header class="ch-head">
+    <div class="ch-no">00</div>
+    <h2>先看结论</h2>
+    <p class="ch-answer">九条结论，按「先决定发不发，再决定怎么说，最后让 AI 照着做」排。每条后面是它所在的章节。</p>
+    <ul class="ch-meta">
+      <li>10 路调研</li><li><span data-stat="evidence">325</span> 条证据</li><li><span data-rule-count>51</span> 条规则</li><li>12 个场景话术</li><li>1 套 Skill</li>
+    </ul>
+  </header>
+
+  <ol class="verdicts wide">
+    <li><h4>先决定发不发，「不发」是合法的结果</h4><a class="go" href="#timing">第 4 章 ›</a>
+      <p>公开评测里，主流大模型主动开口有一半以上是多余的<a class="ev" data-ev="T2-31"></a>。以「会主动找你」出名的开源个人 agent，一年内三次收紧了默认的主动性<a class="ev" data-ev="T7a-03"></a>。发不发要由用户设的条件、阈值和频控先把关，模型只负责写。</p></li>
+    <li><h4>发对类型，比写得漂亮重要</h4><a class="go" href="#life">第 1 章 ›</a>
+      <p>目标建好之后会经过 14 种状态，对应 14 种消息。PA 在后台跑的时候，消息的任务是让人放心；卡在用户身上的时候，消息必须带一个决定，也只带一个。</p></li>
+    <li><h4>前 6 个字宽出结果，前 12 个字宽说完一件事</h4><a class="go" href="#read">第 2 章 ›</a>
+      <p>最紧的容器只露三到六个字<a class="ev" data-ev="T1-08"></a>；调大字号后，第一行只剩 12 个字左右<a class="ev" data-ev="T1-05"></a>。同一件事要按容器写几个版本，一份 40 字的文案塞不进所有地方。</p></li>
+    <li><h4>一条消息一个决定；花钱那一下，永远交还用户</h4><a class="go" href="#cost">第 3 章 ›</a>
+      <p>逐条确认的弹窗，用户通过率高达 93%，等于没人在看<a class="ev" data-ev="T3-07"></a>；可另一边，只有约 5%–9% 的人接受 AI 不经确认就付款<a class="ev" data-ev="T4-31"></a>。所以小事先办、留撤销口，把「问」留给付款、对外发送和不可逆的那几次。</p></li>
+    <li><h4>「省了多少」必须能对账</h4><a class="go" href="#cost">第 3 章 ›</a>
+      <p>实测里 AI 说「划算」的商品比日常价还贵 15%，一份看起来最完整的「三平台比价」其实是模型编的<a class="ev" data-ev="T7b-05"></a>。每个「便宜了」都要带上：跟什么比、哪里的数据、几点查的。</p></li>
+    <li><h4>中文的分寸在一致和克制里</h4><a class="go" href="#wording">第 5 章 ›</a>
+      <p>「你」还是「您」没有行业共识，真正的硬伤是混用<a class="ev" data-ev="T5-08"></a>。7.4 万条界面文案里，带句末语气词的只有 0.1%，带感叹号的只有 0.5%<a class="ev" data-ev="T5-09"></a>。</p></li>
+    <li><h4>语气看事情，不猜心情；并且交给用户调</h4><a class="go" href="#tone">第 6 章 ›</a>
+      <p>先看事情多严肃，再看能观察到的用户状态，冲突时取更克制的一档。不存在让所有人满意的默认语气：同一家公司 4 个月内先因太热回滚、又因太冷加温<a class="ev" data-ev="T8-11"></a><a class="ev" data-ev="T8-12"></a>。</p></li>
+    <li><h4>默认有人味，不开玩笑；幽默留给办成的轻松事</h4><a class="go" href="#humor">第 7 章 ›</a>
+      <p>不开玩笑不扣分，开错必扣分<a class="ev" data-ev="T6-02"></a>。靶子比笑点重要：只对事和数字，不对人。失败、扣款、受阻、截止前，任何档位都只报事实。</p></li>
+    <li><h4>规范要写成机器能执行、能检查的东西</h4><a class="go" href="#skill">第 9 章 ›</a>
+      <p>消息是结构化对象，事实由代码写入；字数和禁用说法交给规则检查；语气靠原因和成对的例子。本手册附带一套 Skill<span data-if="eval">，已经用 18 个情境做过有无对比的盲评，结果在第 9 章</span><span data-if-not="eval">，带 18 个回归用例和三层评测办法，见第 9 章</span>。</p></li>
+  </ol>
+
+  <div class="sub wide">
+    <h3>对基础稿的 12 处更正 <small>逐条核查后的结果</small></h3>
+    <div class="grid-2">
+      <div class="callout fix"><b>出处错了</b>「米勒定律 4±1 组块」：约 4 个组块出自 Cowan（2001），Miller（1956）说的是 7±2<a class="ev" data-ev="T3-27"></a>。</div>
+      <div class="callout fix"><b>没有出处</b>「注意力窗口 1.5–3 秒」「28 秒压到 3.5 秒」「消除 85% 交互摩擦」都是推演。有出处的锚是：手表交互约 5 秒<a class="ev" data-ev="T1-06"></a>；真人助理一句话的中位长度 21 个字<a class="ev" data-ev="T5-11"></a>。</div>
+      <div class="callout fix"><b>语境被换了</b>79% 扫读、+124% 可用性这组数字来自 1997 年的桌面网页研究，不是通知场景<a class="ev" data-ev="T1-18"></a>。方向可借鉴，数字不能直接套。</div>
+      <div class="callout fix"><b>未能证实</b>被当作「三大认知税」来源的那篇 Medium 文章，本轮没能证实存在。可以改引有据可查的研究：一次提醒引发的绕路平均十几分钟<a class="ev" data-ev="T3-18"></a>，AI 把用户从生产者变成了核对者<a class="ev" data-ev="T3-17"></a>。</div>
+      <div class="callout fix"><b>原文不是这么说的</b>Ant Design 的原话是避免用「您」以免「太过疏远」，没有「下对上的客服疏离感」，也没有「绝不自称」；它本身是面向企业中后台的规范<a class="ev" data-ev="T5-01"></a><a class="ev" data-ev="T7b-30"></a>。</div>
+      <div class="callout fix"><b>和规范相反</b>「废除『知道了』这类按钮」：纯告知的弹窗，「知道了」恰恰是规范推荐的写法<a class="ev" data-ev="T5-05"></a>。该避免的是让用户做选择时用「确定 / 是 / 否」。</div>
+      <div class="callout fix"><b>示例踩了红线</b>黄金话术里的「全网史低」「已凑出最低价」「信用极好」举不出证，还触碰《广告法》和价格比较的规定<a class="ev" data-ev="T5-20"></a><a class="ev" data-ev="T5-22"></a>；「立省」是促销腔，且用在了成交之前。</div>
+      <div class="callout fix"><b>晚于法定时点</b>续费提醒示例写的是「明早扣费」，只提前一天。法规要求至少在续费日前五日以显著方式提醒<a class="ev" data-ev="T5-23"></a>。</div>
+      <div class="callout fix"><b>伪精确</b>2×2 矩阵里的「幽默 45%、正式度 80%」没有量表来源。线上系统用的都是离散档位。矩阵还把「用户焦虑」时的幽默度定得比「任务严肃」时高，方向反了<a class="ev" data-ev="T6-09"></a>。</div>
+      <div class="callout fix"><b>越界</b>「看你今天连开 4 场会」把对用户的观察说出了口。情绪识别本身不准<a class="ev" data-ev="T8-24"></a>，情境只该用来调节长短和时机。</div>
+      <div class="callout fix"><b>一刀切</b>「所有消息锁死在 40 字以内」：胶囊只有 3–6 个字，微信一格 20 个字符<a class="ev" data-ev="T7b-18"></a>；而涉及付款的确认要写齐五样信息，通常需要 60–90 字。</div>
+      <div class="callout fix"><b>立意要改</b>结语「让用户觉得这个决定是自己做出的」。目标应该是让用户真的拥有决定权：看得到依据，改得了默认，撤得回动作<a class="ev" data-ev="T4-30"></a>。</div>
+    </div>
+  </div>
+
+  <div class="sub col">
+    <h3>这些结论有多硬</h3>
+    <p>证据台账里共 <b class="num" data-stat="evidence">325</b> 条。其中 <b class="num" data-stat="verified">148</b> 条打开了原文或对照了下载到本地的一手文件；<b class="num" data-stat="search">111</b> 条只见于搜索结果的摘要；<b class="num" data-stat="memory">66</b> 条是检索额度用完之后凭既有知识补的，没有核对。每条都标了类型和把握程度，点正文里的小角标可以看到。</p>
+    <p>两个限制要先说明。一是本轮的网络环境只放行了少数站点（平台官方文档和代码仓库），所以平台规范、法规条文和开源项目核得最扎实，学术论文和媒体报道多数停在摘要一级。二是中国用户的一手数据很少：六个用户画像、频率上限、幽默的档位边界都是设计假设，标了「推演」的地方上线前要自己测。</p>
+  </div>
+</section>

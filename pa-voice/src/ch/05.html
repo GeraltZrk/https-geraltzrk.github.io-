@@ -1,0 +1,75 @@
+<section class="ch" id="wording">
+  <header class="ch-head">
+    <div class="ch-no">05</div>
+    <h2>中文里，一字之差差在哪</h2>
+    <p class="ch-answer"><b>一致和克制。</b>称呼选一档用到底；语气词和感叹号接近于零；报忧先说事实和补救；举不出证的话不说。</p>
+    <ul class="ch-meta"><li>委托问题 ③ 中文用词</li><li>规则 R28–R34</li><li>含自采语料统计与法规条文</li></ul>
+  </header>
+
+  <div class="facts wide">
+    <div class="fact"><b class="num">5 / 5</b><span>被统计的 5 款国产 AI 产品，界面文案全部「你」「您」混用</span><cite>19 款产品、74,531 条文案<a class="ev" data-ev="T5-08"></a></cite></div>
+    <div class="fact"><b class="num">26.5<small>%</small></b><span>真人扮演助理时带「您」的发言占比；带「你」的是 9.4%</span><cite>5 万句对话语料<a class="ev" data-ev="T5-10"></a></cite></div>
+    <div class="fact"><b class="num">0.5<small>%</small></b><span>界面文案里带感叹号的比例。「温馨提示」「亲」出现 0 次</span><cite><a class="ev" data-ev="T5-09"></a></cite></div>
+    <div class="fact"><b class="num">呵呵</b><span>浅笑脸 🙂 在 Unicode 官方中文数据里的读法</span><cite><a class="ev" data-ev="T5-15"></a></cite></div>
+  </div>
+
+  <div class="sub wide">
+    <div class="tool-split w-3-2">
+      <div class="col">
+        <h3>「像人一样说话」，像的是哪一种人</h3>
+        <p>句末语气词（呢、吧、哦、啦）在三种语体里的密度差了两个数量级：界面文案 0.1%，真人扮演的助理 12.8%，普通用户聊天 42.3%<a class="ev" data-ev="T5-09"></a><a class="ev" data-ev="T5-11"></a>。PA 如果照着普通聊天的密度写，语气词就比一个真人助理多出三倍。</p>
+        <p>「你」和「您」也是同样的情形。设计规范常说避免用「您」<a class="ev" data-ev="T5-01"></a>，可真人扮演助理时四分之一的话带「您」。两边都不算错，它们是两个档位。真正的硬伤是混用：这一条消息用「你」，下一条用「您」，同一句里两个都有。</p>
+        <p>中文用户吐槽 AI 助手的那些词，指向的也不是温度。「我会稳稳地接住你」被做成表情包，是因为它被用得太多太顺手；媒体的评语是，这话本身并不冷<a class="ev" data-ev="T7b-09"></a>。被嫌弃的是复读，和嘴甜不办事。</p>
+      </div>
+      <figure class="bars" aria-label="句末语气词在三种语体中的占比">
+        <figcaption>带句末语气词的句子占比</figcaption>
+        <div class="bar-row"><span>界面文案</span><i style="--w:0.24%"></i><b class="num">0.1%</b></div>
+        <div class="bar-row"><span>真人扮演的助理</span><i style="--w:30.3%"></i><b class="num">12.8%</b></div>
+        <div class="bar-row"><span>普通用户</span><i style="--w:100%"></i><b class="num">42.3%</b></div>
+        <p class="note">界面文案取自 19 款开源产品的中文语言包；助理与用户取自一份任务型对话语料。条长按同一比例绘制。</p>
+      </figure>
+    </div>
+  </div>
+
+  <div class="sub wide">
+    <h3>用户是怎么说的 <small>经媒体报道转引，未逐条核对原帖</small></h3>
+    <div class="voices">
+      <div class="voice"><q>一本正经胡说八道，嬉皮笑脸认真道歉</q><span>秒认错、态度极好、屡教不改，被叫作「认错永动机」<a class="ev" data-ev="T7b-10"></a>。</span><cite>网友对某 AI 助手的概括</cite></div>
+      <div class="voice"><q>不躲，不退，不避，不逃，稳稳接住你</q><span>共情句被模板化复用之后的样子<a class="ev" data-ev="T7b-09"></a>。</span><cite>网友总结的「进阶版」</cite></div>
+      <div class="voice"><q>尝试下单失败然后去别的 App 下单，这样的情况有两次就不会再用了</q><span>信任的预算大约是两次失败<a class="ev" data-ev="T7b-17"></a>。</span><cite>某 AI 生活助手的评测用户</cite></div>
+      <div class="voice"><q>去京东下单更优惠</q><span>被评测记为亮点的一句话。敢指向别家，坦白查不了，反而加分<a class="ev" data-ev="T7b-06"></a>。</span><cite>某 AI 助手的比价回复</cite></div>
+    </div>
+  </div>
+
+  <div class="tool wide sub" id="lexicon">
+    <div class="tool-head"><h3>中文 PA 词表</h3><span>检查线索，不是黑名单：先保事实，再看语境</span></div>
+    <div class="tool-body">
+      <div class="controls">
+        <div class="chips" id="lexCats" role="group" aria-label="按类别筛选"></div>
+        <div class="field" style="flex:1 1 12rem"><label for="lexQ" class="sr">搜索词表</label><input class="input" id="lexQ" type="search" placeholder="搜一个词，例如：您、立省、明早"></div>
+      </div>
+      <div class="scroll-x">
+        <table>
+          <thead><tr><th>类别</th><th>别这样说</th><th>这样说</th><th>为什么</th></tr></thead>
+          <tbody id="lexBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub wide">
+    <h3>法规红线与安全写法</h3>
+    <div class="tbl scroll-x">
+      <table>
+        <thead><tr><th>红线说法或做法</th><th>依据</th><th>安全写法</th></tr></thead>
+        <tbody id="legalBody"></tbody>
+      </table>
+    </div>
+    <div class="callout bound" style="margin-top:1rem"><b>边界</b>PA 发给单个用户的消息算不算「广告」，取决于商业模式，需要法务判断。但举不出证的「最低」不管合不合规，都会在用户发现更低价的那一刻毁掉信任。2026 年 7 月 15 日施行的《人工智能拟人化互动服务管理暂行办法》把不涉及持续情感互动的工作助手排除在外<a class="ev" data-ev="T5-27"></a>：话越少、越不拟人，合规负担越轻。</div>
+  </div>
+
+  <div class="sub wide">
+    <h3>这一章的规则</h3>
+    <div data-rules="wording"></div>
+  </div>
+</section>

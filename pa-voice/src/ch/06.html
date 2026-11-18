@@ -1,0 +1,111 @@
+<section class="ch" id="tone">
+  <header class="ch-head">
+    <div class="ch-no">06</div>
+    <h2>语气怎么随人、随事、随时调</h2>
+    <p class="ch-answer"><b>声音不变，语气分档。</b>先看事情多严肃，再看能观察到的用户状态，冲突时取更克制的一档。不猜心情；把选择权交给用户。</p>
+    <ul class="ch-meta"><li>委托问题 ③④ 人物、心情、场景</li><li>规则 R35–R41</li><li>画像预设为设计假设</li></ul>
+  </header>
+
+  <div class="facts wide">
+    <div class="fact"><b class="num">4<small>个月</small></b><span>同一家公司先因语气太热回滚更新，又因太冷把温度加了回去</span><cite><a class="ev" data-ev="T8-11"></a><a class="ev" data-ev="T8-12"></a></cite></div>
+    <div class="fact"><b class="num">8<small>种</small></b><span>之后它把语气改成了用户可选的预设</span><cite><a class="ev" data-ev="T8-13"></a></cite></div>
+    <div class="fact"><b class="num">+10–30<small>个百分点</small></b><span>把模型调得更「温暖」之后，错误率的上升幅度</span><cite>针对微调的研究<a class="ev" data-ev="T8-23"></a></cite></div>
+    <div class="fact"><b class="num">6,282<small>人</small></b><span>9 项研究：同一段共情的话，标成 AI 写的就被评为更不真诚</span><cite><a class="ev" data-ev="T8-22"></a></cite></div>
+  </div>
+
+  <div class="sub col">
+    <h3>不变的七件事，可调的七个档</h3>
+    <p>行业里几份一手规范说的是同一件事：声音始终如一，语气跟着读者的处境变，拿不准就取严肃的一侧<a class="ev" data-ev="T8-01"></a>；账单、安全这类严肃事务要体贴，但简短直接<a class="ev" data-ev="T8-02"></a>。AI 厂商给模型定的默认语气是「像同事，不像密友」<a class="ev" data-ev="T8-05"></a>。</p>
+    <p>不变的部分：是 AI，不装人；只站在用户一边；事实锁定；对事不对人；不施压；每条消息都让事情往前走一步；说完尊重用户的决定。</p>
+    <p>可调的部分是七个参数，每个都是离散的档位，每一档都有能判定的语言特征。基础稿里「幽默 45%、正式度 80%」这种百分比，模型执行不了，人也检查不了。拨一拨下面的调音台。</p>
+  </div>
+
+  <div class="tool wide sub" id="toneConsole">
+    <div class="tool-head"><h3>语气调音台</h3><span>选情境，看七个参数落在哪一档，以及这时候的话术</span></div>
+    <div class="tool-body">
+      <div class="controls" id="toneControls"></div>
+      <div class="tool-split w-3-2">
+        <div class="stack">
+          <div class="note">当前档位 <b class="num" id="toneCode" style="color:var(--ink)"></b></div>
+          <div class="dials" id="toneDials"></div>
+        </div>
+        <div class="stack">
+          <div id="toneSample" class="stack"></div>
+          <ul class="bullets note" id="toneNotes"></ul>
+        </div>
+      </div>
+      <p class="note">解析顺序从高到低：法规红线 › 用户的显式设置 › 任务风险 › 当下事件 › 关系阶段 › 画像预设 › 弱信号。把轻松误判成严肃，代价是有点无聊；把严肃误判成轻松，代价是信任。</p>
+    </div>
+  </div>
+
+  <div class="sub wide">
+    <h3>用情境代替读心 <small>能用什么信号，哪些不碰</small></h3>
+    <div class="grid-2">
+      <div class="col">
+        <p>基础稿的矩阵有一根轴叫「用户实时情绪」。这根轴靠不住：从文字里识别细粒度的情绪，准确率有限，连人和人之间的判断也只有中等一致<a class="ev" data-ev="T8-24"></a>。已上线的主动式助手实际使用的都是显式信号：时段、是否在忙、用户选的预设、有没有回复。</p>
+        <p>所以这根轴应该换成「能观察到的状态」。PA 只依据三样东西调语气：系统确知的事件，用户说出口的话，用户的显式设置。时钟和日历只用来调节长短和时机，不说出口。打字节奏、语音语调这类生物特征不采集<a class="ev" data-ev="T8-25"></a>。</p>
+        <p>压力下人只保留中心线索、改用更简单的决策方式<a class="ev" data-ev="T8-29"></a>。所以判断出「用户在忙」之后，该做的只有一件事：更短。</p>
+      </div>
+      <div class="tbl scroll-x">
+        <table style="min-width:0">
+          <thead><tr><th>信号</th><th>可靠性</th><th>怎么调</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">用户的设置和原话</th><td>高</td><td>直接覆盖其余各项；「简短点」「别开玩笑」立即生效并记住</td></tr>
+            <tr><th scope="row">任务风险</th><td>高</td><td>幽默和表情归零；必须含金额、时点、撤销方式</td></tr>
+            <tr><th scope="row">失败、延误、损失</th><td>高</td><td>只报事实；最多一句承认；先方案后原因</td></tr>
+            <tr><th scope="row">PA 自己出错</th><td>高</td><td>道歉一次，说清改了什么；进入修复期</td></tr>
+            <tr><th scope="row">用户明说的情绪</th><td>中到高</td><td>只回应说出口的内容，不延伸推断</td></tr>
+            <tr><th scope="row">时间段、日程密度</th><td>中</td><td>只调节长短和时机，不评论</td></tr>
+            <tr><th scope="row">已读未回</th><td>低</td><td>只调频率，不推断情绪</td></tr>
+            <tr><th scope="row">文本情绪模型</th><td>低</td><td>只允许触发「更克制」，不据此加热情</td></tr>
+            <tr><th scope="row">生物特征</th><td>不用</td><td>禁用</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub wide">
+    <h3>六个画像预设 <small>设计假设，由用户自选，不由系统猜</small></h3>
+    <div class="tbl scroll-x">
+      <table>
+        <thead><tr><th>预设</th><th>想要的</th><th>反感的</th><th>这样说</th><th>别这样说</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">打工人</th><td>少打扰，结论先行</td><td>黑话；被评论忙不忙</td><td class="say-cell">15:00 的会和取件冲突，已把取件改到 19:00。[好] [改回去]</td><td class="nosay-cell">亲爱的打工人，辛苦啦～记得照顾好自己哦！</td></tr>
+          <tr><th scope="row">Z 世代</th><td>被平视；自己选人设</td><td>说教、打鸡血、过期的梗</td><td class="say-cell">凑单方案好了：加一包 ¥9.9 的纸巾，整单反而少付 ¥12。[按这个下单]</td><td class="nosay-cell">年轻人要学会理财，别乱花钱。</td></tr>
+          <tr><th scope="row">家庭采购</th><td>到手价、单价、保质期都算清</td><td>被叫「宝妈」；被制造焦虑</td><td class="say-cell">纸尿裤 L 码 2 箱到手 ¥268，合 ¥1.4/片，比你上次买便宜 ¥0.2/片。[下单] [看明细]</td><td class="nosay-cell">宝妈必囤！手慢无！</td></tr>
+          <tr><th scope="row">长辈模式</th><td>被尊重；慢一点；一次一件事</td><td>网络词、缩写、催促、诱导</td><td class="say-cell">您的燃气费这个月是 86 元，还没有交。需要我现在帮您交吗？交之前会再跟您确认一次。</td><td class="nosay-cell">燃气费待缴，戳这里秒办～</td></tr>
+          <tr><th scope="row">价格敏感</th><td>具体到几块钱；没有附加条件</td><td>套路、任务裂变、术语</td><td class="say-cell">这单能便宜 15 块，不用拉人，不用做任务，点一下就行。</td><td class="nosay-cell">差 0.01 元即可提现，快邀请好友助力！</td></tr>
+          <tr><th scope="row">商务</th><td>替他把关；直说利弊</td><td>请示太多；情绪化</td><td class="say-cell">建议改签 16:30 东航直飞：能赶上 19:00 的晚宴，差价 ¥310。[改签] [维持原计划]</td><td class="nosay-cell">要不您看看怎么选比较好呢？</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" style="margin-top:.6rem">本轮没有拿到任何可核对的中国人群调研数据来支撑这张表。上线前建议每个画像找 8–12 人，用同一事件的三种语气渲染做偏好和理解度对比。适老场景另有规范：主要文字不小于 18 号，禁止诱导式按键<a class="ev" data-ev="T8-33"></a>。</p>
+  </div>
+
+  <div class="sub wide">
+    <h3>熟络是挣来的 <small>关系阶段由交付记录驱动，不由天数驱动</small></h3>
+    <div class="flow" style="--flow-cols:4">
+      <div><small>冷启动</small><b>前 3 个目标，或某类事第一次做</b><span>多解释、每步确认、不开玩笑。先说清规则：「只提醒，不下单；降到 ¥1,300 以下才打扰你。」</span></div>
+      <div><small>建立期</small><b>同类事办成 3 次以上</b><span>解释缩成半句。可以问一次：「以后这类 ¥1,300 以内的直接订？」</span></div>
+      <div><small>熟悉期</small><b>用户给过分类授权</b><span>一眼版为主，授权内先办后报。「老规矩订了靠窗，¥1,280，30 分钟内可取消。」</span></div>
+      <div><small>修复期</small><b>PA 出过错，或用户连续撤销</b><span>退回逐步确认，只报事实。「上次改错了时间，这次先跟你确认。」</span></div>
+    </div>
+    <p class="note" style="margin-top:.6rem">熟络只通过「更短、更自主」来表达，不通过更亲密的称呼。实测里，有经验的用户放手更多，同时打断纠偏也更多：信任增长的样子是「放手，并且更会监督」<a class="ev" data-ev="T3-08"></a>。</p>
+  </div>
+
+  <div class="sub wide">
+    <h3>温度的四条边界</h3>
+    <div class="grid-2">
+      <div class="callout"><b>共情和道歉要短</b>服务现场的录像研究里，开场之后继续道歉和共情会拉低满意度，解决问题的动作才拉高<a class="ev" data-ev="T8-21"></a>。一句承认，12 个字以内，然后给方案。</div>
+      <div class="callout"><b>用户带着火气时，去掉人设</b>愤怒的用户遇到越拟人的机器人，满意度越低<a class="ev" data-ev="T8-20"></a>。失败节点不卖萌，不用昵称，像工具一样给事实和下一步。</div>
+      <div class="callout"><b>不做情感挽留</b>对陪伴类应用的审计发现，告别时的操纵话术能把互动拉高很多倍，同时推高流失意图<a class="ev" data-ev="T8-28"></a>。PA 的「告别时刻」是用户说「别提醒了」：立刻执行，一句确认，告诉他怎么恢复。</div>
+      <div class="callout"><b>别自封管家</b>有研究提示，讨人喜欢的「仆人」型角色可能让人自己更松懈<a class="ev" data-ev="T8-18"></a>；带拟人特征的帮手会削弱自主感<a class="ev" data-ev="T8-19"></a>。省钱省时间的事用能力和数字说话，把功劳的措辞还给用户：「你设的目标价到了」。</div>
+    </div>
+  </div>
+
+  <div class="sub wide">
+    <h3>这一章的规则</h3>
+    <div data-rules="tone"></div>
+  </div>
+</section>

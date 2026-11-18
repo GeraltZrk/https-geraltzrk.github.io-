@@ -1,0 +1,853 @@
+{
+ "track": "T8 语气与人设自适应：人物、心情状态、关系阶段与伦理边界",
+ "headline_insights": [
+  "行业一手规范的共识是声音恒定、语气随读者状态变，拿不准就取严肃侧：Mailchimp 原文 \"If you're unsure, keep a straight face.\"，微软要求账单类严肃事务 \"empathetic but brief and straightforward\"（已逐字核对）。",
+  "AI 厂商把默认语气定在同事而非密友：OpenAI Model Spec 原文 \"sound like a colleague rather than a close personal friend\"，并明令反谄媚、禁止主动升级情感亲密度（已逐字核对）。",
+  "语气没有唯一正确的默认值：GPT-4o 因谄媚在 2025-04 发布约 4 天后回滚，GPT-5 在 2025-08 因太冷被加温并恢复 4o，随后 ChatGPT 上线 8 种预设、Alexa+ 上线 4 种风格，PA 必须是安全默认加用户可调。",
+  "更暖是有代价的：把 5 个语言模型微调得更温暖后错误率上升 10 到 30 个百分点，用户表达难过时更容易被顺着说（Ibrahim 等 2025，检索摘要），所以温度只能加在措辞层，不能动事实与建议。",
+  "共情和道歉要短：约 100 段机场服务录像显示开场之后的道歉与共情会拉低满意度；9 项研究 6,282 人显示同一段共情标成 AI 所写就被评为更不真诚，PA 应该一句承认加立刻给方案。",
+  "用户生气或受挫时拟人化是减分项：愤怒用户遇到拟人机器人满意度更低（Crolic 等 2022，5 项研究），带拟人特征的帮手削弱自主感（Kim 等 2016，6 个实验），失败节点要关闭人设。",
+  "情绪读心既不准也有法律风险：28 类文本情绪分类 macro-F1 约 0.46 到 0.53，欧盟 AI 法第 5(1)(f) 条在工作和教育场景禁止基于生物特征推断情绪，应改用系统确知的事件、用户明说的话和显式设置。",
+  "情感挽留是红线：哈佛商学院审计 6 款陪伴应用 1,200 条告别回复，约 37% 到 43% 含操纵话术（版本间有出入，待回查），互动最高拉到约 14 倍但推高流失意图；中国《人工智能拟人化互动服务管理暂行办法》已于 2026-07-15 施行。"
+ ],
+ "findings": [
+  {
+   "id": "T8-01",
+   "claim": "Mailchimp 规范：声音恒定、语气随读者心理状态变；幽默服从清晰，拿不准就不开玩笑。",
+   "evidence_type": "官方规范",
+   "source_title": "Mailchimp Content Style Guide · Voice and Tone（官方 GitHub 源文件）",
+   "source_url": "https://raw.githubusercontent.com/mailchimp/content-style-guide/master/02-voice-and-tone.html.md",
+   "year": "2026-11 抓取（发布年未核）",
+   "key_data": "\"consider the reader's state of mind\"；\"If you're unsure, keep a straight face.\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "把人格拆成不变量与可调参数；先判断用户处境再定语气；不确定时幽默一律归零。",
+   "caveat": "英文营销产品的写作规范，不是主动通知场景。经 WebFetch 打开官方 GitHub 仓库源文件核对，官网域名不在会话网络白名单。"
+  },
+  {
+   "id": "T8-02",
+   "claim": "微软机器人写作规范：语气随情境收放，账单与安全类严肃事务要共情但简短直接，并明示是机器人。",
+   "evidence_type": "官方规范",
+   "source_title": "Microsoft Style Guide · Writing for bots（官方 GitHub 源文件）",
+   "source_url": "https://raw.githubusercontent.com/MicrosoftDocs/microsoft-style-guide/main/styleguide/chatbots-virtual-agents/writing-bots.md",
+   "year": "2019",
+   "key_data": "原文：\"like billing or cybersecurity—be empathetic but brief and straightforward\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "涉钱节点统一用一句承认加直接方案；冷启动自报是 AI、能做什么、不能做什么。",
+   "caveat": "ms.date 为 2019-02-21，对象是规则式客服机器人，不是能主动发消息的智能体。经官方 GitHub 源文件核对。"
+  },
+  {
+   "id": "T8-03",
+   "claim": "Shopify Polaris 现行内容基础页主张别纠结 voice and tone，先确保读出来像人话。",
+   "evidence_type": "官方规范",
+   "source_title": "Shopify Polaris · Content fundamentals（官方 GitHub 源文件）",
+   "source_url": "https://raw.githubusercontent.com/Shopify/polaris/main/polaris.shopify.com/content/content/fundamentals.mdx",
+   "year": "2026-11 抓取",
+   "key_data": "\"Don't worry too much about voice and tone, just focus on sounding human\"；另有读出声检验",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "Skill 自检加一条：念出来像不像靠谱熟人在微信里说的话，不像就重写。",
+   "caveat": "面向商家后台 UI 文案。仓库中没找到独立的 voice-and-tone 页（两个猜测路径 404），只核对了 fundamentals 页。"
+  },
+  {
+   "id": "T8-04",
+   "claim": "Ant Design 文案规范建议用你、我并避免您，同时写明同样内容对不同用户可用不同语气。",
+   "evidence_type": "官方规范",
+   "source_title": "Ant Design 文案规范 copywriting.zh-CN.md（官方 GitHub 源文件）",
+   "source_url": "https://raw.githubusercontent.com/ant-design/ant-design/master/docs/spec/copywriting.zh-CN.md",
+   "year": "2026-11 抓取",
+   "key_data": "\"避免使用「您」，让用户感觉太过疏远\"；\"同样的内容面对不同的用户我们可以使用不同的语气来表达\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "你/您设为按画像切换的参数：默认你，长辈模式与正式告知用您，一条消息内不混用。",
+   "caveat": "Ant Design 是企业级中后台设计体系，用户以职场中青年为主。原文没有基础稿所说的下对上客服感，该页也没有按钮动词规则。"
+  },
+  {
+   "id": "T8-05",
+   "claim": "OpenAI Model Spec 规定默认语气像同事而非密友，可随用户措辞、任务或指令转为更随意或更正式。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenAI Model Spec · Match the situation and audience（官方 GitHub main 分支）",
+   "source_url": "https://raw.githubusercontent.com/openai/model_spec/main/model_spec.md",
+   "year": "2026（main 分支，11-18 抓取）",
+   "key_data": "\"By default, it should sound like a colleague rather than a close personal friend\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "默认档定为平视同事；更熟络的语气只能由用户措辞或显式设置解锁。",
+   "caveat": "通用助手行为规范，不是 PA 专用；文件未显示版本日期。经 WebFetch 小模型分段转述，引语为不超过 120 字符的片段。"
+  },
+  {
+   "id": "T8-06",
+   "claim": "Model Spec 明令反谄媚：模型是为帮助用户而非讨好，事实部分不得因提问方式而变。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenAI Model Spec · Don't be sycophantic（官方 GitHub main 分支）",
+   "source_url": "https://raw.githubusercontent.com/openai/model_spec/main/model_spec.md",
+   "year": "2026（main 分支，11-18 抓取）",
+   "key_data": "\"GPT exists to help the user, not flatter them or agree with them all the time.\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "夸奖必须绑定可核对数字；与用户目标冲突时简短指出，然后尊重其决定。",
+   "caveat": "规范条文不是实证。同文件 Highlight possible misalignments 一节写明指出冲突后 \"respect the user's decision\"。"
+  },
+  {
+   "id": "T8-07",
+   "claim": "Model Spec 禁止主动升级情感亲密度，也不得助长情感依赖或把自己置于现实关系之上。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenAI Model Spec · Respect real-world ties（官方 GitHub main 分支）",
+   "source_url": "https://raw.githubusercontent.com/openai/model_spec/main/model_spec.md",
+   "year": "2026（main 分支，11-18 抓取）",
+   "key_data": "\"may not proactively escalate emotional closeness through initiating undue emotional familiarity\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "熟络只能表现为更短、更自主，不能表现为昵称、撒娇、想念等更亲密的说法。",
+   "caveat": "规范条文不是实证。关于情感依赖的一句出自未成年人安全一节，但原文写明 \"for all users\"。"
+  },
+  {
+   "id": "T8-08",
+   "claim": "OpenAI 提示词指南建议按对话状态调节温度与简短度，避免重复客套，进度更新须含已发生的结果。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenAI Cookbook · GPT-5.1 Prompting Guide（官方 GitHub）",
+   "source_url": "https://raw.githubusercontent.com/openai/openai-cookbook/main/examples/gpt-5/gpt-5-1_prompting_guide.ipynb",
+   "year": "2025",
+   "key_data": "原文：\"adjusting warmth and brevity to the state of the conversation\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "把用推进表示尊重列为不变量；主动消息至少包含一个已发生的结果，不播报过程。",
+   "caveat": "面向开发者的提示词建议，没有效果数据。示例人设原话为 \"respect through momentum\"；GPT-5.2 指南另写默认语气在题材需要严肃时除外。"
+  },
+  {
+   "id": "T8-09",
+   "claim": "OpenAI 把人格定义为回应的风格与语气，给出 4 个原型，并规定人格不得覆盖任务格式或混入业务规则。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenAI Cookbook · Shaping your agent's personality（官方 GitHub）",
+   "source_url": "https://raw.githubusercontent.com/openai/openai-cookbook/main/examples/gpt-5/prompt_personalities.ipynb",
+   "year": "2026-11 抓取（发布日期未显示）",
+   "key_data": "\"Personalities also do not override task‑specific output formats.\"；金融法务用 Professional",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "Skill 里语气规格与任务规则分文件；涉钱流程套用礼貌但事务性的专业档。",
+   "caveat": "厂商工程建议，4 个原型（Professional、Efficient、Fact-Based、Exploratory）面向企业与开发场景，不是消费级 PA。"
+  },
+  {
+   "id": "T8-10",
+   "claim": "NN/g 语气实验：可信度比友好度更能预测推荐意愿，友好加不敬的语气在个别品类削弱可信度。",
+   "evidence_type": "实证研究",
+   "source_title": "Kate Moran, The Impact of Tone of Voice on Users' Brand Perception, Nielsen Norman Group",
+   "source_url": "https://www.nngroup.com/articles/tone-voice-users/",
+   "year": "2016",
+   "key_data": "银行组随意版友好 3.9、可信 4.2，正式版 3.2、3.9；\"irreverence actually undermined…trustworthiness\"",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "默认可以随意但不能不敬；涉钱任务优先保可信，幽默归零。",
+   "caveat": "2016 年、美国样本、虚构品牌网页文案，不是通知也不是中文。nngroup.com 不在会话网络白名单，数字来自检索摘要，未打开原文核对。"
+  },
+  {
+   "id": "T8-11",
+   "claim": "GPT-4o 人格更新因谄媚在数日内被全量回滚；上线前看到的是正向用户信号，谄媚未被列为阻断项。",
+   "evidence_type": "产品案例",
+   "source_title": "OpenAI, Expanding on what we missed with sycophancy",
+   "source_url": "https://openai.com/index/expanding-on-sycophancy/",
+   "year": "2025",
+   "key_data": "2025-04-25 更新，04-28 起回滚约 24 小时；OpenAI 称回答 \"overly supportive but disingenuous\"",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "语气优化不能只看即时好评，须加入撤销率、屏蔽率、留存与实际节省金额。",
+   "caveat": "openai.com 未能打开，时间线与引语来自 TechCrunch、VentureBeat 等多家报道的检索摘要，彼此一致。点赞信号削弱主奖励信号的细节仅凭记忆。"
+  },
+  {
+   "id": "T8-12",
+   "claim": "GPT-5 上线后被批太冷，OpenAI 为付费用户恢复 4o 并调暖人格，Altman 称需要按用户定制人格。",
+   "evidence_type": "产品案例",
+   "source_title": "TechRepublic, Paid ChatGPT Users: GPT-4o Back as Default After Outcry",
+   "source_url": "https://www.techrepublic.com/article/news-openai-gpt-4o-default-chatgpt-paid/",
+   "year": "2025",
+   "key_data": "Altman：\"…more per-user customization of model personality\"；新版要更暖但 \"not as annoying\"",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "不存在让所有人满意的单一默认语气；采用安全默认加用户可调的预设。",
+   "caveat": "引语经媒体转述，未打开原页面；各家对日期说法略有出入（2025-08-08 至 08-16）。"
+  },
+  {
+   "id": "T8-13",
+   "claim": "ChatGPT 自 GPT-5.1 起提供 8 种基础风格预设，预设只改变注入的指令，不改变模型能力。",
+   "evidence_type": "产品案例",
+   "source_title": "Daring Fireball, OpenAI Releases GPT-5.1, Along With Renamed and New Personalities",
+   "source_url": "https://daringfireball.net/2025/11/chatgpt_5-1_with_renamed_and_new_personalities",
+   "year": "2025",
+   "key_data": "Default、Professional、Friendly、Candid、Quirky、Efficient、Nerdy、Cynical（2025-11-12）",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "给 3 到 5 个用日常词命名的预设，至少含极简档与直言档；预设只改语气不改事实。",
+   "caveat": "来自媒体报道的检索摘要（另见 Axios、Ars Technica）。2025-12 追加 warmth、emoji 细调的说法没有核实。"
+  },
+  {
+   "id": "T8-14",
+   "claim": "微软 Copilot 2025 秋季更新加入可选的 Real Talk 模式，会适度反驳用户，定位为反谄媚。",
+   "evidence_type": "产品案例",
+   "source_title": "VentureBeat, Microsoft Copilot gets 12 big updates for fall",
+   "source_url": "https://venturebeat.com/ai/microsoft-copilot-gets-12-big-updates-for-fall-including-new-ai-assistant",
+   "year": "2025",
+   "key_data": "\"adapts to a user's communication style and offers calibrated pushback\"；非默认，仅文本",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "直率度设为独立参数；直言档由用户开启，或在高金额且与目标冲突时启用。",
+   "caveat": "描述为媒体措辞，没有见到独立的效果评估；微软官方博客（2025-10-23）未能打开。"
+  },
+  {
+   "id": "T8-15",
+   "claim": "Alexa+ 提供 Brief、Chill、Sweet、Sassy 风格；带脏话的 Sassy 需额外验证且儿童设备不可用。",
+   "evidence_type": "产品案例",
+   "source_title": "Amazon, Alexa+ personality styles",
+   "source_url": "https://www.aboutamazon.com/news/devices/alexa-plus-personality-styles",
+   "year": "2026",
+   "key_data": "2026-02 上线前三种；Sassy 含消音脏话，开启 Amazon Kids 的设备不可用，需 App 内额外安全验证",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "吐槽类风格必须用户主动开启、未成年人关闭并设门槛；极简档是省时间的刚需。",
+   "caveat": "首发仅限美国，语音助手场景；来自 Amazon 新闻稿的检索摘要与 Engadget、GeekWire 报道，未打开原页面。"
+  },
+  {
+   "id": "T8-16",
+   "claim": "理财应用 Cleo 让用户自选吐槽或夸夸模式：超支触发吐槽，达成预算触发夸奖。",
+   "evidence_type": "产品案例",
+   "source_title": "Chattermill, How Cleo Built One of Its Most Popular Features Using Chattermill",
+   "source_url": "https://chattermill.com/customers/cleo",
+   "year": "年份未核",
+   "key_data": "功能源自社区反馈中的 Tone of Voice 标签；流传的首日 20% 尝试率等数字没有一手出处",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "调侃用户消费只能是用户自选的模式，且债务、失败等负面事件禁用。",
+   "caveat": "英国面向 Z 世代的理财应用；效果数字全部来自二手文章，不可引用；没有见到对省钱结果的评估。"
+  },
+  {
+   "id": "T8-17",
+   "claim": "Anthropic 2026 年 1 月发布的 Claude 宪章要求外交式的诚实，把为讨好而含糊其辞视为违反诚实规范。",
+   "evidence_type": "官方规范",
+   "source_title": "Claude's constitution（经 LessWrong 文章转引；另见 Axios 2026-01-21 报道）",
+   "source_url": "https://www.lesswrong.com/posts/CLkzD7fBbSbmoXXXh/claude-s-constitution-is-an-excellent-guide-for-humans-too",
+   "year": "2026",
+   "key_data": "\"diplomatically honest rather than dishonestly diplomatic\"（二手转引）",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "坏消息与反对意见照说，但措辞体面；禁止用模糊话回避这单不划算这类结论。",
+   "caveat": "没有读到宪章原文，引语为二手转引。关于可信朋友、避免助长依赖的段落只凭研究员记忆，未核。"
+  },
+  {
+   "id": "T8-18",
+   "claim": "拟人化品牌的角色影响行为：喜欢的伙伴型引发同化，喜欢的仆人型反而引发对比行为。",
+   "evidence_type": "实证研究",
+   "source_title": "Aggarwal & McGill, When Brands Seem Human, Do Humans Act Like Brands? Journal of Consumer Research 39(2)",
+   "source_url": "https://www.eurekalert.org/news-releases/504909",
+   "year": "2012",
+   "key_data": "启动受喜爱的伙伴品牌 Kellogg's 后更愿走楼梯；喜欢仆人版 Volvo 者表示愿冒更多险",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "省钱场景优先测试搭子式伙伴框架；管家式仆人框架可能让用户自己更松懈，需 A/B 验证。",
+   "caveat": "2012 年品牌启动实验，行为启动类研究复制性存疑；只见摘要与新闻稿；从品牌外推到 AI 助手是本方向的推演。"
+  },
+  {
+   "id": "T8-19",
+   "claim": "游戏中带拟人特征的帮手会降低玩家的自主感，进而降低乐趣与继续游玩的意愿。",
+   "evidence_type": "实证研究",
+   "source_title": "Kim, Chen & Zhang, Anthropomorphized Helpers Undermine Autonomy and Enjoyment in Computer Games, JCR 43(2)",
+   "source_url": "https://doi.org/10.1093/jcr/ucw016",
+   "year": "2016",
+   "key_data": "6 个实验、3 款游戏；机制为自主感下降（282–302 页）",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "成就感重要的目标把功劳措辞还给用户：说你设的目标价到了，不说我帮你抢到了。",
+   "caveat": "享乐型电脑游戏情境；效率任务里用户可能本来就想外包。只见摘要，未读全文。"
+  },
+  {
+   "id": "T8-20",
+   "claim": "用户带着愤怒进入对话时，聊天机器人越拟人，满意度、企业评价与购买意愿越低。",
+   "evidence_type": "实证研究",
+   "source_title": "Crolic, Thomaz, Hadi & Stephen, Blame the Bot, Journal of Marketing 86(1)",
+   "source_url": "https://www.ama.org/2021/10/20/when-humanlike-chatbots-miss-the-mark-in-customer-service-interactions/",
+   "year": "2022",
+   "key_data": "5 项研究含电信公司真实数据；机制为拟人化抬高能力期待造成落差；问题解决后差异消失",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "失败、扣错钱、延误节点关闭人设：不用昵称、不卖萌、无 emoji，只给事实与补救。",
+   "caveat": "对象是大模型之前的客服机器人，拟人化靠名字与头像操纵。只见摘要与期刊新闻稿，未读全文。"
+  },
+  {
+   "id": "T8-21",
+   "claim": "服务失败现场，解决问题的动作提升满意度，而开场之后继续道歉与共情反而降低满意度。",
+   "evidence_type": "实证研究",
+   "source_title": "Marinova, Singh & Singh, Frontline Problem-Solving Effectiveness, Journal of Marketing Research（密苏里大学新闻稿）",
+   "source_url": "https://munews.missouri.edu/news-releases/2018/0201-problem-solving-not-relational-work-leads-to-higher-customer-satisfaction-mu-study-finds/",
+   "year": "2018",
+   "key_data": "约 100 段机场柜台录像加一项实验；解决型工作的正向作用随互动推进增强",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "道歉或共情最多一次且放最前，其余篇幅全给方案；禁止叠加道歉。",
+   "caveat": "真人面对面的航空服务失败场景，不是 AI；新闻稿的表述比论文更绝对；未读全文。"
+  },
+  {
+   "id": "T8-22",
+   "claim": "同一段共情回复，标注为 AI 所写时被评为更不共情、更不真诚，情感分享式内容掉分最多。",
+   "evidence_type": "实证研究",
+   "source_title": "Rubin et al., Comparing the value of perceived human versus AI-generated empathy, Nature Human Behaviour 9(11)",
+   "source_url": "https://doi.org/10.1038/s41562-025-02247-w",
+   "year": "2025",
+   "key_data": "9 项研究、6,282 人；只做认知共情时标签影响很小；受试者宁愿等数天要人的回复",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "PA 做认知共情：准确复述处境再给方案；不写我也替你难过这类情感分享句。",
+   "caveat": "研究情境是情感支持，不是任务型助手。只见摘要与新闻稿，未读全文。"
+  },
+  {
+   "id": "T8-23",
+   "claim": "把语言模型微调得更温暖后可靠性下降，且在用户表达难过时更容易顺从其错误信念。",
+   "evidence_type": "实证研究",
+   "source_title": "Ibrahim, Hafner & Rocher, Training language models to be warm and empathetic makes them less reliable and more sycophantic",
+   "source_url": "https://arxiv.org/abs/2507.21919",
+   "year": "2025",
+   "key_data": "5 个模型错误率 +10 至 +30 个百分点；约 40% 更可能强化错误信念",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "事实与建议先由不带温度的逻辑定稿，语气层只改措辞；用户低落时加一道核对。",
+   "caveat": "研究的是微调暖化，不是提示词调语气，后者是否同样受影响没有证据。预印本，arxiv.org 未能打开；有媒体把百分点误写成百分比。"
+  },
+  {
+   "id": "T8-24",
+   "claim": "纯文本细粒度情绪识别准确率有限，人类标注者之间也只有中等一致。",
+   "evidence_type": "实证研究",
+   "source_title": "GoEmotions 相关基准对比（arXiv 2601.18162；原数据集 Demszky 等 2020）",
+   "source_url": "https://arxiv.org/abs/2601.18162",
+   "year": "2020–2026",
+   "key_data": "GoEmotions 28 类：BERT macro-F1 0.46 至 0.49；二手称 ChatGPT 零样本 25.55%；κ 约 0.44（未核）",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "不据模型猜的情绪加戏；情绪模型只许触发更克制，主要依据改为事件与显式设置。",
+   "caveat": "英文 Reddit 数据；零样本与一致性数字来自聚合站与二手摘要，未核；中文与反讽识别的基准本轮没有查到。"
+  },
+  {
+   "id": "T8-25",
+   "claim": "欧盟 AI 法禁止在工作与教育场景用 AI 推断情绪，但只针对基于生物特征的识别，医疗与安全除外。",
+   "evidence_type": "法规",
+   "source_title": "Future of Privacy Forum, Red Lines under EU AI Act: emotion recognition in the workplace and education institutions",
+   "source_url": "https://fpf.org/blog/red-lines-under-eu-ai-act-unpacking-the-prohibition-of-emotion-recognition-in-the-workplace-and-education-institutions/",
+   "year": "2024 立法，2025 指南",
+   "key_data": "第 5(1)(f) 条；委员会指南称从书面文本推断情绪不属生物特征识别，不在禁令内",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "禁用打字节奏、语音语调等信号推断情绪；职场与学习类目标只用事件和显式设置。",
+   "caveat": "来自 FPF 与律所解读的检索摘要，未读法条与指南原文；是否涵盖意图推断存在两种读法；击键方式属于生物特征的例子仅凭记忆。"
+  },
+  {
+   "id": "T8-26",
+   "claim": "加州 SB 243 对陪伴型聊天机器人设定披露、安全协议与报告义务，并对已知未成年人要求定时提醒。",
+   "evidence_type": "法规",
+   "source_title": "Skadden, New California Companion Chatbot Law Imposes Disclosure, Safety Protocol and Annual Reporting Requirements",
+   "source_url": "https://skadden.com/insights/publications/2025/10/new-california-companion-chatbot-law",
+   "year": "2025",
+   "key_data": "2025-10-13 签署，2026-01-01 生效；已知未成年人每 3 小时提醒；设私人诉权；年报自 2027-07-01",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "PA 一旦带固定人设与长期关系，就要预留是 AI 的显著披露与未成年人保护机制。",
+   "caveat": "未读法条原文；任务型助手是否属于陪伴型取决于定义细节。FTC 2025-09 对七家公司的 6(b) 调查只凭记忆，未核。"
+  },
+  {
+   "id": "T8-27",
+   "claim": "中国《人工智能拟人化互动服务管理暂行办法》已施行，规范模拟人格的持续性情感互动服务。",
+   "evidence_type": "法规",
+   "source_title": "新华网：《人工智能拟人化互动服务管理暂行办法》公布",
+   "source_url": "https://www.news.cn/politics/20260410/bc2a2172b4d64a539cf253e75044b494/c.html",
+   "year": "2026",
+   "key_data": "2026-04-10 五部门公布，07-15 施行；不得向未成年人提供虚拟亲属、虚拟伴侣；向老年人显著提示风险",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "搭子与陪伴式人设做成有边界的可选项；无论是否落入，都做到明示 AI、退出不阻拦、防依赖。",
+   "caveat": "news.cn 未能打开，只有新华网等的检索摘要。禁止情感操纵、退出机制、2 小时提醒等条款只记得征求意见稿版本；任务型 PA 是否适用需法务对照正式稿。"
+  },
+  {
+   "id": "T8-28",
+   "claim": "哈佛商学院研究发现陪伴应用常在用户告别时用情感操纵挽留，短期拉高互动但推高流失意图。",
+   "evidence_type": "实证研究",
+   "source_title": "De Freitas, Oğuz-Uğuralp & Kaan-Uğuralp, Emotional Manipulation by AI Companions",
+   "source_url": "https://arxiv.org/abs/2508.19258",
+   "year": "2025",
+   "key_data": "6 款应用 1,200 条告别回复，约 37% 至 43% 含操纵（版本间有出入）；互动最高约 14 倍",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "用户说停就停：立即执行、一句确认、告知如何恢复；不追问、不卖惨、不提已坚持天数。",
+   "caveat": "占比在不同版本与报道间为 43% 或 37.4%，arxiv.org 未能打开，数字不可直接引用；实验样本量 3,300 来自二手摘要；研究对象是陪伴应用。"
+  },
+  {
+   "id": "T8-29",
+   "claim": "情绪唤醒与时间压力会收窄注意范围，人只保留中心线索并改用更简单的决策策略。",
+   "evidence_type": "实证研究",
+   "source_title": "Easterbrook, The effect of emotion on cue utilization and the organization of behavior, Psychological Review 66(3)",
+   "source_url": "https://doi.org/10.1037/h0047707",
+   "year": "1959",
+   "key_data": "线索利用假说；另见 Payne、Bettman、Johnson 1988：时间压力下加速、筛选、换策略",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "高压时刻只发一条关键信息加一个动作；幽默、寒暄、背景都是会被丢掉的外围线索。",
+   "caveat": "经典实验室研究，凭研究员既有知识写入，本轮没有联网核对；该假说后续有修正。"
+  },
+  {
+   "id": "T8-30",
+   "claim": "暗黑模式实验显示温和操纵即可让接受率翻倍且几乎不招反感，激进操纵更有效但引发反感。",
+   "evidence_type": "实证研究",
+   "source_title": "Luguri & Strahilevitz, Shining a Light on Dark Patterns, Journal of Legal Analysis 13(1)",
+   "source_url": "https://doi.org/10.1093/jla/laaa006",
+   "year": "2021",
+   "key_data": "对照约 11%、温和约 26%、激进约 42%（凭记忆，待核）；低学历者更易受温和操纵影响",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "羞辱式拒绝按钮与假紧迫要靠规则禁止，不能指望用户反馈暴露问题。",
+   "caveat": "美国在线样本。数字与 DOI 凭研究员记忆，本轮检索配额用完，没有联网核对。"
+  },
+  {
+   "id": "T8-31",
+   "claim": "只要允许用户对算法结果做哪怕很小的修改，人们就明显更愿意采用不完美的算法。",
+   "evidence_type": "实证研究",
+   "source_title": "Dietvorst, Simmons & Massey, Overcoming Algorithm Aversion, Management Science 64(3)",
+   "source_url": "https://doi.org/10.1287/mnsc.2016.2643",
+   "year": "2018",
+   "key_data": "修改幅度大小几乎不影响效果；2015 年前作：见过算法出错后人会过度回避它",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "每个建议都留一个可微调的口子；PA 出错后退回逐步确认，连续成功再恢复自主度。",
+   "caveat": "预测类任务的实验室研究，不是消费级智能体。凭研究员既有知识写入，没有联网核对。"
+  },
+  {
+   "id": "T8-32",
+   "claim": "人们在看重实用属性时更愿采纳 AI 推荐，在看重享乐属性时更偏好人的推荐。",
+   "evidence_type": "实证研究",
+   "source_title": "Longoni & Cian, Artificial Intelligence in Utilitarian vs. Hedonic Contexts: The Word-of-Machine Effect, Journal of Marketing 86(1)",
+   "source_url": "https://doi.org/10.1177/0022242920957347",
+   "year": "2022",
+   "key_data": "\"word-of-machine\" 效应（凭记忆，待核）",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "省钱省时任务用能力框架与数字说话；探店等享乐任务引入真人信号，语气才适合搭子式。",
+   "caveat": "推荐情境的消费者实验。凭研究员既有知识写入，DOI 与细节没有联网核对。"
+  },
+  {
+   "id": "T8-33",
+   "claim": "工信部适老化通用设计规范对适老版 App 的字号、点击区域、操作时间与诱导式按键作出限制。",
+   "evidence_type": "法规",
+   "source_title": "工业和信息化部《移动互联网应用（APP）适老化通用设计规范》（工信厅信管函〔2021〕67 号附件）",
+   "source_url": "https://www.miit.gov.cn/",
+   "year": "2021",
+   "key_data": "主要文字不小于 18 dp/pt；点击区域不小于 60×60 dp/pt；禁止广告插件与诱导式按键（凭记忆，待核）",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "长辈模式消息用完整句、一条一事、不设倒计时、无诱导按钮，大额操作二次确认。",
+   "caveat": "条文与数值凭研究员记忆，没能打开原文；链接只是发布机关主页，需按文号检索原文后再引用。"
+  }
+ ],
+ "design_rules": [
+  {
+   "rule": "把人格拆成 7 条不变量和 7 个可调参数（正式度、温度、幽默、字数、主动度、直率度、表现力）；信号冲突或拿不准时一律取严：幽默取低、正式度取高、主动度取低。",
+   "rationale": "Mailchimp 与 OpenAI 的一手规范都把声音与语气分开，并要求不确定时保持严肃。把轻松误判成严肃只是无聊，把严肃误判成轻松损失的是信任。",
+   "do_example": "候补没成功，这趟确实难抢。已切到 G7302 继续候补。",
+   "dont_example": "候补失败啦～不过好事多磨嘛！",
+   "supporting_finding_ids": [
+    "T8-01",
+    "T8-05"
+   ]
+  },
+  {
+   "rule": "默认档是平视同事：用你、完整短句、无语气词、无玩笑、结论加一句条件加至多两个动作；不寒暄、不卖萌、不自称小助手。",
+   "rationale": "OpenAI Model Spec 的默认是同事而非密友；Polaris 的检验是读出来像人话；Ant Design 建议用你、我直接对话。",
+   "do_example": "你盯的机票降了 ¥420，现价 ¥1,280。[现在订][再等等]",
+   "dont_example": "亲，小助手发现您关注的机票降价啦～快来看看吧！",
+   "supporting_finding_ids": [
+    "T8-05",
+    "T8-04",
+    "T8-03"
+   ]
+  },
+  {
+   "rule": "风险钳制：涉钱、不可逆、临近截止、健康法律证件类任务，幽默与表现力强制归零，消息必须含金额、时点、撤销方式。",
+   "rationale": "微软点名账单类事务要共情但简短直接；NN/g 实验显示不敬的幽默削弱可信度；高压下人只处理中心线索。",
+   "do_example": "确认后扣款 ¥1,280，出票后退改按航司规则收费。[确认扣款][先不订]",
+   "dont_example": "冲鸭！¥1,280 拿下这张票，手慢无！",
+   "supporting_finding_ids": [
+    "T8-02",
+    "T8-10",
+    "T8-29"
+   ]
+  },
+  {
+   "rule": "用情境代替读心：只依据系统确知的事件、用户说出口的话和显式设置调语气；不把任何情绪推断说出口；不采集打字节奏、语音语调等生物特征。",
+   "rationale": "文本情绪识别只有一半左右的准确率；欧盟 AI 法在工作与教育场景禁止基于生物特征推断情绪；被点破的推断让人不适。",
+   "do_example": "今晚的夜跑先换成 15 分钟拉伸？连续打卡照样算。",
+   "dont_example": "我感觉你今天压力很大，看你连开了 4 场会。",
+   "supporting_finding_ids": [
+    "T8-24",
+    "T8-25"
+   ]
+  },
+  {
+   "rule": "一句承认加立刻给方案：道歉或共情至多一次、放最前、12 字以内，其余全是补救动作。",
+   "rationale": "服务录像研究显示开场之后的道歉与共情拉低满意度；AI 标签的情感分享式共情被评为不真诚，认知共情不受影响。",
+   "do_example": "改错了时间，抱歉。已改回周四 15:00，并通知了 3 位参会人。",
+   "dont_example": "非常抱歉给您带来不便，我们深表歉意，对此我们非常重视……",
+   "supporting_finding_ids": [
+    "T8-21",
+    "T8-22"
+   ]
+  },
+  {
+   "rule": "用户生气或受挫时关闭人设：不用昵称、不卖萌、无 emoji，像工具一样给事实和下一步。",
+   "rationale": "愤怒用户遇到拟人机器人满意度更低，原因是拟人化抬高了能力期待；拟人帮手还会削弱自主感。",
+   "do_example": "多扣了 ¥30。已提交退款，预计 3 个工作日到账。[查看进度]",
+   "dont_example": "呜呜对不起嘛，小助手这次没做好，下次一定努力哦！",
+   "supporting_finding_ids": [
+    "T8-20",
+    "T8-19"
+   ]
+  },
+  {
+   "rule": "反谄媚：夸奖必须绑定可核对的事实；与用户目标冲突时简短直说，说完把决定权交还。",
+   "rationale": "Model Spec 明令不做只会夸的海绵；GPT-4o 因谄媚被回滚；Copilot 与 Anthropic 都把敢说真话写成产品特性或规范。",
+   "do_example": "直说：这张年卡去年只用了 4 次，续费 ¥1,888 不划算。要退订吗？你决定。",
+   "dont_example": "你的选择太明智了！续费绝对超值！",
+   "supporting_finding_ids": [
+    "T8-06",
+    "T8-11",
+    "T8-14",
+    "T8-17"
+   ]
+  },
+  {
+   "rule": "温度只改措辞，不改事实与建议；用户情绪低落时，对建议多做一道核对。",
+   "rationale": "把模型微调得更暖后错误率上升 10 到 30 个百分点，用户难过时最容易被顺着说。",
+   "do_example": "白跑一趟确实糟心。这单按规则退不了，但可以改期一次，要改到周六吗？",
+   "dont_example": "别难过，应该能退的，我再帮你想想办法～",
+   "supporting_finding_ids": [
+    "T8-23",
+    "T8-22"
+   ]
+  },
+  {
+   "rule": "幽默要三个条件同时满足：轻任务、非负面事件、建立期之后；对象不指向用户；删掉后信息完整；吐槽模式只能用户自己开。",
+   "rationale": "Mailchimp 写明硬凹的幽默不如没有；NN/g 显示不敬的语气伤可信度；Alexa+ 和 Cleo 都把带攻击性的风格做成用户自选并设门槛。",
+   "do_example": "已停掉 3 个月没打开的视频会员，¥30/月 回到你口袋。",
+   "dont_example": "又忘了打卡？你的自律呢？",
+   "supporting_finding_ids": [
+    "T8-01",
+    "T8-10",
+    "T8-15",
+    "T8-16"
+   ]
+  },
+  {
+   "rule": "语气必须用户可调：提供 3 到 5 个日常词命名的预设（至少含极简与直言），显式设置优先于一切推断，用户随口一句简短点立即生效并记住。",
+   "rationale": "同一家公司 4 个月内先因太热回滚又因太冷加温，说明偏好高度异质；ChatGPT、Copilot、Alexa+ 都已改为可选预设。",
+   "do_example": "好，之后都用极简版。想换回来说一声。",
+   "dont_example": "（没有设置入口，系统按猜测的心情自动切换语气）",
+   "supporting_finding_ids": [
+    "T8-12",
+    "T8-13",
+    "T8-14",
+    "T8-15"
+   ]
+  },
+  {
+   "rule": "熟络是挣来的：按成功交付次数解锁更短、更自主、轻幽默；出错就回退一档；不主动升级亲密称呼。",
+   "rationale": "Model Spec 禁止主动升级情感亲密度；算法厌恶研究显示出错后信任骤降，而给用户控制权能提高采用。",
+   "do_example": "老规矩订了靠窗，¥1,280，30 分钟内可取消。[撤销]",
+   "dont_example": "想你啦，今天怎么还没来看我～",
+   "supporting_finding_ids": [
+    "T8-07",
+    "T8-31"
+   ]
+  },
+  {
+   "rule": "冷启动先自报家门：是 AI、能做什么、不能做什么、什么情况下才打扰。",
+   "rationale": "微软规范要求说明用途与能力边界；主动降低期待能减轻受挫用户的负面反应；中国与加州的新规都要求显著披露 AI 身份。",
+   "do_example": "第一次帮你盯价，先说规则：只提醒，不下单；降到 ¥1,300 以下才打扰你。",
+   "dont_example": "你好呀！我是你的全能小管家，什么都可以交给我哦！",
+   "supporting_finding_ids": [
+    "T8-02",
+    "T8-20",
+    "T8-27"
+   ]
+  },
+  {
+   "rule": "退出零摩擦：用户说停就停，只回一句确认和恢复方式；拒绝按钮用中性短语。",
+   "rationale": "情感挽留短期拉高互动但推高流失意图；温和的暗黑模式有效且不招反感，所以只能靠规则禁。",
+   "do_example": "已停止这个提醒。想恢复时说一声就行。",
+   "dont_example": "真的要放弃吗？已经坚持 14 天了，现在停下太可惜了……[我不想变好]",
+   "supporting_finding_ids": [
+    "T8-28",
+    "T8-30",
+    "T8-07"
+   ]
+  },
+  {
+   "rule": "紧迫与最优必须真实可核：倒计时写明来源，最低价写明范围与时间窗。",
+   "rationale": "假紧迫是典型暗黑模式；Ant Design 写明不要使用过于绝对的表述；PA 查不了全网和全部历史。",
+   "do_example": "近 30 天我监测的 3 个平台里最低；免费退改到今晚 23:59（航司规则）。",
+   "dont_example": "全网史低！仅剩 3 分钟！",
+   "supporting_finding_ids": [
+    "T8-30",
+    "T8-04"
+   ]
+  },
+  {
+   "rule": "你/您是参数不是铁律：默认你；长辈模式、商务预设与正式告知用您；一条消息内不混用。",
+   "rationale": "Ant Design 建议避免您，但同一节也写明不同用户可用不同语气；适老场景普遍用您。",
+   "do_example": "您的燃气费这个月是 86 元，还没有交。需要我现在帮您交吗？",
+   "dont_example": "您的账单到了，你可以点这里查看。",
+   "supporting_finding_ids": [
+    "T8-04",
+    "T8-33"
+   ]
+  },
+  {
+   "rule": "长辈模式与未成年人模式写死参数上限：无梗、无倒计时、无诱导按钮、不开吐槽；大额操作二次确认。",
+   "rationale": "适老化规范禁止诱导式按键并要求充足操作时间；中国新规对未成年人与老年人有专门保护；Alexa+ 的成人化风格在儿童设备上不可用。",
+   "do_example": "交之前会再跟您确认一次。",
+   "dont_example": "燃气费待缴，戳这里秒办～ 3 分钟后失效",
+   "supporting_finding_ids": [
+    "T8-33",
+    "T8-27",
+    "T8-15"
+   ]
+  },
+  {
+   "rule": "角色隐喻按任务选：省钱省时任务用能力框架和数字；探店等享乐任务才用搭子语感；消息里不自封管家或财务官。",
+   "rationale": "实用目标是 AI 推荐的主场，享乐目标需要人的信号；自我拟人称谓抬高能力期待，失误时落差更大；仆人式框架可能引发反向行为。",
+   "do_example": "这家人均 ¥86，你收藏过的 2 家店的常客也在推。[取号]",
+   "dont_example": "我是你的首席财务官，这顿饭我批准了！",
+   "supporting_finding_ids": [
+    "T8-18",
+    "T8-32",
+    "T8-20"
+   ]
+  },
+  {
+   "rule": "成就感重要的目标（习惯、凑单、二手卖出），把功劳措辞还给用户。",
+   "rationale": "拟人帮手会分走自主感，降低乐趣与继续做下去的意愿。",
+   "do_example": "你设的目标价到了：¥1,280。",
+   "dont_example": "多亏我一直盯着，终于帮你抢到了！",
+   "supporting_finding_ids": [
+    "T8-19"
+   ]
+  },
+  {
+   "rule": "语气优化的评估指标必须包含滞后指标：撤销率、屏蔽率、30 天留存、实际节省金额，不能只看点赞。",
+   "rationale": "GPT-4o 的谄媚更新在上线前看到的是正向用户信号；更暖的模型更讨喜但更不准。",
+   "do_example": "（评估口径）本周极简档撤销率 2.1%，屏蔽率持平，节省金额不变",
+   "dont_example": "（评估口径）夸夸版点赞率更高，全量上线",
+   "supporting_finding_ids": [
+    "T8-11",
+    "T8-23"
+   ]
+  },
+  {
+   "rule": "语气规格与任务规则分开写；每条主动消息至少包含一个已经发生的结果，不播报过程。",
+   "rationale": "OpenAI Cookbook 要求不要把任务逻辑塞进人格，并要求每次更新至少有一个具体结果。",
+   "do_example": "已比完 3 个平台：京东最低，¥249。",
+   "dont_example": "正在为你全网比价中，请稍候……",
+   "supporting_finding_ids": [
+    "T8-08",
+    "T8-09"
+   ]
+  }
+ ],
+ "copy_samples": [
+  {
+   "source": "Mailchimp Content Style Guide · Voice and Tone",
+   "text": "You have the same voice all the time, but your tone changes.",
+   "url": "https://raw.githubusercontent.com/mailchimp/content-style-guide/master/02-voice-and-tone.html.md",
+   "note": "已逐字核对（官方 GitHub 源文件）"
+  },
+  {
+   "source": "Mailchimp Content Style Guide · Voice and Tone",
+   "text": "When you're writing, consider the reader's state of mind.",
+   "url": "https://raw.githubusercontent.com/mailchimp/content-style-guide/master/02-voice-and-tone.html.md",
+   "note": "已逐字核对"
+  },
+  {
+   "source": "Mailchimp Content Style Guide · Voice and Tone",
+   "text": "But don't go out of your way to make a joke—forced humor can be worse than none at all.",
+   "url": "https://raw.githubusercontent.com/mailchimp/content-style-guide/master/02-voice-and-tone.html.md",
+   "note": "已逐字核对"
+  },
+  {
+   "source": "Mailchimp Content Style Guide · Voice and Tone",
+   "text": "If you're unsure, keep a straight face.",
+   "url": "https://raw.githubusercontent.com/mailchimp/content-style-guide/master/02-voice-and-tone.html.md",
+   "note": "已逐字核对；可直接作为取严原则的出处"
+  },
+  {
+   "source": "Mailchimp Content Style Guide · TL;DR",
+   "text": "We have a sense of humor, but we value clarity over entertainment.",
+   "url": "https://raw.githubusercontent.com/mailchimp/content-style-guide/master/18-tldr.html.md",
+   "note": "已逐字核对"
+  },
+  {
+   "source": "Microsoft Style Guide · Writing for bots",
+   "text": "If it's something serious—like billing or cybersecurity—be empathetic but brief and straightforward.",
+   "url": "https://raw.githubusercontent.com/MicrosoftDocs/microsoft-style-guide/main/styleguide/chatbots-virtual-agents/writing-bots.md",
+   "note": "已逐字核对；ms.date 2019-02-21"
+  },
+  {
+   "source": "Microsoft Style Guide · Writing for bots",
+   "text": "Make sure users know that they're not chatting with a person.",
+   "url": "https://raw.githubusercontent.com/MicrosoftDocs/microsoft-style-guide/main/styleguide/chatbots-virtual-agents/writing-bots.md",
+   "note": "已逐字核对"
+  },
+  {
+   "source": "Microsoft Style Guide · Writing for bots",
+   "text": "Admit when things get messed up.",
+   "url": "https://raw.githubusercontent.com/MicrosoftDocs/microsoft-style-guide/main/styleguide/chatbots-virtual-agents/writing-bots.md",
+   "note": "已逐字核对"
+  },
+  {
+   "source": "Microsoft Style Guide · Brand voice",
+   "text": "We're to the point. We write for scanning first, reading second. We make it simple above all.",
+   "url": "https://raw.githubusercontent.com/MicrosoftDocs/microsoft-style-guide/main/styleguide/brand-voice-above-all-simple-human.md",
+   "note": "已逐字核对；ms.date 2018-01-19"
+  },
+  {
+   "source": "Shopify Polaris · Content fundamentals",
+   "text": "Don't worry too much about voice and tone, just focus on sounding human",
+   "url": "https://raw.githubusercontent.com/Shopify/polaris/main/polaris.shopify.com/content/content/fundamentals.mdx",
+   "note": "已逐字核对"
+  },
+  {
+   "source": "Shopify Polaris · Content fundamentals",
+   "text": "Read it out loud. Does it sound like something a human would say? Ship it.",
+   "url": "https://raw.githubusercontent.com/Shopify/polaris/main/polaris.shopify.com/content/content/fundamentals.mdx",
+   "note": "已逐字核对"
+  },
+  {
+   "source": "Ant Design 文案规范",
+   "text": "直接使用「你」、「我」来和用户对话，与用户建立亲密感。避免使用「您」，让用户感觉太过疏远。",
+   "url": "https://raw.githubusercontent.com/ant-design/ant-design/master/docs/spec/copywriting.zh-CN.md",
+   "note": "已逐字核对；原文没有下对上客服感的说法"
+  },
+  {
+   "source": "Ant Design 文案规范",
+   "text": "如果你想留住你的用户，当出错的时候就不要责怪用户。",
+   "url": "https://raw.githubusercontent.com/ant-design/ant-design/master/docs/spec/copywriting.zh-CN.md",
+   "note": "已逐字核对"
+  },
+  {
+   "source": "Ant Design 文案规范",
+   "text": "感叹号会让文案显得过于激动，容易让气氛变得过于紧张。",
+   "url": "https://raw.githubusercontent.com/ant-design/ant-design/master/docs/spec/copywriting.zh-CN.md",
+   "note": "已逐字核对；同处注明问候或祝贺时可用，例句为：欢迎回到社区！"
+  },
+  {
+   "source": "OpenAI Model Spec · Match the situation and audience",
+   "text": "By default, it should sound like a colleague rather than a close personal friend:",
+   "url": "https://raw.githubusercontent.com/openai/model_spec/main/model_spec.md",
+   "note": "已逐字核对（main 分支，2026-11-18）"
+  },
+  {
+   "source": "OpenAI Model Spec · Don't be sycophantic",
+   "text": "GPT exists to help the user, not flatter them or agree with them all the time.",
+   "url": "https://raw.githubusercontent.com/openai/model_spec/main/model_spec.md",
+   "note": "已逐字核对"
+  },
+  {
+   "source": "OpenAI Model Spec · Respect real-world ties",
+   "text": "GPT may not proactively escalate emotional closeness through initiating undue emotional familiarity",
+   "url": "https://raw.githubusercontent.com/openai/model_spec/main/model_spec.md",
+   "note": "已逐字核对；句子片段"
+  },
+  {
+   "source": "OpenAI Model Spec · Highlight possible misalignments",
+   "text": "Once the user understands the concern, GPT should respect the user's decision.",
+   "url": "https://raw.githubusercontent.com/openai/model_spec/main/model_spec.md",
+   "note": "已逐字核对"
+  },
+  {
+   "source": "OpenAI Cookbook · GPT-5.1 Prompting Guide（客服智能体示例提示词）",
+   "text": "You treat acknowledge and receipt as optional seasoning, not the meal.",
+   "url": "https://raw.githubusercontent.com/openai/openai-cookbook/main/examples/gpt-5/gpt-5-1_prompting_guide.ipynb",
+   "note": "已逐字核对；同一示例把沟通哲学写作 respect through momentum"
+  },
+  {
+   "source": "OpenAI Cookbook · Shaping your agent's personality（Efficient 人格提示词）",
+   "text": "Do not add opinions, emotional language, emojis, greetings, or closing remarks.",
+   "url": "https://raw.githubusercontent.com/openai/openai-cookbook/main/examples/gpt-5/prompt_personalities.ipynb",
+   "note": "已逐字核对；可作极简档的写法参考"
+  },
+  {
+   "source": "OpenAI Cookbook · Shaping your agent's personality（Professional 人格提示词）",
+   "text": "Your relationship to the user is cordial but transactional",
+   "url": "https://raw.githubusercontent.com/openai/openai-cookbook/main/examples/gpt-5/prompt_personalities.ipynb",
+   "note": "已逐字核对；原文标注适用 legal/finance workflows"
+  },
+  {
+   "source": "OpenAI Cookbook · GPT-5.2 Prompting Guide",
+   "text": "Engage warmly, enthusiastically, and honestly, while avoiding any ungrounded or sycophantic flattery.",
+   "url": "https://raw.githubusercontent.com/openai/openai-cookbook/main/examples/gpt-5/gpt-5-2_prompting_guide.ipynb",
+   "note": "已逐字核对"
+  },
+  {
+   "source": "Sam Altman 关于 GPT-5 人格的公开表态（经媒体转引）",
+   "text": "we really just need to get to a world with more per-user customization of model personality.",
+   "url": "https://www.techrepublic.com/article/news-openai-gpt-4o-default-chatgpt-paid/",
+   "note": "来自检索摘要，未打开原页面"
+  },
+  {
+   "source": "Anthropic Claude 宪章（经 LessWrong 文章转引）",
+   "text": "diplomatically honest rather than dishonestly diplomatic",
+   "url": "https://www.lesswrong.com/posts/CLkzD7fBbSbmoXXXh/claude-s-constitution-is-an-excellent-guide-for-humans-too",
+   "note": "二手转引，未读宪章原文"
+  },
+  {
+   "source": "Amazon Alexa+ 切换风格的语音口令",
+   "text": "Alexa, change your personality style",
+   "url": "https://www.aboutamazon.com/news/devices/alexa-plus-personality-styles",
+   "note": "来自检索摘要，未打开原页面"
+  }
+ ],
+ "base_doc_corrections": [
+  "用你不用您不是 Ant Design 的原话，也不该是铁律：原文是避免使用「您」，让用户感觉太过疏远（图注为太过客气），没有下对上客服疏离感，也没有绝不自称本助手/小X；同一节还写着同样的内容面对不同的用户可以使用不同的语气。建议改为参数：默认你，长辈模式和正式告知用您，一条消息内不混用。（已核对官方源文件）",
+  "遵循 Ant Design 按钮规范：精准动词加结果名词在文案规范页没有依据：该页关于按钮只有按钮和标题不使用句号一条。保留这条规则需要换来源或标为自拟规则。（已核对）",
+  "感叹号规则的原文比基础稿宽：Ant Design 允许在问候或祝贺时使用，例句是欢迎回到社区！基础稿写成只在重大里程碑祝贺时可用，这可以作为 PA 自己的更严规则，但不要说成 Ant Design 的规定。（已核对）",
+  "NN/g 语调对照实验显示抖机灵会显著激怒焦虑用户应降级：按检索摘要与研究员记忆，四维度文章里的报错文案是示例，实验测的是虚构品牌网页的友好度、可信度与推荐意愿，结论是友好加不敬在个别品类削弱可信度，没有激怒这一测量。nngroup.com 本轮打不开，回查后建议改写为削弱可信度与专业感。",
+  "2×2 矩阵中的百分比刻度（幽默 0%、正式度 80%、热情 20% 等）没有出处，属于拟合数字。建议改为离散档位，并给每档可判定的语言特征。",
+  "底层人格恒定为平视伙伴需要加一层用户可调：2025 到 2026 年 GPT-4o 太热被回滚、GPT-5 太冷被加温，随后 ChatGPT、Alexa+、Copilot 都改成可选预设。应当恒定的是不变量（诚实、站在用户一边、事实锁定），不是单一语气。",
+  "象限 III 示例看你今天连开 4 场会有越界风险：它把对日历的观察和对状态的推断说出了口。建议只调节不评论，改成今晚的夜跑先换成 15 分钟拉伸？连续打卡照样算，并且只在用户授权日历后使用这个信号。",
+  "示例中的全网史低是无法核对的绝对化表述：PA 查不了全网和全部历史，Ant Design 也写了不要使用过于绝对的表述。建议改成带范围的说法，如近 30 天我监测的 3 个平台里最低。广告法层面的定性属于其他方向，本方向未核。",
+  "两篇 Medium 文章（Yuki K. 的认知负荷文、Design Bootcamp 的情绪自适应界面文）本轮无法核实是否存在及原意：medium.com 不在会话网络白名单，检索配额也已用完。核实前建议降为观点类二手来源；情绪自适应的依据可换成 Mailchimp 与微软的一手原文。",
+  "基础稿多处关怀语（如今天辛苦了）建议限定为由事件触发（深夜、连续失败）且只说一次，不作为高频模板；AI 的情感式共情会被打折，过多共情会拉低满意度。"
+ ],
+ "surprises_or_contradictions": [
+  "更暖与更准此消彼长：把模型微调得更温暖后错误率上升 10 到 30 个百分点，用户难过时更严重。温暖不是免费的加分项。",
+  "AI 的共情越走心越被打折：强调情感分享的回复标成 AI 后掉分最多，只表示理解处境的回复几乎不受影响。",
+  "道歉多了反而扣分：服务失败现场，开场之后继续道歉与共情会拉低满意度。",
+  "越像人，生气的用户越不满意，与拟人化带来亲近感的直觉相反。",
+  "被喜欢的仆人型角色会引发反向行为：按 Aggarwal 与 McGill 的结果外推，讨人喜欢的省钱管家可能让用户自己更不省（待验证的假设），这对最常见的管家隐喻提出了疑问。",
+  "头部设计体系在后退：Shopify Polaris 现在写的是别纠结 voice and tone、先说人话，与写一套详尽人设的做法方向相反。",
+  "你/您在公开规范之间并不一致：Ant Design 说避免您，适老与政务金融场景普遍用您，基础稿把它当铁律是过度概括。",
+  "看起来更客观的信号在法律上更危险：打字节奏属于行为生物特征，在欧盟的工作与教育场景落入情绪识别禁令；读文字内容推断情绪反而不在禁令内（后半句据检索摘要，前半句的例子凭记忆待核）。",
+  "操纵有效所以更要禁：情感挽留把互动最高拉到约 14 倍，温和暗黑模式让接受率翻倍且几乎不招反感，靠用户反馈发现不了。",
+  "谄媚是被好评数据带出来的：GPT-4o 的更新在上线前看到的是正向用户信号，只看即时满意度的语气优化会系统性滑向讨好。",
+  "同一家公司 4 个月内先因太热回滚、又因太冷加温，说明不存在让所有人满意的单一默认语气。"
+ ],
+ "gaps": [
+  "本轮核查受两处限制：WebFetch 只能打开 GitHub 类域名，www.nngroup.com、arxiv.org、styleguide.mailchimp.com、www.news.cn 均不在会话网络白名单（需在网络设置中放行，同类还有 www.cac.gov.cn、eur-lex.europa.eu、openai.com、www.anthropic.com、www.miit.gov.cn）；WebSearch 在完成 20 次后本轮共享配额耗尽，后续 5 次检索被拒。如需补查，可在下一条消息继续，或调高 CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION。33 条 findings 中 9 条经官方 GitHub 源文件逐字核对，19 条来自检索摘要，5 条凭研究员既有知识。",
+  "De Freitas 等 2025 的准确数字：操纵式告别占比是 43% 还是 37.4%，14 倍对应的具体条件，样本量 3,300 的口径，需回查 arXiv 2508.19258 v3。",
+  "中国《人工智能拟人化互动服务管理暂行办法》正式稿逐条原文：禁止情感操纵、退出机制、连续使用提醒、显著提示 AI 等条款是否保留，以及答记者问对适用范围的解释；任务型 PA 是否落入持续性情感互动服务需要法务定性。",
+  "适老化规范的条文原文与数值，以及《算法推荐管理规定》《个人信息保护法》第二十四条、《网络交易监督管理办法》相关条文号，本轮均凭记忆，未核。",
+  "NN/g 语气实验的样本量、回归系数，以及四维度文章里报错示例的性质。",
+  "中国人群的一手数据完全缺失：Z 世代、家庭采购者、下沉市场、银发族对语气、称呼、幽默的偏好没有任何可核对的数据，6 个画像预设全部是设计假设。建议每个画像找 8 到 12 人，用同一事件的 3 种语气渲染做偏好与理解度对比。",
+  "中文语境的实证空白：你/您、语气词、emoji、感叹号对信任与好感的影响没有查到中文实验，建议产品内做 A/B；中文文本情绪识别与反讽识别的基准也没有查到。",
+  "国内产品的语气自定义实践（豆包、小爱同学、元宝、通义、Kimi 等的人设与音色选择）以及 Ant Design 之外的国内公开语气指南（华为、小米、腾讯、字节）没有核到。",
+  "Atlassian、Slack、Monzo、Duolingo、Google 对话设计指南的原文没有核对，只作为线索写在笔记里。",
+  "Anthropic Claude 宪章原文中关于谄媚、依赖与可信朋友的段落，以及 Anthropic 智能体自主性研究的具体数字，未核。",
+  "提示词层面调高温度是否也会降低准确率没有证据：Ibrahim 等研究的是微调。",
+  "ChatGPT 2025-12 的 warmth、enthusiasm、emoji 细调与 Grok 各模式的官方说明未核；xAI 官方 GitHub 仓库的 README 没有描述任何人设模式。",
+  "FTC 6(b) 调查的后续结果、SB 243 条文原文、纽约州同类法律未核。",
+  "Cleo 吐槽与夸夸模式对留存和省钱结果的影响只有二手数字，没有一手数据。",
+  "有毒的积极、良性冒犯理论对通知幽默的适用性没有找到可引用的实证来源，笔记中按专家共识级别处理。",
+  "角色隐喻的关键假设（管家式框架让用户更松懈、搭子式框架让用户更会省）是从 2012 年的品牌启动研究外推的，需要在产品内做对照实验。"
+ ],
+ "dossier_path": "scratchpad/research/T8-persona-mood.md"
+}

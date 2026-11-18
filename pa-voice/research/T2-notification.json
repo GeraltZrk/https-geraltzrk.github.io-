@@ -1,0 +1,814 @@
+{
+ "track": "T2 通知与打扰的科学：时机、频率、疲劳、分级与平台规则",
+ "headline_insights": [
+  "「打断后要 23 分钟才能恢复」是误引：Gloria Mark 的 23 分 15 秒是被打断的工作当天被重新拾起前的平均间隔（其间约插入 2 件事）；她 2008 年的实验反而发现被打断的人做得更快，代价是压力和挫败感更高。",
+  "通知不点也有成本：Stothart 2015 发现只是收到通知（不看不回），注意力任务的表现下降幅度就与真的接电话、发短信相当，所以可发可不发的消息只能走不响不振的层级。",
+  "批处理有效但看频率：Fitz 2019（n=237，2 周）每天 3 次定时送达让人更专注、压力更低，每小时一批几乎无效，完全不给通知反而更焦虑，答案不是静音而是可预期。",
+  "平台已把分级变成准入条件：iOS 的 Time Sensitive 只能用于正在发生或 1 小时内将发生的事，华为、vivo、OPPO 把资讯营销类推送限制在每天 2 条且静默，Android 15 对连发通知自动降声降振最长 2 分钟。",
+  "推送权限是稀缺资产：Airship 2025 年数据 opt-in 中位数 iOS 48.85%、Android 53.3%，直接打开率中位数约 3%，推送只能当加急通道，App 内的目标卡片才是底座。",
+  "PA 的天然优势是触发式：Batch 2025 基准中由用户行为触发的情境式推送打开率 14.4%，群发式 4.19%（约 3.4 倍），一旦混入 PA 自发的「推荐」就会丢掉这个优势。",
+  "模型不能独自决定该不该开口：ProactiveBench 上 GPT-4o 的误报率 51.85%，专门微调后仍约 50%，发不发要由用户设的触发条件、硬阈值和频控先把关。",
+  "实况窗/实时活动只给执行中的过程：Apple（上限 8 小时）、Android 16 Live Updates、华为实况窗口径一致，要求进行中、用户发起、有始有终且禁广告，多日的「盯降价」不够格。"
+ ],
+ "findings": [
+  {
+   "id": "T2-01",
+   "claim": "「打断后要23分钟才能恢复」是误引：23分15秒是被打断的工作当天被重新拾起前的平均间隔，其间还插了约2件别的事。",
+   "evidence_type": "实证研究",
+   "source_title": "Mark, González & Harris (CHI 2005) No Task Left Behind? Examining the Nature of Fragmented Work；数字出自 Gloria Mark 2006 年 Gallup 访谈",
+   "source_url": "https://dl.acm.org/doi/10.1145/1054972.1055017",
+   "year": "2005/2006",
+   "key_data": "Gallup访谈：81.9%的被打断工作当天恢复，平均23分15秒，中间约2个插入任务；CHI 2005：57%的工作领域被打断。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "真实代价是任务被搁置和插队，不是固定分钟数。需要动作的通知要能在通知内一键闭环，别把人引进App。",
+   "caveat": "仅经搜索摘要核对，news.gallup.com 与 ACM 页面在本会话打不开；二手来源称 CHI 论文正文数字为 25 分 26 秒（SD 54 分 48 秒），未核原文；美国办公室现场观察，早于智能手机。"
+  },
+  {
+   "id": "T2-02",
+   "claim": "被打断的人反而更快做完任务，代价是更高的压力、挫败感、时间压力和费力感；打断的成本主要是情绪而非分钟数。",
+   "evidence_type": "实证研究",
+   "source_title": "Mark, Gudith & Klocke (CHI 2008) The Cost of Interrupted Work: More Speed and Stress",
+   "source_url": "https://dl.acm.org/doi/10.1145/1357054.1357072",
+   "year": "2008",
+   "key_data": "CHI 2008实验：被打断组完成更快、质量相近，但压力、挫败、费力、时间压力显著更高。",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "用户高压时段（赶路、会议、深夜）少发；要发就给确定结论，不渲染紧迫。「省时间」不能只算秒数。",
+   "caveat": "实验室邮件任务、学生样本、短时任务；搜索摘要确认结论，未打开原文。"
+  },
+  {
+   "id": "T2-03",
+   "claim": "桌面端邮件和IM提醒会引发连锁切换：被提醒打断后，回到原任务最长可达15分钟，部分中断数小时后才恢复。",
+   "evidence_type": "实证研究",
+   "source_title": "Iqbal & Horvitz (CHI 2007) Disruption and Recovery of Computing Tasks: Field Study, Analysis, and Directions",
+   "source_url": "https://www.erichorvitz.com/CHI_2007_Iqbal_Horvitz.pdf",
+   "year": "2007",
+   "key_data": "后续论文转述：恢复原活动最长约15分钟；研究员记忆的原文数字（处理近10分钟、再过10–15分钟、27%超2小时）未核。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "一条通知的成本=看一眼+概率性绕路。通知自带结论和按钮，别用「点开看看」把人带偏。",
+   "caveat": "搜索只确认了方法与「最长 15 分钟」的转述；其余数字凭记忆，引用前须核原文；2007 年微软员工的桌面环境。"
+  },
+  {
+   "id": "T2-04",
+   "claim": "手机通知即使不看不回，也会显著拉低正在进行的注意力任务表现，效应量与真的接电话、发短信相当。",
+   "evidence_type": "实证研究",
+   "source_title": "Stothart, Mitchum & Yehnert (2015) The Attentional Cost of Receiving a Cell Phone Notification, JEP:HPP 41(4)",
+   "source_url": "https://doi.org/10.1037/xhp0000100",
+   "year": "2015",
+   "key_data": "随机分组（来电/短信/无通知），被试不知情；收到通知组错误显著更多，来电比短信更糟。",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "「发了不点也没损失」不成立。可发可不发的消息一律走不响不振的层级：被动通知、摘要、App内卡片。",
+   "caveat": "美国本科生、实验室持续注意任务；通知是真人电话和短信而非 App 推送；经新闻稿与搜索摘要核对，未打开论文。"
+  },
+  {
+   "id": "T2-05",
+   "claim": "在任务执行中途打断，比在任务边界处打断多花3%–27%时间、错误翻倍、烦躁感高31%–106%。",
+   "evidence_type": "实证研究",
+   "source_title": "Bailey & Konstan (2006) On the need for attention-aware systems, Computers in Human Behavior 22(4)",
+   "source_url": "https://doi.org/10.1016/j.chb.2005.12.009",
+   "year": "2006",
+   "key_data": "摘要数字：3%–27% more time；twice the number of errors；31%–106% more annoyance。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "非紧急消息等到自然断点再发：刚解锁、切换应用、通话或会议刚结束。",
+   "caveat": "来自研究员既有知识，检索额度耗尽未在本次会话核对，DOI 凭记忆；2006 年桌面实验室任务。"
+  },
+  {
+   "id": "T2-06",
+   "claim": "在一段手机交互刚结束时（打完电话、读完短信）送达的通知，被处理得明显快于随机时刻送达的。",
+   "evidence_type": "实证研究",
+   "source_title": "Fischer, Greenhalgh & Benford (MobileHCI 2011) Investigating Episodes of Mobile Phone Activity as Indicators of Opportune Moments to Deliver Notifications",
+   "source_url": "https://interruptions.net/literature/Fischer-MobileHCI11.pdf",
+   "year": "2011",
+   "key_data": "自然情境实验：假设通话/短信片段结尾是断点；结论支持，且任务负荷与情境合适度也显著影响延迟。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "把「用户刚放下一件事」当发送窗口：付款完成后、导航结束后、会议结束后一两分钟。",
+   "caveat": "搜索只确认论文与假设，结果部分凭记忆；样本约 20 人、2 周、英国、2011 年；同作者 2010 年论文认为内容比时机更重要（凭记忆）。"
+  },
+  {
+   "id": "T2-07",
+   "claim": "把通知延后到用户的「断点」再送达，自评认知负荷明显下降：受控研究低46%，30人16天野外研究低33%。",
+   "evidence_type": "实证研究",
+   "source_title": "Okoshi 等 Attelia（PerCom/UbiComp 2015）；Attention and Engagement-Awareness in the Wild（IEEE PerCom 2017）",
+   "source_url": "https://dblp.org/rec/conf/percom/OkoshiTTIT17.html",
+   "year": "2015/2017",
+   "key_data": "Attelia：断点时机认知负荷低46%（受控）、低33%（野外）；PerCom 2017：Yahoo! JAPAN 687,840名用户、3周线上实验。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "断点检测值得做，但只用于非紧急消息；最廉价的断点信号是刚解锁、刚切换应用、刚结束通话。",
+   "caveat": "认知负荷为 NASA-TLX 自评；PerCom 2017 的响应时间降幅（记忆中 49.7%）本次未核实，勿引用具体数；日本 Android 用户。"
+  },
+  {
+   "id": "T2-08",
+   "claim": "用户能否接受一条通知首先看内容：有打扰感的通知只有内容有用时才被接受；高优先级通知的响应明显更快。",
+   "evidence_type": "实证研究",
+   "source_title": "Mehrotra, Pejovic, Vermeulen, Hendley & Musolesi (CHI 2016) My Phone and Me: Understanding People's Receptivity to Mobile Notifications",
+   "source_url": "https://discovery.ucl.ac.uk/1502364/1/CHI16.pdf",
+   "year": "2016",
+   "key_data": "20名用户、10,372条通知、474份问卷；高优先级平均响应11.94秒，低优先级25.91秒。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "先保证「这条对我有用」再优化时机；首句回答「这跟我哪个目标有关、值多少」。",
+   "caveat": "样本仅 20 人；响应时间=看到+决定；人格特质结论各来源转述不一；经搜索摘要核对，未打开原文。"
+  },
+  {
+   "id": "T2-09",
+   "claim": "仅凭手机使用数据就能预测用户此刻是否愿意接触主动推荐的内容，精确率比基线高66.6%；「可打扰」不等于「愿意投入」。",
+   "evidence_type": "实证研究",
+   "source_title": "Pielot, Cardoso, Katevas, Serrà, Matic & Oliver (IMWUT 2017) Beyond Interruptibility: Predicting Opportune Moments to Engage Mobile Phone Users",
+   "source_url": "https://dl.acm.org/doi/10.1145/3130956",
+   "year": "2017",
+   "key_data": "337名用户、4周现场研究；预测engagement的模型precision比基线高66.6%。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "区分「现在能看一眼」和「现在愿意做决定」：需决定的消息挑空闲时段，告知类静默入账即可。",
+   "caveat": "66.6% 是模型精确率提升，不是用户参与度提升；作者幻灯片的「转化率 +507%」定义未核，勿引用。"
+  },
+  {
+   "id": "T2-10",
+   "claim": "成年人每天要处理几十条通知（15人研究日均63.5条，278人研究约56条），以即时通讯和邮件为主，多在几分钟内被查看。",
+   "evidence_type": "实证研究",
+   "source_title": "Pielot, Church & de Oliveira (MobileHCI 2014) An In-Situ Study of Mobile Phone Notifications；Pielot, Vradi & Park (MobileHCI 2018) Dismissed!",
+   "source_url": "https://www.interruptions.net/literature/Pielot-MobileHCI18.pdf",
+   "year": "2014/2018",
+   "key_data": "2014：15人1周，日均63.5条；2018：278人（西班牙）794,525条通知，NN/g转述日均约56条。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "PA每条推送都在和几十条人际消息抢位置；非人际、非时效的消息默认不该出声。",
+   "caveat": "西欧 Android 用户、2014–2016 年数据；青少年更高（Common Sense Media 2023 中位数 237 条/日，凭记忆未核）；经搜索摘要核对。"
+  },
+  {
+   "id": "T2-11",
+   "claim": "把通知改成每天3次定时批量送达，用户更专注、心情更好、更有掌控感、压力更低；每小时一批几乎无效；全关反而更焦虑。",
+   "evidence_type": "实证研究",
+   "source_title": "Fitz, Kushlev, Jagannathan, Lewis, Paliwal & Ariely (2019) Batching smartphone notifications can improve well-being, Computers in Human Behavior 101",
+   "source_url": "https://doi.org/10.1016/j.chb.2019.07.016",
+   "year": "2019",
+   "key_data": "随机现场实验n=237，2周；批次时点9:00/15:00/21:00；完全不给通知组焦虑与FoMO更高。",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "非紧急消息合并成每天1–3个固定批次，并告诉用户几点来；不要用「全部静音」当省事方案。",
+   "caveat": "印度 Android 用户，仅 2 周；部分作者与批处理 App（Daywise）有利益关联；摘要对 productivity 的表述有歧义；未打开原文。"
+  },
+  {
+   "id": "T2-12",
+   "claim": "关掉所有通知24小时让人更专注高效，但也更焦虑、与社交圈的联结感下降；原计划的30天版本招不到人。",
+   "evidence_type": "实证研究",
+   "source_title": "Pielot & Rello (MobileHCI 2017) Productive, Anxious, Lonely: 24 Hours Without Push Notifications",
+   "source_url": "https://arxiv.org/abs/1612.02314",
+   "year": "2017",
+   "key_data": "30人交叉设计；73.3%表示打算关掉部分通知；二手转述称两年后约六成说到做到的人仍在用勿扰。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "用户要的是可控而不是全无。给每个目标三档开关：紧急才叫我、每天汇总、有变化就说。",
+   "caveat": "样本 30 人、自我报告；两年回访数字来自二手报道，未核原文。"
+  },
+  {
+   "id": "T2-13",
+   "claim": "邮件「批处理」未被证实能降低压力；主动去查（拉）的人比靠通知（推）的人自评生产力更高。",
+   "evidence_type": "实证研究",
+   "source_title": "Mark, Iqbal, Czerwinski, Johns, Sano & Lutchyn (CHI 2016) Email Duration, Batching and Self-interruption",
+   "source_url": "https://dl.acm.org/doi/10.1145/2858036.2858262",
+   "year": "2016",
+   "key_data": "40名信息工作者、12个工作日、心率监测；摘要称未发现批处理邮件降低压力的证据。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "汇总不是万能药：摘要要短到一眼扫完，并让用户随时能主动拉到最新状态（目标卡片、小组件）。",
+   "caveat": "来自研究员既有知识，未在本次会话核对，DOI 凭记忆；对象是邮件而非手机通知，与 Fitz 2019 部分相左。"
+  },
+  {
+   "id": "T2-14",
+   "claim": "告警一多就会被无视：医生对电子处方系统的用药安全警报有49%–96%直接跳过（override）。",
+   "evidence_type": "实证研究",
+   "source_title": "van der Sijs, Aarts, Vulto & Berg (2006) Overriding of Drug Safety Alerts in Computerized Physician Order Entry, JAMIA 13(2)",
+   "source_url": "https://doi.org/10.1197/jamia.M1809",
+   "year": "2006",
+   "key_data": "JAMIA 2006系统综述：drug safety alerts are overridden by clinicians in 49% to 96% of cases。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "时效级提醒必须稀缺且几乎每次都值得；给它设采纳率红线，低于红线就自动收紧触发条件。",
+   "caveat": "医疗场景类比，非消费通知；来自研究员既有知识，未在本次会话核对。"
+  },
+  {
+   "id": "T2-15",
+   "claim": "推送权限已是稀缺资产：2025年opt-in中位数iOS 48.85%、Android 53.3%（2023年为71.3%）。",
+   "evidence_type": "行业数据",
+   "source_title": "Airship: Mobile App Push Notification Benchmarks for 2026（经 Mobiloud 转述）",
+   "source_url": "https://www.airship.com/mobile-app-push-notification-benchmarks-for-2026/",
+   "year": "2026",
+   "key_data": "Android中位数71.3%（2023）→59.5%（2024）→53.3%（2025）；2024年直接打开率中位数Android 3.4%、iOS 3.1%。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "约一半用户没给权限，给了的也有约97%的推送不被直接点开；App内目标卡片才是底座，推送只是加急通道。",
+   "caveat": "厂商基准报告，样本为 Airship 客户，经二手转述，未打开原报告；「直接打开率」低估了看了没点的价值。"
+  },
+  {
+   "id": "T2-16",
+   "claim": "由用户行为或事件触发的情境式推送，打开率约为群发式的3.4倍（14.4%对4.19%）。",
+   "evidence_type": "行业数据",
+   "source_title": "Batch: Benchmark notifications push & CRM mobile 2025",
+   "source_url": "https://batch.com/blog/case-studies/benchmark-notifications-push-crm-mobile",
+   "year": "2025",
+   "key_data": "Batch 2025基准（约8000亿条消息）：contextual 14.4%、generic 4.19%；Android opt-in 85%→67%，iOS 58%→56%。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "PA的优势是每条消息都由用户自己的目标触发；别混入群发式「推荐」，否则整条通道被拉回4%。",
+   "caveat": "法国厂商、客户以欧洲品牌为主；数字来自二手转述，报告需留资下载，未核原文。"
+  },
+  {
+   "id": "T2-17",
+   "claim": "用户自述的容忍阈值很低：每周1条推送就有约10%–13%的人表示会关通知；「无关通知太多」是删App的首要自述原因。",
+   "evidence_type": "行业数据",
+   "source_title": "Localytics/Qualtrics 2017 调查（MarketingProfs 转述）；Helplama；Leanplum（Fast Company 转述）",
+   "source_url": "https://www.marketingprofs.com/charts/2018/33486/how-many-mobile-push-notifications-are-too-many",
+   "year": "2017–2025",
+   "key_data": "Localytics 2017（1,000名美国用户）：每周1条时10%会关；Helplama：13%；Leanplum：无关通知是删App首因。",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "把「每周几条」当预算而不是KPI；每条都要说得清「为什么是现在、为什么是你」。",
+   "caveat": "均为厂商委托的自述意向调查，非行为数据；流传的「每周 3–6 条 40% 关闭」「每周 1 条 6% 卸载」本次未找到出处，勿引用。"
+  },
+  {
+   "id": "T2-18",
+   "claim": "同一句提醒反复用会失效：Duolingo用「近期用过就降权」的bandit算法轮换文案模板，DAU提升0.5%、新用户留存提升2%。",
+   "evidence_type": "实证研究",
+   "source_title": "Yancey & Settles (KDD 2020) A Sleeping, Recovering Bandit Algorithm for Optimizing Recurring Notifications",
+   "source_url": "https://research.duolingo.com/papers/yancey.kdd20.pdf",
+   "year": "2020",
+   "key_data": "KDD 2020摘要：0.5% increase in total DAUs，2% increase in new user retention；数据集含35天2亿条提醒。",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "高频提醒要有模板池并记录每人近期用过的模板；但文案优化收益是个位数，别指望它救场。",
+   "caveat": "摘要数字经搜索核对，未打开 PDF；冷却半衰期约 15 天、提醒在上次练习约 23.5 小时后发出均为记忆值；语言学习场景。"
+  },
+  {
+   "id": "T2-19",
+   "claim": "Duolingo把「不靠增加发送量」当增长底线（protect the channel），并在用户连续多天不响应后主动停发且告知。",
+   "evidence_type": "产品案例",
+   "source_title": "Jorge Mazal: How Duolingo reignited user growth（Lenny's Newsletter）；Duolingo 停发提醒的公开截图",
+   "source_url": "https://www.lennysnewsletter.com/p/how-duolingo-reignited-user-growth",
+   "year": "2023",
+   "key_data": "停发文案：These reminders don't seem to be working. We'll stop sending them for now.",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "给PA设「自动闭嘴」：同类提醒连续N次无响应即降级或停发，并用一句话说明已停、怎么恢复。",
+   "caveat": "来自研究员既有知识，未在本次会话核对；停发天数（约 7 天）未核。"
+  },
+  {
+   "id": "T2-20",
+   "claim": "iOS把通知分四个打扰级别，并规定Time Sensitive只能用于正在发生或1小时内将发生的事。",
+   "evidence_type": "官方规范",
+   "source_title": "Apple Human Interface Guidelines: Managing notifications",
+   "source_url": "https://developer.apple.com/design/human-interface-guidelines/managing-notifications",
+   "year": "2026（现行版）",
+   "key_data": "原文：an event that's happening now or will happen within an hour；首次到达时系统提供关闭入口并定期复评。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "分级直接对齐四档；「明早扣费」「三天后截止」都不够格用时效级，只有1小时内的窗口才可穿透专注模式。",
+   "caveat": "Critical 级需 Apple 特批的 entitlement（已核 criticalAlert 文档），面向健康、安全、家居类，PA 基本不可用。"
+  },
+  {
+   "id": "T2-21",
+   "claim": "Apple明确要求同一件事不要重复通知，哪怕用户没回应；营销通知须用户明确同意，且绝不能用Time Sensitive。",
+   "evidence_type": "官方规范",
+   "source_title": "Apple Human Interface Guidelines: Notifications；App Store Review Guidelines 4.5.3 / 4.5.4",
+   "source_url": "https://developer.apple.com/design/human-interface-guidelines/notifications",
+   "year": "2026（现行版）",
+   "key_data": "原文：Avoid sending multiple notifications for the same thing, even if someone hasn't responded.",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "「没回就再催一遍」被平台点名反对。升级只能因为情况变了（更近、更贵、更少），并带上新信息。",
+   "caveat": "HIG 为设计指南；App Review 4.5.3/4.5.4 为审核条款，营销推送须 opt-in 并可退出，滥用可被撤销推送权限。"
+  },
+  {
+   "id": "T2-22",
+   "claim": "iOS支持「先静默试发」的临时授权（只进通知中心，附保留/关闭按钮）；官方建议任务类应用在用户排好第一个任务后再要权限。",
+   "evidence_type": "官方规范",
+   "source_title": "Apple Developer Documentation: Asking permission to use notifications",
+   "source_url": "https://developer.apple.com/documentation/usernotifications/asking-permission-to-use-notifications",
+   "year": "2026（现行版）",
+   "key_data": "原文：you might make the request after the person schedules a first task；临时通知不响、不横幅、不上锁屏。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "在用户创建第一个目标的那一刻再要权限，并说清「我只在这几种情况叫你」。",
+   "caveat": "用户点「保留」后默认仍是静默送达，需用户自行改为显著提醒。"
+  },
+  {
+   "id": "T2-23",
+   "claim": "Android按是否须立刻知道或行动分四档重要性，并列出不该发通知的情形：无价值召回、节日问候、无需用户参与的操作、可自愈的错误。",
+   "evidence_type": "官方规范",
+   "source_title": "Android Developers: Notifications 设计指南；Create and manage notification channels",
+   "source_url": "https://developer.android.com/design/ui/mobile/guides/home-screen/notifications",
+   "year": "2026（现行版）",
+   "key_data": "原文：disguised as urgent, it can produce unnecessary alarm；标题≤30字符、正文≤40字符、动作≤3个。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "「同步完成」「又查了一遍没变化」这类过程汇报按规范不该发；任务提醒归DEFAULT，订阅内容归LOW。",
+   "caveat": "30/40 字符按拉丁字符给出，中文可见字数需按机型实测；国内定制系统的展示可能不同。"
+  },
+  {
+   "id": "T2-24",
+   "claim": "系统已在替用户反骚扰：Android 13起通知默认关闭，15对短时连发自动降声降振最长2分钟，16强制自动分组。",
+   "evidence_type": "官方规范",
+   "source_title": "Android Developers: About notifications；Notification runtime permission",
+   "source_url": "https://developer.android.com/develop/ui/compose/notifications",
+   "year": "2026（现行版）",
+   "key_data": "冷却原文：repetitive notifications for up to two minutes；权限原文：off by default；同应用≥4条未分组即自动合并。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "连发3条不如合成1条：后面几条会被系统压成无声。用户还能看到你每天发了多少条。",
+   "caveat": "国内定制系统（HyperOS、ColorOS、OriginOS、HarmonyOS）实现可能不同；另已核：Android 13 起持续发送不产生可见通知的高优 FCM 会被降级。"
+  },
+  {
+   "id": "T2-25",
+   "claim": "两大平台都支持原地更新而非新发一条：Android同ID更新可只在首次提醒，APNs可用collapse-id合并多条。",
+   "evidence_type": "官方规范",
+   "source_title": "Android Developers: Create a notification；Apple: Sending notification requests to APNs",
+   "source_url": "https://developer.android.com/develop/ui/views/notifications/build-notification",
+   "year": "2026（现行版）",
+   "key_data": "setOnlyAlertOnce：仅首次出现时打断，后续更新不再提醒；Android 8.1起每秒最多响一次；apns-collapse-id合并多条。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "一个目标对应一条会变化的通知。价格再降、名次前移都更新同一条且不再响，只有状态跨级才重新提醒。",
+   "caveat": "更新过于频繁（1 秒内多次）会被 Android 丢弃；国内厂商通道的覆盖与合并参数各家不同，需逐家确认。"
+  },
+  {
+   "id": "T2-26",
+   "claim": "实时活动、Live Updates、实况窗口径一致：只给进行中、用户发起、有始有终的过程用，禁广告促销；Apple上限8小时。",
+   "evidence_type": "官方规范",
+   "source_title": "Apple HIG: Live Activities；ActivityKit 文档；Android Developers: Live Updates；华为实况窗设计指南",
+   "source_url": "https://developer.apple.com/design/human-interface-guidelines/live-activities",
+   "year": "2026（现行版）",
+   "key_data": "Apple：don't exceed eight hours；Android：追踪包裹不适合用Live Update；两家均禁广告促销。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "只有执行中阶段（排队叫号、当天行程、上门取件）能上实况窗；多日的「盯降价」不够格，留在通知和卡片。",
+   "caveat": "Apple 与 Android 原文已核；华为「避免用于营销、广告」及 8 小时生命周期来自搜索摘要和第三方博客，未打开原文；OpenHarmony 文档显示第三方应用不能直接创建实况窗类型通知。"
+  },
+  {
+   "id": "T2-27",
+   "claim": "国内安卓厂商把推送强制分两类：服务与通讯类不限量、可响铃；资讯营销类每天限2条（新闻类5条）且静默展示。",
+   "evidence_type": "官方规范",
+   "source_title": "华为推送服务：推送数量管理细则（并经阿里云 EMAS、腾讯云移动推送文档转述 vivo/OPPO/小米规则）",
+   "source_url": "https://developer.huawei.com/consumer/cn/doc/HMSCore-Guides/message-restriction-description-0000001361648361",
+   "year": "2023",
+   "key_data": "华为自2023-01-05起：资讯营销类新闻5条/日、其他2条/日，服务与通讯不限；vivo运营消息同为5/2；OPPO公信总量=累计用户数×2。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "消息要能归入用户订阅的提醒、订单、出行、账务才有资格响铃；「我觉得你可能想…」类建议每天最多2条且无声。",
+   "caveat": "经搜索摘要核对，未能打开原页面；「静默展示」与华为 category 细分为记忆补充；小米公信限额各文档说法不一，荣耀未查；规则常变，上线前须逐家复核并申请消息自分类。"
+  },
+  {
+   "id": "T2-28",
+   "claim": "鸿蒙系统层按类型定提醒强度：社交通信、服务提醒可横幅+锁屏+响铃；内容资讯只进通知中心，不横幅、不锁屏、不响。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenHarmony 文档：管理通知渠道（notification-slot.md）、通知概述、notificationManager API 参考",
+   "source_url": "https://raw.githubusercontent.com/openharmony/docs/master/zh-cn/application-dev/notification/notification-slot.md",
+   "year": "2026（master 分支）",
+   "key_data": "SlotType表：SERVICE_INFORMATION横幅/锁屏/铃声均为Y；CONTENT_INFORMATION仅通知中心为Y；单应用通知留存最多24条。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "在源头给每条消息打「服务提醒/内容资讯」标签；提示词让模型先判类型再写文案。",
+   "caveat": "来自 OpenHarmony 开源文档；HarmonyOS 商用版与 Push Kit 的分类和审核以华为开发者文档为准。"
+  },
+  {
+   "id": "T2-29",
+   "claim": "微信小程序的一次性订阅消息是用户点一次、只能发一条；长期订阅仅向政务民生、医疗、交通、金融、教育等公共服务开放。",
+   "evidence_type": "官方规范",
+   "source_title": "微信开放文档：小程序订阅消息（经开发者社区文章转述）",
+   "source_url": "https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/subscribe-message.html",
+   "year": "2019 起",
+   "key_data": "开发者文章转述官方规则：用户每授权一次只能下发一条；长期订阅目前仅向政务民生、医疗、交通、金融、教育等线下公共服务开放。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "微信生态里每条主动消息都要用户预先点头。创建目标时把提醒点做成选项：「降到¥2,000时叫我一次」。",
+   "caveat": "未能打开官方文档，内容来自开发者社区转述且年代不一；一次性订阅有效期说法不一，开放范围可能已变。"
+  },
+  {
+   "id": "T2-30",
+   "claim": "《互联网弹窗信息推送服务管理规定》要求弹窗广告可一键关闭，禁止诱导沉迷和过度消费的算法模型，并要求合理规划推送频次。",
+   "evidence_type": "法规",
+   "source_title": "《互联网弹窗信息推送服务管理规定》（国家网信办、工信部、市场监管总局，湖南省政府门户网站转载）",
+   "source_url": "http://www.hunan.gov.cn/zqt/zcsd/202209/t20220913_28839216.html",
+   "year": "2022",
+   "key_data": "网信办、工信部、市场监管总局联合发布，2022-09-30施行；广告须显著标明「广告」和关闭标志，确保一键关闭。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "「省钱」话术若一味催下单有诱导过度消费之嫌；每类主动消息都要有关闭和降频入口，协议里写明频次。",
+   "caveat": "经搜索摘要与政府网站转载核对，未打开网信办原文；「科学规划推送频次、不得干扰关闭」的条文位置凭记忆；《个人信息保护法》第 24 条另要求自动化决策推送提供便捷拒绝方式（未核）。"
+  },
+  {
+   "id": "T2-31",
+   "claim": "让大模型自己判断「该不该主动开口」并不可靠：ProactiveBench上GPT-4o误报率51.85%，专门微调后仍约50%。",
+   "evidence_type": "实证研究",
+   "source_title": "Lu 等：Proactive Agent: Shifting LLM Agents from Reactive Responses to Active Assistance（官方仓库 README）",
+   "source_url": "https://github.com/thunlp/ProactiveAgent",
+   "year": "2024",
+   "key_data": "README：GPT-4o精确率48.15%、误报率51.85%、F1 64.60%；Qwen2-7B微调后误报率50.22%、F1 66.47%。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "发不发不能交给模型自由裁量：触发条件、硬阈值、频控在前，模型只负责写；灰区默认只入账。",
+   "caveat": "2024 年模型与模拟事件流（编程、写作、日常共 6,790 个事件）；各模型召回均近 100%，问题在话多而非漏报；新模型表现可能不同。"
+  },
+  {
+   "id": "T2-32",
+   "claim": "主动式助手的经典框架：把「猜对的收益×把握」与「打扰和猜错的代价」相比，在直接做、先问、不动之间选；没把握就缩小动作。",
+   "evidence_type": "专家观点",
+   "source_title": "Horvitz (CHI 1999) Principles of Mixed-Initiative User Interfaces",
+   "source_url": "https://www.erichorvitz.com/chi99horvitz.pdf",
+   "year": "1999",
+   "key_data": "CHI 1999十二条原则，含minimizing the cost of poor guesses about action and timing、不确定时缩小服务范围。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "给每类主动消息定把握阈值：高且在授权内就做完再告知；中间给一键确认；低就只入账不打扰。",
+   "caveat": "来自研究员既有知识，未在本次会话核对；理论框架，阈值需产品自行标定。Amershi 等 CHI 2019 的 18 条人机交互指南（G3、G8、G10、G17）与之一致。"
+  },
+  {
+   "id": "T2-33",
+   "claim": "主动式AI助手能提升产出，但建议太频繁、不看时机时用户反感：编程场景随机实验中任务完成量提升12%–18%。",
+   "evidence_type": "实证研究",
+   "source_title": "Chen, Zhu, Zhao, Mozannar, Sontag & Talwalkar (CHI 2025) Need Help? Designing Proactive AI Assistants for Programming",
+   "source_url": "https://arxiv.org/abs/2410.04596",
+   "year": "2025",
+   "key_data": "61名参与者；主动助手比非主动基线多完成12%–18%的任务；持续高频建议的版本偏好更低。",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "主动性的收益取决于少而准。先把建议收进卡片，让用户有空时自己翻，而不是每条都推。",
+   "caveat": "来自研究员既有知识，未在本次会话核对，数字与实验细节需复核；编程场景，外推到生活类 PA 须谨慎。"
+  },
+  {
+   "id": "T2-34",
+   "claim": "ChatGPT Pulse把主动性做成每天一次、有头有尾：夜间异步研究，早晨给一组卡片，看完提示今天到此为止，内容当天有效。",
+   "evidence_type": "产品案例",
+   "source_title": "OpenAI: Introducing ChatGPT Pulse（及 TechCrunch 报道）",
+   "source_url": "https://openai.com/index/introducing-chatgpt-pulse/",
+   "year": "2025",
+   "key_data": "2025-09-25发布（Pro移动端预览）；媒体报道其结尾为Great, that's it for today.；可curate并点赞点踩。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "日报要有结束感：固定时刻、3–5张卡封顶、结尾明说「今天就这些」，把用户还给生活。",
+   "caveat": "来自研究员既有知识，本会话打不开 openai.com；功能后续可能已调整，引用前须复核。"
+  },
+  {
+   "id": "T2-35",
+   "claim": "主流助手给定时与主动任务都设了硬上限和显式开关：ChatGPT Tasks与Gemini定时操作均限10个活跃任务，有结果才通知。",
+   "evidence_type": "产品案例",
+   "source_title": "OpenAI Help Center: Scheduled tasks in ChatGPT；Google: Scheduled actions in the Gemini app",
+   "source_url": "https://help.openai.com/en/articles/10291617-scheduled-tasks-in-chatgpt",
+   "year": "2025",
+   "key_data": "ChatGPT Tasks（2025-01测试版）：最多10个活跃任务，完成时推送或邮件通知；Gemini scheduled actions（2025-06）：最多10个。",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "给每人的活跃盯梢目标设上限并在创建时显示余量；只在有产出时通知，不发「我开始了/还在跑」。",
+   "caveat": "来自研究员既有知识，URL 与数字均未在本次会话核对，上限可能已调整。"
+  },
+  {
+   "id": "T2-36",
+   "claim": "系统级AI会改写你的通知：Apple的通知摘要曾把新闻推送概括出错误事实，iOS 18.3因此暂停了新闻类摘要并改用斜体标识。",
+   "evidence_type": "产品案例",
+   "source_title": "Apple: About iOS 18 Updates（iOS 18.3 更新说明）",
+   "source_url": "https://support.apple.com/en-us/121161",
+   "year": "2025",
+   "key_data": "iOS 18.3更新说明（凭记忆）：新闻与娱乐类App的通知摘要暂时不可用；摘要以斜体和图标与原通知区分。",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "通知要抗摘要：首句自成完整事实（什么事、多少钱、何时截止），不靠第二句补充否定或条件。",
+   "caveat": "来自研究员既有知识，未在本次会话核对，URL 需复核；Android 16 的 AI 通知摘要与自动归类同样未核。"
+  }
+ ],
+ "design_rules": [
+  {
+   "rule": "分级主表：每条主动消息先按「紧急度 × 需不需要动作」定层级。≤1小时且必须用户定 → 时效推送（带1–2个按钮，到期前最多原地再提醒1次）；≤1小时但有默认方案 → 标准推送1次并写明「不操作将在几点按什么执行」；1–24小时需决定 → 标准推送（挑断点），截止前1小时内未处理升级一次；1–7天 → 进每日摘要并在目标卡片标「待你决定」；无时限 → 只入账。只是告知的，除非用户此刻要据此行动，否则不出声。",
+   "rationale": "「1小时」门槛直接取自 Apple 对 Time Sensitive 的官方定义（平台硬规则）；非紧急进摘要有 Fitz 2019 与 ChatGPT Pulse 支持（实证 + 产品案例）；各格具体落在哪一层、升级几次是本研究推演，需 A/B 标定。完整 4×3 表与平台参数映射见 dossier 第 9 节。",
+   "do_example": "（时效推送）16:30 的号还剩 2 个，15 分钟后放给下一位。［帮我占一个］［不用了］",
+   "dont_example": "（按时效级响铃送达）本周省钱小结出炉啦，快来看看吧",
+   "supporting_finding_ids": [
+    "T2-20",
+    "T2-23",
+    "T2-11",
+    "T2-34",
+    "T2-27",
+    "T2-28"
+   ]
+  },
+  {
+   "rule": "频率硬配额：时效推送人均 ≤1 条/日、≤3 条/周；标准推送所有目标合计 ≤3 条/日、单目标 ≤1 条/日；PA 自发建议 ≤1 条/日且默认并入摘要；每日摘要 1 次、3–5 条封顶；同一用户 2 分钟内最多 1 条有声提醒。",
+   "rationale": "平台硬规则：华为/vivo/OPPO 资讯营销类 2 条/日且静默、Android 15 冷却 2 分钟、Apple 反对同一件事重复通知。实证旁证：Fitz 每天 3 批有效而每小时一批无效；告警 override 率 49%–96%。具体数字是推演，上线后用通知权限保留率、时效级采纳率、用户主动打开 App 查进度的次数来校准。",
+   "do_example": "（当天第 4 件事不单独推，只在 App 内显示）另有 2 件不急的事，已放进明早 8:30 的汇总。",
+   "dont_example": "一天内为同一张机票推送 6 次：东京机票又变了 ¥10",
+   "supporting_finding_ids": [
+    "T2-27",
+    "T2-24",
+    "T2-21",
+    "T2-11",
+    "T2-14",
+    "T2-10"
+   ]
+  },
+  {
+   "rule": "时效级（穿透专注模式/勿扰）只给 1 小时内发生或失效的事，且永远不用于营销或建议。",
+   "rationale": "Apple 原文规定 Time Sensitive 必须是 happening now or will happen within an hour，且系统会在首次到达时让用户选择关闭、之后定期复评；滥用一次就可能永久失去这个层级。",
+   "do_example": "CA1502 改到 3 号登机口，18:05 关闭登机。（距现在 40 分钟）",
+   "dont_example": "（时效级）视频会员 3 天后续费 ¥30，要不要停掉？",
+   "supporting_finding_ids": [
+    "T2-20",
+    "T2-21",
+    "T2-14"
+   ]
+  },
+  {
+   "rule": "同一件事只发一条；情况变化时原地更新同一条且不再响；绝不因为「用户没回应」而重发。",
+   "rationale": "Apple HIG 明确写了即使用户没回应也不要为同一件事发多条；Android 提供同 ID 更新 + setOnlyAlertOnce，APNs 提供 collapse-id；Android 15 还会把短时间内的连发自动压成无声。",
+   "do_example": "同一条通知从「上海—东京 ¥2,180，降了 ¥320」更新为「¥2,050，降了 ¥450，余 4 张」，更新时不响。",
+   "dont_example": "10:00 机票降价了！ → 12:00 还没看吗？机票降价了哦 → 15:00 最后提醒",
+   "supporting_finding_ids": [
+    "T2-21",
+    "T2-25",
+    "T2-24"
+   ]
+  },
+  {
+   "rule": "升级必须带新信息：升级的理由只能是窗口变短、损失变大、库存变少或用户设的线被触发。",
+   "rationale": "重复而没有新信息的提醒正是告警疲劳的来源（临床警报 49%–96% 被跳过）；Horvitz 的框架要求每次打断都重新过一遍收益与代价的比较。",
+   "do_example": "（三天前进过摘要，最后一晚才推送）今晚 23:59 前不停掉，明早按 ¥199 续一年。［现在停掉］［继续续费］",
+   "dont_example": "你有一条待确认事项尚未处理，请尽快处理。",
+   "supporting_finding_ids": [
+    "T2-21",
+    "T2-32",
+    "T2-14"
+   ]
+  },
+  {
+   "rule": "非紧急的一律进摘要：每天固定时刻 1 次，按「要你决定的 → 已替你办完的 → 仅供了解的」排序，3–5 条封顶，结尾明说「今天就这些」。",
+   "rationale": "Fitz 2019：每天 3 次可预期的批次改善专注、掌控感和压力，每小时一批无效；ChatGPT Pulse 把有限结尾当卖点。但 Mark 2016 提醒汇总不是万能药，所以摘要必须短，且用户能随时主动拉到最新状态。",
+   "do_example": "早 8:30 · 今天 3 件事：1. 东京机票 ¥2,180，离你的 ¥2,000 线还差 ¥180；2. 宽带还有 12 天到期，找到便宜 ¥312/年的套餐，等你点头；3. 报销 ¥486 已到账。今天就这些。",
+   "dont_example": "一天里分 6 次推送零散进展，每条都以「温馨提示」开头。",
+   "supporting_finding_ids": [
+    "T2-11",
+    "T2-34",
+    "T2-13",
+    "T2-10"
+   ]
+  },
+  {
+   "rule": "过程不汇报；可发可不发的只更新 App 内目标卡片，不推送。",
+   "rationale": "Stothart 2015：不看的通知也在扣注意力；Android 官方清单把「无需用户参与的操作」「可自愈的错误」列为不该发通知的情形；Iqbal & Horvitz 记录到提醒会引发十分钟级的绕路。",
+   "do_example": "（目标卡片上）已比对 12 家，暂无更低价 · 10 分钟前更新",
+   "dont_example": "（推送）我又帮你查了一遍，价格没变哦",
+   "supporting_finding_ids": [
+    "T2-04",
+    "T2-23",
+    "T2-03"
+   ]
+  },
+  {
+   "rule": "创建目标时签「打扰契约」，并在那一刻才请求通知权限：让用户三选一决定什么情况叫他。",
+   "rationale": "Apple 官方建议任务类应用在用户排好第一个任务后再请求权限；Android 13 起通知默认关闭且建议在情境中请求；微信一次性订阅要求每条消息预先授权；opt-in 中位数只有约五成；Pielot & Rello 显示用户要的是可控而非全无。",
+   "do_example": "盯住这张机票，什么时候叫你？ ○ 降到 ¥2,000 以下立刻叫我 ○ 每天早上汇总一次 ○ 只在快卖完时叫我",
+   "dont_example": "首次打开 App 就弹「允许通知」，目标创建后默认什么都推。",
+   "supporting_finding_ids": [
+    "T2-22",
+    "T2-24",
+    "T2-29",
+    "T2-12",
+    "T2-15"
+   ]
+  },
+  {
+   "rule": "用户订阅的「目标进展」与 PA 自发的「建议」分两条通道、两套配额；建议通道默认静默、可一键关闭，带货内容标「广告」。",
+   "rationale": "国内厂商和鸿蒙系统在通道层就把服务提醒与资讯营销分开，后者限量且静默；Apple 要求营销通知单独 opt-in；弹窗规定要求广告可识别、可一键关闭；Batch 数据表明触发式的打开率是群发式的 3.4 倍，混发会拖垮整条通道。",
+   "do_example": "通道「目标进展」只发用户设过条件的事；通道「PA 的建议」每天最多 1 条并入早间汇总，旁边有「不再提这类」。",
+   "dont_example": "用「订单提醒」通道发：猜你还想买这个",
+   "supporting_finding_ids": [
+    "T2-27",
+    "T2-28",
+    "T2-21",
+    "T2-30",
+    "T2-16"
+   ]
+  },
+  {
+   "rule": "非紧急但需要决定的消息挑断点发：用户刚结束一件事的一两分钟内，或用户自己约定的时段。",
+   "rationale": "任务中途打断比边界处多花 3%–27% 时间、错误翻倍（Bailey & Konstan）；交互片段结束后送达的通知处理更快（Fischer 2011）；断点送达使自评认知负荷下降 33%–46%（Okoshi）；「能看一眼」不等于「愿意做决定」（Pielot 2017）。",
+   "do_example": "（检测到会议结束 2 分钟后）15:00 评审会要改期，回一个你方便的时间？",
+   "dont_example": "（用户正在导航开车时弹出）本月咖啡目标已省 ¥380",
+   "supporting_finding_ids": [
+    "T2-05",
+    "T2-06",
+    "T2-07",
+    "T2-09"
+   ]
+  },
+  {
+   "rule": "自动闭嘴：同类消息连续 3 次未点开或被划掉就降一级；习惯类提醒连续 5–7 天无响应就停发，并用一句话告知已停和恢复方式。",
+   "rationale": "Duolingo 把保护通道当增长底线，并在用户长期不响应后主动停发；告警疲劳研究表明继续发只会让真正重要的也被忽略；用户自述的容忍阈值很低。降级阈值为推演。",
+   "do_example": "夜跑提醒连着 5 天没被点开，我先改成每周日汇总一次。想恢复每天提醒，在目标里改回来就行。",
+   "dont_example": "第 30 天仍然每晚 21:00 发同一句：今天还没跑步哦",
+   "supporting_finding_ids": [
+    "T2-19",
+    "T2-14",
+    "T2-17"
+   ]
+  },
+  {
+   "rule": "高频重复的提醒（打卡、日报开头）要有不少于 6 个模板的池子，记录每位用户最近用过的模板，约两周内不重复。",
+   "rationale": "Duolingo KDD 2020 证实文案存在新鲜度衰减，用「近期用过就降权」的算法换来 DAU +0.5%、新用户留存 +2%；收益是个位数，所以值得做但不必过度投入。冷却两周取自记忆中的半衰期参数，待核。",
+   "do_example": "周一「昨天跑了 3 公里，今晚还是 20:30？」周二「连着 4 天了，今天想轻一点可以只拉伸 10 分钟。」",
+   "dont_example": "每天同一句：坚持就是胜利，今天也要打卡哦",
+   "supporting_finding_ids": [
+    "T2-18"
+   ]
+  },
+  {
+   "rule": "实况窗/实时活动只给「执行中」且 8 小时内结束的过程；过程中只为关键节点提醒，结束后 15–30 分钟撤下；实况期间不再为同一件事另发推送。",
+   "rationale": "Apple、Android、华为三家都要求进行中、用户发起、有始有终且禁广告；Apple 原文建议结束后 15–30 分钟移除，并明确不要在实时活动之外再为同一更新发推送；Android 文档点名追踪包裹都不合适。",
+   "do_example": "（实况窗）前面 6 桌 · 约 18 分钟。只在「还剩 2 桌」时提醒一次，入座 15 分钟后撤下。",
+   "dont_example": "（实况窗常驻）正在为你监控 3 件商品的价格",
+   "supporting_finding_ids": [
+    "T2-26",
+    "T2-28"
+   ]
+  },
+  {
+   "rule": "模型不独自决定发不发：用户设的触发条件 → 频控配额 → 价值门槛都通过后才调用模型写文案；模型的选项里必须有「只入账、不打扰」，并且它是灰区的默认项。",
+   "rationale": "ProactiveBench 显示最好的模型在「该不该主动开口」上误报率仍约 50%，召回近 100%，即天性话多；Horvitz 框架要求不确定时缩小动作范围；CHI 2025 的实验显示高频主动建议让用户反感。",
+   "do_example": "提示词片段：先判断 tier；若触发条件未命中或价值低于门槛，输出 tier=L0 且不写推送文案，只写一行卡片更新。",
+   "dont_example": "让模型每小时自由判断「现在有没有值得告诉用户的事」并直接推送。",
+   "supporting_finding_ids": [
+    "T2-31",
+    "T2-32",
+    "T2-33"
+   ]
+  },
+  {
+   "rule": "首句抗截断、抗摘要：第一句就是完整事实（什么事、多少钱或多久、何时截止），不靠后半句补充否定或条件。",
+   "rationale": "Android 建议标题不超过 30 字符、正文不超过 40 字符且标题放最重要的信息；系统级 AI 摘要会改写通知，Apple 曾因摘要出错暂停新闻类摘要；Mehrotra 2016 表明内容是否有用决定通知是否被接受。",
+   "do_example": "东京往返 ¥2,050，比你的目标价低 ¥150，今晚 24:00 前有效。",
+   "dont_example": "好消息！你关注的机票有新动态，不过需要注意的是……",
+   "supporting_finding_ids": [
+    "T2-36",
+    "T2-23",
+    "T2-08"
+   ]
+  },
+  {
+   "rule": "夜间（默认 22:00–08:00）不发标准推送；只有窗口 ≤1 小时且用户为该类勾选过「夜里也叫我」的才放行，其余入账并放到次日摘要第一条。",
+   "rationale": "Fitz 的有效批次最晚在 21:00；Apple 只允许 1 小时内的事穿透专注模式；Mark 2008 表明打断的主要代价是压力。22:00–08:00 的具体时段为推演，应允许用户改。",
+   "do_example": "（23:10 发现降价，不推送；次日 8:30 摘要第一条）昨晚 23:10 东京机票降到 ¥2,050，现在还在，要订吗？",
+   "dont_example": "（凌晨 1 点响铃）机票降了 ¥30",
+   "supporting_finding_ids": [
+    "T2-11",
+    "T2-20",
+    "T2-02"
+   ]
+  },
+  {
+   "rule": "给推送设价值门槛：省下的钱或时间乘以把握，过不了门槛（示意值：省钱 ≥¥20 或 ≥目标金额 5%，省时 ≥15 分钟，或 24 小时内截止）就只进摘要；门槛允许用户自己改。",
+   "rationale": "Horvitz 的期望效用框架；一条通知的「看到+决定」时间约 12–26 秒（Mehrotra 2016），还可能引发十分钟级的绕路（Iqbal & Horvitz），为省几块钱单独打断大概率净亏。门槛数值为推演示意，需按品类标定。",
+   "do_example": "（摘要里的一行）牙膏凑单能再省 ¥3，已帮你记下，下次一起买时用。",
+   "dont_example": "（单独推送并响铃）发现一个凑单方案，可以再省 ¥3 哦",
+   "supporting_finding_ids": [
+    "T2-32",
+    "T2-03",
+    "T2-08",
+    "T2-15"
+   ]
+  },
+  {
+   "rule": "给每位用户的活跃盯梢目标数设硬上限并在创建时显示余量；只在任务有产出时通知，不发「我开始了」「还在跑」。",
+   "rationale": "ChatGPT Tasks 与 Gemini 定时操作都把活跃任务限制在 10 个并提供集中管理入口；上限既控制通知总量，也让用户对「PA 在替我盯什么」保持掌控。10 个的数字来自未核对的产品案例。",
+   "do_example": "已在盯 7 件事，还能再加 3 件。新目标：降到 ¥2,000 以下叫你。",
+   "dont_example": "已开始为你监控机票价格！我会持续努力的～（创建后立刻推送一条）",
+   "supporting_finding_ids": [
+    "T2-35",
+    "T2-23"
+   ]
+  }
+ ],
+ "copy_samples": [
+  {
+   "source": "Apple HIG · Notifications（预览被隐藏时的通用正文示例）",
+   "text": "\"Friend request,\" \"New comment,\" \"Reminder,\" or \"Shipment.\"",
+   "url": "https://developer.apple.com/design/human-interface-guidelines/notifications",
+   "note": "已核。官方给的「不泄露细节但能让人判断要不要看」的正文写法。"
+  },
+  {
+   "source": "Android 设计指南 · Notifications（官方反例）",
+   "text": "Haven't seen you in a while!",
+   "url": "https://developer.android.com/design/ui/mobile/guides/home-screen/notifications",
+   "note": "已核。官方点名的「无直接价值的召回通知」。"
+  },
+  {
+   "source": "Android 文档 · Time-sensitive notifications 示例代码",
+   "text": "HIGH PRIORITY / Check this dog puppy video NOW!",
+   "url": "https://developer.android.com/develop/ui/views/notifications/time-sensitive",
+   "note": "已核。官方示例代码里的占位标题与正文，本身恰好是「把不重要的事伪装成紧急」的反面教材。"
+  },
+  {
+   "source": "Android 文档 · Notification runtime permission 推荐流程",
+   "text": "Get notified! / I'm in",
+   "url": "https://developer.android.com/develop/ui/views/notifications/notification-permission",
+   "note": "已核。系统权限弹窗之前的说明屏标题与确认按钮。"
+  },
+  {
+   "source": "Android 文档 · Live Updates",
+   "text": "Thinking... / Rerouting...",
+   "url": "https://developer.android.com/develop/ui/views/notifications/live-update",
+   "note": "已核。ETA 未知时的占位文案，官方要求不要显示空状态。"
+  },
+  {
+   "source": "Android 文档 · Progress-centric notifications",
+   "text": "Tip / Add dish",
+   "url": "https://developer.android.com/develop/ui/compose/notifications/progress-centric",
+   "note": "已核。外卖进度通知里的动作按钮示例：动作要与当前阶段相关。"
+  },
+  {
+   "source": "Android 文档 · 锁屏隐藏内容时的替代文案",
+   "text": "2 new messages / You have 3 new text messages",
+   "url": "https://developer.android.com/develop/ui/views/notifications/build-notification",
+   "note": "已核。敏感内容在锁屏上的公开版本写法。"
+  },
+  {
+   "source": "Apple ActivityKit 文档 · Live Activity 提醒示例",
+   "text": "\\(heroName) has been knocked down! / Open the app and use a potion to heal \\(heroName).",
+   "url": "https://developer.apple.com/documentation/activitykit/displaying-live-data-with-live-activities",
+   "note": "已核。标题给状态变化，正文给下一步。"
+  },
+  {
+   "source": "Apple 文档 · 临时授权通知上的系统按钮",
+   "text": "Keep / Turn Off；Deliver Immediately / Deliver in Scheduled Summary",
+   "url": "https://developer.apple.com/documentation/usernotifications/asking-permission-to-use-notifications",
+   "note": "已核。系统替用户提供的「保留/关闭」与「立即送达/进定时摘要」选项。"
+  },
+  {
+   "source": "Ant Design 文案规范",
+   "text": "我们将会审核你的申诉 / 欢迎回到社区！",
+   "url": "https://raw.githubusercontent.com/ant-design/ant-design/master/docs/spec/copywriting.zh-CN.md",
+   "note": "已核。「我们」的合理语境；感叹号仅用于问候或祝贺。"
+  },
+  {
+   "source": "ChatGPT Pulse（据 TechCrunch 报道）",
+   "text": "Great, that's it for today.",
+   "url": "https://openai.com/index/introducing-chatgpt-pulse/",
+   "note": "未核，凭记忆。日报的有限结尾。"
+  },
+  {
+   "source": "Duolingo 推送（停发提醒）",
+   "text": "These reminders don't seem to be working. We'll stop sending them for now.",
+   "url": "https://www.lennysnewsletter.com/p/how-duolingo-reignited-user-growth",
+   "note": "未核，凭记忆（公开截图广泛流传）。连续不响应后的自动闭嘴告知。"
+  }
+ ],
+ "base_doc_corrections": [
+  "Ant Design 关于「你/您」的原文（已核源文件）是：「直接使用「你」、「我」来和用户对话，与用户建立亲密感。避免使用「您」，让用户感觉太过疏远。」基础稿的「『您』带有明显的下对上客服疏离感」是加工过的转述，应改回原文口径。",
+  "基础稿称 Ant Design「明确指出…绝不自称本助手/小X」：该规范没有这句话，是基础稿自己的主张，应去掉对 Ant Design 的归因。原文只有「不要在同一个句式中混用「你」和「我」」。",
+  "基础稿称「遵循 Ant Design 按钮规范，用精准动词 + 结果名词」：Ant Design 文案规范没有按钮文案专节，只在标点部分提到按钮和标题不用句号；这条应标为自拟规则或另找来源。",
+  "基础稿「除重大目标达成的里程碑祝贺外…」对应的原文是：「当向用户表达问候或祝贺时，使用「！」是合理的语境，例如「欢迎回到社区！」。」范围是问候或祝贺，不限于里程碑。",
+  "「注意力窗口通常只有 1.5 至 3 秒」：本方向没有找到出处，应降级为设计假设。可引用的相邻实证是 Mehrotra 2016 的通知「看到+决定」时间均值 11.94 秒（高优先级）与 25.91 秒（低优先级），以及 Android 官方的标题 ≤30 字符、正文 ≤40 字符建议。",
+  "「28 秒压到 3.5 秒」「节省 87.5%」「消除约 85% 的交互摩擦」：基础稿自己标的是模型测算，没有实测来源，应明确标为推演示意，不能与 NN/g 的 +124% 并列成实证。",
+  "「米勒定律 4±1 组块」归属有误：4±1 出自 Cowan 2001，Miller 1956 是 7±2（通识更正，本次未联网核对）。",
+  "Yuki K. 的 Medium 文章《AI Agent UX: How to Reduce Cognitive Load and User Fatigue》（基础稿标注 2026 年 10 月）：本方向检索额度耗尽，未能核实其是否存在。无论是否存在，它是个人博客，Checking/Interrupting/Watching 三分法应标为作者观点；其中「打断税」建议改用一手研究支撑：Mark 2005/2008、Iqbal & Horvitz 2007、Stothart 2015、Bailey & Konstan 2006。",
+  "若基础稿或后续稿件引用「打断后需要 23 分钟恢复」，须改为准确表述：23 分 15 秒是被打断的工作当天被重新拾起前的平均间隔（含处理打断和约 2 个插入任务），且 Mark 2008 发现被打断者完成更快但压力更高。",
+  "示例话术里的「全网史低」：PA 只监控有限平台和时间窗，无法证明「全网」「史上」；若消息构成广告，还触及《广告法》第九条第（三）项的绝对化用语风险。建议改成可证实的限定说法，如「你盯的 5 个平台里近 90 天最低」（法规部分本次未联网核对）。",
+  "基础稿「严格锁死在 40 个汉字以内」：方向对，但 Android 的 30/40 是拉丁字符，iOS 没有给字数；中文在各机型锁屏、横幅上的可见字数需实测后再定数，暂应标为经验值。",
+  "基础稿只讨论「怎么写」，缺少「发不发、发到哪一层、一天发几条」。按本方向证据，分级与频控对「省时间还是偷时间」的影响大于措辞，建议在报告结构上把分级表和频率上限放在话术规范之前。",
+  "基础稿象限 III 示例「看你今天连开 4 场会…」隐含读取日历并推断用户状态：应让用户知道依据是什么，并能关闭这类基于个人特征的主动建议（《个人信息保护法》第 24 条的精神，未联网核对）。",
+  "基础稿场景 4 的降级提醒（「睡前只刷 5 个核心高频词」）需要补频控：同类提醒连续多天没被理会就应自动降频或停发并告知，否则好话术也会变成机械噪音。"
+ ],
+ "surprises_or_contradictions": [
+  "被打断的人完成任务更快（Mark 2008）。打断的代价是压力而不是速度，「打断让你慢 23 分钟」是流传甚广的误引。",
+  "把通知全关掉并不更好：更焦虑、更怕错过、与社交圈的联结感下降（Fitz 2019；Pielot & Rello 2017），原计划的 30 天关通知实验甚至招不到人。",
+  "批处理的频率是关键：每天 3 次有效，每小时一次几乎无效（Fitz 2019）；而邮件领域的研究没有发现批处理能降低压力（Mark 2016），两者并不一致。",
+  "不看不点的通知也在扣注意力，效应量与真的用手机相当（Stothart 2015），所以「静默但响一声」并不是零成本。",
+  "内容比时机重要：时机选得再好，不相关的内容也不被接受（Fischer 2010、Mehrotra 2016）。",
+  "最强的大模型在「该不该主动开口」上误报率仍有一半，而召回接近 100%（ProactiveBench）：模型的天性是话多而不是漏报。",
+  "Duolingo 用专门的 bandit 算法优化提醒文案，收益只有 DAU +0.5%：文案优化的边际收益远小于直觉，真正的大头在发不发、何时发、发给谁。",
+  "Apple 的规范明确写了「即使用户没回应也不要重发」，与常见的催办逻辑正相反。",
+  "「盯降价」这种多日目标不够格上实况窗或实时活动；Android 文档甚至点名追踪包裹都不合适，因为用户不需要持续盯着。OpenHarmony 文档还显示第三方应用不能直接创建实况窗类型的通知。",
+  "Android 的通知权限已不再是默认开启：opt-in 中位数从 71.3%（2023）降到 53.3%（2025），已接近 iOS 的约 49%。",
+  "Android 官方示例代码里的高优先级通知文案是「Check this dog puppy video NOW!」，恰好是它自己设计指南反对的写法：说明「伪装成紧急」有多容易发生。",
+  "OpenAI 把「今天到此为止」当作主动式产品的卖点；主流助手都给定时任务设了 10 个的硬上限。主动性的行业共识是做减法。"
+ ],
+ "gaps": [
+  "本会话的 WebFetch 只能访问 developer.apple.com、developer.android.com、raw.githubusercontent.com、github.com。以下域名需在会话网络设置中放行后才能复核原文：news.gallup.com、research.duolingo.com、static1.squarespace.com、arxiv.org、developer.huawei.com、www.cac.gov.cn、help.openai.com、openai.com、en.wikipedia.org、api.semanticscholar.org、pmc.ncbi.nlm.nih.gov、developers.weixin.qq.com、*.github.io、web.archive.org。",
+  "WebSearch 在本方向完成 29 次检索后，因整个工作流共享的额度（200 次/轮）耗尽而不可用。如需继续检索，可在本轮结束后发后续消息继续，或调高 CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION。",
+  "因此未能检索、只能凭既有知识补充的主题：ChatGPT Pulse / Tasks、Gemini 定时操作的现行规则与界面文案；Meta AI 主动消息准则；iOS 18–26 的通知摘要与优先通知；Android 16 的 AI 通知摘要与通知整理；CHI 2025 主动式助手论文的具体数字；告警疲劳文献；Horvitz 1999 与 Amershi 2019 原文。",
+  "需复核原文的具体数字：Gallup 访谈与 CHI 2005（23 分 15 秒 vs 25 分 26 秒）；Iqbal & Horvitz 2007（近 10 分钟、10–15 分钟、27% 超 2 小时）；Okoshi PerCom 2017 的响应时间降幅（记忆中 49.7%）；Fitz 2019 全文中 productivity 的方向；Duolingo 论文的冷却参数与 23.5 小时。",
+  "国内平台规则未打开原文：华为、小米、OPPO、vivo 的最新限额与消息分类申请口径（小米公信额度各文档说法不一，荣耀未查）；鸿蒙实况窗的官方场景清单、审核标准与 8 小时生命周期；微信订阅消息与服务号模板消息的现行规则和有效期。",
+  "法规未打开原文：《互联网弹窗信息推送服务管理规定》第五条逐项文字；工信部 2023 年关于提升 App 服务能力的通知中涉及弹窗与推送的条款；《个人信息保护法》第 24 条、《广告法》第 9/43/44 条在 PA 主动消息上的适用需法务确认。",
+  "国内数据空白：个推、极光、友盟+、QuestMobile 关于国内推送到达率、点击率、通知关闭率的报告未检索；国内用户每日通知量没有实测数据。",
+  "国内主动式助手未查：豆包、元宝、通义、Kimi、小艺、小爱、YOYO、小布、蓝心小V 的主动提醒、定时任务与频率控制规则。",
+  "没有找到针对「代理型 PA 的主动消息频率」的直接实证；分级表各格的落层、频率上限、夜间时段、价值门槛、自动降级阈值大多是推演，需要 A/B 实验标定。",
+  "批处理的长期效果未知（Fitz 只做了 2 周）；断点检测在国内定制系统上能拿到哪些信号、是否合规未查。",
+  "中文通知在各机型锁屏、横幅、实况窗胶囊上的实际可见汉字数未查，需要实测；Android 的 30/40 字符建议是拉丁字符。",
+  "流传的行业数字找不到原始出处：「每周 1 条导致 6% 卸载」「每周 3–6 条导致 40% 关闭」「每天超过 5 条卸载率 3 倍」，建议一律不引用。",
+  "两条值得核实的「少发反而长期更好」线索：Meta 分析团队 2022 年文章 Notifications: why less is more（长期实验）；LinkedIn 2015 年减少 40% 邮件后投诉减半。本次均未核到 URL。",
+  "稍后提醒（snooze）的用户行为研究只留了线索（Weber 等 MobileHCI 2018），未读正文；事件相对时间的 snooze 选项是否优于固定分钟数没有证据。",
+  "基础稿引用的 Yuki K. Medium 文章是否真实存在，本方向未能核实。"
+ ],
+ "dossier_path": "scratchpad/research/T2-notification.md"
+}

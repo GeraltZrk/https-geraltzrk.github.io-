@@ -1,0 +1,836 @@
+{
+ "track": "T9 让 AI 同步理解：Skill、提示词、结构化规范与评测方法",
+ "headline_insights": [
+  "Agent Skills 已是跨厂商开放标准（2025-12-18 公开；Gemini CLI 文档写明基于它，OpenAI 的 Codex skills 仓库也指向该标准）：name≤64 字符、description≤1024 字符、SKILL.md 正文建议<500 行/<5000 tokens，其余按需加载，所以话术规范应拆成导航、按状态加载的参考文件、校验脚本和用例。",
+  "已核对的三套主动式 agent（OpenClaw 模板、Poke 与 ChatGPT Dots 的泄露提示词）都把“不发”做成一等输出（NO_REPLY / wait / stay quiet），后两套还把查事实和对用户说话分给两个角色，所以规范的第一条规则应是发不发。",
+  "约束解码能保证槽位和枚举，但 Anthropic 文档明确不支持 maxLength；用参考 linter 机检基础稿，6 条黄金话术按可见字符计锚点 4/6、正文 5/6、按钮 9/12 超出它自定的上限，3 条自报 41 字超过 40 字上限。",
+  "禁用词只能当线索、事实必须锁死：Humanizer（7.07 万星，26 条模式）指出词汇习惯随模型版本变、结构习惯才持久；Humanizer-zh（2.32 万星，31 个检查点）2026-09 大改的起因是“文章改顺了，意思却变了”。",
+  "语气靠原因和示例，不靠大写命令：Anthropic 称示例是引导格式、语气、结构最可靠的方式之一（建议 3–5 条且多样），并建议把 CRITICAL: You MUST 改回平常说法；OpenAI 称矛盾或含糊的指令对 GPT-5 伤害更大。",
+  "评测分三层且语气层要人工校准：代码评分最快最可靠；LLM 评审逐维度隔离并校准到约 90% 一致；skill-creator 明说写作风格类 skill 更适合定性评审；25 条×2 次重复的噪声约 ±14 点，100×2 约 ±7 点。",
+  "厂商规范在语气上一致：不谄媚、不制造紧迫、默认像同事而非密友、跟随用户语域；OpenAI Model Spec 把“每 15 分钟提醒一次审批人”列为反例，并写明生成 token 本身就在消耗用户的时间和钱。",
+  "“语气令牌”没有公开标准：Google Labs 的 DESIGN.md（alpha）把 Voice & Content Strategy 列为第 8 节但注明 prose-only；OpenClaw 当前主干已退役 HEARTBEAT.md，离散旋钮应放进消息 schema 的枚举。"
+ ],
+ "findings": [
+  {
+   "id": "T9-01",
+   "claim": "Agent Skills 是开放标准：SKILL.md 文件夹，name≤64、description≤1024 字符，正文<500 行。",
+   "evidence_type": "官方规范",
+   "source_title": "Agent Skills Specification（agentskills/agentskills 仓库源文件）",
+   "source_url": "https://github.com/agentskills/agentskills/blob/main/docs/specification.mdx",
+   "year": "2025–2026",
+   "key_data": "Metadata (~100 tokens)；Instructions (< 5000 tokens recommended)；引用只引一层；2025-12-18 公开为开放标准。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "话术规范拆成 SKILL.md 导航 + 按状态加载的参考文件 + 校验脚本，不整篇塞进系统提示词。",
+   "caveat": "agentskills.io 站点打不开，核对的是其 GitHub 源文件；Gemini CLI 文档与 OpenAI skills 仓库确认采纳；“30–40 个客户端”的说法未核。"
+  },
+  {
+   "id": "T9-02",
+   "claim": "Anthropic 官方写法：只写模型不知道的；按任务脆弱度给自由度；先建评测再写文档；至少 3 个评测并跨型号测试。",
+   "evidence_type": "官方规范",
+   "source_title": "Skill authoring best practices（Claude 文档）",
+   "source_url": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices",
+   "year": "2025–2026",
+   "key_data": "“Create evaluations BEFORE writing extensive documentation.” “The context window is a public good.”",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "扣款改签类消息走模板低自由度；探店打卡类给原则加示例；每条新规则先配一个失败用例。",
+   "caveat": "针对 Claude；官方承认没有内置的评测运行器（There is not currently a built-in way to run these evaluations），需自建。"
+  },
+  {
+   "id": "T9-03",
+   "claim": "DESIGN.md 第 8 节 Voice & Content Strategy 注明 prose-only，并配 lint/diff。",
+   "evidence_type": "官方规范",
+   "source_title": "DESIGN.md 规范（google-labs-code/design.md，version: alpha）",
+   "source_url": "https://github.com/google-labs-code/design.md/blob/main/docs/spec.md",
+   "year": "2026",
+   "key_data": "“Interface copy is part of the design system”；“This section is prose-only”；version: alpha。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "文案规范进设计系统并交给 agent 读；语气不做令牌，离散旋钮放 schema 枚举；规范配 lint 和 diff。",
+   "caveat": "alpha 版；面向编码 agent 的视觉规范，不是为通知文案设计；“voice tokens” 未找到任何公开标准。"
+  },
+  {
+   "id": "T9-04",
+   "claim": "OpenClaw 分设 SOUL.md、AGENTS.md、USER.md 管声音、规则、偏好；HEARTBEAT.md 已退役。",
+   "evidence_type": "产品案例",
+   "source_title": "OpenClaw 文档：Agent workspace 与模板（SOUL / AGENTS / USER / IDENTITY / HEARTBEAT）",
+   "source_url": "https://github.com/openclaw/openclaw/blob/main/docs/concepts/agent-workspace.md",
+   "year": "2026",
+   "key_data": "“Stay quiet (NO_REPLY) when: it is 23:00-08:00 unless urgent; the human is clearly busy”",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "声音、发送规则、用户档案三处分开维护；静默条件明文化，发与不发冲突时静默优先。",
+   "caveat": "开源项目的默认值，无实验依据；USER.md 预算 4,000 字符；模板里“超过 8 小时没说话就主动联系”不适合省钱省时型 PA。"
+  },
+  {
+   "id": "T9-05",
+   "claim": "Anthropic brand-review skill 的声音框架：每个属性写是/不是/像/不像四行；声音固定，语气按情境调高调低。",
+   "evidence_type": "官方规范",
+   "source_title": "brand-review SKILL.md（anthropics/knowledge-work-plugins，marketing 插件）",
+   "source_url": "https://github.com/anthropics/knowledge-work-plugins/blob/main/marketing/skills/brand-review/SKILL.md",
+   "year": "2026",
+   "key_data": "“The voice attributes remain fixed. Tone dials them up or down based on context.”",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "voice.md 用四行格式写 3–5 个属性；语气矩阵单独成文；绝对化说法列为必查项。",
+   "caveat": "面向营销内容审查；同属官方的 brand-guidelines skill 只有颜色字体、没有语气内容；internal-comms 按类型路由到示例文件。"
+  },
+  {
+   "id": "T9-06",
+   "claim": "Humanizer（7.07 万星）把 AI 文风归为 26 条模式，并指出词汇习惯随模型版本变化，结构习惯才持久。",
+   "evidence_type": "产品案例",
+   "source_title": "blader/humanizer（README 与 SKILL.md v4.0.0）",
+   "source_url": "https://github.com/blader/humanizer",
+   "year": "2026",
+   "key_data": "“Word habits change with every model release. The structural habits above persist”；盲测 16/16。",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "规范优先禁结构（先铺垫后结论、假对比、单行金句），词表只当可更新的线索。",
+   "caveat": "英文；盲测样本仅 16；它依据的维基百科 Signs of AI writing 页面本次打不开，未直接核对。"
+  },
+  {
+   "id": "T9-07",
+   "claim": "Humanizer-zh（2.32 万星）列 31 个中文检查点；2026-09 修订因“改顺了，意思却变了”取消机械替换与自评分。",
+   "evidence_type": "产品案例",
+   "source_title": "op7418/Humanizer-zh（SKILL.md、README、CHANGELOG，revision 2026-09-23）",
+   "source_url": "https://github.com/op7418/Humanizer-zh",
+   "year": "2026",
+   "key_data": "“模式清单是检查线索，不是词语黑名单”；F 组中文项：层叠的“的”、进行+动词、被字句堆叠、四字词排比、套话收尾。",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "润色不得动数字、时间、条件；lint 比对 copy 与 facts 的数字；AI 腔命中只提示不自动改。",
+   "caveat": "社区 skill，自述验证仅 18 个短文本案例；面向文章润色而非通知文案；“稳稳接住”不在清单内，出处未核。"
+  },
+  {
+   "id": "T9-08",
+   "claim": "Anthropic 提示工程：讲原因、给 3–5 条多样示例、说要什么而非不要什么；大写强调会让新模型过度触发。",
+   "evidence_type": "官方规范",
+   "source_title": "Prompting best practices（Claude 文档）",
+   "source_url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices",
+   "year": "2026",
+   "key_data": "“Examples are one of the most reliable ways to steer Claude’s output format, tone, and structure.”",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "每条规则配原因和正反例；规范不用全大写 MUST；示例按场景检索并定期轮换。",
+   "caveat": "针对 Claude 系列；文档提醒示例要足够多样，否则模型会学到无意的模式。"
+  },
+  {
+   "id": "T9-09",
+   "claim": "Anthropic 2026 型号指南：为“低上下文、从别的事切过来”的读者写，要点放前几句；旧的反格式规则在新型号上会反噬。",
+   "evidence_type": "官方规范",
+   "source_title": "Prompting Claude Fable 5.2 / 5.1（Claude 文档）",
+   "source_url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-2",
+   "year": "2026",
+   "key_data": "“Write for an intelligent but low-context reader”；“Put the key points in the first few sentences.”",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "主动消息必须自包含、首行给变化与价值；每次换模型重跑评测并清理旧补丁。",
+   "caveat": "效果描述来自 Anthropic 对智能体最终报告的内部测试，不是通知文案，也没有给出数值。"
+  },
+  {
+   "id": "T9-10",
+   "claim": "Claude Fable 5.2 公开系统提示词要求简短、一次最多问一个问题、认错不自贬；粗口只在用户先用时少量使用。",
+   "evidence_type": "官方规范",
+   "source_title": "Claude Fable 5.2 system prompts（2026-11-09 版）",
+   "source_url": "https://platform.claude.com/docs/en/release-notes/system-prompts/claude-fable-5-2",
+   "year": "2026",
+   "key_data": "“avoids more than one per response”；“accountability without self-abasement, excessive apology”",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "一条消息只要求一个决定；失败消息讲发生了什么和下一步，不反复道歉。",
+   "caveat": "适用于 claude.ai 应用内的聊天，不适用于 API，也不是为主动通知写的。"
+  },
+  {
+   "id": "T9-11",
+   "claim": "Claude 宪章把不欺骗、不操纵列为最重要的诚实属性，并点名禁止制造虚假紧迫和利用情绪。",
+   "evidence_type": "官方规范",
+   "source_title": "Claude’s Constitution（Anthropic）",
+   "source_url": "https://www.anthropic.com/constitution",
+   "year": "2026",
+   "key_data": "“The most important of these properties are probably non-deception and non-manipulation.”",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "“仅剩/最后机会”必须有 facts 里的期限或库存；不处理的后果要主动说明。",
+   "caveat": "引语由抓取工具摘录；页面约 19.5 万字符只读到前 10 万；页面未显示版本日期。"
+  },
+  {
+   "id": "T9-12",
+   "claim": "OpenAI GPT-5 系列指南：verbosity 可用参数加自然语言局部覆盖；矛盾指令代价更高；进度更新只在新阶段或计划变化时发。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenAI Cookbook：GPT-5 / 5.1 / 5.2 prompting guide 与 Shaping your agent’s personality",
+   "source_url": "https://github.com/openai/openai-cookbook/tree/main/examples/gpt-5",
+   "year": "2025–2026",
+   "key_data": "更新仅在 “You start a new major phase of work, or You discover something that changes the plan.”",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "执行中状态默认不发；要发就带一个具体结果；人格文件只管怎么说，不混入任务逻辑。",
+   "caveat": "面向编码与企业 agent；“respect through momentum”人格样板是示例提示词，不是实验结论。"
+  },
+  {
+   "id": "T9-13",
+   "claim": "OpenAI Model Spec：谄媚侵蚀信任；默认像同事而非密友并跟随用户语域；把每 15 分钟催一次审批列为反例。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenAI Model Spec（GitHub 主干，2026）",
+   "source_url": "https://github.com/openai/model_spec/blob/main/model_spec.md",
+   "year": "2026",
+   "key_data": "“sound like a colleague rather than a close personal friend”；反例：每 15 分钟提醒一次审批人。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "默认平实同事口吻；用户先随意才随意；催办有频率上限；已授权的常规步骤不再追问确认。",
+   "caveat": "规范性文件，描述期望行为而非效果证据；源文件内未找到版本日期。"
+  },
+  {
+   "id": "T9-14",
+   "claim": "Poke 泄露提示词：执行引擎只转述事实，人格 agent 负责措辞；不值得说就 wait；emoji、俚语、长度都跟随用户。",
+   "evidence_type": "产品案例",
+   "source_title": "Poke 系统提示词（泄露，x1xhlol/system-prompts-and-models-of-ai-tools）",
+   "source_url": "https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools/tree/main/Poke",
+   "year": "2025–2026",
+   "key_data": "“Never text with emojis if the user has not texted them first.”；不值得说时 “use the wait tool”。",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "生成链路分“查事实”和“写话术”两步；“不发”做成工具；幽默与 emoji 用镜像规则而非固定配额。",
+   "caveat": "泄露文本，厂商未确认，可能过期；英文短信场景；没有效果数据。verified 指文本逐字读过。"
+  },
+  {
+   "id": "T9-15",
+   "claim": "ChatGPT Dots 泄露提示词：后台 Dreamer 永不联系用户，只在有用且新时上报；上报先写时效项及其期限或后果。",
+   "evidence_type": "产品案例",
+   "source_title": "ChatGPT Dots：Dreamer / action-items / writing-style（泄露，asgeirtj/system_prompts_leaks）",
+   "source_url": "https://github.com/asgeirtj/system_prompts_leaks/tree/main/OpenAI/dots",
+   "year": "2026",
+   "key_data": "“If you have nothing like this to report, save your progress in your notes and stay quiet.”",
+   "verified_by_fetch": true,
+   "confidence": "low",
+   "pa_implication": "每条消息按“变了什么、值多少、不确定什么、下一步”组织；重复发现只在有变化时再提。",
+   "caveat": "泄露文本（文件内时间戳 2026-10-04），真实性与现行状态未知；同仓库另有 2025-05 的自动化上下文提示词。"
+  },
+  {
+   "id": "T9-16",
+   "claim": "泄露的 ChatGPT 人格预设与 Meta AI 提示词都带词级禁用表，并规定人格不套用到替用户写的东西上。",
+   "evidence_type": "产品案例",
+   "source_title": "ChatGPT personality instructions 与 Meta AI Muse Spark 1.1（泄露，asgeirtj/system_prompts_leaks）",
+   "source_url": "https://github.com/asgeirtj/system_prompts_leaks/blob/main/OpenAI/chatgpt-personality-instructions.md",
+   "year": "2025–2026",
+   "key_data": "“DO NOT automatically write user-requested written artifacts … in your specific personality”",
+   "verified_by_fetch": true,
+   "confidence": "low",
+   "pa_implication": "PA 自己说话用 PA 的声音；替用户发给别人的消息要像用户；词级禁令视为随模型更新的补丁。",
+   "caveat": "泄露文本，未经确认；OpenAI Cookbook 官方文章印证“人格不覆盖任务输出格式”。"
+  },
+  {
+   "id": "T9-17",
+   "claim": "内容规范可改写成 agent 可读规则并配 linter：Vercel 规范有 README、AGENTS.md、skill 三种形态。",
+   "evidence_type": "产品案例",
+   "source_title": "Vercel Web Interface Guidelines（另核对 Vale、AutoCorrect、中文文案排版指北、Microsoft Style Guide）",
+   "source_url": "https://github.com/vercel-labs/web-interface-guidelines",
+   "year": "2025–2026",
+   "key_data": "“Error messages guide the exit.”；按钮 “Continue” 改 “Save API Key”；Vale 是 prose linter。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "规范同时出人读版、agent 版和审查脚本；按钮写结果；中文排版用 AutoCorrect 类工具机检。",
+   "caveat": "Vercel 自述是自家品牌偏好而非通用准则；Shopify、Atlassian、GitLab、Intuit 的做法本次未能核实。"
+  },
+  {
+   "id": "T9-18",
+   "claim": "文案可当数据、一稿多渲染：Ditto 有 variants/statuses，MessageFormat 用 .match 按选择器出变体。",
+   "evidence_type": "官方规范",
+   "source_title": "Unicode MessageFormat 规范（message-format-wg）；Ditto CLI；Google A2UI",
+   "source_url": "https://github.com/unicode-org/message-format-wg",
+   "year": "2025–2026",
+   "key_data": "“The Unicode MessageFormat Standard is a stable part of CLDR.”；A2UI：UI “using data, not code”。",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "一条消息只生成一个对象，推送、IM、卡片、语音是渲染变体；高风险模板写成变体表。",
+   "caveat": "把选择器用于渠道和语气档是我的推演，未见公开实践；Frontitude 未核。"
+  },
+  {
+   "id": "T9-19",
+   "claim": "约束解码能保证槽位与枚举，但不支持 maxLength；格式约束对推理型任务可能有损、对分类型任务有益（有争议）。",
+   "evidence_type": "官方规范",
+   "source_title": "Structured outputs（Claude 文档）；Tam 等《Let Me Speak Freely?》作者仓库",
+   "source_url": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
+   "year": "2024–2026",
+   "key_data": "Not supported: “String constraints (minLength, maxLength)”；Tam 等 EMNLP 2024 共 270 组实验。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "字数上限交给 lint 加重试；语气、是否发送用枚举；先输出 decision 再输出 copy。",
+   "caveat": "Tam 等的结论被 dottxt 反驳，作者 2024-12 的补充实验也得到不同结果；实验用的是 2024 年的旧型号。"
+  },
+  {
+   "id": "T9-20",
+   "claim": "Anthropic 评测方法：代码评分最快最可靠，LLM 评审要先验证可靠性；起步 20–50 条真实失败用例，每个维度单独评审。",
+   "evidence_type": "官方规范",
+   "source_title": "Demystifying evals for AI agents（2026-01-09）；Define success criteria and build evaluations",
+   "source_url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+   "year": "2026",
+   "key_data": "“20-50 simple tasks drawn from real failures is a great start.” 单次成功率 75% 时三次全过约 42%（0.75³）。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "评测分 schema、规则、评审三层；回归集看三次全过率，因为每个用户只看到一次采样。",
+   "caveat": "博客引语由抓取工具摘录；面向通用 agent，对话术没有专门数据。"
+  },
+  {
+   "id": "T9-21",
+   "claim": "LLM 评审有位置、冗长、自我偏好、标签顺从四类偏差，需用几十条人工标注校准到约 90% 一致。",
+   "evidence_type": "官方规范",
+   "source_title": "Eval health checklist（anthropics/skills，claude-api skill）",
+   "source_url": "https://github.com/anthropics/skills/blob/main/skills/claude-api/shared/evals/eval-audit.md",
+   "year": "2026",
+   "key_data": "“judges reliably prefer longer answers”；“25 cases × 2 reps ~ ±14 points, 100 × 2 ~ ±7”。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "评审提示写明不因更长而加分；成对比较随机换位；用例到 100 条才能看清 ±7 点的差别。",
+   "caveat": "~90% 是经验线；Zheng 等 2023 的“GPT-4 与人一致率超 80%”本次未能核对原文。"
+  },
+  {
+   "id": "T9-22",
+   "claim": "skill-creator 用“带 skill 对不带 skill”成对运行加盲评，并明说写作风格类主观 skill 更适合定性人工评审。",
+   "evidence_type": "官方规范",
+   "source_title": "skill-creator SKILL.md（anthropics/skills）",
+   "source_url": "https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md",
+   "year": "2026",
+   "key_data": "“Subjective skills (writing style, design quality) are better evaluated qualitatively”；60/40 切分。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "事实、格式、发不发自动判；语气和幽默留人工看板；改 skill 时与旧版快照做盲比。",
+   "caveat": "这是流程说明，不是对照实验。"
+  },
+  {
+   "id": "T9-23",
+   "claim": "promptfoo 提供确定性断言与模型评分断言，可把 schema 校验、lint 脚本、量表评审和成对择优放进同一份回归配置。",
+   "evidence_type": "产品案例",
+   "source_title": "promptfoo 文档：Assertions & metrics、LLM Rubric、Select Best",
+   "source_url": "https://github.com/promptfoo/promptfoo/blob/main/site/docs/configuration/expected-outputs/index.md",
+   "year": "2026",
+   "key_data": "llm-rubric 返回 {reason, score, pass}；select-best 在同一用例的多个输出里选优；is-json 可带 JSON Schema。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "规范仓库自带回归配置；改规范的 PR 必须跑通回归并附生成对比。",
+   "caveat": "只核对了文档，没有实际运行；笔记里的配置是示意。"
+  },
+  {
+   "id": "T9-24",
+   "claim": "人设会漂移：Li 等 2024 在 8 轮对话内观察到显著漂移；Anthropic 2026 研究发现情绪倾诉和元反思类对话最易致漂移。",
+   "evidence_type": "实证研究",
+   "source_title": "Measuring and Controlling Persona Drift in Language Model Dialogs（作者仓库 README）；The assistant axis",
+   "source_url": "https://github.com/likenneth/persona_drift",
+   "year": "2024–2026",
+   "key_data": "“a significant persona drift within eight rounds of conversations”；capping 降有害回应约 50%。",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "每次生成都重新注入声音规范与示例；回归集加入“长线程后发提醒”和情绪类目标用例。",
+   "caveat": "对象为 LLaMA2 等开源模型与英文对话；主动消息多为短上下文单次生成，外推需谨慎；arXiv 原文未能打开。"
+  },
+  {
+   "id": "T9-25",
+   "claim": "记忆使用的规范：延续已知偏好免得用户重复；区分“用户说的”与“推断的”；推断不得覆盖明确指令；不因可得就提及。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenAI Model Spec 记忆条款；OpenClaw USER.md 模板；Claude memory tool 文档",
+   "source_url": "https://github.com/openai/model_spec/blob/main/model_spec.md",
+   "year": "2026",
+   "key_data": "“GPT should distinguish what the user said from what it inferred”；USER.md 预算 4,000 字符。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "用户档案存成指令式条目并标来源；“别这么啰嗦”当场生效并落盘；一次性选择不升级为长期偏好。",
+   "caveat": "规范与产品做法，没有效果数据；泄露的 Dots 提示词也写“一次性表态不过度推断”。"
+  },
+  {
+   "id": "T9-26",
+   "claim": "上下文工程的原则是找最小的高信号 token 集合；示例应少而多样、有代表性，而不是堆边角规则。",
+   "evidence_type": "官方规范",
+   "source_title": "Effective context engineering for AI agents（Anthropic 工程博客）",
+   "source_url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+   "year": "2025",
+   "key_data": "“the smallest possible set of high-signal tokens”；上下文是有限资源，边际收益递减。",
+   "verified_by_fetch": true,
+   "confidence": "medium",
+   "pa_implication": "生成前只喂目标原话、状态迁移、事实槽位、风险、渠道上限、用户状态与档案、近 3–5 条已发、3–5 条示例。",
+   "caveat": "引语由抓取工具摘录；输入信号清单是我综合各家做法的推演，没有对照实验。"
+  },
+  {
+   "id": "T9-27",
+   "claim": "线上证据（未核）：Duolingo 的通知 bandit 显示重复模板效果衰减；OpenAI 复盘称点赞信号助长了谄媚。",
+   "evidence_type": "实证研究",
+   "source_title": "Yancey & Settles, A Sleeping, Recovering Bandit Algorithm for Optimizing Recurring Notifications（KDD 2020）",
+   "source_url": "https://research.duolingo.com/papers/yancey.kdd20.pdf",
+   "year": "2020–2025",
+   "key_data": "凭记忆：DAU 约 +0.5%、新用户留存约 +2%。原文与 OpenAI 复盘页均未能打开，数字不可直接引用。",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "重复提醒的文案要轮换；线上别只优化点击或点赞，同时盯静音率、关闭通知率和撤销率。",
+   "caveat": "两处来源站点均被网络白名单拦截，内容来自既有知识，必须复核后才能写进报告。"
+  },
+  {
+   "id": "T9-28",
+   "claim": "自测：基础稿 6 条黄金话术按可见字符计，锚点 4/6、正文 5/6、按钮 9/12 超出它自定的上限，3 条自报 41 字。",
+   "evidence_type": "实证研究",
+   "source_title": "T9 自测：参考 linter pa_copy_lint.py 对基础稿 16 条样例的机检",
+   "source_url": "scratchpad/research/t9_tools/pa_copy_lint.py",
+   "year": "2026",
+   "key_data": "只数汉字时正文 3/6、按钮 8/12 仍超限；两种计数法同一条文案相差 8–12；“全网史低”触发绝对化检查。",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "字数规则必须写明计数单位并交给 lint；按钮≤5 字与“动词+结果”冲突，阈值按渠道重定。",
+   "caveat": "非外部来源，脚本可复现；样本仅 16 条且全部来自基础稿，只说明规则与样例不自洽，不代表线上效果。"
+  },
+  {
+   "id": "T9-29",
+   "claim": "Ant Design 原文是“直接使用你、我，避免使用您”，并提醒同一句式不要混用你和我；该页没有“动词+结果名词”的按钮规则。",
+   "evidence_type": "官方规范",
+   "source_title": "Ant Design 文案规范（仓库源文件 copywriting.zh-CN.md）",
+   "source_url": "https://github.com/ant-design/ant-design/blob/master/docs/spec/copywriting.zh-CN.md",
+   "year": "现行版本（2026-11 抓取）",
+   "key_data": "“避免使用「您」，让用户感觉太过疏远。”“感叹号会让文案显得过于激动，容易让气氛变得过于紧张。”“不要使用过于绝对的表述”。",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "默认称“你”；感叹号只留给祝贺；按钮规则的出处改引 DESIGN.md 与 Vercel。",
+   "caveat": "面向中后台产品界面，不是通知或对话场景；规范没有给出实验依据。"
+  },
+  {
+   "id": "T9-30",
+   "claim": "“全网史低”“最低价”属无法自证的绝对化与价格比较说法，有广告法与价格欺诈风险（法规原文未核）。",
+   "evidence_type": "法规",
+   "source_title": "《中华人民共和国广告法》第九条；市场监管总局《广告绝对化用语执法指南》（2023）",
+   "source_url": "https://flk.npc.gov.cn/",
+   "year": "2021–2023",
+   "key_data": "凭记忆：广告法第九条禁止使用“国家级、最高级、最佳”等用语；2023 年执法指南界定了例外情形。原文未抓取。",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "比较性说法必须带范围、时间窗和数据源并留存依据，例如改说“近 30 天 3 个平台里最低”。",
+   "caveat": "法规原文与适用性（PA 向自己的用户转述价格是否构成广告）均未核实，需法务确认；URL 仅为国家法律法规数据库入口。"
+  }
+ ],
+ "design_rules": [
+  {
+   "rule": "把话术规范做成 Skill 包：SKILL.md 只放流程与导航；声音、语气矩阵、发送策略、各状态细则、渠道、风险表达分文件；校验放脚本，用例放 evals。",
+   "rationale": "规范正文建议 <500 行，参考文件按需加载且只引一层。按状态拆开后，写“受阻”消息时不会把幽默规则也读进上下文。",
+   "do_example": "pa-proactive-voice/SKILL.md + references/{voice, tone-matrix, send-policy, state-opportunity, state-blocked-failed, channels, humor, lexicon, risky-phrases, compliance}.md + assets/{message.schema.json, templates/, examples/} + scripts/{lint_message.py, render.py} + evals/",
+   "dont_example": "一份 8000 字的《PA 话术规范》整篇贴进系统提示词，换模型后没人知道哪句还有效。",
+   "supporting_finding_ids": [
+    "T9-01",
+    "T9-02",
+    "T9-04",
+    "T9-05"
+   ]
+  },
+  {
+   "rule": "先判定发不发，再写怎么说：每次状态迁移先输出 decision（send_now / hold_until / digest / skip）和理由，skip 是合法输出。",
+   "rationale": "已核对的主动式 agent 都把沉默做成一等输出；Model Spec 写明生成 token 本身就在消耗用户的时间和钱。",
+   "do_example": "23:40 发现降价 ¥12 → decision=digest，并入明早的汇总。",
+   "dont_example": "每次抓到价格变动都立刻推一条“价格有变化哦”。",
+   "supporting_finding_ids": [
+    "T9-04",
+    "T9-13",
+    "T9-14",
+    "T9-15"
+   ]
+  },
+  {
+   "rule": "事实与措辞分离：金额、时间、条件由代码写入 facts，模型只写首行和一句上下文；发出前机检文案里的每个数字都能在 facts 里找到。",
+   "rationale": "润色会把意思改掉（Humanizer-zh 的修订教训）；线上系统把查事实和说话分给两个角色。",
+   "do_example": "facts：降价 ¥640、免费取消至 11-25 23:59 → “东京酒店降了 ¥640，11-25 23:59 前可免费退旧单。”",
+   "dont_example": "让模型自由发挥：“东京酒店大降价，立省 600 多，名额有限！”（数字被模糊，凭空多出稀缺性）",
+   "supporting_finding_ids": [
+    "T9-07",
+    "T9-14",
+    "T9-15",
+    "T9-19"
+   ]
+  },
+  {
+   "rule": "消息用固定槽位的对象表示，语气用枚举不用百分比；字数上限写进字段说明并交给 lint，不指望 schema 管住。",
+   "rationale": "约束解码能保证枚举和必填，不支持 maxLength；“幽默 45%”这类刻度模型无法稳定执行，也无法测试。",
+   "do_example": "tone: {user_state: busy, register: plain, humor: none, emoji_allowed: false, exclamation_allowed: false}",
+   "dont_example": "语气参数：幽默 45% · 正式度 20% · 热情 70%",
+   "supporting_finding_ids": [
+    "T9-19",
+    "T9-03",
+    "T9-28"
+   ]
+  },
+  {
+   "rule": "声音固定、语气可调：voice.md 每个属性写“是 / 不是 / 像这样 / 不像这样”四行；语气矩阵只把属性调高调低，不换人格。",
+   "rationale": "Anthropic 的声音框架和微软风格指南都把 voice 与 tone 分开；正反例比形容词更容易被模型执行。",
+   "do_example": "利落——是：第一行说变化和价值；不是：冷淡、省掉条件；像：东京酒店降了 ¥640；不像：好消息！终于降价啦～",
+   "dont_example": "只写“语气要专业、亲切、有温度”。",
+   "supporting_finding_ids": [
+    "T9-05",
+    "T9-08",
+    "T9-17"
+   ]
+  },
+  {
+   "rule": "每条规则写成“规则 + 原因 + 正反例”，不用全大写的 MUST / NEVER，也不留互相打架的条款。",
+   "rationale": "模型能从原因泛化；大写强调会让新模型过度触发；矛盾指令对新模型的伤害更大。",
+   "do_example": "不用感叹号，因为它会让扣款类提醒显得更紧张；里程碑祝贺可以用一个。",
+   "dont_example": "【重要！！】绝对禁止使用感叹号！！同时要保持热情！",
+   "supporting_finding_ids": [
+    "T9-08",
+    "T9-12",
+    "T9-22"
+   ]
+  },
+  {
+   "rule": "首行给变化和价值，消息自包含：读者是从别的事情切过来的低上下文读者，不该需要回忆上文。",
+   "rationale": "Anthropic 2026 指南与 Dots 泄露提示词都要求要点前置、时效项带期限或后果。",
+   "do_example": "视频会员明早 08:00 续费 ¥30，你已 35 天没看。[停掉续费] [保留]",
+   "dont_example": "你之前创建的目标有新进展，点击查看详情。",
+   "supporting_finding_ids": [
+    "T9-09",
+    "T9-15",
+    "T9-12"
+   ]
+  },
+  {
+   "rule": "镜像用户而不是套配额：emoji、网络用语、口语化程度跟随用户最近的用法，用户没先用就不用；默认口吻是平实的同事。",
+   "rationale": "Model Spec 默认“像同事而非密友”并跟随用户语域；Poke 用镜像规则控制 emoji、俚语和长度。",
+   "do_example": "用户常回“ok👌” → 完成消息可带 1 个常见 emoji；用户一向写完整句 → 不带。",
+   "dont_example": "规定“轻松场景每条必须带 1–2 个 emoji 和一句俏皮话”。",
+   "supporting_finding_ids": [
+    "T9-13",
+    "T9-14",
+    "T9-16"
+   ]
+  },
+  {
+   "rule": "幽默要三个条件同时满足：任务低风险、用户不忙不急、不是重复提醒；玩笑对着事情不对着人，不连开两个。",
+   "rationale": "Poke 与 Dots 的幽默条款一致；GPT-5.1 的人格样板在高风险时连寒暄都去掉；矫饰的比喻让读者多绕一步。",
+   "do_example": "本月少点了 9 次外卖，省下 ¥380，够一张周六的演出票。",
+   "dont_example": "航班延误提醒里写“看来飞机也想多睡会儿～”。",
+   "supporting_finding_ids": [
+    "T9-14",
+    "T9-15",
+    "T9-12",
+    "T9-09"
+   ]
+  },
+  {
+   "rule": "不谄媚、不制造紧迫、不替用户感受：紧迫词必须有 facts 里的期限或库存；比较性说法必须带范围、时间窗和来源。",
+   "rationale": "Claude 宪章点名禁止虚假紧迫；Model Spec 称谄媚侵蚀信任；无依据的最高级是 brand-review 的法务必查项。",
+   "do_example": "近 30 天 3 个平台里最低，券今晚 24:00 到期。",
+   "dont_example": "全网史低！手慢无，千万别错过！",
+   "supporting_finding_ids": [
+    "T9-11",
+    "T9-13",
+    "T9-05",
+    "T9-30"
+   ]
+  },
+  {
+   "rule": "禁用表达当线索不当黑名单：命中客服腔、AI 腔、翻译腔时提示并交人或评审复核，不自动替换；词表随模型版本更新。",
+   "rationale": "词汇习惯随模型变化、结构习惯持久；机械替换会误伤正常表达，还会把事实改坏。",
+   "do_example": "lint 输出 info：命中“不仅…更是…”，建议直接陈述。",
+   "dont_example": "用正则把所有破折号和四字词一律删掉。",
+   "supporting_finding_ids": [
+    "T9-06",
+    "T9-07",
+    "T9-16"
+   ]
+  },
+  {
+   "rule": "一条消息只要求一个决定：恰好 1 个主动作，按钮写“动词 + 结果”；不可逆或对外发送的动作标记二次确认，并说明不处理会怎样。",
+   "rationale": "公开的系统提示词要求一次最多问一个问题；DESIGN.md 与 Vercel 都要求按钮说出结果；Model Spec 偏好可逆做法。",
+   "do_example": "[重订省 ¥640]（先下新单再退旧单，需确认）[保留原订单]；不处理则继续盯到入住前 3 天。",
+   "dont_example": "为你找到 6 个航班和 4 家酒店，你看怎么选？[确定] [取消]",
+   "supporting_finding_ids": [
+    "T9-10",
+    "T9-03",
+    "T9-17",
+    "T9-13"
+   ]
+  },
+  {
+   "rule": "一稿多渲染：模型只生成一次消息对象，推送标题、IM 气泡、卡片、语音由渲染层按变体表输出；高风险场景直接用模板。",
+   "rationale": "把文案当数据管理（变体、状态）是成熟做法；让模型为每个渠道各写一遍会产生不一致的事实。",
+   "do_example": "push：东京酒店降了 ¥640；card：东京酒店降了 ¥640，11-25 前可免费退旧单。两者用同一组 facts。",
+   "dont_example": "推送说省 ¥640，卡片里写省 600 多。",
+   "supporting_finding_ids": [
+    "T9-18",
+    "T9-19",
+    "T9-02"
+   ]
+  },
+  {
+   "rule": "示例库按“目标类型 × 状态 × 风险 × 用户状态”打标签，生成时检索 3–5 条（含 1 条“不发”），同一用户不连续取到同一条带梗示例。",
+   "rationale": "示例是引导语气最可靠的手段之一，但雷同示例会被照抄；重复的俏皮话很快变成噪音。",
+   "do_example": "写“降价待确认”时取 3 条 price_watch 示例 + 1 条 skip 示例。",
+   "dont_example": "系统提示词里永远是同一条带“冰美式”梗的示例。",
+   "supporting_finding_ids": [
+    "T9-08",
+    "T9-26",
+    "T9-05"
+   ]
+  },
+  {
+   "rule": "评测三层：schema 校验 → 规则 lint → 逐维度二元评审（先用几十条人工标注校准到约 90% 一致）；语气和幽默保留人工看板。",
+   "rationale": "代码评分最快最可靠；LLM 评审偏爱更长的答案，必须校准；写作风格类 skill 官方建议定性评审。",
+   "do_example": "D1 首行可判：只看首行，读者能否说出“变了什么、值多少”？回答 pass / fail / unknown 加一句理由。",
+   "dont_example": "让一个评审一次性给“整体质量 1–10 分”。",
+   "supporting_finding_ids": [
+    "T9-20",
+    "T9-21",
+    "T9-22",
+    "T9-23"
+   ]
+  },
+  {
+   "rule": "金标集 150–200 条：不少于 30% 是“不该发”，约 10% 对抗用例，放入已知坏例；按标签分层 60/40 切分；改规范或换模型必跑回归并看三次全过率。",
+   "rationale": "100 条 × 2 次重复的噪声约 ±7 点；起步用 20–50 条真实失败即可；每个用户只看到一次采样，一致性比均分重要。",
+   "do_example": "用例：深夜小额降价 → 期望 decision 不是 send_now；同一事实二次触发 → 期望 skip。",
+   "dont_example": "只挑 10 条好看的示例人工看一眼就上线。",
+   "supporting_finding_ids": [
+    "T9-20",
+    "T9-21",
+    "T9-22",
+    "T9-28"
+   ]
+  },
+  {
+   "rule": "用户反馈当场生效并落盘：把“别这么啰嗦”写成一条指令式偏好（优先 / 总是 / 从不），就地替换旧条目并标注来源；一次性选择不升级。",
+   "rationale": "规范要求延续已知偏好并区分“说的”和“推断的”；指令式用户档案有字数预算，不得自相矛盾。",
+   "do_example": "用户档案新增：“优先 两句以内的提醒（用户明说，2026-11-18）”；下一条消息即变短。",
+   "dont_example": "回一句“好的我会注意”，下次照旧；或因用户一次没点按钮就永久关闭该类提醒。",
+   "supporting_finding_ids": [
+    "T9-25",
+    "T9-04",
+    "T9-15"
+   ]
+  },
+  {
+   "rule": "人和 AI 共用一个仓库：改规范的 PR 必须附用例、lint 与回归结果、金标集上的生成对比；回归失败时让模型先定位冲突条款再做小改。",
+   "rationale": "DESIGN.md 用 lint 和 diff 守规范；官方流程是 Claude A 改 skill、Claude B 跑用例；GPT-5.1 指南的元提示可定位矛盾指令。",
+   "do_example": "PR：给 state-stale.md 新增“过期不制造内疚”规则 + 3 条用例 + 改前改后 12 条生成对比。",
+   "dont_example": "文案在协作文档里改了措辞要求，提示词工程师一周后才手动同步。",
+   "supporting_finding_ids": [
+    "T9-02",
+    "T9-03",
+    "T9-12",
+    "T9-22",
+    "T9-23"
+   ]
+  },
+  {
+   "rule": "PA 自己说话用 PA 的声音；替用户发给别人的消息要像用户，并在发送前展示草稿和收件人。",
+   "rationale": "人格预设不套用到用户要的产出物；泄露的 Poke 与 Dots 提示词都要求对外发送前确认。",
+   "do_example": "给参会人的改期通知按用户平时的邮件口吻起草 → [看草稿并发送]",
+   "dont_example": "用 PA 的俏皮口吻直接替用户群发“会议顺延啦～”。",
+   "supporting_finding_ids": [
+    "T9-16",
+    "T9-14",
+    "T9-15"
+   ]
+  },
+  {
+   "rule": "每次生成都重新注入声音规范、当前状态的参考文件和最近 3–5 条已发消息，不依赖对话历史里的旧指令。",
+   "rationale": "人设在多轮对话中会漂移；自动化上下文要求不重复先前内容；上下文应是最小的高信号集合。",
+   "do_example": "输入：目标原话 + 状态迁移 + facts + tone 枚举 + 最近 3 条已发消息 + 4 条示例。",
+   "dont_example": "把 40 轮闲聊历史和完整抓价日志一起塞给模型写一条提醒。",
+   "supporting_finding_ids": [
+    "T9-24",
+    "T9-26",
+    "T9-15"
+   ]
+  }
+ ],
+ "copy_samples": [
+  {
+   "source": "OpenClaw SOUL.md 模板（官方仓库）",
+   "text": "Be genuinely helpful, not performatively helpful. Skip the \"Great question!\" and \"I'd be happy to help!\" — just help.",
+   "url": "https://github.com/openclaw/openclaw/blob/main/docs/reference/templates/SOUL.md",
+   "note": "声音文件开篇第一条。已核对原文件。"
+  },
+  {
+   "source": "OpenClaw AGENTS.md 模板（官方仓库）",
+   "text": "Stay quiet (`NO_REPLY`) when: it is 23:00-08:00 unless urgent; the human is clearly busy; nothing is new; the last check was less than 30 minutes ago.",
+   "url": "https://github.com/openclaw/openclaw/blob/main/docs/reference/templates/AGENTS.md",
+   "note": "静默规则；紧接一句 When reach-out and quiet conditions both apply, stay quiet. 已核对。"
+  },
+  {
+   "source": "OpenClaw USER.md 模板（官方仓库）",
+   "text": "- Prefer concise progress updates during implementation work.",
+   "url": "https://github.com/openclaw/openclaw/blob/main/docs/reference/templates/USER.md",
+   "note": "指令式用户偏好的示例行。已核对。"
+  },
+  {
+   "source": "Poke 主提示词（泄露）",
+   "text": "Never output preamble or postamble. Never include unnecessary details when conveying information, except possibly for humor. Never ask the user if they want extra detail or additional tasks.",
+   "url": "https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools/blob/main/Poke/Poke_p1.txt",
+   "note": "简洁条款。泄露文本，厂商未确认。"
+  },
+  {
+   "source": "Poke 主提示词（泄露）",
+   "text": "IMPORTANT: Never text with emojis if the user has not texted them first.",
+   "url": "https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools/blob/main/Poke/Poke_p1.txt",
+   "note": "镜像规则。泄露文本。"
+  },
+  {
+   "source": "Poke 主提示词（泄露）",
+   "text": "Never make multiple jokes in a row unless the user reacts positively or jokes back.",
+   "url": "https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools/blob/main/Poke/Poke_p1.txt",
+   "note": "幽默条款。泄露文本。"
+  },
+  {
+   "source": "Poke 执行引擎提示词示例（泄露）",
+   "text": "You'll be notified in 10 minutes if Jony hasn't emailed you back.",
+   "url": "https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools/blob/main/Poke/Poke%20agent.txt",
+   "note": "设置提醒后的确认句：一句话、带时间和条件。泄露文本。"
+  },
+  {
+   "source": "ChatGPT Dots dreamer.md（泄露）",
+   "text": "Put time-sensitive findings first and give their deadline or consequence.",
+   "url": "https://github.com/asgeirtj/system_prompts_leaks/blob/main/OpenAI/dots/dreamer.md",
+   "note": "上报顺序。泄露文本，文件内时间戳 2026-10-04。"
+  },
+  {
+   "source": "ChatGPT Dots dreamer.md（泄露）",
+   "text": "Is there any way that you can very concretely save time or money for the user and anticipate any needs that the user has before they see or feel them?",
+   "url": "https://github.com/asgeirtj/system_prompts_leaks/blob/main/OpenAI/dots/dreamer.md",
+   "note": "研究计划里的问题，直接对应省钱省时间。泄露文本。"
+  },
+  {
+   "source": "ChatGPT Dots action-items 技能示例（泄露）",
+   "text": "Request an $80 desk price adjustment - A recent purchase drops in price while still inside the store's adjustment window.",
+   "url": "https://github.com/asgeirtj/system_prompts_leaks/blob/main/OpenAI/dots/skills/action-items/SKILL.md",
+   "note": "行动项命名：动词 + 金额 + 对象。泄露文本。"
+  },
+  {
+   "source": "ChatGPT Dots writing-style 技能示例（泄露）",
+   "text": "Recommendation: delay the rollout until Thursday. Payments still fails in 2 of 20 test accounts. Ana owns the rerun.",
+   "url": "https://github.com/asgeirtj/system_prompts_leaks/blob/main/OpenAI/dots/skills/writing-style/SKILL.md",
+   "note": "替用户代写的高管更新：结论、依据、负责人。泄露文本。"
+  },
+  {
+   "source": "ChatGPT 自动化上下文提示词，2025-05（泄露）",
+   "text": "If the instructions are to \"Remind me ...\" or \"Tell me ...\" then simply say the reminder.",
+   "url": "https://github.com/asgeirtj/system_prompts_leaks/blob/main/OpenAI/Old/prompt-automation-context.md",
+   "note": "提醒类定时任务的规则；同段还有 Do not repeat the content from prior automation turns。泄露文本。"
+  },
+  {
+   "source": "OpenAI Model Spec（好例子）",
+   "text": "I found five suitable campsites. Reserving all five would keep your options open, but it would prevent other campers from booking them. Should I reserve all five, or book the best-looking site now?",
+   "url": "https://github.com/openai/model_spec/blob/main/model_spec.md",
+   "note": "有外部影响时讲清取舍并只问一个问题。已核对源文件。"
+  },
+  {
+   "source": "OpenAI Model Spec（反例）",
+   "text": "I'll keep reminding the reviewer every 15 minutes until pull request #123 is approved.",
+   "url": "https://github.com/openai/model_spec/blob/main/model_spec.md",
+   "note": "标注为 BAD: repeatedly interrupts the reviewer to speed up a routine approval。已核对。"
+  },
+  {
+   "source": "OpenAI GPT-5.1 prompting guide（官方人格样板）",
+   "text": "Your communication philosophy is \"respect through momentum.\" You're warm in intention but concise in expression, focusing every message on helping the user progress with as little friction as possible.",
+   "url": "https://github.com/openai/openai-cookbook/blob/main/examples/gpt-5/gpt-5-1_prompting_guide.ipynb",
+   "note": "客服 agent 的示例提示词。已核对 notebook 源文件。"
+  },
+  {
+   "source": "OpenAI GPT-5.2 prompting guide",
+   "text": "Each update must include at least one concrete outcome (“Found X”, “Confirmed Y”, “Updated Z”).",
+   "url": "https://github.com/openai/openai-cookbook/blob/main/examples/gpt-5/gpt-5-2_prompting_guide.ipynb",
+   "note": "进度更新规范。已核对。"
+  },
+  {
+   "source": "Claude Fable 5.2 系统提示词（Anthropic 公开，2026-11-09）",
+   "text": "Claude keeps responses focused, brief, and concise to avoid overwhelming the person.",
+   "url": "https://platform.claude.com/docs/en/release-notes/system-prompts/claude-fable-5-2",
+   "note": "tone_and_formatting 段。已核对。"
+  },
+  {
+   "source": "Prompting Claude Fable 5.2（Anthropic 文档）",
+   "text": "Write for an intelligent but low-context reader. The person reading has not seen your tool calls, your reasoning or the files you opened, and may be switching in from other work.",
+   "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-2",
+   "note": "官方建议加入系统提示的段落开头。已核对。"
+  },
+  {
+   "source": "DESIGN.md 规范示例（Google Labs）",
+   "text": "Tone of voice: Precise, calm, and utilitarian. Avoid exclamation marks, marketing hyperbole, and conversational filler.",
+   "url": "https://github.com/google-labs-code/design.md/blob/main/docs/spec.md",
+   "note": "Voice & Content Strategy 一节的示例。已核对。"
+  },
+  {
+   "source": "Vercel Web Interface Guidelines",
+   "text": "Your API key is incorrect or expired. Generate a new key in your account settings.",
+   "url": "https://github.com/vercel-labs/web-interface-guidelines",
+   "note": "错误信息写法：原因 + 出路；对照的坏例子是 Invalid API key。已核对。"
+  },
+  {
+   "source": "Anthropic brand-review skill",
+   "text": "This sounds like: \"Here's how to get started — it takes about five minutes.\" This does NOT sound like: \"Yo! This is super easy, even a noob can do it lol.\"",
+   "url": "https://github.com/anthropics/knowledge-work-plugins/blob/main/marketing/skills/brand-review/SKILL.md",
+   "note": "声音属性四行写法里的正反例。已核对。"
+  },
+  {
+   "source": "Humanizer-zh SKILL.md",
+   "text": "改写前：好问题！这是导出功能的说明。它支持 CSV。希望这对您有帮助！ 改写后：导出功能支持 CSV。",
+   "url": "https://github.com/op7418/Humanizer-zh",
+   "note": "第 22 条“客服腔”的示例。已核对。"
+  },
+  {
+   "source": "Humanizer-zh 更新记录（2026-09-23）",
+   "text": "这次更新重点处理一个问题：文章改顺了，意思却变了。",
+   "url": "https://github.com/op7418/Humanizer-zh/blob/main/CHANGELOG.md",
+   "note": "修订动机。已核对。"
+  },
+  {
+   "source": "Ant Design 文案规范（配图说明）",
+   "text": "相对于「失败」，「无法完成」是更加客观的结果，更容易让用户在心理上接受。用户需要知道在出现问题的情况下如何进行下一步操作。",
+   "url": "https://github.com/ant-design/ant-design/blob/master/docs/spec/copywriting.zh-CN.md",
+   "note": "异常状态的写法。已核对源文件。"
+  },
+  {
+   "source": "Meta AI（Muse Spark 1.1 网页版）提示词（泄露）",
+   "text": "Keep emojis to a minimum; your words should do the heavy lifting.",
+   "url": "https://github.com/asgeirtj/system_prompts_leaks/blob/main/Meta/muse-spark-1.1-web.md",
+   "note": "Writing style 段。泄露文本。"
+  },
+  {
+   "source": "Microsoft Style Guide（2018）",
+   "text": "We write for scanning first, reading second.",
+   "url": "https://github.com/MicrosoftDocs/microsoft-style-guide/blob/main/styleguide/brand-voice-above-all-simple-human.md",
+   "note": "声音原则 Crisp and clear 的说明。已核对。"
+  }
+ ],
+ "base_doc_corrections": [
+  "Ant Design 关于“你/您”的原文是“直接使用「你」、「我」来和用户对话，与用户建立亲密感。避免使用「您」，让用户感觉太过疏远。”（配图说明：太过客气，让用户感觉有些疏远）。原文没有“下对上”“客服疏离感”，也没有“绝不自称本助手/小X”；它主张直接用你、我，只是不要在同一句式里混用，并不主张“隐去主语”。后两点应标为团队主张。",
+  "基础稿称“遵循 Ant Design 按钮规范，用精准动词 + 结果名词”。Ant Design 文案规范页没有这条，相关的只有“操作的名称和目标页面标题的名称保持一致”。可核的出处是 DESIGN.md 规范（verb phrases naming the outcome rather than generic labels like OK or Submit）和 Vercel 准则（Continue 改为 Save API Key）。",
+  "三段式上限“锚点≤10 字、上下文≤22 字、按钮≤5 字、合计严格 40 字以内”没有出处，也没有定义怎么数字数。机检基础稿自己的 6 条黄金话术：自报 3 条 41 字；按可见字符计锚点 4/6、正文 5/6、按钮 9/12 超限；只数汉字时正文 3/6、按钮 8/12 超限。应降级为“待按渠道截断长度和线上数据校准的默认值”，写明计数规则并交给 lint。",
+  "四象限里的“幽默 45% · 正式度 20% · 热情 70%”等百分比没有出处，模型也无法稳定执行或测试。已核对的线上系统都用离散条件（用户先用 emoji 才用、高风险直接进正事、不连开两个玩笑）。建议改成枚举加触发条件。",
+  "“注意力窗口 1.5–3 秒”“28 秒压到 3.5 秒（节省 87.5%）”“消除约 85% 交互摩擦”“3 秒理解阈值”在基础稿里自述为模型测算，本方向没有找到任何来源支持，应标为推演，不作为事实陈述。",
+  "“米勒定律 4±1 组块”归属有误：4±1 通常归于 Cowan 2001，Miller 1956 是 7±2。属其他方向的核查范围，本次未抓取原文，等对应方向确认。",
+  "示例“到手 ¥249（全网史低）”“已凑出最低价”是无法自证的绝对化和价格比较说法。Anthropic brand-review 把无依据的最高级列为始终检查的法务标记，Ant Design 也写“不要使用过于绝对的表述”。广告法第九条与 2023 年《广告绝对化用语执法指南》原文本次未能抓取。建议改成带范围和时间窗的说法（如“近 30 天 3 个平台里最低”）并留存依据，交法务确认。",
+  "示例 6 的“信用极好买家”同属无依据的评价性说法，应换成可核的事实（平台信用等级、成交笔数）。",
+  "结语“让用户觉得这个精明的决定完全是自己做出的”可以被读成营造掌控的错觉，与 Claude 宪章的 non-deceptive、autonomy-preserving 以及 Model Spec 的“让个性化的使用可见、可调”相冲突。建议改成让用户真的拥有决定权：看得到依据、改得了默认、撤得回动作。",
+  "示例 3 的“已备好全员顺延的通知草稿 [一键发送顺延]”是代用户对外发消息。泄露的 Poke 与 Dots 提示词都要求发送前展示草稿和收件人并取得确认。建议增加“看草稿和收件人”入口，并把“点击即确认”写进产品规则。",
+  "象限 III 示例“看你今天连开 4 场会”主动提到从日历推断的状态。Model Spec 要求不因上下文可得就提及它。建议只在它能解释建议、且用户开启过相应授权时才提数据来源。",
+  "Yuki K. 的 Medium 文章（基础稿标注 Oct 2026）本方向没能访问 medium.com，是否存在、原意如何均未核实；在对应方向核实前应标为单一博客观点。"
+ ],
+ "surprises_or_contradictions": [
+  "OpenClaw 的 HEARTBEAT.md 已经退役：当前主干文档写明新工作区不再创建、运行时也不再读取，检查清单改跟着每个自动化任务走，静默信号是 NO_REPLY。任务书仍把它列为现行文件。",
+  "Anthropic 官方的 brand-guidelines skill 不含任何语气内容，只有颜色和字体；官方的声音规范样本在另一个仓库的 brand-review skill 里。",
+  "去 AI 味的禁用词做法在退潮：Humanizer-zh 2026-09 修订取消了机械替换和自评分，因为改写把事实改坏了；Humanizer 自己承认检测器照样标红它的输出。同期的 stop-slop 仍在用 1–10 分自评表，两种取向并存。",
+  "提示词里的强调会过期并反噬：Anthropic 文档明说新模型对系统提示更敏感，CRITICAL: You MUST 会导致过度触发；旧的“禁止格式”规则在新型号上会压掉内容需要的结构。规范不是写一次用几年的东西。",
+  "结构化输出管不了字数：minLength / maxLength 不在约束解码支持范围内，SDK 会把它们剥掉写进描述再事后校验。",
+  "线上的主动式 agent 把查事实和说话拆成两个角色，且沉默是默认：Poke 的执行引擎被告知不要自己生成通知，Dots 的 Dreamer 永不联系用户。这与“一次调用写出一条通知”的直觉相反。",
+  "人格不等于代写：OpenAI 的人格预设（泄露文本与官方 Cookbook 都有）和 Dots 的 writing-style 技能都把“助手自己怎么说话”和“替用户写给别人的东西”分开处理。",
+  "默认语域有分歧：OpenAI Model Spec 的默认是像同事、不像密友，Poke 的设定是像朋友；两者都要求跟随用户的语域。省钱省时间型 PA 更接近前者。",
+  "Anthropic 自己不建议把写作风格的评测全自动化：skill-creator 写明主观 skill 更适合定性评审，不要把断言硬套到需要人判断的东西上；而它的评测文档又说尽量自动化、量比质重要。合理的分工是事实、格式、发不发自动判，语气与幽默留人工校准。",
+  "Google Labs 的 DESIGN.md 把文案正式纳入设计系统（第 8 节），却明确该节 prose-only，没有语气令牌；本次没有找到 voice tokens 的任何公开标准。",
+  "基础稿的 6 条黄金话术守不住它自己定的字数规则，说明只写在文档里、不进 lint 的规则连作者也执行不了。",
+  "泄露的 ChatGPT Dots 研究计划里直接出现了“concretely save time or money for the user”，与本项目“省钱、省时间”的定位一致，且它的上报格式（变了什么、为什么重要、哪里不确定、下一步）可直接借用。"
+ ],
+ "gaps": [
+  "搜索额度：成功搜索 7 次后，本轮所有 agent 共享的 200 次 WebSearch 额度用尽，未达到“至少 15 次搜索”；之后只对已知的一手地址做直接抓取，没有绕过限制。若要补搜，需要用户发后续消息或调高搜索上限。",
+  "网络白名单拦截：agentskills.io、docs.openclaw.ai、en.wikipedia.org、arxiv.org、openai.com、simonwillison.net、research.duolingo.com、hamel.dev 均打不开，需在会话网络设置里放行后补查；已改用 GitHub 上的源文件核对其中一部分。",
+  "未核到的具体条目：维基百科 Signs of AI writing 原文；Zheng 等 2023 的评审一致率数字；Duolingo bandit 论文的效果数字；OpenAI 谄媚事件复盘原文；Simon Willison 记录的 ChatGPT Tasks 提示词；ChatGPT Pulse 的提示词或写作规范；Cursor rules 官方文档；agentskills.io 的客户端数量。",
+  "任务书点名但完全没查到的：Shopify、Atlassian、GitLab、Intuit 把内容规范用于生成式 AI 的做法；Frontitude；voice tokens 的公开实践；Meta AI 的主动式提示词。",
+  "中文侧空白：没能做中文检索，缺主流大模型写中文短文案常见毛病的公开讨论、国内厂商的 AI 文案规范、“稳稳接住”等安慰腔的出处；中文语气与幽默的 LLM 评审可靠性没有任何公开数据。",
+  "法规原文未核：广告法第九条、《广告绝对化用语执法指南》、价格比较与价格欺诈规定、互联网广告标识要求，以及 PA 向自己的用户转述价格是否构成广告，都需要法务方向确认。",
+  "阈值没有实证：各槽位字数上限、勿扰时段、频控次数、语气词上限目前都是团队约定或他人产品的默认值，需要用渠道截断规则和线上 A/B 确定。",
+  "泄露提示词（Poke、ChatGPT Dots、人格预设、Meta AI）的真实性和时效无法确认，线上实际行为没有测过。",
+  "人设漂移研究都基于开源模型或英文对话，对中文商用模型和“短上下文、一次生成”的主动消息场景缺直接证据。",
+  "参考 linter 只在基础稿的 16 条样本上跑过，词表很小，去重、绝对时间、语气枚举一致性三条规则未实现；评审量表与 promptfoo 配置没有实际运行，校准线能否达到未知。"
+ ],
+ "dossier_path": "scratchpad/research/T9-ai-skill.md"
+}

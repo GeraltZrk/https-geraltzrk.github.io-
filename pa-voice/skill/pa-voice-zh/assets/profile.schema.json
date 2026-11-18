@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pa-voice-zh/profile.schema.json",
+  "title": "UserVoiceProfile",
+  "description": "用户风格档案。按人存放在记忆层，不放进 Skill。只记用户明说的偏好和显式设置，不从消费数据推断年龄、性别、收入。每条偏好带日期和来源，改了就原地替换，不追加互相矛盾的条目。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["address", "preset", "quiet_hours", "thresholds", "humor_opt_in", "lock_screen", "mandates", "stage", "notes"],
+  "properties": {
+    "address": { "type": "string", "enum": ["你", "您"], "description": "称呼档。全程一致，不在同一会话里切换" },
+    "preset": { "type": "string", "enum": ["default", "worker", "genz", "family", "elder", "value", "exec", "minor"], "description": "用户自选或由显式模式（长辈、未成年人）决定，不由系统猜" },
+    "quiet_hours": {
+      "type": "object", "additionalProperties": false, "required": ["start", "end", "timezone"],
+      "properties": { "start": { "type": "string" }, "end": { "type": "string" }, "timezone": { "type": "string" } },
+      "description": "默认 23:00–08:00"
+    },
+    "thresholds": {
+      "type": "object", "additionalProperties": false, "required": ["money_min", "time_min"],
+      "properties": {
+        "money_min": { "type": "number", "description": "低于这个金额的机会进小结，不单独推送" },
+        "time_min": { "type": "number", "description": "低于这个分钟数的省时进小结" }
+      }
+    },
+    "humor_opt_in": { "type": "string", "enum": ["off", "H1", "H2", "H3"], "description": "用户自己打开的幽默上限。H3（吐槽）只能由用户开启" },
+    "lock_screen": { "type": "string", "enum": ["private", "category", "detailed"], "description": "锁屏上露多少：private=只说有事；category=说是哪类；detailed=含金额" },
+    "mandates": {
+      "type": "array",
+      "description": "用户给过的分类授权：哪类事、金额上限、有效期。A3 只在这里列出的范围内成立",
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["category", "limit", "expires_at", "granted_at"],
+        "properties": { "category": { "type": "string" }, "limit": { "type": "string" }, "expires_at": { "type": "string" }, "granted_at": { "type": "string" } }
+      }
+    },
+    "stage": { "type": "string", "enum": ["cold", "building", "familiar", "repair"], "description": "关系阶段，由交付记录驱动，不由天数驱动" },
+    "notes": {
+      "type": "array",
+      "description": "用户明说过的偏好，写成陈述事实，带日期。例：{\"text\": \"说过别用感叹号\", \"observed\": \"2026-11-02\", \"status\": \"active\"}",
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["text", "observed", "status"],
+        "properties": { "text": { "type": "string" }, "observed": { "type": "string" }, "status": { "type": "string", "enum": ["active", "superseded"] } }
+      }
+    }
+  }
+}

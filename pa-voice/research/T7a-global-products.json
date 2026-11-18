@@ -1,0 +1,880 @@
+{
+ "track": "T7a 海外竞品与用户声音：主动式个人智能体与省钱/省时类产品怎么说话",
+ "dossier_path": "scratchpad/research/T7a-global-products.md",
+ "headline_insights": [
+  "证据边界：本轮 WebFetch 全部被网络策略拦截，搜索配额在第 15 次后耗尽；只有 OpenClaw、Hermes、nanobot、Poke SDK 四项是原文直读核实，另 10 项结论仅来自搜索摘录，还有 28 个产品完全没查。",
+  "海外主动式 agent 的第一条话术规则是“不说”：OpenClaw、Hermes、nanobot 都内置静默契约（NO_REPLY、[SILENT]、通知闸门），OpenClaw 模板写明 23:00–08:00 只有紧急事项可打扰，且可联系与应安静冲突时保持安静。",
+  "开源个人 agent OpenClaw 在一年内三次收紧默认主动性：2026 年 1 月到 2 月心跳默认投递由 last 改为 none，v2026.8.1 移除“从对话推断待办再跟进”，到 2026.11.5 心跳整体并入需显式建立的自动化任务。",
+  "失败与受阻已有成型的降噪配方（OpenClaw 2026.11.5）：瞬时故障先在 30 秒、1 分钟、5 分钟自行重试，连续 2 次失败才报，冷却 1 小时，同一原因只报一次，恢复不通知，连续 10 次失败自动停用。",
+  "用户约定的提醒与后台巡检是两类消息：nanobot 规定前者即使内容很短也应通知、后者无可行动变化就压掉；Hermes 用 0–10 紧急度、默认达到 7 才打扰，建议被拒后永不再提、待处理最多 5 条。",
+  "语气正从单一人设走向用户选档：GPT-5.1 给 8 个预设、Hermes 给 14 个，默认档都偏“直接、不啰嗦”；Cleo 的 roast 与 hype 是用户主动进入的模式，本轮没找到任何公开数据证明毒舌本身带来增长。",
+  "每日简报要有尽头：ChatGPT Pulse 每天一次、约 5–10 张卡片、以 Great, that's it for today. 收尾；ChatGPT Tasks 单任务最高每小时一次，活跃任务按套餐封顶（3、5、15 个）。",
+  "已知的坑集中在三处：AI 把多条通知改写成假事实（Apple 在 iOS 18.3 测试版暂停新闻类摘要）、主动消息被读成留存手段（Meta 的 14 天、5 条、一次即停规则）、情绪施压式催促（Duolingo 被用户称为情感勒索）。"
+ ],
+ "findings": [
+  {
+   "id": "T7a-01",
+   "claim": "OpenClaw 官方人设模板把“不表演式热情、不谄媚、先自己查再开口”写成第一性规则。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenClaw npm 包 2026.11.5：docs/reference/templates/SOUL.md",
+   "source_url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "year": "2026",
+   "key_data": "\"Be genuinely helpful, not performatively helpful.\"｜\"Not a corporate drone. Not a sycophant.\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "主动消息删掉开场客套与收尾寒暄；能自己查到的不问用户，带着答案和一个动作来。",
+   "caveat": "经 npm 官方包内原文件逐字核对，不是 WebFetch（docs.openclaw.ai 在本会话打不开）。面向英文开发者社区，模板是默认值，用户可改。"
+  },
+  {
+   "id": "T7a-02",
+   "claim": "OpenClaw 用成对清单规定何时主动联系、何时闭嘴，并写明两者冲突时保持安静。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenClaw npm 包 2026.11.5：docs/reference/templates/AGENTS.md",
+   "source_url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "year": "2026",
+   "key_data": "安静条件：23:00-08:00（紧急除外）、用户正忙、无新变化、距上次检查不足 30 分钟；\"both apply, stay quiet\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "PA 需要一张可打扰判定表：深夜、用户忙、无新变化、30 分钟内刚查过，一律不发。",
+   "caveat": "包内原文直读，不是 WebFetch。“超过 8 小时没说话可联系”一条适合通用助手，目标型 PA 照搬会变噪音。"
+  },
+  {
+   "id": "T7a-03",
+   "claim": "OpenClaw 一年内三次收紧默认主动性：心跳默认不外发、移除推断式跟进、心跳并入显式自动化。",
+   "evidence_type": "产品案例",
+   "source_title": "OpenClaw npm 包三版对照：clawdbot 2026.1.24-3、openclaw 2026.2.26、openclaw 2026.11.5",
+   "source_url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "year": "2026",
+   "key_data": "\"The inferred commitments experiment was removed in v2026.8.1\"；默认 target 1 月为 last，2 月改 none",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "主动跟进只来自用户明确建立的目标或日程，不从闲聊里推断待办再回头催。",
+   "caveat": "三版包内文档直读，不是 WebFetch。文档没写移除原因，“收紧”是研究员对版本差异的归纳，不是官方表述。"
+  },
+  {
+   "id": "T7a-04",
+   "claim": "OpenClaw 让每次后台运行落到 5 种结果之一：no_change 静默，其余四种必须带摘要。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenClaw npm 包 2026.11.5：docs/automation/cron-jobs/payloads.md",
+   "source_url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "year": "2026",
+   "key_data": "record_result: no_change / progress / done / blocked / needs_attention；摘要 1–2000 字符",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "目标每次巡检都产出枚举结果；只有进展、完成、受阻、待确认才生成话术。",
+   "caveat": "包内原文直读，不是 WebFetch。枚举到 PA 目标状态的映射是研究员建议。"
+  },
+  {
+   "id": "T7a-05",
+   "claim": "OpenClaw 的失败通知：瞬时故障先重试，连续 2 次才报，同因只报一次，恢复不通知。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenClaw npm 包 2026.11.5：docs/automation/cron-jobs/delivery.md",
+   "source_url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "year": "2026",
+   "key_data": "连续 2 次失败才告警、冷却 1 小时；先在 30 秒、1 分、5 分重试；连续 10 次失败自动停用任务",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "受阻消息设阈值与冷却；瞬时故障不打扰；同一原因只说一次，只问恰好需要的那一样。",
+   "caveat": "包内原文直读，不是 WebFetch。这些是开发者向产品的默认值，消费级 PA 的阈值需自行实验。"
+  },
+  {
+   "id": "T7a-06",
+   "claim": "OpenClaw 控制台推送默认只开审批类，其余需用户开启；静音时段丢弃不补发；锁屏细节分三档。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenClaw npm 包 2026.11.5：docs/web/notifications.md",
+   "source_url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "year": "2026",
+   "key_data": "\"every other attention category is opt-in\"；\"Quiet hours suppress… rather than queueing stale alerts\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "推送类别默认最小化；免打扰期间的非紧急消息过期即弃；锁屏是否显示金额由用户定档。",
+   "caveat": "包内原文直读，不是 WebFetch。该文档针对浏览器与 macOS 推送，不是 IM 聊天消息；与基础稿“金额前置”存在张力。"
+  },
+  {
+   "id": "T7a-07",
+   "claim": "OpenClaw 模板要求一条想清楚的回复胜过多条碎片，纯确认用表情回应代替新消息。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenClaw npm 包：docs/reference/templates/AGENTS.md（2026.11.5 与 2026.2.26）",
+   "source_url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "year": "2026",
+   "key_data": "\"Send one thoughtful reply instead of several fragments.\"；旧版 \"Avoid the triple-tap\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "主动消息一条说完，不做“在吗、好消息、降价了”三连；纯确认用轻量回执。",
+   "caveat": "包内原文直读，不是 WebFetch。原规则写在群聊一节，用于主动消息是研究员的外推。"
+  },
+  {
+   "id": "T7a-08",
+   "claim": "OpenClaw 人设指南：“保持专业、周到”式空话只会产出糊状语气；幽默要自然，不硬凹。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenClaw npm 包 2026.11.5：docs/concepts/soul.md",
+   "source_url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "year": "2026",
+   "key_data": "\"Humor is allowed. Not forced jokes\"｜\"Sharp is good. Annoying is not.\"｜\"That's how you get mush.\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "语气规范写成可执行短句与禁用开场白清单，不写“专业、温暖、友好”这类形容词。",
+   "caveat": "包内原文直读，不是 WebFetch。该指南含“允许脏话”等面向英文极客用户的设定，不适用于中文大众产品。"
+  },
+  {
+   "id": "T7a-09",
+   "claim": "OpenClaw 明确：定时任务不会从渠道或历史推断回复语言，语言规则必须写进任务提示词。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenClaw npm 包 2026.11.5：docs/automation/cron-jobs/delivery.md（Output language 一节）",
+   "source_url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "year": "2026",
+   "key_data": "官方例句：\"Respond in Chinese; keep URLs, code, and product names unchanged.\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "每个主动任务模板显式写：用简体中文；品牌名、链接、金额格式保持原样。",
+   "caveat": "包内原文直读，不是 WebFetch。"
+  },
+  {
+   "id": "T7a-10",
+   "claim": "OpenClaw 把“承诺的后续必须带结果回来、进度不等于完成”写进系统提示词并做成回归测试。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenClaw npm 包 2026.11.5：docs/concepts/system-prompt.md、docs/concepts/personal-agent-benchmark-pack.md",
+   "source_url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "year": "2026",
+   "key_data": "\"never treat progress (like `running`) as completion\"；测试场景含 personal-no-fake-progress，共 10 个",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "“已提交、处理中、已完成”严格分开且有凭据；说了“到账告诉你”就必须回来说。",
+   "caveat": "包内原文直读，不是 WebFetch。测试包只读到说明文档，没读到用例本身。"
+  },
+  {
+   "id": "T7a-11",
+   "claim": "Hermes Agent 的自动化建议同意优先：只提议不代建，拒绝后永不再提，待处理最多 5 条。",
+   "evidence_type": "产品案例",
+   "source_title": "hermes-agent 0.19.0（PyPI，作者 Nous Research）：cron/suggestions.py",
+   "source_url": "https://pypi.org/project/hermes-agent/0.19.0/",
+   "year": "2026",
+   "key_data": "\"Suggestions never auto-create jobs\"；\"not re-offered after the user says no\"；MAX_PENDING = 5",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "推荐新目标时一键接受或拒绝；被拒的建议按稳定键去重永不重提；建议池封顶。",
+   "caveat": "经 PyPI 官方 wheel 内源码逐字核对，不是 WebFetch。开源开发者向产品。"
+  },
+  {
+   "id": "T7a-12",
+   "claim": "Hermes 给每个定时任务加固定提示：无新内容只回 [SILENT]，且不得与正文混用。",
+   "evidence_type": "产品案例",
+   "source_title": "hermes-agent 0.19.0：cron/scheduler.py",
+   "source_url": "https://pypi.org/project/hermes-agent/0.19.0/",
+   "year": "2026",
+   "key_data": "\"respond with exactly [SILENT] (nothing else)… Never combine [SILENT] with content\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "给模型一个明确的不发送出口：要么完整汇报，要么完全沉默，杜绝“没啥事但说一声”。",
+   "caveat": "wheel 内源码直读，不是 WebFetch。源码注释承认模型常不守格式，解析器容忍 SILENT、NO_REPLY 等变体：只靠提示词不够，要程序兜底。"
+  },
+  {
+   "id": "T7a-13",
+   "claim": "Hermes 的邮件监控用 0–10 紧急度打分，默认达到 7 才打扰，要求评分保守；分类失败不得静默。",
+   "evidence_type": "产品案例",
+   "source_title": "hermes-agent 0.19.0：cron/scripts/classify_items.py",
+   "source_url": "https://pypi.org/project/hermes-agent/0.19.0/",
+   "year": "2026",
+   "key_data": "\"0 (ignore entirely) to 10 (interrupt the user now)… most items should score low\"；默认 --threshold 7",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "用用户自述的重要标准做打分门槛，门槛默认偏高；监控自身出错必须让用户知道。",
+   "caveat": "wheel 内源码直读，不是 WebFetch。门槛 7 是该项目的默认值，没有附带效果数据。"
+  },
+  {
+   "id": "T7a-14",
+   "claim": "Hermes 内置蓝图按场景写死语气：续费提醒要可行动，习惯打卡不评判，高频提醒每次换说法。",
+   "evidence_type": "产品案例",
+   "source_title": "hermes-agent 0.19.0：cron/blueprint_catalog.py",
+   "source_url": "https://pypi.org/project/hermes-agent/0.19.0/",
+   "year": "2026",
+   "key_data": "\"actionable heads-up… not just a notification\"｜\"warm and non-judgmental\"｜\"Vary the wording each time\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "每类目标配一段场景语气指令：续费给动作，习惯只问不催，高频强制换措辞，一律一条短消息。",
+   "caveat": "wheel 内源码直读，不是 WebFetch。这些是写给模型的指令，不是面向用户的成品文案。"
+  },
+  {
+   "id": "T7a-15",
+   "claim": "Hermes 把人格做成 14 个一句话预设（含 concise、hype），默认人设只有“有用、直接、不啰嗦”。",
+   "evidence_type": "产品案例",
+   "source_title": "hermes-agent 0.19.0：cli.py、hermes_cli/default_soul.py",
+   "source_url": "https://pypi.org/project/hermes-agent/0.19.0/",
+   "year": "2026",
+   "key_data": "默认：\"helpful, knowledgeable, and direct… genuinely useful over being verbose\"；预设共 14 个",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "默认语气取直接、不啰嗦；打气、搞怪等做成用户可选预设，不做默认。",
+   "caveat": "wheel 内源码直读，不是 WebFetch。预设含 catgirl、uwu 等社区趣味项，不代表主流消费产品做法。"
+  },
+  {
+   "id": "T7a-16",
+   "claim": "nanobot 在后台任务与用户之间加一道通知闸门：只放行可行动信息，闸门出错时默认不通知。",
+   "evidence_type": "产品案例",
+   "source_title": "nanobot-ai 0.4.1（PyPI）：nanobot/templates/agent/evaluator.md、nanobot/utils/evaluator.py",
+   "source_url": "https://pypi.org/project/nanobot-ai/0.4.1/",
+   "year": "2026",
+   "key_data": "\"Suppress when the response is a routine status check with nothing new\"；heartbeat \"fail closed\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "生成与发送分两步：先写，再由独立闸门判断值不值得发，并滤掉“要不要告诉你”的元话语。",
+   "caveat": "经 PyPI 官方 wheel 内文件逐字核对，不是 WebFetch。闸门是额外一次模型调用，有成本与延迟。"
+  },
+  {
+   "id": "T7a-17",
+   "claim": "nanobot 区分两类消息：用户指定时间的提醒每次必达，灵活巡检只在有可行动变化时通知。",
+   "evidence_type": "官方规范",
+   "source_title": "nanobot-ai 0.4.1：skills/cron/SKILL.md、templates/agent/cron_reminder.md、templates/agent/evaluator.md",
+   "source_url": "https://pypi.org/project/nanobot-ai/0.4.1/",
+   "year": "2026",
+   "key_data": "\"A user-scheduled reminder should usually notify even when the response is brief\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "用户亲口约定的提醒不可被“无新意”过滤；巡检型才走静默规则；正文不带“已提醒”这类系统腔。",
+   "caveat": "wheel 内文件直读，不是 WebFetch。"
+  },
+  {
+   "id": "T7a-18",
+   "claim": "三个开源 PA 都按渠道规定版式：短信与 iMessage 纯文本且简短，IM 用短段落、不用表格。",
+   "evidence_type": "官方规范",
+   "source_title": "hermes-agent 0.19.0 agent/prompt_builder.py；nanobot-ai 0.4.1 templates/agent/identity.md；OpenClaw AGENTS.md 模板",
+   "source_url": "https://pypi.org/project/hermes-agent/0.19.0/",
+   "year": "2026",
+   "key_data": "短信：\"plain text only… be brief and direct\"（约 1600 字符上限）；IM：\"No tables — use plain lists\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "同一条提醒按渠道出不同版式：推送与短信纯文本一两句，应用内卡片才用结构化层级。",
+   "caveat": "包内源码与模板直读，不是 WebFetch。针对的是海外渠道，微信、飞书等中文渠道的版式限制需另查。"
+  },
+  {
+   "id": "T7a-19",
+   "claim": "ChatGPT Pulse 每天早晨一次，以约 5–10 张卡片交付隔夜研究，读完明确告知今天到此为止。",
+   "evidence_type": "产品案例",
+   "source_title": "TechCrunch：OpenAI launches ChatGPT Pulse to proactively write you morning briefs",
+   "source_url": "https://techcrunch.com/2025/09/25/openai-launches-chatgpt-pulse-to-proactively-write-you-morning-briefs",
+   "year": "2025",
+   "key_data": "收尾语 \"Great, that's it for today.\"；产品负责人称这是有意区别于为参与度优化的应用",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "每日简报条数封顶、读完有明确终点；提供点赞、点踩和“想看什么”的调教入口。",
+   "caveat": "仅搜索摘录，原页打不开。收尾语另有来源写作 That's all for today；5–10 张为二手报道；上线时仅 Pro 移动端预览。"
+  },
+  {
+   "id": "T7a-20",
+   "claim": "ChatGPT Tasks 对活跃任务数按套餐封顶，单个任务最高频率为每小时一次。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenAI Help Center：Tasks in ChatGPT",
+   "source_url": "https://help.openai.com/en/articles/10291617-tasks-in-chatgpt",
+   "year": "2026",
+   "key_data": "\"tasks cannot run more than once per hour\"；活跃上限 Go 3、Plus 5、Pro 15",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "给每个用户的活跃目标数和单目标触达频率设硬上限，超限先暂停或删除旧目标。",
+   "caveat": "仅搜索摘录，原页打不开。帮助中心不同版本对 Business 档写 10 或 15，数字需以现行页面为准。"
+  },
+  {
+   "id": "T7a-21",
+   "claim": "GPT-5.1 把语气做成 8 个用户可选预设，并把“倾听者、机器人”改名为 Friendly、Efficient。",
+   "evidence_type": "产品案例",
+   "source_title": "The Register：OpenAI GPT-5.1 adds more personalities, loses inhibitions",
+   "source_url": "https://www.theregister.com/2025/11/13/openai_gpt51_adds_more_personalities/",
+   "year": "2025",
+   "key_data": "Default、Professional、Friendly、Candid、Quirky、Efficient、Nerdy、Cynical；Efficient 为 concise and plain",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "语气交给用户选档，档位用效果词命名（高效、坦率），不用拟人标签。",
+   "caveat": "仅搜索摘录。预设描述出自媒体转述，官方原文未核对；改名的官方理由未查到，“效果词”是研究员解读。"
+  },
+  {
+   "id": "T7a-22",
+   "claim": "Apple Intelligence 把多条新闻通知合并改写出虚假标题，被 BBC 投诉后暂停了新闻类摘要。",
+   "evidence_type": "产品案例",
+   "source_title": "The Decoder：Apple pauses AI-generated news summaries after serious accuracy issues surface",
+   "source_url": "https://the-decoder.com/apple-pauses-ai-generated-news-summaries-after-serious-accuracy-issues-surface/",
+   "year": "2025",
+   "key_data": "误报 Luigi Mangione 开枪自杀等；iOS 18.3 测试版停用新闻类摘要；其余 App 摘要改斜体标识",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "不让模型把多条来源揉成一句新事实；AI 摘要要有可见标识；金额与日期直接取结构化字段。",
+   "caveat": "仅搜索摘录，多家媒体表述一致但原页未打开；摘录未说明该功能之后是否恢复。"
+  },
+  {
+   "id": "T7a-23",
+   "claim": "Meta AI Studio 的机器人主动跟进有三道闸：用户先开口、14 天内发过至少 5 条、一次不回即停。",
+   "evidence_type": "产品案例",
+   "source_title": "TechCrunch：Meta has found another way to keep you engaged: Chatbots that message you first",
+   "source_url": "https://techcrunch.com/2025/07/03/meta-has-found-another-way-to-keep-you-engaged-chatbots-that-message-you-first/",
+   "year": "2025",
+   "key_data": "14 天窗口、至少 5 条用户消息、无回复只跟进 1 次；媒体标题直接称其为留存手段",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "主动跟进要有“先有互动、未回应即停”的硬规则，且理由必须是用户的目标而非产品留存。",
+   "caveat": "仅搜索摘录。源自外包标注指南泄露的二手报道，各家对“5 条消息还是 5 个问题”表述不一；是否全面上线未知。"
+  },
+  {
+   "id": "T7a-24",
+   "claim": "Poke 把“像朋友发短信”的人设当核心卖点，2026 年 6 月成为首个获 Apple 批准的 iMessage 商务 AI agent。",
+   "evidence_type": "产品案例",
+   "source_title": "AppleInsider：First AI agent for Messages business chat approved by Apple；X 用户 @ziwenxu_ 帖文",
+   "source_url": "https://appleinsider.com/articles/26/06/04/first-ai-agent-for-messages-business-chat-approved-by-apple",
+   "year": "2026",
+   "key_data": "用户：\"roasted me for lowballing… every human thing it did was just a line in there\"；自称已转发约 1 亿条",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "聊天流里的人设能带来传播，但“像人”是写出来的规则；可借鉴发消息的节奏，慎用戏剧化桥段。",
+   "caveat": "仅搜索摘录。系统提示词多次泄露（2025-09、2026-06 版），本轮未读到原文，具体条款一律不引用；1 亿条为公司自述。"
+  },
+  {
+   "id": "T7a-25",
+   "claim": "Cleo 的 roast 与 hype 是用户主动触发的模式，由专职喜剧写手撰写；没有公开数据证明模式带来增长。",
+   "evidence_type": "产品案例",
+   "source_title": "Braze 客户案例：Cleo；BeBeez 报道",
+   "source_url": "https://braze.com/customers/cleo",
+   "year": "未注明",
+   "key_data": "写手：\"It's easier and more fun to write roast mode.\"；Braze 的 +284% 打开来自欢迎流个性化，非 roast",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "毒舌必须是用户点进去的模式，且需要人写的高质量语料；别把“毒舌带来增长”当已证实结论。",
+   "caveat": "仅搜索摘录。未找到 roast 或 hype 的 A/B 数据与逐字推送样本；Braze 数字的口径与年份未核。"
+  },
+  {
+   "id": "T7a-26",
+   "claim": "Duolingo 用老虎机算法挑提醒文案：同一句话重复会失效，需轮换；长期无响应时发“停发提醒”文案。",
+   "evidence_type": "实证研究",
+   "source_title": "Yancey & Settles (KDD 2020)：A Sleeping, Recovering Bandit Algorithm for Optimizing Recurring Notifications",
+   "source_url": "https://research.duolingo.com/papers/yancey.kdd20.pdf",
+   "year": "2020",
+   "key_data": "约 2 亿条提醒、34 天数据；文案 \"These reminders don't seem to be working. We'll stop sending them for now.\"",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "高频提醒建文案池并对最近见过的降权；连续无响应后主动停发，并告知如何恢复。",
+   "caveat": "仅搜索摘录，论文与博客原文未打开。“最有效通知”之说无数据；有用户记录停发约 3 天后恢复，并称其为情感勒索。"
+  },
+  {
+   "id": "T7a-27",
+   "claim": "Hopper 的核心推送是“现在买或再等等”二选一，公司称约四分之三的通知是让用户继续等。",
+   "evidence_type": "行业数据",
+   "source_title": "CardRates 访谈：Hopper Analyzes Travel Data to Forecast Savings on Flights and Hotels",
+   "source_url": "https://www.cardrates.com/news/hopper-analyzes-travel-data-to-forecast-savings-on-flights-and-hotels/",
+   "year": "2016–2019",
+   "key_data": "\"about three-quarters of the notifications… ask you to keep waiting\"；自称 90% 销售来自推送、准确率 95%",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "盯价目标里“先别买”是正当消息，但须带预测依据与下次汇报时间；自述准确率不可写进文案。",
+   "caveat": "仅搜索摘录。全部为公司自述且年代较早，无独立审计。"
+  },
+  {
+   "id": "T7a-28",
+   "claim": "Monzo 把人人可用的写作原则公开成文，主张日常用语与主动语态；也有用户认为过于随意削弱信任。",
+   "evidence_type": "官方规范",
+   "source_title": "Monzo：Tone of voice（写作原则）",
+   "source_url": "https://monzo.com/tone-of-voice/",
+   "year": "2018",
+   "key_data": "\"a (fairly) brief overview of how we write… for everyone in every team\"；引用 800 名法官偏好白话的实验",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "涉钱消息用白话与主动语态，但随意有上限：扣款、失败类保持克制，不开玩笑。",
+   "caveat": "仅搜索摘录，monzo.com 在本会话打不开。没取到其推送通知的具体条款；“降低信任”是社区个别用户观点。"
+  },
+  {
+   "id": "T7a-29",
+   "claim": "Poke 官方 SDK 用一句自然语言条件加一句动作来定义触发器。",
+   "evidence_type": "官方规范",
+   "source_title": "poke npm 包 4.0.461：README.md（Interaction Company 官方开发者工具）",
+   "source_url": "https://registry.npmjs.org/poke/-/poke-4.0.461.tgz",
+   "year": "2026",
+   "key_data": "condition: \"When a deploy fails\", action: \"Send me a summary of the error\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "建目标时让用户用“当……时，就……”一句话约定触发与动作，后续每条提醒都回指这句约定。",
+   "caveat": "经 npm 官方包内 README 逐字核对，不是 WebFetch。示例是开发者场景，迁移到消费场景是研究员外推。"
+  },
+  {
+   "id": "T7a-30",
+   "claim": "OpenClaw 可在多气泡回复之间加 800–2500 毫秒随机停顿（默认关闭），并合并连续碎片以减少刷屏。",
+   "evidence_type": "官方规范",
+   "source_title": "OpenClaw npm 包 2026.11.5：docs/concepts/streaming.md",
+   "source_url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "year": "2026",
+   "key_data": "humanDelay natural：\"800-2500ms random pause\"，默认 off；合并是为减少 \"single-line spam\"",
+   "verified_by_fetch": true,
+   "confidence": "high",
+   "pa_implication": "确需多条时，首条必须独立成立，后续可加自然停顿；默认仍是合并成一条。",
+   "caveat": "包内原文直读，不是 WebFetch。停顿只作用于分块回复，不作用于最终回复。"
+  }
+ ],
+ "design_rules": [
+  {
+   "rule": "先判“发不发”，再想“怎么写”：每次后台巡检产出一个枚举结果（无变化、有进展、完成、受阻、待确认），无变化一律静默。",
+   "rationale": "三个开源个人 agent 都把静默做成协议而非自觉：OpenClaw 的 record_result 五枚举与 NO_REPLY、Hermes 的 [SILENT]、nanobot 的通知闸门。",
+   "do_example": "（不发消息）任务卡显示：监控中 · 14:30 查过 · 现价 ¥1,420",
+   "dont_example": "我又帮你看了一眼，机票价格没有变化哦～",
+   "supporting_finding_ids": [
+    "T7a-04",
+    "T7a-12",
+    "T7a-16"
+   ]
+  },
+  {
+   "rule": "两类消息两套规则：用户亲口约定的定时提醒必达，哪怕很短；后台巡检只在有可行动变化时才发。",
+   "rationale": "nanobot 的闸门原文规定用户设定的提醒即使内容简短也应通知，而例行检查无新内容要压掉。过度静默同样是事故。",
+   "do_example": "该报销了：本周 3 张发票，共 ¥486。[去提交]",
+   "dont_example": "用户说“每晚 9 点提醒我报销”，系统判断“今天没新发票”就不发了。",
+   "supporting_finding_ids": [
+    "T7a-17",
+    "T7a-16"
+   ]
+  },
+  {
+   "rule": "可打扰与应安静的条件同时成立时，安静。只有紧急事项能穿透 23:00–08:00、用户正忙、30 分钟内刚查过这三道门。",
+   "rationale": "OpenClaw 模板原文：When reach-out and quiet conditions both apply, stay quiet. Only an urgent item overrides quiet hours.",
+   "do_example": "23:40 发现降价，留到早上发：昨晚降了 ¥60，今晚 24:00 前有效。[下单]",
+   "dont_example": "凌晨 1 点推送：你关注的耳机降价 ¥12 啦",
+   "supporting_finding_ids": [
+    "T7a-02",
+    "T7a-06"
+   ]
+  },
+  {
+   "rule": "免打扰期间攒下的非紧急消息，过期就丢，不排队补发；用户约定的一次性提醒则顺延到窗口打开。",
+   "rationale": "OpenClaw：静音时段压掉推送而不是把过期提醒排队；一次性任务在活动时段外保持待发，周期任务直接跳过这一轮。",
+   "do_example": "早上只发仍然有效的一条：现价 ¥1,280，比你的目标价低 ¥20，今天 18:00 前有效。",
+   "dont_example": "08:00 连弹 5 条昨晚已经失效的价格波动提醒。",
+   "supporting_finding_ids": [
+    "T7a-06"
+   ]
+  },
+  {
+   "rule": "一条说完，不发碎片；确需多条时首条必须独立成立。",
+   "rationale": "OpenClaw 模板要求一条想清楚的回复代替多条碎片，并在工程上合并连续小块以减少刷屏。",
+   "do_example": "降到 ¥1,280，比目标价低 ¥20，今晚 24:00 前有效。[下单] [再等等]",
+   "dont_example": "在吗 / 有个好消息 / 你盯的那个降价了！（三条连发）",
+   "supporting_finding_ids": [
+    "T7a-07",
+    "T7a-30"
+   ]
+  },
+  {
+   "rule": "删掉表演式开场与客套收尾，直接给结果。",
+   "rationale": "OpenClaw 人设模板第一条：Be genuinely helpful, not performatively helpful；官方改写提示词要求永不以 Great question、Absolutely 开头。",
+   "do_example": "已退订，下月起不再扣 ¥30。",
+   "dont_example": "好的，非常乐意为你处理！已成功完成退订～还有什么需要帮忙的吗？",
+   "supporting_finding_ids": [
+    "T7a-01",
+    "T7a-08"
+   ]
+  },
+  {
+   "rule": "进度不等于完成。“已提交、处理中、已完成”三个词各自要有凭据，承诺了后续就必须回来说。",
+   "rationale": "OpenClaw 系统提示词规定绝不把 running 当完成，并用回归测试检查“无假进度”和“待办、受阻、完成分开”。",
+   "do_example": "退款申请已提交，平台受理中，预计 3 个工作日到账。到账后我告诉你。",
+   "dont_example": "搞定了！（其实只是提交了申请）",
+   "supporting_finding_ids": [
+    "T7a-10"
+   ]
+  },
+  {
+   "rule": "失败先自己重试；连续失败才上报；同一原因只说一次；消息里只写归一化的原因和需要用户做的那一件事。",
+   "rationale": "OpenClaw 默认连续 2 次失败才告警、冷却 1 小时、同因合并为一次事件；瞬时故障先在 30 秒、1 分、5 分重试；原始报错留在历史里不进聊天。",
+   "do_example": "抢号连续 2 次没成：医院系统要求重新登录。[去登录]",
+   "dont_example": "Error 502: upstream timeout…；或每 30 分钟一条“又失败了”。",
+   "supporting_finding_ids": [
+    "T7a-05"
+   ]
+  },
+  {
+   "rule": "监控本身坏了必须告诉用户；平时用任务卡上的时间戳证明“还在盯”，不靠发消息。",
+   "rationale": "OpenClaw 警告检查失败时变安静的监控看起来健康其实坏了；Hermes 规定分类器失败不得静默。",
+   "do_example": "比价源已 2 小时连不上，盯价暂停。[换一个数据源]",
+   "dont_example": "接口挂了三天没有任何提示，用户以为一直在盯。",
+   "supporting_finding_ids": [
+    "T7a-10",
+    "T7a-13"
+   ]
+  },
+  {
+   "rule": "主动建议新目标要同意优先：只提议不代建，被拒绝后不再提，待处理的建议封顶。",
+   "rationale": "Hermes 源码：建议永不自动创建任务，拒绝按稳定键锁存不再重提，待处理上限 5 条，注释写明是为了不变成一面唠叨墙。",
+   "do_example": "你每月 5 号都会查宽带账单，要不要我每月 3 号先比一次价？[好] [不用]",
+   "dont_example": "每周问一遍：要不要开启账单提醒？",
+   "supporting_finding_ids": [
+    "T7a-11"
+   ]
+  },
+  {
+   "rule": "用用户自己的话定义“什么才值得打扰”，并给打分设一个偏高的默认门槛。",
+   "rationale": "Hermes 的邮件监控让用户填“只在邮件……时通知我”，用 0–10 打分、默认达到 7 才推，并要求评分器保守。",
+   "do_example": "只推三类：今天必须回的、家人发的、提到截止日的。",
+   "dont_example": "所有“可能相关”的都推一遍。",
+   "supporting_finding_ids": [
+    "T7a-13"
+   ]
+  },
+  {
+   "rule": "语气做成可选预设，默认档是“直接、不啰嗦”；涉钱、受阻、深夜自动回到默认档。",
+   "rationale": "GPT-5.1 与 Hermes 都把语气交给用户选档；Cleo 的毒舌是用户主动进入的模式；OpenClaw 在工程上把风格层和行为契约分开，可以只换风格。",
+   "do_example": "扣款失败时（无论用户选了哪档）：房租代扣没成功，余额差 ¥320。今天 22:00 前补足即可。[去转账]",
+   "dont_example": "对所有人默认毒舌；或在扣款失败时还抖机灵。",
+   "supporting_finding_ids": [
+    "T7a-15",
+    "T7a-21",
+    "T7a-25",
+    "T7a-08"
+   ]
+  },
+  {
+   "rule": "高频提醒每次换说法；幽默不硬凹、不连发。",
+   "rationale": "Hermes 蓝图逐字要求每次换措辞以免显得机械；Duolingo 的算法专门处理重复文案的新鲜度衰减；OpenClaw 指南写明幽默不是硬塞的笑话。",
+   "do_example": "三天三种：水杯在你左手边。／站起来接杯水。／该喝水了。",
+   "dont_example": "连续 5 天：喝水时间到啦，做个水润的打工人～",
+   "supporting_finding_ids": [
+    "T7a-14",
+    "T7a-26",
+    "T7a-08"
+   ]
+  },
+  {
+   "rule": "盯价目标里“先别买”是正当消息，但必须带依据和下次汇报的时间，且低频。",
+   "rationale": "Hopper 自述约四分之三的通知是让用户继续等；价值在于预测，不在于报平安。",
+   "do_example": "先别买：这条航线近 30 天周二最便宜。我周二早上再报一次。",
+   "dont_example": "每天一条：今天还没降，再等等哦。",
+   "supporting_finding_ids": [
+    "T7a-27"
+   ]
+  },
+  {
+   "rule": "提醒长期没人理就停，并用一句话告诉用户怎么恢复。",
+   "rationale": "Duolingo 的停发文案是其最出名的通知；Meta 的规则是一次不回即停。但停了又悄悄恢复会被读成情感操控。",
+   "do_example": "这个提醒你已经 5 次没点开，我先停了。想恢复就回我“继续盯”。",
+   "dont_example": "无限期每天催；或悄悄停掉、过几天又悄悄恢复。",
+   "supporting_finding_ids": [
+    "T7a-26",
+    "T7a-23"
+   ]
+  },
+  {
+   "rule": "每日简报条数封顶，读完明确收尾。",
+   "rationale": "ChatGPT Pulse 用有尽头的卡片流和收尾语区别于信息流；Hermes 的摘要蓝图把条数限制为 3、5、8 三档。",
+   "do_example": "今天就 3 件：① 话费明天到期 ¥58 [续费] ② 东京机票降 ¥210 [看看] ③ 报销到账 ¥486。没别的了。",
+   "dont_example": "无限下拉的“猜你想看”。",
+   "supporting_finding_ids": [
+    "T7a-19",
+    "T7a-14"
+   ]
+  },
+  {
+   "rule": "锁屏上的细节按用户选的隐私档位显示；默认只露类别，不露金额与商户。",
+   "rationale": "OpenClaw 把锁屏细节分为仅通用文案、仅名称、详细三档，审批类通知在锁屏一律用通用文案。",
+   "do_example": "锁屏：有 1 笔续费等你确认。解锁后：爱奇艺明早自动续费 ¥30。[停掉] [保留]",
+   "dont_example": "锁屏直接显示还款金额与逾期天数。",
+   "supporting_finding_ids": [
+    "T7a-06"
+   ]
+  },
+  {
+   "rule": "语言与渠道版式写进每个任务模板，不指望模型自己猜。",
+   "rationale": "OpenClaw 明确定时任务不推断回复语言；Hermes 与 nanobot 为短信、iMessage、IM、邮件分别写了格式提示。",
+   "do_example": "模板里写明：用简体中文；品牌名、链接、金额格式保持原样；推送用纯文本，不用表格。",
+   "dont_example": "同一段带表格和标题的长文同时发到推送、短信和应用内。",
+   "supporting_finding_ids": [
+    "T7a-09",
+    "T7a-18"
+   ]
+  },
+  {
+   "rule": "不让模型把多条来源揉成一句新“事实”；金额、日期、人名直接取结构化字段，AI 摘要要有可见标识。",
+   "rationale": "Apple 的通知摘要正是在合并多条新闻时改写出假标题，最终暂停了新闻类摘要并给其余摘要加斜体标识。",
+   "do_example": "话费 ¥58，明天到期（数字取自账单字段），旁边标注“AI 摘要”。",
+   "dont_example": "把三条不同来源的通知合并改写成一句新标题。",
+   "supporting_finding_ids": [
+    "T7a-22"
+   ]
+  },
+  {
+   "rule": "语气规范写成可执行的短句和禁用清单，不写形容词；人设与操作规则分文件存放。",
+   "rationale": "OpenClaw 指南指出“保持专业、提供周到帮助”这类规则只会产出糊状语气；它把语气放 SOUL.md、操作规则放 AGENTS.md。",
+   "do_example": "不以“好的”“当然”开头；一句能说完就一句。",
+   "dont_example": "保持专业、温暖、友好的沟通风格。",
+   "supporting_finding_ids": [
+    "T7a-08",
+    "T7a-01"
+   ]
+  },
+  {
+   "rule": "续费与缴费类提醒必须带一个现在就能做的动作。",
+   "rationale": "Hermes 续费蓝图逐字要求写成可行动的提醒，而不只是一条通知。",
+   "do_example": "爱奇艺明早自动续费 ¥30，你 35 天没看了。[停掉续费] [保留]",
+   "dont_example": "温馨提示：您的会员即将续费。",
+   "supporting_finding_ids": [
+    "T7a-14"
+   ]
+  },
+  {
+   "rule": "习惯类提醒只问不催，不评判，鼓励只用一句。",
+   "rationale": "Hermes 习惯蓝图逐字要求温暖、不评判、一句鼓励、一条短消息；Duolingo 的内疚式催促被用户称为情感勒索。",
+   "do_example": "今天读了吗？没读也没事，明天接着来。",
+   "dont_example": "今天还没打卡！千万别半途而废！",
+   "supporting_finding_ids": [
+    "T7a-14",
+    "T7a-26"
+   ]
+  },
+  {
+   "rule": "建目标时让用户用“当……时，就……”一句话约定触发条件与期望动作，之后每条提醒都回指这句约定。",
+   "rationale": "Poke 官方 SDK 用一句条件加一句动作定义触发器；nanobot 要求把持久目标写成终态与完成证据，而不是步骤。",
+   "do_example": "按你说的“东京往返降到 ¥2,800 以下就告诉我”：现在 ¥2,740。[下单] [再等等]",
+   "dont_example": "你之前创建的目标有新进展，请查看。",
+   "supporting_finding_ids": [
+    "T7a-29",
+    "T7a-17"
+   ]
+  }
+ ],
+ "copy_samples": [
+  {
+   "source": "OpenClaw 2026.2.26 默认心跳提示词（docs/gateway/heartbeat.md）",
+   "text": "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK.",
+   "url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.2.26.tgz",
+   "note": "原文直读核实。写给模型的指令，不是面向用户的文案。"
+  },
+  {
+   "source": "OpenClaw 2026.11.5 示例任务提示词（docs/gateway/heartbeat.md）",
+   "text": "Check the monitor scratch. Report only changes that need attention; otherwise reply NO_REPLY.",
+   "url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "OpenClaw SOUL.md 模板",
+   "text": "**Be genuinely helpful, not performatively helpful.** Skip the \"Great question!\" and \"I'd be happy to help!\" — just help.",
+   "url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "OpenClaw SOUL.md 模板",
+   "text": "Concise when needed, thorough when it matters. Not a corporate drone. Not a sycophant. Just... good.",
+   "url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "OpenClaw AGENTS.md 模板",
+   "text": "**Stay quiet (`NO_REPLY`) when:** it is 23:00-08:00 unless urgent; the human is clearly busy; nothing is new; the last check was less than 30 minutes ago.",
+   "url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "OpenClaw AGENTS.md 模板",
+   "text": "**Reach out when:** an important email arrives; a calendar event is less than 2h away; you find something interesting; you have not said anything for more than 8h.",
+   "url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "OpenClaw AGENTS.md 模板",
+   "text": "When reach-out and quiet conditions both apply, stay quiet. Only an urgent item overrides quiet hours.",
+   "url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "OpenClaw 2026.2.26 AGENTS.md 模板",
+   "text": "The goal: Be helpful without being annoying. Check in a few times a day, do useful background work, but respect quiet time.",
+   "url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.2.26.tgz",
+   "note": "原文直读核实。2026.11.5 版已删去这句。"
+  },
+  {
+   "source": "OpenClaw AGENTS.md 模板",
+   "text": "Send one thoughtful reply instead of several fragments.",
+   "url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "OpenClaw 人设指南（docs/concepts/soul.md）",
+   "text": "Humor is allowed. Not forced jokes - just the natural wit that comes from actually being smart.",
+   "url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "OpenClaw 人设指南（docs/concepts/soul.md）",
+   "text": "Sharp is good. Annoying is not.",
+   "url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "OpenClaw 自动化投递文档，语言规则例句",
+   "text": "Summarize the updates. Respond in Chinese; keep URLs, code, and product names unchanged.",
+   "url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "OpenClaw 传说文档，创建者对 agent 在群聊里乱发目录结构的反应",
+   "text": "openclaw what did we discuss about talking with people xD",
+   "url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.5.tgz",
+   "note": "原文直读核实。少见的用户对主动行为的即时反应。"
+  },
+  {
+   "source": "Hermes Agent 0.19.0 定时任务固定提示（cron/scheduler.py）",
+   "text": "SILENT: If there is genuinely nothing new to report, respond with exactly \"[SILENT]\" (nothing else) to suppress delivery. Never combine [SILENT] with content — either report your findings normally, or say [SILENT] and nothing more.",
+   "url": "https://pypi.org/project/hermes-agent/0.19.0/",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "Hermes Agent 邮件监控，面向用户的功能描述",
+   "text": "Check your inbox periodically and ping you ONLY about mail that actually needs attention — never the newsletters.",
+   "url": "https://pypi.org/project/hermes-agent/0.19.0/",
+   "note": "原文直读核实。面向用户的成品文案。"
+  },
+  {
+   "source": "Hermes Agent 续费提醒蓝图，面向用户的功能描述",
+   "text": "A heads-up before a recurring payment, subscription renewal, or due date — so nothing auto-charges by surprise.",
+   "url": "https://pypi.org/project/hermes-agent/0.19.0/",
+   "note": "原文直读核实。面向用户的成品文案。"
+  },
+  {
+   "source": "Hermes Agent 续费提醒蓝图提示词",
+   "text": "Phrase it as an actionable heads-up (e.g. 'review or cancel before it renews'), not just a notification. One short message.",
+   "url": "https://pypi.org/project/hermes-agent/0.19.0/",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "Hermes Agent 习惯打卡蓝图提示词",
+   "text": "Ask whether they did it today, keep it warm and non-judgmental, and offer a one-line word of encouragement. One short message.",
+   "url": "https://pypi.org/project/hermes-agent/0.19.0/",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "Hermes Agent 喝水提醒蓝图提示词",
+   "text": "Vary the wording each time so it doesn't feel robotic. One short line.",
+   "url": "https://pypi.org/project/hermes-agent/0.19.0/",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "Hermes Agent 邮件监控的用户填写项与默认值",
+   "text": "Only notify me if the mail… / needs a reply today, is from my manager or family, or mentions a deadline",
+   "url": "https://pypi.org/project/hermes-agent/0.19.0/",
+   "note": "原文直读核实。斜线前是槽位标签，斜线后是默认值。"
+  },
+  {
+   "source": "Hermes Agent 紧急度分类器指令",
+   "text": "Score EACH item from 0 (ignore entirely) to 10 (interrupt the user now).",
+   "url": "https://pypi.org/project/hermes-agent/0.19.0/",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "Hermes Agent 人格预设 hype",
+   "text": "YOOO LET'S GOOOO!!! I am SO PUMPED to help you today! Every question is AMAZING and we're gonna CRUSH IT together! This is gonna be LEGENDARY! ARE YOU READY?! LET'S DO THIS!",
+   "url": "https://pypi.org/project/hermes-agent/0.19.0/",
+   "note": "原文直读核实。打气型人设的极端样本，可作反例参照。"
+  },
+  {
+   "source": "Hermes Agent 人格预设 concise",
+   "text": "You are a concise assistant. Keep responses brief and to the point.",
+   "url": "https://pypi.org/project/hermes-agent/0.19.0/",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "nanobot 0.4.1 通知闸门提示词",
+   "text": "The user should never see the agent reasoning about whether to speak.",
+   "url": "https://pypi.org/project/nanobot-ai/0.4.1/",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "nanobot 0.4.1 SOUL.md",
+   "text": "Treat the user's time as the scarcest resource, and their trust as the most valuable.",
+   "url": "https://pypi.org/project/nanobot-ai/0.4.1/",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "nanobot 0.4.1 定时提醒规则",
+   "text": "Do not add status reports like \"Done\" or \"Reminded\" unless they are the natural response.",
+   "url": "https://pypi.org/project/nanobot-ai/0.4.1/",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "Poke 官方 SDK README 的触发器示例",
+   "text": "condition: \"When a deploy fails\", action: \"Send me a summary of the error\"",
+   "url": "https://registry.npmjs.org/poke/-/poke-4.0.461.tgz",
+   "note": "原文直读核实。"
+  },
+  {
+   "source": "ChatGPT Pulse 读完后的收尾语（TechCrunch 转述）",
+   "text": "Great, that's it for today.",
+   "url": "https://techcrunch.com/2025/09/25/openai-launches-chatgpt-pulse-to-proactively-write-you-morning-briefs",
+   "note": "搜索摘录，未打开原页。另有来源写作 That's all for today。"
+  },
+  {
+   "source": "Duolingo 推送通知",
+   "text": "These reminders don't seem to be working. We'll stop sending them for now.",
+   "url": "https://blog.duolingo.com/hi-its-duo-the-ai-behind-the-meme/",
+   "note": "搜索摘录，未打开原页。触发天数各来源说法不一。"
+  },
+  {
+   "source": "Apple 就通知摘要出错对 BBC 的声明",
+   "text": "We are working on improvements and will make them available in a future software update.",
+   "url": "https://the-decoder.com/apple-pauses-ai-generated-news-summaries-after-serious-accuracy-issues-surface/",
+   "note": "搜索摘录，未打开原页。"
+  },
+  {
+   "source": "Hopper 高管在 CardRates 访谈中的说法",
+   "text": "about three-quarters of the notifications we'll send you will actually ask you to keep waiting",
+   "url": "https://www.cardrates.com/news/hopper-analyzes-travel-data-to-forecast-savings-on-flights-and-hotels/",
+   "note": "搜索摘录，未打开原页。口语转述。"
+  },
+  {
+   "source": "Cleo 喜剧写手 Ciara Jack",
+   "text": "It's easier and more fun to write roast mode.",
+   "url": "https://bebeez.eu/?p=51222",
+   "note": "搜索摘录，未打开原页。"
+  },
+  {
+   "source": "X 用户 Ziwen 谈 Poke 泄露的系统提示词",
+   "text": "I once spent 30 minutes bargaining with it over price. it wouldn't budge, roasted me for lowballing, and i genuinely thought a person was messing with me. After reading that prompt, every human thing it did was just a line in there.",
+   "url": "https://x.com/ziwenxu_/status/2063892254100509007",
+   "note": "搜索摘录，未打开原帖。用户声音。"
+  },
+  {
+   "source": "Monzo 写作指南的自述",
+   "text": "a (fairly) brief overview of how we write. It's for everyone in every team, and it applies to all the writing we do, inside and out.",
+   "url": "https://monzo.com/tone-of-voice/",
+   "note": "搜索摘录，未打开原页。"
+  },
+  {
+   "source": "UX 文章标题，作者记录了 20 天的 Duolingo 邮件",
+   "text": "20 days of emotional blackmail from Duolingo",
+   "url": "https://uxdesign.cc/20-days-of-emotional-blackmail-from-duolingo-4f566523e3c5",
+   "note": "搜索摘录，只取到标题。用户声音。"
+  }
+ ],
+ "base_doc_corrections": [
+  "基础稿缺“是否发送”这一层：它的三段式、字数上限、按钮规范都假设消息已决定要发。海外三个开源个人 agent 都把静默契约放在话术之前（T7a-02、04、12、16）。建议报告结构先讲发不发，再讲怎么写。",
+  "“用户实时情绪感知”应降级为设计假设：基础稿的 2×2 矩阵假设系统能感知情绪，本方向查到的产品实际用的都是显式信号（时段、是否忙、用户选的预设、是否回复），OpenClaw 还在 v2026.8.1 移除了从对话推断待办的功能。建议把“情绪”轴改为“可观测信号”轴。",
+  "“幽默 45%、热情 70%”这类百分比参数没有出处，应标为示意。海外产品用的是离散预设（GPT-5.1 8 个、Hermes 14 个），不是连续旋钮。",
+  "“把金额锚定在首行前 8 个字”需要加隐私例外：OpenClaw 把锁屏细节分三档，审批类通知在锁屏只用通用文案（T7a-06）。涉钱金额是否出现在锁屏上应由用户设置。",
+  "“注意力窗口 1.5–3 秒”“28 秒压到 3.5 秒”“消除 85% 交互摩擦”：本方向检索到的产品资料与官方文档里没有可对应的数据，维持“无出处的模型推演”的判断，建议改写为假设并标注。",
+  "示例里的“全网史低”：海外盯价产品 Hopper 连 95% 准确率都只是公司自述、无独立审计（T7a-27）。建议示例改为可验证的说法（如“近 30 天最低”并给数据来源）；是否触碰广告法由法规方向确认，本方向未查。",
+  "“高频重复提醒严禁固定俏皮话”可从经验升级为有据：Hermes 蓝图逐字要求每次换措辞（T7a-14，已核实）；Duolingo 的 KDD 2020 论文针对的正是重复文案的新鲜度衰减（T7a-26，论文原文本轮未打开）。",
+  "“绝不自称小X”需按渠道区分：活在聊天流里的 agent（OpenClaw 的 Molty、Poke）恰恰有名字、气质和签名 emoji。该禁令更适合通知栏和卡片，不一定适合对话流。这是研究员推断，需中文语境方向交叉验证。",
+  "Yuki K. 的 Medium 文章是否存在、Ant Design 关于“你/您”的原文：不在本方向检索范围内，且本会话无法抓取网页，均未能核实。"
+ ],
+ "surprises_or_contradictions": [
+  "最主动的产品在主动收缩：OpenClaw 以“会主动找你”出名，但默认值一路往“不外发、不推断、要显式建立”走，心跳文件 HEARTBEAT.md 到 2026.11.5 已退役。",
+  "Hopper 自述约四分之三的通知是“再等等”：不需要用户行动的消息也可以是核心价值，前提是带预测。与“只在需要行动时才打扰”的直觉相反。",
+  "Duolingo 最出名的提醒是“我们不提醒你了”；但同一做法被用户称为情感勒索，且有记录显示停发只持续约三天就恢复。",
+  "过度静默也是事故：nanobot 规定用户约定的提醒即使很短也要发；Hermes 规定分类器失败不得静默；OpenClaw 警告检查失败时变安静的监控看起来健康其实坏了。",
+  "去重不会自然存在：OpenClaw 把心跳迁移到普通自动化后，官方说明承认去掉了心跳专属的重复抑制，repeated updates can be delivered。",
+  "同是主动消息，动机决定观感：OpenAI 把 Pulse 包装成有尽头的反信息流；Meta 的跟进规则写得并不激进，仍被 TechCrunch 和 The Decoder 的标题直接称为留存手段。",
+  "人设是获客点，但平台方把语气交还给用户选：Poke 靠讨价还价出圈、Cleo 靠 roast 出圈，而 GPT-5.1 与 Hermes 的默认档都是“直接、不啰嗦”。",
+  "两家对“用户偏好怎么写给模型”给了相反答案：OpenClaw 要求写成 Always、Never、Prefer 开头的指令；Hermes 要求写成陈述事实，理由是命令式会在之后被当成指令重复执行。",
+  "口语化在涉钱场景有上限：Monzo 的写作原则广受引用，但其社区里也有用户说不那么正式的语言降低了他们的信任。"
+ ],
+ "gaps": [
+  "工具限制（最重要）：本会话云端环境的网络策略只放行包管理器与 MCP，WebFetch 对 openai.com、monzo.com、blog.duolingo.com、the-decoder.com、elifuzz.github.io、cdn.jsdelivr.net 全部解析失败；WebSearch 在第 15 次后因全流程共享的每轮 200 次配额耗尽被拒。需在环境的“允许的域名”里放行目标站点或提高搜索配额后重跑本方向。",
+  "完全没查的产品（28 个）：Gemini 定时操作、Pixel Magic Cue、Google Labs CC、Alexa+、Microsoft Copilot（Daily、Mico、Real Talk、Actions）、Perplexity（Tasks、Comet、邮件助手）、Claude、Manus、Lindy、Martin、Rocket Money、Honey/PayPal、Capital One Shopping、Google Flights、Kayak、Keepa、CamelCamelCamel、Revolut、Wise、Apple Fitness、Whoop、Strava、Headspace、Todoist、Motion、Reclaim、Sunsama、Slackbot。笔记附录 C 列了研究员既有知识里的线索，全部未核实，不可直接引用。",
+  "Poke 泄露系统提示词原文未读到：2025-09 版（GitHub EliFuzz/awesome-system-prompts 的 leaks/poke 目录）与 2026-06 版里关于小写、emoji、笑话频率、禁用客服腔短语、主动触发的条款。",
+  "“Cognition 收购 Poke”只在一篇第三方文章的标题里出现，未核实真伪。",
+  "Cleo：roast 与 hype 的逐字推送样本、模式的 A/B 效果数据；Braze 案例数字（+284% 打开、+124% 推送互动）的口径与年份。",
+  "Duolingo：KDD 2020 论文的效果数字；“停发提醒”文案的触发天数；产品负责人的原话与姓名拼写（搜索摘录写作 Jem Kans，疑为误拼）。",
+  "ChatGPT Pulse 收尾语的确切措辞与卡片数量、向 Plus 与免费用户扩展的现状；ChatGPT Tasks 各套餐上限的现行数字；GPT-5.1 预设的官方描述与改名理由。",
+  "Apple 通知摘要在 iOS 18.3 之后是否恢复、以什么标识方式恢复。",
+  "用户声音严重不足：Reddit、Hacker News、X 上对各产品主动消息的逐字抱怨与称赞基本没采集到，目前只有 3 条。",
+  "OpenClaw 在 v2026.8.1 移除“推断式承诺”的官方原因：需查该版本的发布说明或相关讨论。",
+  "2026 年新发布的主动式个人 agent 与各家通知策略调整没有做专门检索；本轮的 2026 年进展只覆盖 OpenClaw、Hermes、nanobot 与 Poke。"
+ ]
+}

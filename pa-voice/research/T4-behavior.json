@@ -1,0 +1,845 @@
+{
+ "track": "T4 目标推进与省钱省时的行为科学",
+ "headline_insights": [
+  "提醒有效但效应小、会衰减、有隐性成本：大样本实测的助推平均只有+1.4个百分点（期刊论文为+8.7），HeartSteps步行建议从+107%一路走低，提醒在增加目标行为的同时增加退订，不算这笔账净收益会被高估约10倍。",
+  "两个megastudy（47,306人与689,693人）结论一致：提醒两次并说“已为你预留/在等你”效果最好，出人意料、随意、互动式的写法更差，而且专家没猜中——严肃事项别抖机灵，话术靠测不靠猜。",
+  "进度怎么说有讲究：帮用户监控进度本身有效（138项研究，d+=0.40）；过半前说“已完成”、过半后说“还剩”；开局给真实的已有进度可把完成率从19%提到34%。",
+  "断档时最糟的一句话是“你的连胜断了”：7项研究显示突出断连会降低后续投入，预留“可歇额度”、把重启放在周一或月初（健身房到访周初约+33%）更能续上。",
+  "决定权要真交给用户：2026年Accenture调查（16国2.5万余人）只有9%接受AI全自动付款、32%接受“AI决定、我来付”，Forrester称约3/4的人设了限额也不愿自动支付；而只要能“稍微改一下”，人对算法的采用意愿就明显上升。",
+  "金钱措辞的民间定律证据偏弱：储蓄提醒现场实验里得失框架无显著差别，“100法则”的小额反转不显著；稳妥写法是首行绝对金额、周期性节省按年合计、最多一个取自用户心愿单的换算（点明机会成本可使购买意愿降约20%）。",
+  "省时间是被用户自己低估的价值：只有28.2%的人会花钱买时间，买了的人却更快乐；等待类消息要给确定的时间点和原因，结论后露一行真实工作量能提高感知价值。",
+  "中国语境有硬需求也有硬约束：自动续费2025年黑猫投诉69,201件、约75%与“不知情”“没通知”有关，法规要求续费前五日显著提醒；2026年“双11”规则整体做减法；年轻人要的是“可以买贵的，但不能买贵了”；“全网史低”属高风险表述。"
+ ],
+ "findings": [
+  {
+   "id": "T4-01",
+   "claim": "把目标写成“如果X就Y”的执行意图，对达成有中到大的促进；2024年更新显示效应因结果类型在小到中之间",
+   "evidence_type": "实证研究",
+   "source_title": "Gollwitzer & Sheeran (2006) Implementation Intentions and Goal Achievement: A Meta-analysis, Adv. Exp. Soc. Psychol. 38；Sheeran, Listrom & Gollwitzer (2024) European Review of Social Psychology",
+   "source_url": "https://doi.org/10.1080/10463283.2024.2334563",
+   "year": "2006/2024",
+   "key_data": "2006年：94项独立检验d=0.65（N>8,000）；2024年：642项检验，认知、情感、行为结果d=0.27–0.66",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "建目标和求确认时顺手定下“触发条件+动作”，让用户自己挑：到价就叫你，没到就出发前14天提醒",
+   "caveat": "二手博客称2024年元分析偏倚校正后d约0.15–0.35，未核到原文；研究多在健康、学业场景，非消费场景；WebFetch被会话网络策略拦截，仅据搜索摘要。"
+  },
+  {
+   "id": "T4-02",
+   "claim": "越接近奖励投入越多（目标梯度）；努力取决于剩余距离占原始距离的比例，带赠章的卡集满更快",
+   "evidence_type": "实证研究",
+   "source_title": "Kivetz, Urminsky & Zheng (2006) The Goal-Gradient Hypothesis Resurrected, Journal of Marketing Research 43(1):39–58",
+   "source_url": "https://business.columbia.edu/faculty/research/goal-gradient-hypothesis-resurrected-purchase-acceleration-illusionary-goal",
+   "year": "2006",
+   "key_data": "咖啡集点卡越近兑换买得越勤；带2枚赠章的12格卡比10格空卡更快集满；加速越明显者留存越高、回来越快",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "临近完成时再推一把最划算，说“只差1步”“还差¥40”；完成后立刻接下一个小目标防回落",
+   "caveat": "忠诚计划场景；购买间隔缩短约20%、拿到奖励后节奏回落等细节凭记忆，未核；PA里的进度必须是真的。"
+  },
+  {
+   "id": "T4-03",
+   "claim": "开局就给“已有进度”，完成率明显更高；给出进度的来由时效应更稳",
+   "evidence_type": "实证研究",
+   "source_title": "Nunes & Drèze (2006) The Endowed Progress Effect: How Artificial Advancement Increases Effort, Journal of Consumer Research 32(4):504–512",
+   "source_url": "https://doi.org/10.1086/500480",
+   "year": "2006",
+   "key_data": "洗车店300张卡：预盖2章的10格卡9个月兑换率34%，8格空卡19%，两者都需再洗8次",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "目标建好即显示“第1步已完成”，把PA已做的真实工作算进进度，不造假进度",
+   "caveat": "2004年单一洗车店现场实验；原研究的进度是商家人为给的，PA只能用真实已完成的工作；数字为多家二手来源一致转述，DOI凭记忆。"
+  },
+  {
+   "id": "T4-04",
+   "claim": "进度过半前强调“已完成”，过半后强调“还剩”，让人盯住较小的那块，动机更强",
+   "evidence_type": "实证研究",
+   "source_title": "Koo & Fishbach (2012) The Small-Area Hypothesis: Effects of Progress Monitoring on Goal Adherence, Journal of Consumer Research 39(3):493–509",
+   "source_url": "https://doi.org/10.1086/663827",
+   "year": "2012",
+   "key_data": "摘要：起步阶段关注已累积进度更促进坚持，“完成20%”比“还剩80%”有力；接近终点时反过来",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "进度文案在50%处换框架：前半程说“已搞定2步”，后半程说“只剩最后1步”",
+   "caveat": "咖啡店、贝果店忠诚卡现场实验与实验室研究；未见大规模独立复制；50%为简化阈值。"
+  },
+  {
+   "id": "T4-05",
+   "claim": "帮人监控目标进度本身就能提高达成，监控频率的提升中介了这一效果",
+   "evidence_type": "实证研究",
+   "source_title": "Harkin et al. (2016) Does Monitoring Goal Progress Promote Goal Attainment? A Meta-Analysis of the Experimental Evidence, Psychological Bulletin 142(2):198–229",
+   "source_url": "https://eprints.whiterose.ac.uk/id/eprint/91437/",
+   "year": "2016",
+   "key_data": "138项随机研究，N=19,951：监控频率d+=1.98，目标达成d+=0.40（95%CI 0.32–0.48）",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "定期进度简报是有证据的功能：由PA代劳、留痕、写清数字，不让用户自己去翻",
+   "caveat": "研究多为健康行为；“记录下来或公开时效果更大”的调节结论凭摘要记忆，未逐字核对；不等于提醒越多越好。"
+  },
+  {
+   "id": "T4-06",
+   "claim": "周一、月初、学期初、生日后等时间地标之后，人更愿意启动向上的行为（新起点效应）",
+   "evidence_type": "实证研究",
+   "source_title": "Dai, Milkman & Riis (2014) The Fresh Start Effect: Temporal Landmarks Motivate Aspirational Behavior, Management Science 60(10):2563–2582",
+   "source_url": "https://faculty.wharton.upenn.edu/wp-content/uploads/2014/06/Dai_Fresh_Start_2014_Mgmt_Sci.pdf",
+   "year": "2014",
+   "key_data": "大学健身房到访：每周初约+33%，学期初约+47%；“diet”搜索与承诺合约同样在地标后上升",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "重启搁置目标、建议调整的消息放在周一、月初、假期后，并点明“从今天重新算”",
+   "caveat": "档案数据，相关性证据，美国样本；百分比出自二手转述；后续研究提示清零可能挫伤表现好的人（凭记忆，未核）。"
+  },
+  {
+   "id": "T4-07",
+   "claim": "反馈平均有益，但逾三分之一反而降低表现；越指向“人”而非“任务”，越容易适得其反",
+   "evidence_type": "实证研究",
+   "source_title": "Kluger & DeNisi (1996) The Effects of Feedback Interventions on Performance, Psychological Bulletin 119(2):254–284",
+   "source_url": "https://doi.org/10.1037/0033-2909.119.2.254",
+   "year": "1996",
+   "key_data": "607个效应量、23,663人次：平均d=0.41，约38%的反馈干预使表现下降",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "受阻和催办只说事和下一步，不评价人；新目标多给已做到的，老目标可直说差距",
+   "caveat": "本条未经本次联网检索（搜索额度用尽），数字与DOI凭研究员记忆；Fishbach系列关于新手要正反馈、老手要负反馈的结论同样未核。"
+  },
+  {
+   "id": "T4-08",
+   "claim": "记录里突出“连胜还在”提升后续投入，突出“连胜断了”则挫伤；作者建议不要推送断连通知",
+   "evidence_type": "实证研究",
+   "source_title": "Silverman & Barasch (2023) On or Off Track: How (Broken) Streaks Affect Consumer Decisions, Journal of Consumer Research 49(6):1095–1117",
+   "source_url": "https://doi.org/10.1093/jcr/ucac029",
+   "year": "2023",
+   "key_data": "7项研究；连胜定义为连续3次及以上；早期版本报告断连效应与此前连胜长短无关",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "断档后不发“已中断X天”，改发“今天接上就行”；不可抗力造成的缺口不记为断",
+   "caveat": "多为情境实验与在线样本；机制表述出自发表前摘要；“可修复能否恢复动机”未核到原文；连胜本身可能成为焦虑来源。"
+  },
+  {
+   "id": "T4-09",
+   "claim": "给目标预留“应急额度”的人更愿意选难目标、坚持更久，而且倾向于留着额度不用",
+   "evidence_type": "实证研究",
+   "source_title": "Sharif & Shu (2017) The Benefits of Emergency Reserves: Greater Preference and Persistence for Goals That Have Slack with a Cost, Journal of Marketing Research 54(3):495–509",
+   "source_url": "https://doi.org/10.1509/jmr.15.0231",
+   "year": "2017",
+   "key_data": "例：每周7天健身另给2天“紧急跳过”；同作者2021年OBHDP论文研究失误后的坚持",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "习惯目标默认带“可歇额度”，说“这周还有2次可以歇”，而不是直接把目标调低",
+   "caveat": "细节来自作者学位论文与访谈摘要，期刊原文数字未核；以美国在线样本和小型现场实验为主。"
+  },
+  {
+   "id": "T4-10",
+   "claim": "一次破例后容易“破罐破摔”，认定目标已毁而彻底放开；短期、禁止式的目标更易触发",
+   "evidence_type": "实证研究",
+   "source_title": "Polivy & Herman 反调节进食研究；Cochran & Tesser (1996) The “what the hell” effect（经 Wikipedia: Counterregulatory eating 转述）",
+   "source_url": "https://en.wikipedia.org/wiki/Counterregulatory_eating",
+   "year": "1996/2010",
+   "key_data": "Polivy、Herman与Deo（2010）：以为自己吃了“大份”披萨的节食者，随后吃的饼干约为非节食者两倍",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "超支或断档后的第一条消息要缩小损失面：只是这一笔、这一天，本月目标还在",
+   "caveat": "证据集中在节食，迁移到消费和习惯是推论；有研究（Tomiyama 2009）提示日常情境下效应较弱；仅据二手资料。"
+  },
+  {
+   "id": "T4-11",
+   "claim": "提醒确实提高储蓄目标达成；提到具体目标的更有效，得失框架无显著差别，补发晚提醒无增益",
+   "evidence_type": "实证研究",
+   "source_title": "Karlan, McConnell, Mullainathan & Zinman (2016) Getting to the Top of Mind: How Reminders Increase Saving, Management Science 62(12):3393–3411",
+   "source_url": "https://pubsonline.informs.org/doi/fpi/10.1287/mnsc.2015.2296",
+   "year": "2016",
+   "key_data": "玻利维亚、秘鲁、菲律宾3家银行现场实验；工作论文版：收到月度提醒者多存6%",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "提醒里点名用户自己定的目标；不必纠结“省”还是“亏”的措辞；别靠加发来补救",
+   "caveat": "发展中国家储蓄账户、短信与信件渠道，年代较早；6%来自工作论文版，未确认正式发表版数字。"
+  },
+  {
+   "id": "T4-12",
+   "claim": "megastudy里最有效的短信是提前两次提醒并说“已为你预留”；与角色预期不符的写法更差",
+   "evidence_type": "实证研究",
+   "source_title": "Milkman et al. (2021) A megastudy of text-based nudges encouraging patients to get vaccinated at an upcoming doctor’s appointment, PNAS 118(20) e2101165118",
+   "source_url": "https://doi.org/10.1073/pnas.2101165118",
+   "year": "2021",
+   "key_data": "N=47,306、19种短信：平均把接种率提高约5%；最佳方案=就诊前提醒两次+疫苗已为你预留",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "机会和截止类消息用“替你留到18:00”的所有权句式；同一节点最多两次；严肃事不抖机灵",
+   "caveat": "美国流感疫苗场景，迁移到购物出行属推论；“不出人意料、不随意、不互动”的括注和4.6个百分点凭记忆未核；“预留”必须属实。"
+  },
+  {
+   "id": "T4-13",
+   "claim": "助推的平均效果被高估：期刊研究平均+8.7个百分点，助推团队的大样本实测只有+1.4",
+   "evidence_type": "实证研究",
+   "source_title": "DellaVigna & Linos (2022) RCTs to Scale: Comprehensive Evidence From Two Nudge Units, Econometrica 90(1):81–116",
+   "source_url": "https://www.econometricsociety.org/publications/econometrica/2022/01/01/rcts-scale-comprehensive-evidence-two-nudge-units",
+   "year": "2022",
+   "key_data": "期刊74项助推：+8.7pp（对照组26.0%）；助推团队：+1.4pp（+8.0%）；中位样本484对10,006",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "别指望一句话术扭转行为：预期定在个位数百分点，先改时机和步骤数，话术靠A/B选",
+   "caveat": "政府通信场景；Mertens 2022元分析d=0.43，Maier 2022校正发表偏倚后认为无证据，争论未完。"
+  },
+  {
+   "id": "T4-14",
+   "claim": "情境化推送的效果会随时间衰减：步行建议起初让随后30分钟步数翻倍，之后逐步减弱",
+   "evidence_type": "实证研究",
+   "source_title": "Klasnja et al. (2019) Efficacy of Contextually Tailored Suggestions for Physical Activity: A Micro-randomized Optimization Trial of HeartSteps, Annals of Behavioral Medicine 53(6):573–582",
+   "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6401341",
+   "year": "2019",
+   "key_data": "44人、42天、每天5个决策点：步行建议平均+24%（59步），初期+107%（271步）后下降；久坐提醒无效",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "给同类提醒设衰减预算：连续两次被忽略就降频、换形式，或并入周报",
+   "caveat": "小样本健康场景；把衰减归因于习惯化属解释；任意建议对比不发总体+14%仅边缘显著（p=.06）。"
+  },
+  {
+   "id": "T4-15",
+   "claim": "提醒有隐性成本：它提高目标行为，也提高退订；不计这笔成本会把净收益高估约十倍",
+   "evidence_type": "实证研究",
+   "source_title": "Damgaard & Gravert (2018) The hidden costs of nudging: Experimental evidence from reminders in fundraising, Journal of Public Economics 157:15–26",
+   "source_url": "https://econpapers.repec.org/RePEc:eee:pubeco:v:157:y:2018:i:c:p:15-26",
+   "year": "2018",
+   "key_data": "慈善机构现场实验：提醒同时增加捐款与邮件退订；不计隐性成本使捐赠者福利效应被高估10倍",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "把关提醒率、静音率放到和点击率同级的位置；每条提醒先过“值不值得打扰”",
+   "caveat": "慈善募捐邮件场景，动机结构与用户自建目标不同；单条提醒的金额数字在不同版本间不一致，未核。"
+  },
+  {
+   "id": "T4-16",
+   "claim": "JITAI框架主张只在“有需要且此刻接得住”时干预；2025年系统综述指出其核心组件多未被实证检验",
+   "evidence_type": "专家观点",
+   "source_title": "Nahum-Shani et al. (2018) Just-in-Time Adaptive Interventions (JITAIs) in Mobile Health, Annals of Behavioral Medicine；系统综述见 Frontiers in Digital Health (2025)",
+   "source_url": "https://www.frontiersin.org/journals/digital-health/articles/10.3389/fdgth.2025.1460167/full",
+   "year": "2018/2025",
+   "key_data": "组件：决策点、干预选项、裁剪变量、决策规则；两个状态：脆弱或机会、可接收性",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "每条主动消息过两问：现在发有没有用？他此刻接不接得住？只满足前者就排到下个空档",
+   "caveat": "框架性文献而非效果证据；医疗健康语境；2018年原文未核，转述自综述与密歇根大学项目页。"
+  },
+  {
+   "id": "T4-17",
+   "claim": "“必须、应该、千万别”式的控制性语言被感知为威胁自由，引发逆反，降低说服效果",
+   "evidence_type": "实证研究",
+   "source_title": "Miller, Lane, Deatrick, Young & Potts (2007) Psychological Reactance and Promotional Health Messages, Human Communication Research 33(2):219–240",
+   "source_url": "https://doi.org/10.1111/j.1468-2958.2007.00297.x",
+   "year": "2007",
+   "key_data": "实验操纵控制性语言与用词具体度；后续综述：武断、强硬的措辞比含蓄、不强硬的引发更多逆反",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "催办用“要不要、可以、你来定”，给理由和选项；删掉“必须、务必、千万、赶紧”",
+   "caveat": "美国大学生、健康宣传语境；原文结果未核到，文末“选择权在你”可降低威胁感为记忆细节；中文语气词的效应缺实证。"
+  },
+  {
+   "id": "T4-18",
+   "claim": "在请求后加一句“当然你可以拒绝”总体能提高依从，但高质量研究里效应不显著",
+   "evidence_type": "实证研究",
+   "source_title": "The Effectiveness of the “But-you-are-free” technique（预注册元分析，Meta-Psychology）；原元分析 Carpenter (2013)",
+   "source_url": "https://open.lnu.se/index.php/metapsychology/article/view/2640",
+   "year": "2013/2020",
+   "key_data": "52项实验、N=19,528：g=0.44（95%CI 0.36–0.51）；7项低偏倚风险研究g=0.11（CI −0.18–0.40）",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "“你来定”要落在真实可选的按钮上（改一下、先不用、稍后），而不是句尾一句客套",
+   "caveat": "原始研究多为街头当面请求，文字和App场景证据少；多数近期研究统计功效不足；发表年份以期刊页面为准。"
+  },
+  {
+   "id": "T4-19",
+   "claim": "暗黑模式短期确实有效：温和手法让接受率约翻倍、激进手法近四倍，但只有激进手法引发反感",
+   "evidence_type": "实证研究",
+   "source_title": "Luguri & Strahilevitz (2021) Shining a Light on Dark Patterns, Journal of Legal Analysis 13(1):43",
+   "source_url": "https://academic.oup.com/jla/article/13/1/43/6180579",
+   "year": "2021",
+   "key_data": "身份盗窃保护订阅实验：温和暗黑模式签约率约为对照组2倍，激进组近4倍；仅激进组出现强烈反弹",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "拒绝按钮写中性的“先不用”，不写“不了，我愿意多花钱”；不做假倒计时、假库存",
+   "caveat": "美国在线样本的一次性订阅决策，测不到长期信任损失；羞辱式确认的单项效果在摘要中未单列。"
+  },
+  {
+   "id": "T4-20",
+   "claim": "“损失比收益更痛”并非处处成立：领域经验越多损失厌恶越弱，学界对其普适性仍有争论",
+   "evidence_type": "实证研究",
+   "source_title": "Gal & Rucker (2018) The Loss of Loss Aversion, Journal of Consumer Psychology 28(3)；Mrkva, Johnson, Gächter & Herrmann (2020) Moderating Loss Aversion, JCP 30(3):407–428",
+   "source_url": "https://nottingham-repository.worktribe.com/preview/3681607/Mrkva-Johnson-Gaechter-Herrmann_2019-11-20.pdf",
+   "year": "2018/2020",
+   "key_data": "Mrkva等5个样本N=17,720：各类人群均有损失厌恶，但知识和经验越多越弱，年长者更强",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "“会扣¥30”只用于真会发生的损失（续费、过期作废）；机会型消息老实说“可省¥30”",
+   "caveat": "实验多为赌局与估值任务，不是通知文案对比；储蓄提醒现场实验中得失框架无显著差异（见T4-11）。"
+  },
+  {
+   "id": "T4-21",
+   "claim": "高价商品用“省多少钱”比“打几折”更显价值；低价商品上的反向规律未达显著，100法则只是口诀",
+   "evidence_type": "实证研究",
+   "source_title": "González, Esteva, Roggeveen & Grewal (2016) Amount off versus percentage off—when does it matter? Journal of Business Research 69(3):1022–1027",
+   "source_url": "https://econpapers.repec.org/RePEc:eee:jbrese:v:69:y:2016:i:3:p:1022-1027",
+   "year": "2016",
+   "key_data": "标价高于100美元时金额折扣的价值感与购买意愿更高；低于100美元呈相反趋势但不显著",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "首行统一写绝对金额“省¥420”；小额时再补一个相对量：“省¥6，约8折”",
+   "caveat": "美元语境与购买意向测量；人民币下的阈值没有实证，不能照搬¥100分界；口诀出自Berger的畅销书。"
+  },
+  {
+   "id": "T4-22",
+   "claim": "非整数显得更有事实依据，精确价格的量级会被低估；把估算写成精确数等于借用可信度",
+   "evidence_type": "实证研究",
+   "source_title": "Thomas, Simon & Kadiyali (2010) The Price Precision Effect, Marketing Science 29(1):175–190；Schindler & Yalch (2006) Advances in Consumer Research 33:586–590",
+   "source_url": "https://econpapers.repec.org/RePEc:inm:ormksc:v:29:y:2010:i:1:p:175-190",
+   "year": "2006/2010",
+   "key_data": "5项研究显示买家低估精确价格的量级；“99.44%”这类尖锐数字被认为比“99%”更像事实",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "已发生的写精确值（省了¥86.5）；预估的写“约¥90”并标“预计”",
+   "caveat": "房价与广告声明场景；工作论文与正式版对市场数据的方向表述不一，需读原文；专家身上效应会反转；写法建议属推论。"
+  },
+  {
+   "id": "T4-23",
+   "claim": "订阅靠“忘了取消”获利：换卡迫使用户重新决定时，取消率从平常约2%升到至少8%",
+   "evidence_type": "实证研究",
+   "source_title": "Einav, Klopack & Mahoney, Selling Subscriptions, NBER Working Paper 31547 (2023)；American Economic Review 115(5):1650–71 (2025)",
+   "source_url": "https://www.nber.org/papers/w31547",
+   "year": "2023/2025",
+   "key_data": "卡组织数据：10项订阅服务均在换卡月留存骤降；注意力参数λ平均0.18",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "续费前提醒加一键停是最硬的省钱场景；话术给三件事：哪天扣、扣多少、最近用了几次",
+   "caveat": "美国数据；2%到8%出自媒体转述；“不注意使商家收入增加14%至200%以上”凭记忆，本次未核到。"
+  },
+  {
+   "id": "T4-24",
+   "claim": "把同一笔钱拆成“每天几块”能降低付出感、提高参与；反过来，省下的钱按年合计才显大",
+   "evidence_type": "实证研究",
+   "source_title": "Hershfield, Shu & Benartzi (2020) Temporal Reframing and Participation in a Savings Program: A Field Experiment, Marketing Science 39(6):1039–1051",
+   "source_url": "https://pubsonline.informs.org/doi/epdf/10.1287/mksc.2019.1177",
+   "year": "2020",
+   "key_data": "Acorns数千新用户：每月150美元框架下高收入者参与是低收入者3倍，改成每天5美元后差距消失",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "用户要付的钱可拆小（每天不到¥1）；帮用户省的钱按年合计（每月¥30，一年约¥360）",
+   "caveat": "“按年合计显大”是由该机制反推的设计推论，未被直接检验；“按日框架报名约为按月4倍”凭记忆，本次未核到。"
+  },
+  {
+   "id": "T4-25",
+   "claim": "人做决定时很少主动想“这笔钱还能干嘛”；一句点明机会成本的话就能明显改变选择",
+   "evidence_type": "实证研究",
+   "source_title": "Frederick, Novemsky, Wang, Dhar & Nowlis (2009) Opportunity Cost Neglect, Journal of Consumer Research 36(4):553–561",
+   "source_url": "https://som.yale.edu/news/2009/05/opportunity-costs-remind-consumers-about-savings",
+   "year": "2009",
+   "key_data": "“不买”改写为“留着这笔钱买别的”后，愿花15美元买DVD的人少约20%；便宜款iPod选择率约翻倍",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "省钱结果配一个取自用户心愿单的换算，一条消息最多一个，不随手编“十杯咖啡”",
+   "caveat": "美国学生与在线样本的购买情境；对守财型用户效果较弱；原文为75%降到55%系记忆，未核。"
+  },
+  {
+   "id": "T4-26",
+   "claim": "花钱买时间能提升幸福感，但只有约28%的人这么做——省时间的价值常被用户自己低估",
+   "evidence_type": "实证研究",
+   "source_title": "Whillans, Dunn, Smeets, Bekkers & Norton (2017) Buying time promotes happiness, PNAS 114(32):8523–8527",
+   "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5559044",
+   "year": "2017",
+   "key_data": "美加丹荷6,000余人；n=4,469中28.2%每月花钱买时间；60人现场实验：40美元买时间比买物更快乐",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "省时结果要显式记账：“这周替你省了2小时10分”，并说清省在哪几件事上",
+   "caveat": "西方样本为主；现场实验仅60人；调查部分为相关性；未涉及AI代办。"
+  },
+  {
+   "id": "T4-27",
+   "claim": "同一件事用“时间”而不是“金钱”来说，更能唤起个人联结与好感；炫耀型商品上相反",
+   "evidence_type": "实证研究",
+   "source_title": "Mogilner & Aaker (2009) The Time vs. Money Effect: Shifting Product Attitudes and Decisions through Personal Connection, Journal of Consumer Research 36(2)",
+   "source_url": "https://knowledge.wharton.upenn.edu/article/time-vs-money-analyzing-which-one-rules-consumer-choices/",
+   "year": "2009",
+   "key_data": "柠檬水摊轮换三种招牌：看到“花一点时间”招牌的顾客满意度最高、付得更多",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "轻松任务优先说时间和体验（到店直接坐下）；省钱任务才把金额放在首位",
+   "caveat": "具体比例与金额在二手来源间对不上（14%对7%；391人中40人购买），未核原文；测的是产品态度而非通知效果。"
+  },
+  {
+   "id": "T4-28",
+   "claim": "等待的体感长短由心理决定：不确定、没解释、还没开始、无事可做的等待都显得更长",
+   "evidence_type": "专家观点",
+   "source_title": "Maister (1985) The Psychology of Waiting Lines",
+   "source_url": "https://davidmaister.com/articles/the-psychology-of-waiting-lines/",
+   "year": "1985",
+   "key_data": "8条命题，如“不确定的等待比已知有限的更长”“未解释的比已解释的更长”；后续检验有支持也有反驳",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "排队和执行中消息给“到哪了、几点到、为什么”：已取号A37，预计18:40，晚高峰慢15分钟",
+   "caveat": "原文是经验命题而非实验；Jones与Peppiatt（1996）等检验结果不一；URL为作者官网地址，本次未能打开核对。"
+  },
+  {
+   "id": "T4-29",
+   "claim": "让用户看见系统替他干了什么会提高感知价值，甚至胜过结果相同的瞬间返回",
+   "evidence_type": "实证研究",
+   "source_title": "Buell & Norton (2011) The Labor Illusion: How Operational Transparency Increases Perceived Value, Management Science 57(9):1564–1579",
+   "source_url": "https://pubsonline.informs.org/doi/fpi/10.1287/mnsc.1110.1376",
+   "year": "2011",
+   "key_data": "在线旅行与婚恋搜索5项实验：展示正在做哪些工作的等待，比结果相同的即时返回更受偏好",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "结论后加一行真实工作量（比了12家、盯了6天），明细折叠；没办成时不拿它邀功",
+   "caveat": "实验室模拟网站；“结果差时展示劳动更糟”凭记忆未核；与折叠推理不矛盾——首屏只露一行。"
+  },
+  {
+   "id": "T4-30",
+   "claim": "人看到算法出错后会弃用；只要允许对结果做哪怕很小的修改，使用意愿就明显回升",
+   "evidence_type": "实证研究",
+   "source_title": "Dietvorst, Simmons & Massey (2018) Overcoming Algorithm Aversion: People Will Use Imperfect Algorithms If They Can (Even Slightly) Modify Them, Management Science 64(3):1155–1170",
+   "source_url": "https://marketing.wharton.upenn.edu/wp-content/uploads/2020/07/Dietvorst-Overcoming-Algorithm-Aversion.pdf",
+   "year": "2018",
+   "key_data": "摘要：可调整不完美算法的预测时，参与者使用算法的意愿高得多，准确度也随之提高",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "确认卡常备一个“改一下”，可改的只留一两项（数量、时间、上限）",
+   "caveat": "有金钱激励的预测任务，不是购物代办；采用率的具体数字未核；可调项过多会抬高理解成本。"
+  },
+  {
+   "id": "T4-31",
+   "claim": "2025–2026年多项调查一致：多数人愿让AI查和比，只有约5%–9%接受它不经确认就付款",
+   "evidence_type": "行业数据",
+   "source_title": "Accenture “Talk to my AI Agent” 消费者调查（2026年1月，16国2.5万余人），Chain Store Age 报道；另见 Forrester、Riskified、Ipsos、Worldpay、ACI 等调查",
+   "source_url": "https://chainstoreage.com/accenture-customers-trust-ai-agents-perform-these-tasks-them",
+   "year": "2025–2026",
+   "key_data": "Accenture：32%愿在限定范围内让AI决定、自己付款，9%接受全自动；Forrester 2026.4：约3/4设了限额也不愿自动支付",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "默认“我备好，你点了才付”；自动执行只给用户主动开启的小额、有上限、可撤销事项",
+   "caveat": "均为厂商与咨询机构问卷，经行业媒体转述，问法差异大（Riskified同一指标从70%降到45%）；未找到中国消费者的同类一手调查。"
+  },
+  {
+   "id": "T4-32",
+   "claim": "自动续费是中国消费者的显性痛点：2025年黑猫相关投诉6.9万件，约75%与“不知情”“没通知”有关",
+   "evidence_type": "行业数据",
+   "source_title": "中新网《民生调查局丨22万条投诉！“自动续费”套路深》（2026-03-14）；中消协2025年三季度消费投诉分析",
+   "source_url": "https://www.chinanews.com.cn/m/cj/2026/03-14/10586915.shtml",
+   "year": "2025–2026",
+   "key_data": "2025年69,201件，其中51,545件属“诱导或不知情开通”与“扣费前未收到通知”；累计超22万条",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "续费提醒写明哪天扣、扣多少、怎么停，并能直接代停；这是需求最明确的省钱场景",
+   "caveat": "黑猫为商业投诉平台，数字反映投诉活跃度而非发生率；口径由媒体检索得出；中消协2025年三季度也称此类投诉持续攀升。"
+  },
+  {
+   "id": "T4-33",
+   "claim": "法规已把续费前提醒定为经营者义务：服务前及续费日前五日显著提醒，并提供简便取消入口",
+   "evidence_type": "法规",
+   "source_title": "《网络交易监督管理办法》（国家市场监督管理总局令第37号，2021-05-01施行）第十八条",
+   "source_url": "https://www.gov.cn/zhengce/zhengceku/2021-03/16/content_5593226.htm",
+   "year": "2021",
+   "key_data": "第十八条：在自动展期、自动续费等日期前五日，以显著方式提请消费者注意，由消费者自主选择",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "PA提醒不低于法定线：提前5天和前1天各一次，用推送或短信，没被看到就换渠道再提醒",
+   "caveat": "条文据多家转述并凭记忆补全，未打开gov.cn原文；“显著方式”无统一定义，最高法典型案例认为仅站内信难谓显著（二手）。"
+  },
+  {
+   "id": "T4-34",
+   "claim": "2026年“双11”在《互联网平台价格行为规则》施行后整体做减法：官方直降、现货、少凑单、价保拉长",
+   "evidence_type": "产品案例",
+   "source_title": "人民日报海外版《不凑单、不蹲点、不用复杂计算——规则“做减法”，“双11”消费更透明》（新华网2026-11-11转载）",
+   "source_url": "https://www.news.cn/fortune/20261111/a4decc0901734937bdb92bac70d6d0d0/c.html",
+   "year": "2026",
+   "key_data": "规则2026-04-10施行（7章29条）；预售周期缩短、跨店满减淡出、官方直降与现货成主流、价保周期拉长",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "只报到手价和比自己买少花多少，把算式收起来；把盯价保做成默认动作",
+   "caveat": "媒体报道层面的概括，各平台实际规则仍有门槛；“43%认为规则复杂致决策疲劳”仅见二手转述，未找到原始调查。"
+  },
+  {
+   "id": "T4-35",
+   "claim": "第三次全国时间利用调查：居民日均上网5小时37分，比2018年多2小时55分，屏幕时间挤占明显",
+   "evidence_type": "行业数据",
+   "source_title": "国家统计局《第三次全国时间利用调查公报》（2024-10-31）",
+   "source_url": "https://www.stats.gov.cn/sj/zxfb/202410/t20241031_1957217.html",
+   "year": "2024",
+   "key_data": "互联网使用参与率92.9%（+35.9个百分点）；家务劳动参与者日均1小时59分（−28分）；购物用互联网者54.7%",
+   "verified_by_fetch": false,
+   "confidence": "high",
+   "pa_implication": "PA自己不能再多占屏幕时间：一条消息能办完，就别把人拉进App",
+   "caveat": "调查时间2024年5月；公报不直接测量时间贫困感；有酬劳动与自由支配时间数值本次未查到；“不多占屏幕”为推论。"
+  },
+  {
+   "id": "T4-36",
+   "claim": "年轻人的省钱心态是“可以买贵的，但不能买贵了”：在意的是不花冤枉钱，而不是买便宜货",
+   "evidence_type": "行业数据",
+   "source_title": "中国青年报社社会调查中心调查，中新网转载《“可以买贵的,但不能买贵了” 年轻人砍价不只为省钱》（2026-07-23）",
+   "source_url": "https://www.chinanews.com.cn/sh/2026/07-23/10664843.shtml",
+   "year": "2026",
+   "key_data": "1,334名受访青年：91.1%过去一年有砍价经历；60.7%认为砍价是不花冤枉钱、消费理性的表现",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "省钱文案的落点是“没买贵”“这个价靠谱”，少用“便宜、低价、薅”，并给出比价依据",
+   "caveat": "问卷网在线样本、青年群体、非概率抽样；砍价不完全等于比价；未找到2025年比价专题数据。"
+  },
+  {
+   "id": "T4-37",
+   "claim": "“全网最低、史低”在中国属高风险表述：无法举证就可能构成绝对化用语或虚假价格比较",
+   "evidence_type": "法规",
+   "source_title": "国家市场监督管理总局《广告绝对化用语执法指南》（2023年2月）；《互联网平台价格行为规则》（2026-04-10施行）",
+   "source_url": "https://www.jetro.go.jp/ext_images/world/asia/cn/ip/law/pdf/section/20230225b_02.pdf",
+   "year": "2023/2026",
+   "key_data": "指南：限定具体时间、地域的客观事实陈述不属违法，但广告主无法证明真实性的仍依法查处",
+   "verified_by_fetch": false,
+   "confidence": "medium",
+   "pa_implication": "改成带范围、时间、出处的可证事实：“近30天最低（京东自营，截至今天10:00）”",
+   "caveat": "PA私域消息是否属广告需法务判断；指南未逐一列举“史低”；《明码标价和禁止价格欺诈规定》原文本次未查到。"
+  },
+  {
+   "id": "T4-38",
+   "claim": "61,293人的健身megastudy里，54种干预中最有效的是“缺席后回来给小奖励”，多数效果不持久",
+   "evidence_type": "实证研究",
+   "source_title": "Milkman et al. (2021) Megastudies improve the impact of applied behavioural science, Nature 600:478–483",
+   "source_url": "https://doi.org/10.1038/s41586-021-04128-4",
+   "year": "2021",
+   "key_data": "45%的干预使每周到访提高9%–27%；仅8%的干预在4周结束后仍有可测的显著效果",
+   "verified_by_fetch": false,
+   "confidence": "low",
+   "pa_implication": "把“回来”本身当成值得肯定的动作；别高估任何话术的长期效果，要持续测",
+   "caveat": "本条未经本次联网检索（搜索额度用尽），数字与DOI凭研究员记忆；美国健身房场景，奖励为积分而非话术。"
+  }
+ ],
+ "design_rules": [
+  {
+   "rule": "每条主动消息先过“值不值得打扰”两问（现在发有没有用？他此刻接不接得住？）；同类提醒连续两次被忽略就降频、换形式或并入周报",
+   "rationale": "提醒的效应小且会衰减，还会把人推向静音和退订；把打扰当成本来管，比多发更能保住长期可达性。",
+   "do_example": "这周 3 条小进展并成一条：东京机票仍在 ¥1,400 上下，没到你设的线，我继续盯。",
+   "dont_example": "连续三天同一时间发：你关注的航班价格有变动，快来看看吧。",
+   "supporting_finding_ids": [
+    "T4-13",
+    "T4-14",
+    "T4-15",
+    "T4-16"
+   ]
+  },
+  {
+   "rule": "机会提醒用所有权句式（替你留着、你的那张），并写明保留到何时、是否扣款；保留必须是真的",
+   "rationale": "两个megastudy里“已为你预留/在等你”是最有效的提醒措辞；虚构保留就滑向暗黑模式。",
+   "do_example": "盯了 6 天的那班机降到 ¥1,180，比你设的线低 ¥120。座位先替你留到 18:00，不付款不扣钱。",
+   "dont_example": "太棒啦！全网史低价出现，手慢无，速抢！",
+   "supporting_finding_ids": [
+    "T4-12",
+    "T4-19",
+    "T4-37"
+   ]
+  },
+  {
+   "rule": "截止提醒=具体时刻+不操作会发生什么+一键处理，同一节点最多提醒两次；自动续费类不低于“提前5天+前1天”",
+   "rationale": "提醒本身有效，但补发晚提醒无增益；megastudy最佳方案正是两次；法规对续费提醒有五日底线。",
+   "do_example": "周五 24:00 会自动续费 ¥30/月，这个月只打开过 1 次。现在停掉，还是周四晚再提醒一次？",
+   "dont_example": "您的会员即将到期，为避免影响使用，请尽快处理！！",
+   "supporting_finding_ids": [
+    "T4-11",
+    "T4-12",
+    "T4-23",
+    "T4-32",
+    "T4-33"
+   ]
+  },
+  {
+   "rule": "求确认默认“我备好，你点了才付”：给出到手结果、确认、改一下、先不用，并说明何时扣钱；涉及钱时沉默只能等于不执行",
+   "rationale": "调查显示接受AI不经确认付款的人只有约5%–9%；允许小幅修改能明显提高对算法方案的采用。",
+   "do_example": "按这个方案下单：猫粮拆两单，到手 ¥249，比直接买少 ¥86.5。[确认下单] [改一下] [先不买]。付款前不会扣钱。",
+   "dont_example": "已为您自动下单并支付 ¥249，如有疑问请联系客服。",
+   "supporting_finding_ids": [
+    "T4-30",
+    "T4-31"
+   ]
+  },
+  {
+   "rule": "催办只推一个最小下一步；进度过半前说“已完成”，过半后说“还剩”",
+   "rationale": "进度监控提高达成；人更容易被较小的那块推动；越接近终点投入越多。",
+   "do_example": "报销只剩最后 1 步：点提交。现在提，还是明早 9 点提醒你？",
+   "dont_example": "你的报销还有 4 项未完成，请尽快处理。",
+   "supporting_finding_ids": [
+    "T4-02",
+    "T4-03",
+    "T4-04",
+    "T4-05"
+   ]
+  },
+  {
+   "rule": "每个目标绑定一条“如果—就”，并让用户自己挑触发条件",
+   "rationale": "执行意图是目标达成研究里证据最厚的技术之一；条件由用户定，也顺带给了掌控感。",
+   "do_example": "到 ¥1,200 以下我马上叫你；一直没到的话，出发前 14 天提醒你做决定。这样行吗？",
+   "dont_example": "已为您开启价格监控，有消息会通知您。",
+   "supporting_finding_ids": [
+    "T4-01",
+    "T4-30"
+   ]
+  },
+  {
+   "rule": "删掉“必须、务必、千万、赶紧”等控制性词，换成“理由+选项”；决定权落在按钮上，拒绝项用中性词且同样好点",
+   "rationale": "控制性语言引发逆反；“你可以拒绝”只有落到真实选项上才有意义；羞辱式拒绝是暗黑模式。",
+   "do_example": "今天还差背单词这一项。睡前刷 5 个词也算数，要不要现在来？[来 3 分钟] [今天歇了]",
+   "dont_example": "今天必须完成打卡，千万不要半途而废！[立即打卡] [不了，我选择放弃自己]",
+   "supporting_finding_ids": [
+    "T4-17",
+    "T4-18",
+    "T4-19"
+   ]
+  },
+  {
+   "rule": "断档后不提“断了”和天数，只说今天怎么接上；习惯目标默认带“可歇额度”；重启消息放在周一、月初、假期后",
+   "rationale": "突出断连会挫伤后续投入并可能触发破罐破摔；应急额度和新起点能把人接回来。",
+   "do_example": "新的一周从今天算起。上周歇了 2 天不影响，这周还有 2 次可以歇。",
+   "dont_example": "你的 14 天连胜已中断，已经 3 天没打卡了。",
+   "supporting_finding_ids": [
+    "T4-06",
+    "T4-08",
+    "T4-09",
+    "T4-10",
+    "T4-38"
+   ]
+  },
+  {
+   "rule": "受阻或失败消息=事实+原因+已采取的下一步（+兜底）；只谈任务不评价人，不卖萌，不拿工作量邀功",
+   "rationale": "指向人的负反馈容易适得其反；没解释、不确定的等待和失败最磨人。",
+   "do_example": "候补没排到——前面还有 37 人，这班基本没戏。已改盯 G102 和 G106，有票先替你留着。",
+   "dont_example": "很遗憾，由于您设置的条件过于苛刻，抢票失败了呢~",
+   "supporting_finding_ids": [
+    "T4-07",
+    "T4-28",
+    "T4-29"
+   ]
+  },
+  {
+   "rule": "写钱：首行绝对金额；已发生写精确值，预估写“约”并标“预计”；周期性节省按年合计；最多配一个取自用户心愿单的换算",
+   "rationale": "金额框架在较高价位更显价值；精确数自带可信度，不能滥用；机会成本被点明才会被感知；按年合计为设计推论。",
+   "do_example": "已停掉视频会员自动续费，每月少扣 ¥30，一年约 ¥360，够你心愿单里那双跑鞋的一半了。",
+   "dont_example": "为您节省了约 8.3% 的娱乐开支，相当于十杯奶茶、三张电影票、一顿火锅哦！",
+   "supporting_finding_ids": [
+    "T4-21",
+    "T4-22",
+    "T4-24",
+    "T4-25"
+   ]
+  },
+  {
+   "rule": "损失句式只用于真实且确定会发生的损失（续费扣款、券作废）；机会型消息老实说“可省”，不把机会包装成损失",
+   "rationale": "损失框架的优势并不稳定，现场实验里得失框架无显著差别；包装出来的损失接近虚假紧迫。",
+   "do_example": "这张 ¥50 的券今晚 24:00 作废。用掉，还是让它过期？",
+   "dont_example": "再不下单你就亏了 ¥50！",
+   "supporting_finding_ids": [
+    "T4-11",
+    "T4-20"
+   ]
+  },
+  {
+   "rule": "写时间：落到分钟并给对比基线，落到用户日程；等待类消息给确定的时间点和原因，并说明不用盯",
+   "rationale": "用户自己会低估省时间的价值；不确定、没解释的等待体感更长。",
+   "do_example": "已帮你线上取号 A37，前面 12 桌，预计 18:40 到你，比到店现排少等约 70 分钟。差 3 桌时我叫你。",
+   "dont_example": "正在为您排队中，请耐心等待。",
+   "supporting_finding_ids": [
+    "T4-26",
+    "T4-27",
+    "T4-28",
+    "T4-35"
+   ]
+  },
+  {
+   "rule": "价格比较必须带“范围+时间+出处”，不用“全网最低、史低、最划算”等绝对化词；“均价”要说明是哪里、多久的均价",
+   "rationale": "无法举证的绝对化比较有合规风险；用户一旦发现更低价，信任即毁。",
+   "do_example": "近 30 天最低（京东自营，截至今天 10:00），比上周均价低 ¥86。",
+   "dont_example": "全网史低！错过再等一年！",
+   "supporting_finding_ids": [
+    "T4-34",
+    "T4-36",
+    "T4-37"
+   ]
+  },
+  {
+   "rule": "复盘=结果数字+一行真实工作量+没办成的也说，再问一句下次的默认做法",
+   "rationale": "让进度和劳动可见能提高达成与感知价值；只报喜会削弱可信度。",
+   "do_example": "东京机票收尾：盯了 9 天、比过 12 家，¥1,180 成交，比第一天便宜 ¥420。酒店那条线没降到位，已停。下次还按这个线盯吗？",
+   "dont_example": "恭喜！本次任务圆满完成，感谢您的信任与支持！",
+   "supporting_finding_ids": [
+    "T4-05",
+    "T4-25",
+    "T4-29"
+   ]
+  },
+  {
+   "rule": "涉及钱、截止、受阻的消息不抖机灵；幽默只留给低风险且已办成的时刻，并先做A/B再铺开",
+   "rationale": "megastudy里与角色预期不符、随意的写法效果更差，专家也猜不中哪句最好；话术效应本就只有个位数百分点。",
+   "do_example": "号取好了，18:30 到店直接坐下。排队这种事交给我。",
+   "dont_example": "叮咚~你的钱包正在瑟瑟发抖，会员又要偷偷续费啦！",
+   "supporting_finding_ids": [
+    "T4-12",
+    "T4-13"
+   ]
+  },
+  {
+   "rule": "建议放弃或调整时，给“改目标、再等等、先停掉”三个体面出口，附上已知事实，不提沉没成本和断档天数",
+   "rationale": "对正在落后的人，时间地标是重启的好时机；强调断档和“已经投入”会挫伤或绑架用户。",
+   "do_example": "这条线盯了 30 天，最低到过 ¥1,340，离你定的 ¥1,200 还差 ¥140。月初了，要不要：[把线调到 ¥1,350] [再盯两周] [先停掉]",
+   "dont_example": "您已经坚持了 30 天，现在放弃太可惜了！",
+   "supporting_finding_ids": [
+    "T4-06",
+    "T4-08",
+    "T4-09"
+   ]
+  },
+  {
+   "rule": "省钱的落点写“没买贵”和“到手价”，不让用户算题；算式和规则明细默认折叠",
+   "rationale": "市场和监管都在把凑单算题从消费者身上拿走；年轻人在意的是不花冤枉钱，而不是买便宜货。",
+   "do_example": "到手 ¥249，这个价不算贵：近 30 天里只有 2 天比这低。",
+   "dont_example": "叠加跨店满 300 减 50、品类券满 199 减 20 及店铺券后，预计可享折上折优惠。",
+   "supporting_finding_ids": [
+    "T4-34",
+    "T4-36"
+   ]
+  }
+ ],
+ "copy_samples": [
+  {
+   "source": "Milkman 等 2021，PNAS megastudy 最佳短信的核心措辞（研究刺激）",
+   "text": "reserved for you",
+   "url": "https://doi.org/10.1073/pnas.2101165118",
+   "note": "搜索摘要原话为 flu shots that were already reserved for the patient；完整短信全文未核到"
+  },
+  {
+   "source": "Milkman 等 2022，沃尔玛药房 megastudy 最佳短信的核心措辞（研究刺激）",
+   "text": "waiting for you",
+   "url": "https://researchdiscovery.drexel.edu/esploro/outputs/journalArticle/A-680000-person-megastudy-of-nudges-to/991021861659604721",
+   "note": "搜索摘要原话为 a flu shot was waiting for them"
+  },
+  {
+   "source": "“但你是自由的”依从技巧的标准附言（Meta-Psychology 元分析页面）",
+   "text": "But you are free to accept or refuse",
+   "url": "https://open.lnu.se/index.php/metapsychology/article/view/2640"
+  },
+  {
+   "source": "Mogilner & Aaker 2009 柠檬水摊招牌（研究刺激）",
+   "text": "Spend a little time and enjoy our lemonade",
+   "url": "https://knowledge.wharton.upenn.edu/article/time-vs-money-analyzing-which-one-rules-consumer-choices/",
+   "note": "对照招牌为 Spend a little money and enjoy our lemonade 与 Enjoy our lemonade；搜索转述，原招牌带摊名"
+  },
+  {
+   "source": "Frederick 等 2009 对“不买”选项的改写（研究刺激）",
+   "text": "keeping the money for other purchases",
+   "url": "https://som.yale.edu/news/2009/05/opportunity-costs-remind-consumers-about-savings"
+  },
+  {
+   "source": "Frederick 等 2009 iPod 实验的差价表述（研究刺激）",
+   "text": "leaving you $100 in cash",
+   "url": "https://som.yale.edu/news/2009/05/opportunity-costs-remind-consumers-about-savings"
+  },
+  {
+   "source": "Sharif & Shu 应急储备研究中的目标设计用语",
+   "text": "emergency skip",
+   "url": "https://escholarship.org/uc/item/3vm2h8gj",
+   "note": "例：每周 7 天健身，另给 2 天 emergency skip"
+  },
+  {
+   "source": "Accenture 2026 调查对有限授权的描述（Chain Store Age 报道）",
+   "text": "within defined boundaries such as price and preference",
+   "url": "https://chainstoreage.com/accenture-customers-trust-ai-agents-perform-these-tasks-them"
+  },
+  {
+   "source": "中国青年报调查报道标题（中新网 2026-07-23 转载）",
+   "text": "可以买贵的,但不能买贵了",
+   "url": "https://www.chinanews.com.cn/sh/2026/07-23/10664843.shtml"
+  },
+  {
+   "source": "人民日报海外版报道标题（新华网 2026-11-11 转载）",
+   "text": "不凑单、不蹲点、不用复杂计算——规则“做减法”，“双11”消费更透明",
+   "url": "https://www.news.cn/fortune/20261111/a4decc0901734937bdb92bac70d6d0d0/c.html"
+  },
+  {
+   "source": "同一报道对旧促销玩法的概括",
+   "text": "满减—凑单—退款—再凑单",
+   "url": "https://www.news.cn/fortune/20261111/a4decc0901734937bdb92bac70d6d0d0/c.html"
+  },
+  {
+   "source": "2025–2026 年“双11”平台促销用语（媒体报道中出现）",
+   "text": "官方立减 / 官方直降 / 一件直降 / 现货开卖",
+   "url": "https://www.thepaper.cn/newsDetail_forward_34453201",
+   "note": "四个独立的产品文案词，不是一句话"
+  },
+  {
+   "source": "中消协 2025 年三季度消费投诉分析",
+   "text": "App或网页端缺乏明显的“取消续费”入口",
+   "url": "https://news.qq.com/rain/a/20251107A04AWP00"
+  },
+  {
+   "source": "中消协 2025 年三季度消费投诉分析",
+   "text": "建议相关部门探索建立行业统一的续费提醒标准规范",
+   "url": "https://news.qq.com/rain/a/20251107A04AWP00"
+  },
+  {
+   "source": "黑猫投诉平台的投诉原因分类（中新网 2026-03-14）",
+   "text": "诱导消费者自动续费或在消费者不知情情况下开始自动续费",
+   "url": "https://www.chinanews.com.cn/m/cj/2026/03-14/10586915.shtml"
+  },
+  {
+   "source": "黑猫投诉平台的投诉原因分类（中新网 2026-03-14）",
+   "text": "消费者在扣费前未收到或未看到通知",
+   "url": "https://www.chinanews.com.cn/m/cj/2026/03-14/10586915.shtml"
+  },
+  {
+   "source": "《网络交易监督管理办法》第十八条",
+   "text": "在消费者接受服务前和自动展期、自动续费等日期前五日，以显著方式提请消费者注意，由消费者自主选择",
+   "url": "https://www.gov.cn/zhengce/zhengceku/2021-03/16/content_5593226.htm",
+   "note": "据多家转述并凭记忆补全，未打开原文核对"
+  }
+ ],
+ "base_doc_corrections": [
+  "「米勒定律（4±1 组块）」归属有误：7±2 出自 Miller (1956)，约 4 个组块的上限出自 Cowan (2001)。建议改为「Cowan 的工作记忆容量约 4 个组块」。（凭既有知识，本次未联网核对。）",
+  "「注意力窗口 1.5–3 秒」「28 秒压到 3.5 秒」「消除约 85% 交互摩擦」没有出处，基础稿自己也写的是「模型测算」。应明确标为「示意性推演，未经测量」，或换成有出处的数字。",
+  "「全网史低」应删除或改写：属于无法举证的绝对化比较，触碰《广告法》第九条与《广告绝对化用语执法指南》的风险区，也与 2026-04-10 施行的《互联网平台价格行为规则》禁止虚假促销的方向相悖。建议改成「近 30 天最低（某平台，截至某时）」。PA 私域消息是否构成广告需法务判断。",
+  "场景 6 的「高于均价 ¥80」要补参考点：哪里的均价、多长时间的均价。否则是无从比较的被比较价格。",
+  "「把损失金额提至首行」的理由要降级：损失框架并不稳定地优于收益框架（储蓄提醒现场实验里得失框架无显著差别；损失厌恶的普适性仍有争论）。把金额和时间提到首行仍然对，但依据是可扫读和「用户自定目标可见」，不是「损失更痛」。",
+  "场景 3「已免费锁好 16:30 东航直飞」、场景 2「按此方案锁单」需写明是否已扣款、能否撤销：2025–2026 年调查显示只有约 5%–9% 的人接受不经确认的付款。",
+  "四象限里「幽默 45%、正式度 20%、热情 70%」等百分比是伪精确，没有测量依据。建议改成档位（无、轻、中）并注明是经验设定。",
+  "结尾那句「让用户觉得这个精明的决定完全是自己做出的」应改为真实的控制权：线由用户定、最后一下由用户点、参数可改（Dietvorst 2018），而不是制造掌控的错觉。",
+  "「把完整推理全部折叠」需要补一句：首屏保留一行真实工作量（如「比了 12 家、盯了 6 天」），明细再折叠。劳动错觉研究显示看得见的工作能提高感知价值。",
+  "「已止损 ¥198/月，这笔钱拿去喝十杯冰美式更香」的机制成立（机会成本具象化），但换算物应取自用户自己的心愿单，且每条消息最多一个。",
+  "场景 4 的「接住 14 天连胜纪录」「用免签卡休息」有证据支持（连胜研究与应急储备研究），可保留；需要补一条反面规则：断了之后不提「断了」。",
+  "「不用温馨提示、好消息开头」的建议可以补上实证依据：megastudy 里与角色预期不符、随意的写法效果更差。",
+  "基础稿把 NN/g、Medium、LogRocket 等二手 UX 文章当作机制证据；目标推进部分建议换成一手研究（执行意图、进度监控、megastudy 等），并如实标注效应量不大。"
+ ],
+ "surprises_or_contradictions": [
+  "助推在大样本实测里只有 +1.4 个百分点，期刊论文（+8.7）高估了约 6 倍；校正发表偏倚后，有学者认为平均效应接近零。话术不是魔法。",
+  "储蓄提醒的现场实验里，「省」和「亏」两种说法没有显著差别——「损失框架一定更有效」不成立。",
+  "megastudy 里更好的写法是「不出人意料、不随意、不互动」；一句「已为你预留」打败了所有更花心思的写法，而且专家和普通人都没猜中。这给幽默感划了一条有证据的线：能不能用，取决于是否符合用户对这个角色此刻的预期。",
+  "提醒在提高目标行为的同时提高退订；不算这笔账，净收益会被高估约 10 倍。",
+  "补发晚提醒没有额外效果；情境化推送的效果几周内明显衰减（步行建议从 +107% 降下来）。",
+  "「当然你可以拒绝」这一经典技巧总体 g=0.44，但 7 项高质量研究里效应不显著（g=0.11）。",
+  "温和的暗黑模式能让接受率翻倍而且不引发反感——这正是它需要被主动禁止、而不能靠用户反弹来约束的原因。",
+  "「100 法则」里「小额用百分比更好」的那一半，在原论文里没有达到显著。",
+  "让人多等一会儿但看见系统在干活，可能比瞬间出结果更受欢迎——与基础稿「一切过程都该折叠」的直觉相反。",
+  "对 AI 代买的放心程度不是单调上升：Riskified 的同一指标从 2025 年底约 70% 降到 2026 年初 45%；Forrester 发现预设限额也没有让多数人放心。",
+  "只有 28.2% 的人会花钱买时间，尽管这让人更快乐——「省时间」不是自明的卖点，需要被说出来、记下来。",
+  "进度不该一直用同一种说法：过半之后继续说「已完成 80%」，不如说「只剩 2 步」。",
+  "新起点是双刃剑：对正在连胜的人「清零」可能适得其反（凭记忆，未核）。",
+  "执行意图的经典效应量 d=0.65 可能偏高：二手来源称 2024 年元分析偏倚校正后约 0.15–0.35（未核原文）。"
+ ],
+ "gaps": [
+  "WebFetch 在本会话中完全不可用，所有发现的 verified_by_fetch 均为 false。需要在会话网络设置中放行以下域名后逐条复核：kops.uni-konstanz.de、business.columbia.edu、eprints.whiterose.ac.uk、faculty.wharton.upenn.edu、econpapers.repec.org、pubmed.ncbi.nlm.nih.gov、www.pnas.org、en.wikipedia.org、www.tandfonline.com、academic.oup.com、www.nngroup.com（以及各论文的出版方域名）。",
+  "全队共享的搜索额度（每轮 200 次）在本方向完成 43 次搜索后用尽，以下计划内题目未能检索；如需继续，可在下一轮追加搜索或调高搜索上限。",
+  "优先复核的数字：megastudy 最佳短信的逐字全文与 4.6 个百分点；Hershfield 2020「按日框架报名约为按月 4 倍」；Einav 等「不注意使商家收入增加 14% 至 200% 以上」；Sheeran 2024 的偏倚校正值；Mogilner & Aaker 柠檬水摊的比例与金额；Kivetz 2006 的天数；Dai 2014 各时间地标的百分比。",
+  "未检索：截止措辞相关研究——Tu & Soman (2014) 时间归类与任务启动、Shu & Gneezy (2010) 期限越长越拖、Zhu, Yang & Hsee (2018) 单纯紧迫效应。",
+  "未检索：「交给我，你可以忘了」的依据——Masicampo & Baumeister (2011) 做了计划即可消除未完成目标的认知占用。",
+  "未检索：Fishbach 系列原文（新手与老手对正负反馈的不同反应）、Eskreis-Winkler & Fishbach (2019) 失败反馈、Kluger & DeNisi (1996) 原文；T4-07 全凭记忆。",
+  "未检索：体面放弃的依据——Wrosch 等 (2003) 目标脱离与幸福感；沉没成本话术的反面证据。",
+  "未检索：自我决定理论在数字提醒中的元分析证据；自主支持性语言的中文写法没有实证。",
+  "未检索：个性化过头的「被监视感」（Aguirre 等 2015；Kim, Barasz & John 2019）。",
+  "未检索：IKEA 效应、心理账户、付款之痛、锚定与参考价的原文数字；默认项的力量与伦理（Jachimowicz 等 2019）。",
+  "未检索：提醒衰减的更多证据（Calzolari & Nardotto 2017；Allcott & Rogers 2014）与 Duolingo 等产品的连胜、连胜保护数据。",
+  "未查到：《明码标价和禁止价格欺诈规定》《消费者权益保护法实施条例》第十条的原文；《网络交易监督管理办法》第十八条未打开官方文本核对。",
+  "未查到：第三次全国时间利用调查中的有酬劳动、无酬劳动、个人自由支配时间数值；中国「时间贫困」的直接测量。",
+  "空白：中国消费者对 AI 代下单、代付款的一手调查数据（只确认了 21 世纪经济报道 2026-08-05 一篇报道的标题）；支付宝、千问、豆包等产品的用户态度数据。",
+  "空白：中文提醒话术的随机对照实验。本方向的机制证据几乎全部来自英文、欧美样本，中文语气词、称谓、幽默的效应没有实证。",
+  "空白：满减规则复杂度引起反感的原始调查（「43%」的出处）；中国青年报 2025 年比价专题数据；各平台价保政策细节与 PA 代办价保的可行性。",
+  "待验证的设计推论：把省下的钱按年合计是否真的更有感；「一条消息最多一个具象换算」；50% 处切换进度框架；「同一节点最多两次」迁移到购物出行场景是否成立。建议各做一次 A/B。"
+ ],
+ "dossier_path": "scratchpad/research/T4-behavior.md"
+}

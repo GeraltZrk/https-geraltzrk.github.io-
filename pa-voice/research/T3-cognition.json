@@ -299,16 +299,16 @@
   },
   {
    "id": "T3-23",
-   "claim": "能撤销就别用确认：人会因习惯化一路点「好」；浏览器安全警告与用药警示的大规模数据显示警告常被直接略过",
+   "claim": "能撤销就别用确认：人会因习惯化一路点「好」；浏览器安全警告与用药警示的大规模数据显示警告常被略过",
    "evidence_type": "专家观点",
    "source_title": "Raskin (2007) Never Use a Warning When You Mean Undo, A List Apart；数据另见 Akhawe & Felt (2013)（Chrome SSL 警告）和 van der Sijs 等 (2006) JAMIA 13(2)（用药警示）",
    "source_url": "https://alistapart.com/article/neveruseawarning/",
    "year": "2007",
-   "key_data": "Chrome SSL 警告点击穿透率 70.2%（Akhawe & Felt 2013）；用药警示被忽略 49%–96%（van der Sijs 等 2006）",
+   "key_data": "Chrome SSL 警告点击穿透率 70.2%（Akhawe & Felt 2013）；用药安全警报被医生跳过（override）49%–96%，不含高级别过量警报（van der Sijs 等 2006）",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "可撤回的动作改成先做＋撤销窗口；回执里写清怎么撤、撤到何时",
-   "caveat": "2026-11-18 读了 Raskin 原文，习惯化会让人一路点「好」、用撤销代替警告的论点都对得上；后半句的大规模数据不出自这篇，出自另外两篇论文。Chrome SSL 警告点击穿透率 70.2%（Akhawe & Felt 2013，是最高值）没有核对原文。49%–96% 出自 van der Sijs 等综述的 17 篇研究，T2-14 的全文核到，原文说的是警示被 override，不含高级别过量警报。",
+   "caveat": "2026-11-18 读了 Raskin 原文，习惯化会让人一路点「好」、用撤销代替警告的论点都对得上；后半句的大规模数据不出自这篇，出自另外两篇论文。Chrome SSL 警告点击穿透率 70.2%（Akhawe & Felt 2013，是最高值）没有核对原文。49%–96% 出自 van der Sijs 等 2006 综述（纳入 17 篇文献，这个范围来自其中 8 项研究），读该综述全文时核到，原文说的是警示被 override，不含高级别过量警报。",
    "check_override": "fetch",
    "verify_verdict": "confirmed"
   },
@@ -340,7 +340,7 @@
   },
   {
    "id": "T3-26",
-   "claim": "选择过载并不稳定：50 个实验的元分析平均效应约为零，只在偏好不明、选项难比、想省力时才明显",
+   "claim": "选择过载并不稳定：50 个实验的元分析平均效应约为零，偏好不明、选项难比、想省力时更容易出现",
    "evidence_type": "实证研究",
    "source_title": "Scheibehenne, Greifeneder & Todd (2010) Can There Ever Be Too Many Options?, Journal of Consumer Research",
    "source_url": "https://doi.org/10.1086/651235",
@@ -349,7 +349,7 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "主动提醒默认给 1 个推荐加最多 2 个备选；用户主动问还有什么时可多给，但要同一维度排好序",
-   "caveat": "2026-11-18 读了两篇论文的摘要，全文没有读到。Chernev 等的 99 个观测共 N=7,202，四个调节因素是选项集复杂度、任务难度、偏好不确定和省力目标。Scheibehenne 等称没有找到充分条件，Chernev 等则称计入调节因素后总体效应显著，「只在……才明显」说得偏硬。",
+   "caveat": "2026-11-18 读了两篇论文的摘要，全文没有读到。Chernev 等的 99 个观测共 N=7,202，四个调节因素是选项集复杂度、任务难度、偏好不确定和省力目标。Scheibehenne 等称没有找到充分条件，Chernev 等则称计入调节因素后总体效应显著。",
    "check_override": "abstract",
    "verify_verdict": "confirmed"
   },
@@ -394,7 +394,7 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "结论后留一句真实工作量（比了 12 家），可展开看明细；结果不好时不炫过程",
-   "caveat": "2026-11-18 读了论文摘要，全文没有读到。摘要只说探讨了边界条件，没有细节，「结果差时展示努力会减分」没有核到。「而非决策质量」是手册加的提醒，摘要测的是服务价值感知。",
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。摘要只说探讨了边界条件，没有细节，「结果差时展示努力会减分」没有核到，所以建议里「结果不好时不炫过程」只是手册的推论。「而非决策质量」是手册加的提醒，摘要测的是服务价值感知。",
    "check_override": "abstract",
    "verify_verdict": "confirmed"
   },

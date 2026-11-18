@@ -93,7 +93,7 @@
   },
   {
    "id": "T6-07",
-   "claim": "AI 客服失败后表达幽默能提高宽恕，自贬型最好；一处摘要称仅在低严重度成立。",
+   "claim": "AI 客服失败后表达幽默能提高宽恕，自贬型最好；但正面效应只在低严重度失败中成立，中、高严重度下消失。",
    "evidence_type": "实证研究",
    "source_title": "Xie 等 (2025) Affiliative or self-defeating? Exploring the effect of humor types on customer forgiveness in the context of AI agents' service failure, Journal of Business Research 194",
    "source_url": "https://ideas.repec.org/a/eee/jbrese/v194y2025ics0148296325002048.html",
@@ -102,7 +102,7 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "自嘲只用于「失误小、已补救、只说一句」；损失大或没修好时不用。",
-   "caveat": "2026-11-18 读了论文摘要，全文没有读到。严重度边界写在正式摘要里：正面效应只在低严重度失败中保持，中、高严重度下消失。情景实验的具体设计未核，不是真实损失。",
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。情景实验的具体设计未核，不是真实损失。",
    "check_override": "abstract"
   },
   {

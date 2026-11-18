@@ -8,7 +8,7 @@
 
   <div class="facts wide">
     <div class="fact"><b class="num">51.85<small>%</small></b><span>公开评测里，一款主流大模型「主动开口」的误报率。它几乎不漏该帮的时候，但一半是多余的</span><cite><a class="ev" data-ev="T2-31"></a></cite></div>
-    <div class="fact"><b class="num">约一半</b><span>用户没有给应用推送权限。推送只能当加急通道，任务卡才是底座</span><cite><a class="ev" data-ev="T2-15"></a></cite></div>
+    <div class="fact"><b class="num">约一半</b><span>用户没有给应用推送权限。推送只能当加急通道，任务卡才是底座</span><cite>厂商基准数据，2025 年中位数<a class="ev" data-ev="T2-15"></a></cite></div>
     <div class="fact"><b class="num">3.4<small>倍</small></b><span>由用户行为触发的推送，打开率是群发式的 3.4 倍（14.4% 对 4.19%）</span><cite>厂商基准数据<a class="ev" data-ev="T2-16"></a></cite></div>
     <div class="fact"><b class="num">3<small>次/天</small></b><span>通知改成每天 3 次批量送达，人更专注、压力更低；每小时一批几乎没用</span><cite>随机现场实验，237 人<a class="ev" data-ev="T2-11"></a></cite></div>
     <div class="fact"><b class="num">+1.4<small>个百分点</small></b><span>大样本实测里，一次助推的平均效果。期刊论文里的数字是 +8.7</span><cite><a class="ev" data-ev="T4-13"></a></cite></div>
@@ -17,7 +17,7 @@
   <div class="sub col">
     <h3>第一条话术规则是「不说」</h3>
     <p>基础稿的全部规则都假设这条消息已经决定要发。三个开源的个人 agent 做法相反：把「不发」做成一等公民，写进提示词和代码。其中一个的模板里有两张成对的清单，一张写什么时候主动联系，一张写什么时候闭嘴，末尾一句是：两边都成立时，保持安静<a class="ev" data-ev="T7a-02"></a>。另一个在后台任务和用户之间加了一道闸门，闸门自己出错时，默认不通知<a class="ev" data-ev="T7a-16"></a>。</p>
-    <p>它们还一致地把消息分成两类，各用一套规则<a class="ev" data-ev="T7a-17"></a>。</p>
+    <p>后一个还把消息分成两类，各用一套规则<a class="ev" data-ev="T7a-17"></a>。</p>
   </div>
   <div class="tbl scroll-x wide" style="margin-top:1rem">
     <table>
@@ -55,11 +55,11 @@
         <thead><tr><th>层级</th><th>用户感受到什么</th><th>用在什么时候</th><th>平台对应</th></tr></thead>
         <tbody>
           <tr><th scope="row">S0 入账</th><td>没有任何提示；打开任务卡能看到</td><td>没有新变化；PA 能自己重试的故障；过程中的小进展</td><td>不发通知，只更新卡片和小组件</td></tr>
-          <tr><th scope="row">S1 轻提示</th><td>不亮屏不响，进通知中心或周期小结</td><td>只是告知；没有时限；PA 自己的建议</td><td>iOS 的被动级；Android 的低重要性<a class="ev" data-ev="T2-23"></a></td></tr>
+          <tr><th scope="row">S1 轻提示</th><td>不亮屏不响，进通知中心或周期小结</td><td>只是告知；没有时限；PA 自己的建议</td><td>iOS 的被动级<a class="ev" data-ev="T2-20"></a>；Android 的低重要性<a class="ev" data-ev="T2-23"></a></td></tr>
           <tr><th scope="row">S2 推送</th><td>亮屏、响一次</td><td>需要用户当天做决定；用户正在等的结果</td><td>默认级</td></tr>
-          <tr><th scope="row">S3 时效推送</th><td>能穿透专注模式</td><td>正在发生，或 1 小时内就会错过；且用户亲手设过这个触发条件</td><td>iOS 明文规定只用于此，且不得用于营销<a class="ev" data-ev="T2-20"></a></td></tr>
+          <tr><th scope="row">S3 时效推送</th><td>能穿透专注模式</td><td>正在发生，或 1 小时内就会错过；且用户亲手设过这个触发条件</td><td>iOS 规定只用于正在发生或 1 小时内发生的事<a class="ev" data-ev="T2-20"></a>，且不得用于营销<a class="ev" data-ev="T2-21"></a></td></tr>
           <tr><th scope="row">S4 电话或短信</th><td>强打断</td><td>只有用户建目标时勾选了「可以打电话叫我」</td><td>默认关闭</td></tr>
-          <tr><th scope="row">实况</th><td>锁屏或状态栏上一个会变的状态</td><td>用户正在等、有始有终、几小时内结束的过程：排队、当天行程、取件</td><td>三家平台口径一致；多日的盯价不够格<a class="ev" data-ev="T2-26"></a></td></tr>
+          <tr><th scope="row">实况</th><td>锁屏或状态栏上一个会变的状态</td><td>用户正在等、有始有终、几小时内结束的过程：排队、当天行程、上门取件</td><td>Apple、Android 口径一致（华为未核原文）；多日的盯价、包裹追踪不够格<a class="ev" data-ev="T2-26"></a></td></tr>
         </tbody>
       </table>
     </div>
@@ -82,15 +82,15 @@
       <div class="mx-cell"><b>S0</b></div>
       <div class="mx-cell"><b>S0</b></div>
     </div>
-    <p class="note" style="margin-top:.8rem">「1 小时」这条线取自 iOS 对时效通知的官方门槛。各格具体落在哪一层、升级几次，是本手册的推演，需要 A/B 标定。两大平台都支持原地更新同一条通知而不是新发一条<a class="ev" data-ev="T2-25"></a>，也都反对为同一件事重复通知，哪怕用户没回应<a class="ev" data-ev="T2-21"></a>。</p>
+    <p class="note" style="margin-top:.8rem">「1 小时」这条线取自 iOS 对时效通知的官方门槛。各格具体落在哪一层、升级几次，是本手册的推演，需要 A/B 标定。两大平台都支持原地更新同一条通知而不是新发一条<a class="ev" data-ev="T2-25"></a>，Apple 还明确反对为同一件事重复通知，哪怕用户没回应<a class="ev" data-ev="T2-21"></a>。</p>
   </div>
 
   <div class="sub wide">
     <h3>发几次，没回应怎么办</h3>
     <div class="grid-2">
       <div class="col">
-        <p>提醒有用，但效果比想象的小，而且有代价。大样本的短信实验里，效果最好的做法是提前提醒两次，并说东西「已为你留着」；补发更晚的提醒没有额外收益<a class="ev" data-ev="T4-12"></a><a class="ev" data-ev="T4-11"></a>。提醒在推动目标的同时也在把人推走：一项募捐实验里，提醒同时提高了捐款和退订，不算退订这笔账，净收益会被高估约十倍<a class="ev" data-ev="T4-15"></a>。</p>
-        <p>所以同一节点最多两次。再没回应，就说明这件事此刻对用户不重要，或者方式不对。降频，然后停，并告诉用户怎么恢复。一款语言学习应用最出名的通知正是宣布「先不发了」；它同时因为内疚式的催促被用户称为「情感勒索」<a class="ev" data-ev="T7a-26"></a>。可以借的是「无效就停」这个机制，不是它的语气。</p>
+        <p>提醒有用，但效果比想象的小，而且有代价。大样本的短信实验里，效果最好的做法是提前提醒两次，并说东西「已为你留着」<a class="ev" data-ev="T4-12"></a>；另一项银行储蓄提醒实验里，补发更晚的提醒没有额外收益<a class="ev" data-ev="T4-11"></a>。提醒在推动目标的同时也在把人推走：一项募捐实验里，提醒同时提高了捐款和退订，不算退订这笔账，净收益会被高估约十倍<a class="ev" data-ev="T4-15"></a>。</p>
+        <p>所以同一节点最多两次。再没回应，就说明这件事此刻对用户不重要，或者方式不对。降频，然后停，并告诉用户怎么恢复。一款语言学习应用有一条通知，正是宣布「先不发了」；它同时因为内疚式的催促被用户称为「情感勒索」<a class="ev" data-ev="T7a-26"></a>。可以借的是「无效就停」这个机制，不是它的语气。</p>
       </div>
       <div class="tbl scroll-x">
         <table style="min-width:0">
@@ -113,9 +113,9 @@
   <div class="sub wide">
     <h3>国内渠道的三条硬约束</h3>
     <div class="grid-3">
-      <div class="callout"><b>厂商推送分两类</b>只有归入「服务与通讯」的消息（用户订阅的提醒、订单物流、出行、账务、待办）才能响铃、不限量。「我发现一个你可能感兴趣的」属于资讯营销，多数厂商每天最多 2 条，而且静默<a class="ev" data-ev="T2-27"></a>。每条消息在源头就要打好类别。</div>
-      <div class="callout"><b>微信里每条都要预先订阅</b>一次性订阅是订一次、发一条，一格约 20 个字符<a class="ev" data-ev="T2-29"></a>。提醒点要在建目标时就做成明确的选项：「降到 ¥2,000 时叫我一次」。</div>
-      <div class="callout"><b>续费提醒是法定义务</b>自动续费要在扣费日前五日以显著方式提醒<a class="ev" data-ev="T5-23"></a>。只发站内信，或者短信发失败了不补发，法院认定为没尽到义务<a class="ev" data-ev="T7b-24"></a>。发了不等于送达。</div>
+      <div class="callout"><b>厂商推送分两类</b>只有归入「服务与通讯」的消息（用户订阅的提醒、订单物流、出行、账务、待办）才能响铃、不限量。「我发现一个你可能感兴趣的」属于资讯营销，华为、vivo 的规则是每天最多 2 条（新闻类 5 条），多半静默展示；规则常变，未核原文<a class="ev" data-ev="T2-27"></a>。每条消息在源头就要打好类别。</div>
+      <div class="callout"><b>微信里每条都要预先订阅</b>一次性订阅是订一次、发一条<a class="ev" data-ev="T2-29"></a>，thing 字段据开发者资料约 20 个字符（未核官方文档）<a class="ev" data-ev="T1-27"></a>。提醒点要在建目标时就做成明确的选项：「降到 ¥2,000 时叫我一次」。</div>
+      <div class="callout"><b>续费提醒是法定义务</b>自动续费要在扣费日前五日以显著方式提醒<a class="ev" data-ev="T5-23"></a>。只发站内信，或者短信发失败了不补发，据媒体转述的一起最高法案例，被认定为没尽到义务<a class="ev" data-ev="T7b-24"></a>。发了不等于送达。</div>
     </div>
   </div>
 

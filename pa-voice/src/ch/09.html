@@ -15,8 +15,8 @@
 
   <div class="sub col">
     <h3>一段提示词为什么不够</h3>
-    <p>把这份手册整段贴进提示词，模型会写得更像样，但有三类事它做不稳。第一类是事实：让模型把几条来源揉成一句话，出过把新闻通知改写成假标题的事故<a class="ev" data-ev="T7a-22"></a>。第二类是字数和禁用说法：模型数不准字，结构化输出也不提供长度约束<a class="ev" data-ev="T9-19"></a>。第三类是「发不发」：公开评测里，主流模型主动开口的误报率在一半上下<a class="ev" data-ev="T2-31"></a>。</p>
-    <p>已经在线上跑的个人 agent 给出的做法很一致：负责执行的部分只转述事实，负责说话的部分只管措辞，不值得说就等<a class="ev" data-ev="T9-14"></a>；后台任务和用户之间加一道闸，只放行能行动的信息，闸出错时默认不通知<a class="ev" data-ev="T7a-16"></a>；没有新内容就只回一个约定的静默标记<a class="ev" data-ev="T7a-12"></a>。</p>
+    <p>把这份手册整段贴进提示词，模型会写得更像样，但有三类事它做不稳。第一类是事实：让模型把几条来源揉成一句话，Apple 的通知摘要就出过把新闻通知改写成假标题的事故<a class="ev" data-ev="T7a-22"></a>。第二类是字数和禁用说法：模型数不准字，结构化输出也不提供长度约束<a class="ev" data-ev="T9-19"></a>。第三类是「发不发」：2024 年的一项公开评测里，GPT-4o 等模型主动开口的误报率在一半上下<a class="ev" data-ev="T2-31"></a>。</p>
+    <p>已经在线上跑的个人 agent 给出的做法很一致：负责执行的部分只转述事实，负责说话的部分只管措辞，不值得说就等（据一份泄露的提示词，厂商未确认）<a class="ev" data-ev="T9-14"></a>；后台任务和用户之间加一道闸，只放行能行动的信息，闸出错时默认不通知<a class="ev" data-ev="T7a-16"></a>；没有新内容就只回一个约定的静默标记<a class="ev" data-ev="T7a-12"></a>。</p>
     <p>所以这套规范落成三层，每层交给最擅长它的一方。</p>
   </div>
 
@@ -34,7 +34,7 @@
   <div class="tool wide sub" id="baseCheck">
     <div class="tool-head"><h3>拿基础稿的六条「黄金话术」试一下</h3><span>人写的规范，自己的例子也会出界。所以要让机器查。</span></div>
     <div class="tool-body">
-      <p class="note">基础稿给每条消息定了三个上限：锚点 10 个字以内，上下文 22 个字以内，每个按钮 5 个字以内，整条 40 个汉字以内。下面先按它自己的上限数一遍，再过一遍本手册的体检；右边是按手册改后的版本，过的是同一套检查。</p>
+      <p class="note">基础稿给每条消息定了四个上限：锚点 10 个字以内，上下文 22 个字以内，每个按钮 5 个字以内，整条 40 个汉字以内。下面先按它自己的上限数一遍，再过一遍本手册的体检；右边是按手册改后的版本，过的是同一套检查。</p>
       <div class="chips" id="baseChips" role="group" aria-label="六条黄金话术"></div>
       <div class="tool-split">
         <div class="stack">
@@ -55,7 +55,7 @@
     <h3>Skill 包里有什么 <small>pa-voice-zh · <span data-stat="skillFiles">14</span> 个文件</small></h3>
     <div class="grid-2" style="margin-bottom:1.4rem">
       <div class="col">
-        <p>Skill 是一种开放的打包格式：一个文件夹，里面有一份带元信息的 <code>SKILL.md</code>，加上按需读取的参考文件和脚本<a class="ev" data-ev="T9-01"></a>。模型平时只看见一句描述，判断用得上才读正文，正文再指向更细的文件。这样规范可以写得很全，又不会每次都占满上下文<a class="ev" data-ev="T9-26"></a>。</p>
+        <p>Skill 是一种开放的打包格式：一个文件夹，里面有一份带元信息的 <code>SKILL.md</code>，加上按需读取的参考文件和脚本<a class="ev" data-ev="T9-01"></a>。模型平时只看见一句描述，判断用得上才读正文，正文再指向更细的文件。这样规范可以分层写，又不会每次都占满上下文<a class="ev" data-ev="T9-01"></a><a class="ev" data-ev="T9-26"></a>。</p>
         <p>这个包按官方写法组织<a class="ev" data-ev="T9-02"></a>：正文只写模型原本不知道的东西；每条规则带一句原因和一组正反例<a class="ev" data-ev="T9-08"></a>；能用代码判定的都放进脚本。</p>
       </div>
       <div class="tbl scroll-x">

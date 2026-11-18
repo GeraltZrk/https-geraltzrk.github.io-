@@ -52,7 +52,7 @@
   </div>
 
   <div class="sub wide">
-    <h3>Skill 包里有什么 <small>pa-voice-zh · <span data-stat="skillFiles">15</span> 个文件</small></h3>
+    <h3>Skill 包里有什么 <small>pa-voice-zh · <span data-stat="skillFiles">17</span> 个文件</small></h3>
     <div class="grid-2" style="margin-bottom:1.4rem">
       <div class="col">
         <p>Skill 是一种开放的打包格式：一个文件夹，里面有一份带元信息的 <code>SKILL.md</code>，加上按需读取的参考文件和脚本<a class="ev" data-ev="T9-01"></a>。模型平时只看见一句描述，判断用得上才读正文，正文再指向更细的文件。这样规范可以分层写，又不会每次都占满上下文<a class="ev" data-ev="T9-01"></a><a class="ev" data-ev="T9-26"></a>。</p>
@@ -66,7 +66,7 @@
             <tr><th scope="row">references/</th><td>发送策略、14 种类型的模板、语气档位、幽默阶梯、词表、容器预算、全部规则</td><td>模型，按需</td></tr>
             <tr><th scope="row">assets/</th><td>消息和用户档案的结构定义；场景话术库（示例）</td><td>代码与模型</td></tr>
             <tr><th scope="row">scripts/</th><td>体检脚本，和本页的体检器是同一份代码</td><td>代码，每次</td></tr>
-            <tr><th scope="row">evals/</th><td><span data-stat="evalCases">46</span> 条回归用例、评审量表、评测用的提示词和配对办法</td><td>改规范、换模型时</td></tr>
+            <tr><th scope="row">evals/</th><td><span data-stat="evalCases">78</span> 条回归用例、评审量表、评测用的提示词和配对办法</td><td>改规范、换模型时</td></tr>
             <tr><th scope="row">CHANGELOG.md</th><td>每一版改了什么，是哪一轮评测逼出来的</td><td>改规范的人</td></tr>
           </tbody>
         </table>
@@ -94,7 +94,7 @@
   </div>
 
   <div class="sub wide" id="eval">
-    <h3>有 Skill 和没有，差多少 <small><span data-if="eval"><span data-stat="evalRounds">3</span> 轮盲评：前四轮读完整文字时没赢，分成两层之后占优</span><span data-if-not="eval">评测办法；结果待跑</span></small></h3>
+    <h3>有 Skill 和没有，差多少 <small><span data-if="eval"><span data-stat="evalRounds">5</span> 轮盲评：前四轮读完整文字时没赢，分成两层之后占优</span><span data-if-not="eval">评测办法；结果待跑</span></small></h3>
     <div class="grid-2">
       <div class="col">
         <p>评测按「同一批情境，带 Skill 和不带各写两遍，评审不知道哪个是哪个」的办法做<a class="ev" data-ev="T9-22"></a>。写的一方是同一个模型，区别只在读没读过这套 Skill。情境覆盖机会、扣款提醒、求拍板、按授权已办、需要接管、延误、更正、放弃、里程碑、长辈模式、监控故障、定时提醒、缺比较基准和周报，其中几条的正确答案是「不发」。用例里的金额、日期和商品，都不和 Skill 里的示例重复。每改一次规范就补一批新用例；第三轮起，新用例由没看过规范改动的模型出题，另一个模型核对日期和算术。</p>

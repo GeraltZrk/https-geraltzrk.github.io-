@@ -1080,8 +1080,8 @@
             split(R.lock.tally, '合计') + groupRows(R.lock, R) +
             (R.lock.perJudge || []).map(function (j) { return split(j, JUDGE[j.judge - 1] || ('评审 ' + j.judge)); }).join('') +
             caseLine(R.lock) +
-            '<p class="note">锁屏按标题 20、正文 50 个字宽截断，按钮' + (R.checks && (R.checks.skill.detail_used || R.checks.baseline.detail_used) ? '和展开层都' : '') + '不显示；对话按 24 和 120 截断。' +
-            (R.lock.cut ? '两边各 ' + R.lock.cut.total + ' 条输出里，显示不全的：带 Skill ' + R.lock.cut.skill + ' 条，不带 Skill ' + R.lock.cut.baseline + ' 条。' : '') + '</p></figure>' : '');
+            '<p class="note">锁屏按标题 20、正文 50 个字宽截断，按钮' + (R.checks && (R.checks.skill.detail_used || R.checks.baseline.detail_used) ? '和展开层都' : '') + '不显示；对话按 24 和 120 截断。这几个长度是本手册的预算，不是真机实测。' +
+            (R.lock.cut ? '两边各 ' + R.lock.cut.total + ' 条输出里，超出这个长度被截断的：带 Skill ' + R.lock.cut.skill + ' 条，不带 Skill ' + R.lock.cut.baseline + ' 条。' : '') + '</p></figure>' : '');
       }
       if (ck && R.checks) {
         var cs = R.checks.skill, cb = R.checks.baseline;

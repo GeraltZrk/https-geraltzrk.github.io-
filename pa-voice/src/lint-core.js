@@ -44,7 +44,7 @@
   var SURFACES = {
     lock:    { name: '锁屏通知',         title: 16, titleHard: 20, body: 40, bodyHard: 50, note: '默认字号一行约 17–20 字；调大字号后约 12–14 字' },
     android: { name: '安卓通知（折叠）', title: 16, titleHard: 20, body: 20, bodyHard: 50, note: '标题恒为 1 行，正文默认也只有 1 行' },
-    wechat:  { name: '微信服务通知',     title: 20, titleHard: 20, body: 20, bodyHard: 20, note: '模板字段，一格约 20 个字符，超长会发送失败' },
+    wechat:  { name: '微信服务通知',     title: 20, titleHard: 20, body: 20, bodyHard: 20, note: '模板字段，thing 类官方上限 20 个字符，超长接口报参数错误' },
     watch:   { name: '手表',             title: 9,  titleHard: 11, body: 24, bodyHard: 36, note: '抬腕只看到标题这一行，约 5 秒' },
     island:  { name: '灵动岛 / 实况窗',  title: 4,  titleHard: 6,  body: 3,  bodyHard: 6,  note: '只放得下一个状态词和一个数字' },
     chat:    { name: '对话气泡',         title: 20, titleHard: 24, body: 80, bodyHard: 120, note: '会话内可以稍长，仍然先说结论' }

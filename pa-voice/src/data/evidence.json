@@ -281,10 +281,10 @@
   "url": "https://doi.org/10.1145/2628363.2628364",
   "year": "2014",
   "data": "15 名用户、1 周；日均 63.5 条，主要来自即时通讯和邮件；通常几分钟内被查看",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "只经搜索摘要核对，原文所在域名打不开；样本仅 15 人、西欧信息工作者、2014 年。",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到。受试人群（西欧信息工作者）摘要里没有写，未核。样本仅 15 人、一周，2014 年的数据。",
   "so": "回应窗口短于 5 分钟的节点不能发「待确认」，要在创建目标时拿授权，事后告知。"
  },
  {
@@ -317,10 +317,10 @@
   "url": "https://www.nngroup.com/articles/how-users-read-on-the-web/",
   "year": "1997",
   "data": "79% 扫读、16% 逐字读；简洁 +58%、可扫读 +47%、客观语气 +27%、三者合计 +124%（样本量未核实）",
-  "check": "search",
-  "verified": false,
+  "check": "fetch",
+  "verified": true,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。79%/16%、简洁 +58%、可扫读 +47%、客观 +27%、合计 +124% 都在搜索摘要里看到了，这次连客观语气的 27% 也核到了；但两次检索都没找到「约 51 人」这个样本量，而且 nngroup.com 和 deusto 转载页在这个环境里都打不开。我同意第一位核查员判 partial。建议台账保留条目原文和全部数字，改为 search 级核实，把 caveat 里的「样本约 51 人」删掉或标成未核实。（见：Jakob Nielsen's Alertbox for October 1, 1997（转载）；Concise, SCANNABLE, and Objective（Morkes & Nielsen 1997，搜索摘要））",
+  "caveat": "2026-11-18 读了原文。58%、47%、27%、124% 都是相对推销式写法的对照版而言。研究对象是 1997 年的桌面网页，不是通知场景。",
   "so": "可以引用方向（用户默认不会读完），不能把 124% 说成通知场景的提升幅度。"
  },
  {
@@ -331,14 +331,14 @@
   ],
   "claim": "NN/g：扫列表时用户最初往往只看每项开头 2 个词左右（测试中用前 11 个字符模拟，11 是为统一标准截取的长度，不是实测值）；多行以相同的词开头时，人会故意跳过行首（绕过型）。",
   "kind": "实证研究",
-  "source": "Nielsen: First 2 Words: A Signal for the Scanning Eye；Pernice: Text Scanning Patterns: Eyetracking Evidence（NN/g）",
+  "source": "Nielsen: First 2 Words: A Signal for the Scanning Eye；Pernice: F-Shaped Pattern of Reading on the Web: Misunderstood, But Still Relevant (Even on Mobile)（NN/g）",
   "url": "https://www.nngroup.com/articles/first-2-words-a-signal-for-scanning/",
-  "year": "2009 / 2019",
+  "year": "2009 / 2017",
   "data": "前 2 个词左右；测试截取前 11 个字符（研究者定的长度，非观测值），35% 的链接只看前 11 个字符时完全猜不出去向；bypassing pattern：多行以相同词开头时读者跳过行首",
-  "check": "search",
-  "verified": false,
+  "check": "fetch",
+  "verified": true,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。NN/g 原文的说法是「大多数列表项用户看到 2 个词左右，开头词短就多看一点，长就只看第一个词」。11 个字符是研究者为了统一标准选的截取长度，原文明说不是每次都正好看 11 个字符。绕过型的定义核到了。我同意第一位核查员判 partial，也同意他的更正，建议台账采用他的 corrected_claim。另外这篇的年份没核到，有二手来源写的是 2006，台账里的 2009 建议标成待核。（见：First 2 Words: A Signal for the Scanning Eye（NN/g，搜索摘要）；Reading Pattern（NN/g Alertbox））",
+  "caveat": "2026-11-18 读了两篇原文。绕过型出自 Pernice 2017 年讲 F 型阅读的那篇，不是 2019 年那篇。结论来自英文网页列表，不是中文通知场景，只能借鉴方向。",
   "so": "前 6 个字宽必须自带信息；禁用「【PA】」「温馨提示」这类固定前缀，否则用户会学会跳过开头。"
  },
  {
@@ -347,17 +347,17 @@
   "chapters": [
    "read"
   ],
-  "claim": "中文阅读的知觉广度约为注视点左侧 1 个字、右侧 2–3 个字，一次注视约覆盖 4 个字。",
+  "claim": "中文阅读的知觉广度不对称：从注视的字往左 1 个字、往右 3 个字；向右的眼跳约 2–2.5 个字，相邻两次注视的范围稍有重叠。",
   "kind": "实证研究",
   "source": "Inhoff & Liu: The perceptual span and oculomotor activity during the reading of Chinese sentences（JEP:HPP 24(1)）",
   "url": "https://doi.org/10.1037/0096-1523.24.1.20",
   "year": "1998",
-  "data": "左 1 字、右 3 字；中文眼跳幅度约 2–3 个字",
-  "check": "search",
+  "data": "左 1 字、右 3 字；向右眼跳约 2–2.5 个字",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。多篇综述在搜索结果里转述 Inhoff & Liu 1998：知觉广度为左 1 字、右 2–3 字（最多 3 字），中文向前眼跳约 2.6 字；后续研究认为右侧最多可到 4 字、左侧可能更宽。（见：The perceptual span in traditional Chinese（Cambridge）等综述）",
-  "so": "「一眼」约等于 4 个字、2 个词。结果词和数字要挤进开头 4–6 个字。"
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到。后续研究认为右侧最多可到 4 个字，左侧可能更宽。",
+  "so": "一次注视大约能看清注视点往右 3 个字，结果词和数字要放在开头几个字里。"
  },
  {
   "id": "T1-21",
@@ -374,7 +374,7 @@
   "check": "search",
   "verified": false,
   "confidence": "low",
-  "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。这次比第一位核查员多核到两项：Brysbaert 2019 英文默读非虚构 238 词/分钟（190 项研究）在摘要里看到了；Sun 等 1985 默读约 580 字/分钟只在 Yen 等 2011 的转引里看到，原文没核到。IReST 中文 255±29 字/分钟仍然只有 IRIS Reading 这个二手来源；另有一项 2018 年的中文 IReST 研究测得年轻读者约 295–315 字/分钟，比 255 快。我同意第一位核查员判 partial。建议台账写明 238 已核到；580 和 255 都是二手转引，并标注 255 是 IReST 给的常模，年轻中文读者实测可能更快。每秒 7 字、每秒 4–4.5 字仍然只是推算。（见：Yen 等 2011（转引 Sun, Morita & Stark 1985，搜索摘要）；Brysbaert 2019 摘要；IRIS Reading（转引 IReST））",
+  "caveat": "2026-11-18 读了 IReST 和 Brysbaert 2019 的摘要，238 词/分钟对上了。IReST 摘要只给 17 种语言的平均值，中文 255±29、Sun 等 1985 的 580、2018 年研究的 295–315 都没核到。每秒 7 字和每秒 4–4.5 字是推算。IReST 受试为 18–35 岁，测的是朗读。",
   "so": "2 秒约读 14 个字，5 秒约 35 个字；播报 20 个字要 4–5 秒。字数预算按这个换算。"
  },
  {
@@ -389,10 +389,10 @@
   "url": "https://doi.org/10.1037/0096-1523.34.5.1277",
   "year": "2008 / 2014",
   "data": "按词加空格与无空格一样好读；按字或切成非词加空格，阅读时间更长；Ma 等 2014：歧义串切分符合竞争假说，受词频影响（回视增加的证据出自后续研究，不是 Ma 等 2014）",
-  "check": "search",
-  "verified": false,
+  "check": "fetch",
+  "verified": true,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。Bai 等 2008 的摘要支持前半句：按词加空格和无空格一样好读，切成非词或每个字都加空格时阅读时间更长。Ma, Li & Rayner 2014（JEP:HPP 40(3)）的摘要只说歧义串的切分符合词频竞争假说，没提到切错后回视增加；关于回视的证据出自后来引用它的研究。我同意第一位核查员判 partial，也同意他的更正，建议台账采用他的 corrected_claim。（见：Reading spaced and unspaced Chinese text: Evidence from eye movements（Lancashire / Southampton 存档，搜索摘要）；Word segmentation of overlapping ambiguous strings during Chinese reading（Ma, Li & Rayner 2014，搜索摘要））",
+  "caveat": "2026-11-18 读了 Bai 等 2008 的全文（PMC），前半句逐点对上，实验 1 受试是 16 名天津师范大学本科生。后半句出自 Ma 等 2014，只核到书目信息，交集型歧义串、词频竞争、增加加工负担和「改签到」这个例子都没核到。",
   "so": "避开「改签到」「已退款项」「本周日程」这类歧义串；截止时间不写「5 日前」，写到具体时刻。"
  },
  {
@@ -473,16 +473,16 @@
   "chapters": [
    "read"
   ],
-  "claim": "微信订阅消息的模板字段有硬上限：thing 类 20 个字符、phrase 类 5 个汉字，参数不合规即发送失败（第三方文章报错误码 47003 或 data.xxx.value invalid）。",
+  "claim": "微信订阅消息的模板字段有硬上限：thing 类 20 个以内字符、phrase 类 5 个以内汉字，参数不符合规则时接口返回错误码 47003（参数错误）。",
   "kind": "官方规范",
-  "source": "微信开放文档：小程序订阅消息 subscribeMessage.send（参数值内容限制）",
-  "url": "https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.send.html",
-  "year": "版本未核",
-  "data": "thing 20 个以内字符；phrase 5 个以内汉字；name 10 个以内纯汉字（或 20 个以内纯字母/符号）；character_string 32 位以内（官方文档搜索级佐证，phrase 与报错码 47003 来自第三方转述）",
-  "check": "search",
-  "verified": false,
+  "source": "微信开放文档：小程序 服务端 API「发送订阅消息」（sendMessage / subscribeMessage.send，注意事项中的订阅消息参数值内容限制说明），页面最后编辑于 2026-04-08",
+  "url": "https://developers.weixin.qq.com/miniprogram/dev/server/API/mp-message-management/subscribe-message/api_sendmessage.html",
+  "year": "2026",
+  "data": "thing 20个以内字符；phrase 5个以内汉字；name 10个以内纯汉字或20个以内纯字母或符号；character_string 32位以内数字、字母或符号；47003 参数错误（以上均见官方「发送订阅消息」页；data.xxx.value invalid 来自第三方文章）",
+  "check": "fetch",
+  "verified": true,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。不同意第一位核查员“thing/character_string 原话未核到”的说法：搜索摘要显示微信官方订阅消息发送接口文档写着 thing 20 字符以内、character_string 32 位以内，name 10 个汉字的说法也有搜索级佐证。但 phrase 5 个汉字、超长报错（47003 / data.xxx.value invalid）只在第三方文章里看到，而且官方页面打不开（developers.weixin.qq.com 在本环境被拦截），看到的也是服务号文档，不是小程序 subscribeMessage.send 页面。同意判 partial，台账建议写“四项限制有搜索级佐证，phrase 和失败行为来自第三方转述，待用官方页面复核”。（见：Send a subscription notification（微信服务号 sendNewSubscribeMsg 文档，搜索摘要））",
+  "caveat": "2026-11-18 读了官方原文。原网址已经失效，这里换成了迁移后的页面。限制适用于小程序订阅消息的发送接口。",
   "so": "微信版要单独写：结论放进第一个 thing 字段并控制在 20 字符内，状态词放 phrase，不能直接塞推送原文。"
  },
  {
@@ -491,17 +491,17 @@
   "chapters": [
    "read"
   ],
-  "claim": "国内安卓厂商推送对长度有硬限制，其中 vivo 最紧：标题最多 20 个汉字、内容最多 50 个汉字（官方 2.7.0 版文档，按 1 汉字=2 字符计），须以厂商最新文档为准。",
+  "claim": "国内安卓厂商推送对长度有硬限制。vivo 现行服务端 API 文档（2.9.4 版）规定：通知标题最大 40 个字符、通知内容最大 100 个字符，按 Java String.length() 计算长度。各家以厂商最新文档为准。",
   "kind": "官方规范",
-  "source": "vivo 开放平台推送服务端 API（单推接口）；小米、OPPO、魅族推送服务端文档",
+  "source": "vivo 开放平台：服务端API接口文档（documentCenter/doc/362，当前版本 2.9.4）；小米、OPPO、魅族推送服务端文档",
   "url": "https://dev.vivo.com.cn/documentCenter/doc/362",
   "year": "版本未核",
-  "data": "vivo 标题 20 汉字、内容 50 汉字（官方 2.7.0 版文档，1 汉字=2 字符，即 40/100 字符）；小米 title 50、description 128；OPPO title 32（DCloud 转述，官方未核）、content 200；魅族 title 32、content 100",
-  "check": "search",
-  "verified": false,
+  "data": "vivo 标题最大 40 个字符、内容最大 100 个字符（官方服务端API接口文档 2.9.4 版，按 Java String.length() 计算长度）；小米 title 50、description 128；OPPO title 32（DCloud 转述，官方未核）、content 200；魅族 title 32、content 100（小米、OPPO、魅族本次未核）",
+  "check": "fetch",
+  "verified": true,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。不同意第一位核查员“vivo 内容 50 汉字没有查到”的说法：搜索摘要显示 vivo 官方 PUSH-UPS API 2.7.0 版写着“通知内容最大 50 个汉字（即最大不超过 100 个英文字符）”，标题 20 个汉字，原条目的 vivo 数字成立（腾讯云 128、阿里云 100 是第三方转述，场景或版本不同）。小米 50/128、魅族 32/100 与 DCloud 转述一致；但 OPPO 标题 DCloud 写的是 32 字，没有找到 50 的依据（OPPO 官方 PDF 的摘要里没有字段限制）。所以仍判 partial，台账建议保留 vivo 20/50 汉字（注明 2019 年 2.7.0 版），OPPO 标题改为“32（第三方转述，官方未核）”。（见：vivo PUSH UPS API接口文档 2.7.0版（PDF，搜索摘要））",
-  "so": "想一份文案通吃国内通道，就按标题 20 字、正文 50 字封顶；Skill 的字数检查要按通道分别实现。"
+  "caveat": "2026-11-18 读了 vivo 现行官方文档（2.9.4 版）。此前据搜索摘要，2.7.0 版写的是标题 20、内容 50 个汉字，旧版原文这次没有取到。照现行文档，vivo 标题比转述的 OPPO、魅族的 32 还宽，不再是最紧的一家。",
+  "so": "各通道上限不同，Skill 的字数检查要按通道分别实现并以厂商最新文档为准，vivo 现行是标题 40、内容 100 个字符（按 String.length() 计）。"
  },
  {
   "id": "T1-29",
@@ -545,16 +545,16 @@
   "chapters": [
    "timing"
   ],
-  "claim": "「打断后要23分钟才能恢复」是误引：23分15秒是被打断的工作当天被重新拾起前的平均间隔，其间还插了约2件别的事。",
+  "claim": "「打断后要23分钟才能恢复」是误引：23分15秒是被打断的工作当天被重新拾起前的平均间隔；CHI 2005 论文发现，多数被打断的工作当天会恢复，但恢复前会先插进超过两件别的事。",
   "kind": "实证研究",
   "source": "Mark, González & Harris (CHI 2005) No Task Left Behind? Examining the Nature of Fragmented Work；数字出自 Gloria Mark 2006 年 Gallup 访谈",
   "url": "https://dl.acm.org/doi/10.1145/1054972.1055017",
   "year": "2005/2006",
-  "data": "Gallup访谈：81.9%的被打断工作当天恢复，平均23分15秒，中间约2个插入任务；CHI 2005：57%的工作领域被打断。",
+  "data": "Gallup访谈：81.9%的被打断工作当天恢复，平均23分15秒（未核原文）；CHI 2005：观察 24 名信息工作者，57%的工作领域被打断，被打断的工作恢复前插入了超过两件其他活动。",
   "check": "search",
   "verified": false,
   "confidence": "medium",
-  "caveat": "仅经搜索摘要核对，news.gallup.com 与 ACM 页面在本会话打不开；二手来源称 CHI 论文正文数字为 25 分 26 秒（SD 54 分 48 秒），未核原文；美国办公室现场观察，早于智能手机。",
+  "caveat": "2026-11-18 读了 CHI 2005 论文摘要，全文没有读到；23 分 15 秒和 81.9% 出自 Gallup 访谈，原文没有取到。另有二手来源称 CHI 正文数字为 25 分 26 秒（SD 54 分 48 秒），也未核。美国办公室现场观察，早于智能手机。",
   "so": "真实代价是任务被搁置和插队，不是固定分钟数。需要动作的通知要能在通知内一键闭环，别把人引进App。"
  },
  {
@@ -569,10 +569,10 @@
   "url": "https://dl.acm.org/doi/10.1145/1357054.1357072",
   "year": "2008",
   "data": "CHI 2008实验：被打断组完成更快、质量相近，但压力、挫败、费力、时间压力显著更高。",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "high",
-  "caveat": "实验室邮件任务、学生样本、短时任务；搜索摘要确认结论，未打开原文。",
+  "caveat": "2026-11-18 读了论文摘要（出版方登记的摘要），全文没有读到。数据里的「显著」摘要没写统计显著性，未核。实验条件据此前记录是实验室邮件任务、学生样本、短时任务，摘要里没有这些，也未核。",
   "so": "用户高压时段（赶路、会议、深夜）少发；要发就给确定结论，不渲染紧迫。「省时间」不能只算秒数。"
  },
  {
@@ -605,10 +605,10 @@
   "url": "https://doi.org/10.1037/xhp0000100",
   "year": "2015",
   "data": "随机分组（来电/短信/无通知），被试不知情；收到通知组错误显著更多，来电比短信更糟。",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "high",
-  "caveat": "美国本科生、实验室持续注意任务；通知是真人电话和短信而非 App 推送；经新闻稿与搜索摘要核对，未打开论文。",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到。卷期 41(4)，以及 数据里随机分为来电、短信、无通知三组、被试不知情、错误更多、来电比短信更糟，摘要里都没有，未核。样本是美国本科生，实验室持续注意任务，通知是真人来电和短信，不是 App 推送。",
   "so": "「发了不点也没损失」不成立。可发可不发的消息一律走不响不振的层级：被动通知、摘要、App内卡片。"
  },
  {
@@ -734,7 +734,7 @@
   "check": "search",
   "verified": false,
   "confidence": "high",
-  "caveat": "印度 Android 用户，仅 2 周；部分作者与批处理 App（Daywise）有利益关联；摘要对 productivity 的表述有歧义；未打开原文。",
+  "caveat": "2026-11-18 核对了书目信息（题名、作者、期刊、年份），登记信息里没有摘要，实验内容和 数据里的数字仍只见于检索摘要。样本是印度 Android 用户，仅 2 周；部分作者与批处理 App（Daywise）有利益关联；摘要对 productivity 的表述有歧义。",
   "so": "非紧急消息合并成每天1–3个固定批次，并告诉用户几点来；不要用「全部静音」当省事方案。"
  },
  {
@@ -779,16 +779,16 @@
   "chapters": [
    "timing"
   ],
-  "claim": "告警一多就会被无视：医生对电子处方系统的用药安全警报有49%–96%直接跳过（override）。",
+  "claim": "警报太多太滥就会被跳过：综述统计，电子处方系统的用药安全警报有 49%–96% 被医生跳过（高级别的过量警报除外，约 27%）；门诊研究里最主要的原因是警报疲劳，也就是警报不严重、不相关或反复弹出。综述也指出，很多时候跳过是合理的。",
   "kind": "实证研究",
   "source": "van der Sijs, Aarts, Vulto & Berg (2006) Overriding of Drug Safety Alerts in Computerized Physician Order Entry, JAMIA 13(2)",
   "url": "https://doi.org/10.1197/jamia.M1809",
   "year": "2006",
-  "data": "JAMIA 2006系统综述：drug safety alerts are overridden by clinicians in 49% to 96% of cases。",
-  "check": "search",
-  "verified": false,
+  "data": "JAMIA 2006 系统综述（17 篇文献）：drug safety alerts are overridden by clinicians in 49% to 96% of cases（不含高级别过量警报，后者约 27%）；the most important reason for overriding was alert fatigue。",
+  "check": "fetch",
+  "verified": true,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索结果给出了该综述的作者、JAMIA 2006;13(2):138–147（PMID 16357358），以及摘要原话“overridden in 49% to 96% of cases”；PMC 原文页在本环境打不开。（见：Overriding of Drug Safety Alerts in Computerized Physician Order Entry (PMC)）",
+  "caveat": "2026-11-18 读了论文全文。这是 17 篇文献的综述，「警报疲劳是最主要原因」出自其中三项门诊研究。场景是医院电子处方系统，用到 App 通知上只是类比。",
   "so": "时效级提醒必须稀缺且几乎每次都值得；给它设采纳率红线，低于红线就自动收紧触发条件。"
  },
  {
@@ -799,14 +799,14 @@
   ],
   "claim": "推送权限已是稀缺资产：2025年opt-in中位数iOS 48.85%、Android 53.3%（2023年为71.3%）。",
   "kind": "行业数据",
-  "source": "Airship: Mobile App Push Notification Benchmarks for 2026（经 Mobiloud 转述）",
+  "source": "Airship: Mobile App Push Notification Benchmarks for 2026",
   "url": "https://www.airship.com/mobile-app-push-notification-benchmarks-for-2026/",
   "year": "2026",
   "data": "Android中位数71.3%（2023）→59.5%（2024）→53.3%（2025）；2024年直接打开率中位数Android 3.4%、iOS 3.1%。",
-  "check": "search",
-  "verified": false,
+  "check": "fetch",
+  "verified": true,
   "confidence": "medium",
-  "caveat": "厂商基准报告，样本为 Airship 客户，经二手转述，未打开原报告；「直接打开率」低估了看了没点的价值。",
+  "caveat": "2026-11-18 读了 Airship 原页面，数据期为 2025 年 1 月到 12 月。说法括号里 2023 年的 71.3%，数据里 2024 年的 59.5% 和直接打开率 Android 3.4%、iOS 3.1%，页面正文都没有，未核。这是厂商基准报告，样本为 Airship 客户；「直接打开率」低估了看了没点的价值。",
   "so": "约一半用户没给权限，给了的也有约97%的推送不被直接点开；App内目标卡片才是底座，推送只是加急通道。"
  },
  {
@@ -821,10 +821,10 @@
   "url": "https://batch.com/blog/case-studies/benchmark-notifications-push-crm-mobile",
   "year": "2025",
   "data": "Batch 2025基准（约8000亿条消息）：contextual 14.4%、generic 4.19%；Android opt-in 85%→67%，iOS 58%→56%。",
-  "check": "search",
-  "verified": false,
+  "check": "fetch",
+  "verified": true,
   "confidence": "medium",
-  "caveat": "法国厂商、客户以欧洲品牌为主；数字来自二手转述，报告需留资下载，未核原文。",
+  "caveat": "2026-11-18 读了 Batch 原页面，统计期 2024 年 7 月到 2025 年 7 月。3.4 倍是按两个打开率算出的，原文没写倍数；原文的情境式还包括按预设时间触发。法国厂商的基准，页面只说是欧洲范围的调查，客户以欧洲品牌为主未核。",
   "so": "PA的优势是每条消息都由用户自己的目标触发；别混入群发式「推荐」，否则整条通道被拉回4%。"
  },
  {
@@ -856,11 +856,11 @@
   "source": "Yancey & Settles (KDD 2020) A Sleeping, Recovering Bandit Algorithm for Optimizing Recurring Notifications",
   "url": "https://research.duolingo.com/papers/yancey.kdd20.pdf",
   "year": "2020",
-  "data": "KDD 2020摘要：0.5% increase in total DAUs，2% increase in new user retention；数据集含35天2亿条提醒。",
-  "check": "search",
-  "verified": false,
+  "data": "KDD 2020 摘要：0.5% increase in total DAUs，2% increase in new user retention；离线评估用的是旧系统 34 天的数据（训练 15 天 8800 万行、测试 19 天 1.14 亿行）。",
+  "check": "fetch",
+  "verified": true,
   "confidence": "high",
-  "caveat": "摘要数字经搜索核对，未打开 PDF；冷却半衰期约 15 天、提醒在上次练习约 23.5 小时后发出均为记忆值；语言学习场景。",
+  "caveat": "2026-11-18 读了论文全文（PDF）。冷却半衰期 15 天已对上，是作者按此前 A/B 测试经验选定的值；提醒在上次练习约 23.5 小时后发出的说法没有找到原文。离线评估数据出自正文，不在摘要里。语言学习场景。",
   "so": "高频提醒要有模板池并记录每人近期用过的模板；但文案优化收益是个位数，别指望它救场。"
  },
  {
@@ -1022,7 +1022,7 @@
   "check": "search",
   "verified": false,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。阿里云、腾讯云文档的摘要都印证了：华为自 2023-01-05 起资讯营销类新闻 5 条/日、其他 2 条/日，服务与通讯类不限量；资讯营销类为静默通知，服务与通讯类带铃声和振动；vivo 运营消息 5/2；OPPO 公信总量为累计用户数×2（累计用户数<50000 时按 100000 计）。以上全是二手转述，没打开华为原页面。（见：阿里云移动推送：厂商通道限制与消息分类）",
+  "caveat": "只见于搜索摘要，华为原页面没有读到（页面要前端加载，2026-11-18 仍取不到正文）。阿里云、腾讯云文档的摘要印证了：华为自 2023-01-05 起资讯营销类新闻 5 条/日、其他 2 条/日，服务与通讯类不限量；资讯营销类静默展示，服务与通讯类带铃声和振动；vivo 运营消息 5/2；OPPO 公信总量为累计用户数×2（不足 50000 时按 100000 计）。全是二手转述。",
   "so": "消息要能归入用户订阅的提醒、订单、出行、账务才有资格响铃；「我觉得你可能想…」类建议每天最多2条且无声。"
  },
  {
@@ -1051,14 +1051,14 @@
   ],
   "claim": "微信小程序的一次性订阅消息是用户点一次、只能发一条；长期订阅仅向政务民生、医疗、交通、金融、教育等公共服务开放。",
   "kind": "官方规范",
-  "source": "微信开放文档：小程序订阅消息（经开发者社区文章转述）",
+  "source": "开发者社区文章转述（微信开放文档《小程序订阅消息（用户通过弹窗订阅）开发指南》现行版本只说明分一次性订阅和长期订阅两类，没有写这两条规则）",
   "url": "https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/subscribe-message.html",
   "year": "2019 起",
-  "data": "开发者文章转述官方规则：用户每授权一次只能下发一条；长期订阅目前仅向政务民生、医疗、交通、金融、教育等线下公共服务开放。",
+  "data": "开发者文章转述：用户每授权一次只能下发一条；长期订阅目前仅向政务民生、医疗、交通、金融、教育等线下公共服务开放。官方现行指南（最后编辑 2026-11-12）只写明订阅消息分一次性和长期两类。官方另有《新版一次性订阅消息开发指南》（最后编辑 2026-07-15）：开发者按业态卡片的状态模版同步服务状态，由平台依据状态流转向用户下发通知；哪些状态变更会下发，由微信动态调整。",
   "check": "search",
   "verified": false,
   "confidence": "medium",
-  "caveat": "未能打开官方文档，内容来自开发者社区转述且年代不一；一次性订阅有效期说法不一，开放范围可能已变。",
+  "caveat": "2026-11-18 读了微信官方现行的订阅消息开发指南、wx.requestSubscribeMessage 接口页和新版一次性订阅消息开发指南，没有找到「每授权一次只能下发一条」和长期订阅开放范围这两条规则的原文，仍只是开发者社区的转述，官方页面也没有相反说法。社区文章年代不一，一次性订阅有效期说法不一，开放范围可能已变。",
   "so": "微信生态里每条主动消息都要用户预先点头。创建目标时把提醒点做成选项：「降到¥2,000时叫我一次」。"
  },
  {
@@ -1175,16 +1175,16 @@
   "chapters": [
    "timing"
   ],
-  "claim": "系统级AI会改写你的通知：Apple的通知摘要曾把新闻推送概括出错误事实，iOS 18.3因此暂停了新闻类摘要并改用斜体标识。",
+  "claim": "系统级 AI 会改写你的通知：Apple 在 iOS 18.3 中暂停了新闻与娱乐类 App 的通知摘要，并改用斜体文字和图标把摘要和普通通知区分开（暂停原因更新说明里没有写，摘要出错的说法见媒体报道）。",
   "kind": "产品案例",
   "source": "Apple: About iOS 18 Updates（iOS 18.3 更新说明）",
   "url": "https://support.apple.com/en-us/121161",
   "year": "2025",
-  "data": "iOS 18.3更新说明（凭记忆）：新闻与娱乐类App的通知摘要暂时不可用；摘要以斜体和图标与原通知区分。",
-  "check": "search",
-  "verified": false,
+  "data": "iOS 18.3 更新说明：Notification summaries for News & Entertainment apps are temporarily unavailable；摘要以斜体文字和图标与其他通知区分。",
+  "check": "fetch",
+  "verified": true,
   "confidence": "low",
-  "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。iClarified 转载的 iOS 18.3 官方更新说明和 MacRumors 等媒体都印证了：新闻与娱乐类 App 的通知摘要暂时不可用，起因是摘要生成了错误标题，摘要改用斜体与普通通知区分；Apple 原页面打不开，原条目里的 URL 未核实。（见：iOS 18.3 Release Notes (iClarified) / MacRumors）",
+  "caveat": "2026-11-18 读了 Apple 原页面。页面没有标日期，年份 2025 未核。摘要生成错误标题的说法来自 MacRumors 等媒体报道，只经检索核对。",
   "so": "通知要抗摘要：首句自成完整事实（什么事、多少钱、何时截止），不靠第二句补充否定或条件。"
  },
  {
@@ -1591,14 +1591,14 @@
   ],
   "claim": "能撤销就别用确认：人会因习惯化一路点「好」；浏览器安全警告与用药警示的大规模数据显示警告常被直接略过",
   "kind": "专家观点",
-  "source": "Raskin (2007) Never Use a Warning When You Mean Undo, A List Apart",
+  "source": "Raskin (2007) Never Use a Warning When You Mean Undo, A List Apart；数据另见 Akhawe & Felt (2013)（Chrome SSL 警告）和 van der Sijs 等 (2006) JAMIA 13(2)（用药警示）",
   "url": "https://alistapart.com/article/neveruseawarning/",
   "year": "2007",
   "data": "Chrome SSL 警告点击穿透率 70.2%（Akhawe & Felt 2013）；用药警示被忽略 49%–96%（van der Sijs 等 2006）",
-  "check": "search",
-  "verified": false,
+  "check": "fetch",
+  "verified": true,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索摘要确认 Raskin（作者为 Aza Raskin，ALA 第 241 期）以习惯化为由主张用撤销代替警告，Akhawe & Felt 的 Chrome SSL 警告点击穿透率最高 70.2%、van der Sijs 等 2006 综述 17 篇研究得出 49%–96% 被忽略，均与条目一致；alistapart.com 和 pubmed 在本环境无法打开，原文未直接核对。（见：Alice in Warningland (USENIX Security 2013) / Overriding of Drug Safety Alerts in CPOE (JAMIA 2006) / Never Use a Warning When you Mean Undo）",
+  "caveat": "2026-11-18 读了 Raskin 原文，习惯化会让人一路点「好」、用撤销代替警告的论点都对得上；后半句的大规模数据不出自这篇，出自另外两篇论文。Chrome SSL 警告点击穿透率 70.2%（Akhawe & Felt 2013，是最高值）没有核对原文。49%–96% 出自 van der Sijs 等综述的 17 篇研究，T2-14 的全文核到，原文说的是警示被 override，不含高级别过量警报。",
   "so": "可撤回的动作改成先做＋撤销窗口；回执里写清怎么撤、撤到何时"
  },
  {
@@ -1649,10 +1649,10 @@
   "url": "https://doi.org/10.1086/651235",
   "year": "2010",
   "data": "63 个条件、50 个实验、N=5,036，平均效应量几乎为零；Chernev 等 2015 找到四个调节因素（99 个观测）",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。Scheibehenne 等 2010 的 63 个条件、50 个实验、N=5,036、平均效应几乎为零均在摘要中看到；Chernev 等 2015 摘要确认 99 个观测（N=7,202）及选项集复杂度、决策任务难度、偏好不确定性、决策目标四个调节因素，与条目的三种情形大致对应。（见：Can There Ever Be Too Many Options? A Meta-Analytic Review of Choice Overload (econbiz/unibas 摘要)；Choice overload: A conceptual review and meta-analysis (Kellogg)）",
+  "caveat": "2026-11-18 读了两篇论文的摘要，全文没有读到。Chernev 等的 99 个观测共 N=7,202，四个调节因素是选项集复杂度、任务难度、偏好不确定和省力目标。Scheibehenne 等称没有找到充分条件，Chernev 等则称计入调节因素后总体效应显著，「只在……才明显」说得偏硬。",
   "so": "主动提醒默认给 1 个推荐加最多 2 个备选；用户主动问还有什么时可多给，但要同一维度排好序"
  },
  {
@@ -1667,10 +1667,10 @@
   "url": "https://doi.org/10.1017/S0140525X01003922",
   "year": "2001",
   "data": "Cowan：成人约 3–5 个组块；Miller：7±2；Sweller (1988) 认知负荷理论",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。Cowan 2001（BBS 24(1):87–114）摘要明确区分 Miller 的约 7 个组块与 3–5 个、平均约 4 个组块的容量上限，与条目一致；Sweller 1988 未在本轮核对。（见：The magical number 4 in short-term memory: A reconsideration of mental storage capacity (摘要)）",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到。摘要说 Miller 总结的是约 7 个组块，「7±2」这个写法没有核对；摘要没有限定「成人」；Sweller (1988) 认知负荷理论没有核对。",
   "so": "一条消息里需要用户同时比较的变量不超过 3–4 个；超过就拆，或由 PA 先定下其中几个"
  },
  {
@@ -1685,10 +1685,10 @@
   "url": "https://doi.org/10.1177/1745691616652873",
   "year": "2016",
   "data": "23 个实验室、N=2,141、d=0.04 [−0.07, 0.15]；Vohs 等 2021：36 个实验室、N=3,531、d=0.06",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。Hagger 等 2016 与 Vohs 等 2021（Psychological Science 32(10)）的实验室数、样本量与效应量均在摘要中看到，与条目完全一致；Vohs 一文的探索性分析在全样本中得到 d=0.08 的显著效应，可作补充说明。（见：A Multilab Preregistered Replication of the Ego-Depletion Effect；A Multisite Preregistered Paradigmatic Test of the Ego-Depletion Effect）",
+  "caveat": "2026-11-18 读了 Hagger 等 2016 的摘要和 Vohs 等 2021 的预印本摘要，全文没有读到。Vohs 一文正式发表在 Psychological Science 32(10) 这一点没有核对。Vohs 等的验证性检验不显著，探索性全样本分析得到 d=0.08 的显著效应，可作补充。",
   "so": "论证少问时改用可测的依据：打断的时间成本、确认通过率、核对用时"
  },
  {
@@ -1703,10 +1703,10 @@
   "url": "https://doi.org/10.1287/mnsc.1110.1376",
   "year": "2011",
   "data": "5 个实验，在线旅行与在线交友的模拟服务；机制为感知努力引发的回报心理",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。摘要确认 5 个实验模拟在线旅行与在线交友服务、偏好等待更久的网站、以感知努力引发的回报心理为中介，与条目一致；caveat 中「结果差时展示努力会减分」未在摘要中看到，仍需看全文复核。（见：The Labor Illusion: How Operational Transparency Increases Perceived Value (摘要转载)）",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到。摘要只说探讨了边界条件，没有细节，「结果差时展示努力会减分」没有核到。「而非决策质量」是手册加的提醒，摘要测的是服务价值感知。",
   "so": "结论后留一句真实工作量（比了 12 家），可展开看明细；结果不好时不炫过程"
  },
  {
@@ -1739,10 +1739,10 @@
   "url": "https://doi.org/10.1111/j.1467-9280.2009.02284.x",
   "year": "2009",
   "data": "“very likely” 定义 >90%，但约四分之三受试者把它理解为低于 90%，近半数理解为低于 66%（二手转述）；词旁直接标数字区间的格式一致性优于只给对照表；2014 年 Budescu 等在 24 国 17 种语言（25 个样本）重复出同样模式",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。同意第一位核查员的 partial。方向成立：Budescu 2009 让受试者给出下限、上限和最佳估计，只给词的对照组和只给对照表的翻译组偏差都大，词旁直接标数字的格式一致性最好。2014 年 NCC 论文覆盖 24 国 17 种语言 25 个样本，模式稳定。但我四次检索都没找到“中位数约 65%–75%”的原话。Mother Jones 写的是公众均值约 62%，但那篇也谈 Budescu 后来的研究，来源不确定；博客转述则是“25% 受试者的最佳估计低于 70%”。我打不开原文 PDF（moodle2.units.it 被网络拦截）。建议台账删去 65%–75%，改为下面的分布型表述，并注明二手转述、未见原文。（见：Communicating about Uncertainty in Climate Change, Part II（搜索摘要））",
+  "caveat": "2026-11-18 读了 2009 年论文摘要，只说受试者拿到对照表仍明显偏离 IPCC 指南，没有数字。>90% 的定义、四分之三低于 90%、近半数低于 66%、偏低的方向、词旁标区间优于对照表都没有核到。2014 年研究（Nature Climate Change）只核到书目信息，24 国、17 种语言、25 个样本没有核对。",
   "so": "关键预测用「词＋频率」双写（多半不会再降，近 60 天 10 次里 8 次）；其余换成行动建议"
  },
  {
@@ -1955,16 +1955,16 @@
    "timing",
    "tone"
   ],
-  "claim": "记录里突出“连胜还在”提升后续投入，突出“连胜断了”则挫伤；作者建议不要推送断连通知",
+  "claim": "记录里突出「连胜还在」比突出「连胜断了」带来更多后续投入；用户把断连归因于自己时效应更强，允许「修复」断连时效应减弱",
   "kind": "实证研究",
   "source": "Silverman & Barasch (2023) On or Off Track: How (Broken) Streaks Affect Consumer Decisions, Journal of Consumer Research 49(6):1095–1117",
   "url": "https://doi.org/10.1093/jcr/ucac029",
   "year": "2023",
-  "data": "7项研究；连胜定义为连续3次及以上；早期版本报告断连效应与此前连胜长短无关",
-  "check": "search",
+  "data": "7项研究；连胜定义为连续3次及以上；效应与实际过往行为无关，只取决于记录如何呈现",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "多为情境实验与在线样本；机制表述出自发表前摘要；“可修复能否恢复动机”未核到原文；连胜本身可能成为焦虑来源。",
+  "caveat": "2026-11-18 读了正式发表版摘要，全文没有读到。摘要里没有作者建议不要推送断连通知的说法，全文有没有没核到。研究多为情境实验与在线样本；连胜本身也可能成为焦虑来源。",
   "so": "断档后不发“已中断X天”，改发“今天接上就行”；不可抗力造成的缺口不记为断"
  },
  {
@@ -2018,17 +2018,17 @@
    "timing",
    "tone"
   ],
-  "claim": "提醒确实提高储蓄目标达成；提到具体目标的更有效，得失框架无显著差别，补发晚提醒无增益",
+  "claim": "提醒确实提高储蓄目标达成；同时提到储蓄目标和金钱激励的提醒尤其有效，得失框架无显著差别，补发晚提醒无叠加效果",
   "kind": "实证研究",
   "source": "Karlan, McConnell, Mullainathan & Zinman (2016) Getting to the Top of Mind: How Reminders Increase Saving, Management Science 62(12):3393–3411",
   "url": "https://pubsonline.informs.org/doi/fpi/10.1287/mnsc.2015.2296",
   "year": "2016",
   "data": "玻利维亚、秘鲁、菲律宾3家银行现场实验；工作论文版：收到月度提醒者多存6%",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "high",
-  "caveat": "发展中国家储蓄账户、短信与信件渠道，年代较早；6%来自工作论文版，未确认正式发表版数字。",
-  "so": "提醒里点名用户自己定的目标；不必纠结“省”还是“亏”的措辞；别靠加发来补救"
+  "caveat": "2026-11-18 读了正式发表版摘要，全文没有读到。玻利维亚、秘鲁、菲律宾三国没有核到；工作论文版「多存 6%」在工作论文的摘要里没有，正式发表版数字也没有核对。对象是新开承诺储蓄账户的客户，发展中国家，短信与信件渠道，年代较早。",
+  "so": "提醒里点名用户自己定的目标，有金钱激励时一并写上；不必纠结「省」还是「亏」的措辞；别靠加发来补救。"
  },
  {
   "id": "T4-12",
@@ -2045,10 +2045,10 @@
   "url": "https://doi.org/10.1073/pnas.2101165118",
   "year": "2021",
   "data": "N=47,306、19种短信：平均把接种率提高约5%；最佳方案=就诊前提醒两次+疫苗已为你预留",
-  "check": "search",
-  "verified": false,
+  "check": "fetch",
+  "verified": true,
   "confidence": "high",
-  "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索摘要（多家机构库转载 PNAS 摘要）确认 N=47,306、19 种短信、平均提高约 5%、最佳方案为提醒两次并告知疫苗已预留，且与患者对医生沟通预期相符的写法效果更好；PNAS 原页无法打开，4.6 个百分点未核。（见：A megastudy of text-based nudges encouraging patients to get vaccinated at an upcoming doctor's appointment（机构库摘要，搜索结果））",
+  "caveat": "2026-11-18 读了论文全文（PMC）。约 5% 是相对提升，绝对值 2.1 个百分点；最佳方案提升 4.6 个百分点（11%），校正膨胀后保守估计 2.8 个百分点。两次提醒分别在就诊前 72 和 24 小时发出。「与预期不符的写法更差」来自事后相关分析。",
   "so": "机会和截止类消息用“替你留到18:00”的所有权句式；同一节点最多两次；严肃事不抖机灵"
  },
  {
@@ -2066,10 +2066,10 @@
   "url": "https://www.econometricsociety.org/publications/econometrica/2022/01/01/rcts-scale-comprehensive-evidence-two-nudge-units",
   "year": "2022",
   "data": "期刊74项助推：+8.7pp（对照组26.0%）；助推团队：+1.4pp（+8.0%）；中位样本484对10,006",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "high",
-  "caveat": "政府通信场景；Mertens 2022元分析d=0.43，Maier 2022校正发表偏倚后认为无证据，争论未完。",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到。数据里的期刊 74 项、对照组 26.0%、中位样本 484 对 10,006 没有核到。场景是政府通信。另有 Mertens 2022 元分析得 d=0.43，Maier 2022 校正发表偏倚后认为没有证据，这两篇没有核对，争论未完。",
   "so": "别指望一句话术扭转行为：预期定在个位数百分点，先改时机和步骤数，话术靠A/B选"
  },
  {
@@ -2102,16 +2102,16 @@
    "timing",
    "tone"
   ],
-  "claim": "提醒有隐性成本：它提高目标行为，也提高退订；不计这笔成本会把净收益高估约十倍",
+  "claim": "提醒有隐性成本：它提高目标行为，也提高退订；不计这笔成本会把提醒给捐赠者带来的福利效应高估约十倍，还会掩盖慈善机构一方可能受到的负面影响",
   "kind": "实证研究",
   "source": "Damgaard & Gravert (2018) The hidden costs of nudging: Experimental evidence from reminders in fundraising, Journal of Public Economics 157:15–26",
   "url": "https://econpapers.repec.org/RePEc:eee:pubeco:v:157:y:2018:i:c:p:15-26",
   "year": "2018",
   "data": "慈善机构现场实验：提醒同时增加捐款与邮件退订；不计隐性成本使捐赠者福利效应被高估10倍",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "high",
-  "caveat": "慈善募捐邮件场景，动机结构与用户自建目标不同；单条提醒的金额数字在不同版本间不一致，未核。",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到。慈善募捐邮件场景，动机结构与用户自建目标不同。单条提醒的金额数字在不同版本间不一致，没有核到；第二个现场实验的细节也没有核到。",
   "so": "把关提醒率、静音率放到和点击率同级的位置；每条提醒先过“值不值得打扰”"
  },
  {
@@ -2149,11 +2149,11 @@
   "source": "Miller, Lane, Deatrick, Young & Potts (2007) Psychological Reactance and Promotional Health Messages, Human Communication Research 33(2):219–240",
   "url": "https://doi.org/10.1111/j.1468-2958.2007.00297.x",
   "year": "2007",
-  "data": "实验操纵控制性语言与用词具体度；后续综述：武断、强硬的措辞比含蓄、不强硬的引发更多逆反",
-  "check": "search",
+  "data": "实验操纵健康宣传信息里控制性语言的强弱和用词具体度（对象为年轻成年人）：控制性语言带来多种负面结果，文末加恢复自由的附言结果更正面",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "美国大学生、健康宣传语境；原文结果未核到，文末“选择权在你”可降低威胁感为记忆细节；中文语气词的效应缺实证。",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到。说法里「必须、应该、千万别」这几个具体词和「降低说服效果」的具体测量没有核到。对象是健康宣传信息下的年轻成年人，摘要没说是美国大学生；中文语气词的效应缺实证。",
   "so": "催办用“要不要、可以、你来定”，给理由和选项；删掉“必须、务必、千万、赶紧”"
  },
  {
@@ -2192,10 +2192,10 @@
   "url": "https://academic.oup.com/jla/article/13/1/43/6180579",
   "year": "2021",
   "data": "身份盗窃保护订阅实验：温和暗黑模式签约率约为对照组2倍，激进组近4倍；仅激进组出现强烈反弹",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "high",
-  "caveat": "美国在线样本的一次性订阅决策，测不到长期信任损失；羞辱式确认的单项效果在摘要中未单列。",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到。订阅的是身份盗窃保护服务这一点没有核到，摘要只说是一项可疑服务。美国消费者样本的一次性订阅决策，测不到长期信任损失；羞辱式确认的单项效果摘要里没有单列。",
   "so": "拒绝按钮写中性的“先不用”，不写“不了，我愿意多花钱”；不做假倒计时、假库存"
  },
  {
@@ -2213,10 +2213,10 @@
   "url": "https://nottingham-repository.worktribe.com/preview/3681607/Mrkva-Johnson-Gaechter-Herrmann_2019-11-20.pdf",
   "year": "2018/2020",
   "data": "Mrkva等5个样本N=17,720：各类人群均有损失厌恶，但知识和经验越多越弱，年长者更强",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "实验多为赌局与估值任务，不是通知文案对比；储蓄提醒现场实验中得失框架无显著差异（见T4-11）。",
+  "caveat": "2026-11-18 读了两篇论文的摘要，全文没有读到。实验多为赌局与估值任务，不是通知文案对比；储蓄提醒现场实验中得失框架无显著差异（见T4-11）。",
   "so": "“会扣¥30”只用于真会发生的损失（续费、过期作废）；机会型消息老实说“可省¥30”"
  },
  {
@@ -2234,10 +2234,10 @@
   "url": "https://econpapers.repec.org/RePEc:eee:jbrese:v:69:y:2016:i:3:p:1022-1027",
   "year": "2016",
   "data": "标价高于100美元时金额折扣的价值感与购买意愿更高；低于100美元呈相反趋势但不显著",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "美元语境与购买意向测量；人民币下的阈值没有实证，不能照搬¥100分界；口诀出自Berger的畅销书。",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到。美元语境与购买意向测量，人民币下的阈值没有实证，不能照搬¥100分界；「100法则」口诀出自 Berger 的畅销书一说没有核对。",
   "so": "首行统一写绝对金额“省¥420”；小额时再补一个相对量：“省¥6，约8折”"
  },
  {
@@ -2255,10 +2255,10 @@
   "url": "https://econpapers.repec.org/RePEc:inm:ormksc:v:29:y:2010:i:1:p:175-190",
   "year": "2006/2010",
   "data": "5项研究显示买家低估精确价格的量级；“99.44%”这类尖锐数字被认为比“99%”更像事实",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "房价与广告声明场景；工作论文与正式版对市场数据的方向表述不一，需读原文；专家身上效应会反转；写法建议属推论。",
+  "caveat": "2026-11-18 读了 Thomas 等论文的摘要，全文没有读到；Schindler & Yalch 一篇没有读到，「99.44%」比「99%」更像事实的结论没有核到。场景是房价与广告声明，正式版摘要称标价越精确成交价越高；专家身上效应会反转一说没有核到；写法建议属推论。",
   "so": "已发生的写精确值（省了¥86.5）；预估的写“约¥90”并标“预计”"
  },
  {
@@ -2318,10 +2318,10 @@
   "url": "https://som.yale.edu/news/2009/05/opportunity-costs-remind-consumers-about-savings",
   "year": "2009",
   "data": "“不买”改写为“留着这笔钱买别的”后，愿花15美元买DVD的人少约20%；便宜款iPod选择率约翻倍",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "high",
-  "caveat": "美国学生与在线样本的购买情境；对守财型用户效果较弱；原文为75%降到55%系记忆，未核。",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到。数据里的 15 美元 DVD 情境、少约 20%（75% 降到 55%）、便宜款 iPod 选择率约翻倍都没有核到。美国学生与在线样本的购买情境；敏感度随长期花钱态度而不同，对守财型用户效果较弱。",
   "so": "省钱结果配一个取自用户心愿单的换算，一条消息最多一个，不随手编“十杯咖啡”"
  },
  {
@@ -2333,16 +2333,16 @@
    "timing",
    "tone"
   ],
-  "claim": "花钱买时间能提升幸福感，但只有约28%的人这么做——省时间的价值常被用户自己低估",
+  "claim": "花钱买时间能提升幸福感，但只有约28%的人每月这么做；即使负担得起，很多人也不在这上面花钱",
   "kind": "实证研究",
   "source": "Whillans, Dunn, Smeets, Bekkers & Norton (2017) Buying time promotes happiness, PNAS 114(32):8523–8527",
   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5559044",
   "year": "2017",
   "data": "美加丹荷6,000余人；n=4,469中28.2%每月花钱买时间；60人现场实验：40美元买时间比买物更快乐",
-  "check": "search",
-  "verified": false,
+  "check": "fetch",
+  "verified": true,
   "confidence": "high",
-  "caveat": "西方样本为主；现场实验仅60人；调查部分为相关性；未涉及AI代办。",
+  "caveat": "2026-11-18 读了论文全文（PMC）。样本以西方为主（美加丹荷共 6,271 人）；60 人实验是温哥华在职成年人的被试内设计，规模小；调查部分为相关性；论文没有测人们怎样评估省时的价值，也未涉及 AI 代办。",
   "so": "省时结果要显式记账：“这周替你省了2小时10分”，并说清省在哪几件事上"
  },
  {
@@ -2402,10 +2402,10 @@
   "url": "https://pubsonline.informs.org/doi/fpi/10.1287/mnsc.1110.1376",
   "year": "2011",
   "data": "在线旅行与婚恋搜索5项实验：展示正在做哪些工作的等待，比结果相同的即时返回更受偏好",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索摘要确认 Management Science 57(9):1564–1579、在线旅行与婚恋 5 项实验、人们会偏好结果相同但展示工作过程的较慢网站；“结果差时展示劳动更糟”一句仍未查到依据，期刊页无法打开。（见：The Labor Illusion: How Operational Transparency Increases Perceived Value（搜索摘要））",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到。摘要只说探讨了边界条件，没写具体内容；「结果差时展示工作量反而更糟」没有找到依据。实验是模拟的在线旅行和婚恋网站。",
   "so": "结论后加一行真实工作量（比了12家、盯了6天），明细折叠；没办成时不拿它邀功"
  },
  {
@@ -2423,10 +2423,10 @@
   "url": "https://marketing.wharton.upenn.edu/wp-content/uploads/2020/07/Dietvorst-Overcoming-Algorithm-Aversion.pdf",
   "year": "2018",
   "data": "摘要：可调整不完美算法的预测时，参与者使用算法的意愿高得多，准确度也随之提高",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "high",
-  "caveat": "有金钱激励的预测任务，不是购物代办；采用率的具体数字未核；可调项过多会抬高理解成本。",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到，采用率等具体数字和样本量未核。任务是有金钱激励的预测，不是购物代办；可调项过多会抬高理解成本。",
   "so": "确认卡常备一个“改一下”，可改的只留一两项（数量、时间、上限）"
  },
  {
@@ -2485,11 +2485,11 @@
   "source": "《网络交易监督管理办法》（国家市场监督管理总局令第37号，2021-05-01施行）第十八条",
   "url": "https://www.gov.cn/zhengce/zhengceku/2021-03/16/content_5593226.htm",
   "year": "2021",
-  "data": "第十八条：在自动展期、自动续费等日期前五日，以显著方式提请消费者注意，由消费者自主选择",
-  "check": "search",
-  "verified": false,
+  "data": "第十八条：应当在消费者接受服务前和自动展期、自动续费等日期前五日，以显著方式提请消费者注意，由消费者自主选择",
+  "check": "fetch",
+  "verified": true,
   "confidence": "high",
-  "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索摘要中多家转述的第十八条原文与条目一致，含“接受服务前和自动展期、自动续费等日期前五日，以显著方式提请消费者注意”及“显著、简便的随时取消或者变更的选项”；gov.cn 原文无法打开，令号未直接核到。（见：国家市场监督管理总局《网络交易监督管理办法》相关转述（搜索结果摘要，含 gov.cn 条目））",
+  "caveat": "2026-11-18 读了原文（中国政府网），令号、施行日期和第十八条全文都已核对。",
   "so": "PA提醒不低于法定线：提前5天和前1天各一次，用推送或短信，没被看到就换渠道再提醒"
  },
  {
@@ -2846,7 +2846,7 @@
   "check": "search",
   "verified": false,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。同意第一位核查员的 partial。claim 本身基本成立：吧征求同意（Kendrick 转引 p.307）；啊表示 reduced forcefulness（Lin 2014 转引 pp.313–7）；哦是友好提醒、呢与回应预期相关，有 Huang 2007 的二手转述为据。问题在 data：“列六个句末语气词”不准确。第一位核查员查到第 7 章（pp.238–318）只分五节讨论了、呢、吧、哦、啊/呀；吗虽列在 p.238 的清单里，却放到第 18 章疑问句中讨论，这一点我这轮没有独立看到。原书我打不开（aclweb.org 被网络拦截）。建议台账 claim 保留，data 按下面的写法改。（见：Leiden University dissertation (Lin 2014)（搜索摘要））",
+  "caveat": "2026-11-18 核对了书目信息（书名、出版社、年份、章节页码），各语气词的功能没有读到正文。吧征求同意、啊降低强硬度分别有他人论著转引 p.307、pp.313–7 为据，哦、呢的功能只有二手转述，「被」字句多表不如意没有核到。",
   "so": "建议用「吧」、缓和疑问用「呢」；不利消息用主动句写出施事，不写「你的订单被取消」。"
  },
  {
@@ -2918,7 +2918,7 @@
   "check": "search",
   "verified": false,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。同意第一位核查员判断为 partial：两个示例在检索摘要中可见，但标准原话是「不造成歧义时前一个单位可省略」，不是一律两端带单位；「4千」以及计量/编号/概数分工的条款原文都没有检索到（只看到 2011 版新增了「计量」「编号」「概数」这几个术语）；PKU、ecjtu 的 PDF 在本环境打不开。建议台账写 partial，改用更正后的表述，并删掉「不写4千」或标明未核实。（见：GBT 15835—2011 出版物上数字用法（搜索摘要，含规范问答））",
+  "caveat": "只见于搜索摘要，标准原文没有读到（2026-11-18 教育部网站仍连不上）。两个示例在摘要里看得到；标准的原话是「不造成歧义时前一个单位可省略」，不是一律两端都带单位。「4千」以及计量、编号、概数怎么分工的条款原文没有查到，只看到 2011 版新增了这几个术语。",
   "so": "「两三天」用汉字、「3 天」用数字；范围写「¥300～¥500」「15%～30%」。"
  },
  {
@@ -3167,10 +3167,10 @@
   "url": "https://faculty.wharton.upenn.edu/wp-content/uploads/2017/03/2016-54537-001.pdf",
   "year": "2017",
   "data": "8 个实验；讲笑话无论成败都显自信，不得体的笑话显低能力；作者称幽默是有风险的行为",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "high",
-  "caveat": "仅搜索摘要，效应量未核。情境是职场人际，美国样本，对象是人不是 AI。",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到，效应量未核，摘要也没写样本是不是美国人。情境是职场人际，对象是人不是 AI。",
   "so": "用户买的是能力感。默认不开玩笑，开就要稳；失误后不靠抖机灵挽回。"
  },
  {
@@ -3179,17 +3179,17 @@
   "chapters": [
    "humor"
   ],
-  "claim": "中国受试者更倾向认为幽默是喜剧演员等专业人士的特质，加拿大人期待普通人也幽默。",
+  "claim": "香港华人大学生更倾向认为幽默是喜剧演员等专业人士的特质，加拿大大学生期待普通人也幽默。",
   "kind": "实证研究",
   "source": "Yue, Jiang, Lu & Hiranandani (2016) To Be or Not To Be Humorous? Cross Cultural Perspectives on Humor, Frontiers in Psychology 7:1495",
   "url": "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2016.01495/full",
   "year": "2016",
-  "data": "研究1 文化启动改变对幽默的评价；2a 加拿大人更看重幽默；2b 中国人把幽默归给专业人士",
-  "check": "search",
-  "verified": false,
+  "data": "研究1：96 名香港大学生，文化启动改变对幽默的评价；研究2a：加拿大与香港华人本科生各 121 人，加拿大人更看重幽默；研究2b：加拿大人提名亲友的占 47.09%，香港华人占 14.42%，香港华人提名的 81.73% 是职业喜剧演员、演员和歌手",
+  "check": "fetch",
+  "verified": true,
   "confidence": "medium",
-  "caveat": "仅搜索摘要，样本量未核。大学生样本，测的是对人的幽默的态度，年代早于 Z 世代网络幽默文化。",
-  "so": "办正事的角色不幽默不扣分；中文默认档比英文产品低一级，求风趣不求搞笑。"
+  "caveat": "2026-11-18 读了论文全文（PMC）。研究 2a、2b 是同一批受试者；原文局限部分写明不是内地样本，不能直接推到内地用户。测的是对人的幽默的态度，年代早于 Z 世代网络幽默文化。",
+  "so": "办正事的角色不幽默不扣分；香港华人大学生更把幽默看成专业人士的特质，中文默认档可以比英文产品收一点，求风趣不求搞笑，对内地用户要自己测。"
  },
  {
   "id": "T6-04",
@@ -3257,10 +3257,10 @@
   "url": "https://ideas.repec.org/a/eee/jbrese/v194y2025ics0148296325002048.html",
   "year": "2025",
   "data": "4 个实验，N=1919；自贬型幽默换来的宽恕最多",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "仅搜索摘要。严重度边界只在一次摘要里出现，第二次检索未复现，需读原文。情景实验，不是真实损失。",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到。严重度边界写在正式摘要里：正面效应只在低严重度失败中保持，中、高严重度下消失。情景实验的具体设计未核，不是真实损失。",
   "so": "自嘲只用于「失误小、已补救、只说一句」；损失大或没修好时不用。"
  },
  {
@@ -3287,16 +3287,16 @@
   "chapters": [
    "humor"
   ],
-  "claim": "服务失败时，幽默只有被顾客认为好笑才算补救手段。",
+  "claim": "服务失败时，自贬型幽默对顾客有正面作用，但要被顾客觉得特别好笑；否则效果不如真诚道歉或经济补偿等传统补救手段。",
   "kind": "实证研究",
   "source": "Kobel & Groeppel-Klein (2021) No laughing matter, or a secret weapon? Exploring the effect of humor in service failure situations, Journal of Business Research 132",
   "url": "https://econpapers.repec.org/RePEc:eee:jbrese:v:132:y:2021:i:c:p:260-269",
   "year": "2021",
-  "data": "摘要：Humor turns out to be a method of service recovery when considered funny.",
-  "check": "search",
+  "data": "摘要：the humor has to be experienced as particularly funny, otherwise it is less effective than traditional service recovery tools, such as a sincere apology or financial (or other) compensation.",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "仅搜索摘要，实验设计未核。",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到，实验数量、样本量和具体设计未核。做的是情景实验。",
   "so": "好笑没把握就不用。失败和受阻节点统一零幽默。"
  },
  {
@@ -3311,10 +3311,10 @@
   "url": "https://doi.org/10.1037/0022-3514.89.6.925",
   "year": "2005",
   "data": "邮件组发件人预期约 78%、实际约 56%；语音组实际约 73%（二手报道；另有报道称发件人自评约 90%，APA 报道称语音组约 75%）",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "low",
-  "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。基本同意第一位核查员判断为 partial，但我的检索比他多查到一点：AMA、Gigazine 的摘要给出语音组 73%（Gigazine 作 73.1%），所以 73% 有二手依据；不过 90% 应该是另一项测量（发件人对自己解读能力的估计），不一定和 78% 冲突。论文出处 JPSP 89(6), 925–936 已核实，原文结果部分没看到，APA/AMA/NYU 的页面在本环境都打不开。建议台账写 partial，数字标注「据二手报道」。（见：PubMed 16393025；AMA「The Miscommunication Medium」、APA Monitor 2006 年 2 月、Gigazine（检索摘要））",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到。摘要支持人高估邮件传达语气（包括讽刺）的方向，78%、56% 只见于二手报道，讽刺实验的设计和样本量未核。90% 可能是另一项测量（发件人对自己解读能力的估计），不一定和 78% 冲突。",
   "so": "推送里不写反讽和阴阳怪气。按字面读一遍，若是指责或威胁就删。"
  },
  {
@@ -3701,16 +3701,16 @@
   "chapters": [
    "humor"
   ],
-  "claim": "Duolingo 专门为通知文案的新鲜度衰减建模，收益是 DAU +0.5%；其内疚式催促在国内被称「电子 PUA」。",
+  "claim": "Duolingo 专门为通知文案的新鲜度衰减建模，收益是 DAU +0.5%。国内把它的内疚式催促叫作「电子 PUA」，这一点不出自这篇论文，没有核对。",
   "kind": "行业数据",
   "source": "Yancey & Settles (2020) A Sleeping, Recovering Bandit Algorithm for Optimizing Recurring Notifications, KDD 2020",
   "url": "https://research.duolingo.com/papers/yancey.kdd20.pdf",
   "year": "2020",
-  "data": "相对强基线 DAU +0.5%、新用户留存 +2%；约 2 亿条提醒；36 氪编译文称其邮件为「情感勒索信」",
-  "check": "search",
-  "verified": false,
+  "data": "相对强基线 DAU +0.5%、新用户留存 +2%；离线评估数据 34 天，共约 2 亿行（88M+114M）。36 氪编译文称其邮件为「情感勒索信」，不出自这篇论文，没有核对。",
+  "check": "fetch",
+  "verified": true,
   "confidence": "medium",
-  "caveat": "跨轨道引用（T2、T7a、T7b 的搜索摘要），我未独立核对。数据天数两处记录不一（34 与 35 天）。学习类 App，结论不能直接搬到省钱场景。",
+  "caveat": "2026-11-18 读了论文全文。论文正文说的是每天发出「数百万条」提醒，约 2 亿行是离线评估数据集训练加测试的行数，不是提醒总数。学习类 App，结论不能直接搬到省钱场景。",
   "so": "高频提醒不放固定俏皮话；要放就建模板池加冷却。内疚牌不用于钱的场景。"
  },
  {
@@ -4257,17 +4257,17 @@
    "tone",
    "skill"
   ],
-  "claim": "Duolingo 用老虎机算法挑提醒文案：同一句话重复会失效，需轮换；长期无响应时发“停发提醒”文案。",
+  "claim": "Duolingo 用多臂老虎机算法挑提醒文案：同一模板天天发会让用户脱敏，需要轮换。长期无响应时发「停发提醒」文案一事，论文里没有，只见于用户转述，没有核对。",
   "kind": "实证研究",
   "source": "Yancey & Settles (KDD 2020)：A Sleeping, Recovering Bandit Algorithm for Optimizing Recurring Notifications",
   "url": "https://research.duolingo.com/papers/yancey.kdd20.pdf",
   "year": "2020",
-  "data": "约 2 亿条提醒、34 天数据；文案 \"These reminders don't seem to be working. We'll stop sending them for now.\"",
-  "check": "search",
-  "verified": false,
+  "data": "离线评估数据 34 天（训练 15 天、测试 19 天），共约 2 亿行（88M+114M）",
+  "check": "fetch",
+  "verified": true,
   "confidence": "medium",
-  "caveat": "仅搜索摘录，论文与博客原文未打开。“最有效通知”之说无数据；有用户记录停发约 3 天后恢复，并称其为情感勒索。",
-  "so": "高频提醒建文案池并对最近见过的降权；连续无响应后主动停发，并告知如何恢复。"
+  "caveat": "2026-11-18 读了论文全文。停发提醒文案的真正出处没有找到；有用户记录称停发约 3 天后又恢复，并称其为情感勒索，这些都不在论文里，没有核对。「最有效通知」的说法没有数据支撑。",
+  "so": "高频提醒建文案池并轮换，不让同一模板天天出现，免得用户脱敏。"
  },
  {
   "id": "T7a-27",
@@ -4697,17 +4697,17 @@
    "tone",
    "cost"
   ],
-  "claim": "元宝把提醒做进微信，经服务通知触达；微信一次性订阅「订一次发一条」，字段约20字符。",
+  "claim": "腾讯元宝支持在微信里用一句话设置提醒，到点通过微信服务通知提醒用户。",
   "kind": "产品案例",
   "source": "腾讯元宝宣布上线新能力，支持一句话在微信内设置提醒（IT之家）",
   "url": "https://www.ithome.com/0/906/436.htm",
   "year": "2025",
-  "data": "用户例句「每月15日12点提醒我给咪咪做外驱」；长期订阅仅对政务民生、医疗等开放；thing字段超20字符发送失败。",
-  "check": "search",
-  "verified": false,
+  "data": "IT之家 2025-12-19：用户向元宝发一句包含事项和时间的消息，元宝自动识别任务，在指定时间通过微信服务通知提醒。微信订阅消息的字段限制见 T1-27，订阅规则见 T2-29。",
+  "check": "fetch",
+  "verified": true,
   "confidence": "medium",
-  "caveat": "元宝功能多家报道一致；订阅消息规则来自开发者博客与产品社区（woshipm.com/operate/4586700.html等），非微信官方文档，有效期有24小时与7天两种矛盾说法。",
-  "so": "每条主动消息都当稀缺配额用：只发状态变化；锚点字数按20字符硬上限设计。"
+  "caveat": "2026-11-18 读了 IT之家原文。正文很短，只讲了一句话设提醒和服务通知这条触达渠道，文章配图没有读。元宝这项功能多家报道一致。",
+  "so": "提醒入口做到一句话说清事项和时间就能设好，到点经用户已在用的渠道送达。"
  },
  {
   "id": "T7b-19",
@@ -4777,16 +4777,16 @@
    "tone",
    "cost"
   ],
-  "claim": "系统级智能体的主动服务靠状态节点和情境卡片，几乎没有文案人格：vivo补航班节点，小米复制单号即弹查快递。",
+  "claim": "系统级主动服务主要靠状态展示和情境推荐：vivo 原子岛能显示航班、火车、导航、外卖等进行中的状态，复制或拖放内容后会推荐相应服务（如地址、航班、日程创建）。小米的例子另有出处。",
   "kind": "产品案例",
-  "source": "OriginOS 6 更新：航班出行体验优化等（IT之家）",
+  "source": "vivo 全新系统 OriginOS 6 安卓首发钉钉来电上岛（IT之家，2025-12-02）",
   "url": "https://www.ithome.com/0/901/936.htm",
   "year": "2025",
-  "data": "vivo小V建议卡片覆盖日程、酒店、高铁、导航、机票、快递；小米澎湃OS 3评测称超级小爱「更主动」。",
-  "check": "search",
-  "verified": false,
+  "data": "原子岛「信息展示」覆盖骑行/步行导航、打车、航班（航旅纵横）、火车（国铁吉讯）、外卖等；「服务推荐」覆盖地址、股票、航班、火车、口令、网址、电话号码、日程创建等。小米澎湃OS 3 的例子出自 36kr，本次没有核对。",
+  "check": "fetch",
+  "verified": true,
   "confidence": "low",
-  "caveat": "「没有文案人格」是我基于功能描述的归纳，未见实际卡片文案；小米出处36kr.com/p/3444790738196866。未打开原文。",
+  "caveat": "2026-11-18 读了 IT之家原文。原文只是列出原子岛支持的应用和场景，没有展示实际卡片文案，看不出有没有文案人格；「主要靠状态展示和情境推荐」是从功能列表归纳的。小米的例子出处为 36kr.com/p/3444790738196866。",
   "so": "进行中状态向系统卡片学：先列全状态节点表，触发点尽量贴着用户刚做的动作。"
  },
  {
@@ -4877,16 +4877,16 @@
    "tone",
    "cost"
   ],
-  "claim": "12306候补让用户预设「截止兑现时间」（6档），仍出现凌晨0:38兑现当天7:46车次的情况。",
+  "claim": "12306候补让用户在提交时自选「截止兑现时间」，系统全天24小时持续兑现，所以会出现半夜兑现的情况：有一单在2月23日凌晨2:53兑现了当天8:50开的车次，比用户选的截止时间早4小时57分。",
   "kind": "产品案例",
-  "source": "12306候补购票相关官方澄清（新华网）",
+  "source": "铁路部门回应“半夜候补成功1700元车票作废”报道（新华网转中国铁路微信公众号，2026-02-25）",
   "url": "https://www.news.cn/politics/20260225/560e9f859dbd47f28cce47c177be56b4/c.html",
   "year": "2026",
-  "data": "兑现通知按用户所选方式（微信、短信）发送，含车次、开车时间；截止兑现时间最早开车前12小时、最晚前20分钟。",
-  "check": "search",
-  "verified": false,
+  "data": "兑现成功后，按用户所选方式（微信、短信）通知，内容包括车次、开车时间等；提交候补时系统会提示「系统全天24小时持续进行兑现」。截止兑现时间的档位和范围，原文没有写，待核对。",
+  "check": "fetch",
+  "verified": true,
   "confidence": "low",
-  "caveat": "凌晨兑现案例出处为finance.sina.cn/2026-10-10/detail-iniushrz7633001.d.html，细节未核；通知模板原文未取到。未打开原文。",
+  "caveat": "2026-11-18 读了原文，这是铁路部门自己的回应。另有一则凌晨 0:38 兑现当天 7:46 车次的案例，出处为 finance.sina.cn/2026-10-10/detail-iniushrz7633001.d.html，没有核对。通知的完整文案原文里没有。",
   "so": "不可逆的自动成交：建目标时就问「最晚几点前成交才要」；深夜成交要升级提醒渠道。"
  },
  {
@@ -5144,7 +5144,7 @@
   "check": "search",
   "verified": false,
   "confidence": "high",
-  "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索摘要显示更新在 4 月 24–25 日上线，4 月 28 日开始回滚，全量回滚约用 24 小时；那句引语、「因用户正向信号决定上线」以及用户反馈奖励信号削弱主奖励信号都能看到；也有报道写测试没有专门衡量谄媚。有一处出入：部分媒体把回滚日期写成 4 月 29 日。openai.com 无法打开。（见：OpenAI, Expanding on what we missed with sycophancy（搜索摘要）；TechCrunch；VentureBeat）",
+  "caveat": "只见于搜索摘要，OpenAI 原文没有读到。摘要显示更新在 4 月 24–25 日上线，4 月 28 日开始回滚，全量回滚约用 24 小时；那句引语、因用户正向信号决定上线都能看到；也有报道写测试没有专门衡量谄媚。部分媒体把回滚日期写成 4 月 29 日。",
   "so": "语气优化不能只看即时好评，须加入撤销率、屏蔽率、留存与实际节省金额。"
  },
  {
@@ -5267,10 +5267,10 @@
   "url": "https://www.eurekalert.org/news-releases/504909",
   "year": "2012",
   "data": "启动受喜爱的伙伴品牌 Kellogg's 后更愿走楼梯；喜欢仆人版 Volvo 者表示愿冒更多险",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "2012 年品牌启动实验，行为启动类研究复制性存疑；只见摘要与新闻稿；从品牌外推到 AI 助手是本方向的推演。",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到。喜欢仆人版 Volvo 的人表示愿冒更多险，这一结果摘要里没有，没有核对。2012 年的品牌启动实验，共 3 项研究，行为启动类研究复制性存疑；从品牌外推到 AI 助手是推演。",
   "so": "省钱场景优先测试搭子式伙伴框架；管家式仆人框架可能让用户自己更松懈，需 A/B 验证。"
  },
  {
@@ -5285,10 +5285,10 @@
   "url": "https://doi.org/10.1093/jcr/ucw016",
   "year": "2016",
   "data": "6 个实验、3 款游戏；机制为自主感下降（282–302 页）",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "享乐型电脑游戏情境；效率任务里用户可能本来就想外包。只见摘要，未读全文。",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到，效应量没有核对。享乐型电脑游戏情境，效率任务里用户可能本来就想外包。",
   "so": "成就感重要的目标把功劳措辞还给用户：说你设的目标价到了，不说我帮你抢到了。"
  },
  {
@@ -5303,10 +5303,10 @@
   "url": "https://www.ama.org/2021/10/20/when-humanlike-chatbots-miss-the-mark-in-customer-service-interactions/",
   "year": "2022",
   "data": "5 项研究含电信公司真实数据；机制为拟人化抬高能力期待造成落差；问题解决后差异消失",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "high",
-  "caveat": "对象是大模型之前的客服机器人，拟人化靠名字与头像操纵。只见摘要与期刊新闻稿，未读全文。",
+  "caveat": "2026-11-18 读了论文摘要，全文没有读到。「问题解决后差异消失」摘要里没有，没有核对。对象是大模型之前的客服机器人，拟人化靠名字与头像操纵。",
   "so": "失败、扣错钱、延误节点关闭人设：不用昵称、不卖萌、无 emoji，只给事实与补救。"
  },
  {
@@ -5315,17 +5315,17 @@
   "chapters": [
    "tone"
   ],
-  "claim": "服务失败现场，解决问题的动作提升满意度，而开场之后继续道歉与共情反而降低满意度。",
+  "claim": "服务失败现场，解决问题的动作提升满意度，且作用随互动推进增强；关系型工作或正面情绪表露做得过多，会削弱解决问题对满意度的正向作用。",
   "kind": "实证研究",
-  "source": "Marinova, Singh & Singh, Frontline Problem-Solving Effectiveness, Journal of Marketing Research（密苏里大学新闻稿）",
+  "source": "Marinova, Singh & Singh (2018) Frontline Problem-Solving Effectiveness: A Dynamic Analysis of Verbal and Nonverbal Cues, Journal of Marketing Research 55(2):178–192",
   "url": "https://munews.missouri.edu/news-releases/2018/0201-problem-solving-not-relational-work-leads-to-higher-customer-satisfaction-mu-study-finds/",
   "year": "2018",
   "data": "约 100 段机场柜台录像加一项实验；解决型工作的正向作用随互动推进增强",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "真人面对面的航空服务失败场景，不是 AI；新闻稿的表述比论文更绝对；未读全文。",
-  "so": "道歉或共情最多一次且放最前，其余篇幅全给方案；禁止叠加道歉。"
+  "caveat": "2026-11-18 读了论文摘要，全文和新闻稿原文没有读到。录像约 100 段这个数没有核对。摘要里没有出现「道歉」，也没有说共情本身会拉低满意度。真人面对面的航空服务失败场景，不是 AI；新闻稿的表述比论文更绝对。",
+  "so": "道歉和共情点到为止，篇幅留给解决问题的动作，关系型的话说多了会削弱方案的效果。"
  },
  {
   "id": "T8-22",
@@ -5342,7 +5342,7 @@
   "check": "search",
   "verified": false,
   "confidence": "medium",
-  "caveat": "研究情境是情感支持，不是任务型助手。只见摘要与新闻稿，未读全文。",
+  "caveat": "2026-11-18 只核对了书目信息（题名、作者、期刊、年份），登记信息里没有摘要。研究内容和 9 项研究、6,282 人、等数天这些数字仍只见于检索摘要和新闻稿，全文没有读。研究情境是情感支持，不是任务型助手。",
   "so": "PA 做认知共情：准确复述处境再给方案；不写我也替你难过这类情感分享句。"
  },
  {
@@ -5357,10 +5357,10 @@
   "url": "https://arxiv.org/abs/2507.21919",
   "year": "2025",
   "data": "5 个模型错误率 +10 至 +30 个百分点；约 40% 更可能强化错误信念",
-  "check": "search",
-  "verified": false,
+  "check": "fetch",
+  "verified": true,
   "confidence": "medium",
-  "caveat": "研究的是微调暖化，不是提示词调语气，后者是否同样受影响没有证据。预印本，arxiv.org 未能打开；有媒体把百分点误写成百分比。",
+  "caveat": "2026-11-18 读了论文全文（arXiv 预印本 v2）。主实验是微调暖化；论文另用系统提示词给 Llama-70B 和 Qwen-32B 调暖做了对照，也出现类似的可靠性下降，只是幅度较小、不够一致。有媒体把百分点误写成百分比。",
   "so": "事实与建议先由不带温度的逻辑定稿，语气层只改措辞；用户低落时加一道核对。"
  },
  {
@@ -5369,16 +5369,16 @@
   "chapters": [
    "tone"
   ],
-  "claim": "纯文本细粒度情绪识别准确率有限，人类标注者之间也只有中等一致。",
+  "claim": "纯文本细粒度情绪识别准确率有限：GoEmotions（27种情绪加中性，共28类）上，BERT 的平均 F1 为 0.46，各类差别很大。标注者之间的一致性因情绪而异：附录表7的 Cohen's kappa 从悲痛的 0.095 到感激的 0.749 不等，作者认为所有类别的 kappa 都大于 0，说明标注者之间存在一致。",
   "kind": "实证研究",
-  "source": "GoEmotions 相关基准对比（arXiv 2601.18162；原数据集 Demszky 等 2020）",
-  "url": "https://arxiv.org/abs/2601.18162",
-  "year": "2020–2026",
-  "data": "GoEmotions 28 类：BERT macro-F1 0.46 至 0.49；二手称 ChatGPT 零样本 25.55%；κ 约 0.44（未核）",
-  "check": "search",
-  "verified": false,
+  "source": "Demszky 等 (2020) GoEmotions: A Dataset of Fine-Grained Emotions（ACL 2020；arXiv 2005.00547）；Harutyunyan & Kumar (2026) Fine-Grained Emotion Detection on GoEmotions（arXiv 2601.18162）",
+  "url": "https://arxiv.org/abs/2005.00547",
+  "year": "2020 / 2026",
+  "data": "Demszky 等 2020：BERT 平均 F1 0.46（标准差 0.19，含中性类），感激最高 0.86，悲痛最低 0；83% 的样本只有一个情绪标签，94% 的样本至少有两位标注者在同一个标签上一致；附录表7的 Cohen's kappa 最高是感激 0.749，最低是悲痛 0.095，27 种情绪里 23 种低于 0.4（论文主要用的指标是标注者间相关，不是 kappa）。Harutyunyan & Kumar 2026 复现的 BERT macro-F1 是 0.49。「ChatGPT 零样本 25.55%」和「κ 约 0.44」没有找到出处，已删。",
+  "check": "fetch",
+  "verified": true,
   "confidence": "medium",
-  "caveat": "英文 Reddit 数据；零样本与一致性数字来自聚合站与二手摘要，未核；中文与反讽识别的基准本轮没有查到。",
+  "caveat": "2026-11-18 读了两篇论文全文。数据是英文 Reddit 评论；中文和反讽识别的基准没有查到。",
   "so": "不据模型猜的情绪加戏；情绪模型只许触发更克制，主要依据改为事件与显式设置。"
  },
  {
@@ -5396,7 +5396,7 @@
   "check": "search",
   "verified": false,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。第5(1)(f)条只管工作和教育场景、只管基于生物特征数据的推断、医疗与安全用途除外、书面文本不在禁令内，这几点在 FPF 和多家律所摘要中都能看到；击键属于行为生物特征的例子也在摘要中出现。是否涵盖意图推断，FPF 与 Freshfields（转述委员会指南）说法相反。fpf.org 无法打开。（见：FPF Red Lines under EU AI Act（搜索摘要）；CMS、Lewis Silkin、Freshfields 解读）",
+  "caveat": "只见于搜索摘要，FPF 原文没有读到。第 5(1)(f) 条只管工作和教育场景、只管基于生物特征数据的推断、医疗与安全用途除外、书面文本不在禁令内，这几点在 FPF 和多家律所的摘要里都能看到。是否涵盖意图推断，FPF 与 Freshfields（转述委员会指南）说法相反。",
   "so": "禁用打字节奏、语音语调等信号推断情绪；职场与学习类目标只用事件和显式设置。"
  },
  {
@@ -5429,10 +5429,10 @@
   "url": "https://www.news.cn/politics/20260410/bc2a2172b4d64a539cf253e75044b494/c.html",
   "year": "2026",
   "data": "2026-04-10 五部门公布，07-15 施行；不得向未成年人提供虚拟亲属、虚拟伴侣；向老年人显著提示风险",
-  "check": "search",
-  "verified": false,
+  "check": "fetch",
+  "verified": true,
   "confidence": "medium",
-  "caveat": "news.cn 未能打开，只有新华网等的检索摘要。禁止情感操纵、退出机制、2 小时提醒等条款只记得征求意见稿版本；任务型 PA 是否适用需法务对照正式稿。",
+  "caveat": "2026-11-18 读了新华网发布稿全文，稿子只有概述，没有条款原文。「模拟人格的持续性情感互动」这一定义、不得向未成年人提供虚拟亲属和虚拟伴侣、向老年人显著提示风险，都没有核到，要看《办法》正文。禁止情感操纵、退出机制、2 小时提醒等条款只见于征求意见稿；任务型 PA 是否适用需法务对照正式稿。",
   "so": "搭子与陪伴式人设做成有边界的可选项；无论是否落入，都做到明示 AI、退出不阻拦、防依赖。"
  },
  {
@@ -5447,10 +5447,10 @@
   "url": "https://arxiv.org/abs/2508.19258",
   "year": "2025",
   "data": "6 款应用 1,200 条告别回复，约 37% 至 43% 含操纵（版本间有出入）；互动最高约 14 倍",
-  "check": "search",
+  "check": "abstract",
   "verified": false,
   "confidence": "medium",
-  "caveat": "占比在不同版本与报道间为 43% 或 37.4%，arxiv.org 未能打开，数字不可直接引用；实验样本量 3,300 来自二手摘要；研究对象是陪伴应用。",
+  "caveat": "2026-11-18 读了 arXiv 论文 v1 和 v3 的摘要，全文没有读到。v1 为 43%，v3 改为 37%；「6 款应用」只见于 v1。「哈佛商学院」这一单位归属没有核到，各种手法的分布和实验设计也没有核到。实验样本是 3,300 名美国成年人，研究对象是陪伴应用。",
   "so": "用户说停就停：立即执行、一句确认、告知如何恢复；不追问、不卖惨、不提已坚持天数。"
  },
  {
@@ -5468,7 +5468,7 @@
   "check": "search",
   "verified": false,
   "confidence": "medium",
-  "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。同意第一位核查员判断为 partial：Easterbrook 1959 的出处和「唤醒收窄线索」的结论成立；Payne 等 1988 的加速、少搜信息、改用按属性策略都有检索依据，但「筛选（filtration）」在摘要里没有原话（原文摘要页在本环境打不开，没有读到）。建议台账写 partial，把「筛选」改成「搜索的信息变少/更有选择」，并补上卷期页码。（见：PubMed 13658305；Duke 学者库（Payne, Bettman & Johnson 1988, JEP:LMC 14(3), 534–552）；Cambridge 章节检索摘要）",
+  "caveat": "2026-11-18 核到两篇的书目信息和 Payne 等 1988 的摘要。Easterbrook 没有摘要，「唤醒收窄线索、只保留中心线索」没有核到；Payne 等摘要只说人会针对时间压力调整策略，加速处理、搜索的信息变少、转向按属性的简单策略都没有核到。唤醒出自 Easterbrook，时间压力出自 Payne 等，「时间压力收窄注意范围」两篇读到的文字里都没有。",
   "so": "高压时刻只发一条关键信息加一个动作；幽默、寒暄、背景都是会被丢掉的外围线索。"
  },
  {
@@ -5531,16 +5531,16 @@
   "chapters": [
    "tone"
   ],
-  "claim": "工信部《移动互联网应用（App）适老化通用设计规范》（2021年4月发布）对适老版 App 的字号作了下限规定，并禁止广告内容及插件和诱导式按键；点击区域、操作时间的具体条款还需对照原文核实。",
+  "claim": "工信部《移动互联网应用（APP）适老化通用设计规范》（2021年4月）规定：适老版界面和单独适老版 App 的主要文字不小于 18 dp/pt，适老版界面主要组件可点击区域不小于 60×60 dp/pt，并严禁广告内容和插件；所有 App 都不得设诱导下载、诱导付款等诱导式按键；限时不是必要环节、也不涉及法律承诺或财务交易时，应给用户留足操作时间。",
   "kind": "法规",
-  "source": "工业和信息化部《移动互联网应用（APP）适老化通用设计规范》（工信厅信管函〔2021〕67 号附件）",
-  "url": "https://www.miit.gov.cn/",
+  "source": "《工业和信息化部办公厅关于进一步抓好互联网应用适老化及无障碍改造专项行动实施工作的通知》（工信厅信管函〔2021〕67号）附件2《移动互联网应用（APP）适老化通用设计规范》，中国政府网政策文件库转载",
+  "url": "https://www.gov.cn/zhengce/zhengceku/2021-04/13/content_5599225.htm",
   "year": "2021",
-  "data": "适老版界面及单独适老版 App 中，主要文字信息不小于 18 dp/pt；严禁广告内容及插件（含广告弹窗），不得有诱导下载、诱导付款等诱导式按键。点击区域 60×60 的数值和操作时间条款在已检索到的材料中没有出现，待核原文。文号：搜索摘要显示工信厅信管函〔2021〕67号是2021年4月12日的专项行动实施通知，它与这两项规范的附件关系待核。",
-  "check": "search",
-  "verified": false,
+  "data": "主要文字信息：最大字体不小于 30 dp/pt，适老版界面和单独适老版 App 不小于 18 dp/pt。可点击区域：适老版界面主要组件不小于 60×60 dp/pt，其他页面 44×44；单独适老版 App 首页 48×48，其他页面 44×44。5.1.1 适老版界面和单独适老版 App 严禁广告内容及插件，不能随机出现广告或临时广告弹窗；5.1.2 移动应用中不得有诱导下载、诱导付款等诱导式按键。2.3 充足操作时间：如果限时不是活动的必要部分或关键要素，且不会导致用户发生法律承诺或财务交易，应为用户的操作留下充足时间，用户操作完毕前界面不发生变化。",
+  "check": "fetch",
+  "verified": true,
   "confidence": "low",
-  "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。我同意第一位核查员判为 partial。搜索摘要能证实三点：规范2021年4月7日发布；适老版界面和单独适老版 App 严禁广告弹窗；不得有诱导下载、诱导付款等按键。另有一份网站版规范的摘要提到 18dp/pt 大字体。查不到的有三项：点击区域 60×60 的数值，我用了两次专门检索都没有找到；操作时间相关的条款没有找到；搜索摘要提到〔2021〕67号是工信部办公厅4月12日发的《关于进一步抓好互联网应用适老化及无障碍改造专项行动实施工作的通知》，但这两项规范是不是它的附件，没有得到确认。原文所在的 ithome、sheitc、smejs 都被网络拦截，打不开。建议台账写法：保留字号、广告、诱导式按键三项限制；删去60×60和操作时间，或者标为“待核原文”；出处写“工信部2021年4月7日发布的《移动互联网应用（App）适老化通用设计规范》”，文号另行核实后再加。（见：IT之家：工信部发布《互联网网站适老化通用设计规范》和《移动互联网应用(App)适老化通用设计规范》（搜索摘要））",
+  "caveat": "2026-11-18 读了中国政府网转载的通知及附件全文。规范对外发布的具体日期没有核到，网页只有通知的成文日期 2021 年 4 月 6 日。",
   "so": "长辈模式消息用完整句、一条一事、不设倒计时、无诱导按钮，大额操作二次确认。"
  },
  {

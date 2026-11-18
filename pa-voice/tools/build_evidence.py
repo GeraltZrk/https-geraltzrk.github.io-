@@ -2,10 +2,13 @@
 """把各调研方向的结构化结果（research/*.json）汇成网页用的证据台账 src/data/evidence.json。
 
 每条证据保留：结论、类型、来源、原始数据、把握程度、边界，以及「核对方式」：
-  fetch  —— 本轮打开了原页面逐字核对
-  local  —— 对照下载到本地的一手文件（官方仓库、安装包内文档）核对
-  search —— 只见于搜索结果摘要，原页面在本轮网络环境里打不开
-  memory —— 检索额度用尽后凭研究员既有知识补充，未核对
+  fetch    —— 打开了原页面或论文全文逐字核对
+  local    —— 对照下载到本地的一手文件（官方仓库、安装包内文档）核对
+  abstract —— 论文只读到出版方登记的摘要，摘要里没有的数字没法核
+  search   —— 只见于搜索结果摘要，原页面在当时的网络环境里打不开
+  memory   —— 检索额度用尽后凭研究员既有知识补充，未核对
+
+后来单独复核过的条目，在 research/*.json 里用 check_override 写明做到了哪一层。
 """
 import json
 import pathlib
@@ -34,7 +37,7 @@ def clean_url(raw: str) -> str:
 
 def check_of(f: dict) -> str:
     # 后来又单独复核过的条目，以复核时做到的程度为准
-    if f.get("check_override") in ("fetch", "local", "search", "memory"):
+    if f.get("check_override") in ("fetch", "local", "abstract", "search", "memory"):
         return f["check_override"]
     # 本轮自己动手做的测量（没有外部链接、出处写明是自测或自采）算「对照本地原文」
     src = f.get("source_title", "") + f.get("source", "")

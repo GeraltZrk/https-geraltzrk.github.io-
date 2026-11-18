@@ -301,15 +301,15 @@
    "id": "T3-23",
    "claim": "能撤销就别用确认：人会因习惯化一路点「好」；浏览器安全警告与用药警示的大规模数据显示警告常被直接略过",
    "evidence_type": "专家观点",
-   "source_title": "Raskin (2007) Never Use a Warning When You Mean Undo, A List Apart",
+   "source_title": "Raskin (2007) Never Use a Warning When You Mean Undo, A List Apart；数据另见 Akhawe & Felt (2013)（Chrome SSL 警告）和 van der Sijs 等 (2006) JAMIA 13(2)（用药警示）",
    "source_url": "https://alistapart.com/article/neveruseawarning/",
    "year": "2007",
    "key_data": "Chrome SSL 警告点击穿透率 70.2%（Akhawe & Felt 2013）；用药警示被忽略 49%–96%（van der Sijs 等 2006）",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "可撤回的动作改成先做＋撤销窗口；回执里写清怎么撤、撤到何时",
-   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索摘要确认 Raskin（作者为 Aza Raskin，ALA 第 241 期）以习惯化为由主张用撤销代替警告，Akhawe & Felt 的 Chrome SSL 警告点击穿透率最高 70.2%、van der Sijs 等 2006 综述 17 篇研究得出 49%–96% 被忽略，均与条目一致；alistapart.com 和 pubmed 在本环境无法打开，原文未直接核对。（见：Alice in Warningland (USENIX Security 2013) / Overriding of Drug Safety Alerts in CPOE (JAMIA 2006) / Never Use a Warning When you Mean Undo）",
-   "check_override": "search",
+   "caveat": "2026-11-18 读了 Raskin 原文，习惯化会让人一路点「好」、用撤销代替警告的论点都对得上；后半句的大规模数据不出自这篇，出自另外两篇论文。Chrome SSL 警告点击穿透率 70.2%（Akhawe & Felt 2013，是最高值）没有核对原文。49%–96% 出自 van der Sijs 等综述的 17 篇研究，T2-14 的全文核到，原文说的是警示被 override，不含高级别过量警报。",
+   "check_override": "fetch",
    "verify_verdict": "confirmed"
   },
   {
@@ -349,8 +349,8 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "主动提醒默认给 1 个推荐加最多 2 个备选；用户主动问还有什么时可多给，但要同一维度排好序",
-   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。Scheibehenne 等 2010 的 63 个条件、50 个实验、N=5,036、平均效应几乎为零均在摘要中看到；Chernev 等 2015 摘要确认 99 个观测（N=7,202）及选项集复杂度、决策任务难度、偏好不确定性、决策目标四个调节因素，与条目的三种情形大致对应。（见：Can There Ever Be Too Many Options? A Meta-Analytic Review of Choice Overload (econbiz/unibas 摘要)；Choice overload: A conceptual review and meta-analysis (Kellogg)）",
-   "check_override": "search",
+   "caveat": "2026-11-18 读了两篇论文的摘要，全文没有读到。Chernev 等的 99 个观测共 N=7,202，四个调节因素是选项集复杂度、任务难度、偏好不确定和省力目标。Scheibehenne 等称没有找到充分条件，Chernev 等则称计入调节因素后总体效应显著，「只在……才明显」说得偏硬。",
+   "check_override": "abstract",
    "verify_verdict": "confirmed"
   },
   {
@@ -364,8 +364,8 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "一条消息里需要用户同时比较的变量不超过 3–4 个；超过就拆，或由 PA 先定下其中几个",
-   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。Cowan 2001（BBS 24(1):87–114）摘要明确区分 Miller 的约 7 个组块与 3–5 个、平均约 4 个组块的容量上限，与条目一致；Sweller 1988 未在本轮核对。（见：The magical number 4 in short-term memory: A reconsideration of mental storage capacity (摘要)）",
-   "check_override": "search",
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。摘要说 Miller 总结的是约 7 个组块，「7±2」这个写法没有核对；摘要没有限定「成人」；Sweller (1988) 认知负荷理论没有核对。",
+   "check_override": "abstract",
    "verify_verdict": "confirmed"
   },
   {
@@ -379,8 +379,8 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "论证少问时改用可测的依据：打断的时间成本、确认通过率、核对用时",
-   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。Hagger 等 2016 与 Vohs 等 2021（Psychological Science 32(10)）的实验室数、样本量与效应量均在摘要中看到，与条目完全一致；Vohs 一文的探索性分析在全样本中得到 d=0.08 的显著效应，可作补充说明。（见：A Multilab Preregistered Replication of the Ego-Depletion Effect；A Multisite Preregistered Paradigmatic Test of the Ego-Depletion Effect）",
-   "check_override": "search",
+   "caveat": "2026-11-18 读了 Hagger 等 2016 的摘要和 Vohs 等 2021 的预印本摘要，全文没有读到。Vohs 一文正式发表在 Psychological Science 32(10) 这一点没有核对。Vohs 等的验证性检验不显著，探索性全样本分析得到 d=0.08 的显著效应，可作补充。",
+   "check_override": "abstract",
    "verify_verdict": "confirmed"
   },
   {
@@ -394,8 +394,8 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "结论后留一句真实工作量（比了 12 家），可展开看明细；结果不好时不炫过程",
-   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。摘要确认 5 个实验模拟在线旅行与在线交友服务、偏好等待更久的网站、以感知努力引发的回报心理为中介，与条目一致；caveat 中「结果差时展示努力会减分」未在摘要中看到，仍需看全文复核。（见：The Labor Illusion: How Operational Transparency Increases Perceived Value (摘要转载)）",
-   "check_override": "search",
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。摘要只说探讨了边界条件，没有细节，「结果差时展示努力会减分」没有核到。「而非决策质量」是手册加的提醒，摘要测的是服务价值感知。",
+   "check_override": "abstract",
    "verify_verdict": "confirmed"
   },
   {
@@ -422,8 +422,8 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "关键预测用「词＋频率」双写（多半不会再降，近 60 天 10 次里 8 次）；其余换成行动建议",
-   "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。同意第一位核查员的 partial。方向成立：Budescu 2009 让受试者给出下限、上限和最佳估计，只给词的对照组和只给对照表的翻译组偏差都大，词旁直接标数字的格式一致性最好。2014 年 NCC 论文覆盖 24 国 17 种语言 25 个样本，模式稳定。但我四次检索都没找到“中位数约 65%–75%”的原话。Mother Jones 写的是公众均值约 62%，但那篇也谈 Budescu 后来的研究，来源不确定；博客转述则是“25% 受试者的最佳估计低于 70%”。我打不开原文 PDF（moodle2.units.it 被网络拦截）。建议台账删去 65%–75%，改为下面的分布型表述，并注明二手转述、未见原文。（见：Communicating about Uncertainty in Climate Change, Part II（搜索摘要））",
-   "check_override": "search",
+   "caveat": "2026-11-18 读了 2009 年论文摘要，只说受试者拿到对照表仍明显偏离 IPCC 指南，没有数字。>90% 的定义、四分之三低于 90%、近半数低于 66%、偏低的方向、词旁标区间优于对照表都没有核到。2014 年研究（Nature Climate Change）只核到书目信息，24 国、17 种语言、25 个样本没有核对。",
+   "check_override": "abstract",
    "verify_verdict": "partial"
   },
   {

@@ -13,16 +13,16 @@
  "findings": [
   {
    "id": "T2-01",
-   "claim": "「打断后要23分钟才能恢复」是误引：23分15秒是被打断的工作当天被重新拾起前的平均间隔，其间还插了约2件别的事。",
+   "claim": "「打断后要23分钟才能恢复」是误引：23分15秒是被打断的工作当天被重新拾起前的平均间隔；CHI 2005 论文发现，多数被打断的工作当天会恢复，但恢复前会先插进超过两件别的事。",
    "evidence_type": "实证研究",
    "source_title": "Mark, González & Harris (CHI 2005) No Task Left Behind? Examining the Nature of Fragmented Work；数字出自 Gloria Mark 2006 年 Gallup 访谈",
    "source_url": "https://dl.acm.org/doi/10.1145/1054972.1055017",
    "year": "2005/2006",
-   "key_data": "Gallup访谈：81.9%的被打断工作当天恢复，平均23分15秒，中间约2个插入任务；CHI 2005：57%的工作领域被打断。",
+   "key_data": "Gallup访谈：81.9%的被打断工作当天恢复，平均23分15秒（未核原文）；CHI 2005：观察 24 名信息工作者，57%的工作领域被打断，被打断的工作恢复前插入了超过两件其他活动。",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "真实代价是任务被搁置和插队，不是固定分钟数。需要动作的通知要能在通知内一键闭环，别把人引进App。",
-   "caveat": "仅经搜索摘要核对，news.gallup.com 与 ACM 页面在本会话打不开；二手来源称 CHI 论文正文数字为 25 分 26 秒（SD 54 分 48 秒），未核原文；美国办公室现场观察，早于智能手机。"
+   "caveat": "2026-11-18 读了 CHI 2005 论文摘要，全文没有读到；23 分 15 秒和 81.9% 出自 Gallup 访谈，原文没有取到。另有二手来源称 CHI 正文数字为 25 分 26 秒（SD 54 分 48 秒），也未核。美国办公室现场观察，早于智能手机。"
   },
   {
    "id": "T2-02",
@@ -35,7 +35,8 @@
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "用户高压时段（赶路、会议、深夜）少发；要发就给确定结论，不渲染紧迫。「省时间」不能只算秒数。",
-   "caveat": "实验室邮件任务、学生样本、短时任务；搜索摘要确认结论，未打开原文。"
+   "caveat": "2026-11-18 读了论文摘要（出版方登记的摘要），全文没有读到。数据里的「显著」摘要没写统计显著性，未核。实验条件据此前记录是实验室邮件任务、学生样本、短时任务，摘要里没有这些，也未核。",
+   "check_override": "abstract"
   },
   {
    "id": "T2-03",
@@ -61,7 +62,8 @@
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "「发了不点也没损失」不成立。可发可不发的消息一律走不响不振的层级：被动通知、摘要、App内卡片。",
-   "caveat": "美国本科生、实验室持续注意任务；通知是真人电话和短信而非 App 推送；经新闻稿与搜索摘要核对，未打开论文。"
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。卷期 41(4)，以及 数据里随机分为来电、短信、无通知三组、被试不知情、错误更多、来电比短信更糟，摘要里都没有，未核。样本是美国本科生，实验室持续注意任务，通知是真人来电和短信，不是 App 推送。",
+   "check_override": "abstract"
   },
   {
    "id": "T2-05",
@@ -152,7 +154,7 @@
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "非紧急消息合并成每天1–3个固定批次，并告诉用户几点来；不要用「全部静音」当省事方案。",
-   "caveat": "印度 Android 用户，仅 2 周；部分作者与批处理 App（Daywise）有利益关联；摘要对 productivity 的表述有歧义；未打开原文。"
+   "caveat": "2026-11-18 核对了书目信息（题名、作者、期刊、年份），登记信息里没有摘要，实验内容和 数据里的数字仍只见于检索摘要。样本是印度 Android 用户，仅 2 周；部分作者与批处理 App（Daywise）有利益关联；摘要对 productivity 的表述有歧义。"
   },
   {
    "id": "T2-12",
@@ -182,31 +184,32 @@
   },
   {
    "id": "T2-14",
-   "claim": "告警一多就会被无视：医生对电子处方系统的用药安全警报有49%–96%直接跳过（override）。",
+   "claim": "警报太多太滥就会被跳过：综述统计，电子处方系统的用药安全警报有 49%–96% 被医生跳过（高级别的过量警报除外，约 27%）；门诊研究里最主要的原因是警报疲劳，也就是警报不严重、不相关或反复弹出。综述也指出，很多时候跳过是合理的。",
    "evidence_type": "实证研究",
    "source_title": "van der Sijs, Aarts, Vulto & Berg (2006) Overriding of Drug Safety Alerts in Computerized Physician Order Entry, JAMIA 13(2)",
    "source_url": "https://doi.org/10.1197/jamia.M1809",
    "year": "2006",
-   "key_data": "JAMIA 2006系统综述：drug safety alerts are overridden by clinicians in 49% to 96% of cases。",
+   "key_data": "JAMIA 2006 系统综述（17 篇文献）：drug safety alerts are overridden by clinicians in 49% to 96% of cases（不含高级别过量警报，后者约 27%）；the most important reason for overriding was alert fatigue。",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "时效级提醒必须稀缺且几乎每次都值得；给它设采纳率红线，低于红线就自动收紧触发条件。",
-   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索结果给出了该综述的作者、JAMIA 2006;13(2):138–147（PMID 16357358），以及摘要原话“overridden in 49% to 96% of cases”；PMC 原文页在本环境打不开。（见：Overriding of Drug Safety Alerts in Computerized Physician Order Entry (PMC)）",
-   "check_override": "search",
+   "caveat": "2026-11-18 读了论文全文。这是 17 篇文献的综述，「警报疲劳是最主要原因」出自其中三项门诊研究。场景是医院电子处方系统，用到 App 通知上只是类比。",
+   "check_override": "fetch",
    "verify_verdict": "confirmed"
   },
   {
    "id": "T2-15",
    "claim": "推送权限已是稀缺资产：2025年opt-in中位数iOS 48.85%、Android 53.3%（2023年为71.3%）。",
    "evidence_type": "行业数据",
-   "source_title": "Airship: Mobile App Push Notification Benchmarks for 2026（经 Mobiloud 转述）",
+   "source_title": "Airship: Mobile App Push Notification Benchmarks for 2026",
    "source_url": "https://www.airship.com/mobile-app-push-notification-benchmarks-for-2026/",
    "year": "2026",
    "key_data": "Android中位数71.3%（2023）→59.5%（2024）→53.3%（2025）；2024年直接打开率中位数Android 3.4%、iOS 3.1%。",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "约一半用户没给权限，给了的也有约97%的推送不被直接点开；App内目标卡片才是底座，推送只是加急通道。",
-   "caveat": "厂商基准报告，样本为 Airship 客户，经二手转述，未打开原报告；「直接打开率」低估了看了没点的价值。"
+   "caveat": "2026-11-18 读了 Airship 原页面，数据期为 2025 年 1 月到 12 月。说法括号里 2023 年的 71.3%，数据里 2024 年的 59.5% 和直接打开率 Android 3.4%、iOS 3.1%，页面正文都没有，未核。这是厂商基准报告，样本为 Airship 客户；「直接打开率」低估了看了没点的价值。",
+   "check_override": "fetch"
   },
   {
    "id": "T2-16",
@@ -219,7 +222,8 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "PA的优势是每条消息都由用户自己的目标触发；别混入群发式「推荐」，否则整条通道被拉回4%。",
-   "caveat": "法国厂商、客户以欧洲品牌为主；数字来自二手转述，报告需留资下载，未核原文。"
+   "caveat": "2026-11-18 读了 Batch 原页面，统计期 2024 年 7 月到 2025 年 7 月。3.4 倍是按两个打开率算出的，原文没写倍数；原文的情境式还包括按预设时间触发。法国厂商的基准，页面只说是欧洲范围的调查，客户以欧洲品牌为主未核。",
+   "check_override": "fetch"
   },
   {
    "id": "T2-17",
@@ -241,11 +245,12 @@
    "source_title": "Yancey & Settles (KDD 2020) A Sleeping, Recovering Bandit Algorithm for Optimizing Recurring Notifications",
    "source_url": "https://research.duolingo.com/papers/yancey.kdd20.pdf",
    "year": "2020",
-   "key_data": "KDD 2020摘要：0.5% increase in total DAUs，2% increase in new user retention；数据集含35天2亿条提醒。",
+   "key_data": "KDD 2020 摘要：0.5% increase in total DAUs，2% increase in new user retention；离线评估用的是旧系统 34 天的数据（训练 15 天 8800 万行、测试 19 天 1.14 亿行）。",
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "高频提醒要有模板池并记录每人近期用过的模板；但文案优化收益是个位数，别指望它救场。",
-   "caveat": "摘要数字经搜索核对，未打开 PDF；冷却半衰期约 15 天、提醒在上次练习约 23.5 小时后发出均为记忆值；语言学习场景。"
+   "caveat": "2026-11-18 读了论文全文（PDF）。冷却半衰期 15 天已对上，是作者按此前 A/B 测试经验选定的值；提醒在上次练习约 23.5 小时后发出的说法没有找到原文。离线评估数据出自正文，不在摘要里。语言学习场景。",
+   "check_override": "fetch"
   },
   {
    "id": "T2-19",
@@ -362,7 +367,7 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "消息要能归入用户订阅的提醒、订单、出行、账务才有资格响铃；「我觉得你可能想…」类建议每天最多2条且无声。",
-   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。阿里云、腾讯云文档的摘要都印证了：华为自 2023-01-05 起资讯营销类新闻 5 条/日、其他 2 条/日，服务与通讯类不限量；资讯营销类为静默通知，服务与通讯类带铃声和振动；vivo 运营消息 5/2；OPPO 公信总量为累计用户数×2（累计用户数<50000 时按 100000 计）。以上全是二手转述，没打开华为原页面。（见：阿里云移动推送：厂商通道限制与消息分类）",
+   "caveat": "只见于搜索摘要，华为原页面没有读到（页面要前端加载，2026-11-18 仍取不到正文）。阿里云、腾讯云文档的摘要印证了：华为自 2023-01-05 起资讯营销类新闻 5 条/日、其他 2 条/日，服务与通讯类不限量；资讯营销类静默展示，服务与通讯类带铃声和振动；vivo 运营消息 5/2；OPPO 公信总量为累计用户数×2（不足 50000 时按 100000 计）。全是二手转述。",
    "check_override": "search",
    "verify_verdict": "confirmed"
   },
@@ -383,14 +388,14 @@
    "id": "T2-29",
    "claim": "微信小程序的一次性订阅消息是用户点一次、只能发一条；长期订阅仅向政务民生、医疗、交通、金融、教育等公共服务开放。",
    "evidence_type": "官方规范",
-   "source_title": "微信开放文档：小程序订阅消息（经开发者社区文章转述）",
+   "source_title": "开发者社区文章转述（微信开放文档《小程序订阅消息（用户通过弹窗订阅）开发指南》现行版本只说明分一次性订阅和长期订阅两类，没有写这两条规则）",
    "source_url": "https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/subscribe-message.html",
    "year": "2019 起",
-   "key_data": "开发者文章转述官方规则：用户每授权一次只能下发一条；长期订阅目前仅向政务民生、医疗、交通、金融、教育等线下公共服务开放。",
+   "key_data": "开发者文章转述：用户每授权一次只能下发一条；长期订阅目前仅向政务民生、医疗、交通、金融、教育等线下公共服务开放。官方现行指南（最后编辑 2026-11-12）只写明订阅消息分一次性和长期两类。官方另有《新版一次性订阅消息开发指南》（最后编辑 2026-07-15）：开发者按业态卡片的状态模版同步服务状态，由平台依据状态流转向用户下发通知；哪些状态变更会下发，由微信动态调整。",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "微信生态里每条主动消息都要用户预先点头。创建目标时把提醒点做成选项：「降到¥2,000时叫我一次」。",
-   "caveat": "未能打开官方文档，内容来自开发者社区转述且年代不一；一次性订阅有效期说法不一，开放范围可能已变。"
+   "caveat": "2026-11-18 读了微信官方现行的订阅消息开发指南、wx.requestSubscribeMessage 接口页和新版一次性订阅消息开发指南，没有找到「每授权一次只能下发一条」和长期订阅开放范围这两条规则的原文，仍只是开发者社区的转述，官方页面也没有相反说法。社区文章年代不一，一次性订阅有效期说法不一，开放范围可能已变。"
   },
   {
    "id": "T2-30",
@@ -472,17 +477,17 @@
   },
   {
    "id": "T2-36",
-   "claim": "系统级AI会改写你的通知：Apple的通知摘要曾把新闻推送概括出错误事实，iOS 18.3因此暂停了新闻类摘要并改用斜体标识。",
+   "claim": "系统级 AI 会改写你的通知：Apple 在 iOS 18.3 中暂停了新闻与娱乐类 App 的通知摘要，并改用斜体文字和图标把摘要和普通通知区分开（暂停原因更新说明里没有写，摘要出错的说法见媒体报道）。",
    "evidence_type": "产品案例",
    "source_title": "Apple: About iOS 18 Updates（iOS 18.3 更新说明）",
    "source_url": "https://support.apple.com/en-us/121161",
    "year": "2025",
-   "key_data": "iOS 18.3更新说明（凭记忆）：新闻与娱乐类App的通知摘要暂时不可用；摘要以斜体和图标与原通知区分。",
+   "key_data": "iOS 18.3 更新说明：Notification summaries for News & Entertainment apps are temporarily unavailable；摘要以斜体文字和图标与其他通知区分。",
    "verified_by_fetch": false,
    "confidence": "low",
    "pa_implication": "通知要抗摘要：首句自成完整事实（什么事、多少钱、何时截止），不靠第二句补充否定或条件。",
-   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。iClarified 转载的 iOS 18.3 官方更新说明和 MacRumors 等媒体都印证了：新闻与娱乐类 App 的通知摘要暂时不可用，起因是摘要生成了错误标题，摘要改用斜体与普通通知区分；Apple 原页面打不开，原条目里的 URL 未核实。（见：iOS 18.3 Release Notes (iClarified) / MacRumors）",
-   "check_override": "search",
+   "caveat": "2026-11-18 读了 Apple 原页面。页面没有标日期，年份 2025 未核。摘要生成错误标题的说法来自 MacRumors 等媒体报道，只经检索核对。",
+   "check_override": "fetch",
    "verify_verdict": "confirmed"
   }
  ],

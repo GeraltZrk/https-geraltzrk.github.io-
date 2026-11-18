@@ -339,16 +339,17 @@
   },
   {
    "id": "T7a-26",
-   "claim": "Duolingo 用老虎机算法挑提醒文案：同一句话重复会失效，需轮换；长期无响应时发“停发提醒”文案。",
+   "claim": "Duolingo 用多臂老虎机算法挑提醒文案：同一模板天天发会让用户脱敏，需要轮换。长期无响应时发「停发提醒」文案一事，论文里没有，只见于用户转述，没有核对。",
    "evidence_type": "实证研究",
    "source_title": "Yancey & Settles (KDD 2020)：A Sleeping, Recovering Bandit Algorithm for Optimizing Recurring Notifications",
    "source_url": "https://research.duolingo.com/papers/yancey.kdd20.pdf",
    "year": "2020",
-   "key_data": "约 2 亿条提醒、34 天数据；文案 \"These reminders don't seem to be working. We'll stop sending them for now.\"",
+   "key_data": "离线评估数据 34 天（训练 15 天、测试 19 天），共约 2 亿行（88M+114M）",
    "verified_by_fetch": false,
    "confidence": "medium",
-   "pa_implication": "高频提醒建文案池并对最近见过的降权；连续无响应后主动停发，并告知如何恢复。",
-   "caveat": "仅搜索摘录，论文与博客原文未打开。“最有效通知”之说无数据；有用户记录停发约 3 天后恢复，并称其为情感勒索。"
+   "pa_implication": "高频提醒建文案池并轮换，不让同一模板天天出现，免得用户脱敏。",
+   "caveat": "2026-11-18 读了论文全文。停发提醒文案的真正出处没有找到；有用户记录称停发约 3 天后又恢复，并称其为情感勒索，这些都不在论文里，没有核对。「最有效通知」的说法没有数据支撑。",
+   "check_override": "fetch"
   },
   {
    "id": "T7a-27",

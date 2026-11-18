@@ -104,16 +104,17 @@
   },
   {
    "id": "T4-08",
-   "claim": "记录里突出“连胜还在”提升后续投入，突出“连胜断了”则挫伤；作者建议不要推送断连通知",
+   "claim": "记录里突出「连胜还在」比突出「连胜断了」带来更多后续投入；用户把断连归因于自己时效应更强，允许「修复」断连时效应减弱",
    "evidence_type": "实证研究",
    "source_title": "Silverman & Barasch (2023) On or Off Track: How (Broken) Streaks Affect Consumer Decisions, Journal of Consumer Research 49(6):1095–1117",
    "source_url": "https://doi.org/10.1093/jcr/ucac029",
    "year": "2023",
-   "key_data": "7项研究；连胜定义为连续3次及以上；早期版本报告断连效应与此前连胜长短无关",
+   "key_data": "7项研究；连胜定义为连续3次及以上；效应与实际过往行为无关，只取决于记录如何呈现",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "断档后不发“已中断X天”，改发“今天接上就行”；不可抗力造成的缺口不记为断",
-   "caveat": "多为情境实验与在线样本；机制表述出自发表前摘要；“可修复能否恢复动机”未核到原文；连胜本身可能成为焦虑来源。"
+   "caveat": "2026-11-18 读了正式发表版摘要，全文没有读到。摘要里没有作者建议不要推送断连通知的说法，全文有没有没核到。研究多为情境实验与在线样本；连胜本身也可能成为焦虑来源。",
+   "check_override": "abstract"
   },
   {
    "id": "T4-09",
@@ -143,7 +144,7 @@
   },
   {
    "id": "T4-11",
-   "claim": "提醒确实提高储蓄目标达成；提到具体目标的更有效，得失框架无显著差别，补发晚提醒无增益",
+   "claim": "提醒确实提高储蓄目标达成；同时提到储蓄目标和金钱激励的提醒尤其有效，得失框架无显著差别，补发晚提醒无叠加效果",
    "evidence_type": "实证研究",
    "source_title": "Karlan, McConnell, Mullainathan & Zinman (2016) Getting to the Top of Mind: How Reminders Increase Saving, Management Science 62(12):3393–3411",
    "source_url": "https://pubsonline.informs.org/doi/fpi/10.1287/mnsc.2015.2296",
@@ -151,8 +152,9 @@
    "key_data": "玻利维亚、秘鲁、菲律宾3家银行现场实验；工作论文版：收到月度提醒者多存6%",
    "verified_by_fetch": false,
    "confidence": "high",
-   "pa_implication": "提醒里点名用户自己定的目标；不必纠结“省”还是“亏”的措辞；别靠加发来补救",
-   "caveat": "发展中国家储蓄账户、短信与信件渠道，年代较早；6%来自工作论文版，未确认正式发表版数字。"
+   "pa_implication": "提醒里点名用户自己定的目标，有金钱激励时一并写上；不必纠结「省」还是「亏」的措辞；别靠加发来补救。",
+   "caveat": "2026-11-18 读了正式发表版摘要，全文没有读到。玻利维亚、秘鲁、菲律宾三国没有核到；工作论文版「多存 6%」在工作论文的摘要里没有，正式发表版数字也没有核对。对象是新开承诺储蓄账户的客户，发展中国家，短信与信件渠道，年代较早。",
+   "check_override": "abstract"
   },
   {
    "id": "T4-12",
@@ -165,8 +167,8 @@
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "机会和截止类消息用“替你留到18:00”的所有权句式；同一节点最多两次；严肃事不抖机灵",
-   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索摘要（多家机构库转载 PNAS 摘要）确认 N=47,306、19 种短信、平均提高约 5%、最佳方案为提醒两次并告知疫苗已预留，且与患者对医生沟通预期相符的写法效果更好；PNAS 原页无法打开，4.6 个百分点未核。（见：A megastudy of text-based nudges encouraging patients to get vaccinated at an upcoming doctor's appointment（机构库摘要，搜索结果））",
-   "check_override": "search",
+   "caveat": "2026-11-18 读了论文全文（PMC）。约 5% 是相对提升，绝对值 2.1 个百分点；最佳方案提升 4.6 个百分点（11%），校正膨胀后保守估计 2.8 个百分点。两次提醒分别在就诊前 72 和 24 小时发出。「与预期不符的写法更差」来自事后相关分析。",
+   "check_override": "fetch",
    "verify_verdict": "confirmed"
   },
   {
@@ -180,7 +182,8 @@
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "别指望一句话术扭转行为：预期定在个位数百分点，先改时机和步骤数，话术靠A/B选",
-   "caveat": "政府通信场景；Mertens 2022元分析d=0.43，Maier 2022校正发表偏倚后认为无证据，争论未完。"
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。数据里的期刊 74 项、对照组 26.0%、中位样本 484 对 10,006 没有核到。场景是政府通信。另有 Mertens 2022 元分析得 d=0.43，Maier 2022 校正发表偏倚后认为没有证据，这两篇没有核对，争论未完。",
+   "check_override": "abstract"
   },
   {
    "id": "T4-14",
@@ -197,7 +200,7 @@
   },
   {
    "id": "T4-15",
-   "claim": "提醒有隐性成本：它提高目标行为，也提高退订；不计这笔成本会把净收益高估约十倍",
+   "claim": "提醒有隐性成本：它提高目标行为，也提高退订；不计这笔成本会把提醒给捐赠者带来的福利效应高估约十倍，还会掩盖慈善机构一方可能受到的负面影响",
    "evidence_type": "实证研究",
    "source_title": "Damgaard & Gravert (2018) The hidden costs of nudging: Experimental evidence from reminders in fundraising, Journal of Public Economics 157:15–26",
    "source_url": "https://econpapers.repec.org/RePEc:eee:pubeco:v:157:y:2018:i:c:p:15-26",
@@ -206,7 +209,8 @@
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "把关提醒率、静音率放到和点击率同级的位置；每条提醒先过“值不值得打扰”",
-   "caveat": "慈善募捐邮件场景，动机结构与用户自建目标不同；单条提醒的金额数字在不同版本间不一致，未核。"
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。慈善募捐邮件场景，动机结构与用户自建目标不同。单条提醒的金额数字在不同版本间不一致，没有核到；第二个现场实验的细节也没有核到。",
+   "check_override": "abstract"
   },
   {
    "id": "T4-16",
@@ -228,11 +232,12 @@
    "source_title": "Miller, Lane, Deatrick, Young & Potts (2007) Psychological Reactance and Promotional Health Messages, Human Communication Research 33(2):219–240",
    "source_url": "https://doi.org/10.1111/j.1468-2958.2007.00297.x",
    "year": "2007",
-   "key_data": "实验操纵控制性语言与用词具体度；后续综述：武断、强硬的措辞比含蓄、不强硬的引发更多逆反",
+   "key_data": "实验操纵健康宣传信息里控制性语言的强弱和用词具体度（对象为年轻成年人）：控制性语言带来多种负面结果，文末加恢复自由的附言结果更正面",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "催办用“要不要、可以、你来定”，给理由和选项；删掉“必须、务必、千万、赶紧”",
-   "caveat": "美国大学生、健康宣传语境；原文结果未核到，文末“选择权在你”可降低威胁感为记忆细节；中文语气词的效应缺实证。"
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。说法里「必须、应该、千万别」这几个具体词和「降低说服效果」的具体测量没有核到。对象是健康宣传信息下的年轻成年人，摘要没说是美国大学生；中文语气词的效应缺实证。",
+   "check_override": "abstract"
   },
   {
    "id": "T4-18",
@@ -258,7 +263,8 @@
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "拒绝按钮写中性的“先不用”，不写“不了，我愿意多花钱”；不做假倒计时、假库存",
-   "caveat": "美国在线样本的一次性订阅决策，测不到长期信任损失；羞辱式确认的单项效果在摘要中未单列。"
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。订阅的是身份盗窃保护服务这一点没有核到，摘要只说是一项可疑服务。美国消费者样本的一次性订阅决策，测不到长期信任损失；羞辱式确认的单项效果摘要里没有单列。",
+   "check_override": "abstract"
   },
   {
    "id": "T4-20",
@@ -271,7 +277,8 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "“会扣¥30”只用于真会发生的损失（续费、过期作废）；机会型消息老实说“可省¥30”",
-   "caveat": "实验多为赌局与估值任务，不是通知文案对比；储蓄提醒现场实验中得失框架无显著差异（见T4-11）。"
+   "caveat": "2026-11-18 读了两篇论文的摘要，全文没有读到。实验多为赌局与估值任务，不是通知文案对比；储蓄提醒现场实验中得失框架无显著差异（见T4-11）。",
+   "check_override": "abstract"
   },
   {
    "id": "T4-21",
@@ -284,7 +291,8 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "首行统一写绝对金额“省¥420”；小额时再补一个相对量：“省¥6，约8折”",
-   "caveat": "美元语境与购买意向测量；人民币下的阈值没有实证，不能照搬¥100分界；口诀出自Berger的畅销书。"
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。美元语境与购买意向测量，人民币下的阈值没有实证，不能照搬¥100分界；「100法则」口诀出自 Berger 的畅销书一说没有核对。",
+   "check_override": "abstract"
   },
   {
    "id": "T4-22",
@@ -297,7 +305,8 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "已发生的写精确值（省了¥86.5）；预估的写“约¥90”并标“预计”",
-   "caveat": "房价与广告声明场景；工作论文与正式版对市场数据的方向表述不一，需读原文；专家身上效应会反转；写法建议属推论。"
+   "caveat": "2026-11-18 读了 Thomas 等论文的摘要，全文没有读到；Schindler & Yalch 一篇没有读到，「99.44%」比「99%」更像事实的结论没有核到。场景是房价与广告声明，正式版摘要称标价越精确成交价越高；专家身上效应会反转一说没有核到；写法建议属推论。",
+   "check_override": "abstract"
   },
   {
    "id": "T4-23",
@@ -336,11 +345,12 @@
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "省钱结果配一个取自用户心愿单的换算，一条消息最多一个，不随手编“十杯咖啡”",
-   "caveat": "美国学生与在线样本的购买情境；对守财型用户效果较弱；原文为75%降到55%系记忆，未核。"
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。数据里的 15 美元 DVD 情境、少约 20%（75% 降到 55%）、便宜款 iPod 选择率约翻倍都没有核到。美国学生与在线样本的购买情境；敏感度随长期花钱态度而不同，对守财型用户效果较弱。",
+   "check_override": "abstract"
   },
   {
    "id": "T4-26",
-   "claim": "花钱买时间能提升幸福感，但只有约28%的人这么做——省时间的价值常被用户自己低估",
+   "claim": "花钱买时间能提升幸福感，但只有约28%的人每月这么做；即使负担得起，很多人也不在这上面花钱",
    "evidence_type": "实证研究",
    "source_title": "Whillans, Dunn, Smeets, Bekkers & Norton (2017) Buying time promotes happiness, PNAS 114(32):8523–8527",
    "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5559044",
@@ -349,7 +359,8 @@
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "省时结果要显式记账：“这周替你省了2小时10分”，并说清省在哪几件事上",
-   "caveat": "西方样本为主；现场实验仅60人；调查部分为相关性；未涉及AI代办。"
+   "caveat": "2026-11-18 读了论文全文（PMC）。样本以西方为主（美加丹荷共 6,271 人）；60 人实验是温哥华在职成年人的被试内设计，规模小；调查部分为相关性；论文没有测人们怎样评估省时的价值，也未涉及 AI 代办。",
+   "check_override": "fetch"
   },
   {
    "id": "T4-27",
@@ -388,8 +399,8 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "结论后加一行真实工作量（比了12家、盯了6天），明细折叠；没办成时不拿它邀功",
-   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索摘要确认 Management Science 57(9):1564–1579、在线旅行与婚恋 5 项实验、人们会偏好结果相同但展示工作过程的较慢网站；“结果差时展示劳动更糟”一句仍未查到依据，期刊页无法打开。（见：The Labor Illusion: How Operational Transparency Increases Perceived Value（搜索摘要））",
-   "check_override": "search",
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。摘要只说探讨了边界条件，没写具体内容；「结果差时展示工作量反而更糟」没有找到依据。实验是模拟的在线旅行和婚恋网站。",
+   "check_override": "abstract",
    "verify_verdict": "confirmed"
   },
   {
@@ -403,7 +414,8 @@
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "确认卡常备一个“改一下”，可改的只留一两项（数量、时间、上限）",
-   "caveat": "有金钱激励的预测任务，不是购物代办；采用率的具体数字未核；可调项过多会抬高理解成本。"
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到，采用率等具体数字和样本量未核。任务是有金钱激励的预测，不是购物代办；可调项过多会抬高理解成本。",
+   "check_override": "abstract"
   },
   {
    "id": "T4-31",
@@ -438,12 +450,12 @@
    "source_title": "《网络交易监督管理办法》（国家市场监督管理总局令第37号，2021-05-01施行）第十八条",
    "source_url": "https://www.gov.cn/zhengce/zhengceku/2021-03/16/content_5593226.htm",
    "year": "2021",
-   "key_data": "第十八条：在自动展期、自动续费等日期前五日，以显著方式提请消费者注意，由消费者自主选择",
+   "key_data": "第十八条：应当在消费者接受服务前和自动展期、自动续费等日期前五日，以显著方式提请消费者注意，由消费者自主选择",
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "PA提醒不低于法定线：提前5天和前1天各一次，用推送或短信，没被看到就换渠道再提醒",
-   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索摘要中多家转述的第十八条原文与条目一致，含“接受服务前和自动展期、自动续费等日期前五日，以显著方式提请消费者注意”及“显著、简便的随时取消或者变更的选项”；gov.cn 原文无法打开，令号未直接核到。（见：国家市场监督管理总局《网络交易监督管理办法》相关转述（搜索结果摘要，含 gov.cn 条目））",
-   "check_override": "search",
+   "caveat": "2026-11-18 读了原文（中国政府网），令号、施行日期和第十八条全文都已核对。",
+   "check_override": "fetch",
    "verify_verdict": "confirmed"
   },
   {

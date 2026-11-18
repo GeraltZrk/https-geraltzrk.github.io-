@@ -152,7 +152,7 @@
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "语气优化不能只看即时好评，须加入撤销率、屏蔽率、留存与实际节省金额。",
-   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。搜索摘要显示更新在 4 月 24–25 日上线，4 月 28 日开始回滚，全量回滚约用 24 小时；那句引语、「因用户正向信号决定上线」以及用户反馈奖励信号削弱主奖励信号都能看到；也有报道写测试没有专门衡量谄媚。有一处出入：部分媒体把回滚日期写成 4 月 29 日。openai.com 无法打开。（见：OpenAI, Expanding on what we missed with sycophancy（搜索摘要）；TechCrunch；VentureBeat）",
+   "caveat": "只见于搜索摘要，OpenAI 原文没有读到。摘要显示更新在 4 月 24–25 日上线，4 月 28 日开始回滚，全量回滚约用 24 小时；那句引语、因用户正向信号决定上线都能看到；也有报道写测试没有专门衡量谄媚。部分媒体把回滚日期写成 4 月 29 日。",
    "check_override": "search",
    "verify_verdict": "confirmed"
   },
@@ -245,7 +245,8 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "省钱场景优先测试搭子式伙伴框架；管家式仆人框架可能让用户自己更松懈，需 A/B 验证。",
-   "caveat": "2012 年品牌启动实验，行为启动类研究复制性存疑；只见摘要与新闻稿；从品牌外推到 AI 助手是本方向的推演。"
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。喜欢仆人版 Volvo 的人表示愿冒更多险，这一结果摘要里没有，没有核对。2012 年的品牌启动实验，共 3 项研究，行为启动类研究复制性存疑；从品牌外推到 AI 助手是推演。",
+   "check_override": "abstract"
   },
   {
    "id": "T8-19",
@@ -258,7 +259,8 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "成就感重要的目标把功劳措辞还给用户：说你设的目标价到了，不说我帮你抢到了。",
-   "caveat": "享乐型电脑游戏情境；效率任务里用户可能本来就想外包。只见摘要，未读全文。"
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到，效应量没有核对。享乐型电脑游戏情境，效率任务里用户可能本来就想外包。",
+   "check_override": "abstract"
   },
   {
    "id": "T8-20",
@@ -271,20 +273,22 @@
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "失败、扣错钱、延误节点关闭人设：不用昵称、不卖萌、无 emoji，只给事实与补救。",
-   "caveat": "对象是大模型之前的客服机器人，拟人化靠名字与头像操纵。只见摘要与期刊新闻稿，未读全文。"
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。「问题解决后差异消失」摘要里没有，没有核对。对象是大模型之前的客服机器人，拟人化靠名字与头像操纵。",
+   "check_override": "abstract"
   },
   {
    "id": "T8-21",
-   "claim": "服务失败现场，解决问题的动作提升满意度，而开场之后继续道歉与共情反而降低满意度。",
+   "claim": "服务失败现场，解决问题的动作提升满意度，且作用随互动推进增强；关系型工作或正面情绪表露做得过多，会削弱解决问题对满意度的正向作用。",
    "evidence_type": "实证研究",
-   "source_title": "Marinova, Singh & Singh, Frontline Problem-Solving Effectiveness, Journal of Marketing Research（密苏里大学新闻稿）",
+   "source_title": "Marinova, Singh & Singh (2018) Frontline Problem-Solving Effectiveness: A Dynamic Analysis of Verbal and Nonverbal Cues, Journal of Marketing Research 55(2):178–192",
    "source_url": "https://munews.missouri.edu/news-releases/2018/0201-problem-solving-not-relational-work-leads-to-higher-customer-satisfaction-mu-study-finds/",
    "year": "2018",
    "key_data": "约 100 段机场柜台录像加一项实验；解决型工作的正向作用随互动推进增强",
    "verified_by_fetch": false,
    "confidence": "medium",
-   "pa_implication": "道歉或共情最多一次且放最前，其余篇幅全给方案；禁止叠加道歉。",
-   "caveat": "真人面对面的航空服务失败场景，不是 AI；新闻稿的表述比论文更绝对；未读全文。"
+   "pa_implication": "道歉和共情点到为止，篇幅留给解决问题的动作，关系型的话说多了会削弱方案的效果。",
+   "caveat": "2026-11-18 读了论文摘要，全文和新闻稿原文没有读到。录像约 100 段这个数没有核对。摘要里没有出现「道歉」，也没有说共情本身会拉低满意度。真人面对面的航空服务失败场景，不是 AI；新闻稿的表述比论文更绝对。",
+   "check_override": "abstract"
   },
   {
    "id": "T8-22",
@@ -297,7 +301,7 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "PA 做认知共情：准确复述处境再给方案；不写我也替你难过这类情感分享句。",
-   "caveat": "研究情境是情感支持，不是任务型助手。只见摘要与新闻稿，未读全文。"
+   "caveat": "2026-11-18 只核对了书目信息（题名、作者、期刊、年份），登记信息里没有摘要。研究内容和 9 项研究、6,282 人、等数天这些数字仍只见于检索摘要和新闻稿，全文没有读。研究情境是情感支持，不是任务型助手。"
   },
   {
    "id": "T8-23",
@@ -310,20 +314,22 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "事实与建议先由不带温度的逻辑定稿，语气层只改措辞；用户低落时加一道核对。",
-   "caveat": "研究的是微调暖化，不是提示词调语气，后者是否同样受影响没有证据。预印本，arxiv.org 未能打开；有媒体把百分点误写成百分比。"
+   "caveat": "2026-11-18 读了论文全文（arXiv 预印本 v2）。主实验是微调暖化；论文另用系统提示词给 Llama-70B 和 Qwen-32B 调暖做了对照，也出现类似的可靠性下降，只是幅度较小、不够一致。有媒体把百分点误写成百分比。",
+   "check_override": "fetch"
   },
   {
    "id": "T8-24",
-   "claim": "纯文本细粒度情绪识别准确率有限，人类标注者之间也只有中等一致。",
+   "claim": "纯文本细粒度情绪识别准确率有限：GoEmotions（27种情绪加中性，共28类）上，BERT 的平均 F1 为 0.46，各类差别很大。标注者之间的一致性因情绪而异：附录表7的 Cohen's kappa 从悲痛的 0.095 到感激的 0.749 不等，作者认为所有类别的 kappa 都大于 0，说明标注者之间存在一致。",
    "evidence_type": "实证研究",
-   "source_title": "GoEmotions 相关基准对比（arXiv 2601.18162；原数据集 Demszky 等 2020）",
-   "source_url": "https://arxiv.org/abs/2601.18162",
-   "year": "2020–2026",
-   "key_data": "GoEmotions 28 类：BERT macro-F1 0.46 至 0.49；二手称 ChatGPT 零样本 25.55%；κ 约 0.44（未核）",
+   "source_title": "Demszky 等 (2020) GoEmotions: A Dataset of Fine-Grained Emotions（ACL 2020；arXiv 2005.00547）；Harutyunyan & Kumar (2026) Fine-Grained Emotion Detection on GoEmotions（arXiv 2601.18162）",
+   "source_url": "https://arxiv.org/abs/2005.00547",
+   "year": "2020 / 2026",
+   "key_data": "Demszky 等 2020：BERT 平均 F1 0.46（标准差 0.19，含中性类），感激最高 0.86，悲痛最低 0；83% 的样本只有一个情绪标签，94% 的样本至少有两位标注者在同一个标签上一致；附录表7的 Cohen's kappa 最高是感激 0.749，最低是悲痛 0.095，27 种情绪里 23 种低于 0.4（论文主要用的指标是标注者间相关，不是 kappa）。Harutyunyan & Kumar 2026 复现的 BERT macro-F1 是 0.49。「ChatGPT 零样本 25.55%」和「κ 约 0.44」没有找到出处，已删。",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "不据模型猜的情绪加戏；情绪模型只许触发更克制，主要依据改为事件与显式设置。",
-   "caveat": "英文 Reddit 数据；零样本与一致性数字来自聚合站与二手摘要，未核；中文与反讽识别的基准本轮没有查到。"
+   "caveat": "2026-11-18 读了两篇论文全文。数据是英文 Reddit 评论；中文和反讽识别的基准没有查到。",
+   "check_override": "fetch"
   },
   {
    "id": "T8-25",
@@ -336,7 +342,7 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "禁用打字节奏、语音语调等信号推断情绪；职场与学习类目标只用事件和显式设置。",
-   "caveat": "【2026-11 联网复核】检索摘要印证了这条结论；原文页面在调研环境里打不开，未直接核对。第5(1)(f)条只管工作和教育场景、只管基于生物特征数据的推断、医疗与安全用途除外、书面文本不在禁令内，这几点在 FPF 和多家律所摘要中都能看到；击键属于行为生物特征的例子也在摘要中出现。是否涵盖意图推断，FPF 与 Freshfields（转述委员会指南）说法相反。fpf.org 无法打开。（见：FPF Red Lines under EU AI Act（搜索摘要）；CMS、Lewis Silkin、Freshfields 解读）",
+   "caveat": "只见于搜索摘要，FPF 原文没有读到。第 5(1)(f) 条只管工作和教育场景、只管基于生物特征数据的推断、医疗与安全用途除外、书面文本不在禁令内，这几点在 FPF 和多家律所的摘要里都能看到。是否涵盖意图推断，FPF 与 Freshfields（转述委员会指南）说法相反。",
    "check_override": "search",
    "verify_verdict": "confirmed"
   },
@@ -364,7 +370,8 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "搭子与陪伴式人设做成有边界的可选项；无论是否落入，都做到明示 AI、退出不阻拦、防依赖。",
-   "caveat": "news.cn 未能打开，只有新华网等的检索摘要。禁止情感操纵、退出机制、2 小时提醒等条款只记得征求意见稿版本；任务型 PA 是否适用需法务对照正式稿。"
+   "caveat": "2026-11-18 读了新华网发布稿全文，稿子只有概述，没有条款原文。「模拟人格的持续性情感互动」这一定义、不得向未成年人提供虚拟亲属和虚拟伴侣、向老年人显著提示风险，都没有核到，要看《办法》正文。禁止情感操纵、退出机制、2 小时提醒等条款只见于征求意见稿；任务型 PA 是否适用需法务对照正式稿。",
+   "check_override": "fetch"
   },
   {
    "id": "T8-28",
@@ -377,7 +384,8 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "用户说停就停：立即执行、一句确认、告知如何恢复；不追问、不卖惨、不提已坚持天数。",
-   "caveat": "占比在不同版本与报道间为 43% 或 37.4%，arxiv.org 未能打开，数字不可直接引用；实验样本量 3,300 来自二手摘要；研究对象是陪伴应用。"
+   "caveat": "2026-11-18 读了 arXiv 论文 v1 和 v3 的摘要，全文没有读到。v1 为 43%，v3 改为 37%；「6 款应用」只见于 v1。「哈佛商学院」这一单位归属没有核到，各种手法的分布和实验设计也没有核到。实验样本是 3,300 名美国成年人，研究对象是陪伴应用。",
+   "check_override": "abstract"
   },
   {
    "id": "T8-29",
@@ -390,7 +398,7 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "高压时刻只发一条关键信息加一个动作；幽默、寒暄、背景都是会被丢掉的外围线索。",
-   "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。同意第一位核查员判断为 partial：Easterbrook 1959 的出处和「唤醒收窄线索」的结论成立；Payne 等 1988 的加速、少搜信息、改用按属性策略都有检索依据，但「筛选（filtration）」在摘要里没有原话（原文摘要页在本环境打不开，没有读到）。建议台账写 partial，把「筛选」改成「搜索的信息变少/更有选择」，并补上卷期页码。（见：PubMed 13658305；Duke 学者库（Payne, Bettman & Johnson 1988, JEP:LMC 14(3), 534–552）；Cambridge 章节检索摘要）",
+   "caveat": "2026-11-18 核到两篇的书目信息和 Payne 等 1988 的摘要。Easterbrook 没有摘要，「唤醒收窄线索、只保留中心线索」没有核到；Payne 等摘要只说人会针对时间压力调整策略，加速处理、搜索的信息变少、转向按属性的简单策略都没有核到。唤醒出自 Easterbrook，时间压力出自 Payne 等，「时间压力收窄注意范围」两篇读到的文字里都没有。",
    "check_override": "search",
    "verify_verdict": "partial"
   },
@@ -435,17 +443,17 @@
   },
   {
    "id": "T8-33",
-   "claim": "工信部《移动互联网应用（App）适老化通用设计规范》（2021年4月发布）对适老版 App 的字号作了下限规定，并禁止广告内容及插件和诱导式按键；点击区域、操作时间的具体条款还需对照原文核实。",
+   "claim": "工信部《移动互联网应用（APP）适老化通用设计规范》（2021年4月）规定：适老版界面和单独适老版 App 的主要文字不小于 18 dp/pt，适老版界面主要组件可点击区域不小于 60×60 dp/pt，并严禁广告内容和插件；所有 App 都不得设诱导下载、诱导付款等诱导式按键；限时不是必要环节、也不涉及法律承诺或财务交易时，应给用户留足操作时间。",
    "evidence_type": "法规",
-   "source_title": "工业和信息化部《移动互联网应用（APP）适老化通用设计规范》（工信厅信管函〔2021〕67 号附件）",
-   "source_url": "https://www.miit.gov.cn/",
+   "source_title": "《工业和信息化部办公厅关于进一步抓好互联网应用适老化及无障碍改造专项行动实施工作的通知》（工信厅信管函〔2021〕67号）附件2《移动互联网应用（APP）适老化通用设计规范》，中国政府网政策文件库转载",
+   "source_url": "https://www.gov.cn/zhengce/zhengceku/2021-04/13/content_5599225.htm",
    "year": "2021",
-   "key_data": "适老版界面及单独适老版 App 中，主要文字信息不小于 18 dp/pt；严禁广告内容及插件（含广告弹窗），不得有诱导下载、诱导付款等诱导式按键。点击区域 60×60 的数值和操作时间条款在已检索到的材料中没有出现，待核原文。文号：搜索摘要显示工信厅信管函〔2021〕67号是2021年4月12日的专项行动实施通知，它与这两项规范的附件关系待核。",
+   "key_data": "主要文字信息：最大字体不小于 30 dp/pt，适老版界面和单独适老版 App 不小于 18 dp/pt。可点击区域：适老版界面主要组件不小于 60×60 dp/pt，其他页面 44×44；单独适老版 App 首页 48×48，其他页面 44×44。5.1.1 适老版界面和单独适老版 App 严禁广告内容及插件，不能随机出现广告或临时广告弹窗；5.1.2 移动应用中不得有诱导下载、诱导付款等诱导式按键。2.3 充足操作时间：如果限时不是活动的必要部分或关键要素，且不会导致用户发生法律承诺或财务交易，应为用户的操作留下充足时间，用户操作完毕前界面不发生变化。",
    "verified_by_fetch": false,
    "confidence": "low",
    "pa_implication": "长辈模式消息用完整句、一条一事、不设倒计时、无诱导按钮，大额操作二次确认。",
-   "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。我同意第一位核查员判为 partial。搜索摘要能证实三点：规范2021年4月7日发布；适老版界面和单独适老版 App 严禁广告弹窗；不得有诱导下载、诱导付款等按键。另有一份网站版规范的摘要提到 18dp/pt 大字体。查不到的有三项：点击区域 60×60 的数值，我用了两次专门检索都没有找到；操作时间相关的条款没有找到；搜索摘要提到〔2021〕67号是工信部办公厅4月12日发的《关于进一步抓好互联网应用适老化及无障碍改造专项行动实施工作的通知》，但这两项规范是不是它的附件，没有得到确认。原文所在的 ithome、sheitc、smejs 都被网络拦截，打不开。建议台账写法：保留字号、广告、诱导式按键三项限制；删去60×60和操作时间，或者标为“待核原文”；出处写“工信部2021年4月7日发布的《移动互联网应用（App）适老化通用设计规范》”，文号另行核实后再加。（见：IT之家：工信部发布《互联网网站适老化通用设计规范》和《移动互联网应用(App)适老化通用设计规范》（搜索摘要））",
-   "check_override": "search",
+   "caveat": "2026-11-18 读了中国政府网转载的通知及附件全文。规范对外发布的具体日期没有核到，网页只有通知的成文日期 2021 年 4 月 6 日。",
+   "check_override": "fetch",
    "verify_verdict": "partial"
   }
  ],

@@ -10,7 +10,7 @@ Personal Agent（PA）在用户建好目标之后，怎么给用户发主动消�
 |---|---|
 | `index.html` | 手册：12 章，含体检器、决策树、语气调音台、场景话术库、证据台账等交互 |
 | `skill/pa-voice-zh/` | 给 AI 用的 Skill：规范正文、参考文件、消息结构定义、体检脚本、评测用例 |
-| `research/` | 10 路调研的底稿（`.md`）和结构化发现（`.json`） |
+| `research/` | 10 路调研的底稿（`.md`）和结构化发现（`.json`）。台账由 `.json` 汇成，后来对原文的更正都写在 `.json` 里；`.md` 是当时的笔记，保留原样，和台账不一致的地方以台账为准 |
 | `src/` | 页面源文件：`ch/` 各章正文，`data/` 数据，`app.js` 交互，`lint-core.js` 体检引擎，`styles.css` |
 | `tools/` | 生成与检查脚本 |
 | `build.py` | 把 `src/` 拼成 `index.html` |

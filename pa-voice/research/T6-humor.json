@@ -35,20 +35,22 @@
    "verified_by_fetch": false,
    "confidence": "high",
    "pa_implication": "用户买的是能力感。默认不开玩笑，开就要稳；失误后不靠抖机灵挽回。",
-   "caveat": "仅搜索摘要，效应量未核。情境是职场人际，美国样本，对象是人不是 AI。"
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到，效应量未核，摘要也没写样本是不是美国人。情境是职场人际，对象是人不是 AI。",
+   "check_override": "abstract"
   },
   {
    "id": "T6-03",
-   "claim": "中国受试者更倾向认为幽默是喜剧演员等专业人士的特质，加拿大人期待普通人也幽默。",
+   "claim": "香港华人大学生更倾向认为幽默是喜剧演员等专业人士的特质，加拿大大学生期待普通人也幽默。",
    "evidence_type": "实证研究",
    "source_title": "Yue, Jiang, Lu & Hiranandani (2016) To Be or Not To Be Humorous? Cross Cultural Perspectives on Humor, Frontiers in Psychology 7:1495",
    "source_url": "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2016.01495/full",
    "year": "2016",
-   "key_data": "研究1 文化启动改变对幽默的评价；2a 加拿大人更看重幽默；2b 中国人把幽默归给专业人士",
+   "key_data": "研究1：96 名香港大学生，文化启动改变对幽默的评价；研究2a：加拿大与香港华人本科生各 121 人，加拿大人更看重幽默；研究2b：加拿大人提名亲友的占 47.09%，香港华人占 14.42%，香港华人提名的 81.73% 是职业喜剧演员、演员和歌手",
    "verified_by_fetch": false,
    "confidence": "medium",
-   "pa_implication": "办正事的角色不幽默不扣分；中文默认档比英文产品低一级，求风趣不求搞笑。",
-   "caveat": "仅搜索摘要，样本量未核。大学生样本，测的是对人的幽默的态度，年代早于 Z 世代网络幽默文化。"
+   "pa_implication": "办正事的角色不幽默不扣分；香港华人大学生更把幽默看成专业人士的特质，中文默认档可以比英文产品收一点，求风趣不求搞笑，对内地用户要自己测。",
+   "caveat": "2026-11-18 读了论文全文（PMC）。研究 2a、2b 是同一批受试者；原文局限部分写明不是内地样本，不能直接推到内地用户。测的是对人的幽默的态度，年代早于 Z 世代网络幽默文化。",
+   "check_override": "fetch"
   },
   {
    "id": "T6-04",
@@ -100,7 +102,8 @@
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "自嘲只用于「失误小、已补救、只说一句」；损失大或没修好时不用。",
-   "caveat": "仅搜索摘要。严重度边界只在一次摘要里出现，第二次检索未复现，需读原文。情景实验，不是真实损失。"
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。严重度边界写在正式摘要里：正面效应只在低严重度失败中保持，中、高严重度下消失。情景实验的具体设计未核，不是真实损失。",
+   "check_override": "abstract"
   },
   {
    "id": "T6-08",
@@ -117,16 +120,17 @@
   },
   {
    "id": "T6-09",
-   "claim": "服务失败时，幽默只有被顾客认为好笑才算补救手段。",
+   "claim": "服务失败时，自贬型幽默对顾客有正面作用，但要被顾客觉得特别好笑；否则效果不如真诚道歉或经济补偿等传统补救手段。",
    "evidence_type": "实证研究",
    "source_title": "Kobel & Groeppel-Klein (2021) No laughing matter, or a secret weapon? Exploring the effect of humor in service failure situations, Journal of Business Research 132",
    "source_url": "https://econpapers.repec.org/RePEc:eee:jbrese:v:132:y:2021:i:c:p:260-269",
    "year": "2021",
-   "key_data": "摘要：Humor turns out to be a method of service recovery when considered funny.",
+   "key_data": "摘要：the humor has to be experienced as particularly funny, otherwise it is less effective than traditional service recovery tools, such as a sincere apology or financial (or other) compensation.",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "好笑没把握就不用。失败和受阻节点统一零幽默。",
-   "caveat": "仅搜索摘要，实验设计未核。"
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到，实验数量、样本量和具体设计未核。做的是情景实验。",
+   "check_override": "abstract"
   },
   {
    "id": "T6-10",
@@ -139,8 +143,8 @@
    "verified_by_fetch": false,
    "confidence": "low",
    "pa_implication": "推送里不写反讽和阴阳怪气。按字面读一遍，若是指责或威胁就删。",
-   "caveat": "【2026-11 联网复核】检索摘要只印证了一部分，已按查到的内容改写；原文页面在调研环境里打不开，未直接核对。基本同意第一位核查员判断为 partial，但我的检索比他多查到一点：AMA、Gigazine 的摘要给出语音组 73%（Gigazine 作 73.1%），所以 73% 有二手依据；不过 90% 应该是另一项测量（发件人对自己解读能力的估计），不一定和 78% 冲突。论文出处 JPSP 89(6), 925–936 已核实，原文结果部分没看到，APA/AMA/NYU 的页面在本环境都打不开。建议台账写 partial，数字标注「据二手报道」。（见：PubMed 16393025；AMA「The Miscommunication Medium」、APA Monitor 2006 年 2 月、Gigazine（检索摘要））",
-   "check_override": "search",
+   "caveat": "2026-11-18 读了论文摘要，全文没有读到。摘要支持人高估邮件传达语气（包括讽刺）的方向，78%、56% 只见于二手报道，讽刺实验的设计和样本量未核。90% 可能是另一项测量（发件人对自己解读能力的估计），不一定和 78% 冲突。",
+   "check_override": "abstract",
    "verify_verdict": "partial"
   },
   {
@@ -418,16 +422,17 @@
   },
   {
    "id": "T6-32",
-   "claim": "Duolingo 专门为通知文案的新鲜度衰减建模，收益是 DAU +0.5%；其内疚式催促在国内被称「电子 PUA」。",
+   "claim": "Duolingo 专门为通知文案的新鲜度衰减建模，收益是 DAU +0.5%。国内把它的内疚式催促叫作「电子 PUA」，这一点不出自这篇论文，没有核对。",
    "evidence_type": "行业数据",
    "source_title": "Yancey & Settles (2020) A Sleeping, Recovering Bandit Algorithm for Optimizing Recurring Notifications, KDD 2020",
    "source_url": "https://research.duolingo.com/papers/yancey.kdd20.pdf",
    "year": "2020",
-   "key_data": "相对强基线 DAU +0.5%、新用户留存 +2%；约 2 亿条提醒；36 氪编译文称其邮件为「情感勒索信」",
+   "key_data": "相对强基线 DAU +0.5%、新用户留存 +2%；离线评估数据 34 天，共约 2 亿行（88M+114M）。36 氪编译文称其邮件为「情感勒索信」，不出自这篇论文，没有核对。",
    "verified_by_fetch": false,
    "confidence": "medium",
    "pa_implication": "高频提醒不放固定俏皮话；要放就建模板池加冷却。内疚牌不用于钱的场景。",
-   "caveat": "跨轨道引用（T2、T7a、T7b 的搜索摘要），我未独立核对。数据天数两处记录不一（34 与 35 天）。学习类 App，结论不能直接搬到省钱场景。"
+   "caveat": "2026-11-18 读了论文全文。论文正文说的是每天发出「数百万条」提醒，约 2 亿行是离线评估数据集训练加测试的行数，不是提醒总数。学习类 App，结论不能直接搬到省钱场景。",
+   "check_override": "fetch"
   },
   {
    "id": "T6-33",

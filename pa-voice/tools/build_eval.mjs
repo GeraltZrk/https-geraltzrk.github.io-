@@ -164,7 +164,7 @@ function cutCount(subset) {
   return n;
 }
 const out = {
-  id: round, label, note, model: R.model || '', n_cases: cases.length, runs: RUNS.length, judges: R.judges || 3,
+  id: round, label, note, n_cases: cases.length, runs: RUNS.length, judges: R.judges || 3,
   ...all,
   held_out: held.length ? summarize(held) : null,
   seen: held.length ? summarize(cases.filter((c) => !c.held_out)) : null,

@@ -1,0 +1,17 @@
+{
+  "id": "./",
+  "name": "安本纳尔：命运之骰",
+  "short_name": "命运之骰",
+  "description": "以安本纳尔世界为舞台的同人跑团模拟器。三个时代，三场改变哈兰命运的战役。",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0c1418",
+  "theme_color": "#0c1418",
+  "icons": [
+    { "src": "./assets/ui/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./assets/ui/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

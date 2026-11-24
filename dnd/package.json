@@ -1,0 +1,12 @@
+{
+  "name": "anbennar-dnd",
+  "private": true,
+  "type": "module",
+  "description": "安本纳尔：命运之骰 — static browser game, no build step. Tools here are for development only.",
+  "scripts": {
+    "test": "node tools/test-core.mjs",
+    "validate": "node tools/validate.mjs",
+    "autoplay": "node tools/autoplay.mjs",
+    "serve": "python3 -m http.server 8765"
+  }
+}

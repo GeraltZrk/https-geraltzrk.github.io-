@@ -38,7 +38,7 @@ export function buildCharacter(db, spec) {
   if (sr && sr.abil) for (const a of Object.keys(sr.abil)) bonus[a] = (bonus[a] || 0) + sr.abil[a];
   if (!spec.abilFinal) for (const a of Object.keys(bonus)) abil[a] += bonus[a];
   const bg = db.backgrounds && db.backgrounds[spec.background];
-  const profs = new Set([...(spec.profs || []), ...((bg && bg.profs) || []), ...((race && race.profs) || [])]);
+  const profs = new Set([...(spec.profs || []), ...((bg && bg.profs) || []), ...((race && race.profs) || []), ...((sr && sr.profs) || [])]);
   const equip = Object.assign({ weapon: null, offhand: null, armor: null, trinket: null }, spec.equip || cls.startEquip || {});
   const ch = {
     name: spec.name || '无名氏', gender: spec.gender || 'm', race: spec.race, subrace: spec.subrace || (race.subraces && race.subraces[0] && race.subraces[0].id) || null,
@@ -77,8 +77,11 @@ export function restCharacter(ch, db, kind) {
     refreshDerived(ch, db, true);
     ch.conds = [];
     ch.tempHp = 0;
+    ch.uses = {};
     return;
   }
+  // per-short-rest abilities come back
+  if (ch.uses) for (const id of Object.keys(ch.uses)) { const a = db.abilities[id]; if (!a || !a.cost || a.cost.per !== 'long') delete ch.uses[id]; }
   // short rest: heal half of missing HP, restore short-rest resources and pact slots
   const missing = ch.maxHp - ch.hp;
   ch.hp = Math.min(ch.maxHp, ch.hp + Math.ceil(missing / 2));

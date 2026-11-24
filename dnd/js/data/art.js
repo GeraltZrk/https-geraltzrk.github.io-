@@ -5785,14 +5785,7 @@ export const ART = {
 // Which mod portrait sets a playable race may use.
 export const PORTRAIT_RACES = {
  "human": [
-  "human",
-  "bulwari",
-  "raheni",
-  "halessi",
-  "sarhali",
-  "southeast_halessi",
-  "insyaan_mainlander",
-  "vyzemby"
+  "human"
  ],
  "half_elf": [
   "sun_elf",
@@ -5802,8 +5795,8 @@ export const PORTRAIT_RACES = {
   "sun_elf"
  ],
  "halfling": [
-  "gnome",
-  "human"
+  "human",
+  "gnome"
  ],
  "half_orc": [
   "gray_orc"
@@ -5865,5 +5858,63 @@ export const PORTRAIT_RACES = {
  ],
  "oni": [
   "oni"
+ ],
+ "human:bulwari": [
+  "bulwari",
+  "sarhali"
+ ],
+ "human:raheni": [
+  "raheni"
+ ],
+ "human:yan": [
+  "halessi",
+  "southeast_halessi"
+ ],
+ "centaur": [
+  "human",
+  "bulwari"
+ ],
+ "ogre:horned_ogre": [
+  "oni"
+ ],
+ "orc:green_orc": [
+  "green_orc"
+ ],
+ "orc:gray_orc": [
+  "gray_orc"
+ ],
+ "orc:brown_orc": [
+  "brown_orc"
+ ],
+ "orc:black_orc": [
+  "black_orc"
+ ],
+ "kobold:redscale": [
+  "redscale_kobold"
+ ],
+ "kobold:bluescale": [
+  "bluescale_kobold"
+ ],
+ "kobold:greenscale": [
+  "greenscale_kobold"
+ ],
+ "kobold:goldscale": [
+  "goldscale_kobold"
+ ],
+ "ruinborn:taychendi": [
+  "taychendi"
+ ],
+ "ruinborn:kheionai": [
+  "kheionai"
+ ],
+ "ruinborn:eordan": [
+  "tuathak",
+  "caamas",
+  "selphereg",
+  "snecboth",
+  "peitar"
+ ],
+ "mechanim:insyaan_mechanim": [
+  "mechanim"
  ]
 };

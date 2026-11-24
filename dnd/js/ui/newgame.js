@@ -270,10 +270,12 @@ function autoBuy(c, cls) {
 
 function randomName(db, c, sc) {
   const race = db.races[c.race];
-  const pool = (sc.names && sc.names[c.race]) || (race && race.names) || { m: ['阿尔文'], f: ['伊尔瑟'], family: [] };
+  const sub = race && race.subraces && race.subraces.find((x) => x.id === c.subrace);
+  const pool = (sc.names && (sc.names[`${c.race}:${c.subrace}`] || sc.names[c.race])) || (sub && sub.names) || (race && race.names) || { m: ['阿尔文'], f: ['伊尔瑟'], family: [] };
   const given = R.pick((c.gender === 'f' ? pool.f : pool.m) || pool.m || ['无名氏']);
   const fam = pool.family && pool.family.length ? R.pick(pool.family) : '';
-  return fam ? `${given}·${fam}` : given;
+  if (!fam) return given;
+  return pool.familyFirst ? `${fam}${given}` : `${given}·${fam}`;
 }
 
 function stepConfirm(app, p, sc, go) {

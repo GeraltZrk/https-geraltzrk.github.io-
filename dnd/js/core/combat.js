@@ -64,6 +64,13 @@ function unitSave(ctx, unit, abil) {
 }
 
 function alive(u) { return !u.dead && !u.down && !u.fled; }
+
+/** A saving throw total for a unit, honouring save advantage from race/class passives. */
+function saveRoll(ctx, unit, abil) {
+  const pas = unitPassives(ctx, unit);
+  const adv = (pas.saveAdv || []).includes(abil);
+  return R.d20({ adv }).kept + unitSave(ctx, unit, abil);
+}
 export function unitsOf(c, side) { return c.order.map((id) => c.units[id]).filter((u) => u.side === side); }
 export function living(c, side) { return unitsOf(c, side).filter(alive); }
 
@@ -89,7 +96,7 @@ export function startCombat(ctx, enc) {
     const ch = state.companions[id];
     if (!ch || ch.gone) continue;
     if (ch.hp <= 0) ch.hp = 1;
-    add({ side: 'ally', sheet: id, name: ch.name, conds: [], init: R.d20().kept + R.abilMod(ch.abil.dex), uses: {} });
+    add({ side: 'ally', sheet: id, name: ch.name, conds: [], init: R.d20().kept + R.abilMod(ch.abil.dex) + R.passivesOf(ch, db).init, uses: {} });
   }
   const addNpc = (side, spec) => {
     const def = db.enemies[spec.id];
@@ -189,7 +196,7 @@ export function endTurn(ctx, silent) {
   for (const cond of [...u.conds]) {
     const def = db.conditions[cond.id];
     if (def && def.endOn === 'save' && cond.dc) {
-      const roll = R.d20().kept + unitSave(ctx, u, cond.saveAbil || 'con');
+      const roll = saveRoll(ctx, u, cond.saveAbil || 'con');
       if (roll >= cond.dc) { u.conds = u.conds.filter((x) => x !== cond); logLine(c, `${u.name}摆脱了「${def.name}」。`, 'cond'); continue; }
     }
     if (cond.turns !== undefined && cond.turns !== null) {
@@ -394,8 +401,7 @@ function tryApply(ctx, src, target, apply, dcOverride) {
   let dc = dcOverride || apply.dc || null;
   if (apply.save) {
     dc = dc || (apply.save.dc) || 12;
-    let force = null;
-    const roll = R.d20({ force }).kept + unitSave(ctx, target, apply.save.abil);
+    const roll = saveRoll(ctx, target, apply.save.abil);
     if (roll >= dc) { logLine(c, `${target.name}通过了${R.ABIL_NAMES[apply.save.abil]}豁免（${roll} 对 DC ${dc}）。`, 'save'); return false; }
   }
   return addCond(ctx, target, { cond: apply.cond, turns: apply.turns, dc, save: apply.save }, src);
@@ -544,7 +550,7 @@ export function useAbility(ctx, unit, abilityId, targetUid) {
         landed = ar.hit; crit = ar.crit;
         logLine(c, `　对${target.name}：${rollText(ar)}，${ar.hit ? (ar.crit ? '重击！' : '命中。') : '未命中。'}`, ar.hit ? 'hit' : 'miss');
       } else if (a.save && target.side !== unit.side) {
-        const sv = R.d20().kept + unitSave(ctx, target, a.save.abil);
+        const sv = saveRoll(ctx, target, a.save.abil);
         if (sv >= dc) { landed = false; half = !!a.save.half; logLine(c, `　${target.name}通过${R.ABIL_NAMES[a.save.abil]}豁免（${sv} 对 DC ${dc}）。`, 'save'); }
         else logLine(c, `　${target.name}${R.ABIL_NAMES[a.save.abil]}豁免失败（${sv} 对 DC ${dc}）。`, 'save fail');
       }
@@ -693,7 +699,7 @@ function enemyAct(ctx, u) {
       let dmg = dmgRoll;
       let saved = false;
       if (atk.aoe.save) {
-        const sv = R.d20().kept + unitSave(ctx, t, atk.aoe.save.abil);
+        const sv = saveRoll(ctx, t, atk.aoe.save.abil);
         saved = sv >= atk.aoe.save.dc;
         logLine(c, `　${t.name}${R.ABIL_NAMES[atk.aoe.save.abil]}豁免${saved ? '成功' : '失败'}（${sv} 对 DC ${atk.aoe.save.dc}）。`, saved ? 'save' : 'save fail');
         if (saved) dmg = atk.aoe.save.half ? Math.floor(dmg / 2) : 0;

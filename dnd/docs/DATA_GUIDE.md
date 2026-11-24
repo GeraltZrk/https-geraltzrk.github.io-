@@ -57,6 +57,7 @@ elf: {
   target: 'enemy' | 'ally' | 'self' | 'enemies' | 'allies',   maxTargets: 3,
   attack: 'spell' | 'weapon',          // spell = 法术攻击检定；weapon = 用当前武器打一下（伤害走武器）
   save: { abil: 'dex', half: true },   // 目标豁免，对抗施法者 DC
+  dcAbil: 'str',                       // 非法术能力的 DC = 8 + 熟练 + 该属性调整值；dc: 15 则是固定 DC
   dmg: '2d6', dmgType: 'fire', dmgByLevel: { 5: '2d10', 11: '3d10' },   // 骰式可用 mod / lvl / prof
   hits: 3,                             // 连打几次
   weaponExtra: '2d8', extraType: 'radiant', advantage: true, hitBonus: 2, dmgBonus: 2,   // 配合 attack:'weapon'

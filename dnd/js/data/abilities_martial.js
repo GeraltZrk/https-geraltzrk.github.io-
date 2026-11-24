@@ -151,8 +151,8 @@ export const ABILITIES_MARTIAL = {
   },
   rogue_vital_strike: {
     id: 'rogue_vital_strike', name: '要害一击', kind: 'maneuver', target: 'enemy', attack: 'weapon',
-    advantage: true, weaponExtra: '2d6', cost: { res: 'tricks', n: 1 },
-    desc: '看准了再捅。一次有优势的武器攻击，命中额外造成 2d6 伤害，偷袭照算。花 1 点诡计。',
+    advantage: true, weaponExtra: '1d6+lvl', cost: { res: 'tricks', n: 1 },
+    desc: '看准了再捅。一次有优势的武器攻击，命中额外造成 1d6+等级 伤害，偷袭照算。花 1 点诡计。',
   },
   rogue_slip_away: {
     id: 'rogue_slip_away', name: '脱身', kind: 'feature', quick: true, target: 'self', hide: true, tempHp: '1d8+lvl',
@@ -168,7 +168,7 @@ export const ABILITIES_MARTIAL = {
     desc: '刃上抹了双足飞龙尾刺里的毒，炼金师配毒药拿它打底。一次武器攻击，命中额外造成 2d8 毒素伤害；目标体质豁免（DC 8+熟练加值+敏捷调整值）失败则中毒，攻击有劣势，最多 3 回合。花 2 点诡计。',
     enTerms: { '双足飞龙': 'Wyvern' },
   },
-  rogue_street_wise: P('rogue_street_wise', '老江湖', '进门先看后门在哪，坐下先看谁的手不在桌面上。先攻 +2，察觉和洞悉检定 +2。', { init: 2, skill: { perception: 2, insight: 2 } }),
+  rogue_street_wise: P('rogue_street_wise', '老江湖', '进门先看后门在哪，坐下先看谁的手不在桌面上。能活到今天不全靠运气。先攻 +2，每级生命 +1，察觉和洞悉检定 +2。', { init: 2, hpPerLevel: 1, skill: { perception: 2, insight: 2 } }),
   rogue_reliable_talent: P('rogue_reliable_talent', '可靠才能', '拿手的活不会失手。武器命中 +1；隐匿、巧手、杂技、欺瞒检定 +2。', { hit: 1, skill: { stealth: 2, sleight: 2, acrobatics: 2, deception: 2 } }),
   rogue_elusive: P('rogue_elusive', '滑不留手', '护甲等级 +1，免疫束缚。', { ac: 1, condImmune: ['restrained'] }),
 
@@ -196,8 +196,8 @@ export const ABILITIES_MARTIAL = {
   },
   rogue_shadowdancer_assassinate: {
     id: 'rogue_shadowdancer_assassinate', name: '夺命', kind: 'maneuver', target: 'enemy', attack: 'weapon',
-    advantage: true, weaponExtra: '4d6', cost: { res: 'tricks', n: 2 },
-    desc: '只出一刀，照着要命的地方。一次有优势的武器攻击，命中额外造成 4d6 伤害，偷袭照算。花 2 点诡计。',
+    advantage: true, weaponExtra: '3d6+lvl', cost: { res: 'tricks', n: 2 },
+    desc: '只出一刀，照着要命的地方。一次有优势的武器攻击，命中额外造成 3d6+等级 伤害，偷袭照算。花 2 点诡计。',
   },
   rogue_shadowdancer_death_mark: P('rogue_shadowdancer_death_mark', '匕首认人', '影舞者娜塔琳偏爱的兵器是匕首。攻击骰掷出 19 或 20 都算重击（偷袭骰也翻倍）；先攻 +2。', { critRange: 19, init: 2 }, { en: 'Nathalyne', enTerms: { '影舞者娜塔琳': 'Nathalyne, the Shadowdancer' } }),
 
@@ -239,8 +239,8 @@ export const ABILITIES_MARTIAL = {
   monk_diamond_soul: P('monk_diamond_soul', '金刚心', '所有豁免 +2。', { saveBonus: 2 }),
   monk_empty_body: {
     id: 'monk_empty_body', name: '虚身', kind: 'feature', quick: true, target: 'self',
-    selfApply: { cond: 'invisible', turns: 2 }, cost: { res: 'ki', n: 3 },
-    desc: '附赠动作。人还站在那儿，看的人却抓不住。到你下回合结束前隐形：你的攻击有优势，敌人打你有劣势。花 3 点气。',
+    selfApply: { cond: 'invisible', turns: 3 }, cost: { res: 'ki', n: 3 },
+    desc: '附赠动作。人还站在那儿，看的人却抓不住。隐形 3 回合（算上这一回合）：你的攻击有优势，敌人打你有劣势。花 3 点气。',
   },
 
   // —— 守刃僧（刀锋边区）

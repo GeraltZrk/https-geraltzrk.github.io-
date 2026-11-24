@@ -111,6 +111,15 @@ function stepCharacter(app, p, sc, go) {
 
 function allowed(list, id) { return !list || list.includes(id); }
 
+/** Era notes are keyed by year; use the note closest to the campaign's year. */
+function eraNote(def, year) {
+  if (!def || !def.era) return '';
+  const keys = Object.keys(def.era).map(Number).filter((k) => !Number.isNaN(k));
+  if (!keys.length) return '';
+  const best = keys.reduce((a, b) => (Math.abs(b - year) < Math.abs(a - year) ? b : a));
+  return def.era[best] || '';
+}
+
 function customBuilder(app, p, sc, go) {
   const db = app.db;
   const c = p.custom;
@@ -133,7 +142,7 @@ function customBuilder(app, p, sc, go) {
       for (const s of race.subraces) subs.appendChild(h('button', { type: 'button', class: 'pick' + (c.subrace === s.id ? ' sel' : ''), onclick: () => { c.subrace = s.id; redraw(); } }, h('b', null, s.name), h('span', null, s.short || '')));
       racePanel.appendChild(subs);
     }
-    const era = (race.era && race.era[sc.era]) || '';
+    const era = eraNote(race, sc.era);
     racePanel.appendChild(h('p', { class: 'small muted', style: { margin: '10px 0 0', lineHeight: 1.7 } }, [race.desc, race.trait ? `特性：${race.trait}` : '', era ? `这个年代：${era}` : ''].filter(Boolean).join('　')));
   }
   box.appendChild(racePanel);
@@ -148,7 +157,7 @@ function customBuilder(app, p, sc, go) {
   }
   clsPanel.appendChild(classes);
   const cls = db.classes[c.cls];
-  if (cls) clsPanel.appendChild(h('p', { class: 'small muted', style: { margin: '10px 0 0', lineHeight: 1.7 } }, [cls.desc, (cls.era && cls.era[sc.era]) ? `这个年代：${cls.era[sc.era]}` : ''].filter(Boolean).join('　')));
+  if (cls) clsPanel.appendChild(h('p', { class: 'small muted', style: { margin: '10px 0 0', lineHeight: 1.7 } }, [cls.desc, eraNote(cls, sc.era) ? `这个年代：${eraNote(cls, sc.era)}` : ''].filter(Boolean).join('　')));
   box.appendChild(clsPanel);
 
   // background

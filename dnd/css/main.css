@@ -1,29 +1,34 @@
 /* 安本纳尔：命运之骰 — interface styles.
    Look: Europa Universalis-style event windows — slate frame, gilt edging, parchment body. */
 :root {
-  --ink: #2a1f14;
-  --ink-soft: #5a4631;
-  --parch: #ead9b4;
-  --parch-hi: #f4e8cc;
-  --parch-lo: #d8c193;
-  --parch-edge: #b89b62;
-  --slate-0: #0c1418;
-  --slate-1: #142127;
-  --slate-2: #1c2e36;
-  --slate-3: #27404a;
-  --slate-4: #35545f;
-  --gold: #c9a45a;
-  --gold-hi: #ecd28f;
-  --gold-lo: #8a6c33;
-  --blood: #9c2f24;
-  --blood-hi: #c9483a;
+  /* Colours sampled from the Anbennar mod's own interface art: slate-blue linen panels, bronze-gilt frames,
+     parchment event pictures, crimson and blue ribbons. */
+  --ink: #332212;
+  --ink-soft: #62462c;
+  --parch: #e6c59c;
+  --parch-hi: #f2dcb9;
+  --parch-lo: #d9b081;
+  --parch-edge: #b7895f;
+  --slate-0: #07161a;
+  --slate-1: #161d21;
+  --slate-2: #20272d;
+  --slate-3: #2a343b;
+  --slate-4: #3b454c;
+  --gold: #b99358;
+  --gold-hi: #e3c48d;
+  --gold-lo: #76572f;
+  --blood: #582019;
+  --blood-hi: #a8402f;
+  --ribbon: #3d536a;
+  --ribbon-lo: #232f3e;
+  --teal: #164b5e;
   --leaf: #4f7a3a;
   --leaf-hi: #7fae5c;
   --azure: #3f7fa6;
-  --azure-hi: #7fc0e6;
+  --azure-hi: #8cc4e4;
   --violet: #7a5aa6;
-  --text: #e9e2d0;
-  --text-dim: #a9a290;
+  --text: #dcd8d0;
+  --text-dim: #9d9a92;
   --serif: "Noto Serif SC", "Source Han Serif SC", "Source Han Serif CN", "Songti SC", "STSong", "SimSun", "NSimSun", Georgia, serif;
   --sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC", system-ui, sans-serif;
   --fs: 17px;
@@ -68,7 +73,7 @@ p { margin: 0 0 .9em; }
   display: inline-flex; align-items: center; justify-content: center; gap: .45em;
   min-height: 42px; padding: .5em 1.1em;
   border: 1px solid var(--gold-lo); border-radius: var(--radius);
-  background: linear-gradient(#2c4650, #1b2d35);
+  background: linear-gradient(var(--ribbon), var(--ribbon-lo));
   color: var(--text); cursor: pointer; text-align: center;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 1px 2px rgba(0, 0, 0, .4);
   transition: filter .12s, transform .06s, border-color .12s;
@@ -76,8 +81,8 @@ p { margin: 0 0 .9em; }
 .btn:hover:not(:disabled) { filter: brightness(1.18); border-color: var(--gold); }
 .btn:active:not(:disabled) { transform: translateY(1px); }
 .btn:disabled { opacity: .45; cursor: not-allowed; }
-.btn.primary { background: linear-gradient(#b8924a, #856328); color: #1b1408; border-color: var(--gold-hi); font-weight: 700; }
-.btn.danger { background: linear-gradient(#8a2d24, #5c1c16); border-color: #c9695c; }
+.btn.primary { background: linear-gradient(#c49a5b, #8a6634); color: #1e1509; border-color: var(--gold-hi); font-weight: 700; }
+.btn.danger { background: linear-gradient(#7c2b20, #461a14); border-color: #b9655a; }
 .btn.ghost { background: transparent; border-color: rgba(201, 164, 90, .45); box-shadow: none; }
 .btn.small { min-height: 34px; padding: .3em .7em; font-size: 13px; }
 .btn.block { display: flex; width: 100%; }
@@ -102,7 +107,7 @@ p { margin: 0 0 .9em; }
 }
 .frame-title {
   padding: .55em 1em; text-align: center; font-family: var(--serif); font-weight: 700; font-size: 1.15rem; letter-spacing: .12em; color: var(--gold-hi);
-  background: linear-gradient(#22363f, #17272e); border-bottom: 1px solid var(--gold-lo);
+  background: linear-gradient(#27323a, #1b2227); border-bottom: 1px solid var(--gold-lo);
   text-shadow: 0 1px 0 #000;
 }
 .parch {
@@ -196,7 +201,7 @@ textarea { min-height: 90px; resize: vertical; font-family: ui-monospace, monosp
 /* ---------- play layout ---------- */
 .play { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; width: 100%; max-width: 1180px; margin: 0 auto; padding: calc(6px + var(--safe-t)) 10px calc(78px + var(--safe-b)); align-content: start; }
 @media (min-width: 1000px) { .play { grid-template-columns: minmax(0, 1fr) 320px; padding: 18px 18px 30px; } }
-.topbar { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; padding: 6px 10px; font-size: 13.500px; color: var(--gold-hi); background: linear-gradient(#1d3039, #132127); border: 1px solid var(--gold-lo); border-radius: 2px; }
+.topbar { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; padding: 6px 10px; font-size: 13.500px; color: var(--gold-hi); background: linear-gradient(#27323a, #1b2227); border: 1px solid var(--gold-lo); border-radius: 2px; }
 .topbar .where { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--serif); letter-spacing: .06em; }
 .topbar .when { color: var(--text); font-family: var(--serif); white-space: nowrap; }
 .topbar .coin { display: inline-flex; align-items: center; gap: 4px; color: #f3dc9a; white-space: nowrap; }
@@ -217,7 +222,7 @@ textarea { min-height: 90px; resize: vertical; font-family: ui-monospace, monosp
 .opt {
   display: flex; align-items: center; gap: 10px; width: 100%; min-height: 48px; padding: 9px 14px; text-align: left;
   font-family: var(--serif); font-size: calc(var(--fs) - 1px); line-height: 1.5; color: #f1ead6; cursor: pointer;
-  background: linear-gradient(#2a444e, #1a2c34); border: 1px solid var(--gold-lo); border-radius: 3px;
+  background: linear-gradient(#34475a, #212c3a); border: 1px solid var(--gold-lo); border-radius: 3px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07);
   transition: filter .12s, border-color .12s, transform .06s;
 }
@@ -273,7 +278,7 @@ textarea { min-height: 90px; resize: vertical; font-family: ui-monospace, monosp
 .mini-party .m .grow { min-width: 0; }
 .side-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
 .side-btns .btn { flex-direction: column; gap: 2px; min-height: 52px; padding: 6px 2px; font-size: 12px; }
-.bottom-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; display: grid; grid-template-columns: repeat(6, 1fr); padding: 4px 4px calc(4px + var(--safe-b)); background: linear-gradient(#1d3039, #101b20); border-top: 1px solid var(--gold-lo); }
+.bottom-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; display: grid; grid-template-columns: repeat(6, 1fr); padding: 4px 4px calc(4px + var(--safe-b)); background: linear-gradient(#27323a, #161d21); border-top: 1px solid var(--gold-lo); }
 @media (min-width: 1000px) { .bottom-nav { display: none; } }
 .bottom-nav button { display: grid; justify-items: center; gap: 1px; padding: 6px 0 4px; border: 0; background: none; color: var(--text-dim); font-size: 11px; cursor: pointer; position: relative; }
 .bottom-nav button:active { color: var(--gold-hi); }
@@ -292,7 +297,7 @@ textarea { min-height: 90px; resize: vertical; font-family: ui-monospace, monosp
 @media (min-width: 700px) { .modal-box { border-radius: 4px; max-height: 88vh; } }
 .modal-box.wide { max-width: 900px; }
 @keyframes rise { from { transform: translateY(24px); opacity: 0; } }
-.modal-head { display: flex; align-items: center; justify-content: space-between; padding: 6px 6px 6px 16px; border-bottom: 1px solid var(--gold-lo); background: linear-gradient(#22363f, #17272e); border-radius: inherit; }
+.modal-head { display: flex; align-items: center; justify-content: space-between; padding: 6px 6px 6px 16px; border-bottom: 1px solid var(--gold-lo); background: linear-gradient(#1c4352, #17303b); border-radius: inherit; }
 .modal-head h2 { font-size: 17px; color: var(--gold-hi); }
 .modal-body { min-height: 0; min-width: 0; padding: 14px; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; padding-bottom: calc(16px + var(--safe-b)); }
 .confirm p { font-size: 15px; }
@@ -382,7 +387,7 @@ textarea { min-height: 90px; resize: vertical; font-family: ui-monospace, monosp
 
 /* ---------- toast ---------- */
 .toast-host { position: fixed; top: calc(12px + var(--safe-t)); left: 0; right: 0; z-index: 99; display: grid; justify-items: center; gap: 6px; pointer-events: none; padding: 0 12px; }
-.toast { padding: .5em 1.1em; background: #16252c; border: 1px solid var(--gold); border-radius: 99px; color: #f6e9c6; font-size: 14px; box-shadow: var(--shadow); animation: rise .2s; }
+.toast { padding: .5em 1.1em; background: #1b2227; border: 1px solid var(--gold); border-radius: 99px; color: #f6e9c6; font-size: 14px; box-shadow: var(--shadow); animation: rise .2s; }
 .toast.out { opacity: 0; transition: opacity .3s; }
 .toast-bad { border-color: var(--blood-hi); }
 .toast-cheat { border-color: var(--violet); color: #e3d3f7; }

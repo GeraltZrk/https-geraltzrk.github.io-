@@ -303,6 +303,8 @@ function stepConfirm(app, p, sc, go) {
   const cheatPanel = h('div', { class: 'frame panel' }, h('h3', null, '作弊（随时可以在游戏里的“作弊”菜单改）'));
   const sw = (label, desc, key) => h('label', { class: 'switch', style: { marginBottom: '6px' } }, h('div', null, h('div', null, label), h('div', { class: 'd' }, desc)),
     h('input', { type: 'checkbox', checked: !!p.cheats[key], onchange: (e) => { p.cheats[key] = e.target.checked; p.cheats.used = Object.keys(p.cheats).some((k) => !['used', 'showDc', 'fixedRoll'].includes(k) && p.cheats[k] === true); } }));
+  cheatPanel.appendChild(sw('开局即为神', '带着神格开始：永生、无敌、检定必成，剧情和选项会把你当神来写', 'ascended'));
+  cheatPanel.appendChild(sw('永生', '不会死，也不会老', 'immortal'));
   cheatPanel.appendChild(sw('无敌', '我方不受伤害', 'god'));
   cheatPanel.appendChild(sw('检定必成', '骰子永远站在你这边', 'autoSuccess'));
   cheatPanel.appendChild(sw('无限资源', '法术位和消耗品用不完', 'infRes'));

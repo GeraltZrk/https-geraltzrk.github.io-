@@ -42,7 +42,9 @@ export function validateScenario(sc, db) {
   for (const c of Object.values(db.classes)) for (const t of c.tags || []) tagSet.add(t);
   for (const r of Object.values(db.races)) { for (const t of r.tags || []) tagSet.add(t); for (const s of r.subraces || []) for (const t of s.tags || []) tagSet.add(t); }
   for (const b of Object.values(db.backgrounds)) for (const t of b.tags || []) tagSet.add(t);
-  ['female', 'male', 'other'].forEach((t) => tagSet.add(t));
+  ['female', 'male', 'other', 'god', 'immortal', 'mortal'].forEach((t) => tagSet.add(t));
+  flagsSet.set('ascended', 'engine');
+  let godHooks = 0; const godScenes = new Set();
 
   function checkCond(where, src) {
     if (src === undefined || src === null || src === true || src === false) return;
@@ -50,6 +52,7 @@ export function validateScenario(sc, db) {
     let ast;
     try { ast = compile(src); } catch (e) { E(where, `bad condition "${src}": ${e.message}`); return; }
     for (const id of identifiers(src)) {
+      if (id === 'is.god' || id === 'is.immortal' || id === 'flag.ascended') { godHooks++; const m = where.match(/^scene (\S+)/); if (m) godScenes.add(m[1]); }
       const dot = id.indexOf('.');
       if (dot < 0) { if (!PLAIN.includes(id)) E(where, `unknown identifier "${id}" in "${src}"`); continue; }
       const ns = id.slice(0, dot), key = id.slice(dot + 1);
@@ -133,7 +136,7 @@ export function validateScenario(sc, db) {
         chars += t.length;
         for (const m of t.matchAll(/\{([^{}]*)\}/g)) {
           const tok = m[1];
-          if (['pc', 'ta', 'race', 'cls', 'origin', 'nation'].includes(tok)) continue;
+          if (['pc', 'ta', 'race', 'cls', 'origin', 'nation', 'god'].includes(tok)) continue;
           if (/^m:[^|]*\|f:.*$/.test(tok)) continue;
           if (tok.startsWith('?')) { const cm = tok.match(/^\?([^:]+):/); if (cm) checkCond(where, cm[1].trim()); else E(where, `bad inline conditional {${tok}}`); continue; }
           E(where, `unknown token {${tok}}`);
@@ -308,7 +311,12 @@ export function validateScenario(sc, db) {
   if (unread.length) info.push(`flags set but never read (${unread.length}): ${unread.slice(0, 40).join(', ')}${unread.length > 40 ? ' …' : ''}`);
   for (const id of Object.keys(sc.endings || {})) if (!endingsUsed.has(id)) W(`ending ${id}`, 'no scene uses this ending');
 
-  const stats = { scenes: Object.keys(scenes).length, chars: totalChars, choices: choiceCount, checks, fights, endings: endingsUsed.size, origins: (sc.origins || []).length, factions: (sc.factions || []).length, premades: (sc.premades || []).length, companions: comps.size, codex: Object.keys(sc.codex || {}).length, flags: flagsSet.size };
+  const godEnding = Object.values(sc.endings || {}).some((e) => e.divine) || (sc.epilogues || []).some((e) => typeof e.if === 'string' && /is\.god/.test(e.if));
+  if (Object.keys(scenes).length > 30) {
+    if (godScenes.size < Math.max(10, Math.floor(Object.keys(scenes).length / 8))) W('scenario', `神格线太薄：只有 ${godScenes.size} 个场景对 is.god / is.immortal 有反应（至少每 8 个场景 1 个）`);
+    if (!godEnding) W('scenario', '没有神格结局或神格后日谈（endings 里标 divine: true，或 epilogues 里用 is.god）');
+  }
+  const stats = { godScenes: godScenes.size, scenes: Object.keys(scenes).length, chars: totalChars, choices: choiceCount, checks, fights, endings: endingsUsed.size, origins: (sc.origins || []).length, factions: (sc.factions || []).length, premades: (sc.premades || []).length, companions: comps.size, codex: Object.keys(sc.codex || {}).length, flags: flagsSet.size };
   return { errors, warnings, info, stats };
 }
 

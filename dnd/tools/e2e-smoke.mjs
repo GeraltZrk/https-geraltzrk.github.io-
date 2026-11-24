@@ -60,7 +60,7 @@ async function run(name, contextOpts) {
   await shot('10-panel-log');
   await page.locator('.modal-head .icon-btn').click();
   await openNav('作弊'); await page.waitForSelector('.modal-box'); await shot('11-cheats');
-  for (const t of ['角色', '物品', '世界', '队伍', '剧情']) { await page.locator('.modal-box .tabs button', { hasText: t }).evaluate((e) => e.click()); await page.waitForTimeout(60); }
+  for (const t of ['开关', '角色', '物品', '世界', '队伍', '剧情']) { await page.locator('.modal-box .tabs button', { hasText: t }).evaluate((e) => e.click()); await page.waitForTimeout(60); }
   await shot('12-cheats-story');
   await page.locator('.modal-head .icon-btn').click();
   await openNav('系统'); await page.waitForSelector('.modal-box');

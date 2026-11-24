@@ -1,15 +1,15 @@
 // Cheat menu. Everything here is deliberately unrestricted.
 import { h, button, modal, toast, field } from './dom.js';
 import * as R from '../core/rules.js';
-import { refreshDerived, partySheets } from '../core/state.js';
+import { refreshDerived, partySheets, setAscended, divineTitle } from '../core/state.js';
 import { applyEffects, ensureLevel, levelUp, makeCompanion } from '../core/effects.js';
 import * as Combat from '../core/combat.js';
 
-const TABS = [['toggles', '开关'], ['hero', '角色'], ['items', '物品'], ['world', '世界'], ['party', '队伍'], ['story', '剧情'], ['fight', '战斗']];
+const TABS = [['divine', '神格'], ['toggles', '开关'], ['hero', '角色'], ['items', '物品'], ['world', '世界'], ['party', '队伍'], ['story', '剧情'], ['fight', '战斗']];
 
 export function openCheats(app) {
   if (!app.engine) return null;
-  let current = 'toggles';
+  let current = 'divine';
   let filter = '';
   const m = modal({ title: '作弊菜单', wide: true, content: () => h('div') });
   const st = () => app.state;
@@ -25,7 +25,7 @@ export function openCheats(app) {
       tabs.appendChild(h('button', { type: 'button', class: id === current ? 'on' : '', onclick: () => { current = id; filter = ''; draw(); } }, label));
     }
     m.body.appendChild(tabs);
-    m.body.appendChild({ toggles, hero, items, world, party, story, fight }[current]());
+    m.body.appendChild({ divine, toggles, hero, items, world, party, story, fight }[current]());
   };
 
   const sw = (label, desc, key) => h('label', { class: 'switch' }, h('div', null, h('div', null, label), h('div', { class: 'd' }, desc)),
@@ -40,6 +40,32 @@ export function openCheats(app) {
       input,
       h('button', { class: 'btn small', type: 'button', onclick: () => { input.value = Number(input.value) + (opts.big || 1); set(); } }, '+'));
   };
+
+  function divine() {
+    const s = st();
+    const box = h('div', { class: 'list' });
+    const DOMAINS = ['战争', '月亮', '太阳', '死亡', '知识', '自由', '丰饶', '风暴', '命运', '匠艺', '盗贼', '骰子'];
+    if (s.cheats.ascended) {
+      box.appendChild(h('div', { class: 'li on' }, h('div', { class: 'grow' }, h('b', null, `${s.pc.name}，${divineTitle(s)}`),
+        h('div', { class: 'd' }, '你现在是神。凡人会跪、会怕、会求你、也会有人想弑神；很多场合多出只有神才有的选项，结局和后日谈也会跟着改写。'))));
+    } else {
+      box.appendChild(h('div', { class: 'li' }, h('div', { class: 'grow' }, h('b', null, '升格为神'),
+        h('div', { class: 'd' }, '主角获得神格：永生、无敌、检定必成、资源无限，学会神罚、神言、神恩。之后的剧情文本、人物反应、可选项和结局都会把你当神来写。随时可以褪去神性。'))));
+    }
+    const name = h('input', { type: 'text', maxlength: 14, placeholder: '例如：灰烬行者、骰子之主（留空则用“某某之神”）', value: s.cheats.divineName || '', onchange: (e) => { s.cheats.divineName = e.target.value.trim(); used(); app.refresh(); draw(); } });
+    box.appendChild(field('尊号', name));
+    const dom = h('select', { onchange: (e) => { s.cheats.divineDomain = e.target.value; used(); app.refresh(); draw(); } },
+      [h('option', { value: '', selected: !s.cheats.divineDomain }, '（未定）'), ...DOMAINS.map((d) => h('option', { value: d, selected: s.cheats.divineDomain === d }, d))]);
+    box.appendChild(field('神职', dom));
+    box.appendChild(h('div', { class: 'row' },
+      s.cheats.ascended
+        ? button('褪去神性，变回凡人', () => { setAscended(s, app.db, false); app.autosave(); app.refresh(); draw(); toast('神性散了。你又会流血了。', 'cheat'); }, { class: 'danger' })
+        : button('升神', () => { if (!s.cheats.divineDomain && !s.cheats.divineName) s.cheats.divineDomain = DOMAINS[Math.floor(Math.random() * DOMAINS.length)]; setAscended(s, app.db, true); app.autosave(); app.refresh(); draw(); toast(`${s.pc.name}成了${divineTitle(s)}`, 'cheat', 3600); }, { class: 'primary', icon: 'star' })));
+    box.appendChild(h('div', { class: 'section-title' }, '只要其中一样'));
+    box.appendChild(sw('永生', '不升神，只是不会死也不会老。倒下会自己站起来；隔了几十年的剧情里别人老了，你没有。', 'immortal'));
+    box.appendChild(sw('无敌', '我方不受任何伤害', 'god'));
+    return box;
+  }
 
   function toggles() {
     const s = st();

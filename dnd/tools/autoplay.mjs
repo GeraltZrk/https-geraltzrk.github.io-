@@ -4,7 +4,7 @@
 import { DB, mergeScenarioData } from '../js/data/index.js';
 import { SCENARIOS } from '../js/data/scenarios/index.js';
 import * as R from '../js/core/rules.js';
-import { buildCharacter, newGame, defaultCheats } from '../js/core/state.js';
+import { buildCharacter, newGame, defaultCheats, setAscended } from '../js/core/state.js';
 import { levelUp, levelUpNeeds } from '../js/core/effects.js';
 import { Engine } from '../js/core/engine.js';
 import * as Combat from '../js/core/combat.js';
@@ -79,6 +79,7 @@ function playOnce(db, sc, origin, faction, seed, opts = {}) {
   const cheats = defaultCheats();
   if (opts.god) { cheats.god = true; }
   const state = newGame(db, sc, { originId: origin.id, factionId: faction ? faction.id : null, character: ch, difficulty: 'normal', cheats });
+  if (opts.ascended) setAscended(state, db, true);
   const eng = new Engine(db, sc, state);
   const out = { origin: origin.id, faction: faction ? faction.id : null, cls: ch.cls, race: ch.race, seed, steps: 0, ending: null, problem: null, visited: null, fights: 0, losses: 0, trace: [] };
   try {
@@ -132,7 +133,7 @@ async function main() {
       const list = facs.length ? facs : [null];
       for (let i = 0; i < RUNS; i++) {
         const fac = list[i % list.length];
-        const res = playOnce(db, sc, origin, fac, 1000 + i * 7919 + origin.id.length * 31, { god: i % 3 === 0, trace: traceArg && traceArg.split('=')[1] === origin.id && i === 0 });
+        const res = playOnce(db, sc, origin, fac, 1000 + i * 7919 + origin.id.length * 31, { god: i % 3 === 0, ascended: i % 4 === 1, trace: traceArg && traceArg.split('=')[1] === origin.id && i === 0 });
         total++; steps += res.steps; fights += res.fights; losses += res.losses;
         for (const s of res.visited || []) visited.add(s);
         if (res.ending) { endings[res.ending] = (endings[res.ending] || 0) + 1; levels.push(res.level); }

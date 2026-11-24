@@ -2,7 +2,7 @@
 import * as R from './rules.js';
 import { evaluate } from './expr.js';
 import { applyEffects } from './effects.js';
-import { makeGetter, partySheets, serialise, migrate } from './state.js';
+import { makeGetter, partySheets, serialise, migrate, divineTitle } from './state.js';
 import * as Combat from './combat.js';
 
 const HISTORY_MAX = 25;
@@ -39,6 +39,7 @@ export class Engine {
       .replace(/\{\?([^:{}]+):([^|{}]*)(?:\|([^{}]*))?\}/g, (m, cond, a, b) => (this.test(cond.trim()) ? a : (b || '')))
       .replace(/\{m:([^|{}]*)\|f:([^{}]*)\}/g, (m, a, b) => (pc.gender === 'f' ? b : a))
       .replace(/\{pc\}/g, pc.name)
+      .replace(/\{god\}/g, divineTitle(st))
       .replace(/\{ta\}/g, pc.gender === 'f' ? '她' : '他')
       .replace(/\{race\}/g, race ? race.name : pc.race)
       .replace(/\{cls\}/g, cls ? cls.name : pc.cls)
@@ -254,7 +255,7 @@ export class Engine {
     if (success) st.stats.checksPassed += 1; else st.stats.checksFailed += 1;
     return {
       label: s.label, skill: s.skill, who: s.who.name, isPc: s.who === st.pc, dice: roll.dice, kept: roll.kept, mode: roll.mode,
-      bonus: s.bonus, mods: s.mods, total, dc: s.dc, success, crit, fumble,
+      bonus: s.bonus, mods: s.mods, total, dc: s.dc, success, crit, fumble, divine: !!st.cheats.ascended,
       text: `${s.label} d20[${roll.kept}]${R.fmtMod(s.total)}=${total} 对 DC ${s.dc}`,
     };
   }

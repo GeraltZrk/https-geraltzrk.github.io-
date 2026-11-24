@@ -2,6 +2,7 @@
 import { h, rich, icon, button, bar, toast, confirmDialog, modal } from './dom.js';
 import { paint, paintPortrait, setBackdrop } from './art.js';
 import * as R from '../core/rules.js';
+import { divineTitle } from '../core/state.js';
 import { renderCombat } from './combatView.js';
 import { openPanel } from './panels.js';
 import { openSystem } from './system.js';
@@ -32,6 +33,7 @@ function topbar(app) {
   return h('div', { class: 'topbar' },
     h('span', { class: 'where' }, st.location || app.scenario.title),
     h('span', { class: 'when' }, st.date || ''),
+    st.cheats.ascended ? h('span', { class: 'chip gold', title: '神格' }, icon('star', 13), divineTitle(st)) : null,
     h('span', { class: 'coin', title: app.scenario.coin || '金币' }, icon('coin', 16), String(st.gold)),
     st.cheats.debug ? h('span', { class: 'muted small' }, st.scene) : null);
 }
@@ -68,7 +70,7 @@ function d20Face(roll) {
 }
 
 function rollBox(roll) {
-  const verdict = roll.crit ? '大成功！' : roll.fumble ? '大失败！' : roll.success ? '成功' : '失败';
+  const verdict = roll.divine && roll.success ? '神力所至' : roll.crit ? '大成功！' : roll.fumble ? '大失败！' : roll.success ? '成功' : '失败';
   const cls = roll.crit ? 'crit' : roll.success ? 'ok' : 'fail';
   const parts = [`d20 掷出 ${roll.kept}`];
   if (roll.dice.length > 1) parts[0] = `d20 掷出 ${roll.dice.join(' 与 ')}（${roll.mode === 'adv' ? '优势，取高' : '劣势，取低'} ${roll.kept}）`;
@@ -243,7 +245,8 @@ function heroBox(app) {
   const prevXp = R.XP_TABLE[pc.level];
   const box = h('div', { class: 'frame box' },
     h('div', { class: 'hero' }, paintPortrait(h('div', { class: 'portrait' }), pc.portrait),
-      h('div', { class: 'grow' }, h('div', { class: 'nm' }, pc.name), h('div', { class: 'sub' }, `${race ? race.name : ''} · ${cls ? cls.name : ''} ${pc.level} 级`))),
+      h('div', { class: 'grow' }, h('div', { class: 'nm' }, pc.name), h('div', { class: 'sub' }, `${race ? race.name : ''} · ${cls ? cls.name : ''} ${pc.level} 级`),
+        st.cheats.ascended ? h('div', { class: 'sub', style: { color: 'var(--gold-hi)' } }, `神格：${divineTitle(st)}`) : st.cheats.immortal ? h('div', { class: 'sub', style: { color: 'var(--gold-hi)' } }, '不死之身') : null)),
     h('div', { class: 'stat-line' }, h('span', null, '生命'), h('span', null, `${pc.hp} / ${pc.maxHp}`)), bar(pc.hp, pc.maxHp),
     pc.level < R.MAX_LEVEL ? [h('div', { class: 'stat-line' }, h('span', null, '经验'), h('span', null, `${pc.xp} / ${nextXp}`)), bar(pc.xp - prevXp, nextXp - prevXp, 'xp thin')] : null);
   if (pc.slotsMax && pc.slotsMax.some((n) => n > 0)) {

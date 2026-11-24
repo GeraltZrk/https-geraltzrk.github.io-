@@ -70,6 +70,7 @@ export class App {
   async startGame({ scenarioId, originId, factionId, character, difficulty, cheats }) {
     const scenario = await this.loadScenario(scenarioId);
     const state = State.newGame(this.db, scenario, { originId, factionId, character, difficulty, cheats });
+    if (state.cheats.ascended) State.setAscended(state, this.db, true);
     this.attach(scenario, state);
     this.engine.start();
     this.autosave();

@@ -110,8 +110,25 @@ export function startCombat(ctx, enc) {
   if (enc.intro) logLine(c, enc.intro, 'intro');
   logLine(c, `第 1 轮。先攻顺序：${c.order.map((id) => c.units[id].name).join(' → ')}`, 'round');
   if (state.cheats.noEncounter) { finish(ctx, 'win'); return c; }
+  if (state.cheats.ascended) divineAwe(ctx);
+  if (c.over) return c;
   beginTurn(ctx);
   return c;
+}
+
+/** A god walks onto the field: ordinary foes may break and run before a blow is struck. */
+function divineAwe(ctx) {
+  const { state, db } = ctx;
+  const c = state.combat;
+  const mindless = ['construct', 'undead', 'plant', 'elemental', 'aberration'];
+  logLine(c, `${state.pc.name}没有拔武器。光是站在那儿就够了。`, 'special');
+  for (const u of unitsOf(c, 'enemy')) {
+    if (u.boss || mindless.includes(u.def.type) || c.enc.noAwe) continue;
+    const roll = R.d20().kept + ((u.def.saves && u.def.saves.wis) || 0);
+    if (roll < 12) { u.fled = true; logLine(c, `${u.name}扔下武器跑了。`, 'flee'); }
+    else if (roll < 22 && db.conditions.frightened) { u.conds.push({ id: 'frightened', turns: 3, dc: 30, saveAbil: 'wis' }); logLine(c, `${u.name}的手在抖。`, 'cond bad'); }
+  }
+  checkOver(ctx);
 }
 
 export function currentUnit(c) { return c.units[c.order[c.turn]]; }
@@ -245,6 +262,9 @@ function dealDamage(ctx, src, target, amount, type, opts = {}) {
       target.dead = true;
       state.stats.kills += 1;
       logLine(c, `${target.name}倒下了。`, 'kill');
+    } else if (sheet && target.isPc && (state.cheats.immortal || state.cheats.ascended)) {
+      tgt.hp = tgt.maxHp; target.conds = [];
+      logLine(c, `${target.name}倒下了，又站了起来。伤口合上的速度比血流出来还快。`, 'heal');
     } else if (sheet) {
       target.down = true; sheet.down = true; target.conds = [];
       logLine(c, `${target.name}倒地不起！`, 'down');
@@ -359,6 +379,7 @@ function rollText(ar) {
 }
 
 function casterDc(ctx, unit, ability) {
+  if (ability.dc && !ability.save?.dc && ability.kind !== 'item') return ability.dc;
   const sheet = sheetOf(ctx.state, unit);
   if (!sheet) return ability.dc || 12;
   const pas = unitPassives(ctx, unit);
@@ -476,7 +497,7 @@ function resolveTargets(ctx, unit, ability, targetUid) {
   switch (ability.target) {
     case 'self': return [unit];
     case 'enemies': return ability.maxTargets ? foes.slice(0, ability.maxTargets) : foes;
-    case 'allies': return friends;
+    case 'allies': return ability.revive ? unitsOf(c, unit.side).filter((x) => alive(x) || (x.down && x.sheet)) : friends;
     case 'ally': {
       const t = c.units[targetUid];
       if (t && t.side === unit.side && (alive(t) || (ability.revive && t.down))) return [t];

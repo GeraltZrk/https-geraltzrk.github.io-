@@ -18,6 +18,10 @@ export function defaultCheats() {
     noEncounter: false,  // 跳过战斗（直接胜利）
     freeShop: false,     // 商店免费
     debug: false,        // 显示场景编号
+    ascended: false,     // 升神：主角拥有神格，剧情与选项随之变化（条件 is.god）
+    immortal: false,     // 永生：不会死、不会老（条件 is.immortal）
+    divineName: '',      // 神名 / 尊号
+    divineDomain: '',    // 神职（战争、月亮……）
   };
 }
 
@@ -188,10 +192,42 @@ export function makeGetter(state, db, scenario) {
       case 'picked': return !!state.picked[key];
       case 'cheat': return state.cheats[key];
       case 'knows': return R.knownAbilities(pc, db).includes(key);
-      case 'is': return characterTags(pc, db).includes(key);
+      case 'is':
+        if (key === 'god') return !!state.cheats.ascended;
+        if (key === 'immortal') return !!(state.cheats.ascended || state.cheats.immortal);
+        if (key === 'mortal') return !(state.cheats.ascended || state.cheats.immortal);
+        return characterTags(pc, db).includes(key);
       default: return undefined;
     }
   };
+}
+
+/** The hero's divine style, e.g. "战争之神" — used by the {god} text token. */
+export function divineTitle(state) {
+  const c = state.cheats || {};
+  if (c.divineName && c.divineName.trim()) return c.divineName.trim();
+  if (c.divineDomain) return `${c.divineDomain}之神`;
+  return '新神';
+}
+
+export const DIVINE_ABILITIES = ['divine_wrath', 'divine_word', 'divine_grace'];
+
+/** Raise (or strip) godhood. Returns nothing; callers refresh the UI. */
+export function setAscended(state, db, on) {
+  const c = state.cheats;
+  const pc = state.pc;
+  c.used = true;
+  c.ascended = !!on;
+  if (on) {
+    c.immortal = true; c.god = true; c.autoSuccess = true; c.infRes = true;
+    for (const id of DIVINE_ABILITIES) if (db.abilities[id] && !pc.learned.includes(id)) pc.learned.push(id);
+    state.flags.ascended = true;
+  } else {
+    c.immortal = false; c.god = false; c.autoSuccess = false; c.infRes = false;
+    pc.learned = pc.learned.filter((id) => !DIVINE_ABILITIES.includes(id));
+    delete state.flags.ascended;
+  }
+  refreshDerived(pc, db, true);
 }
 
 /** Convenience tags for conditions: is.caster, is.martial, is.elf, is.longlived, is.noble ... */

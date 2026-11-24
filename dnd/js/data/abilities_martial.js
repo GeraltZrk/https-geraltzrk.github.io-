@@ -93,6 +93,11 @@ export const ABILITIES_MARTIAL = {
     save: { abil: 'wis' }, apply: { cond: 'frightened', turns: 2 }, cost: { res: 'fury', n: 1 },
     desc: '附赠动作。吼一嗓子。所有敌人过感知豁免（DC 8+熟练加值+力量调整值），失败则恐慌：攻击有劣势，最多 2 回合，每回合结束可再豁免。花 1 点蛮劲。',
   },
+  barbarian_wide_swing: {
+    id: 'barbarian_wide_swing', name: '抡扫', kind: 'maneuver', target: 'enemies', maxTargets: 2, attack: 'weapon', dcAbil: 'str',
+    apply: { cond: 'prone', turns: 1, save: { abil: 'str' } }, cost: { res: 'fury', n: 1 },
+    desc: '一斧子带过两个人。对至多 2 个敌人各做一次武器攻击；命中的目标要过力量豁免（DC 8+熟练加值+力量调整值），失败就倒地 1 回合：它攻击有劣势，打它有优势。花 1 点蛮劲。',
+  },
   barbarian_extra_attack: P('barbarian_extra_attack', '额外攻击', '攻击动作可以打两下。', { extraAttack: 1 }),
   barbarian_shrug_off: {
     id: 'barbarian_shrug_off', name: '硬扛', kind: 'feature', quick: true, target: 'self', ai: 'heal',
@@ -146,8 +151,13 @@ export const ABILITIES_MARTIAL = {
   },
   rogue_vital_strike: {
     id: 'rogue_vital_strike', name: '要害一击', kind: 'maneuver', target: 'enemy', attack: 'weapon',
-    advantage: true, weaponExtra: '1d6+lvl', cost: { res: 'tricks', n: 1 },
-    desc: '看准了再捅。一次有优势的武器攻击，命中额外造成 1d6+等级 伤害，偷袭照算。花 1 点诡计。',
+    advantage: true, weaponExtra: '2d6', cost: { res: 'tricks', n: 1 },
+    desc: '看准了再捅。一次有优势的武器攻击，命中额外造成 2d6 伤害，偷袭照算。花 1 点诡计。',
+  },
+  rogue_slip_away: {
+    id: 'rogue_slip_away', name: '脱身', kind: 'feature', quick: true, target: 'self', hide: true, tempHp: '1d8+lvl',
+    cost: { res: 'tricks', n: 1 },
+    desc: '附赠动作。挨了一下就势滚开，再抬头人已经不在原地。立刻藏身（下一次攻击有优势），并获得 1d8+等级 点临时生命。花 1 点诡计。',
   },
   rogue_uncanny_dodge: P('rogue_uncanny_dodge', '直觉闪避', '刀到跟前，身子比脑子先动。护甲等级 +1。', { ac: 1 }),
   rogue_evasion: P('rogue_evasion', '反射闪避', '所有豁免 +1；战斗之外的敏捷豁免有优势。', { saveBonus: 1, saveAdv: ['dex'] }),
@@ -158,7 +168,7 @@ export const ABILITIES_MARTIAL = {
     desc: '刃上抹了双足飞龙尾刺里的毒，炼金师配毒药拿它打底。一次武器攻击，命中额外造成 2d8 毒素伤害；目标体质豁免（DC 8+熟练加值+敏捷调整值）失败则中毒，攻击有劣势，最多 3 回合。花 2 点诡计。',
     enTerms: { '双足飞龙': 'Wyvern' },
   },
-  rogue_street_wise: P('rogue_street_wise', '老江湖', '进门先看后门在哪，动手先看对方哪儿没护住。先攻 +2，察觉检定 +2；攻击骰掷出 19 或 20 都算重击。', { init: 2, skill: { perception: 2 }, critRange: 19 }),
+  rogue_street_wise: P('rogue_street_wise', '老江湖', '进门先看后门在哪，坐下先看谁的手不在桌面上。先攻 +2，察觉和洞悉检定 +2。', { init: 2, skill: { perception: 2, insight: 2 } }),
   rogue_reliable_talent: P('rogue_reliable_talent', '可靠才能', '拿手的活不会失手。武器命中 +1；隐匿、巧手、杂技、欺瞒检定 +2。', { hit: 1, skill: { stealth: 2, sleight: 2, acrobatics: 2, deception: 2 } }),
   rogue_elusive: P('rogue_elusive', '滑不留手', '护甲等级 +1，免疫束缚。', { ac: 1, condImmune: ['restrained'] }),
 
@@ -166,8 +176,8 @@ export const ABILITIES_MARTIAL = {
   rogue_shadowhand_light_fingers: P('rogue_shadowhand_light_fingers', '影手的手艺', '芬尼克·影手是偷出来的英雄，小人国的孩子都学过他两手。巧手检定 +3，杂技检定 +2，先攻 +1。', { skill: { sleight: 3, acrobatics: 2 }, init: 1 }, { en: 'Finnic Shadowhand', enTerms: { '芬尼克·影手': 'Finnic Shadowhand (Finnic síl Vis)', '小人国': 'Small Country' } }),
   rogue_shadowhand_dye_bomb: {
     id: 'rogue_shadowhand_dye_bomb', name: '染料弹', kind: 'maneuver', target: 'enemies', maxTargets: 3, dcAbil: 'dex', ai: 'control',
-    save: { abil: 'dex' }, apply: { cond: 'blinded', turns: 1 }, cost: { res: 'tricks', n: 1 },
-    desc: '维斯沃尔染坊的下脚料灌进蛋壳，照脸砸。至多 3 个敌人过敏捷豁免（DC 8+熟练加值+敏捷调整值），失败则目盲到各自下回合结束：攻击有劣势，打它有优势。花 1 点诡计。',
+    save: { abil: 'dex' }, apply: { cond: 'blinded', turns: 2 }, cost: { res: 'tricks', n: 2 },
+    desc: '维斯沃尔染坊的下脚料灌进蛋壳，照脸砸。至多 3 个敌人过敏捷豁免（DC 8+熟练加值+敏捷调整值），失败则目盲 2 回合：攻击有劣势，打它有优势。这是主要行动。花 2 点诡计。',
     en: 'Viswall dyeworks', enTerms: { '维斯沃尔': 'Viswall' },
   },
   rogue_shadowhand_second_story: P('rogue_shadowhand_second_story', '飞檐走壁', '二楼的窗户比大门好进。先攻 +2，运动和隐匿检定 +2。', { init: 2, skill: { athletics: 2, stealth: 2 } }),
@@ -186,10 +196,10 @@ export const ABILITIES_MARTIAL = {
   },
   rogue_shadowdancer_assassinate: {
     id: 'rogue_shadowdancer_assassinate', name: '夺命', kind: 'maneuver', target: 'enemy', attack: 'weapon',
-    advantage: true, weaponExtra: '2d6+lvl', cost: { res: 'tricks', n: 2 },
-    desc: '只出一刀，照着要命的地方。一次有优势的武器攻击，命中额外造成 2d6+等级 伤害，偷袭照算。花 2 点诡计。',
+    advantage: true, weaponExtra: '4d6', cost: { res: 'tricks', n: 2 },
+    desc: '只出一刀，照着要命的地方。一次有优势的武器攻击，命中额外造成 4d6 伤害，偷袭照算。花 2 点诡计。',
   },
-  rogue_shadowdancer_death_mark: P('rogue_shadowdancer_death_mark', '匕首认人', '影舞者娜塔琳偏爱的兵器是匕首。攻击骰掷出 18 到 20 都算重击，重击时再加 2d6。', { critRange: 18, critDice: 2 }, { en: 'Nathalyne', enTerms: { '影舞者娜塔琳': 'Nathalyne, the Shadowdancer' } }),
+  rogue_shadowdancer_death_mark: P('rogue_shadowdancer_death_mark', '匕首认人', '影舞者娜塔琳偏爱的兵器是匕首。攻击骰掷出 19 或 20 都算重击（偷袭骰也翻倍）；先攻 +2。', { critRange: 19, init: 2 }, { en: 'Nathalyne', enTerms: { '影舞者娜塔琳': 'Nathalyne, the Shadowdancer' } }),
 
   // =========================================================================
   // 武僧 Monk —— 资源：气（ki，短休，数量 = 等级）。气的豁免 DC = 8+熟练加值+敏捷调整值。
@@ -249,20 +259,21 @@ export const ABILITIES_MARTIAL = {
   monk_steward_mind_eye: P('monk_steward_mind_eye', '心眼', '不用眼睛看，反倒看得见破绽。攻击骰掷出 19 或 20 都算重击，护甲等级 +1。', { critRange: 19, ac: 1 }),
 
   // —— 仙界侠客（东洲）
+  monk_xia_cultivation: P('monk_xia_cultivation', '养气', '东洲人说气就是命。每天打坐吐纳攒下来的，都算在命上。每级生命 +1。', { hpPerLevel: 1 }, { en: 'Chi', enTerms: { '东洲': 'Haless', '气': 'Chi' } }),
   monk_xia_charging_bull: {
     id: 'monk_xia_charging_bull', name: '奔牛劲', en: 'School of the Charging Bull', kind: 'maneuver', quick: true, target: 'enemy', attack: 'spell',
-    dmg: '1d8+mod', dmgByLevel: { 5: '2d6+mod', 11: '2d8+mod' }, dmgType: 'bludgeoning',
+    dmg: '1d10+mod', dmgByLevel: { 5: '2d8+mod', 11: '3d8+mod' }, dmgType: 'bludgeoning',
     apply: { cond: 'prone', turns: 1, save: { abil: 'str' } }, cost: { res: 'ki', n: 1 },
-    desc: '附赠动作。奔牛一门的撞法，肩膀先到。一次拳脚攻击，命中造成 1d8+敏捷调整值 钝击（5 级 2d6，11 级 2d8）；目标力量豁免（DC 8+熟练加值+敏捷调整值）失败则倒地 1 回合。花 1 点气。',
+    desc: '附赠动作。奔牛一门的撞法，肩膀先到。一次拳脚攻击，命中造成 1d10+敏捷调整值 钝击（5 级 2d8，11 级 3d8）；目标力量豁免（DC 8+熟练加值+敏捷调整值）失败则倒地 1 回合：它攻击有劣势，打它有优势。花 1 点气。',
   },
   monk_xia_still_ocean: {
     id: 'monk_xia_still_ocean', name: '止水心法', en: 'Still Ocean Technique', kind: 'feature', quick: true, target: 'self',
-    cleanse: 'all', selfApply: { cond: 'steadfast', turns: 5 }, cost: { res: 'ki', n: 1 },
+    cleanse: 'all', apply: { cond: 'steadfast', turns: 5 }, cost: { res: 'ki', n: 1 },
     desc: '附赠动作。口诀只有一句：“我是没有浪的海。”解除身上所有负面状态，并“坚定”5 回合：所有豁免 +2，免疫恐慌。花 1 点气。',
   },
   monk_xia_divine_lightning: {
     id: 'monk_xia_divine_lightning', name: '神雷掌', en: 'School of Divine Lightning', kind: 'maneuver', target: 'enemies', maxTargets: 3,
-    save: { abil: 'dex', half: true }, dmg: '5d8', dmgType: 'lightning', cost: { res: 'ki', n: 3 },
-    desc: '神雷一门的外放功夫，一掌推出去是带响的。至多 3 个敌人各受 5d8 闪电伤害，敏捷豁免（DC 8+熟练加值+敏捷调整值）成功则减半。花 3 点气。',
+    save: { abil: 'dex', half: true }, dmg: '3d8', dmgType: 'lightning', apply: { cond: 'dazed', turns: 1 }, cost: { res: 'ki', n: 2 },
+    desc: '神雷一门把气放到身外的功夫，一掌推出去是带响的。至多 3 个敌人各受 3d8 闪电伤害，敏捷豁免（DC 8+熟练加值+敏捷调整值）成功则减半；豁免失败的还会晕眩 1 回合，攻击有劣势。花 2 点气。',
   },
 };

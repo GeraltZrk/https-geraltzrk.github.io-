@@ -2,7 +2,7 @@
 // crashes, soft-locks, loops, unreachable scenes and which endings were reached.
 // Usage: node tools/autoplay.mjs [scenarioId ...] [--runs=40] [--json] [--trace=originId]
 import { DB, mergeScenarioData } from '../js/data/index.js';
-import { SCENARIOS } from '../js/data/scenarios/index.js';
+import { resolveScenarios } from './lib-scenarios.mjs';
 import * as R from '../js/core/rules.js';
 import { playOnce, STEP_LIMIT } from './lib-play.mjs';
 
@@ -16,8 +16,7 @@ const only = args.filter((a) => !a.startsWith('--'));
 async function main() {
   const report = {};
   let failed = false;
-  for (const entry of SCENARIOS) {
-    if (only.length && !only.includes(entry.id)) continue;
+  for (const entry of resolveScenarios(only)) {
     const sc = (await entry.load()).default;
     const db = { ...DB, companions: {}, enemies: { ...DB.enemies }, items: { ...DB.items }, abilities: { ...DB.abilities }, conditions: { ...DB.conditions } };
     mergeScenarioData(db, sc);

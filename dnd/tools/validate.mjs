@@ -1,7 +1,7 @@
 // Content validator. Usage: node tools/validate.mjs [scenarioId ...] [--json] [--quiet]
 // Checks scene graph integrity, conditions, effects, references, and lints prose.
 import { DB, mergeScenarioData } from '../js/data/index.js';
-import { SCENARIOS } from '../js/data/scenarios/index.js';
+import { resolveScenarios } from './lib-scenarios.mjs';
 import { ART } from '../js/data/art.js';
 import { compile, identifiers } from '../js/core/expr.js';
 import { parseEffect } from '../js/core/effects.js';
@@ -327,8 +327,7 @@ async function main() {
   report.db = { errors: dbErrors };
   if (dbErrors.length) failed = true;
   if (!asJson) { console.log(`== data: ${dbErrors.length} error(s)`); for (const e of dbErrors) console.log('  ERROR ' + e); }
-  for (const entry of SCENARIOS) {
-    if (only.length && !only.includes(entry.id)) continue;
+  for (const entry of resolveScenarios(only)) {
     let sc;
     try { sc = (await entry.load()).default; } catch (e) { report[entry.id] = { errors: ['load failed: ' + e.message], warnings: [], info: [], stats: {} }; failed = true; if (!asJson) console.log(`== ${entry.id}: LOAD FAILED ${e.stack}`); continue; }
     const db = { ...DB, companions: {}, enemies: { ...DB.enemies }, items: { ...DB.items }, abilities: { ...DB.abilities }, conditions: { ...DB.conditions } };

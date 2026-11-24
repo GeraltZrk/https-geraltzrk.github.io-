@@ -9,6 +9,30 @@ node tools/autoplay.mjs <剧本id>     # 随机试玩，查卡死和崩溃
 
 两个都要 0 error / 0 problem 才算完成。文风 warning 也要清掉（改写句子，不要绕过检查）。
 
+## 0. 文件布局（多人并行写作）
+
+每个剧本一个目录 `js/data/scenarios/<id>/`，参考 `demo/`：
+
+| 文件 | 内容 | 导出 |
+|---|---|---|
+| `BIBLE.md` | 剧本圣经：主线、人物、译名表、分幕场景表、标记表 | — |
+| `meta.js` | 除场景以外的全部定义（见第 1 节的字段，不含 `scenes` 和 `codex`） | `export const META = { … }` |
+| `codex.js` | 图鉴条目全文 | `export const CODEX = { … }` |
+| `enemies.js` `items.js` | 本剧本专用的敌人、物品 | `export const ENEMIES` / `export const ITEMS` |
+| `plan.json` | 全部场景 id、每个文件负责哪些 id、各文件的入口场景、进入时的等级、全部标记名 | `{ scenes, parts, entry, levels, flags }` |
+| `prologues_a.js` `prologues_b.js` `act1.js` … `act4.js` `finale.js` | 场景，每个文件一段 | `export const SCENES = { id: Scene, … }` |
+| `index.js` | 把上面这些拼成剧本包 | `export default { …META, codex, enemies, items, scenes }` |
+
+写某一段的人**只改自己的那个文件**。自检用：
+
+```
+node tools/check-part.mjs <剧本id> act2.js
+```
+
+它只加载 `meta.js`、`plan.json` 和你这个文件，把别人负责的场景当成出口，然后做结构校验、文风检查，并从本段入口随机试玩几十遍（凡人和神各走一些）。必须 0 error、0 problem，`never reached` 的场景要么确实只有特定出身/阵营才到得了，要么就是写漏了路。
+
+你负责的场景 id 以 `plan.json` 里 `parts["你的文件"]` 为准，一个都不能少；可以加小场景（如 `a2_07b`），前缀跟本段一致即可。通往别的段的 `goto` 只能指向 `plan.json` 里列出的场景。标记只用 `plan.json` 的 `flags` 里有的；要新增标记，写在本文件内自己设置、自己读取。
+
 ## 1. 剧本包
 
 `js/data/scenarios/<id>/index.js` 默认导出：

@@ -1,0 +1,27 @@
+{
+  "scenes": [
+    "a",
+    "fight",
+    "b",
+    "dead",
+    "end"
+  ],
+  "parts": {
+    "act1.js": [
+      "a",
+      "fight",
+      "b",
+      "dead",
+      "end"
+    ]
+  },
+  "entry": {
+    "act1.js": [
+      "a"
+    ]
+  },
+  "levels": {
+    "act1.js": 1
+  },
+  "flags": []
+}

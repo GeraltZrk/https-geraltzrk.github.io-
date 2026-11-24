@@ -20,7 +20,7 @@ export const CLASSES_MARTIAL = {
     startEquip: { weapon: 'longsword', armor: 'chain_mail', offhand: 'shield', trinket: null },
     startItems: { healing_potion: 2 }, startGold: 15,
     resources: {
-      stamina: { name: '战技', byLevel: [0, 1, 2, 3, 3, 4, 4, 5, 5, 5, 6, 6, 6], rest: 'short' },
+      stamina: { name: '战技', byLevel: [0, 1, 2, 2, 2, 2, 3, 3, 4, 4, 5, 5, 5], rest: 'short' },
       surge: { name: '动作如潮', byLevel: [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2], rest: 'short' },
     },
     features: {

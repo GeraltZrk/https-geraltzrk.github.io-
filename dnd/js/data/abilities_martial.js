@@ -36,7 +36,7 @@ export const ABILITIES_MARTIAL = {
     apply: { cond: 'sundered', turns: 3 }, cost: { res: 'stamina', n: 1 },
     desc: '照着甲缝砸一下。命中后目标“破甲”3 回合：护甲等级 -3，全队都占便宜。这一下代替整个攻击动作。花 1 点战技。',
   },
-  fighter_weapon_mastery: P('fighter_weapon_mastery', '兵器精通', '什么兵器到了手里都知道往哪儿使劲。武器伤害 +2。', { dmg: 2 }),
+  fighter_weapon_mastery: P('fighter_weapon_mastery', '兵器精通', '什么兵器到了手里都知道往哪儿使劲。武器伤害 +1。', { dmg: 1 }),
   fighter_improved_critical: P('fighter_improved_critical', '老手的眼力', '攻击骰掷出 19 或 20 都算重击。', { critRange: 19 }),
   fighter_indomitable: {
     id: 'fighter_indomitable', name: '不屈', kind: 'feature', quick: true, target: 'self', cleanse: 'all', tempHp: '1d10+lvl',

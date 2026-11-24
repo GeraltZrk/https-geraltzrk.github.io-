@@ -56,10 +56,15 @@ def main():
         canvas = Image.new('RGBA', (77, 77), (28, 46, 54, 255))
         canvas.paste(inner, (3, 3))
         canvas.alpha_composite(frames['f' if m.get('gender') == 'f' else 'm'])
-        key = 'gen_' + m['key']
+        key = m['key'] if m['key'].startswith('npc_') else 'gen_' + m['key']
         canvas.convert('RGB').save(os.path.join(a.out, key + '.png'))
         extra[key] = {'kind': 'portrait', 'race': m.get('race'), 'gender': m.get('gender'), 'role': m.get('role'), 'era': m.get('era', 'any')}
-    json.dump(extra, open(os.path.join(a.out, 'extra-meta.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        if m.get('npc'): extra[key]['npc'] = True
+        if m.get('name'): extra[key]['name'] = m['name']
+    side = os.path.join(a.out, 'extra-meta.json')
+    if os.path.exists(side):
+        old = json.load(open(side, encoding='utf-8')); old.update(extra); extra = old
+    json.dump(extra, open(side, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(len(extra), 'portraits framed')
 
 if __name__ == '__main__':

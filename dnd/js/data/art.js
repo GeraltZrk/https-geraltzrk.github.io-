@@ -3255,6 +3255,62 @@ export const ART = {
    "role": "trader",
    "src": "assets/portraits/mechanim_trader.webp"
   },
+  "npc_carodin": {
+   "gender": "m",
+   "name": "Carodin II",
+   "npc": true,
+   "race": "elf",
+   "role": "npc",
+   "src": "assets/portraits/npc_carodin.webp"
+  },
+  "npc_corin": {
+   "gender": "f",
+   "name": "Corin",
+   "npc": true,
+   "race": "human",
+   "role": "npc",
+   "src": "assets/portraits/npc_corin.webp"
+  },
+  "npc_faceless_queen": {
+   "gender": "f",
+   "name": "The Faceless Queen",
+   "npc": true,
+   "race": "centaur",
+   "role": "npc",
+   "src": "assets/portraits/npc_faceless_queen.webp"
+  },
+  "npc_grun": {
+   "gender": "m",
+   "name": "Grun Strongbellow",
+   "npc": true,
+   "race": "dwarf",
+   "role": "npc",
+   "src": "assets/portraits/npc_grun.webp"
+  },
+  "npc_jaddar": {
+   "gender": "m",
+   "name": "Jaddar Jexiszuir",
+   "npc": true,
+   "race": "elf",
+   "role": "npc",
+   "src": "assets/portraits/npc_jaddar.webp"
+  },
+  "npc_laskaris": {
+   "gender": "m",
+   "name": "Laskaris",
+   "npc": true,
+   "race": "ruinborn",
+   "role": "npc",
+   "src": "assets/portraits/npc_laskaris.webp"
+  },
+  "npc_lothane_iii": {
+   "gender": "m",
+   "name": "Lothane III síl Wex",
+   "npc": true,
+   "race": "human",
+   "role": "npc",
+   "src": "assets/portraits/npc_lothane_iii.webp"
+  },
   "ogre_army_reformer": {
    "gender": "m",
    "race": "ogre",

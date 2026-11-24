@@ -37,7 +37,9 @@ html[data-text="l"] { --fs: 19px; }
 html[data-text="xl"] { --fs: 21px; }
 
 * { box-sizing: border-box; }
-html, body { margin: 0; height: 100%; }
+html, body { margin: 0; height: 100%; max-width: 100%; overflow-x: hidden; }
+/* flex/grid children must be allowed to shrink, or one wide scroller blows up the whole layout on phones */
+.page, .page *, .play, .play *, .modal-box * { min-width: 0; }
 body {
   background: var(--slate-0);
   color: var(--text);
@@ -156,7 +158,8 @@ p { margin: 0 0 .9em; }
 .tags { display: flex; gap: 6px; flex-wrap: wrap; }
 .tag { font-size: 12px; padding: .05em .55em; border: 1px solid rgba(201, 164, 90, .4); border-radius: 3px; color: var(--gold-hi); }
 .sticky-foot { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; padding: 10px 14px calc(10px + var(--safe-b)); background: linear-gradient(transparent, rgba(12, 20, 24, .96) 35%); display: flex; justify-content: center; gap: 10px; }
-.sticky-foot .btn { min-width: 150px; }
+.sticky-foot { pointer-events: none; }
+.sticky-foot .btn { min-width: 150px; pointer-events: auto; }
 .panel { padding: 14px; }
 .panel h3 { color: var(--gold-hi); font-size: 16px; margin-bottom: 8px; }
 .grid-2 { display: grid; gap: 14px; grid-template-columns: 1fr; }
@@ -185,7 +188,8 @@ textarea { min-height: 90px; resize: vertical; font-family: ui-monospace, monosp
 .portrait { width: 64px; height: 64px; border-radius: 3px; border: 1px solid var(--gold-lo); background: #111 center top/cover no-repeat; flex: none; box-shadow: 0 1px 4px #000; }
 .portrait.lg { width: 96px; height: 96px; }
 .portrait.sm { width: 44px; height: 44px; }
-.portrait-pick { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+.portrait-pick { display: flex; gap: 8px; max-width: 100%; overflow-x: auto; padding-bottom: 6px; -webkit-overflow-scrolling: touch; }
+.portrait-pick button { flex: none; }
 .portrait-pick button { padding: 0; border: 2px solid transparent; background: none; cursor: pointer; border-radius: 4px; }
 .portrait-pick button.sel { border-color: var(--gold-hi); }
 

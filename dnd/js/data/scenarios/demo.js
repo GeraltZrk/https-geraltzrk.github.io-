@@ -14,7 +14,7 @@ export default {
   chapters: [{ title: '第一幕：城门', scene: 'a' }, { title: '进城之后', scene: 'b' }],
   endingScenes: { good: 'end', death: 'dead' },
   scenes: {
-    a: { id: 'a', title: '卡斯托纳斯城门', chapter: '序章 · 灰烬之路', loc: '东坎诺 · 卡斯托纳斯城外', date: '1444年11月11日',
+    a: { id: 'a', art: 'load_8', title: '卡斯托纳斯城门', chapter: '序章 · 灰烬之路', loc: '东坎诺 · 卡斯托纳斯城外', date: '1444年11月11日',
       text: ['城门口排着长队。{pc}，你排在一辆拉腌鱼的板车后面，已经闻了半个钟头。', { speaker: '守卫', text: '下一个。名字，打哪来，进城干什么。' }, { if: "race == 'elf'", text: '他抬眼看见你的耳朵，把“干什么”三个字咽回去一半。' }, { if: 'party.ilse', speaker: '伊尔瑟', text: '别跟他吵。' }],
       first: ['quest q1 start', 'companion +ilse', 'codex greentide'],
       choices: [
@@ -23,7 +23,7 @@ export default {
         { text: '从板车老板那儿买两瓶药水', once: true, cost: { gold: 10 }, effects: ['item +potion 2'], result: '老板从腌鱼底下摸出两个瓶子。你决定不去想它们为什么在那儿。' },
         { text: '用精灵语低声说句祝福', if: "race == 'elf'", goto: 'b' },
       ] },
-    fight: { id: 'fight', title: '门洞里的麻烦', art: null, text: ['两个兽人，一个地精，身上的锁甲还带着别人的家徽。'], combat: { title: '城门伏击', enemies: [{ id: 'orc', n: 2 }, { id: 'goblin', n: 1 }], win: { effects: ['world order +1'], goto: 'b' }, lose: 'dead',
+    fight: { id: 'fight', title: '门洞里的麻烦', art: 'ev_adventurers_estate', text: ['两个兽人，一个地精，身上的锁甲还带着别人的家徽。'], combat: { title: '城门伏击', enemies: [{ id: 'orc', n: 2 }, { id: 'goblin', n: 1 }], win: { effects: ['world order +1'], goto: 'b' }, lose: 'dead',
       specials: [{ id: 'rock', name: '踹翻腌鱼板车', desc: '让一车腌鱼和木桶滚向他们', check: { skill: 'athletics', dc: 12 }, success: { text: '木桶一路滚过去。', dmgAll: '2d6' }, fail: { text: '板车比看上去沉得多。' } }] } },
     b: { id: 'b', title: '卡斯托纳斯', loc: '东坎诺 · 卡斯托纳斯', text: ['你进了城。半座城是废墟，另外半座在卖东西给来挖废墟的人。'], first: ['quest q1 done', 'level 3'], next: 'end' },
     dead: { id: 'dead', text: ['你倒在了城门口。'], ending: 'death' },

@@ -5773,6 +5773,9 @@ export const ART = {
   "load_9": {
    "src": "assets/art/load_9.webp"
   },
+  "map_world": {
+   "src": "assets/art/map_world.webp"
+  },
   "title": {
    "src": "assets/art/load_21.webp"
   }

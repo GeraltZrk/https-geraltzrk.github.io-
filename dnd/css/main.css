@@ -397,3 +397,9 @@ html[data-motion="off"] * { animation: none !important; transition: none !import
 
 /* shop entry among the options */
 .opt.shop { background: linear-gradient(#4a3a1c, #2e2410); border-color: var(--gold); }
+
+/* world map */
+.worldmap { display: block; width: 100%; aspect-ratio: 2400 / 1134; border: 1px solid var(--gold-lo); background: #3d427a center/cover no-repeat; cursor: zoom-in; padding: 0; border-radius: 2px; }
+.map-modal { max-width: 1200px; }
+.map-scroll { overflow: auto; max-height: 76vh; -webkit-overflow-scrolling: touch; }
+.map-scroll img { display: block; width: 1800px; max-width: none; height: auto; }

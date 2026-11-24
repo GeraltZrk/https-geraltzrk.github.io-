@@ -90,6 +90,12 @@
    "oni"
   ]
  },
- "extra": {},
+ "extra": {
+  "map_world": {
+   "kind": "scene",
+   "maxWidth": 2000,
+   "quality": 72
+  }
+ },
  "patch": {}
 }

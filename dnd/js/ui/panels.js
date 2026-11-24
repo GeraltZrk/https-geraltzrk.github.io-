@@ -1,6 +1,6 @@
 // In-game panels: character sheet, inventory, party, quests, codex, world state, log.
 import { h, rich, button, bar, modal, toast, icon } from './dom.js';
-import { paintPortrait, paint } from './art.js';
+import { paintPortrait, paint, sceneArt, cssUrl } from './art.js';
 import * as R from '../core/rules.js';
 import { partySheets, characterTags } from '../core/state.js';
 import { equipItem, unequip, applyEffects } from '../core/effects.js';
@@ -249,6 +249,12 @@ function worldTab(ctx) {
     }
     box.appendChild(list);
   }
+  const mapArt = sceneArt(app.scenario.map || 'map_world');
+  if (mapArt) {
+    box.appendChild(h('div', { class: 'section-title' }, '哈兰世界'));
+    box.appendChild(h('button', { class: 'worldmap', type: 'button', 'aria-label': '放大地图', style: { backgroundImage: cssUrl(mapArt.src) }, onclick: () => openMap(mapArt) }));
+    box.appendChild(h('p', { class: 'muted small' }, '西边两块是阿伦蒂尔，东边连成一片的是坎诺、布勒瓦尔、阳洲和东洲。点一下放大。'));
+  }
   const tags = characterTags(st.pc, app.db);
   box.appendChild(h('div', { class: 'section-title' }, '你的身份'));
   const origin = (app.scenario.origins || []).find((o) => o.id === st.origin);
@@ -266,4 +272,8 @@ function logTab(ctx) {
   if (!items.length) return h('p', { class: 'muted' }, '还没有记录。');
   for (const l of items) box.appendChild(h('div', { class: 'li' }, icon(l.t === 'choice' ? 'next' : 'scroll', 16), h('div', { class: 'grow' }, h('div', null, l.text), h('div', { class: 'd' }, l.date || ''))));
   return box;
+}
+
+function openMap(art) {
+  modal({ title: '哈兰世界', wide: true, className: 'map-modal', content: () => h('div', { class: 'map-scroll' }, h('img', { src: art.src, alt: '哈兰世界地图', draggable: 'false' })) });
 }

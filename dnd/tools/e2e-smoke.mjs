@@ -101,7 +101,13 @@ async function run(name, contextOpts) {
   await shot('18-after');
   for (let guard = 0; guard < 8; guard++) {
     const lv = page.locator('.modal-box .btn.primary', { hasText: '确认升级' });
-    if (await lv.count()) { await lv.click(); await page.waitForTimeout(100); continue; }
+    if (await lv.count()) {
+      const sub = page.locator('.modal-box .pick-list .pick');
+      if (await sub.count() && !(await page.locator('.modal-box .pick-list .pick.sel').count())) { await sub.first().click(); await page.waitForTimeout(60); }
+      for (let k = 0; k < 2; k++) { const plus = page.locator('.modal-box .abil .pm button:not([disabled])', { hasText: '+' }); if (await plus.count()) { await plus.first().click(); await page.waitForTimeout(40); } }
+      if (name === 'desktop' && guard === 1) await shot('19b-levelup-choices');
+      await lv.click(); await page.waitForTimeout(100); continue;
+    }
     const up = page.locator('.event-body .btn', { hasText: '升级' });
     if (await up.count()) { await up.first().click(); await page.waitForTimeout(100); await shot('19-levelup'); continue; }
     const c = page.locator('.continue-row .btn.primary');

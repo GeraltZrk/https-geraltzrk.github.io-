@@ -152,7 +152,7 @@ function customBuilder(app, p, sc, go) {
   const classes = h('div', { class: 'pick-list' });
   for (const k of Object.values(db.classes)) {
     if (!allowed(sc.classes, k.id)) continue;
-    classes.appendChild(h('button', { type: 'button', class: 'pick' + (c.cls === k.id ? ' sel' : ''), onclick: () => { c.cls = k.id; c.profs = []; if (c.method !== 'buy') assignByClass(c, db); redraw(); } },
+    classes.appendChild(h('button', { type: 'button', class: 'pick' + (c.cls === k.id ? ' sel' : ''), onclick: () => { c.cls = k.id; c.profs = []; if (c.method !== 'buy') assignByClass(c, db); else { for (const a of R.ABILS) c.abil[a] = 8; autoBuy(c, k); } redraw(); } },
       h('b', null, k.name), h('span', null, k.short || '')));
   }
   clsPanel.appendChild(classes);

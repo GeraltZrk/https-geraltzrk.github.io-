@@ -1,8 +1,95 @@
 {
-  "skipLoading": ["0"],
-  "aliases": { "title": "load_21" },
-  "flags": [],
-  "portraitRaces": {},
-  "extra": {},
-  "patch": {}
+ "skipLoading": [
+  "0"
+ ],
+ "aliases": {
+  "title": "load_21"
+ },
+ "flags": [],
+ "portraitRaces": {
+  "human": [
+   "human",
+   "bulwari",
+   "raheni",
+   "halessi",
+   "sarhali",
+   "southeast_halessi",
+   "insyaan_mainlander",
+   "vyzemby"
+  ],
+  "half_elf": [
+   "sun_elf",
+   "human"
+  ],
+  "elf": [
+   "sun_elf"
+  ],
+  "halfling": [
+   "gnome",
+   "human"
+  ],
+  "half_orc": [
+   "gray_orc"
+  ],
+  "orc": [
+   "green_orc",
+   "gray_orc",
+   "brown_orc",
+   "black_orc"
+  ],
+  "goblin": [
+   "exodus_goblin"
+  ],
+  "hobgoblin": [
+   "hobgoblin"
+  ],
+  "kobold": [
+   "redscale_kobold",
+   "bluescale_kobold",
+   "greenscale_kobold",
+   "goldscale_kobold"
+  ],
+  "dwarf": [
+   "dwarven"
+  ],
+  "gnome": [
+   "gnome"
+  ],
+  "harimari": [
+   "harimari"
+  ],
+  "gnoll": [
+   "gnoll"
+  ],
+  "harpy": [
+   "harpy"
+  ],
+  "ogre": [
+   "ogre"
+  ],
+  "troll": [
+   "giantkind"
+  ],
+  "lizardfolk": [
+   "lizardfolk",
+   "ashhana_lizardfolk"
+  ],
+  "ruinborn": [
+   "kheionai",
+   "taychendi",
+   "tuathak",
+   "caamas",
+   "selphereg",
+   "snecboth",
+   "peitar"
+  ],
+  "mechanim": [
+   "mechanim"
+  ],
+  "oni": [
+   "oni"
+  ]
+ },
+ "extra": {},
+ "patch": {}
 }

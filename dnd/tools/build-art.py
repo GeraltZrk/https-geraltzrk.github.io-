@@ -118,7 +118,9 @@ def main():
 
     # --- extra images (wiki maps, generated art): key = file stem
     if args.extra and os.path.isdir(args.extra):
-        meta = cfg.get('extra', {})
+        meta = dict(cfg.get('extra', {}))
+        side = os.path.join(args.extra, 'extra-meta.json')
+        if os.path.exists(side): meta.update(json.load(open(side, encoding='utf-8')))
         for f in sorted(glob.glob(os.path.join(args.extra, '*'))):
             stem, ext = os.path.splitext(os.path.basename(f))
             if ext.lower() not in ('.png', '.jpg', '.jpeg', '.webp'):
@@ -132,9 +134,12 @@ def main():
             if im.size[0] > maxw: im = im.resize((maxw, round(im.size[1] * maxw / im.size[0])), Image.LANCZOS)
             kind = m.get('kind', 'scene')
             if kind == 'portrait':
-                im = im.resize((154, 154), Image.LANCZOS)
+                if im.size != (77, 77): im = im.resize((154, 154), Image.LANCZOS)
                 save_webp(im, os.path.join(out, 'portraits', stem + '.webp'), 84)
-                reg['portraits'][stem] = {'src': f'assets/portraits/{stem}.webp', 'race': m.get('race'), 'gender': m.get('gender'), 'role': m.get('role', 'extra')}
+                entry = {'src': f'assets/portraits/{stem}.webp', 'race': m.get('race'), 'gender': m.get('gender'), 'role': m.get('role', 'extra')}
+                if m.get('npc'): entry['npc'] = True
+                if m.get('name'): entry['name'] = m['name']
+                reg['portraits'][stem] = entry
             else:
                 save_webp(im, os.path.join(out, 'art', stem + '.webp'), m.get('quality', 80))
                 e = {'src': f'assets/art/{stem}.webp'}

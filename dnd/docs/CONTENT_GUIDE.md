@@ -177,3 +177,16 @@ combat: {
 
 - `docs/STYLE_GUIDE.md`：文风，必须照做。
 - 剧本圣经（各剧本目录下的 `BIBLE.md`）：主线、人物、标记表、译名表。**专有名词只用译名表里的写法。**
+
+## 9. 商店
+
+场景里加 `shop`，选项上方会多出一个“看看某某的货”按钮，玩家可以买卖。
+
+```js
+shop: { name: '行脚商老何', blurb: '一句话介绍', stock: ['healing_potion', { id: 'longsword', price: 20 }, { id: 'holy_water', if: "rep.temple >= 1" }],
+        markup: 1.2,      // 价格倍率（默认 1，按物品的 value）
+        buyback: 0.5,     // 收购折价（默认五折）；sell: false = 不收东西
+        if: "flag.x" }    // 可选：满足条件才有这个商人
+```
+
+每幕放 1–2 个商人：一个卖补给（药水、绷带、解毒剂），一个卖这一幕等级段的武器护甲。圣物（relic）和任务物品卖不掉。

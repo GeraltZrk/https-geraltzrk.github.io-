@@ -389,3 +389,6 @@ textarea { min-height: 90px; resize: vertical; font-family: ui-monospace, monosp
 
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 html[data-motion="off"] * { animation: none !important; transition: none !important; }
+
+/* shop entry among the options */
+.opt.shop { background: linear-gradient(#4a3a1c, #2e2410); border-color: var(--gold); }

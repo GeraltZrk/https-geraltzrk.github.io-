@@ -1,5 +1,5 @@
 // Art lookups. The registry (js/data/art.js) maps keys to files under assets/.
-import { ART } from '../data/art.js';
+import { ART, PORTRAIT_RACES } from '../data/art.js';
 
 export function sceneArt(key) {
   if (!key) return null;
@@ -57,13 +57,15 @@ export function setBackdrop(key) {
   else if (!el.style.backgroundImage) el.style.backgroundImage = 'linear-gradient(160deg, #1c2e36, #0c1418 70%)';
 }
 
-export function portraitsFor(race, gender) {
+/** Portrait keys a character of this race/subrace may use. PORTRAIT_RACES maps our ids to the mod's portrait sets. */
+export function portraitsFor(race, gender, subrace) {
+  const sets = (subrace && PORTRAIT_RACES[`${race}:${subrace}`]) || PORTRAIT_RACES[race] || (race ? [race] : null);
   const out = [];
   for (const key of Object.keys(ART.portraits)) {
     const p = ART.portraits[key];
     if (p.npc) continue;
-    if (race && p.race !== race) continue;
-    if (gender && p.gender && p.gender !== gender && gender !== 'x') continue;
+    if (sets && !sets.includes(p.race)) continue;
+    if (gender && p.gender && p.gender !== gender) continue;
     out.push(key);
   }
   return out;

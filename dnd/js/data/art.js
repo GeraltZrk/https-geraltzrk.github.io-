@@ -1191,6 +1191,42 @@ export const ART = {
    "role": "trader",
    "src": "assets/portraits/exodus_goblin_trader_f.webp"
   },
+  "gen_human_knight_f": {
+   "gender": "f",
+   "race": "human",
+   "role": "knight",
+   "src": "assets/portraits/gen_human_knight_f.webp"
+  },
+  "gen_human_knight_m": {
+   "gender": "m",
+   "race": "human",
+   "role": "knight",
+   "src": "assets/portraits/gen_human_knight_m.webp"
+  },
+  "gen_human_mage_f": {
+   "gender": "f",
+   "race": "human",
+   "role": "mage",
+   "src": "assets/portraits/gen_human_mage_f.webp"
+  },
+  "gen_human_mage_m": {
+   "gender": "m",
+   "race": "human",
+   "role": "mage",
+   "src": "assets/portraits/gen_human_mage_m.webp"
+  },
+  "gen_human_rogue_f": {
+   "gender": "f",
+   "race": "human",
+   "role": "rogue",
+   "src": "assets/portraits/gen_human_rogue_f.webp"
+  },
+  "gen_human_rogue_m": {
+   "gender": "m",
+   "race": "human",
+   "role": "rogue",
+   "src": "assets/portraits/gen_human_rogue_m.webp"
+  },
   "giantkind_army_reformer": {
    "gender": "m",
    "race": "giantkind",
@@ -5688,4 +5724,87 @@ export const ART = {
 };
 
 // Which mod portrait sets a playable race may use.
-export const PORTRAIT_RACES = {};
+export const PORTRAIT_RACES = {
+ "human": [
+  "human",
+  "bulwari",
+  "raheni",
+  "halessi",
+  "sarhali",
+  "southeast_halessi",
+  "insyaan_mainlander",
+  "vyzemby"
+ ],
+ "half_elf": [
+  "sun_elf",
+  "human"
+ ],
+ "elf": [
+  "sun_elf"
+ ],
+ "halfling": [
+  "gnome",
+  "human"
+ ],
+ "half_orc": [
+  "gray_orc"
+ ],
+ "orc": [
+  "green_orc",
+  "gray_orc",
+  "brown_orc",
+  "black_orc"
+ ],
+ "goblin": [
+  "exodus_goblin"
+ ],
+ "hobgoblin": [
+  "hobgoblin"
+ ],
+ "kobold": [
+  "redscale_kobold",
+  "bluescale_kobold",
+  "greenscale_kobold",
+  "goldscale_kobold"
+ ],
+ "dwarf": [
+  "dwarven"
+ ],
+ "gnome": [
+  "gnome"
+ ],
+ "harimari": [
+  "harimari"
+ ],
+ "gnoll": [
+  "gnoll"
+ ],
+ "harpy": [
+  "harpy"
+ ],
+ "ogre": [
+  "ogre"
+ ],
+ "troll": [
+  "giantkind"
+ ],
+ "lizardfolk": [
+  "lizardfolk",
+  "ashhana_lizardfolk"
+ ],
+ "ruinborn": [
+  "kheionai",
+  "taychendi",
+  "tuathak",
+  "caamas",
+  "selphereg",
+  "snecboth",
+  "peitar"
+ ],
+ "mechanim": [
+  "mechanim"
+ ],
+ "oni": [
+  "oni"
+ ]
+};

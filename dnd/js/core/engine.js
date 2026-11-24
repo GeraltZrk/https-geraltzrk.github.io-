@@ -124,10 +124,58 @@ export class Engine {
     const choices = [];
     (sc.choices || []).forEach((ch, i) => { const c = this.choiceState(sc, ch, i); if (c) choices.push(c); });
     const v = Object.assign(base, { type: 'scene', paragraphs: this.paragraphs(sc.text), choices });
+    if (sc.shop && (sc.shop.if === undefined || this.test(sc.shop.if))) v.shop = this.shopView(sc.shop);
     if (sc.combat) v.fight = { label: sc.combat.label || '战斗！' };
     else if (!choices.length && sc.next) v.next = true;
     else if (!choices.length) v.deadEnd = true;
     return v;
+  }
+
+  // ---- shops ------------------------------------------------------------
+  shopView(shop) {
+    const st = this.state;
+    const mult = shop.markup || 1;
+    const stock = [];
+    for (const entry of shop.stock || []) {
+      const id = typeof entry === 'string' ? entry : entry.id;
+      const it = this.db.items[id];
+      if (!it) continue;
+      if (typeof entry === 'object' && entry.if !== undefined && !this.test(entry.if)) continue;
+      const price = st.cheats.freeShop ? 0 : Math.max(1, Math.round(((typeof entry === 'object' && entry.price) || it.value || 10) * mult));
+      stock.push({ id, name: it.name, desc: it.desc || '', price, owned: st.inv[id] || 0, affordable: st.gold >= price });
+    }
+    return { name: shop.name || '商人', blurb: shop.blurb || '', stock, buyback: shop.sell === false ? 0 : (shop.buyback || 0.5) };
+  }
+
+  buy(id) {
+    const st = this.state;
+    const sc = this.scene();
+    if (!sc.shop) return false;
+    const item = this.shopView(sc.shop).stock.find((x) => x.id === id);
+    if (!item || st.gold < item.price) return false;
+    st.gold -= item.price;
+    st.inv[id] = (st.inv[id] || 0) + 1;
+    return true;
+  }
+
+  sellPrice(id) {
+    const sc = this.scene();
+    const it = this.db.items[id];
+    if (!sc.shop || !it || !it.value || it.relic || it.quest) return 0;
+    const rate = sc.shop.sell === false ? 0 : (sc.shop.buyback || 0.5);
+    return Math.floor(it.value * rate);
+  }
+
+  sell(id) {
+    const st = this.state;
+    const price = this.sellPrice(id);
+    if (!price || !(st.inv[id] > 0)) return false;
+    const equipped = partySheets(st).filter((c) => Object.values(c.equip).includes(id)).length;
+    if (st.inv[id] - equipped <= 0) return false;
+    st.inv[id] -= 1;
+    if (st.inv[id] <= 0) delete st.inv[id];
+    st.gold += price;
+    return true;
   }
 
   snapshot() {

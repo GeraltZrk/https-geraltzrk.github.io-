@@ -1,5 +1,5 @@
 // The play screen: event window (story), sidebar (desktop), bottom nav (mobile).
-import { h, rich, icon, button, bar, toast, confirmDialog } from './dom.js';
+import { h, rich, icon, button, bar, toast, confirmDialog, modal } from './dom.js';
 import { paint, paintPortrait, setBackdrop } from './art.js';
 import * as R from '../core/rules.js';
 import { renderCombat } from './combatView.js';
@@ -111,6 +111,7 @@ function eventView(app, view) {
     box.appendChild(h('div', { class: 'continue-row' }, button('这条路还没写完——返回上一步', act(() => eng.undo()), { class: 'ghost' })));
   } else {
     const opts = h('div', { class: 'options' });
+    if (view.shop) opts.appendChild(h('button', { class: 'opt shop', type: 'button', onclick: () => openShop(app) }, h('span', { class: 'n' }, icon('coin', 14)), h('span', { class: 't' }, `看看${view.shop.name}的货`), h('span', { class: 'meta' }, h('span', null, `${view.shop.stock.length} 样`))));
     view.choices.forEach((c, idx) => opts.appendChild(optionButton(app, c, idx, act)));
     box.appendChild(opts);
   }
@@ -139,6 +140,45 @@ function optionButton(app, c, idx, act) {
     h('span', { class: 'n' }, String(idx + 1)),
     h('span', { class: 't' }, c.tag ? h('span', { class: 'tagc' }, `[${c.tag}]`) : null, rich(c.text), c.disabled ? h('span', { class: 'why' }, c.disabled) : null),
     meta.childNodes.length ? meta : null);
+}
+
+function openShop(app) {
+  const eng = app.engine;
+  let tab = 'buy';
+  const m = modal({ title: '买卖', content: () => h('div') });
+  const draw = () => {
+    while (m.body.firstChild) m.body.removeChild(m.body.firstChild);
+    const st = eng.state;
+    const shop = eng.view().shop;
+    if (!shop) { m.close(); return; }
+    m.box.querySelector('.modal-head h2').textContent = shop.name;
+    if (shop.blurb) m.body.appendChild(h('p', { class: 'muted small' }, shop.blurb));
+    m.body.appendChild(h('div', { class: 'row between', style: { marginBottom: '8px' } },
+      h('div', { class: 'tabs', style: { margin: 0 } }, h('button', { type: 'button', class: tab === 'buy' ? 'on' : '', onclick: () => { tab = 'buy'; draw(); } }, '买'), shop.buyback ? h('button', { type: 'button', class: tab === 'sell' ? 'on' : '', onclick: () => { tab = 'sell'; draw(); } }, '卖') : null),
+      h('span', { class: 'chip gold' }, `${st.gold} ${app.scenario.coin || '金币'}`)));
+    const list = h('div', { class: 'list' });
+    if (tab === 'buy') {
+      for (const it of shop.stock) {
+        list.appendChild(h('div', { class: 'li' }, h('div', { class: 'grow' }, h('b', null, it.name, it.owned ? h('span', { class: 'muted small' }, `　已有 ${it.owned}`) : null), h('div', { class: 'd' }, it.desc)),
+          button(it.price ? `${it.price}` : '白拿', () => { if (eng.buy(it.id)) { toast(`买下了${it.name}`); app.autosave(); draw(); } }, { class: 'small primary', icon: 'coin', disabled: !it.affordable })));
+      }
+      if (!shop.stock.length) list.appendChild(h('p', { class: 'muted' }, '货架是空的。'));
+    } else {
+      const ids = Object.keys(st.inv).filter((id) => eng.sellPrice(id) > 0);
+      if (!ids.length) list.appendChild(h('p', { class: 'muted' }, '你身上没有他肯收的东西。'));
+      for (const id of ids) {
+        const it = app.db.items[id];
+        list.appendChild(h('div', { class: 'li' }, h('div', { class: 'grow' }, h('b', null, it.name, ` ×${st.inv[id]}`), h('div', { class: 'd' }, it.desc || '')),
+          button(`卖 ${eng.sellPrice(id)}`, () => { if (eng.sell(id)) { app.autosave(); draw(); } else toast('穿在身上的卖不了', 'bad'); }, { class: 'small' })));
+      }
+    }
+    m.body.appendChild(list);
+  };
+  const origClose = m.close;
+  draw();
+  const obs = new MutationObserver(() => { if (!document.body.contains(m.box)) { obs.disconnect(); app.refresh(); } });
+  obs.observe(document.body, { childList: true });
+  return { close: origClose };
 }
 
 function scrollToEvent(app) {

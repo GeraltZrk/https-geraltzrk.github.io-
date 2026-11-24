@@ -209,9 +209,9 @@ function customBuilder(app, p, sc, go) {
     button('随机', () => { c.name = randomName(db, c, sc); redraw(); }, { class: 'small', icon: 'dice' })));
   idPanel.appendChild(h('div', { class: 'row', style: { marginTop: '8px' } }, h('span', { class: 'small muted' }, '称谓'),
     h('div', { class: 'tabs', style: { margin: 0 } }, [['m', '他'], ['f', '她']].map(([v, l]) => h('button', { type: 'button', class: c.gender === v ? 'on' : '', onclick: () => { c.gender = v; c.portrait = null; redraw(); } }, l)))));
-  let ports = portraitsFor(c.race, c.gender);
-  if (!ports.length) ports = portraitsFor(c.race, null);
-  if (!ports.length) ports = portraitsFor(null, c.gender).slice(0, 24);
+  let ports = portraitsFor(c.race, c.gender, c.subrace);
+  if (!ports.length) ports = portraitsFor(c.race, null, c.subrace);
+  if (!ports.length) ports = portraitsFor(c.race, null, null);
   if (ports.length) {
     if (!c.portrait || !ports.includes(c.portrait)) c.portrait = ports[0];
     const row = h('div', { class: 'portrait-pick', style: { marginTop: '10px' } });

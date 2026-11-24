@@ -251,6 +251,11 @@ export function validateScenario(sc, db) {
     const exits = (s.choices && s.choices.length ? 1 : 0) + (s.next ? 1 : 0) + (s.combat ? 1 : 0) + (s.ending ? 1 : 0);
     if (!exits) E(w, 'dead end: needs choices, next, combat or ending');
     if (s.ending) { endingsUsed.add(s.ending); if (!(sc.endings || {})[s.ending]) E(w, `ending "${s.ending}" missing from endings`); }
+    if (s.shop) {
+      checkCond(w + ' shop', s.shop.if);
+      if (!Array.isArray(s.shop.stock) || !s.shop.stock.length) E(w, 'shop needs stock[]');
+      for (const entry of s.shop.stock || []) { const iid = typeof entry === 'string' ? entry : entry.id; if (!db.items[iid]) E(w, `shop item "${iid}" unknown`); if (typeof entry === 'object') checkCond(w + ' shop', entry.if); }
+    }
     if (s.next) gotoOf(w, id, s.next);
     if (s.combat) { fights++; checkCombat(w + ' combat', id, s.combat); if (s.choices && s.choices.length) W(w, 'scene has both combat and choices — choices are ignored'); }
     let unconditional = 0;

@@ -22,7 +22,10 @@
 // f_10b  那个字：四种情形（被牵的皇帝／皇帝是你／结解了／山上没人），立 bridle_pc / bridle_wise 或者开打。→ f_11
 // f_11   动手：五十三世先起身（要打的话）；主战按 皇帝在哪边 × muster × 阿德蕾西娅的状态 给二十七种编成。→ f_11c
 // f_11c  谁付账：六选一，前提不满足的不显示；收尾保证 end_bridle 一定有人牵绳。→ f_12
-// f_12   那本书：book_locked / book_wise（book_kept 的跳过）。[贤者门下] 借条。→ f_12b 骑士团（order_founder）→ f_12c 交印，去七个结局。
+// f_12   那本书（天亮）：书烧不掉（fx_burn_tried）；book_locked / [旧礼] 念名分再封 / book_wise（writ +2）/ [贤者门下] 借条（writ +1）；
+//        book_kept 的揣书下山。卢西安做护国公（正史）。[神] 十字军来问椅子。→ f_12b
+// f_12b  骑士团（山下坟场）：对坟场的账（investigation DC 16）；order_founder / [蓝宝石之眼] 凯伦的规矩 / 交给瓦勒兰 / 让阿德蕾西娅领头 / 不管。→ f_12c
+// f_12c  交印（去安本科斯特的路上）：同伴最后几句；[神] 哪张椅子都不坐 → end_unseated；其余照 §11.6 去向表六个互斥选项，最后一项兜底。
 // end_*  七个终幕场景，只写结局卡片之前的那一场戏；卡片正文在 meta.js 的 endings 里，接在后面显示。
 //
 // 本段私有标记（只在本文件设、本文件读）：fx_walked fx_route fx_vezina_tip fx_temple_read fx_temple_botched fx_prayed

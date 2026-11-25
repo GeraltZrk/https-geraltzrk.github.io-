@@ -56,10 +56,10 @@
 
 走过的地方：达梅斯海德（Dameshead）、边境地（The Borders）、东坎诺（Escann）、小人国（Small Country）、伦瑟诺（Lencenor）、多斯塔诺（Dostanor），外加布勒瓦尔（出了坎诺，是“舒适区之外”的那一站）。
 
-**各幕的大抉择**（标记名先定在这里，第二部分照此展开）：
+**各幕的大抉择**（标记名先定在这里，第二部分照此展开。引擎的标记只有真假两种，下面写成“名字：值 / 值”的多选一，在 §12 一律拆成一组互斥的标记，写法是 `组名_值`，对照表见 §12.0）：
 
 - 第一幕：普卢姆沃尔（Plumwall）的“受慑”申辩收不收（`plumwall_plea`）；弗恩（Verne）和约里排挤精灵的那一条删不删（`emil_clause`）；泛神会议（Pantheonic Council）上替不替阿拉莉亚（Alaria）作证（`alaria_vote`）；屠夫原（Butcher's Field）的迁葬做不做完（`field_done`）；谁带大小公爵（`dyren_guardian`：barry / crovan / marion / barons）；阿克罗米斯（Acromis）怎么处置（`acromis`：exposed / quiet / traded）。
-- 第二幕：终结黑龙之战（War to End the Dragon）怎么了结（`garrec_fate`：dead / king / exile）；皇帝的遗体去哪（`body`：westgate / citadel / pantheon / quiet / burned / left）；谁缴了魔像的械（`golem`：pc / liv / none）；山上的结解不解、找谁解（`knot_cut` + `knot_by`：alarian / ravens / iacob；或者 `stair_down`）；亚科布（Iacob）的下场（`iacob`：hanged / pardoned / wise）；卢坎归谁养（`lucan_ward`）；伊迪丝跟谁学（`edith_teacher`：alarian / wise / ravens / iacob / none）。
+- 第二幕：终结黑龙之战（War to End the Dragon）怎么了结（`garrec_fate`：dead / king / exile）；皇帝的遗体去哪（`body`：westgate / citadel / pantheon / quiet / burned / left）；谁缴了魔像的械（`golem`：pc / liv / none）；山上的结请谁来解（`knot_by`：alarian / ravens / iacob，这一幕只是动工；解成要等第四幕把芬尼克那块碎片放回誓石，那时才立 `knot_cut`；或者 `stair_down`）；亚科布（Iacob）的下场（`iacob`：hanged / pardoned / wise）；卢坎归谁养（`lucan_ward`）；伊迪丝跟谁学（`edith_teacher`：alarian / wise / ravens / iacob / none）。
 - 第三幕：渡鸦山封不封（`quarantine`）；太阳王（Sun King）宫廷的条件接不接（`sun_terms`）；当众怪谁（`blame`：canrec / elves / ravens / silent）；给不给瓦洛森疫令（`plague_law`：full / limited / refused）；公爵的逐精灵令（`wex_edict`：upheld / overruled / softened）；暴民面前让不让伊迪丝开口（`edith_mob`）；三剂药给谁（`three_doses`）；薇齐娜（Vezina）要不要鸦眼（`vezina_eye`）。
 - 第四幕：克雷格·达梅里斯（Crege Dameris）的血债（`crege`：penance / champions / given）；十字军归谁统领（`charter`：emperor / league / writ / muster）；拉尔桑（Larthán）防线开不开（`larthan_open`）；试炼山最后怎么办（`castan_crowned` + `castan_who`：garrec / lucan / liv / pc；或者 `mountain_sealed`）。
 - 终章：苏雷尔（Surael）神庙底下让不让挖（`temple`）；谁付账（`price`：aldresia / pc / companion / emperor / names）；那本书怎么办（`book`：locked / wise / kept）。
@@ -585,6 +585,26 @@
 | Primrose Blossomfoot | 普丽姆萝丝·花足 | 预设人物 |
 | Brok | 布洛克 | 北要塞的岩石矮人石匠，NPC |
 
+### 3.10 第二部分新增的名字
+
+| English | 中文 | 来源 |
+|---|---|---|
+| Heharrûk（给伊贝尼昂修都城的白银矮人匠师） | 赫哈鲁克〔新译〕 | 新译 |
+| Martin Farran（法拉内安的主人） | 马丁·法兰〔新译〕 | 新译 |
+| Šad Siadan / Siadan Matriarchy（贾赫打垮的鹰身女妖女王国） | 西亚丹〔新译〕 | 新译 |
+| Castan VI Giantsbane（第九道试炼的魔像是他立的） | 巨人克星卡斯坦 | 词库 |
+| Castan XXII the Eccentric（“绕石头跳十圈”是他立的） | 怪人卡斯坦〔新译〕 | 新译 |
+| Swansong（阿拉里安的竖琴） | 天鹅歌 | 新译·数据 |
+| Moonsinger Codex（比珊的达林替穆纳斯写的行传） | 《月歌者法典》〔新译〕 | 新译 |
+| Godly Decrees（诸神战后自己立的规矩：不再下场） | 诸神禁令〔新译〕 | 新译 |
+| Divine Regency（神不下场，君王替神当家） | 神授摄政〔新译〕 | 新译 |
+| kingly avatar（战后的新说法：凡君王都是卡斯特洛斯的化身） | 君王化身〔新译〕 | 新译 |
+| Ascendant（神系里最晚的一辈，死后封上去的） | 升座之神〔新译〕 | 新译 |
+| Red Reapers（奈拉特派去找赖账不死的人的使者） | 红衣收割者〔新译〕 | 新译 |
+| breaking of bread（半身人的规矩：同桌分过饼就不许动手） | 分饼礼〔新译〕 | 新译 |
+| City of Colors（维斯沃尔的外号） | 彩城〔新译〕 | 新译 |
+| Sunrise War | 日升战争 | 词库 |
+
 ---
 
 ## 4 世界局势与声望
@@ -627,7 +647,7 @@
 
 ## 5 出身
 
-五个出身是条约的五方：两个赢家，一个输家，一个不打算入伙的，一个被踩在中间的。每个序章 5–6 场：一桩没有正确答案的裁断，一场小战斗，头一回撞见沉睡者或者少掉的尸首，然后去安本科斯特旧斗兽场领印（共用的末场 `p_seal`，升 2 级，得到监誓印）。
+五个出身是条约的五方：两个赢家，一个输家，一个不打算入伙的，一个被踩在中间的。每个序章 5–6 场：一桩没有正确答案的裁断，一场小战斗，头一回撞见沉睡者或者少掉的尸首，然后到安本科斯特，在旧斗兽场拱廊下的登记桌前领印（各出身自己的末场 `p_<出身>_06`，升 2 级，得到监誓印，都通向 `a1_01`；不设共用场景，两位序章作者才能分头写。当众发誓的那一场是 `a1_01`）。
 
 物品 id 是暂定的，写 `items.js` 的人可以改名。
 
@@ -1026,7 +1046,7 @@
 | 5 | `table` | 《同席》 | `communion` ≥ 8，`writ` 在 4–6，`feud` ≤ 3，`blame` = canrec，没有皇帝 | 最难 |
 | 6 | `ledger` | 《监誓人的账》 | 以上都不中 | 苦里带甜；基线 |
 
-**0 《不肯落座的神》** 仗打完了，人人给你搬椅子：东坎诺的诸王请你上试炼山，祭司们请你进神系，坎雷克那张椅子也空着。你一张都没坐。拖了三十年没散的第七次泛神会议只好复会，当着你的面投票，议题排在“阿德蕾西娅算谁家的化身”后面。世界：没有皇帝，没有新神殿，各国多了一个不知道该怎么称呼的邻居。同正史的关系：正史里没有你，后日谈每一张都写“在这条时间线上”。升了神的主角如果自己去坐了某张椅子，走的是 1、2、3 号结局，另配神格卡片。
+**0 《不肯落座的神》** 仗打完了，人人给你搬椅子：东坎诺的诸王请你上试炼山，祭司们请你进神系，坎雷克那张椅子也空着。你一张都没坐。拖了三十年没散的第七次泛神会议只好复会，当着你的面投票，议题排在“阿德蕾西娅算谁家的化身”后面。世界：没有皇帝，没有新神殿，各国多了一个不知道该怎么称呼的邻居。同正史的关系：正史里没有你，后日谈每一张都写“在这条时间线上”。升了神的主角如果自己去坐了某张椅子，走的是 1、2、3 号结局，另配神格卡片。终幕场景 `end_unseated`，入口是 `f_12` 里只有神看得见的那个选项（立 `god_unseated`）；当神的代价见 §16.4。其余六个结局的终幕场景一律是 `end_<id>`。
 
 **1 《寂静之冠》** 你接过了书上的记号，叫死人躺下。当夜他们全躺下了，从渡鸦山到艾伦河，一个不剩。瘟疫在这一夜结束，比哪个结局都干净。书里所有的魂从此等你一句话，坎雷克的声音还在书里，偶尔抱怨后脑勺痒。世界：边境地和科乌里亚有了一位谁也不敢得罪的守墓人；你老不老、死不死，看你往后肯不肯学他那一步。阿德蕾西娅活着，她建的骑士团头一条誓词是盯着你。同正史的关系：魔典没进库，四百年后想找它的人得来找你。普丽姆萝丝这样的收殓人会当面说你这是偷。
 

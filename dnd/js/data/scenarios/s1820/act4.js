@@ -46,6 +46,10 @@ export const SCENES = {
     "text": [
       "（待写）"
     ],
+    "first": [
+      "quest q_summit start",
+      "quest q_partner stage 4"
+    ],
     "choices": [
       {
         "text": "（待写）client_republic",
@@ -108,6 +112,10 @@ export const SCENES = {
     "text": [
       "（待写）"
     ],
+    "first": [
+      "quest q_summit stage 2",
+      "quest q_wastage done"
+    ],
     "choices": [
       {
         "text": "（待写）article_heads、article_doors",
@@ -136,6 +144,9 @@ export const SCENES = {
     "art": "ev_hre",
     "text": [
       "（待写）"
+    ],
+    "first": [
+      "quest q_summit done"
     ],
     "choices": [
       {
@@ -214,6 +225,9 @@ export const SCENES = {
     "title": "调查庭",
     "text": [
       "（待写）"
+    ],
+    "first": [
+      "quest q_konwell done"
     ],
     "choices": [
       {
@@ -332,6 +346,9 @@ export const SCENES = {
     "title": "别摇开价",
     "text": [
       "（待写）"
+    ],
+    "first": [
+      "quest q_jar stage 3"
     ],
     "choices": [
       {
@@ -494,6 +511,9 @@ export const SCENES = {
     "art": "ev_multi_racial_merc",
     "text": [
       "（待写）"
+    ],
+    "first": [
+      "quest q_partner stage 5"
     ],
     "choices": [
       {

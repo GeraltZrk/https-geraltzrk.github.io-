@@ -5,7 +5,7 @@
 //   node tools/check-data.mjs --bench fighter,monk    … only some classes
 //   node tools/check-data.mjs --enemies               fight every enemy at its own level with a standard party
 //   node tools/check-data.mjs --enemies orc_raider,troll
-//   node tools/check-data.mjs --enc "orc_raider:3,orc_chief:1" --level 4 [--party fighter,cleric,wizard,rogue]
+//   node tools/check-data.mjs --enc "orc_raider:3,orc_chief:1" --level 4 [--party fighter,cleric,wizard,rogue] [--scenario s1444]
 //   --parts a.js,b.js     build the data set from the stable base (conditions, base items) plus these files
 //                         instead of js/data/index.js. Each file's exports named CLASSES*/ABILITIES*/ITEMS*/
 //                         ENEMIES*/CONDITIONS*/RACES*/BACKGROUNDS* are merged in. Use this while other
@@ -25,7 +25,19 @@ const TRIALS = parseInt(opt('trials') || '120', 10);
 
 async function loadDb() {
   const parts = opt('parts');
-  if (!parts || parts === true) { const { DB } = await import('../js/data/index.js'); return { ...DB, companions: {} }; }
+  if (!parts || parts === true) {
+    const { DB } = await import('../js/data/index.js');
+    const db = { ...DB, companions: {} };
+    // --scenario s1444 adds that campaign's own enemies, items and companions, so --enc can use them.
+    const sid = opt('scenario');
+    if (sid && sid !== true) {
+      const mod = await import(pathToFileURL(path.resolve('js/data/scenarios', sid, 'index.js')).href);
+      const sc = mod.default || mod.SCENARIO || mod;
+      db.enemies = { ...db.enemies, ...(sc.enemies || {}) };
+      db.items = { ...db.items, ...(sc.items || {}) };
+    }
+    return db;
+  }
   const { CONDITIONS } = await import('../js/data/conditions.js');
   const { ITEMS_BASE } = await import('../js/data/items_base.js');
   const db = { classes: {}, races: {}, backgrounds: {}, items: { ...ITEMS_BASE }, abilities: {}, conditions: { ...CONDITIONS }, enemies: {}, companions: {}, codex: {} };

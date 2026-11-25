@@ -45,6 +45,9 @@ export const SCENES = {
     "text": [
       "（待写）"
     ],
+    "first": [
+      "quest q_right_of_way start"
+    ],
     "next": "a2_03"
   },
   "a2_03": {
@@ -69,6 +72,9 @@ export const SCENES = {
     "art": "ev_elven_constellation",
     "text": [
       "（待写）"
+    ],
+    "first": [
+      "quest q_wastage stage 2"
     ],
     "choices": [
       {
@@ -119,6 +125,9 @@ export const SCENES = {
     "text": [
       "（待写）"
     ],
+    "first": [
+      "quest q_right_of_way stage 2"
+    ],
     "next": "a2_09"
   },
   "a2_09": {
@@ -141,6 +150,7 @@ export const SCENES = {
       "（待写）"
     ],
     "first": [
+      "quest q_blood start",
       "flag cellar_book",
       "item +cellar_book"
     ],
@@ -207,6 +217,9 @@ export const SCENES = {
     "text": [
       "（待写）"
     ],
+    "first": [
+      "quest q_partner stage 2"
+    ],
     "next": "a2_14"
   },
   "a2_14": {
@@ -214,6 +227,9 @@ export const SCENES = {
     "title": "血账",
     "text": [
       "（待写）"
+    ],
+    "first": [
+      "quest q_blood done"
     ],
     "choices": [
       {
@@ -260,6 +276,9 @@ export const SCENES = {
     "art": "ev_multi_racial_merc",
     "text": [
       "（待写）"
+    ],
+    "first": [
+      "quest q_right_of_way done"
     ],
     "choices": [
       {

@@ -18,6 +18,10 @@ export const SCENES = {
     "text": [
       "（待写）"
     ],
+    "first": [
+      "quest q_jar stage 2",
+      "quest q_partner start"
+    ],
     "next": "a1_03"
   },
   "a1_03": {
@@ -73,6 +77,9 @@ export const SCENES = {
     "title": "电报",
     "text": [
       "（待写）"
+    ],
+    "first": [
+      "quest q_harvest stage 2"
     ],
     "next": "a1_08"
   },
@@ -279,6 +286,7 @@ export const SCENES = {
       "（待写）"
     ],
     "first": [
+      "quest q_wastage start",
       "quest q_harvest done"
     ],
     "next": "a1_16"

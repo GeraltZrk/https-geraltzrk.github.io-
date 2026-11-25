@@ -223,7 +223,10 @@ export function openCodexEntry(app, e) {
       const box = h('div', { class: 'codex-entry' });
       if (e.art) box.appendChild(paint(h('div', { class: 'event-art', style: { marginBottom: '10px', border: '1px solid var(--gold-lo)' } }), e.art));
       const body = h('div', { class: 'body' });
-      for (const p of (Array.isArray(e.text) ? e.text : [e.text])) body.appendChild(h('p', null, rich(p)));
+      // Codex text takes the same tokens and { if, text } paragraphs as scenes do.
+      const raw = Array.isArray(e.text) ? e.text : [e.text];
+      const paras = app.engine ? app.engine.paragraphs(raw) : raw.filter((p) => typeof p === 'string').map((p) => ({ text: p }));
+      for (const p of paras) body.appendChild(h('p', null, rich(p.text)));
       box.appendChild(body);
       return box;
     },

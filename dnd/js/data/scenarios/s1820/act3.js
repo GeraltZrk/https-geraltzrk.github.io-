@@ -46,6 +46,10 @@ export const SCENES = {
     "text": [
       "（待写）"
     ],
+    "first": [
+      "quest q_bill start",
+      "quest q_phrase start"
+    ],
     "next": "a3_03"
   },
   "a3_03": {
@@ -90,6 +94,9 @@ export const SCENES = {
     "title": "第二道菜底下",
     "text": [
       "（待写）"
+    ],
+    "first": [
+      "quest q_bill stage 2"
     ],
     "choices": [
       {
@@ -152,6 +159,9 @@ export const SCENES = {
     "art": "ev_orc_with_axe",
     "text": [
       "（待写）"
+    ],
+    "first": [
+      "quest q_bura stage 2"
     ],
     "choices": [
       {
@@ -218,6 +228,9 @@ export const SCENES = {
     "text": [
       "（待写）"
     ],
+    "first": [
+      "quest q_engine start"
+    ],
     "next": "a3_12"
   },
   "a3_12": {
@@ -239,6 +252,9 @@ export const SCENES = {
     "text": [
       "（待写）"
     ],
+    "first": [
+      "quest q_phrase stage 2"
+    ],
     "next": "a3_14"
   },
   "a3_14": {
@@ -247,6 +263,10 @@ export const SCENES = {
     "art": "ev_the_heroine",
     "text": [
       "（待写）"
+    ],
+    "first": [
+      "quest q_phrase done",
+      "quest q_narwen stage 2"
     ],
     "choices": [
       {
@@ -292,6 +312,9 @@ export const SCENES = {
     "title": "证词",
     "text": [
       "（待写）"
+    ],
+    "first": [
+      "quest q_middlesday stage 2"
     ],
     "choices": [
       {
@@ -349,6 +372,9 @@ export const SCENES = {
     "text": [
       "（待写）"
     ],
+    "first": [
+      "quest q_engine done"
+    ],
     "choices": [
       {
         "text": "（待写）engine_burned",
@@ -368,6 +394,9 @@ export const SCENES = {
     "title": "洇河口",
     "text": [
       "（待写）"
+    ],
+    "first": [
+      "quest q_bill done"
     ],
     "next": "a3_18"
   },

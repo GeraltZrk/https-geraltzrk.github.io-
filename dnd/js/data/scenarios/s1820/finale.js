@@ -55,6 +55,9 @@ export const SCENES = {
     "text": [
       "（待写）"
     ],
+    "first": [
+      "quest q_knock stage 2"
+    ],
     "choices": [
       {
         "text": "（待写）court_signs",
@@ -196,6 +199,7 @@ export const SCENES = {
       "（待写）"
     ],
     "first": [
+      "quest q_knock stage 3",
       "item +torrieth_tally",
       {
         "if": "flag.m_dormant",

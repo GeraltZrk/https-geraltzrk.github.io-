@@ -220,7 +220,7 @@ export const META = {
       "id": "unowned",
       "name": "无主者",
       "region": "铸炉街",
-      "nationName": "迟到者公司",
+      "nationName": "铸炉街自动机厂",
       "startScene": "p_unowned_01",
       "blurb": "铸炉街自动机厂，七号线，夜班。零点的钟敲完，有一台机器放下了锤子，问今天礼拜几。领班要报废它。那台机器也许就是你，也许你是站在它旁边、够得着厂门钥匙的那个人。",
       "tags": [

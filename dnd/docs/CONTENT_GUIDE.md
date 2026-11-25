@@ -51,7 +51,7 @@ export default {
   companions: { id: { id, name, gender, race, subrace?, cls, subclass?, abil, profs, equip:{weapon,armor,offhand,trinket}, portrait, blurb } },
   enemies: { … }, items: { … },                 // 本剧本专用的敌人和物品（格式见 DATA_GUIDE.md）
   quests: { id: { title, desc, stages: ['第1阶段提示', '第2阶段提示'], doneText } },
-  codex: { id: { title, group: '历史|地理|人物|势力|种族|信仰|魔法|怪物', short, text: ['段落'], art? } },
+  codex: { id: { title, group: '历史|地理|人物|势力|种族|信仰|魔法|怪物', short, text: ['段落'], art? } },   // text 和场景正文一样：认 {pc} {god} {?条件:甲|乙}，也认 { if, text } 段落
   chapters: [ { title, note, scene, if?, effects? } ],     // 作弊菜单“跳到章节”用；effects 用来补齐该章需要的等级/同伴/标记
   flagNotes: { flag名: '给玩家看的中文说明' },             // 作弊菜单里显示
   scenes: { id: Scene },

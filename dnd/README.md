@@ -53,5 +53,5 @@ tools/                      校验、自动试玩、美术导出脚本
 node tools/test-core.mjs          # 规则和引擎的单元测试
 node tools/validate.mjs           # 检查所有剧本的引用、条件、效果和文风
 node tools/autoplay.mjs s1444     # 随机走完整个剧本若干遍，找死路
-node tools/e2e-smoke.mjs          # 用浏览器在桌面和手机尺寸各走一遍
+node tools/e2e-smoke.mjs <地址> <截图目录> <剧本序号0-2> <步数>   # 用浏览器在桌面和手机尺寸各走一遍
 ```

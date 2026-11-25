@@ -430,7 +430,7 @@ export const SCENES = {
         goto: 'a4_04',
       },
       {
-        text: '不答',
+        text: '看着窗台上那排剪了刺的玫瑰，不答',
         effects: ['world feud +1', 'quest lance done'],
         result: '“那就是不肯说。”她叫人上了茶，亲手把杯子推给你。“不说也是一种说法，监誓人。我会当它是最坏的那一种。”',
         goto: 'a4_04',
@@ -777,6 +777,7 @@ export const SCENES = {
   a4_08: {
     id: 'a4_08',
     title: '帐子里的议事',
+    art: 'ev_mages_estate',
     loc: '洛伦泰内 · 婚宴外的大帐',
     text: [
       '婚宴厅外的草地上支了一顶军帐，里头一张长桌，四份章程，每份的角上压一只酒杯。十字军要进科乌里亚去打坎雷克，归谁统领，今晚得定。监誓人的印落在哪一份上，哪一份算数。',
@@ -784,7 +785,7 @@ export const SCENES = {
       { speaker: '伊奥瑞尔', text: '同盟。自由诸国打过一回术士王，章程是现成的。等这件事完了，我们还在。' },
       { speaker: '瓦洛森的法师', text: '令状。封路的是我们，验尸的是我们，熬药的也是我们。兵归谁管，诸位自己掂量。' },
       { speaker: '马里昂', text: '会盟。愿意来的来，不愿意的我不拿刀架着。自愿来的才靠得住。' },
-      '四份里没有哪一份是胡说。',
+      '四只压角的酒杯，没有一只有人碰过。',
       { if: 'flag.a4x_insight_wed', text: '谁同谁事先通过气，你在席上已经看清了。' },
       { if: 'flag.acromis_traded', text: '瓦洛森的法师从袖子里抽出一张旧令状：十八年前你拿阿克罗米斯的把柄，从加里昂手里换来的那一张。“有先例。”他说。' },
       { if: 'flag.map_drawn', text: '温斯坦摊开一张图。上头那条线你认得，是你当年在试炼山的石桌上画的“将来的疆界”，有人上山抄了下来。' },
@@ -853,7 +854,7 @@ export const SCENES = {
       {
         text: '把印落在“同盟”上',
         effects: ['flag charter_league', 'rep rose +3', { if: '!flag.a4x_table_won', then: ['rep moon -1'] }],
-        result: '印落下去。太后没笑，只把自己那只酒杯从章程角上拿开了：用不着压了。马里昂说，他祖母那一辈人打术士王用的也是这面旗，那回可没人问洛伦特排第几。',
+        result: '印落下去。太后没笑，只把自己那只酒杯从章程角上拿开了：用不着压了。马里昂说，当年打术士王他就在这面旗底下，那年他十二，在莫尔班平原叫人俘了，也没人问他排第几。',
         goto: 'a4_09',
       },
       {
@@ -884,7 +885,11 @@ export const SCENES = {
         tag: '神',
         if: 'is.god',
         effects: ['flag charter_muster', 'flag god_crusade', 'world communion +2', 'world mantle +1', 'var god_acts +1'],
-        result: '你点了头。满帐子的人一齐站了起来，四份章程没人再看。兵来得很快，快得不像自愿，有人是怕不来。从今天起，这支兵干的每一件事都记在你名下。',
+        result: [
+          '你点了头。满帐子的人一齐站了起来，四份章程没人再看。头三天来报名的兵比会盟一个月凑的还多，有一半是怕不来。书记官把名册重抄了一遍，抬头那一行写的是你的神号。',
+          { if: 'party.vezina', speaker: '薇齐娜', text: '要是他们烧错了人（我说的是要是），本子上记谁的名字？' },
+          { if: 'party.liv', speaker: '卡斯坦', text: '神的旗插前头。那我那面插哪儿，插你屁股后头？' },
+        ],
         goto: 'a4_09',
       },
     ],
@@ -918,6 +923,7 @@ export const SCENES = {
             { if: 'flag.p_ibevar_blood', n: 2, why: '你替死去的精灵讨过命' },
             { if: 'rep.elders >= 3', n: 2, why: '长老们信你' },
             { if: "origin == 'ibevar'", n: 2, why: '使者是你的族亲' },
+            { if: "is.elf && origin != 'ibevar'", n: 1, why: '你同他说的是精灵话' },
             { if: 'item.lunatein_plank >= 1', n: 1, why: '月火号的船板' },
             { if: 'flag.blame_elves', n: -4, why: '你说过病是精灵带来的' },
             { if: 'flag.edict_upheld', n: -2, why: '逐精灵令上有你的印' },
@@ -935,7 +941,7 @@ export const SCENES = {
         },
       },
       {
-        text: '认了：墙是他们的，线也是',
+        text: '收下单子，告诉他墙是他们的，线也是',
         effects: ['rep elders +1', 'approval barry -1'],
         result: '他头一回正眼看你。“我会同亲王说，人类那边有一位没劝我们。”阿德蕾西娅把那张单子收了起来，没还他。',
         goto: 'a4_10',
@@ -1079,7 +1085,7 @@ export const SCENES = {
       '棚子外头的长凳上摆着婚宴撤下来的剩席，是给抬尸首的人留的。一只渡鸦落在半只烤鹅上，没啄，歪着头等你出来。它开口的时候，声音像在念别人的遗嘱。',
       { speaker: '渡鸦', text: '德基南长老问监誓人好。你想知道我们为什么坐着看。凡是白年早早掐灭的年头，后头都接着人类把精灵赶下海。' },
       { speaker: '渡鸦', text: '有太平的那些年头，都得先有一个精灵同一个女先知的女儿坐下来熬药。我们挑了后一种，所以在那棵树上蹲了十九年。' },
-      '它说完，在鹅背上蹭了蹭喙，飞了。瓦洛森的塔里，加里昂同玛希尔达今年熬出了头一锅药。这件事你是亲眼看见的。',
+      '它说完，在鹅背上蹭了蹭喙，叼走一块鹅皮，飞了。今年瓦洛森塔里熬出的头一锅药，一共三剂，熬药的是加里昂和玛希尔达：一个精灵，一个女先知的女儿。',
       { if: 'party.vezina && flag.vezina_eye', speaker: '薇齐娜', text: '这一句我见过。没告诉你，是因为不仁从来不说哪一句要紧。' },
       { if: 'party.vezina && !flag.vezina_eye', speaker: '薇齐娜', text: '是他的声音。他从来没同我说过这么长的话。……我跟了他二十年。' },
       { if: 'party.barry', speaker: '巴里', text: '十九年。他们看着我家那孩子长大，看着坟一座一座空，一口热饭没给谁送过。对不住，这个理我咽不下去。' },
@@ -1095,7 +1101,7 @@ export const SCENES = {
     text: [
       '比武会最后一天。最后一轮的号角吹过了，东门却又开了一回：一个骑士骑进场，没报名字，没举旗，马蹄踩在霜上没有声音。面甲是拉下来的。两个扈从跟在马后，走路不弯膝盖。',
       '头一个上去拦的是洛伦特的掌旗官，一合落马。枪尖在他喉咙上停了一下，收回去了。看台上有东坎诺来的老兵站了起来。',
-      { speaker: '老兵', text: '那个起手，那个收枪。是净手，埃德蒙·净手。他去年冬天死在梅雷斯克，棺材是我抬的。' },
+      { speaker: '老兵', text: '那个起手，那个收枪。是净手，埃德蒙·净手。他今年开春死在梅雷斯克，棺材是我抬的。' },
       '骑士拨转马头，朝看台最上头那一层走过去。那一层坐的是冠。',
       { if: "faction == 'sapphire'", text: '你认得他进场时行的礼：枪尖点地，再抬到眉心。蓝宝石之眼的旧礼，是他同凯伦两个人定的。' },
       { if: 'party.valeran', speaker: '瓦勒兰', text: '恕我直言，那个礼我认得。家父教过，说是东边的骑士才用，洛伦特人学了要挨笑。' },
@@ -1226,7 +1232,7 @@ export const SCENES = {
       { if: 'flag.palehand_saluted', text: '出门之前他勒住马，朝你回了一个礼：枪尖点地，再抬到眉心。这回是整个的。' },
       '阿德蕾西娅说他进场以后一共出了九枪，九枪都收了。看台上那位东坎诺的老兵坐了回去，嘴里念着一句话：凯伦说，赢了要留人。',
       '看台最上头那一层已经空了。冠都回了各家的偏厅，灯一间一间亮起来。',
-      { if: 'party.valeran', speaker: '瓦勒兰', text: '恕我直言。一个死人今天守了规矩。在场的活人，守了的不到一半。' },
+      { if: 'party.valeran', speaker: '瓦勒兰', text: '恕我直言。刚才看台上有人往场里扔了一把匕首，是南王国的一位伯爵。死人没捡，我捡了。' },
     ],
     choices: [
       {
@@ -1234,6 +1240,13 @@ export const SCENES = {
         if: 'is.god && flag.a4x_palehand_won',
         effects: ['rep escann +1'],
         result: '门洞里的马蹄停了一步，接着走远了。看台上有人把你这句话记了下来，当天晚上已经传出三个版本，有一个版本里你答的是“看心情”。',
+        goto: 'a4_13',
+      },
+      {
+        text: '朝着那道门答他：神不留',
+        if: 'is.god && flag.a4x_palehand_won',
+        effects: ['rep escann -1', { if: "faction == 'sapphire'", then: ['rep escann -1'] }],
+        result: '马蹄声没停。看台上蓝宝石之眼的几个老骑士把帽子戴了回去，一个跟一个走了，走的也是那道门。东坎诺的人后来说：死人守凯伦的规矩，神不守。',
         goto: 'a4_13',
       },
       { text: '去偏厅，诸王在等', goto: 'a4_13' },
@@ -1246,7 +1259,7 @@ export const SCENES = {
     art: 'ev_hre',
     loc: '洛伦泰内 · 各家的偏厅',
     text: [
-      '死人骑进了婚礼的比武场，还占了上风。当天夜里，王宫的偏厅没有一间是黑的，每间里都有一位国王在说同一句话：得有一面大旗，得有个皇帝。你兜里揣着那封信。写信的人等的就是今晚这些话。',
+      '死人骑进了婚礼的比武场，还占了上风。当天夜里，王宫的偏厅没有一间是黑的，每间里都有一位国王在说同一句话：得有一面大旗，得有个皇帝。你兜里揣着那封信。信上那句“修好了自己会请一位上去”，你今晚隔着墙听了十几回，口音各不相同。',
       '人选一个一个摆上桌，像摆菜。卢坎·西卢里昂二十一岁，乌霜家的外孙，精灵的耳朵，他们管他叫“银龙”。',
       { speaker: '卢坎', text: '我舅舅是黑龙，我父亲是精灵，我娘说我们兄妹六个是照着一颗星生的。山认哪一样，我想上去问问。' },
       { if: 'flag.lucan_iacob', text: '他身后站着一个七十九岁的老人，替他拿着斗篷。亚科布。' },
@@ -1262,7 +1275,7 @@ export const SCENES = {
     first: ['codex clarimonde', 'codex lucan'],
     choices: [
       {
-        text: '看看谁最急',
+        text: '挨个看人选身后站着谁',
         once: true,
         check: { skill: 'insight', dc: 16, party: true },
         ok: {
@@ -1297,7 +1310,7 @@ export const SCENES = {
       {
         text: '把信念给他们听，把缰绳的事摊开讲',
         effects: ['flag bridle_public', 'world mantle -2', 'world writ +1', 'approval liv +1', 'approval vezina +1'],
-        result: '你念到“誓词是现成的”，屋里没人出声了。温斯坦头一个开口：结解没解，谁说了算？瓦洛森的法师咳了一声。从今往后，这句话只有法师答得上来。',
+        result: '你念到“誓词是现成的”，屋里没人出声了。温斯坦头一个开口：结解没解，谁说了算？瓦洛森的法师咳了一声。没人看他，他又咳了一声。满屋的国王这才一个一个把头转过去。',
         goto: 'a4_14',
       },
       {
@@ -1468,6 +1481,7 @@ export const SCENES = {
         goto: 'a4_16',
       },
     ],
+    next: 'a4_16',
   },
 
   a4_16: {
@@ -1550,7 +1564,7 @@ export const SCENES = {
     id: 'a4_16b',
     title: '第五十四位',
     text: [
-      { if: '!party.liv', text: '空地上没有卡斯坦。这块石头她惦记了半辈子，今天来的人里偏偏没有她。' },
+      { if: '!party.liv', text: '空地上没有卡斯坦。石头底下的泥里还留着一圈爪印，十六年前踩的，叫雨泡得发圆。今天没有新的。' },
       { if: 'party.liv', text: '卡斯坦在誓石前头站住，把酒囊解下来搁在地上。这是你头一回见她上山不带酒味。她收翅膀的时候，得用手扶一下。' },
       { if: 'party.liv', speaker: '卡斯坦', text: '我等这块石头等了二十六年。它收买不了，这一点比你们谁都强。' },
       { if: 'party.liv && (flag.knot_cut || flag.iacob_loop)', speaker: '卡斯坦', text: '结解了，我听见了。那我上去问它一句：行，还是不行。' },
@@ -1576,7 +1590,7 @@ export const SCENES = {
         goto: 'a4_16c',
       },
       {
-        text: '等她自己拿主意',
+        text: '退开三步，等她自己拿主意',
         if: 'party.liv && !flag.knot_cut && !flag.iacob_loop && flag.liv_told',
         effects: ['flag a4x_liv_stood', 'approval liv +3'],
         result: '她在石头前站了一夜，没坐，没喝。天亮的时候她走回来，从地上捡起酒囊。“老娘不给人当马。”她灌了一大口，递给你。“你早告诉了我，这笔账记你一功，掌玺大臣。”',
@@ -1666,7 +1680,7 @@ export const SCENES = {
           { if: '!flag.knot_cut', then: ['flag liv_bridled'] },
           'companion -liv',
         ],
-        result: '她把誓词从头念到尾，一个字不错，这一段她背了二十六年。{?item.ebonsteel_crown >= 1:乌钢冠是你从地砖底下带出来的，冠圈内侧磨得发亮，她戴上去正好。|冠是布洛克拿铁条现箍的，箍大了一指，她说就这么戴。}温斯坦的脸是青的。屠兽者的椅子上，坐了一位鹰身女妖。',
+        result: '她把誓词从头念到尾，一个字不错，这一段她背了二十六年。{?item.ebonsteel_crown >= 1:乌钢冠是你从地砖底下带出来的，冠圈内侧磨得发亮，她戴上去正好。|冠是布洛克拿铁条现箍的，箍大了一指，她说就这么戴。}温斯坦的脸是青的。她冲他举了举酒囊，问他喝不喝。',
         goto: 'a4_17',
       },
       {
@@ -1731,7 +1745,7 @@ export const SCENES = {
       { if: 'flag.castan_crowned && flag.castan_liv', text: '皇帝卡斯坦的头一道敕令：往后的卡斯坦，过完十道还得再加一道，喝赢她。她嚷得整座山都听得见。' },
       { if: 'flag.castan_crowned && flag.castan_liv && flag.liv_bridled && !flag.iacob_loop', text: '她什么也没觉出来。你读过那封信，你看得出她手腕上多了什么。' },
       { if: 'flag.castan_crowned && flag.castan_pc', text: '头一道敕令等着你落笔。书记官举着印泥站了半个钟头，问你皇帝的印和监誓人的印用哪一枚。' },
-      { if: 'flag.castan_crowned', text: '立了誓的人还得往上走完后六道。往“人类之冠”上添一块石头。劝和两个吵了三百年的林中精怪。同一头双足飞龙交朋友。绕着一块石头跳十圈：当年坎雷克的师父也跳过，没人知道他跳的时候在想什么。然后是第九道的石像，最后进林子猎一头兽。' },
+      { if: 'flag.castan_crowned', text: '立了誓的人还得往上走完后六道。往“人类之冠”上添一块石头。劝和两个吵了三百年的林中精怪。同一头双足飞龙交朋友。绕着一块石头跳十圈：当年坎雷克的师父也跳过，没人知道他跳的时候在想什么。然后是第九道的石像。最后进林子猎一头兽，拿它身上的东西亲手做一件器物，做什么都行，布洛克要验。' },
       { if: 'flag.castan_crowned && flag.golem_forever && !flag.castan_pc', text: '第九道的石像是你当众叫起来的。它起身的时候，膝盖底下的石阶已经跪出了两个坑。' },
       { if: '!flag.castan_crowned && flag.mountain_sealed && !flag.stair_down', text: '石阶从上往下一级一级敲掉，敲了三天。最后一级是克拉丽蒙德自己敲的。她把镐留在了山脚。' },
       { if: '!flag.castan_crowned && flag.stair_down', text: '山还是十六年前你们封的样子：一面崖，一块石头，没有路。' },
@@ -1771,7 +1785,9 @@ export const SCENES = {
       { if: 'party.liv && is.god && flag.castan_pc', speaker: '卡斯坦', text: '你上去了。那我算什么。' },
       { if: 'party.liv && is.god && !flag.castan_pc', speaker: '卡斯坦', text: '你连这个都不要。那你到底要什么。' },
       { if: 'party.liv && is.mortal', speaker: '卡斯坦', text: '我问过它了。往后谁再同我提这座山，我请他喝酒，喝完揍他。' },
-      { if: 'party.valeran', speaker: '瓦勒兰', text: '恕我直言。山上说的话得算数，这规矩要是搬到山下来，恩特本一半的老爷得改行。' },
+      { if: 'party.valeran && is.mortal', speaker: '瓦勒兰', text: '恕我直言。山上说的话得算数，这规矩要是搬到山下来，恩特本一半的老爷得改行。' },
+      { if: 'party.valeran && is.god', speaker: '瓦勒兰', text: '恕我直言，阁下。我向人发过誓，没向神发过。今天在山上我想明白了一半：您说的话算数，可没有一块石头管得着您。' },
+      { if: 'party.vezina && is.god', text: '薇齐娜在本子上写了一行，又划掉了。你瞥见划掉的那两个字是“神立”，旁边改成了“要是”。' },
       { if: 'party.barry', text: '巴里的汤热了三回。他没问山上的事，先给每人盛了一碗，卡斯坦坐过的那只凳子上也搁了一碗。' },
       { if: 'is.god', speaker: '阿德蕾西娅', text: '大人，石头上五十三段誓词，没有一段是神立的。我数过了。' },
       '阿德蕾西娅把你的印匣擦了一遍，放下，又擦了一遍。她今年十五了。',

@@ -46,6 +46,7 @@ export const SCENES = {
       "（待写）"
     ],
     "first": [
+      "companion +guilhem",
       "quest q_harvest start",
       "quest q_guilhem start"
     ],
@@ -56,9 +57,6 @@ export const SCENES = {
     "title": "驳船",
     "text": [
       "（待写）"
-    ],
-    "first": [
-      "companion +guilhem"
     ],
     "next": "a1_06"
   },
@@ -293,6 +291,7 @@ export const SCENES = {
       "（待写）"
     ],
     "first": [
+      "companion +narwen",
       "quest q_narwen start"
     ],
     "next": "a1_17"
@@ -302,9 +301,6 @@ export const SCENES = {
     "title": "头一份报告",
     "text": [
       "（待写）"
-    ],
-    "first": [
-      "companion +narwen"
     ],
     "choices": [
       {

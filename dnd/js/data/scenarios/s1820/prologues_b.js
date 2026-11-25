@@ -79,6 +79,7 @@ export const SCENES = {
       "flag captain",
       "companion +bura",
       "quest q_jar start",
+      "codex c_company",
       {
         "if": "faction == 'seal'",
         "then": [
@@ -167,6 +168,7 @@ export const SCENES = {
       "flag captain",
       "companion +bura",
       "quest q_jar start",
+      "codex c_company",
       {
         "if": "faction == 'seal'",
         "then": [

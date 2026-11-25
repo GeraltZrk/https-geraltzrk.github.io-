@@ -5029,6 +5029,15 @@ export const ART = {
   }
  },
  "scenes": {
+  "ck3_barry": {
+   "src": "assets/art/ck3_barry.webp"
+  },
+  "ck3_damesteeth": {
+   "src": "assets/art/ck3_damesteeth.webp"
+  },
+  "ck3_landing": {
+   "src": "assets/art/ck3_landing.webp"
+  },
   "ev_aakhet_dragon_smug": {
    "sepia": true,
    "src": "assets/ev/ev_aakhet_dragon_smug.webp"

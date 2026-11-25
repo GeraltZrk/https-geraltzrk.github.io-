@@ -414,9 +414,9 @@ export const META = {
       title: '未葬者',
       text: [
         { if: 'world.unburied <= 3', text: '在这条时间线上，白疫没走出边境地。阿雷尔王子活着，老了以后常去瓦洛森的饭堂吃饭，吃完自己洗碗。卡奈特的克雷格也活着，看着儿女成了家，卡奈特一直没有并进达梅里亚。' },
-        { if: 'world.unburied >= 4 && world.unburied <= 6', text: '死的人还是史书上那几位。1050 年，卡奈特的克雷格和他的儿女{?flag.doses_moon:。|，还有马里昂的长子阿雷尔。}同一年，洛伦特的雷安四世。1053 年，加韦德六岁的戈德拉克十一世。' },
+        { if: 'world.unburied >= 4 && world.unburied <= 6', text: '死的人还是史书上那几位。1050 年是卡奈特的克雷格和他的儿女{?flag.doses_rose || flag.doses_split:。|，还有洛伦特的雷安四世。}{?flag.doses_moon || flag.doses_split:|马里昂的长子阿雷尔也没熬过去。}1053 年是加韦德的戈德拉克十一世，他六岁。' },
         { if: 'world.unburied >= 4 && world.unburied <= 6', text: '大墓地的账本上，这几行字写得比别的大一号。' },
-        { if: 'world.unburied >= 7', text: '在这条时间线上，名单又长了一截。克雷格一家，阿雷尔王子，雷安四世，六岁的戈德拉克十一世，后面还跟着整整一页小地方的名字。' },
+        { if: 'world.unburied >= 7', text: '在这条时间线上，名单又长了一截。克雷格一家{?flag.doses_moon || flag.doses_split:|，阿雷尔王子}{?flag.doses_rose || flag.doses_split:|，雷安四世}，六岁的戈德拉克十一世，后面还跟着整整一页小地方的名字。' },
         { if: 'world.unburied >= 7', text: '边境地的村名换了一半。新来的垦户说罗尔萨德话，管路边的老坟叫“前面那家人的”。' },
       ],
     },
@@ -470,7 +470,7 @@ export const META = {
       if: 'flag.price_aldresia || flag.price_pc || flag.price_companion || flag.price_emperor || flag.price_names',
       title: '谁付了账',
       text: [
-        { if: 'flag.price_aldresia', text: '阿德蕾西娅数过了，够一个人去。她去了。骑士团的新人入门头一天，要去瓦洛森的饭堂看一眼那把剑。剑挂在饭堂。' },
+        { if: 'flag.price_aldresia', text: '阿德蕾西娅数过了，够一个人去。她去了，没回来。骑士团的新人入门头一天，都要在瓦洛森的饭堂吃一顿饭。她的剑挂在饭堂。' },
         { if: 'flag.price_pc && is.mortal', text: '付账的是你。书记官在登记册上替你补了一行，墨水用的是你自己那锅蜡化开的。阿德蕾西娅把你的印收着，从来不拿出来盖。' },
         { if: 'flag.price_pc && !is.mortal', text: '付账的是你，可你没死成。阿德蕾西娅说了一句“您不用数人”，然后转身去埋别人。' },
         { if: 'flag.price_companion && flag.price_liv', text: '卡斯坦临走前要了一口酒，喝了一半，把另一半留给你。史书上没有这个名字，瓦洛森的饭堂里有。' },
@@ -515,6 +515,62 @@ export const META = {
         { if: 'flag.edict_softened', text: '那道逐精灵令缓了又缓，缓到后来没人记得它还在。' },
       ],
     },
+    {
+      if: 'flag.iacob_hanged || flag.iacob_pardoned || flag.iacob_wise',
+      title: '背叛者亚科布',
+      text: [
+        { if: 'flag.iacob_hanged', text: '在这条时间线上，亚科布是在卡斯托纳斯西门外绞的。上绞架前他要了一杯茶，喝完把杯子还给了刽子手。福阿哈尔往后换了三任公爵，没一个比他会管账。' },
+        { if: 'flag.iacob_pardoned', text: '他活到九十一岁，死在床上。床头的茶具摆得整整齐齐。最后那几年他替谁办事，谁也说不准。' },
+        { if: 'flag.iacob_wise', text: '在这条时间线上，亚科布在瓦洛森的塔里关了一辈子，也替贤者会讲了一辈子课。讲缰绳那一课，学生抢着坐前排。下了课没人敢同他说话。' },
+      ],
+    },
+    {
+      if: '(flag.lucan_alva || flag.lucan_garrec || flag.lucan_marion || flag.lucan_iacob) && !(flag.castan_lucan && flag.castan_crowned)',
+      title: '卢坎',
+      text: [
+        { if: 'flag.lucan_alva', text: '卢坎跟着母亲长大，后来做了乌里昂马尔的公爵。南王国的人见了他那对耳朵，还是要多看一眼。那座山他从来不提。' },
+        { if: 'flag.lucan_garrec', text: '卢坎是舅舅带大的，学会的头一件事是乌霜家的军礼。他后来做了乌里昂马尔的公爵，府里挂一面黑龙旗，旗边镶的是银。' },
+        { if: 'flag.lucan_marion', text: '卢坎在达梅斯海德长大，同马里昂的孩子们一桌吃饭。他后来做了乌里昂马尔的公爵，口音一辈子没改过来。南王国的人管他叫“西边来的”。' },
+        { if: 'flag.lucan_iacob', text: '卢坎是亚科布教出来的。他后来做了乌里昂马尔的公爵，倒茶的手同他先生一样稳。东坎诺从此又多了一个亚科布。' },
+      ],
+    },
+    {
+      if: 'flag.crege_penance || flag.crege_champions || flag.crege_given',
+      title: '那一枪',
+      text: [
+        { if: 'flag.crege_penance', text: '克雷格行完忏悔礼，又过了几年安生日子。每年泪落月 27 日他不出门，门厅里挂着一根断枪。' },
+        { if: 'flag.crege_champions', text: '克雷格到底没亲自下场，替他出战的骑士赢了。卡奈特的人说他还了一笔，洛伦特的人说他赖了一笔。这笔账就一直挂着。' },
+        { if: 'flag.crege_given', text: '克雷格被交到了太后手里。往后的事，洛伦泰内的人不提，卡奈特的人不问。' },
+      ],
+    },
+    {
+      if: 'flag.temple_dug || flag.temple_guarded',
+      title: '苏雷尔神庙底下',
+      text: [
+        { if: 'flag.temple_dug', text: '西奥多的人从苏雷尔神庙底下带上来一样东西，拿油布裹着，没人当面打开过。往后科乌里亚的贵族不大晒太阳。' },
+        { if: 'flag.temple_guarded', text: '在这条时间线上，苏雷尔神庙底下那样东西又多睡了一阵。西奥多爵士另找了门路，晚了一代人。' },
+      ],
+    },
+    {
+      if: 'flag.book_locked || flag.book_wise',
+      title: '那本书',
+      text: [
+        { if: 'flag.book_locked', text: '魔典锁进了骑士团的库，钥匙分给三个人拿。四百年后有个法师惦记上了它。' },
+        { if: 'flag.book_wise', text: '在这条时间线上，魔典交到了加里昂手里。瓦洛森的塔里多了一间不点灯的屋子，学生路过都绕着走。加里昂每年进去一回，出来不说话。' },
+      ],
+    },
+    {
+      if: 'flag.finnic_chip && item.oathstone_chip < 1',
+      title: '誓石碎片',
+      text: ['誓石碎片放回了山上。维斯沃尔的议会又有人敢开口了，头一句是骂国王。芬尼克听完，叫人给骂他的那位添了一块饼。'],
+    },
+    {
+      title: '拉尔桑',
+      text: [
+        { if: 'flag.larthan_open', text: '在这条时间线上，拉尔桑的墙矮了一截。墙根底下后来开了个集，精灵卖船板，人类卖腌菜。' },
+        { if: '!flag.larthan_open', text: '拉尔桑的墙又立了几百年。墙那边的人记得是谁关的门，墙这边的人记得是谁没开。' },
+      ],
+    },
     // 同伴
     {
       if: 'met.liv',
@@ -533,7 +589,7 @@ export const META = {
       title: '巴里·月华',
       text: [
         '1058 年巴里满一百岁，船上的长老总算肯叫他一声大人。他摆了三天席，第三天的菜是第一天剩的。',
-        { if: 'world.communion <= 2', text: '精灵走的那年，他是少数没走的。他守着戴伦的坟，每年清明往坟前放一块三道卫的乳酪。' },
+        { if: 'world.communion <= 2', text: '精灵走的那年，他是少数没走的。他守着戴伦的坟，每年戴伦生日那天，往坟前放一块三道卫的乳酪。' },
         { if: 'world.communion >= 3', text: '1221 年阿兰蒂尔大峰会的席上，有个两百六十三岁的胖精灵带了一篮子吃的，先分给门口的卫兵。' },
       ],
     },
@@ -589,12 +645,12 @@ export const META = {
     { if: 'is.god && flag.god_crusade', title: '柱子上的字', text: ['在这条时间线上，沼地里烧人的那些年，柱子上刻的是你的神号。骑士团后来花了两代人把它凿掉。凿不干净。'] },
     { if: 'is.god && flag.god_herald', title: '日轮旁边那颗小的', text: ['在这条时间线上，布勒瓦尔的神殿在苏雷尔的日轮旁边添了一颗小的。贾赫一直没回来。东边来的信里问过一句：墙上那颗小的是谁。'] },
     { if: 'is.god && flag.god_promise_viswall', title: '请神吃饭', text: ['在这条时间线上，小人国往后每回有事，你都得回去一趟。芬尼克的孙子管这叫“请神吃饭”。四百年里你吃了十一回，每回都是派。'] },
-    { if: 'is.god && flag.golem_forever', title: '跪着的石像', text: ['第九道试炼的石像还跪着。北要塞的孩子往它手里托着的那颗头上放过果子、帽子和一只猫。猫待了一下午才走。'] },
+    { if: 'is.god && flag.golem_forever', title: '跪着的石像', text: ['在这条时间线上，第九道试炼的石像还跪着。北要塞的孩子往它手里托着的那颗头上放过果子、帽子和一只猫。猫待了一下午才走。'] },
     { if: 'is.god && flag.god_wed', title: '神证的婚', text: ['在这条时间线上，神证的婚没人敢解。奥坎娜守了一辈子寡，西洛瑞尔家和西尔穆纳家都说这是对方求来的。'] },
     { if: 'is.god && flag.price_names', title: '一夜念完', text: ['书上的名字你一夜就念完了。书里的魂同一夜全放了出去。边境地三年没人敢走夜路，第四年才有人敢在门口挂灯。'] },
     { if: 'is.god && flag.castan_pc && flag.castan_crowned && flag.castan_alive && flag.knot_cut', title: '不会死的卡斯坦', text: ['在这条时间线上，试炼山上坐着一位不会死的卡斯坦。誓词说“至我寿终之日”，你没有那一日。坎雷克想要的东西，你替他办成了。'] },
-    { if: 'is.immortal', title: '欠一死', text: ['奈拉特的收殓人在账上给你留了一行：欠一死。大墓地每换一任大祭司，都写信来问那笔账还挂不挂着。你每回都回信。'] },
+    { if: 'is.immortal', title: '欠一死', text: ['在这条时间线上，奈拉特的收殓人在账上给你留了一行：欠一死。大墓地每换一任大祭司，都写信来问那笔账还挂不挂着。你每回都回信。'] },
     { if: 'is.immortal && flag.price_pc', title: '后脑勺', text: ['书在你身上留的那道记号，过了多少年也没淡。阴天的时候，你听得见有人在很远的地方抱怨后脑勺痒。'] },
-    { if: 'is.immortal', title: '两百年前的蜡印', text: ['1221 年阿兰蒂尔大峰会，门口有人拿着一枚两百年前的蜡印求见。卫兵去问书记官。书记官翻了半天，还是找不着那本登记册。'] },
+    { if: 'is.immortal', title: '两百年前的蜡印', text: ['在这条时间线上，1221 年阿兰蒂尔大峰会，门口有人拿着一枚两百年前的蜡印求见。卫兵去问书记官。书记官翻了半天，还是找不着那本登记册。'] },
   ],
 };

@@ -1,4 +1,47 @@
 // s1444《送神》: everything except scenes and codex (see BIBLE.md §4–§10, §12, §13, §16).
+
+// Chapter-jump state (BIBLE.md §12.9). Each list is everything the earlier parts guarantee on the canon line:
+// level, companions, quest stages, the "必有 / 几选一" flags, and the origin's own quest and item.
+const PROLOGUE_DONE = [
+  'level 2', 'companion +ushka', 'flag p_truth', 'quest q_cart start', 'quest q_dragon start',
+  'codex greentide', 'codex corin', 'codex agrados', 'codex standing_order', 'codex truce_table',
+  { if: "origin == 'corintar'", then: ['quest q_o_corintar start'] },
+  { if: "origin == 'sons'", then: ['quest q_o_sons start', { if: 'item.sergeant_urn < 1', then: ['item +sergeant_urn'] }] },
+  { if: "origin == 'wex'", then: ['quest q_o_wex start'] },
+  { if: "origin == 'grudge'", then: ['quest q_o_grudge start', 'flag body_verified'] },
+  { if: "origin == 'tide'", then: ['quest q_o_tide start'] },
+];
+const ACT1_DONE = [
+  ...PROLOGUE_DONE, 'level 4', 'companion +tan', 'companion +nixee',
+  'flag goblins_hidden', 'flag korgus_lake', 'flag roll_seen', 'flag spirits_heard', 'flag testimony_host', 'flag compact_none',
+  'quest q_korgus start', 'quest q_korgus done', 'quest q_sightings start', 'quest q_sightings done', 'quest q_compact start', 'quest q_compact done',
+  'quest q_debt start', 'quest q_ushka start', 'quest q_cart stage 2', 'quest q_dragon stage 2',
+  'codex castonath', 'codex korgus', 'codex khak_bazi', 'codex castellos', 'codex dawn_office',
+  { if: "origin == 'corintar'", then: ['quest q_o_corintar stage 2'] },
+  { if: "origin == 'grudge'", then: ['quest q_o_grudge stage 2'] },
+  { if: "origin == 'tide'", then: ['flag road_ghurad', 'quest q_o_tide stage 2'] },
+];
+const ACT2_DONE = [
+  ...ACT1_DONE, 'level 6', 'companion +garaele',
+  'flag parents_buried_deep', 'flag castellar_seen', 'flag dookanil_known', 'flag belgrak_lost', 'flag notebook_kept',
+  'quest q_parents start', 'quest q_parents done', 'quest q_list start', 'quest q_list fail',
+  'quest q_cart stage 3', 'quest q_dragon stage 3', 'quest q_ushka stage 2',
+  { if: "origin == 'grudge'", then: ['quest q_o_grudge stage 3'] },
+];
+const ACT3_DONE = [
+  ...ACT2_DONE, 'level 8',
+  'flag log_read', 'flag bearing_known', 'flag wound_seen', 'flag proof_kept', 'flag tilda_true', 'flag adenn_damesear', 'flag door_letter_sent', 'world peace -1',
+  'quest q_duke start', 'quest q_duke done', 'quest q_door start', 'quest q_cart stage 4', 'quest q_dragon stage 4', 'quest q_ushka stage 3',
+  { if: "origin == 'sons'", then: ['quest q_o_sons stage 2'] },
+  { if: "origin == 'wex'", then: ['quest q_o_wex stage 2'] },
+];
+const ACT4_DONE = [
+  ...ACT3_DONE, 'level 10',
+  'flag toll_years', 'flag contract_staff', 'flag staff_seen', 'flag war_of_two_seen', 'flag tan_read_it', 'flag rite_done', 'flag wall_sealed', 'flag staff_returned', 'var rites =3',
+  'quest q_door stage 2', 'quest q_door done', 'quest q_ushka done', 'quest q_wall start', 'quest q_wall done', 'quest q_cart stage 5', 'quest q_dragon stage 5',
+  { if: "origin == 'corintar'", then: ['quest q_o_corintar stage 3'] },
+];
+
 export const META = {
   id: 's1444',
   era: 1444,
@@ -286,43 +329,18 @@ export const META = {
     },
   },
 
-  // Cheat menu "jump to chapter" (BIBLE.md §12.9: the canon line by default).
+  // Cheat menu "jump to chapter" (BIBLE.md §12.9: the canon line by default; see the *_DONE lists at the top).
   chapters: [
     { title: '序章 · 科琳的队伍', note: '1 级，一个人。科琳刚倒下。', scene: 'p_corintar_01', if: "origin == 'corintar'" },
     { title: '序章 · 达梅里亚之子', note: '1 级，一个人。北城一条世家的街。', scene: 'p_sons_01', if: "origin == 'sons'" },
     { title: '序章 · 皇帝的差事', note: '1 级，一个人。峭壁区的屋顶。', scene: 'p_wex_01', if: "origin == 'wex'" },
     { title: '序章 · 负怨者兵团', note: '1 级，一个人。南城，一路估价。', scene: 'p_grudge_01', if: "origin == 'grudge'" },
     { title: '序章 · 退潮的人', note: '1 级，一个人。手背不再变色。', scene: 'p_tide_01', if: "origin == 'tide'" },
-    {
-      title: '第一幕 · 没人肯埋的兽人', note: '2 级；乌什卡在队。', scene: 'a1_01',
-      effects: ['level 2', 'companion +ushka', 'flag p_truth', 'quest q_cart start', 'quest q_dragon start'],
-    },
-    {
-      title: '第二幕 · 再没人见过的矮人', note: '4 级；乌什卡、阿坦、妮克西在队。尸首沉了湖，城没人管。', scene: 'a2_01',
-      effects: ['level 4', 'companion +ushka', 'companion +tan', 'companion +nixee', 'quest q_cart start', 'quest q_cart stage 2', 'quest q_dragon start', 'quest q_dragon stage 2',
-        'flag p_truth', 'flag goblins_hidden', 'flag korgus_lake', 'flag roll_seen', 'flag spirits_heard', 'flag testimony_host', 'flag compact_none'],
-    },
-    {
-      title: '第三幕 · 郁金香底下的大公', note: '6 级；加莱尔入队。贝尔格拉克再没人见过。', scene: 'a3_01',
-      effects: ['level 6', 'companion +ushka', 'companion +tan', 'companion +nixee', 'companion +garaele', 'quest q_cart start', 'quest q_cart stage 3', 'quest q_dragon start', 'quest q_dragon stage 3',
-        'flag p_truth', 'flag goblins_hidden', 'flag korgus_lake', 'flag roll_seen', 'flag spirits_heard', 'flag testimony_host', 'flag compact_none',
-        'flag parents_buried_deep', 'flag castellar_seen', 'flag dookanil_known', 'flag belgrak_lost', 'flag notebook_kept'],
-    },
-    {
-      title: '第四幕 · 诸神之王', note: '8 级；九年过去。证据没动，皇后死了，大公埋在月神之耳。', scene: 'a4_01',
-      effects: ['level 8', 'companion +ushka', 'companion +tan', 'companion +nixee', 'companion +garaele', 'quest q_cart start', 'quest q_cart stage 4', 'quest q_dragon start', 'quest q_dragon stage 4', 'quest q_door start',
-        'flag p_truth', 'flag goblins_hidden', 'flag korgus_lake', 'flag roll_seen', 'flag spirits_heard', 'flag testimony_host', 'flag compact_none',
-        'flag parents_buried_deep', 'flag castellar_seen', 'flag dookanil_known', 'flag belgrak_lost', 'flag notebook_kept',
-        'flag log_read', 'flag bearing_known', 'flag wound_seen', 'flag proof_kept', 'flag tilda_true', 'flag adenn_damesear', 'flag door_letter_sent', 'world peace -1'],
-    },
-    {
-      title: '终章 · 卡斯托纳斯，又一次', note: '10 级；出林，外头是 1472 年。门砌上了，杖放回了神龛。', scene: 'f_01',
-      effects: ['level 10', 'companion +ushka', 'companion +tan', 'companion +nixee', 'companion +garaele', 'quest q_cart start', 'quest q_cart stage 5', 'quest q_dragon start', 'quest q_dragon stage 5',
-        'flag p_truth', 'flag goblins_hidden', 'flag korgus_lake', 'flag roll_seen', 'flag spirits_heard', 'flag testimony_host', 'flag compact_none',
-        'flag parents_buried_deep', 'flag castellar_seen', 'flag dookanil_known', 'flag belgrak_lost', 'flag notebook_kept',
-        'flag log_read', 'flag bearing_known', 'flag wound_seen', 'flag proof_kept', 'flag tilda_true', 'flag adenn_damesear', 'flag door_letter_sent', 'world peace -1',
-        'flag toll_years', 'flag contract_staff', 'flag staff_seen', 'flag war_of_two_seen', 'flag tan_read_it', 'flag rite_done', 'flag wall_sealed', 'flag staff_returned', 'var rites =3'],
-    },
+    { title: '第一幕 · 没人肯埋的兽人', note: '2 级；乌什卡在队。序章里对那个快死的人说了实话。', scene: 'a1_01', effects: PROLOGUE_DONE },
+    { title: '第二幕 · 再没人见过的矮人', note: '4 级；乌什卡、阿坦、妮克西在队。尸首沉了湖，城没人管。', scene: 'a2_01', effects: ACT1_DONE },
+    { title: '第三幕 · 郁金香底下的大公', note: '6 级；加莱尔入队。贝尔格拉克再没人见过。', scene: 'a3_01', effects: ACT2_DONE },
+    { title: '第四幕 · 诸神之王', note: '8 级；九年过去。证据没动，皇后死了，大公埋在月神之耳。', scene: 'a4_01', effects: ACT3_DONE },
+    { title: '终章 · 卡斯托纳斯，又一次', note: '10 级；出林，外头是 1472 年。门砌上了，杖放回了神龛。', scene: 'f_01', effects: ACT4_DONE },
   ],
 
   flagNotes: {

@@ -102,7 +102,7 @@ const LIST = [
   },
   {
     id: 'daras', name: '达拉斯', type: 'humanoid', level: 7,
-    desc: '话少，针线活好，第一幕的寿衣都是他缝的。他只冲一个人去。头一刀之后他只招架。',
+    desc: '话少，针线活好，收尸队用的寿衣他缝过不少。他只冲一个人去，头一刀之后只招架。',
     hp: 90, ac: 15, init: 4, saves: S(1, 4, 2, 1, 2, 0), xp: 550, ai: 'cunning',
     attacks: [
       { name: '只这一刀', hit: 10, dmg: '4d8+4', type: 'piercing', uses: 1, weight: 20, text: '{name}从人堆里出来，刀是窄刃的，一句话也没有。' },

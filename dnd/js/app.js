@@ -154,8 +154,9 @@ export function boot() {
   window.__app = app;
   setBackdrop('title');
   app.show('title');
-  if ('serviceWorker' in navigator && location.protocol === 'https:') {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
-  }
+  // Offline cache. Sandboxed frames (embedded previews, the standalone build) refuse service workers, sometimes by throwing.
+  try {
+    if (!window.__NO_SW && 'serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('./sw.js').catch(() => {});
+  } catch (e) { /* no offline cache here */ }
   return app;
 }

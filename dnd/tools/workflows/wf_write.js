@@ -6,6 +6,7 @@ export const meta = {
     { title: 'Edit', detail: 'a second pair of eyes on each file: voice, consequences, god line' },
   ],
 }
+const M = args.model ? { model: args.model } : {}
 const S = args.scratch
 const G = args.game
 const ID = args.id
@@ -21,7 +22,7 @@ The person who commissioned the game asked for three things above all: a GRAND p
 READ BEFORE WRITING (in this order):
 1. ${G}/docs/STYLE_GUIDE.md — the voice. Study the ✗/✓ pairs. Every paragraph you write will be linted against the banned-phrase list in ${G}/tools/style-lint.mjs (read that file too).
 2. ${G}/docs/CONTENT_GUIDE.md — the exact scene format (§0 file layout, §2 scenes, §3 choices and checks, §4 conditions, §5 effects, §6 fights, §7 pacing, §9 shops, §10 the god line). ${G}/js/data/scenarios/demo/act1.js is a tiny working example.
-3. The campaign bible ${BIBLE} — all of it. Your scenes are in §11; names in §3 (use ONLY these spellings); companions' and NPCs' voices in §8–§9; flags in §12; quests and codex ids in §13; new enemies/items in §14; the divine storyline in §17; hand-over notes in §15.
+3. The campaign bible ${BIBLE} — all of it. Your scenes are in §11; names in §3 (use ONLY these spellings); companions' and NPCs' voices in §8–§9; flags in §12; quests and codex ids in §13; new enemies/items in §14; the divine storyline in §16; hand-over notes in §15.
 4. ${DIR}/meta.js (exact keys of tracks, reputations, origins, factions, companions, quests, endings), ${DIR}/plan.json (which scene ids are yours, entries, entry level, the flag list), ${DIR}/codex.js (codex ids to unlock with "codex <id>"), ${DIR}/enemies.js and ${DIR}/items.js (campaign-specific ids).
 5. Data ids: ${G}/js/data/enemies_core.js (bestiary: id, level, name), ${G}/js/data/items_base.js and items_extra.js (items), class ids (fighter barbarian rogue monk wizard sorcerer warlock cleric druid bard paladin ranger artificer) and their tags, race ids and tags in ${G}/js/data/races.js, backgrounds in backgrounds.js — conditions such as is.caster / is.martial / is.elf / is.monstrous / is.noble use those tags, so grep for the real tag names before using one.
 6. Art: ${G}/js/data/art.js lists the keys (load_N = painted scenes, ev_xxx = sepia event sketches). ${S}/research/12_art_catalog.json and .md describe what each image shows — pick art that actually fits the scene (place, people, mood); give most scenes art, reuse sparingly, never use an image that shows the wrong people or place.
@@ -37,7 +38,7 @@ HARD RULES
 - Checks fail forward: failure costs something and the story continues. Mix skills; use \`party: true\` when a companion could plausibly do it; add \`mods\` and \`adv\` for origin, faction, reputation, items and earlier flags so that earlier choices pay off. DCs per CONTENT_GUIDE §3.
 - Fights: enemies from the bestiary or the campaign's enemies.js at the party's level; give most fights one or two \`specials\` that use the scene; give story fights a \`lose\` outcome (captured, rescued, robbed, driven off) instead of game over; \`win\` always has a goto.
 - Exclusive content per CONTENT_GUIDE §7 minimums for your part: options for specific origins, factions, class groups and races (shown with \`tag\`), and each companion who can be in the party speaks in several scenes (\`if: "party.<id>"\`) in their own voice, with approval effects where they would care.
-- The god line (CONTENT_GUIDE §10 and bible §17): implement every hook §17 assigns to your scenes, and reach the per-part minimum. A god gets extra paragraphs, a [神] option with a real cost, different reactions — never a different main path that mortals cannot follow.
+- The god line (CONTENT_GUIDE §10 and bible §16): implement every hook §16 assigns to your scenes, and reach the per-part minimum. A god gets extra paragraphs, a [神] option with a real cost, different reactions — never a different main path that mortals cannot follow.
 - Bookkeeping: \`chapter\` on the first scene of each act/prologue; \`loc\` and \`date\` when they change; \`first\` effects for quest updates, codex unlocks (when something first appears on screen), companions joining, and the level milestone the bible gives for the end of your part (\`level N\`); a hub scene with a shop and a rest where the bible says.
 - JavaScript: single-quoted strings; watch for unescaped apostrophes and for Chinese quotes inside strings (use “ ” or 「 」 in narration, never ASCII quotes inside single-quoted strings). No trailing prose outside the object. No functions — data only.
 
@@ -54,18 +55,18 @@ const results = await pipeline(
   (p) => agent(`${CONTEXT}
 YOUR JOB: you are the writer of \`${p.file}\` — ${p.what}. Write ${DIR}/${p.file}.
 ${RULES}
-Return a plain-text report: scene count, total characters, checks, fights, how many scenes react to is.god / is.immortal, which exclusive options you wrote (origin/faction/class/race), any place where you departed from the bible and why, and the last output of check-part.`, { label: `write:${ID}:${p.file}`, phase: 'Write' }),
+Return a plain-text report: scene count, total characters, checks, fights, how many scenes react to is.god / is.immortal, which exclusive options you wrote (origin/faction/class/race), any place where you departed from the bible and why, and the last output of check-part.`, { ...M, label: `write:${ID}:${p.file}`, phase: 'Write' }),
   (report, p) => agent(`${CONTEXT}
 YOUR JOB: you are the editor for \`${DIR}/${p.file}\` (${p.what}), which another writer has just finished. You did not write it; be the reader the commissioner will be. Read the file from top to bottom the way a player would, following branches.
 Fix directly in the file, keeping scene ids, joints and flags intact:
 1. VOICE. This is the main job. Hunt for anything that reads machine-written or like translated boilerplate: explained feelings, summarising last lines, stock scenery, three-part lists, symmetrical sentences, adjectives doing a noun's work, NPCs who all talk alike, options written as attitudes instead of actions, "epic" vocabulary. Rewrite those passages so they sound like a good game master talking: concrete, specific to this place and these people, dry where it can be funny. Check NPC and companion lines against their voice notes in the bible (§8–§9) — each should be recognisable without the speaker label. The linter (${G}/tools/style-lint.mjs) only catches the obvious; you must catch the rest.
 2. CONSEQUENCE. Every choice should matter (track, reputation, approval, flag, resource, or a different scene). Give fake choices real consequences or merge them. Check that earlier choices are remembered where the bible says they should be (conditions on flags), and that failures fail forward.
-3. THE GOD LINE. Check the bible's §17 hooks for these scenes are implemented and good: the [神] options have real costs, reactions differ by who is reacting, companions do not all applaud. Add what is missing (CONTENT_GUIDE §10 minimums).
+3. THE GOD LINE. Check the bible's §16 hooks for these scenes are implemented and good: the [神] options have real costs, reactions differ by who is reacting, companions do not all applaud. Add what is missing (CONTENT_GUIDE §10 minimums).
 4. CANON AND NAMES. Proper nouns must match the bible's 译名表. Spot-check ten setting facts against the corpus (${S}/CORPUS.md) and fix errors.
 5. PLAY. Balance of checks and fights, DCs sane for the level, shops/rests where promised, exclusive options present for origins, factions, classes and races.
 After editing run \`cd ${G} && node tools/check-part.mjs ${ID} ${p.file}\` until 0 errors, 0 problems and 0 文风 warnings.
 Return a plain-text report: the ten most significant rewrites as before → after pairs (one line each), what you added, what you could not fix.
 The writer's own report, for context:
-${typeof report === 'string' ? report.slice(0, 3000) : ''}`, { label: `edit:${ID}:${p.file}`, phase: 'Edit' }).then(e => ({ file: p.file, writer: typeof report === 'string' ? report.slice(0, 1500) : report, editor: typeof e === 'string' ? e.slice(0, 2500) : e }))
+${typeof report === 'string' ? report.slice(0, 3000) : ''}`, { ...M, label: `edit:${ID}:${p.file}`, phase: 'Edit' }).then(e => ({ file: p.file, writer: typeof report === 'string' ? report.slice(0, 500) : report, editor: typeof e === 'string' ? e.slice(0, 700) : e }))
 )
 return { id: ID, results: results.filter(Boolean) }

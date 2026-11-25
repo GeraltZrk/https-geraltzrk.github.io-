@@ -1,6 +1,6 @@
 # 1022 AA：《无冕之年》 (The Uncrowned Years)
 
-剧本 id：`s1022`。本文件是剧本圣经的第一部分（概述、真相、译名、局势、出身、阵营、人物、结局）。分幕场景表和标记表在第二部分。
+剧本 id：`s1022`。本文件前半是剧本圣经的第一部分（§1–§10：概述、真相、译名、局势、出身、阵营、人物、结局），后半是第二部分（§11–§16：分幕场景表、标记表、任务与图鉴、新敌人与物品、写作分工、神格线）。
 
 写场景的人先读第 3 节：专有名词只准用那张表里的写法。出处记号：`[wiki: 页名]` 是维基存档，`[ck3: 路径]` `[eu4: 路径]` 是 mod 文件。标〔本作〕的是我们自己编的，正史里没有。
 
@@ -1151,3 +1151,1558 @@
 - 结局正文停在一个动作或者一句话上。基线结局的最后一个画面定了：书记官另起一页，门外有个半精灵小孩在追一只鸡。
 - 预言谁读对了，哪张卡片都不许下断语。德基南那一派要的“精灵和女先知的女儿一起做解药”，正史里就是加里昂和玛希尔达，卡片把这件事摆出来就行。
 - 涉及 1444 剧本的地方只许点到：魔典、卡斯泰利尔、绿潮、“威克斯必须统治”。卡斯特洛斯的事一个字不提。
+
+---
+
+# 第二部分：场景、标记、任务、分工
+
+第一部分定了“是什么”，这一部分定“哪一场干什么”。写场景的人照 §11 的表写，照 §12 的表设标记和读标记，照 §15 的交接条款守接缝。
+
+## 11 分幕场景表
+
+### 11.0 读表的规矩
+
+- 每条的头一行：`场景id｜标题｜地点·日期｜美术key`。美术 key 取自 `js/data/art.js`，没有合适的写 —，不要硬配。
+- 下面几行的行首记号：**事**（这一场发生什么，谁在场）、**选**（关键选项 → 后果 → 去向）、**检**（技能与 DC）、**战**（敌人 id×数量；带 ★ 的是 §14 的新敌人；“名：”是在 encounter 里用 `name` 改的名字）、**专**（出身、阵营、职业、种族专属）、**店**、**休**、**神**（这一场在 §16.2 有神格钩子）。
+- 没写去向的，默认去下一个编号。
+- 效果照 `CONTENT_GUIDE` 的写法。同伴好感简写成“卡+1、巴−1、薇+1、瓦+1”，分别是 `approval liv`、`approval barry`、`approval vezina`、`approval valeran`。
+- 多选一的标记是一组互斥的真假标记（§12.0）。每一组在指定场景里**必须恰好立一个**，这是给下一幕作者的保证。
+- 每场战斗都要写 `lose`，主线战斗输了也往前走。没有心智的东西（沉睡者、行尸、魔像）和坎雷克一系一律 `noAwe: true`。
+- DC 段位：序章 10–12，第一幕 11–14，第二幕 13–15，第三幕 14–16，第四幕 15–17，终章 15–19。
+- 旧礼阵营的“正经葬礼”每幕只在一场里出现，用 `once: true`，效果 `world unburied -1`。
+- 每幕的长休放在枢纽场里（一次）；幕末收尾场的 `rest long` 算换季，不算在“每幕一次”里。短休每幕一到两次，表里标了“休”。
+- 图鉴和任务的解锁点在表里只标最要紧的，其余由各段作者在人物、地点头一回露面时补 `codex <id>`（id 见 §13）。
+
+**固定接缝**
+
+| 段 | 入口 | 出口 |
+|---|---|---|
+| 序章（五个出身） | `p_<出身>_01` | `p_<出身>_06` → `a1_01` |
+| 第一幕 | `a1_01` | `a1_18` → `a2_01` |
+| 第二幕 | `a2_01` | `a2_19` → `a3_01` |
+| 第三幕（开头三场是间幕《十六年》） | `a3_01` | `a3_20` → `a4_01` |
+| 第四幕 | `a4_01` | `a4_18` → `f_01` |
+| 终章（开头两场是间幕《十二个冬天》） | `f_01` | `f_12` → `end_<结局id>` |
+
+两段间幕各归后一段的作者写：时间一跳，口气就换了，接缝放在跳之前最干净。
+
+**场景数**：序章 5×6 = 30；第一幕 18；第二幕 19；第三幕 20（含间幕 3）；第四幕 18；终章 12（含间幕 2）；结局场景 7。合计 124。
+
+---
+
+### 11.1 序章《印》
+
+共同点：每个出身 6 场，一桩没有正确答案的裁断，一场小战斗，头一回撞见沉睡者或者少掉的尸首，末场在安本科斯特的登记桌前领印。进场 1 级，末场 `level 2`。序章只动声望和标记，不动世界局势。开场的选项里给自建人物留一句“少见搭配”的交代（§5.6 的表）。
+
+#### 达梅里亚
+
+`p_dameria_01｜第七天的早饭｜达梅里斯堡·1022 年卡斯坦月 1 日｜ck3_damesteeth`
+- **事**：王室婚礼后第七天，大厅里还在吃剩席。一位在沼泽堡立过功的老兵端着切肉刀往主桌走，刀尖朝前，眼睛后面没人。马里昂宿醉未醒。屋里只有你动了。
+- **检**：perception DC 10 先看出不对（成了下一检有优势）；athletics / acrobatics DC 11 拦人。败：`hp -3`，刀划在你胳膊上，国王没事。两条路都 `flag saw_sleeper`。
+- **专**：[精灵] 你是白银大队留下来的人，喊了他的名字，他没回头。[矮人] 你是银锻炉派来的客，坐得离主桌最近。
+- **神**：有。
+
+`p_dameria_02｜只记得出门打水｜达梅里斯堡·卫兵房·同日｜—`
+- **事**：老兵醒了，手上的油还没擦，问自己怎么在这儿。他只记得出门打水。伊斯特拉拉尼娅要在天黑前吊人。马里昂把这件事交给“屋里唯一动了的人”。
+- **检**：insight DC 11（他没撒谎）；medicine DC 12（没喝酒）；[is.caster] arcana DC 12（身上有别人法术留下的旧茬）。只影响文字和 05 的说服优势。
+
+`p_dameria_03｜帐篷城｜安本科斯特城外·同日午后｜ev_multi_racial_merc`
+- **事**：同盟军的帐篷从旧城墙搭到精灵码头。老兵那一排还住着两个同袍，铺盖卷打好了，铲子磨过。伙房里有个十二岁的女孩在喝第三碗汤，厨子不记得盛过前两碗。这是伊迪丝，`flag met_edith`。
+- **检**：investigation DC 11（铺位底下两把磨快的工兵铲）；persuasion DC 12 让同营的人开口，败了用 §11.7 的样例②（萝卜刻的印）。
+- **选**：给女孩一个铜板、问厨子、不管，三样都只是文字。
+
+`p_dameria_04｜夜里起身的人｜帐篷城·当夜｜—`
+- **战**：两个同袍半夜起身，扛着铲往城堡走。`enthralled_soldier`×2（名：起身的老兵），我方 `man_at_arms`×1。special「照后脑勺来一下」athletics DC 11：成了那人倒下醒过来，退出战斗；败了自己挨一下。胜 `xp 60`。败：在医帐里醒来，两人走到堡门口被元帅拿下，05 的说服 DC +2。
+- **专**：[is.martial] 敲头有优势。[旧礼] 你听出他们嘴里念的是军营晚祷的头一句，念了一半就停了。
+
+`p_dameria_05｜元帅要结案｜达梅里斯堡·次日｜—`
+- **事**：伊斯特拉拉尼娅要三个一起吊，今天。马里昂看着你。没有正确答案。
+- **选**：①照元帅的办 → `flag p_knife_hanged`，`rep moon +1`，`rep wise -1`。②关起来等宫廷法师来验 → `flag p_knife_held`，`rep wise +1`。③交给同营的人看着，放回帐篷城 → `flag p_knife_released`，`rep moon -1`。三者必立其一。
+- **检**：选②③要过 persuasion DC 12；败了照样算数，元帅记你一笔（`rep moon -1`）。
+
+`p_dameria_06｜登记桌｜安本科斯特·旧斗兽场拱廊·1022 年埃斯玛月初｜—`
+- **事**：一张桌，一本登记册，一锅化着的蜡。书记官问名字怎么写，问了两遍。马里昂把印塞给你，说明天当众再发一遍誓。
+- **效果**（`first`）：`level 2`，`item +witness_seal`，`quest witness start`，`codex witnesses`，`codex anbenncost`。→ `a1_01`
+
+#### 洛伦特
+
+`p_lorent_01｜王座上的两岁｜洛伦泰内·王宫·1022 年卡斯坦月 1 日｜—`
+- **事**：国王再过三天满两岁，在他爹的王座上睡着了，脚够不着垫子。恩特本来的骑士当着满厅的人说，太后慑住了御前会议。伊奥瑞尔没起身。
+- **检**：insight DC 12（那位骑士自己是信的）；history DC 11（御前会议上回是怎么表决的）。
+- **专**：[精灵] 你是跟太后从红林来的人，恩特本的人看你的眼神不一样。[矮人] [侏儒] 见 §5.6 的交代。
+
+`p_lorent_02｜太后的茶｜洛伦泰内·内室｜ev_lilac_wars`
+- **事**：伊奥瑞尔任命你做监誓人，多交代一件和约上没有的事：查清克雷格·达梅里斯那一枪是不是他自己的。她承认表决那天叫人把一个门卫“劝”开了，别的没做。
+- **效果**：`quest lance start`，`codex ioriel`。起始物品 `ioriel_letter` 在这里交代用处。
+- **选**：问她自己信哪种（她答不上来）；不问。只是文字。
+
+`p_lorent_03｜对大厅说什么｜洛伦泰内·大厅｜—`
+- **事**：她让你出去回话。满厅的人等着。没有正确答案。
+- **选**：①说太后谁也没慑 → `flag p_hall_denied`，`rep rose +1`。②照实说门卫那件事 → `flag p_hall_truth`，`rep rose -1`。③宣布这事由监誓人立案待查 → `flag p_hall_inquiry`，`rep wise +1`。三者必立其一。
+- **检**：persuasion / deception DC 12（①用欺瞒）。败：大厅没散，恩特本的人当场退席，文字不同，标记照立。
+- **神**：有。
+
+`p_lorent_04｜红宝石矮人的箱子｜洛伦泰内·城门外｜—`
+- **事**：替王室管了几百年账的红宝石矮人在装箱。他们的位子给了一位精灵。预设人物巴丽拉在这里有自己的一段。
+- **检**：persuasion DC 12 或 [矮人] 直接成：一位老账房翻出大捷比武会的开销，骑枪是谁家供的写得清清楚楚 → `item +lance_ledger`。
+- **店**：矮人顺手卖掉带不走的东西（`healing_potion`、`bandage`、`dagger`、`shield`）。
+
+`p_lorent_05｜莫尔班平原来的车｜去恩特本的岔路口｜—`
+- **事**：运回莫尔班平原战死者的车队。棺材钉得好好的，有几口抬起来太轻。一个年轻骑士在找三十七号，那口是空的。他叫瓦勒兰。`flag saw_empty_graves`，`flag p_met_valeran`。
+- **战**：押车的恩特本扈从以为你在动棺材。`village_militia`×2、`man_at_arms`×1。special「报出莫冈大人的名号」intimidation DC 11：成了一人收手。胜 `xp 60`。败：被捆在车辕上，瓦勒兰替你解的绳。
+- **检**：investigation DC 12（车夫记不得中途停过车）。
+
+`p_lorent_06｜登记桌｜安本科斯特·旧斗兽场拱廊·埃斯玛月初｜—`
+- **事**：同达梅里亚版。书记官把“洛伦特”三个字写得很花。拱廊那头站着克雷格·达梅里斯，没人同他说话。
+- **效果**：`level 2`，`item +witness_seal`，`quest witness start`，`codex witnesses`，`codex anbenncost`。→ `a1_01`
+
+#### 乌霜边区
+
+`p_ebonmarck_01｜围城第九十一天｜乌霜领·加雷克的大厅·1022 年卡斯坦月 1 日｜ev_fireball`
+- **事**：围城的营火一夜比一夜近。加雷克要你带一句话出去：听我们讲完，或者别再杀了。乌尔维克不信有人肯听。军需官说，前些天有个行商拿旧帝国的金币打听皇帝倒在哪儿，`flag p_old_coin`。
+- **检**：history DC 11（那种钱二十年没人铸了）；insight DC 12（加雷克也怕父亲有几件事是自己愿意的）。
+- **专**：[精灵] [半精灵] 你是阿尔瓦夫人嫁过去时带来的人。[鹰身女妖] 你是乌翼兵团的。
+
+`p_ebonmarck_02｜自己人的申辩｜乌霜领·城门洞｜—`
+- **事**：一个老军团兵承认 1016 年烧过白湾人的村子，说自己当时被慑住了。围城的白湾人放出话：交出这个人，信使可以过营。没有正确答案。
+- **选**：①交人 → `flag p_gave_legionary`，`rep dragon -1`，`rep escann +1`，03 直接通行。②不交 → `rep dragon +1`，03 要自己想办法过营。
+- **检**：insight DC 12（他自己也说不准）。预设人物马尔坎修士在这里可以替他做临终的祷告。
+
+`p_ebonmarck_03｜过营｜乌霜领外·围城营地·夜｜—`
+- **事**：白湾人的战帮、阿德安的狂热骑士、几面倒戈的黑卡斯塔诺旗。营门口的老哨兵从前是军团的人。
+- **检**（没交人才有）：stealth DC 12 或 deception DC 12。还有第三条路：你顺口报了旧军团的夜间口令，他抬手放行，转头就不记得放过谁 → `flag saw_sleeper`，`flag p_used_watchword`。检定败：被追出营，04 开战时 `hp -4`。
+- **专**：交了人的走大路，哨兵照样在，你可以停下来看他一眼（`flag saw_sleeper`）。没走口令那条路的，在 04 的尾巴上补立 `saw_sleeper`：卡斯坦指给你看一个站着睡的哨兵。
+- **神**：有。
+
+`p_ebonmarck_04｜按亲戚价｜阿德尼卡的大路｜ev_harpy_immortal_fight`
+- **战**：白湾战帮的散兵追上来。`reaver_raider`×3（名：白湾战帮），我方 `harpy_raider`×1（名：一个鹰身女妖）。special「往河滩上引」survival DC 11：成了敌方一人陷住。胜 `xp 75`。败：她把你从泥里拎出来，价钱翻倍。
+- **事**：她自称卡斯坦，往下数是五十四世，说按亲戚价收费。`flag met_liv_early`。
+- **选**：给十枚金冠（`gold -10`）／许她一顿酒。只影响 a1_01 的头一句话。
+
+`p_ebonmarck_05｜克拉丽蒙德的一句话｜安本科斯特·达梅里斯堡外廊｜—`
+- **事**：替你讨来这枚印的偏偏是她。她说输家得有人在场，不然这纸和约只是赢家的家书。她只问一件事：皇帝叫你们放下兵器那天，你放了没有。
+- **选**：①放了 → `flag p_laid_arms`。②没放 → `flag p_fought_on`。③那天你不在沼泽堡 → 两个都不立。读它的场景都有“都没立”的写法。
+- **检**：insight DC 12（她在莫尔班平原是替卡斯塔诺打的仗，这件事她没提）。
+
+`p_ebonmarck_06｜登记桌｜安本科斯特·旧斗兽场拱廊·埃斯玛月初｜—`
+- **事**：书记官在“所属”一栏停了笔，想写“东坎诺某地”。
+- **检**：persuasion / intimidation DC 12 让他照实写“乌霜边区”。成败只是文字。
+- **效果**：`level 2`，`item +witness_seal`，`quest witness start`，`codex witnesses`，`codex anbenncost`。→ `a1_01`
+
+#### 伊贝瓦尔
+
+`p_ibevar_01｜两条命｜瓦多塞德·1022 年卡斯坦月 1 日｜load_27`
+- **事**：都城盖在卡德斯特人的废墟上，白银矮人匠师赫哈鲁克在量墙。一个精灵哨兵死了，凶手是法拉内安的人类伐木工，锁在柱子上。伊贝尼昂要你去看了再回话。
+- **检**：history DC 11（那条界谁也没画过）；insight DC 12（伐木工在等人告诉他出了什么事）。
+- **专**：[人类] 你是归了亲王之法的法拉内安垦户。[矮人] 你是砌墙的白银矮人。
+
+`p_ibevar_02｜雪橇｜瓦多塞德以南·林界｜ev_dark_forest`
+- **事**：出事的地方。伐木工的雪橇还在，圆木底下压着一具裹好的尸首，死了一年以上，是从法拉内安的坟地里起出来的。他说自己是来砍树的。
+- **检**：survival DC 11（脚印笔直往南，一步没绕）；investigation DC 12（圆木是摆上去遮东西的）；medicine DC 12（尸首的年头）。任一成功 `flag saw_sleeper`；全败也立，由赫哈鲁克的徒弟指出来。
+
+`p_ibevar_03｜法拉内安的人来了｜瓦多塞德·工地·夜｜—`
+- **事**：马丁·法兰的人来要人。
+- **检**：persuasion DC 12 劝退，成了跳过战斗。
+- **战**：`village_militia`×3。special「敲响排钟」performance / arcana DC 11：成了全体敌人失手一轮。胜 `xp 60`。败：伐木工被抢走半路又被亲王的人追回，04 里“交还”一项的声望改成 `rep elders -2`。
+
+`p_ibevar_04｜亲王问你｜瓦多塞德·亲王帐｜—`
+- **事**：伊贝尼昂把你的答复写成法。没有正确答案。
+- **选**：①一命抵一命，照船上的规矩 → `flag p_ibevar_blood`，`rep elders +1`。②收赔命钱，人交还法拉内安 → `flag p_ibevar_weregild`，`rep elders -1`，`rep moon +1`。③先押着，等一个验得出“他当时是不是自己做的主”的人 → `flag p_ibevar_held`，`rep wise +1`。三者必立其一。
+- **神**：有。
+
+`p_ibevar_05｜月火号的船板｜安本科斯特·精灵码头｜ck3_landing`
+- **事**：改了名的族人在拆月火号的船板当木料。预设人物加琳德尔的排钟在这里装箱。一个白银大队的老兵用你的旧名叫你。
+- **检**：persuasion DC 12 或 performance DC 12，救下一块刻着船名的板 → `item +lunatein_plank`。败：板子进了锯坑，你捡到一把锯末。
+- **店**：码头的精灵船具商（`healing_potion`、`antidote`、`shortbow`、`leather`）。
+
+`p_ibevar_06｜登记桌｜安本科斯特·旧斗兽场拱廊·埃斯玛月初｜—`
+- **事**：书记官要你报姓。船上的人只有船名，他把“塔·卢纳泰因”写错了两回。
+- **效果**：`level 2`，`item +witness_seal`，`quest witness start`，`codex witnesses`，`codex anbenncost`。→ `a1_01`
+
+#### 威克斯
+
+`p_wex_01｜路沟｜去科塞顿的大路·1022 年卡斯坦月 1 日｜—`
+- **事**：用 §11.7 的样例①开场。一车束好腰的尸首翻进路沟，福尔卡德踩着板凳翻账本：四百零六座坟，束腰只发出去三百九十副。
+- **检**：athletics DC 10 帮着抬（败：`hp -2`，闪了腰）；religion DC 11（束腰葬的规矩）。
+- **专**：[半身人] 你是大墓地的人。[精灵] 你学巴里的样在丘陵里落了户。
+- **神**：有。
+
+`p_wex_02｜公爵的小马｜同地｜ck3_barry`
+- **事**：巴里·月华赶到，带着一篮子吃的和一匹小马。马是八岁的公爵托他转交的，鞍袋里有张字条：监誓人发不发马？不发先骑我的。`companion +barry`，`codex barry`，`codex dyren`。
+- **选**：收下马／让巴里先牵着。只是文字，a1_10 会提。
+
+`p_wex_03｜第十二具｜路沟边｜—`
+- **事**：沟里十一具有束腰，第十二具没有。他脖子上挂着卡斯塔诺的军团牌，是当年埃尔拉克的兵，和他杀的人埋在了一处。没有正确答案。
+- **选**：①给他束腰，同威克斯人一起迁葬 → `flag p_wex_buried_legionary`，`rep wex -1`，巴+1。②扔出去 → `flag p_wex_cast_out`，`rep wex +1`，巴−1。③墙外单立一座坟，写上军团番号 → 两个都不立，`rep wex +0`。
+- **检**：religion DC 11，成了福尔卡德替你挡下玛格达手下人的骂。
+
+`p_wex_04｜扒束腰的｜路沟·黄昏｜—`
+- **战**：几个流民来扒死人身上的束腰，鲸骨和亚麻能卖钱。`vagrant_bandit`×2、`cutpurse`×1。special「巴里请他们吃饭」persuasion DC 11（party）：成了一人坐下不打了。胜 `xp 50`。败：束腰被扒走三副，账更对不上了。
+
+`p_wex_05｜十六座空坟｜屠夫原·次日清晨｜ev_looming_death`
+- **事**：坑边的铲痕是齐的。预设人物普丽姆萝丝在这里一座一座对过。起始物品 `ledger_page` 在这里交代用处。`flag saw_empty_graves`，`quest sixteen_graves start`。
+- **检**：investigation DC 11（是收殓人制式的铲）；survival DC 11（没有野兽的爪印）；religion DC 11（挖的人行过礼才动的土）。
+
+`p_wex_06｜登记桌｜安本科斯特·旧斗兽场拱廊·埃斯玛月初｜—`
+- **事**：几位摄政各写了一封信，每封都说“谁都行，除了某某”。巴里替公爵按手印，印泥是果酱。
+- **效果**：`level 2`，`item +witness_seal`，`quest witness start`，`codex witnesses`，`codex anbenncost`。→ `a1_01`
+
+---
+
+### 11.2 第一幕《谁的手》（1022 年埃斯玛月—苏伦月，18 场）
+
+**进场假定**：2 级。队里只有威克斯出身带着巴里，其余出身一个同伴也没有。可能立着的标记：阵营的 `f_*`；`saw_sleeper` 或 `saw_empty_graves`（至少一个）；各出身的 `p_*`；`met_edith`（达梅里亚）、`p_met_valeran`（洛伦特）、`met_liv_early`（乌霜边区）。背包里有 `witness_seal` 和出身的起始物品。
+
+**出场保证**：4 级。卡斯坦、巴里、薇齐娜都在队里（这一幕谁也不会走）。`knows_watchword`、`knows_iacob_name` 一定立着。`guardian_*` 四选一、`acromis_*` 三选一都立了。`plumwall_plea`、`emil_struck`、`field_done`、`alaria_for` / `alaria_blocked` 立没立都有可能。伊迪丝从这一幕末尾起跟着辎重走。
+
+**这一幕的清单**：战斗 a1_08、a1_12、a1_16（另有 a1_04 的骑士裁决）。枢纽 a1_02。没有正确答案的裁断 a1_04、a1_13、a1_17。出身专属：达梅里亚 a1_03、洛伦特 a1_02、乌霜边区 a1_14、伊贝瓦尔 a1_06、威克斯 a1_13。阵营专属：蓝宝石 a1_04、旧礼 a1_05 和 a1_11、贤者门下 a1_03。职业组 a1_15。种族 a1_07、a1_09。
+
+`a1_01｜斗兽场｜安本科斯特·旧斗兽场·1022 年埃斯玛月 3 日｜ev_harpy_immortal`
+- **事**：`chapter: 第一幕 · 谁的手`。各国的监誓人当众发誓。念到一半，一个鹰身女妖落在场子正中，说卡斯塔诺也该有个座。看台上有人伸手去摸剑。巴里挤进来，带着一篮子吃的和一封替公爵按了手印的信。
+- **选**：①替她说话，让她站到监誓人这一排 → 卡+2，`rep dragon +1`，`rep moon -1`。②请她去看台坐 → 卡−1。③ [乌霜边区] 把自己的凳子让出半边 → 卡+2，`rep dragon +1`。
+- **效果**：`companion +liv`；不是威克斯出身的 `companion +barry`；`codex liv`，`codex barry`。`met_liv_early` 的人，她头一句是来讨那顿酒。
+- **检**：persuasion DC 12 压住看台（败：`rep escann -1`，克拉丽蒙德替你把场子压住了）。
+- **神**：有。
+
+`a1_02｜帐篷城｜安本科斯特城外·同月｜ev_multi_racial_merc`
+- **事**：枢纽。帐篷城和精灵码头。选项都是 `once`，逛完走“进堡”。
+- **选**（一次性）：伊迪丝和那碗汤（没立 `met_edith` 的在这里头一回见她；`quest edith start`）；拿萝卜印的老兵（persuasion DC 12，成了得一条帐篷城的门路，a1_08 有优势；败了用 §11.7 的样例②，达梅里亚序章用过的换一句）；码头上拆船板的人和船上的长老吵架（insight DC 12）；陪卡斯坦喝一顿（卡+1，`gold -5`）；巴里开了一锅（`rest long`，一次）。
+- **专**：[洛伦特] 克雷格·达梅里斯一个人站在马厩边。当面问他那一枪：insight DC 13，成败都 `flag lance_asked`，`quest lance stage 2`；成了你看得出他没躲。[达梅里亚] 凭 `moon_badge` 进军需库，多一件 `chain_shirt`。
+- **店**：同盟军的军需官（`healing_potion`、`bandage`、`antidote`、`spear`、`shortsword`、`light_crossbow`、`leather`、`shield`）。
+- **神**：有。
+
+`a1_03｜验心｜达梅里斯堡·宫廷法师的塔楼｜ev_mages_estate`
+- **事**：玛希尔达验那位老兵。`p_knife_hanged` 的人没了证人，验的是他的同袍；达梅里亚以外的出身是被马里昂请来“做个见证”。她请人先搜她的身。验出来的东西：有人对他说过一句旧军营的口令，他就走了。加里昂说：我看得对不对，除了我没人查得了。
+- **选**：①把验心的结果写进案卷，算数 → `flag exam_precedent`，`world writ +1`，`rep wise +1`，巴−1。②要她再找一个不是法师的见证，不然不算 → `rep wise -1`，`rep moon +1`。③ [贤者门下] 自己动手再验一遍：arcana DC 13，成了 `flag exam_precedent`、`world writ +1`、`flag knows_watchword`；败了头疼三天（`hp -4`），按②算。
+- **检**：insight DC 12（加里昂是真的不想当这个人）；[is.caster] arcana DC 13 听清那句口令 → `flag knows_watchword`。
+- **专**：[达梅里亚] 你进得了国王的内室，马里昂私下说了那句“家道中落”，并且问你：要是他娘还在，这把刀敢不敢进门。
+- `quest sleepers start`，`codex enthralment`，`codex garion`，`codex masilda`。
+
+`a1_04｜普卢姆沃尔的申辩｜达梅里斯堡·大厅｜—`
+- **事**：听证。塞西利乌斯·普鲁穆里斯申辩：994 年他父亲倒戈是被慑住的，公爵领该还。阿丽娅坐在旁听席，她丈夫就死在那一仗。没有正确答案：收了，人人都能说“我当时被慑住了”；不收，一个儿子替父亲背一辈子。
+- **检**：history DC 13（账上有一袋金子的去向）；insight DC 13（他自己也不知道真假）。成一项，下面的说服有优势。
+- **选**：①收下申辩 → `flag plumwall_plea`，`world writ +1`，`rep moon -1`；`exam_precedent` 立着的话文字改成“照前例办”。②驳回 → `rep moon +1`，旧达梅里亚的诸侯记你一笔（a1_17 的说服 DC +2）。③ [蓝宝石] 骑士裁决：两边各出一人。你替王室出场，对 `sellsword`×1（名：普卢姆沃尔的斗士）。胜：申辩驳回，可这一家的名声洗干净了，`flag plumwall_duel`，`rep escann +1`。败：按①算，你认。
+- **专**：[达梅里亚] 你坐在王座一侧，阿丽娅会先看你。
+- **神**：有。
+
+`a1_05｜月山｜月山·月神神殿｜—`
+- **事**：路上一场。王后有了身孕。大女祭司阿丽娅提出：往后监誓人的判词，由她涂油作保。第七次泛神会议正在山上开，比珊的达林抱着他的《月歌者法典》到处找人签名。
+- **选**：①接受涂油 → `flag aria_anoints`，`rep moon +1`，`rep rose -1`。②谢绝 → `rep moon -1`。
+- **检**：religion DC 12（会议在吵什么）；insight DC 13（阿丽娅要的是月神神殿给国王定名分的那只手）。
+- **专**：[旧礼] 你进得了会场的内圈，下一场的检定有优势；用掉 `holy_oil` 可以自己给判词涂油，不欠阿丽娅的。
+- `codex moon_temple`，`codex seventh_council`。
+
+`a1_06｜活手的名分｜月山·泛神会议会场｜ev_piety`
+- **事**：辩论。议题是“活手”阿拉莉亚：封不封，算谁家的化身。她生前不拜任何一位坎诺的神。会场请监誓人作证：山上活下来的人是怎么说她的。正史的结果不变，会议不给她名分；你改的是记录上怎么写，和两族各自记住了什么。
+- **选**：①替她作证 → `flag alaria_for`，`world communion +1`，`rep elders -1`。②拦下 → `flag alaria_blocked`，`rep elders +2`，`world communion -1`。③只说你知道的 → 两个都不立。
+- **检**：religion DC 13 或 persuasion DC 14（party，巴里肯上）。成了你选的那一边在记录上多一句话；败了祭司们把你的证词掐掉一半，声望效果减半（取整）。
+- **专**：[伊贝瓦尔] 亲王的手令要你去拦。拦了 `rep elders +1`；不拦，手令上多一道折痕，a4_09 有人提。
+- **神**：有。全剧最大的一处神格钩子。
+
+`a1_07｜月河上的和约｜月河·一条平底驳船｜—`
+- **事**：谈判。弗恩的埃米尔一世来同达梅里亚正式签和约，割出螫针。他带来的文本里多了一条：精灵不得在弗恩置地、任职。船舷外有双足飞龙在低飞。
+- **检**：insight DC 12（他要的是回国有话可说）；history DC 13（螫针的过路税可以换个写法）；persuasion DC 14；intimidation DC 13（卡斯坦在场有优势）。
+- **选**：①硬删 → `flag emil_struck`，`world communion +1`，`rep moon +1`；没过说服的话埃米尔当场翻脸，飞龙掠船，全队 `damage 1d6`。②拿过路税同他换（要过 history）→ `flag emil_struck`，`world communion +1`，没有代价。③留着 → `rep elders -1`。
+- **专**：[is.elf] 你可以当面回他一句“写上吧，省得我们猜”，`rep elders +1`，条款留着。[伊贝瓦尔] `p_ibevar_blood` 的人，埃米尔引你那条“一命抵一命”的法当例子。
+
+`a1_08｜码头的夜｜安本科斯特·精灵码头·夜｜ck3_landing`
+- **战**：拆船板的、守船的长老、领不到饷的老兵打成一团，人堆里有一个是“起身”的。`thug`×3、`enthralled_soldier`×1（名：起身的老兵；`p_knife_released` 的话就是被你放回去的那位）。special「照后脑勺来一下」athletics DC 12；special「让卡斯坦吼一嗓子」intimidation DC 12（party）：成了打手逃一个。可以不杀人。胜 `xp 150`。败：在一条渔船舱里醒来，`gold -15`。
+- **事**：有人看见一个外乡人在人群外头动嘴，往威克斯方向去了。巴里的小公爵来信催他回去。
+
+`a1_09｜去科塞顿的路｜边境地·大路｜—`
+- **事**：赶路。卡斯坦和巴里头一回为屠夫原吵起来：那一仗是卡斯塔诺军团干的。
+- **检**：survival DC 12 或 animal DC 12（公爵的小马不肯过桥）。败：多走一天，`gold -5`。
+- **选**：劝架、站一边、让他们吵完。站卡斯坦：卡+1 巴−1；站巴里：反过来；让他们吵完：两人各 +1。
+- **专**：[is.halfling] 路边半身人的客店认你是自家人，白吃一顿，多听一条消息：大墓地夜里有人干活。
+- **休**：`rest short`。
+
+`a1_10｜威克斯堡｜威克斯堡·议事厅｜—`
+- **事**：宫廷戏。王位空了三十年。八岁的戴伦问你监誓人发不发马。摄政们各有各的打算：玛格达嗓门最大；克洛万话最少；男爵们抱成一团；马里昂的使者提出由国王做监护人。
+- **选**（一次性，听各家怎么说）：玛格达、克洛万、男爵们、马里昂的使者。每听一家，a1_13 对应选项多一段文字。
+- **检**：insight DC 13（没有一个人是为了孩子）。
+- `quest dyren start`，`codex dyren`。
+
+`a1_11｜大墓地｜科塞顿·大墓地｜ev_priest_phantom`
+- **事**：调查。壁龛里的死人束着腰，站得笔直。福尔卡德的账：十六座空坟。`saw_empty_graves` 的人是回来对第二遍。
+- **检**：investigation DC 13（铲痕、车辙）；medicine DC 12（坟是空着填回去的）；religion DC 12（挖的人懂行）。成两项以上：你看出干活的是福尔卡德自己手下的两个收殓人；不够两项，下一场开战时才知道。
+- **专**：[旧礼] 主持一场正经葬礼（`once`，`world unburied -1`）。[威克斯] 你回了家，福尔卡德把钥匙串给你。
+- **店**：收殓人的铺子（`holy_water`、`bandage`、`antidote`、`healing_potion`、`nerat_candle`）。
+- **效果**：不是威克斯出身的，福尔卡德抄一份账页给你，`item +ledger_page`（保证人人有）；`quest sixteen_graves start`（没开过的）或 `stage 2`，`codex necropolis`，`codex corset_burial`，`codex folcard`。
+
+`a1_12｜雾里收尸的人｜屠夫原·夜｜ev_looming_death`
+- **战**：雾里有人在起坟，干得很规矩。`enthralled_soldier`×3（名：收尸的人，其中两个穿着收殓人的袍子）。special「照后脑勺来一下」athletics DC 12；special「念那句旧口令」（要 `knows_watchword`）history / arcana DC 13：成了一人站住不动，卡−1 巴−1。`noAwe`。胜 `xp 200`。败：他们装完车走了，你在坑里醒来，下面的迁葬要多花 20 金冠。
+- **事**：车辙往南，进沼地的方向。没有人赶车发令。福尔卡德认出自己的人，坐在坑沿上不说话。
+- **选**：①把迁葬做完，四百零六座一座不落（`gold -40`，或者 `rep wex >= 2` 时免费）→ `flag field_done`，`world unburied -2`，巴+1。②留人看着，先走 → 不立。
+- `quest sixteen_graves stage 3`，`codex butchers_field`，`codex sleepers`。
+- **神**：有。
+
+`a1_13｜谁带大公爵｜威克斯堡·议事厅｜—`
+- **事**：摄政之争要监誓人的印才算数。没有正确答案。戴伦在门外听。
+- **选**：①巴里 → `flag guardian_barry`，`world communion +1`，`rep wex -1`，巴+2。②克洛万 → `flag guardian_crovan`，`world writ +1`，巴−1。③马里昂 → `flag guardian_marion`，`world feud +1`，`rep moon +1`，`rep wex -1`。④男爵们 → `flag guardian_barons`，`rep wex +2`，巴−1。四者必立其一。
+- **专**：[威克斯] 你自己有一票，戴伦会先问你；选完他把小马的缰绳塞到你手里，或者牵回去。`aria_anoints` 的人，选③时玛格达当场说这印是月神神殿的。
+- `quest dyren stage 2`。
+
+`a1_14｜克洛万听得懂｜威克斯堡·克洛万的书房｜—`
+- **事**：调查。克洛万小时候在亚科布手下当过九年被监护人。那句口令他听得懂：是亚科布辖地操场上的口令。拿这个接活的人，他知道一个，在阿克罗姆顿。
+- **检**：persuasion DC 13（`guardian_crovan` 的人自动成）。败：他要你欠他一个人情，`rep wex -1`，话照说。
+- **专**：[乌霜边区] 沉睡的老兵对你不设防。你可以直接问屠夫原抓到的那个：他把口令原样背给你。`p_used_watchword` 的人，克洛万问你用过几回。[贤者门下] 你可以验克洛万本人（他同意）：arcana DC 13，成了 `world writ +1`，知道他没被人动过。
+- **效果**：`flag knows_watchword`（保证）。`quest sleepers stage 2`，`codex iacob`。
+
+`a1_15｜阿克罗姆顿的地窖｜阿克罗姆顿·酒窖｜ev_female_spy`
+- **事**：潜入。维德拉尔杜斯·阿克罗米斯的酒窖底下还有一层。梁上蹲着一个人在数里面有几个，她比你早到一步：薇齐娜。`companion +vezina`，`codex vezina`，`codex ravenseers`。
+- **检**：三条路挑一条。stealth DC 13；sleight DC 13（锁）；deception DC 13（装成买酒的）。败：惊动了人，下一场敌人多一个 `thug`。
+- **专**：[is.caster] 你摸得出门框上有旧法术的茬，知道里面的人什么时候念口令，下一场先手。[is.martial] 你把酒窖的铁栅整个端下来，athletics 有优势。
+- **选**：薇齐娜问你打算把抓到的人交给谁。答“先问清楚”薇+1；答“吊死”薇−1。
+
+`a1_16｜驯师｜阿克罗姆顿·地窖下层｜—`
+- **战**：★`melcor_handler`×1、`enthralled_soldier`×2。special「照后脑勺来一下」athletics DC 13，敲醒的那个反过来替你挡一轮；special「打断他的口令」（薇齐娜数着拍子）arcana / performance DC 13：成了梅尔科尔空一轮。`noAwe`（受慑者）。胜 `xp 300`。败：你被捆在酒桶上醒来，薇齐娜割的绳，梅尔科尔跑了，账本留下了。
+- **事**：他是亚科布早年的学生，拿旧口令接活。刀是阿克罗米斯买的，本来只说吓一吓，是他自己加的码。空坟的事他不认，他说那些人夜里干什么他管不着。最后一句：亚科布是从山上学来的。
+- **效果**：`flag knows_iacob_name`（胜败都立）。胜了才有处置：
+- **选**：①当场了结 → `flag melcor_dead`，卡+1，薇−1。②押给贤者会 → `flag melcor_wise`，`rep wise +1`，薇−1。③ [蓝宝石] 叫他立誓不再念口令，放他走 → 两个都不立，`rep escann +1`，薇+1。（败了、放了，都算“在逃”。）
+- **神**：有。
+
+`a1_17｜阿克罗米斯的账｜阿克罗姆顿·主厅｜—`
+- **事**：当面对质。他说达梅里亚一千年没让祭司替国王当过家。没有正确答案。
+- **选**：①公开揭发 → `flag acromis_exposed`，`world communion -1`，`rep moon +1`。②私了，他欠你一笔 → `flag acromis_quiet`，薇−1。③拿这桩丑事同加里昂换一纸验心的令状 → `flag acromis_traded`，`world writ +2`，`rep wise +2`，薇−1，巴−1。三者必立其一。
+- **检**：intimidation / persuasion DC 14（驳回过普卢姆沃尔申辩的 DC +2）。败：他照样认栽，可消息先一步传了出去，`rep moon -1`。
+- **专**：`plumwall_plea` 立着的话，他当场也说自己是被慑住的。
+- `quest sleepers done`。
+
+`a1_18｜苏伦月的账｜安本科斯特·帐篷城·1022 年苏伦月｜ck3_barry`
+- **事**：收尾，一场席。巴里摆了三张桌。伊迪丝自己搬着凳子坐到了你这一桌，从此跟着辎重走。四个人各说一句：卡斯坦要往东去看她爹倒下的地方；巴里说那孩子等他回信；薇齐娜把你这半年的裁断念了一遍，一条没漏；伊迪丝给国王起了个外号。东边来了信：乌霜领还在围着，南王国的福阿哈尔公爵亚科布“很乐意协助监誓人”。
+- **效果**（`first`）：`level 4`，`rest long`，`quest witness stage 2`，`quest edith stage 2`。→ `a2_01`
+- **神**：有（同伴的话）。
+
+---
+
+### 11.3 第二幕《地砖下的皇帝》（1023 年花始月—1024 年真霜月，19 场）
+
+**进场假定**：4 级。队里有卡斯坦、巴里、薇齐娜，伊迪丝跟着辎重（不进战斗）。`knows_watchword`、`knows_iacob_name` 立着。第一幕的各组标记见上。
+
+**出场保证**：6 级。四个同伴都在队里（这一幕谁也不会走，卡斯坦最多跌好感）。下面每组恰好立一个：`garrec_king` / `garrec_dead` / `garrec_exile`；`body_westgate` / `body_citadel` / `body_pantheon` / `body_quiet` / `body_burned` / `body_left`；`golem_pc` / `golem_liv` / `golem_none`；`iacob_hanged` / `iacob_pardoned` / `iacob_wise`；`lucan_alva` / `lucan_garrec` / `lucan_marion` / `lucan_iacob`；`edith_alarian` / `edith_wise` / `edith_ravens` / `edith_iacob` / `edith_none`。山上的事四种之一：只修（`mended`）；修并请人解结（`mended` 加 `knot_alarian` / `knot_ravens` / `knot_iacob` 之一）；毁阶（`stair_down` 加 `mountain_sealed`）；什么都不动（一个都不立）。`knot_cut` 在这一幕凡人立不了。`knows_word`、`vow_liv`、`map_drawn`、`liv_saw_body`、`calindal_named`、`clarimonde_pact`、`elrac_debt_paid` 立没立都有可能。乌钢冠在不在背包里看 `item.ebonsteel_crown`。
+
+**这一幕的清单**：战斗 a2_06、a2_10、a2_17。枢纽 a2_02（第二个商人在 a2_15）。没有正确答案的裁断 a2_05、a2_12、a2_18。出身专属：达梅里亚 a2_02、洛伦特 a2_15、乌霜边区 a2_05 和 a2_13、伊贝瓦尔 a2_14、威克斯 a2_07。阵营专属：蓝宝石 a2_05、旧礼 a2_13、贤者门下 a2_18。职业组 a2_09、a2_10。种族 a2_09、a2_15、a2_16。
+
+`a2_01｜西门｜卡斯托纳斯·西门·1023 年花始月｜—`
+- **事**：`chapter: 第二幕 · 地砖下的皇帝`。城里有两个都自称卡斯塔诺的王国，城门税收两遍。一个洛伦特骑士在门洞里等你，递上阿瑟利斯家的信：恩特本信不过太后的监誓人，也信不过月家的，派他来盯着。他说得很客气，一个字没瞒。`companion +valeran`，`codex valeran`，`codex castonath`。
+- **专**：[洛伦特] 他是太后亲手塞过来的。`p_met_valeran` 的人，他先问那口三十七号的棺材后来找着没有。`p_hall_truth` 瓦+1；`p_hall_denied` 瓦−1。
+- **选**：卡斯坦当场封他做“马厩总管”。你可以拦，也可以不拦。巴里已经在给他盛饭了。
+- **神**：有。
+
+`a2_02｜万神道｜卡斯托纳斯·万神道一带｜—`
+- **事**：枢纽。选项都是 `once`。
+- **选**（一次性）：莱恩的宫廷（温斯坦的人也在，两家都说自己是正统；history DC 13 听出谁更怕加雷克）；万神道上失了势的卡斯特洛斯祭司（预设人物马尔坎的老上司；[旧礼] 他们求你带一句话给各国：加冕的事不怪每一个穿这身袍子的人）；矮人的锻炉街（[is.dwarf] 能赊账）；瓦勒兰头一回同巴里吃饭（瓦勒兰当面说精灵的不是，巴里给他添菜；两人各 +1）；卡斯坦教伊迪丝喝酒（你管不管：管，卡−1；不管，薇−1）；睡一觉（`rest long`，一次）。
+- **专**：[达梅里亚] 马里昂的密信追到了这里，只有一句：半精灵爬得上去吗。回“爬得上”`rep moon +1`；回“别爬”`rep moon -1`；回“我替你去看”不变。
+- **店**：军团旧货铺（`legion_shortsword`、`legion_splint`、`longsword`、`chain_mail`、`heavy_crossbow`、`healing_potion`、`greater_healing_potion`、`alchemist_fire`）。
+- **神**：有。
+
+`a2_03｜亚科布的客厅｜卡斯托纳斯·福阿哈尔公爵的宅子｜ev_adventurers_estate`
+- **事**：宫廷戏。亚科布六十岁，很帮忙，茶是好茶。他把慑心术讲成一门手艺：口令、常令、收尾，同训马差不多。这是“缰绳”的头一种讲法。他愿意开一张去围城营地的通行文书。
+- **检**：insight DC 15（他在等一件事，不是你）；arcana DC 14（他讲的手艺里少了最要紧的一环）。`melcor_wise` 的人有梅尔科尔的口供，两项都有优势；`melcor_dead` 的人，他先替学生叹了口气。
+- **选**：①收下文书 → `flag iacob_favor`，a2_05 进营不用检定。②不收 → 瓦+1 卡+1。
+- `codex nichmer`，`codex bridle`（只解锁“手艺”这一段）。
+
+`a2_04｜去乌霜领的路｜阿德尼卡平原｜—`
+- **事**：赶路。马比人多的地方，骑士道是从这里讲出来的。瓦勒兰和卡斯坦吵凯伦算不算叛徒，吵了一整段路。
+- **检**：animal DC 13 或 survival DC 13（败：一匹驮马丢了，`gold -10`）。
+- **选**：凯伦的事你站哪边：守誓要紧（瓦+1 卡−1）／他救的人比他背的誓多（卡+1 瓦−1）／“他死在山上，账清了”（两人都不满意，薇+1）。
+- **专**：[蓝宝石] 路上遇见骑士团的巡骑，他们给你下一场用得着的东西：一面白旗和一位见证骑士。
+- **休**：`rest short`。
+
+`a2_05｜终结黑龙之战｜乌霜领外·围城营地｜ev_fireball`
+- **事**：谈判。白湾人的战帮、阿德安的狂热骑士、倒戈的黑卡斯塔诺人，要监誓人盖一个印：这场仗合乎和约。城里的加雷克只要一场听证。没有正确答案。
+- **检**：进营 persuasion / deception DC 13（`iacob_favor` 免检）。insight DC 14：三家围城的各要各的地，没人打算留活口。
+- **选**：①盖印 → `flag siege_certified`，`rep escann +1`，`rep dragon -2`，卡−1。②给一场听证，围城暂停 → `flag siege_hearing`，`world mantle +1`，`rep dragon +2`，`rep escann -2`。③ [蓝宝石] 骑士裁决，两边各出一人 → `flag siege_duel`，`rep escann +1`，瓦+1。三者必立其一。
+- **专**：[乌霜边区] 选②时你可以拿自己替加雷克作保，`rep escann` 只扣 1。`p_gave_legionary` 的人，白湾人认得你，先敬一碗酒。
+- **神**：有。
+
+`a2_06｜缺口｜乌霜领·城墙缺口｜ev_adeanic_war`
+- **战**（按上一场分三种）：
+  - 听证：狂热骑士夜里撕了停战约。`knight`×1（名：阿德安的狂热骑士）、`man_at_arms`×2、`war_priest`×1。胜 → `flag garrec_king`。败 → 停战垮了，城破，加雷克被乌尔维克拖着往北走，`flag garrec_exile`。
+  - 盖印：你跟着攻城的人进去。`bc_legionary`×3。胜了有选：看着他倒下 → `flag garrec_dead`（正史）；把他和乌尔维克从北门送走 → `flag garrec_exile`，`rep dragon +1`，`rep escann -1`。败 → `flag garrec_dead`，你是被人抬出来的。
+  - 裁决：一对一，对 `knight`×1（名：围城一方的斗士）。胜 → `flag garrec_king`。败 → `flag garrec_exile`，你认。
+- special「冰河渡口」survival DC 13：成了敌方一人落水出局。special「推云梯」athletics DC 13：`dmgAll 2d6`。胜 `xp 350`。
+- `codex garrec`，`codex black_castanor`。
+
+`a2_07｜一口棺材｜乌霜领·大厅（或北门外的雪地）｜—`
+- **事**：加雷克要一口棺材和一个准日子：去把他父亲找回来。他死了的话，开口的是乌尔维克，寒行军动身的前一夜；流亡的话是他自己临走前托的。`quest emperor_body start`，`codex castan_liii`。
+- **专**：[威克斯] 当面讨“屠夫”埃尔拉克那笔债。`garrec_king` 或 `garrec_exile`：他交出埃尔拉克军团的名册和一纸认账的文书 → `flag elrac_debt_paid`，`rep wex +2`，巴+2。`garrec_dead`：乌尔维克把名册摔在桌上，说他只有这个（照样立 `elrac_debt_paid`，`rep wex +1`，巴+1）。`p_wex_buried_legionary` 的人，加雷克先谢你埋了他父亲的兵。
+- **专**：[乌霜边区] `p_gave_legionary` 的人，他问起那个老兵后来怎样了。
+- **选**：卡斯坦要跟去。答应带她看她爹一眼（卡+1），或者只说“到了再看”。`quest liv_claim start`。
+
+`a2_08｜沼泽堡｜沼泽堡·瞭望塔｜—`
+- **事**：调查。木腿的布罗恩费尔德队长和他那把水壶，独眼的老兵和一把熔掉的剑。那天的事：一记闷棍，皇帝喊了停手，然后是一个字。没有闪电，没有火。堡里这几年少了不少尸首，没人看见是谁抬走的。
+- **检**：persuasion DC 13（[乌霜边区] 自动成，他认得你的军团牌）；history DC 14（把几个人的说法对到一起）；perception DC 13（泥里的车辙和屠夫原是一个方向）。
+- **专**：`p_laid_arms` 的人，布罗恩费尔德同你碰了一下水壶；`p_fought_on` 的人，他说那天往前冲的都烧没了，问你是怎么活下来的。`knows_watchword` 的人可以试着对守军念一句：有两个人站起来了。
+- `quest emperor_body stage 2`，`codex bal_mire`，`codex the_word`。
+
+`a2_09｜奈拉特的碗｜沼泽堡外·沼中神龛｜ev_priest_phantom`
+- **事**：小地城。一身沼水和没药味的祭司，一碗黑水。他能替人找死人，要价 30 金冠，或者替他把神龛底下淹着的三具军团兵捞上来埋了。
+- **检**：religion DC 14 或 arcana DC 14 看懂碗里的东西；insight DC 15：去年秋天有人先来看过这只碗 → `flag knows_myrrh`（败了不立，a2_12 还有一次机会）。
+- **专**：[is.elf] 精灵看得出碗上的法术是哪一路，有优势。[is.caster] 你可以自己往碗里看，省下钱，con save DC 13，败了 `hp -5`。[旧礼] 同行的面子，免费。
+- **选**：付钱（`gold -30`）／捞人（athletics DC 13，败了 `hp -4`，照样算数）。结果：头领林地，林子里一座白石驿站。
+
+`a2_10｜头领林地｜头领林地·夜｜ev_the_covenant`
+- **战**：狼人夜袭，它们没忘记对卡斯塔诺子孙的恨。★`headman_wolf`×1、`werewolf`×1、`grey_wolf`×2。special「长矛围圈」athletics DC 14（[is.martial] 有优势）：成了我方一轮内受伤减半。special「把辎重扔进火里」：不用检定，`dmgAll 2d6` 火焰，可是 `gold -30`。胜 `xp 450`。败：瓦勒兰把你拖出林子，行李丢了一半（`gold -40`），伊迪丝不见了一夜，天亮自己走回来，身后跟着一头不咬人的狼。
+- **事**：伊迪丝那件事不解释，薇齐娜记了一笔。
+
+`a2_11｜炖菜｜头领林地·白石驿站｜ev_dark_forest`
+- **事**：守砖人请你们喝炖菜，拐着弯问话。他在看你还是不是你。这是“缰绳”的第二种讲法：他讲成一桩罪，是皇帝自己上山发的誓，旁人不过是接住了。伊迪丝顺口说了句还饿，他就又盛了一碗，盛完愣住，把勺子放下了。
+- **检**：insight DC 14（明白他在试什么）；persuasion DC 15（[乌霜边区] DC 12，他少问三句）。败：`flag keeper_hostile`，他请你们天亮就走。
+- **选**：伊迪丝那一碗之后他要赶人。你替她说话（薇+1 巴+1），或者让她自己说（她说：我跟谁说，谁都给）。
+- **神**：有。
+
+`a2_12｜地砖下｜白石驿站·夜｜—`
+- **事**：他用勺柄敲一块地砖，声音是空的。`keeper_hostile` 的话是卡斯坦半夜自己去撬的，守砖人拿着柴刀站在门口没动。砖下是五十三世，和一顶乌钢冠。守砖人只求一件事：烧了他。他还记得更早来过一个人，一身没药味，问的是遗体，没问儿子（`flag knows_myrrh`；`p_old_coin` 的人对得上那枚金币）。
+- **选一**（卡斯坦）：让她看 → `flag liv_saw_body`，卡+2；不让 → 卡−3，她夜里自己看了，`flag liv_saw_body` 照立，第二天不同你说话。
+- **选二**（遗体，没有正确答案，六者必立其一）：①西门，乌霜家的坟 → `flag body_westgate`，`world mantle +1`（要加雷克没死，或者你是乌霜边区出身）。②北要塞，皇帝的规格 → `flag body_citadel`，`world mantle +2`，`rep escann +1`。③万神道，给整个卡斯塔诺 → `flag body_pantheon`，`world mantle +2`，`rep dragon +1`。④悄悄埋在林子里 → `flag body_quiet`，`world mantle -1`。⑤照守砖人的话烧了 → `flag body_burned`，`world mantle -2`，`world unburied -2`，`rep dragon -2`，卡−2。⑥原样盖回去 → `flag body_left`，`world unburied +1`。
+- **选三**（冠）：收进行李（`item +ebonsteel_crown`，卡+1）／随他一起。
+- `quest emperor_body stage 3`，`quest canrec_trail start`。
+
+`a2_13｜葬礼｜（随上一场）西门 / 北要塞 / 万神道 / 林中 / 艾伦河边｜—`
+- **事**：国葬三种各写一段：谁来了，谁没来，谁站在最后一排。悄悄埋的是夜里四个人抬。烧了的，守砖人把灰装进他那口炖菜的锅。`body_left` 跳过这一场，直接去 a2_14。
+- **专**：[旧礼] 主持葬礼（`once`，`world unburied -1`）。[乌霜边区] 乌霜家的葬礼只有你会办：不必求别的祭司，`rep dragon +1`；预设人物马尔坎在这里主祭。
+- **检**：performance / religion DC 13 念悼词（party）。败：有人在后排笑了一声，`rep escann -1`。
+- **选**：瓦勒兰问你，替一个傀儡办国葬，办给谁看。照实答（瓦+1）／“办给他儿子看”（卡+1）。
+- `quest emperor_body done`（`body_left` 的在 a2_12 以 `fail` 收）。守砖人把他那把勺子给了你：`item +stew_spoon`（办了葬礼或者烧了的才有）。
+
+`a2_14｜刀锋堡｜刀锋边区·刀锋堡｜ev_excalibur`
+- **事**：克拉丽蒙德。她不要再有卡斯坦，她要把石阶毁了。堡里正要试剑：一个黑卡斯塔诺俘虏得去拔卡林达尔，剑认他就活，不认就瞎。
+- **选**：试剑管不管。①拦下（persuasion DC 15；[蓝宝石] 自动成）→ `rep dragon +1`，瓦+1。②让他拔 → 他瞎了，卡−1。③ [乌霜边区] 你替他拔：剑没认你也没伤你，她看了你很久，`rep escann +1`。
+- **选**：她的提议。答应帮她毁阶 → `flag clarimonde_pact`，`rep escann +1`，卡−2；不答应 → 她照样借你向导。
+- **专**：[伊贝瓦尔] 或 [is.elf] 你看得出这把剑是先驱精灵的手艺（正史要到 1027 年才有人认出来）。告诉她 → `flag calindal_named`，`rep escann +1`，`rep elders -1`；不说 → 不变。
+- **神**：有。
+- `codex clarimonde`，`codex sapphire_eye`。
+
+`a2_15｜北要塞｜北要塞｜ev_forge`
+- **事**：小枢纽。岩石矮人石匠布洛克报账：十道试炼，坏了七道半。坡上有个哨兵两年前骂了句娘，从此撒不了谎，现在专管发饷。温斯坦的人不许任何人徒步上山，也没人上得去。
+- **专**：[洛伦特] 山脚下大捷比武会的围栏还立着。investigation DC 14（有 `lance_ledger` 的优势）：你找到了当年的断枪和司礼官的记数牌 → `flag lance_truth`，`quest lance stage 3`。那是他自己的枪，自己的手，是失手。[is.dwarf] 布洛克肯同你说行话，下一场锻炉那一关自动成。[威克斯人奥特拉克] 你认得前半段路，下一场攀爬有优势。
+- **店**：石匠的库房（`ward_runestone`、`vigor_runestone`、`hold_shield`、`warhammer`、`greater_healing_potion`、`antidote`）。
+- **休**：`rest short`。
+- `codex trialmount`，`codex trials`。
+
+`a2_16｜绳子｜试炼山·前五道｜ev_wex_precipice`
+- **事**：卡斯坦飞上去，放下一根绳。山上说过的话都得算数，上去之前薇齐娜把本子合上了。前五道试炼的残骸：喊阵（北要塞有没有人应，看 `rep escann`）；冰凉的石桌；封着火的锻炉；誓石在更高处。
+- **检**：athletics DC 14 攀绳（败：`hp -6`，照样上去）；[is.flyer] 自己飞，免检。performance DC 13 喊阵。
+- **选**（石桌）：画不画“将来的疆界”。画 → `flag map_drawn`，`world mantle +1`；不画 → 不变。
+- **选**（对卡斯坦）：在山上答应她“总有一天让你试”→ `flag vow_liv`，卡+2；薇齐娜提醒你这里说的话收不回。不答应 → 不变。
+- **专**：[is.dwarf] 或 [奇械师] 在锻炉打一件给矮人的礼物，得一件 `ward_runestone`。
+- `quest mountain start`。
+
+`a2_17｜第九道｜试炼山·石阶｜—`
+- **战**：用 §11.7 的样例③开场。★`trial_golem`×1。`noAwe`。special「缴它的械」athletics DC 15 或 sleight DC 16：成了它自己摘头下跪，`end: 'win'`，立 `golem_pc`。special「让卡斯坦去缴」：她来掷，成了立 `golem_liv`，卡+2。打碎它也算赢，可它明天照样站在这儿：立 `golem_none`。败：被它扫下石阶（全队 `damage 2d6`），绕小路上去，立 `golem_none`。三者必立其一。胜 `xp 600`。
+- **事**：规矩刻在它脚边：缴了械，它跪到你死。
+- **神**：有。
+
+`a2_18｜誓石｜试炼山·誓石｜ev_elven_constellation`
+- **事**：石头裂到了根，里面还有细细的东西在流。尼奇默那半句话挂在上面。亚科布带着石匠和五岁的卢坎上来了：银龙的人选，乌霜家的血，精灵的耳朵。他是真心觉得这样对大家都好。`clarimonde_pact` 的人，克拉丽蒙德带着镐也到了。没有正确答案。
+- **检**：arcana DC 15 或 insight DC 15：他念石匠的工序时带出半个音 → `flag knows_word`。败了还有别的路（见下）。
+- **选一**（亚科布，三者必立其一）：①绞死 → `flag iacob_hanged`，`world writ -1`，卡+1。②赦了他，叫他戴罪干活 → `flag iacob_pardoned`，`rep escann -1`，瓦−1；他把那半个字教给你，`flag knows_word`。③交给贤者会 → `flag iacob_wise`，`world writ +1`，`rep wise +1`。[贤者门下] 在①或③之前先验他的心（`world writ +1`）→ `flag knows_word`。
+- **选二**（山，四选一）：①修，并且请人解结 → `flag mended`，`world mantle +2`，再三选一：阿拉里安（`flag knot_alarian`，`rep wise +1`）；渡鸦先知会（`flag knot_ravens`，`flag ravens_trust`，薇+2）；亚科布（`flag knot_iacob`，要他没被绞死；瓦−1 薇−1）。②照原样修，不动那个结 → `flag mended`，`world mantle +3`，薇−2。③同克拉丽蒙德一起毁掉石阶（要 `clarimonde_pact`）→ `flag stair_down`，`flag mountain_sealed`，`world mantle =0`，卡−3，`rep escann +2`，`rep dragon -2`。④什么都不动，下山 → 不立。
+- **选三**（卢坎归谁养，四者必立其一）：跟他母亲回南王国 → `flag lucan_alva`；送到他舅舅身边（要 `garrec_king`）→ `flag lucan_garrec`；送去马里昂的宫里，那里有个半精灵国王 → `flag lucan_marion`，`rep moon +1`；留给亚科布（要 `iacob_pardoned`）→ `flag lucan_iacob`。
+- **神**：有。
+- `quest mountain stage 2`，`codex oathstone`，`codex bridle`（补上“罪”这一段），`codex lucan`。
+
+`a2_19｜1024 年真霜月｜北要塞·炉边｜ev_blank`
+- **事**：收尾。一摞信。阿伦三世 1023 年苏伦月死了，里卡德的冠是头一顶不由卡斯特洛斯祭司递的〔本作：正史只有阿伦三世的死期和继位的人〕。达梅里亚添了个公主。伊迪丝十四岁了，要有个先生。
+- **选**（伊迪丝跟谁学，五者必立其一）：塞纳蒂尔的阿拉里安 → `flag edith_alarian`，巴+1。贤者会 → `flag edith_wise`，`rep wise +1`，薇−1。渡鸦先知会（薇齐娜带去）→ `flag edith_ravens`，薇+1，巴−1。亚科布（要 `iacob_pardoned`）→ `flag edith_iacob`，四个同伴各 −1。谁也不交，跟着你 → `flag edith_none`，卡+1。[贤者门下] 选贤者会时你自己就是她的先生之一。
+- **事**：四个人各说一句。巴里要回去看那孩子。卡斯坦说她在山下等着，等多久都行。
+- **效果**（`first`）：`level 6`，`rest long`，`quest witness stage 3`，`quest edith stage 3`。→ `a3_01`
+- **神**：有（同伴的话）。
+
+---
+
+### 11.4 第三幕《白年》（间幕 1024—1040，正戏 1040 年卡斯坦月—苏伦月，20 场）
+
+**进场假定**：6 级。四个同伴都在。第二幕各组标记见上。
+
+**出场保证**：8 级。卡斯坦、瓦勒兰一定在队里。巴里在不在看 `edict_*`（只有 `edict_overruled` 时他留队）；薇齐娜在不在看 `vezina_left`。阿德蕾西娅从 a3_04 起是你的扈从（不算同伴，战斗里作 `allies`）。下面每组恰好立一个：间幕的 `years_watch` / `years_court` / `years_wards` / `years_graves`；`quarantine_held` / `quarantine_open`；`vezina_eye` / `vezina_stopped` / `vezina_left`（`vezina_left` 可以同 `vezina_eye` 并存）；`sun_terms` / `sun_refused`；`edict_upheld` / `edict_overruled` / `edict_softened`；`blame_canrec` / `blame_elves` / `blame_ravens` / `blame_silent`；`law_full` / `law_limited` / `law_refused`；`doses_moon` / `doses_rose` / `doses_split` / `doses_children`。`knows_ravens_watched`、`knows_roster` 一定立着。`edith_mob`、`edith_trusts`、`arrel_with_you`、`plague_samples`、`cure_early`、`harpies_freed` 立没立都有可能。
+
+**年纪**：从这一幕起，人类两位同伴添了十八年，卡斯坦四十七岁，翅根灰了，巴里没变。主角按 `is.longlived` 分两套写（§5.6），`is.immortal` 另写（§16.3）。
+
+**这一幕的清单**：战斗 a3_05、a3_13（另有 a3_08、a3_15 的条件战斗）。枢纽 a3_11（第二个商人在 a3_16）。没有正确答案的裁断 a3_06、a3_09、a3_14、a3_17、a3_20。出身专属：达梅里亚 a3_03、洛伦特 a3_20、乌霜边区 a3_19、伊贝瓦尔 a3_04 和 a3_11、威克斯 a3_14。阵营专属：蓝宝石 a3_15、旧礼 a3_06、贤者门下 a3_18。职业组 a3_13、a3_19。种族 a3_04、a3_11、a3_13。
+
+#### 间幕《十六年》
+
+`a3_01｜十六年｜—·1024—1040｜ev_blank`
+- **事**：`chapter: 间幕 · 十六年`。一页账：这十六年你干什么去了。按第二幕的标记先写三四句年表（加雷克的下场、山上有没有人干活、谁在带公爵、卢坎在哪）。
+- **选**（四者必立其一）：①在古塔办起“守望”，法师自己查法师 → `flag years_watch`，`world writ +1`，`rep wise +1`。②回本国当差 → `flag years_court`，出身对应的声望 +2（达梅里亚 `moon`、洛伦特 `rose`、乌霜边区 `dragon`、伊贝瓦尔 `elders`、威克斯 `wex`）。③守着那几个孩子：伊迪丝、卢坎、戴伦 → `flag years_wards`，巴+1，a3_14 和终章里孩子们对你的检定各 +2。④去找少掉的尸首 → `flag years_graves`，`world unburied -1`，`flag knows_myrrh`。
+- **神**：有（时间跳跃）。
+
+`a3_02｜彗星之夜｜你选的那个地方·1033 年泪落月｜ev_big_star_in_sky`
+- **事**：神谕之眼彗星过天。伊迪丝二十三岁，来看你。她没使劲，只说了句“都歇会儿吧”，整个营地（或者学堂、宫廷、坟场）的人同时放下了碗。她自己吓得不轻。她的口气按 `edith_*` 五种各写一句。
+- **选**：①“你没做错什么。以后先问。”→ `flag edith_trusts`。②“别让人知道。”→ 不立，薇−1。③ [贤者门下] “这得报给瓦洛森。”→ 不立，`rep wise +1`。
+- `codex edith`。
+
+`a3_03｜信｜你选的那个地方·1040 年卡斯坦月｜ev_blank`
+- **事**：福尔卡德的信：有个人从坟里出来，把我同事吃了。先吃块饼再动身。队伍重新凑齐，各人数了数白头发。卡斯坦翅根疼。瓦勒兰三十九岁，恕他直言，您也不年轻。薇齐娜三十七，本子换到第十一本。巴里带多了乳酪。
+- **专**：[达梅里亚] 十七岁的阿雷尔王子要跟你去边境地。带 → `flag arrel_with_you`，`rep moon +1`；不带 → 马里昂松了口气。
+- **效果**：`quest white_year start`，`date 1040年卡斯坦月`。
+- **神**：有（时间跳跃）。
+
+#### 正戏
+
+`a3_04｜渡鸦山｜科乌里亚·渡鸦山·1040 年卡斯坦月｜ev_looming_death`
+- **事**：`chapter: 第三幕 · 白年`。调查。太阳精灵的驻军守着山下的坟场。卡斯坦月 3 日那座坟还敞着，没填过土。站在坟边看见头一个的是守墓人家十四岁的女儿：阿德蕾西娅。她问：死人解束腰干什么？
+- **检**：medicine DC 14（咬伤发白的样子）；religion DC 14（坟是按规矩开的，没按规矩填）；investigation DC 15（坟边的树上有人蹲过很多年，树皮磨亮了，地上有鸦毛）。
+- **专**：[is.elf] 驻军放你进隔离的那几排屋子，你不容易染病，出来的时候有人朝你扔石头。[伊贝瓦尔] 驻军队长认得亲王的手令，多告诉你一句：总督想把整座山烧了。
+- **效果**：她从这里起给你当扈从。`codex aldresia`，`codex ravenhill`，`codex white_pestilence`。
+
+`a3_05｜头一夜｜渡鸦山·山下坟场·夜｜ev_undead_army`
+- **战**：`pestilent_zombie`×4、`ghoul`×1，我方 `archer`×2（名：太阳精灵驻军）。special「敲钟」athletics DC 14：成了把死人从栅门引开，敌方全体空一轮。`noAwe`。胜 `xp 500`。败：阿德蕾西娅把你拖进停尸房，驻军烧了半个下城，`world unburied +1`。
+- **专**：[is.divine] 你的祷词让它们退三步，敲钟自动成。`arrel_with_you` 的人，王子头一回见血，吐了，然后又站了回去。
+- **事**：天亮以后她数了数：起来十一个，躺下十一个，够数。
+- **神**：有。
+
+`a3_06｜封不封｜渡鸦山·城门｜—`
+- **事**：总督德纳里昂要烧山。城里的人要出城。阿德蕾西娅的爹娘在门里。没有正确答案。
+- **检**：persuasion DC 15 劝住德纳里昂不放火（败：他烧了下城的三条街，`world unburied +1`，然后照你的选择办）。
+- **选**（二者必立其一）：①封门 → `flag quarantine_held`，`world unburied -1`，巴−1。②放没发病的人出城 → `flag quarantine_open`，`world unburied +2`，巴+1。
+- **专**：[旧礼] 在门里办一场正经葬礼（`once`，`world unburied -1`），你得进去，出来要过 con save DC 14，败了 `hp -8`。
+- **神**：有。
+
+`a3_07｜城门口的两队｜渡鸦山·城门外·花始月｜—`
+- **事**：追逐。用 §11.7 的样例④开场：染病的人用门板抬着，染病的精灵自己走着。有人在人群里喊了一声“是精灵带来的”，转身就跑。
+- **检**：追他。athletics DC 14 → acrobatics DC 14 → perception DC 14，三中二算追上。追上了：只是个吓坏的车夫，没人指使他，他孩子在门板上。没追上：这句话当天传遍了山下，a3_17 里“怪坎雷克”的说服 DC +2。
+- **选**：瓦勒兰那句“您最好赶在他们自己想出答案之前给一个”。你现在答不出，这一场只能先压住。
+
+`a3_08｜鸦巢｜渡鸦山·先知会的塔｜ev_magic_study_and_relax`
+- **事**：小地城。薇齐娜带你进她师门。坟边那棵树上蹲了十九年的是先知会的人。德基南长老一只眼是假的，说话像在念别人的遗嘱：我们看见了白年，也看见了没有白年的那些年头。内圈为要不要留你们的命吵翻了。
+- **检**：stealth DC 15 摸进内圈的屋子（`ravens_trust` 的人走正门）；arcana DC 15 看懂墙上的两种读法；insight DC 16（德基南不知道自己当年那一票是对是错）。
+- **战**（潜入失败，或者“灭口”一派占了上风：没有 `ravens_trust` 且 insight 败）：★`wereraven_seer`×2、`court_mage`×1（名：外圈先知）。special「打翻水盆」：他们靠水盆预读，arcana DC 15 成了敌方失去先手。胜 `xp 500`。败：醒来时德基南在给你上药，他那一派赢了。
+- **效果**：`flag knows_ravens_watched`，`quest vezina_eye start`，`codex unkind`。
+
+`a3_09｜鸦眼｜渡鸦山·鸦巢顶层｜ev_elven_eye`
+- **事**：薇齐娜的个人抉择。内圈肯给她一只鸦眼。戴上，她在内圈有一票，压得住德基南；戴久了的人都疯。没有正确答案。
+- **选**（三者必立其一）：①支持她受眼 → `flag vezina_eye`，`flag ravens_trust`，`flag cure_early`（先知会当场交出坎雷克实验室的位置），薇+2。②拦住她 → `flag vezina_stopped`，薇−3，她留队。③把先知会瞒了十九年的事写信捅给各国 → `flag vezina_left`，`flag blame_ravens`，`world unburied +2`，`companion -vezina`，她同师门一起下了狱。
+- **专**：`knot_ravens` 的人，德基南提起山上那个结：解到只剩最后一股，石头缺了一角。
+- `quest vezina_eye done`（①②）或 `fail`（③）。
+
+`a3_10｜海路｜迪文哈尔海·去布拉桑的船上｜ev_far_and_wide`
+- **事**：科乌里亚归太阳王管，外头的兵要进来得有他的印。贾赫东征去了，印在布勒瓦尔城。海路一场：卡斯坦晕船，她说翅膀在船上派不上用场。
+- **检**：con save DC 13（败：吐了两天，`hp -4`，瓦勒兰给你端的水）。一条挂白旗的船漂在航道上：上不上去看。上 → medicine DC 15，成了取到新鲜样本 `flag plague_samples`；败了 `hp -8`，样本照取。不上 → 不变。
+- **专**：[is.sailor] 或 [is.sea_elf] 你看得出那条船是自己抛的锚，船上的人是等死。上船的检定有优势。
+
+`a3_11｜布勒瓦尔城｜布勒瓦尔城｜ev_surakes_sun_garden`
+- **事**：枢纽。出了坎诺。墙里是花园，神殿兼做钱庄，街上的人管贾赫叫重生的苏雷尔。选项都是 `once`。
+- **选**（一次性）：兽苑里关着西亚丹来的鹰身女妖俘虏。卡斯坦站在笼子前头不走。赎人（`gold -150`）或者夜里放人（stealth DC 16，败了 `rep` 不变但下一场 DC +2）→ `flag harpies_freed`，卡+3；不管 → 卡−2。神殿钱庄（把金冠换成汇票，文字）。一位在试炼山上活下来的太阳精灵老兵（history DC 14：贾赫当年说过，没有人往山上逃）。睡一觉（`rest long`，一次）。
+- **专**：[伊贝瓦尔] 拉娜哈莉，亲王的女儿，太阳王的妻子之一。她是你的族亲，替你递话，下一场的说服有优势；她问她父亲的行李开了没有。[is.harpy] 兽苑的看守想把你也登记进去，intimidation DC 14 或者亮出监誓印。[is.elf] 太阳精灵管你叫“留在冷地方的亲戚”。
+- **店**：巴扎（`sun_cult_amulet`、`scroll_fireball`、`scroll_dispel`、`scimitar`、`breastplate`、`greater_healing_potion`、`superior_healing_potion`、`damestear_dust`）。
+- **神**：有。
+- `codex bulwar_city`，`codex sun_cult`，`codex jaher`。
+
+`a3_12｜太阳王的印｜布勒瓦尔城·宫廷｜ev_sun_cult_debate`
+- **事**：谈判。掌印的是王妃“机敏的”伊谢莉丝。她的条件：坎诺的兵可以进科乌里亚，统兵的得是太阳精灵。她已经给东边去了信，回信要走半年。
+- **检**：persuasion DC 17 谈成“两家各出一位统领”。成了按接受算，文字里你没丢面子，`rep` 不扣。
+- **选**（二者必立其一）：①接受 → `flag sun_terms`，`world communion +1`；没谈成“各出一位”的 `rep escann -1`、瓦−1。②不接受 → `flag sun_refused`，终章里德纳里昂的驻军挡你的路。
+- **专**：`knows_ravens_watched` 的人，她提出第三样价码：把先知会交给总督府。你答应的话照 a3_09 的③办（如果还没办），并且按①算。
+- **神**：有。
+
+`a3_13｜大墓地第三层｜科塞顿·大墓地｜ev_cave`
+- **事**：回到边境地。壁龛里束着腰的死人把头转过来了。福尔卡德七十九岁，不肯烧他们：每一个都有名字。
+- **战**：★`corseted_dead`×3、`wight`×1（名：束了腰的老祭司）。special「踢翻灯油」：`dmgAll 3d6` 火焰，福尔卡德会拦，`rep wex -1`。special「割束腰」sleight / athletics DC 14：成了一具当场散架。`noAwe`。胜 `xp 550`：下面三层封住了。败：下面三层丢了，`world unburied +1`，福尔卡德守着门没上来。
+- **专**：[is.martial] 守楼梯口，敌方每轮只能上来两个。[is.halfling] 你钻得进半身人修的矮门，绕到背后，先手。
+- `quest sixteen_graves stage 4`。
+
+`a3_14｜戴伦｜威克斯堡·议事厅｜—`
+- **事**：宫廷戏，巴里的个人抉择。戴伦二十六岁，是你当年交出去的那个样子：巴里带大的签不下去，逼他的是男爵们；克洛万带大的是自己写的，条文很漂亮；马里昂带大的满口达梅里亚腔，想拿这道令换男爵们服他；男爵们带大的谁也不信。令是：精灵逐出威克斯。没有正确答案。
+- **检**：persuasion DC 16（`guardian_barry` −3；`elrac_debt_paid` −2；`years_wards` −2；[威克斯] −2）。成了戴伦当面认错，选项的声望代价减半；败了照样三选一。
+- **选**（三者必立其一）：①照准 → `flag edict_upheld`，`world communion -2`，`rep wex +1`，`companion -barry`：他跟着被逐的人一起出城。②拿印推翻 → `flag edict_overruled`，`world communion +1`，`rep wex -3`，巴里留队，公爵不再见你。③折中：巴里自请留在堡里作保，令缓行 → `flag edict_softened`，`companion -barry`，`rep wex +0`。
+- **专**：[威克斯] 戴伦记得你，记得小马，也记得你当年把他交给了谁。他先说那句“我现在有四百匹，都在拉尸首”。
+- `quest dyren done`，`quest barry_boy done`。
+- **神**：有。
+
+`a3_15｜街口｜威克斯堡·精灵住的那条街·夜｜—`
+- **事**：用 §11.7 的样例⑤。火把两百来支，窗板后面有孩子在哭。伊迪丝三十岁，把手套一根指头一根指头摘下来：我能让他们都回家睡觉，明早谁也不记得。你点个头。`edict_upheld` 的话，这些人是来“帮着执行”的。
+- **选**：①点头 → `flag edith_mob`，`world communion +1`，`world writ +3`，薇−2 巴（在的话）−1 瓦−2；`edith_none` 的她做得最干净，`edith_iacob` 的她多做了一步，第二天有三个人不认得自己的老婆。②按住她的手，自己走到火把前面：persuasion / intimidation DC 16（`edith_trusts` 的人她在后面替你稳住第一排，优势）。成 → `rep wex +1`，瓦+1。败 → 开战。③敲钟，趁乱带精灵走后巷 → 街烧了，人活着，`world communion -1`。④ [蓝宝石] 点名同领头的单挑：对 `thug`×1（名：屠户行的把头），胜了人群散，败了按③。
+- **战**（②败）：`thug`×4、`village_militia`×2，不许杀人（special「夺火把」athletics DC 14）。胜：街保住了。败：按③算。
+- **神**：有。
+- `quest edith done`。
+
+`a3_16｜瓦洛森｜科乌里亚·瓦洛森的孤塔｜ev_mages_estate`
+- **事**：小枢纽。加里昂今年整两百岁，靠精灵的身子骨扛住了病，带人躲进这座塔，四面都是坎雷克的地盘。玛希尔达在熬药。他要两样东西：坎雷克实验室里的样本，封路和征尸的权。阿德蕾西娅在给他们提水。
+- **专**：`acromis_quiet` 的人，阿克罗米斯还那笔旧债：三船粮。`years_watch` 的人，古塔来的学生认你做先生。`plague_samples` 的人，玛希尔达先谢你。
+- **店**：瓦洛森的药房（`antidote`、`strong_antitoxin`、`healers_satchel`、`greater_healing_potion`、`scroll_dispel`、`nerat_candle`、`blessed_water_jar`）。
+- **休**：`rest short`。
+- `codex varlosen`，`codex wise_council`。
+
+`a3_17｜怪谁｜瓦洛森·塔下的空场｜—`
+- **事**：各国的信使、边境地的村长、太阳精灵的军官都在等一句话。没有正确答案。`blame_ravens` 已经立着的人（a3_09 选了③），这一场改成“你已经说过为什么，今天说怎么办”，下面三项都不出现。
+- **选**（四者必立其一）：①坎雷克没死，瘟疫是他放的 → `flag blame_canrec`；有 `ledger_page` 并且 `field_done` 的，账页当众对得上，`world communion +2`；否则 `world communion +1`，还要过 persuasion DC 15（追逐失败的 +2），败了没人信，按④算。②对领主们点头：病是精灵带来的 → `flag blame_elves`，`world communion -3`，`world unburied -1`，巴（在的话）−3，瓦勒兰记下了。③让薇齐娜（或者你自己）讲先知会的事（要 `knows_ravens_watched`）→ `flag blame_ravens`，`world unburied +2`；薇齐娜下狱离队（`flag vezina_left`，`companion -vezina`）；受了眼的她提前一天走了。④一个字也不说 → `flag blame_silent`。
+- **专**：`emil_struck` 的人选①时，弗恩的信使替你作了证。
+- **神**：有。
+
+`a3_18｜疫令｜瓦洛森·塔里的圆桌｜—`
+- **事**：辩论。加里昂要封路、征尸的权，他自己不想要这个权。玛希尔达要它有期限：家母替术士王算了二十年的仗。
+- **检**：persuasion DC 15 让各国信使在“限期”上签字（`exam_precedent` 的人劣势：他们怕这又是一个没人查得了的前例）。
+- **选**（三者必立其一）：①全给 → `flag law_full`，`world writ +2`，`world unburied -2`，瓦−1。②限期十年，有外人看着 → `flag law_limited`，`world writ +1`，`world unburied -1`（要过上面的说服；败了只能在①③里选）。③不给 → `flag law_refused`，`world unburied +1`，`rep wise -2`。
+- **专**：[贤者门下] 你替瓦洛森开口，条文由你起草，②不用检定。`edith_mob` 的人，信使们昨天刚听说威克斯堡那条街的事，②的 DC +2。
+
+`a3_19｜实验室｜达拉万之愚边上·一处塌了半边的墓窖｜—`
+- **事**：潜入。坎雷克四十年的实验室，人已经搬走了。`cure_early` 的人有先知会给的路；没有的要自己找：survival DC 16，败了多花一个月，`world unburied +1`。罐子，笼子，账本从 980 年记起。一页花名册：每个病死的人都在上面。阿雷尔二世的名字在 994 年那一页。
+- **检**：stealth DC 15（屋里有个东西没躺下，是号魂，不打，绕过去；败了全队 `damage 3d6`）；medicine DC 15 挑对罐子；arcana DC 16（[is.caster] 优势）看懂那本书是什么：名册，容器，也是他的命匣。
+- **专**：[乌霜边区] 罐子上拴着军团牌，有一块你认得。
+- **效果**：`flag knows_roster`，`item +lab_samples`，`quest white_year stage 3`，`quest canrec_trail stage 2`，`codex canrec`，`codex book_of_canrec`。
+
+`a3_20｜三剂药｜瓦洛森·药房｜—`
+- **事**：用 §11.7 的样例⑥。玛希尔达头一锅只熬出三剂，只救得了刚被咬的人。达梅里亚的信使：阿雷尔王子前夜在边境上被抓了一道，开始发白（`arrel_with_you` 的话他就躺在隔壁，是跟你来的）。洛伦特的骑士：雷安国王咳了三天。渡鸦山的车夫没开口，车上十一个孩子。她把药箱推给你，转身去刷锅。没有正确答案。
+- **选**（四者必立其一）：①三剂都给达梅里亚 → `flag doses_moon`，`world feud +2`，`rep moon +2`，`rep rose -2`。②三剂都给洛伦特 → `flag doses_rose`，`world feud +2`，`rep rose +2`，`rep moon -2`。③两家各一剂，剩的给最小的孩子 → `flag doses_split`。④全给车夫 → `flag doses_children`，`world unburied -1`，`rep moon -1`，`rep rose -1`，巴（在的话）+2。
+- **专**：[洛伦特] 有一剂本该是你家国王的，骑士当着你的面把手按在剑上。medicine DC 16（任何出身）：雷安那是着了凉。看出来了也没法证明。
+- **事**：没拿到药的阿雷尔活不活，留给终章的间幕按 `unburied` 写。
+- **效果**（`first`）：`level 8`，`quest white_year done`，`quest witness stage 4`。→ `a4_01`
+- **神**：有。
+
+---
+
+### 11.5 第四幕《玫瑰与月的婚礼》（1040 年泰苏伦月—1041 年花始月，18 场）
+
+**进场假定**：8 级。卡斯坦、瓦勒兰在队里；巴里、薇齐娜可能不在。阿德蕾西娅是扈从。第三幕各组标记见上。
+
+**出场保证**：10 级。卡斯坦可能不在了（`liv_north` 往北飞了，`liv_dead`，或者 `castan_liv` 当了皇帝）；瓦勒兰可能不在了（`valeran_purist`、`valeran_released`）。下面每组恰好立一个：`crege_penance` / `crege_champions` / `crege_given`；`charter_emperor` / `charter_league` / `charter_writ` / `charter_muster`；`valeran_champion` / `valeran_released` / `valeran_purist` / `valeran_stayed`。山的最后状态三种之一：有皇帝（`castan_crowned`、`castan_alive`，外加 `castan_garrec` / `castan_lucan` / `castan_liv` / `castan_pc` 之一）；毁阶（`mountain_sealed`）；照旧封着（都不立）。`knot_cut` 立没立看这一幕。`knows_canrec_plan` 一定立着。`finnic_chip`、`viswall_safe`、`larthan_open`、`wedding_blood`、`enteben_stopped`、`bridle_public`、`palehand_saluted`、`liv_told`、`liv_bridled`、`iacob_loop`、`wex_crown_promised`、`lance_told_truth` / `lance_told_thrall` 立没立都有可能。
+
+**这一幕的清单**：战斗 a4_10、a4_12（另有 a4_05、a4_06 的裁决战）。枢纽 a4_04（第二个商人在 a4_14）。没有正确答案的裁断 a4_05、a4_08、a4_16。出身专属：洛伦特 a4_04、伊贝瓦尔 a4_09、达梅里亚和乌霜边区和威克斯 a4_08。阵营专属：蓝宝石 a4_12、旧礼 a4_05、贤者门下 a4_08。职业组 a4_02、a4_15。种族 a4_01、a4_04、a4_15。
+
+`a4_01｜彩城关门｜小人国·维斯沃尔·1040 年泰苏伦月｜—`
+- **事**：`chapter: 第四幕 · 玫瑰与月的婚礼`。谈判。维斯沃尔关了城门，染坊的大缸里煮的是裹尸布。洛伦特和加韦德的使者都住在城外，都说是来“保护”小人国的。芬尼克国王三十八岁，从城头上放下一只篮子，里面是饼：按分饼礼，同桌分过饼的人不许动手。
+- **检**：persuasion DC 15 让他开门（[is.halfling] 自动成；亮出监誓印 +2）。败：你们从染坊的排水口爬进去，全队染成靛蓝色，下一场的检定 −1（没人把蓝脸的人当回事）。
+- **专**：[is.halfling] 守门的认你是自家人，先塞给你一块派（`item +halfling_pie`）。
+- `codex viswall`，`codex finnic`。
+
+`a4_02｜芬尼克的那块石头｜维斯沃尔·议会厅｜—`
+- **事**：他下山时顺手揣走了一小块誓石。石头搁在哪间屋，那间屋里许的愿就都得兑现。议会三年没人敢开口，提案都写在纸条上从门缝里塞进来。布洛克说过山上的石头缺一角：就是这一块。
+- **选一**（先用一用这间屋）：把洛伦特和加韦德的使者请进来，叫他们在这里许诺不动小人国。persuasion DC 16。成 → `flag viswall_safe`，`rep rose -1`。败：使者在门槛外面站住了，一步不肯进。
+- **选二**（石头）：①讨走（他巴不得，议会舍不得：persuasion DC 15，`viswall_safe` 的人免检）→ `flag finnic_chip`，`item +oathstone_chip`。② [游荡者] 或 [is.criminal] 顺手拿走，同他当年一样：sleight DC 17，成了同①，芬尼克第二天来信夸你手艺；败了他当场递给你，说下回别这么费劲。③留给他 → 不立。
+- **专**：[is.caster] 你摸得出石头里那股细流同山上的是一路，知道它放回去会怎样。
+- **神**：有。
+- `quest mountain stage 3`。
+
+`a4_03｜去洛伦泰内的路｜伦瑟诺·大路｜—`
+- **事**：赶路。路上是去赴婚礼的车队和往南逃的人，两股人走的是同一条路。瓦勒兰回了家乡，一路上有人朝他行礼，也有人朝他吐唾沫。路边停着一辆盖着布的车。
+- **检**：medicine DC 15 给那辆车分拣（成了救下两个没发病的，瓦+1；败了你被车主当成抢尸首的，`hp -5`）。survival DC 14 抄近路。
+- **选**：瓦勒兰问你，要是恩特本的人在婚礼上闹起来，你站哪边。答什么他都记着，只影响 a4_06 的开场白。
+- **休**：`rest short`。
+
+`a4_04｜洛伦泰内｜洛伦泰内·婚礼前的城｜ev_lilac_wars`
+- **事**：枢纽。选项都是 `once`。太后一百零二岁，样子没变，长老们得改口了。雷安二十岁，书读得好，没自己拿过一回主意。奥坎娜十七岁，比她丈夫敢说话。马里昂三十八岁。
+- **选**（一次性）：见雷安和奥坎娜（insight DC 15：这门亲事两个人都不反对，也都没人问过他们）；替王室管闸的红宝石矮人还剩最后一家，有没有人谢过他们（去谢一声，带一桶酒，`gold -20` → `flag dwarves_thanked`；[is.dwarf] 不用带酒）；罗恩·阿瑟利斯隔着广场看你；卡斯坦在金匠铺里试冠（卡+1，`gold -10`）；巴里（在的话）替三百人的席面掌勺；睡一觉（`rest long`，一次）。
+- **专**：[洛伦特] 主场。太后问你三十年前那件事的答复。①照实说：是他自己的手，是失手 → `flag lance_told_truth`；有 `lance_truth` 的 `world feud -1`，没有凭据的 `world feud +1`（她把空口白话当成月家的说辞）。②说他当时被慑住了 → `flag lance_told_thrall`，`world feud -1`，`world writ +1`，瓦−2。③不答 → `world feud +1`。`quest lance done`。`p_hall_truth` 的人，她说你当年在大厅里也是这么不给人留面子的。
+- **店**：王城的铺子（`rosemetal_rapier`、`rose_knight_lance`、`rosemetal_breastplate`、`rose_knight_halfplate`、`elven_longbow`、`superior_healing_potion`、`heroism_draught`、`rubenaire_red`）。
+- **神**：有。
+
+`a4_05｜克雷格的血债｜洛伦泰内·白玫瑰庭｜ev_piety`
+- **事**：审判。克雷格·达梅里斯得来参加被他失手杀死的人的儿子的婚礼。他四十一岁，这辈子都在等人让他偿。太后要一个说法。没有正确答案。
+- **选**（三者必立其一）：①忏悔礼：当众卸甲，在先王灵前守一夜 → `flag crege_penance`，`world feud -2`，`rep moon -1`。②骑士裁决，两家各出一人，打到见血为止 → `flag crege_champions`，`world feud -1`；你可以自己替他出场，对 `lorentish_knight`×1（名：白玫瑰庭的斗士），胜负只改文字和 `rep rose` ±1。③把他交给太后 → `flag crege_given`，`world feud +2`，`rep rose +2`，`rep moon -3`，瓦−1；她拿他做了什么，戏里不写。
+- **专**：[旧礼] 你涂油，忏悔礼才算数，往后谁也不能再提这笔债：选①时 `world feud` 再 −1。`aria_anoints` 的人，白玫瑰庭的祭司不认月神神殿的油。
+- `codex rose_and_moon`。
+- **神**：有。
+
+`a4_06｜碎玫瑰｜洛伦泰内·城外·恩特本的营地｜—`
+- **事**：瓦勒兰的个人抉择。恩特本的诸侯打出“碎玫瑰”的旗号，要趁婚礼逼宫。`blame_elves` 的人没得选：他说您已经替我选了，交还了誓，跟他们走了。
+- **选**（四者必立其一）：`blame_elves` → 自动 `flag valeran_purist`，`companion -valeran`，`flag wedding_blood`。否则：①骑士裁决，点他替精灵一方出战 → 战斗：你和他对 `lorentish_knight`×2（名：阿瑟利斯家的斗士），不杀人。胜 → `flag valeran_champion`，`flag enteben_stopped`，他留队，一路不同你说多余的话。败 → `flag valeran_champion`，`flag wedding_blood`。②解了他对你的誓，放他回去拦 → `flag valeran_released`，`companion -valeran`；`world.feud <= 4` 时他拦住了（`flag enteben_stopped`），否则没拦住（`flag wedding_blood`）。③不管 → `flag valeran_stayed`，`flag wedding_blood`，瓦−2。
+- `quest valeran_oath done`。
+
+`a4_07｜婚礼｜洛伦泰内·王宫大厅｜ck3_barry`
+- **事**：宴席。雷安四世娶奥坎娜·西尔穆纳，西坎诺的每一顶冠都在席上。座次是一桩麻烦：卡斯坦坐哪，戴伦坐哪，克雷格坐哪。`wedding_blood` 的话，上到第三道菜时恩特本的人掀了桌子，有人见了血。
+- **检**：performance / persuasion DC 15 敬酒（成了 `rep rose +1` `rep moon +1`）；insight DC 15 看席上谁在同谁咬耳朵（成了 a4_08 有优势）。
+- **效果**：没有 `wedding_blood` → `world feud -1`；有 → `world feud +1`。
+- **选**：把卡斯坦安排到主桌（卡+2，`rep rose -1`）或者下席（卡−1）。`doses_moon` / `doses_rose` 的人，没拿到药的那一家隔着桌子不看你。
+- **神**：有。
+
+`a4_08｜帐子里的议事｜洛伦泰内·婚宴外的大帐｜—`
+- **事**：辩论。十字军归谁统领，四份章程。皇帝：东坎诺的诸王要一位卡斯坦，一面旗。同盟：伊奥瑞尔说，等这件事完了，我们还在。令状：瓦洛森说封路的人就该管兵。会盟：马里昂说自愿来的才靠得住。监誓人的印落在哪份上，哪份算数。没有正确答案。
+- **选**（四者必立其一）：①皇帝 → `flag charter_emperor`，`world mantle +3`（`stair_down` 而卡斯坦不在队里的，这一项是灰的）。②同盟 → `flag charter_league`，`rep rose +3`，`rep moon -1`。③令状 → `flag charter_writ`，`world writ +3`。④自由会盟 → `flag charter_muster`，`world communion +2`，`world unburied +1`。
+- **专**：[达梅里亚] 你替月家说话，选④时马里昂当众管你叫“我的监誓人”，`rep moon +2`。[乌霜边区] 你替黑龙一系开口：`garrec_king` 的话加雷克就坐在帐里，选①时 `rep dragon +2`。[威克斯] 戴伦要的是王号，拿他那一票换：答应 → `flag wex_crown_promised`，`rep wex +2`。[贤者门下] 选③时条文由你起草，可以写上期限：`world writ` 只 +2。`acromis_traded` 的人，加里昂那张旧令状被人当场拿出来当先例。
+- **神**：有。
+
+`a4_09｜拉尔桑来的使者｜洛伦泰内·使者的住处｜—`
+- **事**：谈判。伊贝尼昂的使者来通知一声：拉尔桑一线对人类难民关了。不是商量。
+- **检**：persuasion DC 17。减 DC：`alaria_blocked` −2；`p_ibevar_blood` −2；`rep.elders >= 3` −2；[伊贝瓦尔] 使者是你的族亲，−2。加 DC：`blame_elves` +4；`edict_upheld` +2；`calindal_named` +1（长老们想要回那把剑）。
+- **选**：①说开 → 过了检定 `flag larthan_open`，`world communion +2`，`rep elders -1`；没过，使者把你的话带回去，亲王回了一句“上回有人劝我们开门”。②认了 → `rep elders +1`。③ [伊贝瓦尔] 拿亲王的手令压他：不用检定，`flag larthan_open`，`world communion +2`，`rep elders -3`，你回不了瓦多塞德了。
+- `codex larthan`。
+
+`a4_10｜河里上来的｜洛伦泰内·婚礼那一区的河岸·夜｜ev_undead_army`
+- **战**：死人顺着河漂进了城。`pestilent_zombie`×4、`ghoul`×2、`wight`×1，我方 `man_at_arms`×2（名：婚礼的卫兵）。special「开闸」：`dwarves_thanked` 的人不用检定，`dmgAll 4d6`，红宝石矮人在闸上朝你挥了挥手；没谢过的要过 athletics DC 16，败了闸卡住，`selfDmg 2d6`。`noAwe`。胜 `xp 700`。败：婚礼那一区烧了一半，`world unburied +1`，`world feud +1`。
+- **专**：[is.divine] 你守着桥头，它们过不来，我方多一轮先手。
+
+`a4_11｜那个字｜洛伦泰内·河边的停尸棚｜—`
+- **事**：调查。漂上来的死人里有一个信差，信匣是封蜡的。里面是一封回信，字写得很小，抱怨后脑勺痒。写信的人在等活人自己把山修好；他知道那个字。收信人是谁看标记：`iacob_pardoned` 的是亚科布；否则是“阁下”，没有名字。先知会的事也在这里交底：一只渡鸦落在婚宴的烤鹅上，开口说了德基南那一派为什么坐着看（`ravens_trust` 或者薇齐娜在队里才有，`flag knows_why_watched`）。
+- **检**：investigation DC 16（信是什么时候写的：修山动工那年）；arcana DC 16（信纸上有名册的味道）；history DC 15（誓词里那句“至我寿终之日”）。成一项就够，全败由薇齐娜或阿德蕾西娅念出来。
+- **效果**：`flag knows_canrec_plan`，`quest canrec_trail stage 3`，`codex the_word`（补全）。
+
+`a4_12｜面甲｜洛伦泰内·婚礼比武场｜ev_adeanic_war`
+- **战**：比武会最后一天，一个骑士拉下面甲骑进场，打法同埃德蒙·净手一模一样。他就是。★`edmund_palehand`×1、`wight`×2（名：苍手的扈从）。`noAwe`。special「掀他的面甲」athletics DC 16：成了全场看见里面是什么，他空一轮。胜 `xp 900`：他拨马走了，没追任何人。败：他把你挑下马，枪尖在你喉咙上停了一下，收回去了。凯伦说赢了要留人。
+- **专**：[蓝宝石] 对他行旧礼：他放下枪，接受一对一，扈从不动。无论胜负 `flag palehand_saluted`。瓦勒兰（在的话）也认得这个礼。
+- `codex edmund`，`codex death_knight`。
+- **神**：有。
+
+`a4_13｜每位国王都想要一个皇帝｜洛伦泰内·各家的偏厅｜—`
+- **事**：宫廷戏。死亡骑士闯了婚礼，每位国王都想要一面大旗。人选摆在桌上：加雷克（要 `garrec_king`，四十二岁）；卢坎，二十岁，“银龙”，性子看 `lucan_*`；卡斯坦，四十八岁，在走廊里嚷；`golem_pc` 的你。克拉丽蒙德四十二岁，只说两个字：毁阶。嗓门最大的那几位，没有一个是被人慑住的。
+- **选**：把缰绳的事告诉他们不告诉。①摊开讲 → `flag bridle_public`，`world mantle -2`，`world writ +1`（往后只有法师说得清结解没解），卡+1 薇+1。②不讲 → 不变。
+- **检**：insight DC 16 看出谁最急（`lucan_iacob` 的卢坎身后站着亚科布）；persuasion DC 16 让诸王答应“先上山看过再定”（败：`charter_emperor` 的人被催着三个月内成事，a4_15 少一次短休）。
+
+`a4_14｜北上｜北要塞·1041 年花始月｜ev_forge`
+- **事**：小枢纽。布洛克多了十六年的账：`mended` 的话十道修好了九道，剩下誓石；没修的还是七道半。同伴们上山前各说一句。卡斯坦问你：山上那个结，到底解了没有。
+- **选**（卡斯坦）：把缰绳的事全告诉她 → `flag liv_told`；不说 → 不立。`bridle_public` 的人她已经知道了，自动 `liv_told`。
+- **店**：石匠的库房（`hold_plate`、`hold_chain`、`hold_warhammer`、`ward_runestone`、`vigor_runestone`、`superior_healing_potion`、`stoneskin_potion`）。
+- **休**：`rest short`。
+
+`a4_15｜第二次上山｜试炼山｜ev_wex_precipice`
+- **事**：`mended` 的走修好的石阶，把试炼过一遍；没修的还是卡斯坦放绳；`stair_down` 的只有她飞得上去，带得动一个人。
+- **检**：绕石头跳十圈，acrobatics DC 12，当年坎雷克的师父也跳过（败：从头再跳，全队看着）；两个林中精怪的旧怨，persuasion DC 15；双足飞龙，animal DC 16（卡斯坦在的话她来，有优势）。各败一项 `hp -5`，不拦路。
+- **专**：[is.caster] 你读得出那半句话是冲着“土地与子民”去的。[is.martial] 你一个人把绳桥拉了起来，后面的人少掷一次。[is.flyer] 你自己飞，不用绳。
+- **事**：`iacob_pardoned` 的亚科布已经在誓石边上了，八十岁，带着工具。
+
+`a4_16｜誓石前｜试炼山·誓石｜—`
+- **事**：全剧的分水岭，分三步写，可以拆成 a4_16a / b / c。没有正确答案。
+- **第一步，碎片和结**：背包里有 `oathstone_chip` 才有。放回去。第二幕请过人解结的（`knot_alarian` / `knot_ravens` / `knot_iacob`），最后一股松了 → `flag knot_cut`。例外：`knot_iacob` 的是亚科布亲手收尾，要过 insight DC 17（薇齐娜受了眼并且在队里、或者你 `knows_word`，免检）才看得出他留了一个活扣；没看出来的，正文照写“解完了”，实际不立 `knot_cut`，立 `flag iacob_loop`。没请过人的，石头合上了，结还在。
+- **第二步，卡斯坦**（她在队里才有；她的个人抉择）：①`liv_told`：结解了她就去试（成不成看 `golem_liv` 或者 `world.mantle >= 6`，不成她笑着下来，留队）；结没解，她在石头前站一夜，下来说老娘不给人当马，留队，卡+3。②没告诉她，放她上去立誓（只在没有 `knot_cut` 时出现）：`golem_liv` 或者 `approval.liv >= 5` → 她立了誓，被套上，`flag castan_crowned`、`flag castan_alive`、`flag castan_liv`、`flag liv_bridled`、`world mantle =10`；否则她死在石头前，`flag liv_dead`，`companion -liv`。③不让她试 → `flag liv_north`，`companion -liv`；`vow_liv` 的人这一项是灰的，原因写“你在山上答应过她”。
+- **第三步，山**（第二步没有立出皇帝才有；她死在石头前的也走这一步）：①立一位皇帝 → `flag castan_crowned`、`flag castan_alive`、`world mantle =10`，清掉 `mountain_sealed`，人选：加雷克（要 `garrec_king`）`flag castan_garrec`；卢坎 `flag castan_lucan`；卡斯坦（第二步试成了）`flag castan_liv`；你自己（要 `golem_pc`）`flag castan_pc`。`stair_down` 的只能是卡斯坦或者你。卡斯坦当了皇帝（不管是这一步还是第二步）就不再是同伴：`companion -liv`，终章她以皇帝的身份到场。②毁阶：克拉丽蒙德带着镐上来（要 `clarimonde_pact` 或 `rep.escann >= 3`，否则花 200 金冠雇布洛克的人）→ `flag mountain_sealed`，`world mantle =0`，没试过的卡斯坦按第二步③走。③下山，什么都不动。
+- **神**：有。
+
+`a4_17｜下山｜北要塞·山脚｜—`
+- **事**：后果。诸王收到消息。`charter_emperor` 却没有皇帝的：章程落了空，太后笑了一下，改立 `charter_league`（`unflag charter_emperor`，`world mantle -3`）。往北飞的卡斯坦在天上绕了一圈才走。`liv_bridled` 的她什么也没觉出来，嚷着要加第十一道试炼：喝赢她。有了皇帝的，头一道敕令是什么，按 `castan_*` 各写一句。
+- **选**：阿德蕾西娅十五岁，问能不能正式立誓做你的扈从。答应／叫她再等一年。只是文字，终章会提。
+- **神**：有（同伴的话）。
+- `quest liv_claim done`（加冕、留队）或 `fail`（往北、死），`quest mountain done`。
+
+`a4_18｜1041 年花始月｜北要塞·大路口｜ev_blank`
+- **事**：收尾。十字军头一路出发，打什么旗看 `charter_*`。贾赫的回信到了，晚了半年，很短，句句是实话：他在山上见过尼奇默往上走，没有人往山上逃；科乌里亚的事他回不来，谁管用就让谁管。留下来的同伴各说一句。
+- **效果**（`first`）：`level 10`，`rest long`，`quest witness stage 5`，`item +jaher_letter`。→ `f_01`
+
+---
+
+### 11.6 终章《最后一个冬天》（间幕 1041—1053，正戏 1053 年奈拉月—真霜月，12 场，另加 7 个结局场景）
+
+**进场假定**：10 级。同伴里谁还在，看第三、四幕。阿德蕾西娅是扈从。第四幕的各组标记见上。
+
+**出场**：`f_12` 的最后一个选项按 §10.2 的顺序通向七个 `end_*` 之一。终章里每组恰好立一个：`winters_crusade` / `winters_varlosen` / `winters_home` / `winters_squire`；`temple_dug` / `temple_guarded`；`price_aldresia` / `price_pc` / `price_companion` / `price_emperor` / `price_names`（立了 `book_kept` 的不立 `price_*`）；`book_locked` / `book_wise` / `book_kept`。
+
+**年纪**：人类主角五十出头。瓦勒兰五十二，薇齐娜五十，卡斯坦六十一，巴里九十五岁，还是那张脸。阿德蕾西娅二十七，伊迪丝四十三，戴伦四十，马里昂五十二，伊奥瑞尔一百一十五。
+
+**这一场的清单**：战斗 f_06、f_07、f_08、f_11。枢纽 f_03。检定 DC 15–19。出身专属：达梅里亚 f_09、洛伦特 f_02、乌霜边区 f_10、伊贝瓦尔 f_05、威克斯 f_05。阵营专属：蓝宝石 f_06 和 f_08、旧礼 f_09、贤者门下 f_12。
+
+**会师的人手**用计数器 `var muster`，只在终章里设、终章里读。f_03 进场时清零再加：`edict_softened` +1（巴里带来威克斯的兵）；`enteben_stopped` +1（恩特本的枪骑）；`garrec_king` +1（黑龙的军团）；`larthan_open` +1（伊贝瓦尔的弓手）；`sun_terms` +1（太阳精灵驻军）；`viswall_safe` +1（半身人的粮车）；`winters_crusade` +1。f_07 和 f_11 按它给 `allies` 加人：≥2 一队，≥4 两队。
+
+#### 间幕《十二个冬天》
+
+`f_01｜十二个冬天｜—·1041—1053｜ev_blank`
+- **事**：`chapter: 间幕 · 十二个冬天`。按局势写年表，每条一两句：`unburied` 的三档对应死者名单的三种长度（§10.3）；`communion` 的三档对应 1042 年艾伦纳斯那条街的三种下场；`cure_early` 的人，解药早出了瓦洛森一年（`world unburied -1`，只在这里结算一次）；有皇帝的，写他这十二年发过哪几道敕令；`charter_*` 写十字军打成了什么样。没拿到药的阿雷尔王子：`unburied <= 3` 活着，否则写他是哪一年走的。
+- **选**（四者必立其一）：①跟着十字军一个冬天一个冬天地打 → `flag winters_crusade`，`rep escann +1`。②守在瓦洛森 → `flag winters_varlosen`，`rep wise +2`。③回了本国 → `flag winters_home`，出身对应的声望 +2。④把阿德蕾西娅带出来：教她盖印之前先数人 → `flag winters_squire`，终章里她作 `allies` 时换成更强的数值，f_11 她的台词不同。
+- **神**：有（时间跳跃）。
+
+`f_02｜谁没熬过来｜瓦洛森·1053 年奈拉月｜—`
+- **事**：`chapter: 终章 · 最后一个冬天`。重聚。先数没来的人：福尔卡德；克雷格和他的儿女（1050，`unburied <= 3` 的活着）；雷安四世（1050，同上）；亚科布（赦了的活到九十一岁，去年死在床上）。王位上又是孩子：七岁的鲁本三世，祖母还是那位祖母；加韦德六岁的戈德拉克十一世在咳。来了的人各一句，用第一部分 1053 年那几句示范台词。
+- **专**：[洛伦特] 同一张王座，同一双够不着垫子的脚。太后问你还记不记得三十一年前她交代的那件事，记到哪一年看 `lance_told_*`。
+- **神**：有（时间跳跃）。
+- `quest crusade start`。
+
+#### 正戏
+
+`f_03｜集结｜瓦洛森·十字军大营｜ev_multi_racial_merc`
+- **事**：枢纽。选项都是 `once`。为了一块地来的罗尔萨德人；卢西安·西尔·维文；阿德蕾西娅带最后一路，腰上那把剑叫银歌。进场时按上面的规则算 `var muster`。
+- **选**（一次性）：四个同伴各一场最后的谈话（在队里的才有；离队而留在局里的也来：`edict_softened` 的巴里带着兵，`valeran_released` 且 `enteben_stopped` 的瓦勒兰带着枪骑）；加里昂谈那本书（他不想要，可他更不想让别人要）；伊迪丝四十三岁，`world.writ >= 7` 的她带着令状来，身后跟着一队不说话的人；戴伦四十岁，巴里当着人叫了他一声“我家那孩子”；睡一觉（`rest long`，一次）。
+- **专**：[达梅里亚] 马里昂五十二岁，亲自上阵，问你切肉刀那天的事他到底该怎么讲。
+- **店**：十字军的军需（`ebonsteel_greatsword`、`ebonsteel_greataxe`、`ebonsteel_plate`、`elven_mail`、`superior_healing_potion`、`blessed_water_jar`、`scroll_mass_healing`、`scroll_banishment`、`nerat_candle`）。
+- **神**：有。
+
+`f_04｜苏雷尔神庙｜去科乌尔堡的路上｜load_10`
+- **事**：路边一座苏雷尔的神庙。骑士西奥多·西纳·特里纳斯打听庙底下有什么：听说埋着一位术士王的侍从，听说里面有精灵的寿数。他手下的人已经带了镐。
+- **检**：religion DC 16（底下封着的是什么人）；persuasion DC 17 劝住他（败了他夜里自己去）。
+- **选**（二者必立其一）：①让他们挖 → `flag temple_dug`，西奥多的人留下来打完这一仗（`var muster +1`）。②派人守着 → `flag temple_guarded`；没劝住的，西奥多带人走了（`var muster -1`）。
+
+`f_05｜科乌尔堡｜科乌尔堡｜—`
+- **事**：谈判。总督德纳里昂。`sun_terms` 的人：城门开着，统兵的是太阳精灵，瓦勒兰（在的话）恕他直言。`sun_refused` 的人：城门关着，要么谈，要么绕。
+- **检**（`sun_refused` 才有）：persuasion DC 18，或者夜里绕城 stealth DC 17（party）。败：多耗三天，`var muster -1`，`world unburied +1`。
+- **专**：[伊贝瓦尔] `larthan_open` 的人，拉尔桑来的弓手队长是你的族亲，他说亲王的箱子开了两只。[威克斯] 十字军走的是你老家的路，沿途的村子你叫得出名字，绕城那一检有优势。
+- **选**：统兵的人问你打头阵的是哪一路。点阿德蕾西娅那一路／点别人。只是文字，她都会去。
+
+`f_06｜达拉万之愚｜达拉万之愚·沼地｜—`
+- **事**：过沼。survival DC 16（败：`hp -8`，丢一辆辎重车）。然后看 `world.writ`：
+  - `writ <= 3`：沼里立着一排烧黑的柱子，圣武士正要烧一个背誓的法师。他们自称凯伦的门徒。柱子上的人：`edith_none` 或 `edith_ravens` 的是伊迪丝；否则是瓦洛森的一个学生。
+  - `writ >= 4`：柱子是空的，令状管着。改成沼里的死人拦路。
+- **战**（`writ <= 3`，没谈下来）：`witch_hunter`×3、★`pyre_captain`×1。special「踢散柴堆」athletics DC 16。胜 `xp 900`，`flag pyre_stopped`。败：你被按在泥里看着点火；伊迪丝在柱子上的话她自己开了口，火灭了，所有人都记不得为什么来这儿。
+- **检**（先谈）：persuasion / intimidation DC 18（[蓝宝石] DC 14：你认得他们引的每一句凯伦的话，也知道凯伦没说过后半句）。成 → `flag pyre_stopped`，不用打。
+- **战**（`writ >= 4`）：`pestilent_zombie`×3、`ghoul`×2、`wight`×1。`noAwe`。胜 `xp 700`。
+- **神**：有。
+
+`f_07｜山下的坟场｜渡鸦山·山下坟场｜ev_undead_army`
+- **战**：1040 年头一个人起来的地方。阿德蕾西娅家的坟在第三排。`pestilent_zombie`×4、`wight`×2、`ghoul`×2，我方 `knight`×1（名：阿德蕾西娅）外加 `muster` 给的人。special「敲钟」athletics DC 16：十三年前那口钟还在，成了敌方全体空一轮。`quarantine_open` 的人，起来的里面有你当年放出城又回来的人。`noAwe`。胜 `xp 900`。败：退到钟楼上守到天亮，`var muster -1`。
+- **专**：[is.divine] 同第三幕，敲钟自动成。
+
+`f_08｜门｜渡鸦山·“山上的宅子”大门｜—`
+- **战**：埃德蒙·苍手守门。★`edmund_palehand`×1、`wight`×2。`noAwe`。`palehand_saluted` 的人，或者 [蓝宝石]：他认得你，放下枪，一对一，扈从不动；打完他把门让开，说凯伦说赢了要留人，他照办了三十年。胜 `xp 1000`。败：阿德蕾西娅替你挡了一枪，带伤进门（f_11 她作 `allies` 时生命减半）。
+- **事**：他倒下的时候面甲开了。瓦勒兰（在的话）替他合上的。
+
+`f_09｜笼子｜山上的宅子·前厅｜ev_cave`
+- **事**：上千只笼子，白疫在里面发酵。这一场旁白不逗趣。`vezina_left` 而且是下了狱的：`world.unburied <= 6` 时她在一只笼子里，还活着，在数笼子（放出来 → `flag vezina_freed`，她作 `allies` 跟到最后）；`>= 7` 时笼子是空的，她的名字在书上。里门口站着“遭叛者”阿雷尔二世，994 年就在坎雷克手上了。
+- **检**：medicine DC 16 分清哪些笼子能开；athletics DC 15 砸锁。每开一排要多耗一轮，下一场坎雷克多一个号魂。开不开由你。
+- **战或礼**：★`arrel_revenant`×1。[旧礼] 替他把六十年没办的葬礼办了（`once`，`world unburied -1`），他自己躺下。[达梅里亚] 马里昂站到他祖父面前，叫了他一声；阿雷尔停了一轮，这一轮你们先手。胜 `xp 800`。败：被扔进一只空笼子，阿德蕾西娅开的锁。
+
+`f_10｜死去的国王们｜山上的宅子·大厅｜ev_apostle`
+- **事**：坎雷克坐在死去的国王们中间，说话像个被打断了三十年的学究。他把账讲了一遍：活人会变卦，死人不改口；誓词说“至我寿终之日”，那就找一位没有寿终的。这是“缰绳”的第三种讲法，一份契约。他右手边是空的（阿雷尔在门口）；左手边：`body_quiet` 或 `body_left` 的坐着五十三世，别的情况那张椅子空着，他为这事抱怨了两句。
+- **那个字**（山上有活着的皇帝才有）：
+  - 没有 `knot_cut`：他念了。正文不写那个字，只写烛火、笼子和皇帝的脚怎么了。皇帝走到他那边去。①`knows_word` 的你把另一半接上 → `flag bridle_pc`，皇帝停住，回头看你。②`world.writ >= 7` 而伊迪丝在场 → 她开口，`flag bridle_wise`。③现在就动手 → 开战，对 ★`bridled_emperor`×1（名字按 `castan_*`），打倒就是杀了：`unflag castan_alive`，卡斯坦的话 `flag liv_dead`；打输了，皇帝的剑停在阿德蕾西娅头顶上没落下来，按④走。④不动他，先对付坎雷克 → 下一场他站在坎雷克那边（敌方加一个 ★`bridled_emperor`，打到倒地为止，不算杀），“谁付账”里才有 `price_emperor`。皇帝是你自己的（`castan_pc`）：你的脚自己动了；`knows_word` 的站得住，否则阿德蕾西娅照你后脑勺来了一下，沼泽堡的土办法，你醒了一口气，这口气只够你走到书跟前（下一场只能选 `price_emperor`）。
+  - 有 `knot_cut`：那个字落了空。他问：解了？谁解的？皇帝站在你这边，下一场作 `allies`。
+- **专**：[乌霜边区] 五十三世认得你的军团牌。`p_laid_arms` 的人，他先把剑放下了，下一场不上阵；`p_fought_on` 的人，他朝你点了一下头，照打。`liv_saw_body` 的卡斯坦（在的话）管他叫了一声爹，旁白不说他听没听见。
+- **神**：有。
+- `codex canrec`（补全），`codex bridle`（补上“契约”这一段）。
+
+`f_11｜谁付账｜山上的宅子·大厅｜—`
+- **战**：★`canrec_lich`×1、`bellowing_soul`×2（名：号魂；上一场开过笼子的再加一个）；`body_quiet` / `body_left` 而且五十三世没放下剑的，加 ★`castan_liii_revenant`×1。`noAwe`。special「念名字」（要 `ledger_page`）history / religion DC 17：念对一页，一个号魂散掉。special「抓他后脑勺」：他的命匣不像他，痒；sleight DC 18，成了他空一轮，骂维纳克。胜 `xp 1500`。败：阿德蕾西娅一个人顶到你们爬起来，她重伤（下面只能选 `price_aldresia`）。
+- **事**：书在桌上（打完 `item +book_of_canrec`，`book_locked` / `book_wise` 的在 f_12 再 `item -book_of_canrec`）。毁书就是杀他，号魂松绑的那一下先撕动手的人。阿德蕾西娅说：您教过我，盖印之前先数人。我数过了，够一个人去。没有正确答案。
+- **选**（六选一）：①让她去 → `flag price_aldresia`（正史），`item +silversong`。②你去 → `flag price_pc`；凡人死在这里，结局照常结算；`is.immortal` 的死不了，书在你身上留了一道去不掉的记号。③留到最后的同伴替你去（瓦勒兰在队且 `approval.valeran >= 6`，或者卡斯坦在队且 `approval.liv >= 6` 且没有 `liv_bridled`）→ `flag price_companion`。④被牵的皇帝挣开半口气，自己把书撕了（要 `castan_alive` 且没有 `knot_cut`）→ 成不成：加雷克看 `rep.dragon >= 3`；卢坎看 `lucan_marion`、`lucan_garrec`，或者 `lucan_alva` 加 `years_wards`；卡斯坦看 `approval.liv >= 4`；你自己一定成。成 → `flag price_emperor`，`unflag castan_alive`；不成，这一项消失，重选。这一项只在上一场没人把缰绳夺下来时出现（没有 `bridle_pc`、`bridle_wise`）。⑤不毁书，把名字一页一页念出来（要 `world.unburied <= 3`、`item.ledger_page`、`knows_roster`）→ `flag price_names`。⑥谁也别去，把书上的记号接过来 → `flag book_kept`，跳过下一场的“书的去处”。
+- **收尾**：皇帝还被牵着、还活着，又没人夺过缰绳、也没走 `price_emperor` 的：坎雷克倒下之前把那个字又念了一遍，这回是念给你听的。`world.writ >= 7` 而伊迪丝在场，或者你是凡人又选了 `price_pc`（人没了，接不了）→ `flag bridle_wise`；否则 → `flag bridle_pc`，`flag knows_word`。这样 `end_bridle` 一定有人牵绳。
+- **神**：有。
+- `quest crusade done`，`quest sixteen_graves done`，`quest canrec_trail done`。
+
+`f_12｜那本书｜山上的宅子·天亮｜—`
+- **事**：书烧不掉，可以让人试一次（炉火自己灭了）。科乌里亚归谁：正史是卢西安做护国公，这里照写。骑士团是谁建的：你可以应下来，不留名。
+- **选一**（书，没立 `book_kept` 才有）：封进骑士团的库里 → `flag book_locked`；交给加里昂 → `flag book_wise`，`world writ +2`。[贤者门下] 交给加里昂时可以附一张有期限的借条：`world writ` 只 +1。
+- **选二**（骑士团）：你来建 → `flag order_founder`；交给瓦勒兰（在的话）；不管。
+- **选三**（最后一步）：把印交回安本科斯特。按下面的条件去结局。神多一个选项（条件 `is.god && !flag.book_kept && !(flag.castan_crowned && flag.castan_alive)`）：[神] 哪张椅子都不坐 → `flag god_unseated` → `end_unseated`。
+- **去向**（从上往下，先中先得；实现时写成条件互斥的几个同名选项，或者一个只有 `enter` 条件效果的转场）：
+
+| 顺序 | 条件 | 去向 |
+|---|---|---|
+| 0 | `is.god && flag.god_unseated` | `end_unseated` |
+| 1 | `flag.book_kept` | `end_quiet` |
+| 2 | `flag.castan_crowned && flag.castan_alive && !flag.knot_cut` | `end_bridle` |
+| 3 | `flag.castan_crowned && flag.castan_alive && flag.knot_cut` | `end_fiftyfourth` |
+| 4 | `world.communion <= 2` | `end_parting` |
+| 5 | `world.communion >= 8 && world.writ >= 4 && world.writ <= 6 && world.feud <= 3 && flag.blame_canrec && !flag.castan_crowned` | `end_table` |
+| 6 | 以上都不中 | `end_ledger` |
+
+- **神**：有。
+
+#### 结局场景
+
+每个结局场景只有正文和 `ending: '<id>'`，正文三到五段，按下面的分支换句子。主角死了的（凡人 `price_pc`）用过去时写，最后一个画面换成别人。
+
+`end_unseated｜不肯落座的神｜安本科斯特·旧斗兽场·1054 年｜—`
+- 只有神到得了。东坎诺的诸王请你上山，祭司们请你进神系，坎雷克那张椅子也空着，你一张没坐。拖了三十年的第七次泛神会议复会，当着你的面投票，议题排在“阿德蕾西娅算谁家的化身”后面。分支：`price_*` 五种各一句；`god_half_sentence` 的，会场里没人撒得了谎，会开得很短；巴里（活着的）给你留了个座，你站着吃的。代价见 §16.4。停在：书记官问神号怎么写，要不要留地址。
+
+`end_quiet｜寂静之冠｜渡鸦山·山上的宅子｜ev_looming_death`
+- 当夜死人全躺下了，从渡鸦山到艾伦河。分支：阿德蕾西娅的骑士团头一条誓词是盯着你；预设人物普丽姆萝丝或者 [旧礼] 的自己：有人当面说你这是偷；`is.immortal` 的不用学坎雷克那一步，别人更怕。停在：书里那个声音又抱怨了一句后脑勺痒。
+
+`end_bridle｜缰绳｜试炼山·北要塞｜ev_mages_estate_mad`
+- 山上有皇帝，脖子上有绳。分支：`bridle_wise`（`writ >= 7`）牵绳的是贤者门下，加里昂反对，没拦住；`bridle_pc` 牵绳的是你，`iacob_loop` 的补一句“活扣是他留的，到头来攥在你手里”；皇帝是谁按 `castan_*` 四种写，`castan_liv` 那一版最重，写她照旧嚷着要酒，叫她停她就停。停在：皇帝问你下一道敕令写什么。
+
+`end_fiftyfourth｜第五十四位｜试炼山｜ev_wex_precipice`
+- 结解了，有人走完十道试炼立了誓。`castan_*` 四种各一版（§10.2）。分支：`map_drawn` 的，石桌上你当年画的那条线成了真的疆界；达梅斯海德诸国连夜结盟。停在：卡斯坦版停在第十一道试炼的酒桶边上；别的版停在北要塞的守军头一回应了山上的喊阵。
+
+`end_parting｜各回各船｜凯尔马尔多·白港（或拉尔桑的墙下）｜ck3_landing`
+- 杀停了，因为精灵走了。分支：`larthan_open` 没立的写墙，立了的写船；巴里是少数没走的；马里昂两边都不认；半精灵的孩子们得挑一边，预设人物莉安娜在这里有一句。停在：一条小船解了缆，船上有人回头喊一句威克斯老话。
+
+`end_table｜同席｜安本科斯特·旧斗兽场·兰斯日｜ck3_barry`
+- 每年兰斯日，各国各族坐一圈，主位空着，轮流管饭。分支：今年轮到谁管饭按出身写；瓦洛森的令状十年一续；玫瑰和月是亲家。停在：有人问主位给谁留的，巴里说先吃。
+
+`end_ledger｜监誓人的账｜安本科斯特·旧斗兽场拱廊｜ev_blank`
+- 正史，一字不差。分支：`price_aldresia` 写“瓦洛森的人把她的剑挂在了饭堂”，别的 `price` 换写法；`order_founder` 的补一句骑士团是一位没留下名字的追随者建的。正文底稿是 §11.7 的样例⑦。停在第一部分定好的画面：书记官找不着三十一年前那本登记册，另起一页问名字怎么写，门外有个半精灵小孩在追一只鸡。
+
+---
+
+### 11.7 定稿样例
+
+下面七段是定了稿的正文，对应的场景照抄或者照这个口气写。别的场景拿它们当尺子：先摆东西，人靠说话立住，结尾停在一个动作上。
+
+**① 序章开场（`p_wex_01`）**
+
+一车尸首翻进了路沟。赶车的蹲下去数：十一具，都束着腰，硬邦邦的，好摆。福尔卡德大祭司是个半身人，踩着板凳才够得着车辕。他翻开账本。
+
+**福尔卡德**　屠夫原，四百零六座坟，四百零六块碑，束腰只发出去三百九十副。{pc}，你帮我算算，剩下十六个是谁埋的？
+
+**② 检定失败（`p_dameria_03`、`a1_02`，说服）**
+
+你把监誓人的印举到他鼻子底下。他凑近看了看，又抬头看了看你。
+
+**老兵**　上个月也有人拿这么个印，从我们营里拉走三车冬衣。那个印是萝卜刻的。
+
+他伸手在印上抠下一小块，放进嘴里嚼了嚼。
+
+**老兵**　你这个倒是蜡。那三车冬衣，你管不管？
+
+**③ 战斗开场（`a2_17`）**
+
+第九道试炼的石像跪在台阶当中，脖子上没有头。头在它自己手里托着，脸朝着你们。卡斯坦往地上啐了一口酒。石像站起来，把头往胳肢窝底下一夹，另一只手从石阶里拔出一把剑，剑身有门板宽。
+
+**卡斯坦**　规矩是缴了它的械就算过关。可没说缴的时候它还不还手。
+
+**④ 抉择之前（`a3_07`）**
+
+渡鸦山的钟敲了一夜。天亮以后城门口排了两队：染病的人用门板抬着，染病的精灵自己走着。看热闹的不看门板，都盯着那队精灵。瓦勒兰爵士把手套摘了又戴上。
+
+**瓦勒兰**　恕我直言。他们马上要问为什么。您最好赶在他们自己想出答案之前，给一个。
+
+**⑤ 没有正确答案的抉择（`a3_15`）**
+
+威克斯堡，精灵住的那条街口。火把有两百来支。街那头的窗板后面有孩子在哭。伊迪丝把手套摘了，一根指头一根指头地摘。
+
+**伊迪丝**　我能让他们都回家睡觉，明早谁也不记得。你点个头。
+
+- 点头，让她开口
+- 按住她的手，自己走到火把前面去
+- 叫卡斯坦去敲钟楼的钟，趁乱带精灵走后巷
+
+**⑥ 没有正确答案的抉择（`a3_20`）**
+
+玛希尔达的药只熬出三剂。帐外，达梅里亚的信使说，王子前夜在边境上叫人抓了一道，今早开始发白。洛伦特的骑士说，雷安国王咳了三天。渡鸦山的车夫没开口，车上躺着十一个孩子。她把药箱推给你，转身去刷锅。
+
+- 把三剂都给达梅里亚的信使
+- 把三剂都给洛伦特的骑士
+- 两家各给一剂，剩的给最小的孩子
+- 把药全给车夫
+
+**⑦ 结局段落（`end_ledger`）**
+
+瘟疫是 1053 年冬天停的。阿德蕾西娅没回来，瓦洛森的人把她的剑挂在了饭堂里。你把监誓人的印交还安本科斯特，书记官翻了半天，找不着三十一年前那本登记册。他另起一页，问你的名字怎么写。门外有个半精灵小孩在追一只鸡，鸡往精灵码头那边跑了。
+
+---
+
+## 12 标记表
+
+### 12.0 写法和对照
+
+引擎的标记只有真假（`flag x` 立，`unflag x` 清，`flag.x` 读）。第一部分里写成“名字：值 / 值”的多选一，一律拆成一组互斥的标记。**“必立其一”的组，设置它的那一场每条路都要立一个**；标了“可都不立”的组，读它的场景要有“都没立”的写法。
+
+| 第一部分的写法 | 实际标记 |
+|---|---|
+| `plumwall_plea` | `plumwall_plea`（立 = 收下了申辩） |
+| `emil_clause` | `emil_struck`（立 = 条款删了） |
+| `alaria_vote` | `alaria_for` / `alaria_blocked`（可都不立 = 只说了你知道的） |
+| `dyren_guardian` | `guardian_barry` / `guardian_crovan` / `guardian_marion` / `guardian_barons` |
+| `acromis` | `acromis_exposed` / `acromis_quiet` / `acromis_traded` |
+| `garrec_fate` | `garrec_king` / `garrec_dead` / `garrec_exile` |
+| `body` | `body_westgate` / `body_citadel` / `body_pantheon` / `body_quiet` / `body_burned` / `body_left` |
+| `golem` | `golem_pc` / `golem_liv` / `golem_none` |
+| `knot_by` | `knot_alarian` / `knot_ravens` / `knot_iacob`（可都不立） |
+| `iacob` | `iacob_hanged` / `iacob_pardoned` / `iacob_wise` |
+| `lucan_ward` | `lucan_alva` / `lucan_garrec` / `lucan_marion` / `lucan_iacob` |
+| `edith_teacher` | `edith_alarian` / `edith_wise` / `edith_ravens` / `edith_iacob` / `edith_none` |
+| `quarantine` | `quarantine_held` / `quarantine_open` |
+| `sun_terms` | `sun_terms` / `sun_refused` |
+| `blame` | `blame_canrec` / `blame_elves` / `blame_ravens` / `blame_silent` |
+| `plague_law` | `law_full` / `law_limited` / `law_refused` |
+| `wex_edict` | `edict_upheld` / `edict_overruled` / `edict_softened` |
+| `three_doses` | `doses_moon` / `doses_rose` / `doses_split` / `doses_children` |
+| `crege` | `crege_penance` / `crege_champions` / `crege_given` |
+| `charter` | `charter_emperor` / `charter_league` / `charter_writ` / `charter_muster` |
+| `castan_who` | `castan_garrec` / `castan_lucan` / `castan_liv` / `castan_pc` |
+| `temple` | `temple_dug` / `temple_guarded` |
+| `price` | `price_aldresia` / `price_pc` / `price_companion` / `price_emperor` / `price_names` |
+| `book` | `book_locked` / `book_wise` / `book_kept` |
+
+“读取”一栏里的“后日谈”指 `epilogues` 的条件，“结局”指 `f_12` 的去向表和 `end_*` 的分支。
+
+### 12.1 起始与序章
+
+| 标记 | 含义 | 设置 | 读取 |
+|---|---|---|---|
+| `f_sapphire` / `f_rites` / `f_staff` | 阵营（也可以直接用 `faction == '…'`） | 阵营的 `start` | 全剧的阵营专属选项 |
+| `saw_sleeper` | 序章里撞见过沉睡者 | p_dameria_01，p_ebonmarck_03 或 04，p_ibevar_02 | a1_03、a1_12 的文字 |
+| `saw_empty_graves` | 序章里撞见过少掉的尸首 | p_lorent_05，p_wex_05 | a1_11 |
+| `met_edith` | 序章里见过伊迪丝 | p_dameria_03 | a1_02（没立就在那里初见） |
+| `p_knife_hanged` / `p_knife_held` / `p_knife_released` | 达梅里亚：三个老兵的处置。必立其一 | p_dameria_05 | a1_03（验谁）、a1_08（起身的是谁） |
+| `p_hall_denied` / `p_hall_truth` / `p_hall_inquiry` | 洛伦特：你对大厅说了什么。必立其一 | p_lorent_03 | a2_01（瓦勒兰的头一句）、a4_04（太后） |
+| `p_met_valeran` | 洛伦特：在空棺材边见过瓦勒兰 | p_lorent_05 | a2_01 |
+| `p_old_coin` | 乌霜边区：听说过有人拿旧金币打听皇帝 | p_ebonmarck_01 | a2_12 |
+| `p_gave_legionary` | 乌霜边区：把申辩“受慑”的老兵交给了围城的人 | p_ebonmarck_02 | a2_05、a2_07 |
+| `p_used_watchword` | 乌霜边区：用旧口令使唤过一个沉睡者 | p_ebonmarck_03 | a1_14 |
+| `met_liv_early` | 乌霜边区：序章里卡斯坦救过你 | p_ebonmarck_04 | a1_01 |
+| `p_laid_arms` / `p_fought_on` | 乌霜边区：沼泽堡那天放没放下兵器。可都不立 | p_ebonmarck_05 | a2_08、f_10 |
+| `p_ibevar_blood` / `p_ibevar_weregild` / `p_ibevar_held` | 伊贝瓦尔：两条命的裁断。必立其一 | p_ibevar_04 | a1_07、a4_09 |
+| `p_wex_buried_legionary` / `p_wex_cast_out` | 威克斯：第十二具尸首。可都不立 | p_wex_03 | a2_07 |
+
+### 12.2 第一幕
+
+| 标记 | 含义 | 设置 | 读取 |
+|---|---|---|---|
+| `exam_precedent` | 验心的结果进过案卷，成了前例 | a1_03 | a1_04、a3_18、后日谈（贤者门下） |
+| `knows_watchword` | 你听得懂、念得出那句旧口令 | a1_03（可能），a1_14（保证） | a1_12、a1_16、a2_08 |
+| `lance_asked` | 洛伦特：当面问过克雷格 | a1_02 | a2_15（优势）、a4_04 |
+| `plumwall_plea` | 收下了“受慑”的申辩 | a1_04 | a1_17、后日谈 |
+| `plumwall_duel` | 蓝宝石：用骑士裁决了结的 | a1_04 | a1_17 的文字、后日谈（蓝宝石） |
+| `aria_anoints` | 你的判词由月神神殿涂油作保 | a1_05 | a1_13、a4_05 |
+| `alaria_for` / `alaria_blocked` | 泛神会议上替阿拉莉亚作证／拦下。可都不立 | a1_06 | a4_09、后日谈（旧礼、伊贝瓦尔） |
+| `emil_struck` | 删掉了埃米尔排挤精灵的条款 | a1_07 | a3_17、后日谈 |
+| `field_done` | 屠夫原的迁葬做完了 | a1_12 | a3_17（账页对得上）、后日谈 |
+| `guardian_barry` / `guardian_crovan` / `guardian_marion` / `guardian_barons` | 谁带大戴伦。必立其一 | a1_13 | a1_14、a3_14（戴伦的四种性子）、f_03、后日谈 |
+| `melcor_dead` / `melcor_wise` | 驯师的下场。可都不立（= 在逃） | a1_16 | a2_03 |
+| `knows_iacob_name` | 知道驯师的师父是亚科布 | a1_16（胜败都立） | a2_03 |
+| `acromis_exposed` / `acromis_quiet` / `acromis_traded` | 阿克罗米斯的处置。必立其一 | a1_17 | a3_16（`quiet` 还债；`exposed` 他儿子不让你进门）、a4_08（`traded`）、后日谈 |
+
+### 12.3 第二幕
+
+| 标记 | 含义 | 设置 | 读取 |
+|---|---|---|---|
+| `iacob_favor` | 收过亚科布的通行文书 | a2_03 | a2_05、a2_18（他提这笔人情） |
+| `siege_certified` / `siege_hearing` / `siege_duel` | 围城怎么裁的。必立其一 | a2_05 | a2_06 |
+| `garrec_king` / `garrec_dead` / `garrec_exile` | 加雷克的下场。必立其一 | a2_06 | a2_07、a2_12、a2_18、a3_01、a4_08、a4_13、a4_16、f_03（`muster`）、后日谈 |
+| `elrac_debt_paid` | 威克斯：讨回了“屠夫”那笔债 | a2_07 | a3_14 |
+| `knows_myrrh` | 知道有个一身没药味的人先打听过遗体 | a2_09（可能），a2_12（保证），a3_01 | a3_19、a4_11 的文字 |
+| `keeper_hostile` | 守砖人不信你 | a2_11 | a2_12 |
+| `liv_saw_body` | 卡斯坦看过她爹（a2_12 两条路都立，只是好感不同） | a2_12 | f_10 |
+| `body_westgate` / `body_citadel` / `body_pantheon` / `body_quiet` / `body_burned` / `body_left` | 皇帝遗体的去处。必立其一 | a2_12 | a2_13、f_10、f_11、后日谈 |
+| `calindal_named` | 你告诉了克拉丽蒙德那把剑是谁家的手艺 | a2_14 | a4_09、后日谈（伊贝瓦尔） |
+| `clarimonde_pact` | 你答应帮她毁阶 | a2_14 | a2_18、a4_16 |
+| `lance_truth` | 洛伦特：在比武场找到了凭据 | a2_15 | a4_04 |
+| `map_drawn` | 在石桌上画过“将来的疆界” | a2_16 | a4_08 的文字、end_fiftyfourth |
+| `vow_liv` | 你在山上答应过让卡斯坦试 | a2_16 | a4_16（“不让她试”变灰） |
+| `golem_pc` / `golem_liv` / `golem_none` | 谁缴了魔像的械。必立其一 | a2_17 | a4_13、a4_16、结局 |
+| `iacob_hanged` / `iacob_pardoned` / `iacob_wise` | 亚科布的下场。必立其一 | a2_18 | a2_19、a3_01、a4_11、a4_15、f_02、后日谈 |
+| `knows_word` | 你知道那个字（第二幕学到一半；终章可能听全） | a2_18，f_11 的收尾 | a4_16、f_10 |
+| `mended` | 试炼动工修了 | a2_18 | a3_01、a4_14、a4_15 |
+| `knot_alarian` / `knot_ravens` / `knot_iacob` | 请了谁解结。可都不立 | a2_18 | a3_09（`ravens`）、a4_16、后日谈 |
+| `stair_down` | 第二幕就把石阶毁了 | a2_18 | a4_08、a4_15、a4_16 |
+| `mountain_sealed` | 石阶毁了（最后状态） | a2_18 或 a4_16；a4_16 加冕时清掉 | 后日谈、结局的文字 |
+| `ravens_trust` | 先知会内圈把你当自己人 | a2_18（`knot_ravens`）、a3_09（受眼） | a3_08、a4_11 |
+| `lucan_alva` / `lucan_garrec` / `lucan_marion` / `lucan_iacob` | 卢坎归谁养。必立其一 | a2_18 | a3_01、a4_13、a4_16、f_11、后日谈 |
+| `edith_alarian` / `edith_wise` / `edith_ravens` / `edith_iacob` / `edith_none` | 伊迪丝跟谁学。必立其一 | a2_19 | a3_02、a3_15、f_03、f_06、后日谈 |
+
+### 12.4 第三幕
+
+| 标记 | 含义 | 设置 | 读取 |
+|---|---|---|---|
+| `years_watch` / `years_court` / `years_wards` / `years_graves` | 十六年里你干了什么。必立其一 | a3_01 | a3_03、a3_14、a3_16、f_11、后日谈（`years_watch`：厚望会的种子） |
+| `edith_trusts` | 彗星之夜你对她说了实话 | a3_02 | a3_15、f_10 |
+| `arrel_with_you` | 达梅里亚：带着阿雷尔王子 | a3_03 | a3_05、a3_20、f_01 |
+| `quarantine_held` / `quarantine_open` | 渡鸦山封没封。必立其一 | a3_06 | a3_07、f_07 |
+| `knows_ravens_watched` | 知道先知会十九年前就看见了（保证） | a3_08 | a3_09、a3_12、a3_17 |
+| `vezina_eye` / `vezina_stopped` / `vezina_left` | 薇齐娜的抉择。a3_09 必立其一；`vezina_left` 之后还可能在 a3_12、a3_17 补立，同前两个并存 | a3_09，a3_12，a3_17 | a3_19、a4_11、a4_16、f_03、f_09、后日谈 |
+| `cure_early` | 先知会早交出了实验室的位置 | a3_09 | a3_19、f_01 |
+| `plague_samples` | 从白旗船上取过样本 | a3_10 | a3_16 |
+| `harpies_freed` | 放了西亚丹的鹰身女妖 | a3_11 | a4_17 的文字、后日谈（卡斯坦） |
+| `sun_terms` / `sun_refused` | 太阳王宫廷的条件。必立其一 | a3_12 | f_03（`muster`）、f_05 |
+| `edict_upheld` / `edict_overruled` / `edict_softened` | 逐精灵令。必立其一 | a3_14 | a3_15、a4_09、f_03、后日谈 |
+| `edith_mob` | 让伊迪丝慑住了暴民 | a3_15 | a3_18、后日谈 |
+| `blame_canrec` / `blame_elves` / `blame_ravens` / `blame_silent` | 当众怪谁。必立其一 | a3_17（`blame_ravens` 可能早在 a3_09、a3_12 就立了） | a4_06、a4_09、结局、后日谈 |
+| `law_full` / `law_limited` / `law_refused` | 疫令。必立其一 | a3_18 | f_01 的年表、后日谈 |
+| `knows_roster` | 知道那本书是花名册（保证） | a3_19 | a4_11、f_11 |
+| `doses_moon` / `doses_rose` / `doses_split` / `doses_children` | 三剂药。必立其一 | a3_20 | a4_07、f_01、f_02、后日谈 |
+
+### 12.5 第四幕
+
+| 标记 | 含义 | 设置 | 读取 |
+|---|---|---|---|
+| `viswall_safe` | 两国使者在那间屋里许过诺 | a4_02 | f_03（`muster`）、后日谈 |
+| `finnic_chip` | 誓石碎片到了你手里 | a4_02 | a4_16（同时看 `item.oathstone_chip`）、后日谈 |
+| `dwarves_thanked` | 有人谢过管闸的红宝石矮人 | a4_04 | a4_10 |
+| `lance_told_truth` / `lance_told_thrall` | 洛伦特：你怎么回的太后。可都不立 | a4_04 | f_02、后日谈（洛伦特） |
+| `crege_penance` / `crege_champions` / `crege_given` | 克雷格的血债。必立其一 | a4_05 | a4_07、后日谈 |
+| `valeran_champion` / `valeran_released` / `valeran_purist` / `valeran_stayed` | 瓦勒兰的抉择。必立其一 | a4_06 | f_03、后日谈 |
+| `enteben_stopped` | 恩特本的逼宫被拦下了 | a4_06 | f_03（`muster`） |
+| `wedding_blood` | 婚礼上见了血 | a4_06 | a4_07、后日谈（`feud`） |
+| `charter_emperor` / `charter_league` / `charter_writ` / `charter_muster` | 十字军的章程。必立其一；a4_17 可能把 `emperor` 换成 `league` | a4_08，a4_17 | a4_13、a4_18、f_01、后日谈 |
+| `wex_crown_promised` | 威克斯：答应过替戴伦要王号 | a4_08 | 后日谈（威克斯） |
+| `larthan_open` | 拉尔桑防线说开了 | a4_09 | f_03（`muster`）、f_05、end_parting、后日谈 |
+| `knows_canrec_plan` | 知道坎雷克在等活人修山（保证） | a4_11 | a4_13、f_10 的文字 |
+| `knows_why_watched` | 知道先知会为什么坐着看 | a4_11 | f_10 的文字 |
+| `palehand_saluted` | 对苍手行过旧礼 | a4_12 | f_08 |
+| `bridle_public` | 把缰绳的事对诸王摊开讲了 | a4_13 | a4_14 |
+| `liv_told` | 卡斯坦知道缰绳的全部 | a4_14 | a4_16 |
+| `knot_cut` | 结解成了 | a4_16（神格线里可能早在 a2_18） | f_10、f_11、结局 |
+| `iacob_loop` | 亚科布收尾时留了活扣，你没看出来 | a4_16 | end_bridle |
+| `castan_crowned` | 山上立过皇帝 | a4_16 | 结局、后日谈 |
+| `castan_alive` | 那位皇帝还活着 | a4_16 立；f_10、f_11 可能清掉 | f_10、f_11、结局 |
+| `castan_garrec` / `castan_lucan` / `castan_liv` / `castan_pc` | 皇帝是谁。有 `castan_crowned` 时必立其一 | a4_16 | a4_17、f_10、f_11、结局 |
+| `liv_bridled` | 卡斯坦不知情立了誓，被套上了 | a4_16 | a4_17、f_11、后日谈 |
+| `liv_north` | 卡斯坦往北飞了 | a4_16 | 后日谈 |
+| `liv_dead` | 卡斯坦死了（石头前，或者终章里作为被牵的皇帝） | a4_16，f_10 | 后日谈 |
+
+### 12.6 终章
+
+| 标记 | 含义 | 设置 | 读取 |
+|---|---|---|---|
+| `winters_crusade` / `winters_varlosen` / `winters_home` / `winters_squire` | 十二个冬天你在哪。必立其一 | f_01 | f_03、f_11、后日谈 |
+| `temple_dug` / `temple_guarded` | 苏雷尔神庙底下。必立其一 | f_04 | 后日谈 |
+| `pyre_stopped` | 拦下了沼地里的火刑 | f_06 | 后日谈（蓝宝石） |
+| `vezina_freed` | 从笼子里放出了薇齐娜 | f_09 | f_11、后日谈 |
+| `bridle_pc` / `bridle_wise` | 缰绳到了谁手里。进 `end_bridle` 时必有其一 | f_10，或者 f_11 的收尾 | f_11、end_bridle |
+| `price_aldresia` / `price_pc` / `price_companion` / `price_emperor` / `price_names` | 谁付账。必立其一，立了 `book_kept` 的除外 | f_11 | f_12、结局、后日谈 |
+| `book_locked` / `book_wise` / `book_kept` | 书的去处。必立其一 | `kept` 在 f_11，另两个在 f_12 | 结局、后日谈 |
+| `order_founder` | 骑士团是你建的 | f_12 | end_ledger、后日谈 |
+
+### 12.7 神格线（§16）
+
+这些标记只在 `is.god` 的选项里立。玩家可能中途褪去神性，所以读它们的地方只看标记，不再看 `is.god`。
+
+| 标记 | 含义 | 设置 | 读取 |
+|---|---|---|---|
+| `god_camp` | 你在帐篷城治过人，营散不了 | a1_02 | a1_08（多一个敌人）、a1_18 |
+| `god_on_agenda` | 泛神会议把你排进了议程 | a1_06 | a2_02、a4_05、end_unseated、后日谈 |
+| `god_truce` | 乌霜领的仗是你一句话停的 | a2_05 | a2_06（免战，立 `garrec_king`）、a4_13 |
+| `golem_forever` | 魔像向一个不会死的人下了跪，第九道从此过不去 | a2_17 | a4_16（别的人选要你当面“放它起来”）、后日谈 |
+| `god_half_sentence` | 那半句话落在了你身上：你在的屋里没人撒得了谎 | a2_18 | a4_02、a4_04、a4_13、f_05、end_unseated、后日谈；全剧的欺瞒检定加 `if: "!flag.god_half_sentence"` |
+| `god_healed` | 你在渡鸦山治了病人 | a3_06 | a3_07 的文字、a3_20 |
+| `god_herald` | 你认下了“苏雷尔的使者”的名头 | a3_12 | a4_08、f_05、后日谈 |
+| `god_promise_viswall` | 你在芬尼克那间屋里许过诺 | a4_02 | 后日谈 |
+| `god_wed` | 那桩婚事是你证的 | a4_07 | f_02、后日谈 |
+| `god_crusade` | 十字军是奉你的名出征的 | a4_08 | f_06、后日谈 |
+| `god_unseated` | 最后你哪张椅子都没坐 | f_12 | 结局去向 |
+
+### 12.8 计数器
+
+| 计数器 | 含义 | 设置 | 读取 |
+|---|---|---|---|
+| `var muster` | 终章会师的人手 | f_03 清零后按规则加；f_04、f_05、f_07 加减 | f_07、f_11（给 `allies` 加人） |
+| `var god_acts` | 用过几次 [神] 选项 | 每个 [神] 选项 +1 | f_10（坎雷克数给你听）、后日谈（≥ 4 才有“各国立像”那张） |
+
+同伴好感用引擎自带的 `approval.<id>`。读它的地方：a4_16（`approval.liv >= 5`）、f_11（`approval.valeran >= 6`、`approval.liv >= 6`、`approval.liv >= 4`）。每位同伴全剧能拿到的好感至少有 10 点，写的人别把门槛堵死。
+
+### 12.9 跳章默认值（给 `meta.js` 的 `chapters[].effects` 用）
+
+作弊菜单跳到某一幕时，按“什么都不管”的基线补标记：
+
+- 跳到第二幕：`level 4`；同伴卡斯坦、巴里、薇齐娜；`knows_watchword`、`knows_iacob_name`、`guardian_barons`、`acromis_quiet`、`melcor_dead`；出身对应的 `p_*` 取每组的头一个。
+- 跳到第三幕：再加 `level 6`；同伴瓦勒兰；`siege_certified`、`garrec_dead`、`body_left`、`liv_saw_body`、`knows_myrrh`、`golem_none`、`iacob_pardoned`、`lucan_alva`、`edith_none`；`world unburied +1`。
+- 跳到第四幕：再加 `level 8`；`years_court`、`quarantine_held`、`vezina_stopped`、`knows_ravens_watched`、`sun_terms`、`edict_softened`（巴里离队）、`blame_silent`、`law_limited`、`knows_roster`、`doses_split`；`world unburied -2`、`world communion +1`、`world writ +1`。
+- 跳到终章：再加 `level 10`；`crege_champions`、`valeran_stayed`、`wedding_blood`、`charter_league`、`knows_canrec_plan`、卡斯坦留队（`liv_told`）；局势不用再动（克雷格那一项 −1 同婚礼见血的 +1 抵了）。
+
+照这套默认值走到底是 `end_ledger`。
+
+---
+
+## 13 任务与图鉴
+
+### 13.1 任务
+
+阶段提示是给玩家看的一句话，写成“你要去干的事”。括号里是推进它的场景。
+
+| id | 标题 | 阶段提示 | 完成提示 |
+|---|---|---|---|
+| `witness` | 印 | ①把各国的誓看完（序章末）②往东，去看输家怎么发誓（a1_18）③有人从坟里出来了（a2_19）④给十字军找一面旗（a3_20）⑤最后一个冬天（a4_18） | 你把印交了回去。书记官找不着那本登记册。（各 `end_*`） |
+| `sleepers` | 眼睛后面没人 | ①查出是谁在叫老兵起身（a1_03）②去阿克罗姆顿找那个会说旧口令的人（a1_14） | 驯师是亚科布的学生，刀是阿克罗米斯买的。空坟的事他不认。（a1_17） |
+| `sixteen_graves` | 十六座空坟 | ①福尔卡德的账对不上（p_wex_05 或 a1_11）②看看夜里是谁在干活（a1_11）③车辙往南，没人赶车（a1_12）④大墓地的死人把头转过来了（a3_13） | 四百零六个名字，你在那本书上都找着了。（f_11） |
+| `lance` | 那一枪（洛伦特） | ①查清克雷格那一枪是不是他自己的（p_lorent_02）②比武场的围栏还立着，去看看（a1_02）③回太后的话（a2_15） | 你答了。她记不记这笔账，是她的事。（a4_04） |
+| `edith` | 谁都给 | ①帐篷城有个孩子，她要什么别人就给什么（a1_02）②她得有个先生（a1_18）③看她长成了什么人（a2_19） | 街口那一夜，她问你要一个点头。（a3_15） |
+| `dyren` | 公爵问发不发马 | ①威克斯的摄政们等你的印（a1_10）②十八年后，他有话同你说（a1_13） | 他长成了你交出去的那个样子。（a3_14） |
+| `emperor_body` | 一口棺材 | ①加雷克要你把他父亲找回来（a2_07）②沼泽堡的人说，去问林子里的驿站（a2_08）③地砖下面是空的（a2_12） | 皇帝有了去处。守砖人把勺子洗了。（a2_13；`body_left` 在 a2_12 以 `fail` 收） |
+| `mountain` | 山上的伤 | ①上山看看坏成什么样（a2_16）②石头上挂着半句话（a2_18）③石头缺了一角，在一位半身人国王兜里（a4_02） | 山有了交代。（a4_17） |
+| `canrec_trail` | 没药味 | ①有人比你先来问过遗体（a2_12）②实验室里的账从 980 年记起（a3_19）③他在等活人把山修好（a4_11） | 你见着了写信的人。他后脑勺痒。（f_11） |
+| `white_year` | 白年 | ①去渡鸦山看那座没填土的坟（a3_03）②外头的兵要进科乌里亚，得有太阳王的印（a3_10）③瓦洛森要样本，也要权（a3_19） | 头一锅药只有三剂。你分完了。（a3_20） |
+| `crusade` | 谁付账 | ①最后一路在瓦洛森集结（f_02）②门口站着一位老熟人（f_08） | 有人付了。（f_11） |
+| `liv_claim` | 第五十四位（卡斯坦） | ①她要看她爹一眼（a2_07）②第九道试炼的石像认谁（a2_17）③她问你，那个结到底解了没有（a4_14） | 她得了一个答复。（a4_17；往北飞、死在石头前以 `fail` 收） |
+| `barry_boy` | 我家那孩子（巴里） | ①八岁的孩子不能立誓，巴里替他按手印（a1_10）②那孩子签了一道逐精灵的令（a3_14） | 巴里选了站在哪。（a3_14） |
+| `vezina_eye` | 不仁（薇齐娜） | ①她师门在那棵树上蹲了十九年（a3_08） | 她要了，或者没要那只眼。（a3_09；捅出去以 `fail` 收） |
+| `valeran_oath` | 恕我直言（瓦勒兰） | ①恩特本派他来盯着你（a2_01）②恩特本打出了“碎玫瑰”（a4_03） | 他对你的誓有了下落。（a4_06） |
+
+### 13.2 图鉴（60 条）
+
+全文由场景作者写，头一回碰见就 `codex <id>`。分组只用引擎那八个。带 * 的条目要分两三段写，随剧情逐段补（先写世人以为的，后写查出来的），旁白不替任何一段作保。
+
+**人物**
+
+| id | 标题 | 梗概 |
+|---|---|---|
+| `marion` | 马里昂一世·西尔穆纳 | 头一个半精灵，二十岁的达梅里亚国王；母亲是月神的化身，父亲刚封了神。 |
+| `ioriel` | 伊奥瑞尔·红玫瑰 | 洛伦特太后，八十三岁的精灵，按族里的算法还没成年，替两岁的国王当家。 |
+| `garion` | 智者加里昂 | 头一位大法师，在试炼山丢了一条胳膊一条腿；他看得出谁被慑住了，可没人查得了他。 |
+| `masilda` | 预言者玛希尔达 | 疯女玛法尔达的女儿，加里昂的妻子；验别人的心之前先请人搜她的身。 |
+| `clarimonde` | 旧日庇护地的克拉丽蒙德 | 刀锋边区的女王，砍倒术士王的人；她不要再有卡斯坦。 |
+| `garrec` | 加雷克·乌霜 | 五十三世活着的儿子，被三路人围在乌霜领；他只要一口棺材和一个准日子。 |
+| `castan_liii` | 受慑者卡斯坦五十三世 * | 当了三十七年傀儡的皇帝；沼泽堡一记闷棍让他喊了停手，然后是一个字。 |
+| `nichmer` | 术士王尼奇默 * | 渡鸦先知会出来的宫廷顾问，本事是给别人的魔法下咒；1020 年死在试炼山上，话说到一半。 |
+| `iacob` | 背叛者亚科布 | 术士王从前的侍从，倒戈有功，如今是南王国的公爵；他觉得东坎诺没有皇帝会自己吃自己。 |
+| `canrec` | 亵渎者坎雷克 * | 人人以为死在光复战里的侍从；开头只是账本、空坟和一股没药味。 |
+| `ibenion` | 伊贝尼昂·塔·卢纳泰因 | 伊贝瓦尔亲王，月火号的老船长；上岸二十二年，行李没开。 |
+| `dyren` | 戴伦·里奥纳德 | 威克斯公爵，八岁，扶正的私生子；他长成什么人看是谁带大的。 |
+| `folcard` | 福尔卡德 | 大墓地的大祭司，半身人；他要每个死人都有名字、有束腰、有人数过。 |
+| `finnic` | 芬尼克·影手 | 维斯沃尔国王，农夫出身的半身人，试炼山的幸存者；下山时顺手揣走了一样东西。 |
+| `edmund` | 埃德蒙·净手 * | 自由卡斯塔诺的首领，凯伦的至交；1040 年以后人们管他叫苍手。 |
+| `aldresia` | 阿德蕾西娅 | 渡鸦山守墓人家的女儿，站在坟边看见头一个的人；数东西，认死理。 |
+| `edith` | 伊迪丝 * | 帐篷城的孤儿，她跟谁要什么，谁都给。 |
+| `lucan` | 卢坎·西卢里昂 | 乌霜家的外孙，精灵的耳朵，六胞胎之一；有人管他叫“银龙”。 |
+| `jaher` | 太阳王贾赫 | 太阳精灵的君主，布勒瓦尔人管他叫重生的苏雷尔；东征去了，回信要走半年。 |
+| `liv` | 卡斯坦“五十四世” | 铁爪部的鹰身女妖，乌霜家没上谱的女儿，乌翼兵团的队长。 |
+| `barry` | 巴里·月华 | 在威克斯落了户的精灵，琥珀溪的男爵，小公爵最像父亲的人。 |
+| `vezina` | 薇齐娜·马尔尼德 | 渡鸦先知会外圈的见习先知；将来的事前面一定加“要是”。 |
+| `valeran` | 恩特本的瓦勒兰爵士 | 阿瑟利斯家的骑士，明说是来盯梢的；从不撒谎。 |
+
+**地理**
+
+| id | 标题 | 梗概 |
+|---|---|---|
+| `anbenncost` | 安本科斯特 | 大半还是旧港达穆森：旧斗兽场，达梅里斯堡，没散的帐篷城，四艘移民巨舰泊成的精灵码头。 |
+| `necropolis` | 科塞顿与大墓地 | 边境地的死人都往这里送；壁龛里的人束着腰，站得笔直。 |
+| `butchers_field` | 屠夫原 | 978 年军团在这里杀了来议和的威克斯人；死人拖了四十四年才迁葬。 |
+| `castonath` | 卡斯托纳斯 | 旧帝都，如今城里有两个都自称卡斯塔诺的王国。 |
+| `bal_mire` | 沼泽堡 | 沼上的白石要塞，五十三世倒下的地方。 |
+| `trialmount` | 试炼山 * | 历代卡斯坦上山立誓的地方；战后受了诅咒，没人走得上去。 |
+| `ravenhill` | 渡鸦山与“山上的宅子” * | 科乌里亚的一座山，山下是坟场，山上那座堡做过渡鸦王的巢。 |
+| `varlosen` | 瓦洛森 | 四面都是死人地盘的一座孤塔，解药是在这里熬出来的。 |
+| `bulwar_city` | 布勒瓦尔城 | 太阳王的都城：墙里是花园，神殿兼做钱庄。 |
+| `viswall` | 维斯沃尔 | 小人国的彩城，染坊的城；瘟疫年里大缸煮的是裹尸布。 |
+| `larthan` | 伊贝瓦尔与拉尔桑防线 | 凄苦谷里的精灵国，和它在瘟疫年里关上的那道线。 |
+
+**势力**
+
+| id | 标题 | 梗概 |
+|---|---|---|
+| `witnesses` | 监誓人 | 和约指派的一批持印人，去各国看着人把誓发完。 |
+| `sapphire_eye` | 蓝宝石之眼骑士团 | 凯伦·长枪的门徒去年立的骑士团：赢了要留人，争端派人单挑。 |
+| `wise_council` | 贤者会 | 加里昂和他头一批学生，八个学派的创始人。 |
+| `ravenseers` | 渡鸦先知会 * | 科乌里亚的法师会，外圈看星，内圈读“不仁”。 |
+| `black_castanor` | 黑卡斯塔诺与乌霜家 | 格鲁迪亚来的掠夺者杀了皇帝、过了试炼、坐了一百五十年；如今是人人喊打的输家。 |
+| `rose_and_moon` | 玫瑰与月 | 洛伦特的西洛瑞尔家同达梅里亚的西尔穆纳家，一条命的梁子。 |
+
+**种族**
+
+| id | 标题 | 梗概 |
+|---|---|---|
+| `elves_fleet` | 精灵与残存舰队 | 在海上漂了一千年，上岸二十二年；有的改了人类的名字，有的没有。 |
+| `halflings` | 半身人与分饼礼 | 和约让小人国的小王国复了国；同桌分过饼的人不许动手。 |
+
+**信仰**
+
+| id | 标题 | 梗概 |
+|---|---|---|
+| `moon_temple` | 月神神殿 | 月山上的神殿，大女祭司是国王的祖母；和约之后，它也能递冠了。 |
+| `seventh_council` | 第七次泛神会议 | 神位是一票一票投出来的：这一届封了穆纳斯，认了凯伦，没给阿拉莉亚名分。 |
+| `corset_burial` | 边境教派与束腰葬 | 奈拉特的收殓人给死人束腰，好让他们站着上路。 |
+| `sun_cult` | 太阳崇拜 | 布勒瓦尔人等苏雷尔重生等了很久，然后来了一位精灵。 |
+
+**魔法**
+
+| id | 标题 | 梗概 |
+|---|---|---|
+| `enthralment` | 慑心与验心 | 叫人照你的意思办事的法术，和查一个人“当时是不是自己做的主”的法术。 |
+| `sleepers` | 沉睡者 * | 沼泽堡那天被慑住的人里，有些没醒透。 |
+| `bridle` | 缰绳 * | 皇帝是怎么被牵住的：三个人讲了三遍，三遍对不上。 |
+| `the_word` | 那个字 * | 没有闪电，没有火，就一个字。 |
+| `oathstone` | 誓石 | 刻着历代卡斯坦誓词的石头；在山上说过的话都得算数。 |
+| `trials` | 卡斯坦试炼 | 十道，每位皇帝添一道：喊阵、画疆界、打一件礼物、立誓，一直到绕着石头跳十圈。 |
+| `book_of_canrec` | 坎雷克之书 * | 一本账，从 980 年记起。 |
+| `unkind` | 不仁预言与鸦眼 | 先知会内圈读的预言；它从来不骗人，只是不告诉你哪一句要紧。 |
+
+**历史**
+
+| id | 标题 | 梗概 |
+|---|---|---|
+| `sorcerer_war` | 术士王战争 | 978 到 1020 年，四十二年；精灵是打到一半才上岸的。 |
+| `treaty` | 安本科斯特条约与大舞会 | 1021 年泪落月 31 日；条款传下来的没几条，监誓人就是去补这个缺的。 |
+| `plumwall` | 普卢姆沃尔密谋 | 994 年，倒戈的封臣断了达梅里亚国王的后路；叛公的儿子说父亲当时是被慑住的。 |
+| `tourney` | 大捷比武会 | 1020 年在试炼山脚下比了两个礼拜，挑上山的人；洛伦特的国王死在了场上。 |
+| `white_pestilence` | 白色瘟疫 * | 1040 年卡斯坦月 3 日，渡鸦山，一个刚死的人从没填土的坟里起来了。 |
+
+**怪物**
+
+| id | 标题 | 梗概 |
+|---|---|---|
+| `death_knight` | 死亡骑士与号魂 | 被那本书拉起来的人：有的还记得自己的规矩，有的只剩一嗓子。 |
+
+合计 60 条：人物 23，地理 11，势力 6，种族 2，信仰 4，魔法 8，历史 5，怪物 1。阿克罗米斯、克雷格、守砖人、德基南这几位不单立条目，写进 `plumwall`、`rose_and_moon`、`castan_liii`、`ravenseers` 里；卡林达尔写进 `clarimonde`，彗星写进 `edith`，鹰身女妖写进 `liv`，半精灵写进 `marion`。
+
+---
+
+## 14 本剧本需要的新敌人与物品
+
+### 14.1 新敌人
+
+写进 `s1022/enemies.js`。等级按遇见它的那一幕定；数值照 `DATA_GUIDE` 配，这里只定概念和招牌招式。凡是没有心智、或者被那本书拴着的，encounter 里写 `noAwe: true`。
+
+| id | 名字 | 等级 | 概念 | 招牌招式 |
+|---|---|---|---|---|
+| `melcor_handler` | 驯师梅尔科尔 | 4 | 亚科布早年的学生，瘦，说话像在点名。自己不动手，叫别人动。 | 「旧口令」：指定一个敌人对同伴出手一轮（感知豁免）。「起身」：召来一个 `enthralled_soldier`。被打断就咳嗽。 |
+| `headman_wolf` | 头领林地的老狼 | 6 | 狼人头领，认得卡斯塔诺的军团牌，先咬戴牌子的。 | 「认牌」：对黑卡斯塔诺人和穿军团甲的伤害加骰。「号」：群狼下一击有优势。 |
+| `trial_golem` | 第九道试炼的石像 | 8 | 巨人克星卡斯坦立的魔像，没有头，头在它自己胳肢窝底下夹着。 | 「门板剑」：横扫全体。「缴械即降」：special 成功直接结束。打碎不算赢，它明天还在。免疫魅惑、恐惧、毒。 |
+| `wereraven_seer` | 渡鸦人先知 | 7 | 先知会内圈，老，一只眼是假的；动手之前已经看过这一架。 | 「预读」：每轮头一次被命中改为未中（打翻水盆后失效）。「啄眼」：目盲一轮。「散成一群」：半伤，换位置。 |
+| `corseted_dead` | 束腰的死人 | 5 | 大墓地壁龛里起来的行尸，束腰把它们勒得笔直，迈出来连腰都不用弯。 | 「站得直」：穿刺伤害减半。「排队」：两具相邻时各 +2 命中。束腰被割就散架（special）。 |
+| `edmund_palehand` | 埃德蒙·苍手 | 10 | 死亡骑士，生前是凯伦的至交。面甲不抬，规矩不丢。 | 「冲阵」：骑枪直线伤害。「留人」：不对倒地的人补刀，转向下一个。「受礼」：有人行蓝宝石之眼的旧礼，他只同那个人打。 |
+| `pyre_captain` | 沼地的火刑队长 | 8 | 瘟疫年里自己立了规矩的圣武士，嘴上是凯伦的话。 | 「净火」：对施法者伤害加倍。「引经」：我方一人沉默一轮（魅力豁免）；蓝宝石阵营的人免疫。 |
+| `arrel_revenant` | “遭叛者”阿雷尔二世（亡者） | 9 | 994 年就在坎雷克手上的达梅里亚国王，冠还戴着，背后那一刀的口子也在。 | 「断后」：有人想绕过他，他先出手。「王命」：命令一名人类敌人后退。听见孙子叫他会停一轮。 |
+| `castan_liii_revenant` | 卡斯坦五十三世（亡者） | 10 | 遗体没人收的才有。坐在坎雷克左手边，起身很慢。 | 「放下兵器」：全体豁免，败者缴械一轮（他活着时最后一道令）。认得军团牌。 |
+| `bridled_emperor` | 被牵的皇帝 | 10 | 按 `castan_*` 改名字和武器（加雷克的剑、卢坎的法术、卡斯坦的爪）。眼睛后面有人，脚不听他的。 | 每轮开始有一成机会“挣一口气”，空过这一轮并说一句话。打倒就是杀了。 |
+| `canrec_lich` | 亵渎者坎雷克 | 12 | 巫妖，学究，被打断了三十年。边打边讲道理，后脑勺痒。 | 「点名」：从书里叫出一个号魂。「那个字」：只对被牵的皇帝有用。「痒」：special 成功时空一轮。倒下不算完，要有人付账。 |
+
+**借用现成的**：`enthralled_soldier`（沉睡者、收尸的人）；`pestilent_zombie`（核心库把它记在 1444 以后，白疫 1040 年就有了，照用）；`bellowing_soul`（库里的名字是“嚎魂”，本剧本一律在 encounter 里写 `name: '号魂'`）；`knight`（阿德安的狂热骑士、阿德蕾西娅作友军）；`lorentish_knight`（白玫瑰庭和阿瑟利斯家的斗士）；`witch_hunter`（火刑队）；`reaver_raider`（白湾战帮）；`harpy_raider`（序章里的卡斯坦）；`wight`、`ghoul`、`werewolf`、`grey_wolf`、`thug`、`village_militia`、`man_at_arms`、`archer`、`sellsword`、`bc_legionary`、`war_priest`、`court_mage`、`cutpurse`、`vagrant_bandit`。
+
+### 14.2 剧情物品
+
+写进 `s1022/items.js`。任务物品卖不掉。id 在 §5 里出现过的沿用。
+
+| id | 名字 | 作用 |
+|---|---|---|
+| `witness_seal` | 监誓印 | 一枚蜡印。序章末到手，全剧的“亮印”选项要它（`item.witness_seal`）。饰品位：说服 +1。 |
+| `moon_badge` | 王宫腰牌 | 达梅里亚起始。进达梅里斯堡的内室和军需库。 |
+| `ioriel_letter` | 太后的私信 | 洛伦特起始。上面只有一句话，问的是那一枪。 |
+| `legion_token` | 军团牌 | 乌霜边区起始。沉睡的老兵、沼泽堡的守军、五十三世认它。 |
+| `ibenion_writ` | 亲王的手令 | 伊贝瓦尔起始。a1_06 多一道折痕，a4_09 可以拿它压使者。 |
+| `ledger_page` | 大墓地的账页 | 威克斯起始；别的出身在 a1_11 由福尔卡德抄一份给你（`item +ledger_page`，保证人人有）。a3_17 作证，f_11 念名字。 |
+| `holy_oil` | 圣油 | 旧礼起始，一瓶。a1_05 自己给判词涂油用掉；也可以留到 a4_05。 |
+| `lance_ledger` | 比武会的开销账 | 洛伦特序章得。a2_15 找凭据时有优势。 |
+| `lunatein_plank` | 月火号的船板 | 伊贝瓦尔序章得。饰品位：对精灵的说服 +1。end_parting 里有一句。 |
+| `nerat_candle` | 奈拉特烛 | 瓦洛森和大墓地卖的葬礼蜡烛。消耗品：点着的一轮里行尸不靠近持烛的人。 |
+| `ebonsteel_crown` | 乌钢冠 | a2_12 得（可选）。a4_16 加冕时有它，文字不同；卡斯坦一路惦记。不能戴。 |
+| `oathstone_chip` | 誓石碎片 | a4_02 得。带着它的时候，你许的诺得兑现：全队的欺瞒检定劣势。a4_16 放回去。 |
+| `lab_samples` | 实验室的罐子 | a3_19 得，a3_20 交给玛希尔达。 |
+| `jaher_letter` | 贾赫的回信 | a4_18 得。很短。f_05 可以给德纳里昂看，说服 +2。 |
+| `book_of_canrec` | 坎雷克之书 | 核心库里已有这个 id。f_11 之后才到手；`book_kept` 的留在背包里。 |
+| `silversong` | 银歌 | 阿德蕾西娅的剑。`price_aldresia` 之后留给你（武器）；end_ledger 里它挂在瓦洛森的饭堂，背包里那把换成“一把剑鞘”。 |
+| `stew_spoon` | 守砖人的勺子 | a2_13 得，没有用处。f_10 五十三世在场时，拿出来他会看一眼。 |
+
+商店里用到的其余物品都是 `items_base.js` 和 `items_extra.js` 里现成的，id 已在 §11 各场的“店”里写明。
+
+---
+
+## 15 写作分工
+
+### 15.1 分工表
+
+| 文件 | 写的人 | 负责的场景 | 场数 |
+|---|---|---|---|
+| `prologues_a.js` | 序章甲 | `p_dameria_01–06`、`p_lorent_01–06`、`p_ebonmarck_01–06` | 18 |
+| `prologues_b.js` | 序章乙 | `p_ibevar_01–06`、`p_wex_01–06` | 12 |
+| `act1.js` | 第一幕 | `a1_01–18` | 18 |
+| `act2.js` | 第二幕 | `a2_01–19` | 19 |
+| `act3.js` | 第三幕（含间幕《十六年》） | `a3_01–20` | 20 |
+| `act4.js` | 第四幕 | `a4_01–18` | 18 |
+| `finale.js` | 终章与结局（含间幕《十二个冬天》） | `f_01–12`、七个 `end_*`，外加 `endings`、`endingScenes`、`epilogues` 的正文 | 19 |
+| `meta.js`、`codex.js`、`enemies.js`、`items.js`、`plan.json` | 总设计（不在上面七位里） | 局势、声望、出身、阵营、预设人物、同伴、任务、`chapters`、`flagNotes`；§13、§14 的条目 | — |
+
+序章乙少六场，多出来的力气用在两件事上：把威克斯序章里的巴里写立住（他是全剧头一个开口的同伴），把五个“登记桌”末场的书记官对齐成同一个人（同序章甲对一遍台词）。
+
+### 15.2 人人都要守的
+
+1. **接缝**。入口和出口照 §11.0 的表，一个字不改。可以加小场景（`a2_12b`），前缀同本段；通往别段的 `goto` 只许指向表里的入口。
+2. **保证**。每幕开头的“出场保证”是写给下一位的合同：标了“必立其一”的组，你那一场的每条路（包括检定失败、战斗输掉）都要立一个。写完跑 `check-part`，再手工走一遍“全选最后一项”和“全部检定失败”。
+3. **标记**。只用 §12 里有的。要新增的，自己设自己读，名字带本段前缀（`a2x_…`），不许给别段读。
+4. **局势预算**。五条局势只在 §11 写明的地方动，数目照表。想加一处推动，先找总设计。声望可以酌情多给少给一点，单场不超过 ±3。
+5. **专有名词**只用 §3 的写法（第二部分新增的在 3.10）。库里的“嚎魂”在本剧本写“号魂”。
+6. **不许写的**：那个字是哪个字；卡斯特洛斯在不在；来世什么样；预言谁读对了；坎雷克本人在终章之前露面。旁白不替任何一条真相作保，真相只从文件、物件和有私心的人嘴里出来。
+7. **三种口气**。1022—1024、1040—1041、1053 各一套（§8 每人三句示范）。人类同伴一年比一年老，卡斯坦老得最快，巴里不变。主角的年纪文字按 `is.longlived` 分两套，`is.immortal` 另写。
+8. **同伴**。在队里的每位同伴，每幕至少插三次话，其中一次是两个人互相呛（§8.5）。同伴可能不在队里，他们的话都包在 `party.<id>` 条件里，场景缺了他们也要走得通。
+9. **神格线**。§16.2 的钩子表里属于你那一段的，一条不能少。神的内容一律是加在旁边的；同一场凡人和神都走得通；[神] 选项不许是白捡的最优解。
+10. **阵营、出身、职业、种族专属**。§11 标了“专”的必须写；另外每幕再自己添两三处一句话的专属反应（不带效果）。
+11. **文风**照 `STYLE_GUIDE`。制度是冷的，人是好笑的。瘟疫、大墓地、笼子这几处旁白不逗趣。
+12. **战斗**。每场配一两个 special；输了有去处；该 `noAwe` 的写上。
+13. **美术**。§11 给了 key 的照用；写 — 的不要配图。`load_9`、`load_17`、`load_21`、`ev_castellos_is_dead` 这几张在本剧本不用（画的是别的年代的事）。
+
+### 15.3 各段的交接条款
+
+**序章甲、序章乙**
+- 只动声望和标记，不动世界局势。进场 1 级，末场 `level 2`、`item +witness_seal`、`quest witness start`。
+- 每个序章必须立：`saw_sleeper` 或 `saw_empty_graves` 至少一个；本出身那组 `p_*`。威克斯序章 `companion +barry`，别的序章不给同伴。
+- 末场“登记桌”：同一位书记官，同一本登记册，同一锅蜡。他这个人和这本册子要在 `end_ledger` 里收回来，别把他写死，也别给他起名字。
+- 伊迪丝只在达梅里亚序章露面；卡斯坦只在乌霜边区序章露面（作友军，不入队）；瓦勒兰只在洛伦特序章露面（不入队）。别的序章不要提前用掉这三个人。
+- 自建人物的“少见搭配”在头一场用一句话交代（§5.6）。
+- 预设人物在自己出身的序章里各有一段专属文字，用对应的种族、职业、背景条件包起来（引擎没有“是不是预设人物”这个条件，所以这些段落自建人物撞上同样的搭配也会看到，写的时候别点名）。
+
+**第一幕**
+- 进场时队伍可能是空的（除了威克斯）。`a1_01` 必须把卡斯坦和巴里都放进队；`a1_15` 放薇齐娜。这一幕谁也不许离队。
+- `a1_14` 保证 `knows_watchword`，`a1_16` 胜败都立 `knows_iacob_name`，`a1_11` 保证人人背包里有 `ledger_page`。
+- 这一幕要让玩家**以为**空坟和切肉刀是一伙人干的。梅尔科尔不认空坟这一句必须有，但别让任何人点破。
+- 伊迪丝在 `a1_18` 坐到你这一桌，之后跟着辎重走。她不是同伴，不进战斗。
+- 泛神会议（`a1_06`）的结果同正史一样，不给阿拉莉亚名分；玩家改的是记录和两族的记性。
+- 亚科布这一幕只有名字。
+
+**第二幕**
+- `a2_01` 放瓦勒兰进队。这一幕谁也不许离队。卡斯坦最多跌好感。
+- 缰绳只讲两遍：亚科布讲成手艺（`a2_03`），守砖人讲成罪（`a2_11`）。两遍要对不上。第三遍留给终章。
+- “假地板”：守砖人那句“更早来过一个人，一身没药味”（`a2_12`）必须有，不解释。
+- `knot_cut` 凡人在这一幕立不了；请人解结只是动工。石头缺一角这件事，布洛克可以嘟囔一句“这儿少一块，早年就少了”，别说在谁手里。
+- `a2_16` 起“山上说过的话得算数”：这一场和 `a2_18` 里，主角的欺瞒选项全部去掉；`vow_liv` 是全剧唯一一个会在后面把选项变灰的许诺，写得让玩家知道自己在许什么。
+- 魔像一战三种结果必立其一，输了也要立 `golem_none`。
+- 卢坎五岁，只说一两句孩子话。伊迪丝十四岁。
+- 幕末的信里交代正史的钟：阿伦三世的死、里卡德的冠、公主出生。
+
+**第三幕**
+- 开头三场是间幕，口气换成 1040 年。`a3_03` 把四个同伴重新凑齐，各人的年纪要落在具体的东西上（膝盖、翅根、第十一本本子、多带的乳酪）。
+- `a3_04` 起阿德蕾西娅是扈从，战斗里作 `allies`。她十四岁，数东西。别让她提前说出 1053 年那句“够一个人去”。
+- 巴里的抉择在 `a3_14`，薇齐娜的在 `a3_09`。两个人都可能在这一幕离队，离队的那一场要给一个停在动作上的告别。
+- `blame_*` 可能在 `a3_09` 或 `a3_12` 就立了 `blame_ravens`；`a3_17` 要认这件事。
+- 布勒瓦尔城那三场是“出了坎诺”：吃的、钱、神都换了。贾赫本人不出场。伊谢莉丝只有名号是正史，性子可以写，来历别编。
+- 三剂药：雷安只是着了凉这件事，戏里没人能证明。别替玩家下结论。
+- 坎雷克仍然不露面。实验室是空的。
+- 这一幕的 `unburied` 进出很大，照表给，别自己加。
+
+**第四幕**
+- 进场时巴里、薇齐娜可能不在；瓦勒兰可能在 `a4_06` 走，卡斯坦可能在 `a4_16` 走或者死。每一场都要在“只剩主角和扈从”的情形下走得通。
+- `a4_02` 是全剧最好笑的一场，也是 `knot_cut` 的钥匙。芬尼克那间屋的规矩要让玩家亲手用一次（叫两国使者许诺）。
+- `a4_11` 交底：坎雷克在等活人修山。信的口气照第一部分那句示范（学究、抱怨、后脑勺痒）。信里不写那个字。
+- `a4_16` 分三步，可以拆成三个小场景。`iacob_loop` 的那条路，正文必须照“解完了”写，不许给玩家任何旁白上的提示；能提示的只有薇齐娜（受了眼）和你自己知道的那半个字。
+- `charter_emperor` 落空的回退在 `a4_17`，别忘了 `unflag`。
+- 幕末贾赫的回信只许说第一部分定下的那几句意思。
+
+**终章与结局**
+- 开头两场是间幕。`f_01` 的年表全靠读局势和标记拼，写成一条一句的短段，每条一个 `if`。正史的死者名单（§1.6）在 `unburied` 4–6 时一字不差。
+- `var muster` 自己设自己读。
+- 坎雷克只在 `f_10`、`f_11` 开口。他讲的是第三种缰绳：一份契约。三种讲法谁对，不判。
+- `f_10` 那个字说出口的时候，正文只写周围的东西。
+- `f_11` 的六个选项各有前提，前提不满足的不显示（不要灰着摆出来）。`price_emperor` 检定不成要能退回来重选。凡人选 `price_pc` 之后，`f_12` 和结局由别人的眼睛来写。
+- `f_12` 的去向表照抄，顺序不能换。
+- 七个结局场景加上后日谈卡片（§10.3 的矩阵，§16.5 的神格卡片）都归你。改了正史的卡片以“在这条时间线上”开头；预言谁读对了，哪张都不下断语。
+- `end_ledger` 的最后一个画面是定死的。
+
+---
+
+## 16 神格线
+
+玩家随时可以在作弊菜单里让主角升神（永生、无敌、检定必成），或者只开永生。条件是 `is.god`、`is.immortal`、`is.mortal`，神号用 `{god}`。下面是 1022 剧本对这件事的全部安排。
+
+### 16.1 这个年代的人怎么看“一个活着的神”
+
+**他们手里有什么先例**（1022 年的人都知道，出处在括号里）
+
+- 神位是会议投出来的。建造者巴尔加尔是第三次泛神会议认的，头一位矮人神；米娜拉 822 年去世，835 年第六次会议封神；穆纳斯 1013 年战死，第七次会议封神，靠的是比珊的达林那本《月歌者法典》[wiki: Pantheonic Councils; wiki: Minara]。**先例全是死后才封的。**
+- 化身是活着的时候就算数的。奥琪是月神的第八世化身，去年泪落月才去世；凯伦今年刚被认作阿德安的化身 [wiki: Avatar]。所以“身上带着神”的活人，达梅里亚人见过，三个月前还在给她办丧事。
+- 被拒的也有。阿拉莉亚不拜任何一位坎诺的神，会议说她要是化身，也是王庭之外某位神的；屠兽者卡斯坦被法拉赫的祭司否了，嫌他过得太阔 [wiki: Avatar]。
+- 教义上有一道坎：诸神打完仗立了禁令，从此不再下场，世上的事交给君王代管，这叫神授摄政；战后又添了新说法，凡君王都是卡斯特洛斯的化身 [wiki: Pantheonic Councils 第四、第五次；wiki: Divine Regency; wiki: Avatar]。一个在地上走的神，要么是假的，要么说明君王不用再代管了。哪一样祭司们都不爱听。
+- 神系分辈，最晚一辈叫升座之神，都是从人做起的 [wiki: Regent Court; wiki: Balgar the Builder]。给你找位子的话，只有这一格。
+- 世上已经有一位活着的“神”：布勒瓦尔人把贾赫奉为重生的苏雷尔 [wiki: Jaher ta'Diranhriá; wiki: Surael]。他是个精灵，在东边打仗。
+- 精灵那边正相反：舰队为灰烬之日的事弃了神，只认祖先留下的东西 [ck3: localization/english/religion/anb_religion_elven_l_english.yml]。
+- 奈拉特不容赖着不死的人，传说他派红衣收割者去找巫妖 [wiki: Nerat; wiki: Red Reapers]。
+
+**各方的反应和利害**
+
+| 谁 | 怎么反应 | 图什么，怕什么 |
+|---|---|---|
+| 月神神殿（阿丽娅、比珊的达林） | 最先伸手。达林想给你写一本法典，抱怨活人不好写：您的事迹还没完。阿丽娅想把你认成月神的第九世，赶在别家前头。 | 加冕权刚到手，一位活神站在哪座神殿里，哪座神殿就是坎诺的头一把椅子。怕你自己不肯当谁的化身。 |
+| 卡斯特洛斯的祭司团（万神道） | 嘴上最硬：诸神禁令还在，神不下场，所以你是个法师，又一个术士王。私下里最急：只要你肯说一句“加冕的事不怪他们”，他们什么都肯认。 | 失了势，想翻身。怕你一开口，君王化身那套新说法当场作废。 |
+| 阿德安的骑士和白玫瑰庭 | 要同你比一场。比完很扫兴：打不死的人赢了不算赢。有人因此认定你不是神，是件兵器。 | 凯伦刚被认作化身，他们不想让一个活的抢了死人的风头。 |
+| 奈拉特的收殓人 | 福尔卡德照旧量你的肩宽，量完把尺子卷起来：你这样的，那边没有尺寸。对只开了永生的人更不客气：你欠一死，先记账。 | 每个人都该有个了结。怕你和坎雷克是一路货，只是还没自己发现。 |
+| 泛神会议 | 吵成三派：排进升座之神；认作某位旧神的化身（每家都说是自己家的，同后来阿德蕾西娅的案子一个吵法）；按阿拉莉亚的例，算王庭之外的。结论永远是容后再议。 | 活人没法盖棺论定。投了票你又干出别的事来，票算谁的。 |
+| 船上长老（伊贝尼昂） | 不跪，不谢。上回神在场的时候，我们丢了一块大陆。他会问你那天在哪儿。 | 精灵刚把神戒了，不想让族里的年轻人又找着一个。 |
+| 太阳王的宫廷（伊谢莉丝） | 全坎诺内外唯一有现成位子给你的地方，位子在贾赫下面：苏雷尔的使者。不肯屈就的话，客客气气送你出城。两个太阳，田要晒死的。 | 她丈夫的神号是这个国家的地基。 |
+| 矮人（布洛克、红宝石矮人） | 报账：巴尔加尔是干完活、死了、过了几百年才封的。活着封神，工期没法算。 | 不图什么。活干得好就行。 |
+| 贤者会（加里昂、玛希尔达） | 加里昂最怕这个：一个没人验得了的意志。我连你当时是不是自己做的主都看不出来。玛希尔达请你先搜她的身，然后搜你的，什么也没搜着，这才是她怕的。 | 想给你立规矩，最好是你自己立的。 |
+| 渡鸦先知会（德基南） | 不仁里没有你。他翻了三遍。你站在哪儿，哪儿的预言就是一块白的。内圈一半人想躲着你，一半人想杀你，后一半人知道杀不了，更生气。 | 十九年的“坐着看”全押在预言上。你让预言不作数。 |
+| 马里昂 | 全坎诺唯一拿神当亲戚的人：娘是化身，爹上个月封了神。他同你说话像同姻亲说话，问你们那边热不热闹。 | 想让你站在他身后，别站在他祖母身后。 |
+| 伊奥瑞尔 | 头一回碰见等得过她的人。她不慌，开始重新算账，算的是一百年以后。 | 西洛瑞尔家的一百年大计里要给你留个格子。 |
+| 加雷克 | 只求一件事：请你说一句，他父亲那些年不是他自己。一个没人能上诉的判词。 | 你说了，东坎诺的恨没处放；你不说，他认为你也怕。 |
+| 克拉丽蒙德 | 请你拔一下卡林达尔。剑认了你，她说它也认过别人，说明不了什么。又来一个想坐上去的。 | 她砍过一个自封的王。她在看你是不是下一个。 |
+| 戴伦（八岁） | 神发不发马。 | 马。 |
+| 芬尼克 | 把你请进那间屋，客客气气请你许个诺。 | 小人国头一回有机会拴住一个比洛伦特还大的东西。 |
+| 帐篷城的老兵、边境地的农民 | 先问饷，再问腿，最后问能不能让死了的人回来。有人掏出个萝卜印：上个月也来过一个神。瘟疫年里是另一回事：他们抬着门板翻过封路的栅栏来找你。 | 治病。活命。 |
+| 梅尔科尔 | 对你念了一遍旧口令，没用。立刻改口要给你当差。 | 活。 |
+| 阿克罗米斯 | 尖耳朵，女祭司，现在又来个神。达梅里亚还剩哪样是达梅里亚人的。 | 他那一套“老规矩”里没有你的位子。 |
+| 亚科布 | 最快想明白的人。他一辈子要的是一只稳当的手，你比皇帝稳当。他当场提出替你管祭司。 | 他要站在牵绳的人旁边。 |
+| 坎雷克 | 高兴。誓词说“至我寿终之日”，他找了三十年没有寿终的人。他给你搬了把椅子。 | 一位不会死的卡斯坦，立在没解结的山上。那个字管的是誓，不管你是不是神。 |
+| 卡斯坦 | 神排在皇帝后头，先去打酒。1040 年以后口气变了：她老得最快，你一点没变，她头一回不看你的脸说话。 | 她要那座山给她一个收买不了的答复。你要是开口替山答了，她一辈子就白等了。 |
+| 巴里 | 照旧添菜，问神吃不吃乳酪。夜里他一个人坐着：他本来就要看着身边的人一个个老死，如今多了一个不会走的，他不知道该不该高兴。 | 怕戴伦跑来问他，巴里是不是也不会死。 |
+| 薇齐娜 | 在本子上写了“神”，划掉，改成“要是”。她师门里没人教过预言之外的东西怎么记。 | 她的差事是记下你每一次裁断。现在这本子成了经书还是罪证，她说不准。 |
+| 瓦勒兰 | 恕我直言，我向人发过誓，没向神发过。您要是还算人，我接着跟。他是全队唯一要你亲口答这一句的人。 | 精灵已经比他们长命了。再来一个不死的站在精灵那边，恩特本还剩什么。 |
+| 阿德蕾西娅 | 十四岁：大人，神用不用数人。二十七岁：您去不算数，您又不会死。 | 账得有人拿命付。她不让你用“不会死”把这件事糊弄过去。 |
+| 伊迪丝 | 你跟我一样了：说什么，别人都给。她是全剧唯一拿你当同类的人，也最替你发愁。 | 她一辈子在学怎么不用那张嘴。 |
+
+### 16.2 分幕钩子表
+
+写法的规矩：神的段落用 `{ if: "is.god", text: … }` 加在凡人正文旁边；[神] 选项写 `tag: '神'`、`if: "is.god"`，每用一次 `var god_acts +1`；检定必成不用另写，但成功之后别人怎么看要写。带 ★ 的是只有神才有的选项。
+
+**序章（每个出身一处）**
+
+| 场景 | 凡人版本 | 神版本多了什么 |
+|---|---|---|
+| `p_dameria_01` | 拦刀要过检定，败了挨一刀。 | 刀砍在你胳膊上，弯了。那人眼睛后面没人，神威没处落。满厅的人看着一把弯了的切肉刀。马里昂：我娘是化身，我爹上个月封了神，您又是哪一位。★把刀捋直了还回厨房：`rep moon +1`，元帅是当场头一个跪下的精灵，跪完脸色很难看。 |
+| `p_lorent_03` | 对大厅回话要过检定。 | 你说什么大厅都信。恩特本的人退了席，出门就说太后兜里揣了个神。★以神的名义替太后作保：按①算（立 `p_hall_denied`，瓦勒兰日后照样记这一笔），`rep rose +2`。伊奥瑞尔头一回露出在算账的样子。 |
+| `p_ebonmarck_03` | 潜行、欺瞒，或者用口令。 | 你从营地正中走过去。阿德安的骑士让了路，白湾人的矛扎在你背上断了。★就这么走：`rep dragon +2`，`rep escann -1`，“乌霜边区请来一个神”这句话比你先到了安本科斯特。 |
+| `p_ibevar_04` | 亲王把你的答复写成法。 | 伊贝尼昂照样写，写完说：上回神在场的时候，我们丢了一块大陆。你的答复我写成法，可我不谢你。`rep elders -1`。在场的年轻精灵有两个想跟你走，亲王看见了。 |
+| `p_wex_01` | 帮着抬尸首，对账。 | 福尔卡德量了你的肩宽，把尺子卷起来：你这样的，奈拉特那边没有尺寸。然后照样问你那十六个是谁埋的，先吃块饼再答。账你一眼就对出来了：多出来的十六座是空的（检定必成）。他等你往下说是谁挖的，你说不出：神对得了账，看不见上个月的夜里。这一处没有 [神] 选项，要的就是这个答不上来。 |
+
+**第一幕**
+
+| 场景 | 凡人版本 | 神版本多了什么 |
+|---|---|---|
+| `a1_01` | 书记官念誓词，卡斯坦落场。 | 登记册上没有“神”这一栏，书记官写在“其他”底下。卡斯坦落下来看了你一眼：你是神？行。神排在皇帝后头，你还是我的掌玺大臣。 |
+| `a1_02` | 枢纽，老兵拿萝卜印考你。 | 老兵们排队：先问饷，再问腿。★给断腿的老兵把腿长回来（这世上只有“活手”办到过）：`flag god_camp`。第二天帐外排了三百人，帐篷城散不了了，`rep moon -1`；`a1_08` 多一个 `thug`；`a1_06` 有人管你叫活手第二。 |
+| `a1_04` | 听证，三选一。 | ★你开口替这桩案子下断语：说他父亲是被慑住的（立 `plumwall_plea`，`world writ +1`）或者不是。没人上诉。`rep moon -1`，`rep wise -1`：往后各家有案子不找国王、不找法师，在你门口排队。塞西利乌斯跪下谢你，他的邻居说普鲁穆里斯家买通了一个神。 |
+| `a1_06` | 替阿拉莉亚作证，或者拦。 | 全剧最大的一处。一个活着的神走进正在投票的泛神会议。三派当场吵起来（§16.1）。达林问能不能跟你三年，写一本法典。★走上去说“把我也排进议程”：`flag god_on_agenda`，会议休会请示，阿拉莉亚的案子被“更新的事”挤到后头（你照样可以作证或者拦，效果减半），`rep elders -1`。卡斯特洛斯的祭司举了诸神禁令的牌子，你走过去的时候他们往后挪了三排。 |
+| `a1_12` | 雾里的战斗。 | 沉睡者不怕你（`noAwe`）。巴里：他们看不见你。这话是好是坏，我说不上来。 |
+| `a1_16` | 打驯师。 | 梅尔科尔对你念了旧口令，没用，又念了一遍。然后他跪下要给你当差，说他什么都能叫人去办。★收下他：按“押给贤者会”那一格立 `flag melcor_wise`（`a2_03` 照样有他的口供），正文写他留在帐篷城替你管排队；薇−2，巴−1，`rep wise -1`。 |
+| `a1_18` | 四个同伴各说一句。 | 同伴的话换成 §16.1 那四句。薇齐娜写了“神”，划掉，改成“要是”。瓦勒兰还没入队，他那句留到 `a2_01`。 |
+
+**第二幕**
+
+| 场景 | 凡人版本 | 神版本多了什么 |
+|---|---|---|
+| `a2_01` | 瓦勒兰递信入队。 | 他多问一句：恕我直言，我向人发过誓，没向神发过。您还算不算人。答“算”瓦+1；答“不算”他照样跟，从此称呼改成“阁下”。 |
+| `a2_02` | 枢纽。 | 万神道上失势的祭司分成两拨，一拨朝你举诸神禁令的牌子，一拨夜里来敲门。★在万神道当众说一句“加冕的事不怪每一个穿这身袍子的人”：卡斯特洛斯的祭司团一夜翻身，`rep dragon +1`，`rep escann +1`；和约里“哪座神殿都能加冕”那一条成了笑话，`rep moon -2`。`god_on_agenda` 的人，会议的信使在这里追上你，带来一张要你填的表。 |
+| `a2_05` | 盖印、听证、裁决三选一。 | 两边都请你断。★叫两边都放下兵器：他们放了。`flag siege_hearing`，`flag god_truce`，`world mantle +1`，`rep escann -2`，`a2_06` 没人敢动手，直接立 `garrec_king`。代价：他是“神保的王”，围城的三家各修了一座朝着对方的你的小庙；`a4_13` 没人把加雷克当正经人选。 |
+| `a2_11` | 守砖人用炖菜试你还是不是你。 | 他盛了菜，看着你吃，看了很久：我试的是人。你这样的，我没试过。你过不了这一关，检定必成也没用，因为他要看的是你烫不烫嘴。替你过关的是伊迪丝那一碗，或者 [乌霜边区] 的军团牌。 |
+| `a2_14` | 试剑，毁阶的约。 | 克拉丽蒙德请你拔卡林达尔。它认了你。她说它也认过别人，说明不了什么，然后问你打不打算坐上去。答“不坐”的，她要你在山上再说一遍。 |
+| `a2_17` | 缴魔像的械。 | 你一伸手就缴了（它没有心智，神威不管用，检定必成）。它摘头下跪，规矩是跪到你死。布洛克算了算：那它这辈子不用起来了。`flag golem_pc`，`flag golem_forever`。代价：第九道从此没人过得去，`a4_16` 里你要立别人，得当众“放它起来”，那人算是你给的皇帝。卡−2。 |
+| `a2_18` | 请人解结、照修、毁阶，四选一。 | ★伸手把那半句话扯下来：扯下来了，`flag knot_cut`（不用等碎片），`flag mended` 可以照选。代价：半句话总得落在什么上头，它落在了你身上，`flag god_half_sentence`。从此你在的屋里没人撒得了谎，包括你的同伴和你自己：全剧的欺瞒选项对你关上，同伴的欺瞒检定作废；瓦+1（他本来就不撒谎），薇−2（她的本子），卡−1。亚科布在你跟前头一回说了实话，说完自己吓了一跳。 |
+| `a2_19` | 同伴各说一句，定伊迪丝的先生。 | 伊迪丝：你跟我一样了，说什么别人都给。那你教我吧，你比他们都懂。选 `edith_none` 时文字改成她跟一个神学了十六年“怎么不开口”。 |
+
+**第三幕**
+
+| 场景 | 凡人版本 | 神版本多了什么 |
+|---|---|---|
+| `a3_01`、`a3_03` | 时间跳跃。 | 见 §16.3。 |
+| `a3_05` | 坟场的战斗。 | 行尸不怕你。阿德蕾西娅数完数，问：大人，神用不用数人。 |
+| `a3_06` | 封门还是放人。 | 德纳里昂：重生的苏雷尔在东边打仗，这地方不归别的神管。★进城把病人治了：治好了，阿德蕾西娅的爹娘活了，`flag god_healed`。代价：三个郡的病人抬着门板往渡鸦山赶，栅栏拦不住，`world unburied +1`；之后“封门”那一项的说服 DC +3（必成，可是要动手拦人，巴−2）。你治不过来的，因为你只有一双手。 |
+| `a3_11`、`a3_12` | 枢纽；谈太阳王的条件。 | 满街的人管贾赫叫重生的苏雷尔，城里来了第二个。伊谢莉丝只见你一面，开门见山：两个太阳，田要晒死的。★认下“苏雷尔的使者”这个名头：`flag sun_terms`，`flag god_herald`，条件全免。代价：布勒瓦尔的神殿当天把这件事刻上了墙，坎诺那边听到的是“他们的神给太阳王当了差”，`rep moon -2`，`rep rose -2`，`rep elders -1`。不认的，按凡人的路谈，她的检定 DC 不变，但谈崩了她会请你“在日落前出城”。 |
+| `a3_15` | 伊迪丝、自己上、敲钟。 | ★走到街口站着：两百支火把一支一支低下去，人跪了一地，然后回家了。街保住了。代价：他们是怕你，没改主意，`world writ +1`（有本事的说了算，这个理又多了一个例子）；第二天两拨人各自传说神是站在自己那边的。伊迪丝把手套戴了回去，说了那句“你跟我一样了”。 |
+| `a3_17` | 当众怪谁。 | 人群里有人先喊出来：既然有神在，这病是谁放过来的。船上长老那句“上回神在场的时候”在这里由伊贝瓦尔的信使再说一遍。你选哪一项都必成，没人敢不信。代价：你选的那一项，声望效果翻倍（好的坏的都翻）。 |
+| `a3_20` | 三剂药给谁。 | 两家的信使都跪着。车夫没跪，他腾不出手。你治得了眼前被咬的，治不了药不够这件事：`god_healed` 的人这里多一句“您上回治过一城”，所以谁没拿到药，谁就认定是你不肯。无论选哪项，没拿到药的一方 `rep -1`。 |
+
+**第四幕**
+
+| 场景 | 凡人版本 | 神版本多了什么 |
+|---|---|---|
+| `a4_02` | 讨碎片；叫使者在那间屋里许诺。 | `god_half_sentence` 的人，芬尼克看了你半天：你也是？他那块石头在你旁边不响了。★他客客气气请你也许个诺：维斯沃尔永不陷落。你许了，`flag god_promise_viswall`，`flag viswall_safe`。代价：那间屋里的诺连神也得兑现，往后小人国一有事你就得回来，芬尼克说这叫分饼礼的加长版。 |
+| `a4_05` | 克雷格的血债。 | 克雷格绕过太后，直接跪在你跟前，求你罚他。你罚了也不算：太后要的是她自己点头的那一份。选项照旧，文字多这一段；`god_on_agenda` 的人，白玫瑰庭的祭司问你现在算哪家的，没名分的神涂不了油。 |
+| `a4_07` | 婚宴，座次。 | 把神排在哪：高过诸王不行，低过诸王也不行。司礼官辞了差事。★替新人证婚：`flag god_wed`，`world feud -1`。代价：月神神殿和白玫瑰庭都丢了这桩婚事的名分，`rep moon -1`，`rep rose -1`；神证的婚没人敢解，1050 年以后这件事会回来。 |
+| `a4_08` | 四份章程。 | 帐子里有人提了第五份：奉神的名出征。★点头：按 `charter_muster` 立（`world communion +2`，不加 `unburied`，人来得快），另加 `flag god_crusade`，`world mantle +1`。代价：这支兵打的是你的旗，他们往后干的每一件事都记在你名下，包括 `f_06` 沼地里那些柱子。`god_herald` 的人，诸王先问你现在替谁当差。 |
+| `a4_12` | 打苍手。 | 他不怕你（`noAwe`）。他行了半个礼，面甲里头说：凯伦说赢了要留人。神留不留。打赢之后你可以答他。 |
+| `a4_16` | 碎片、卡斯坦、立谁。 | `golem_forever` 的人立别人，要先当众放魔像起来。★自己立誓（要 `golem_pc`）：`castan_pc`。结解了的，是一位不会死的卡斯坦；结没解的，你是坎雷克等了三十年的那个人，那个字管的是誓。布洛克把账本合上了。 |
+| `a4_17` | 下山的后果。 | 卡斯坦（还在的话）：你上去了，我算什么。你没上去的，她说：你连这个都不要，那你到底要什么。 |
+
+**终章**
+
+| 场景 | 凡人版本 | 神版本多了什么 |
+|---|---|---|
+| `f_01`、`f_02` | 时间跳跃。 | 见 §16.3。`god_wed` 的人：雷安 1050 年病死以后，奥坎娜改嫁不了，这桩婚是神证的。 |
+| `f_03` | 集结，同伴最后的谈话。 | 营里有人朝你的帐子磕头，有人绕着走。阿德蕾西娅：您去不算数，您又不会死。她先把这句话说在前头。 |
+| `f_06` | 沼地的火刑。 | `god_crusade` 的人：他们烧人之前念的是你的神号。你叫停，他们停了，然后问那该烧谁。`pyre_stopped` 照立，瓦勒兰（在的话）说恕我直言，这些人是您的。 |
+| `f_10` | 坎雷克讲他的账。 | 他不怕你，他高兴。他数了你这些年办过的事（读 `var god_acts`），一件一件，像在念推荐信，然后给你搬了把椅子：誓词说至我寿终之日，我找了三十年没有寿终的人。`castan_pc` 而且没解结的神：那个字照样管用，你的脚自己动了；`knows_word` 才站得住，否则靠阿德蕾西娅那一下。 |
+| `f_11` | 谁付账。 | 你去付，死不了（`price_pc`）：号魂撕不动你，书在你身上留了一道去不掉的记号，书里的死人从此当你是自己人。`price_names`：你一夜就念完了。别的选项照旧，阿德蕾西娅那句“您去不算数”在这里兑现：她会同你争。 |
+| `f_12` | 书的去处，交印。 | ★哪张椅子都不坐 → `flag god_unseated` → `end_unseated`。 |
+
+每幕的最低要求（一个 [神] 选项、一处旁人反应、一句同伴的话）对照：第一幕 `a1_02`、`a1_06`、`a1_18`；第二幕 `a2_05`、`a2_14`、`a2_01`；第三幕 `a3_06`、`a3_12`、`a3_15`；第四幕 `a4_07`、`a4_02`、`a4_17`；终章 `f_12`、`f_10`、`f_03`。
+
+### 16.3 时间跳跃：别人老了，你没变
+
+四处都用 `is.immortal`（神和只开永生的都算），同 `is.longlived` 那一套分开写。精灵的写法是“别人认不出你”，永生的写法是“别人认出来了，然后不知道该怎么办”。
+
+| 场景 | 写什么 |
+|---|---|
+| `a3_01` 十六年 | 年表后面加一段：你这十六年的账上没有添一岁。书记官续登记册的时候，在你的年纪那一栏停了笔，抄了上一年的。选“回本国当差”的，同僚换了一茬，新来的以为你是你自己的儿子。 |
+| `a3_03` 信 | 同伴重聚数白头发，数到你这里停了。卡斯坦：你连个褶子都没添，我翅根都灰了。瓦勒兰看了你很久，恕他直言，没往下说。巴里把乳酪往你这边推了推：这滋味我知道一半，往后你慢慢知道另一半。 |
+| `a3_14` 戴伦 | 他二十六岁，一眼就认出你，因为你同他八岁那年看见的一模一样。他说：我这些年一直在想，那天给我发马的到底是个什么。 |
+| `a4_04` 洛伦泰内 | 伊奥瑞尔是全城唯一看你不躲眼神的人。她一百零二岁，样子没变，你也没变。她说长老们总算不叫她孩子了，然后问你打算等到哪一年。 |
+| `f_01` 十二个冬天 | 年表每一条后面是别人的年纪。最后一条是你的：还是领印那天的样子。只开永生的人多一句：大墓地每换一任大祭司，都写信来问那笔账还挂不挂着。 |
+| `f_02` 谁没熬过来 | 数没来的人，数完，阿德蕾西娅二十七岁，站得同你一般高了。她给你当扈从那年十四，问过你神用不用数人。瓦勒兰五十二：那位太后还是我头一回见她的样子，您也是。这件事我想了三十年，现在得想两份。 |
+
+凡人主角选 `price_pc` 会死。永生的主角死不了，这一点在 `f_11` 里要由别人说破（阿德蕾西娅），不要由旁白说。
+
+### 16.4 神格专属结局
+
+- **结局 id**：`unseated`，`divine: true`。**终幕场景**：`end_unseated`。**标题**：《不肯落座的神》。
+- **入口**：`f_12` 最后一步，只有神看得见的选项“[神] 哪张椅子都不坐”，立 `god_unseated`。条件写全是 `is.god && !flag.book_kept && !(flag.castan_crowned && flag.castan_alive)`：书上的记号你没接，山上也没有活着的皇帝（包括你自己）。去向表里排第 0 位，先中先得。升了神而坐了椅子的（自己当了卡斯坦、接了记号），或者山上另有活皇帝的，照凡人的顺序走 1、2、3 号结局，另配 §16.5 的卡片。
+- **世界变成什么样**：仗打完了，人人给你搬椅子。东坎诺的诸王请你上试炼山，祭司们请你进神系，坎雷克那张椅子也空着。你一张没坐。没有皇帝，没有新神殿，瘟疫照 `price_*` 的那一种结束。拖了三十年的第七次泛神会议只好复会，当着你的面投票，议题排在“阿德蕾西娅算谁家的化身”后面，开了十一天，决议是容后再议。各国多了一个不知道该怎么称呼的邻居，陆续订了“神过境”的章程：谁出迎，摆不摆座，用不用撤掉屋里的王座。
+- **当神的代价**：
+  1. **你没处坐了。** 诸神禁令说神不下场，君王才替神当家。你在哪间屋里，哪间屋里的王座就成了摆设，所以每个宫廷都盼着你走。你坐下的桌子，别人就不敢再平起平坐。《同席》那张圆桌每年兰斯日给你留一个位子，你得站着吃，坐下去那张桌子就散了。
+  2. **你的判词没人敢驳，所以没人再肯自己判。** 这三十一年里你替人断过的案子成了先例，可先例的意思变了：有难事，等神来。监誓人这门差事到你为止。
+  3. **头一批信你的是死人。** 你要是亲手付过账，书上的记号还在你身上，书里的人当你是自己人。活人的神殿还在开会。
+  4. **你认识的人会走完。** 卡斯坦最先，然后是瓦勒兰、薇齐娜、马里昂、戴伦，很久以后是巴里。后日谈每一张卡片的最后一句都可以是你在场。
+  5. **坎雷克的话有一半应在你身上。** 他要一个不会寿终的人坐在那张椅子上。你没坐，可你不会寿终这件事是真的，往后每一代想当卡斯坦的人，上山之前都要先问一句你答不答应。
+- **同正史的关系**：正史里没有你。这一结局的后日谈每张都以“在这条时间线上”开头。
+- **停在哪**：书记官另起一页，问神号怎么写，要不要留个地址。门外那个半精灵小孩还在追那只鸡。
+
+### 16.5 神格与永生的后日谈卡片
+
+第一部分 §10.3 已有五张（会议复会十一天；各国立像，鼻子都不一样；`price_names` 一夜念完；不会死的卡斯坦；1221 年拿着蜡印求见）。“各国立像”那张加条件 `var.god_acts >= 4`。再补下面这些，凑成神格八张、永生三张。
+
+| 条件 | 卡片梗概 |
+|---|---|
+| `is.god && flag.god_half_sentence` | 你进哪间屋，哪间屋里没人撒得了谎。各国给你修了专门的偏厅，谈正事在隔壁。在这条时间线上，“当着神的面说”成了一句骂人话，意思是不留情面。 |
+| `is.god && flag.god_crusade` | 沼地里烧人的那些年，柱子上刻的是你的神号。骑士团后来花了两代人把它凿掉。凿不干净。 |
+| `is.god && flag.god_herald` | 布勒瓦尔的神殿在苏雷尔的日轮旁边添了一颗小的。1056 年贾赫东征回来，站在那面墙前头看了很久，问这是谁。 |
+| `is.god && flag.god_promise_viswall` | 小人国往后每回有事，你都得回去一趟。芬尼克的孙子管这叫“请神吃饭”。四百年里你吃了十一回。 |
+| `is.god && flag.golem_forever` | 第九道试炼的石像还跪着。北要塞的孩子往它手里托着的那颗头上放过果子、帽子和一只猫。 |
+| `is.god && flag.god_wed` | 神证的婚没人敢解。奥坎娜守了一辈子寡，西洛瑞尔家和西尔穆纳家都说这是对方求来的。 |
+| `is.immortal`（不要求是神） | 奈拉特的收殓人在账上给你留了一行：欠一死。大墓地每换一任大祭司，都写信来问还挂不挂着。你每回都回信。 |
+| `is.immortal && flag.price_pc` | 书在你身上留的那道记号，过了多少年也没淡。阴天的时候，你听得见有人在很远的地方抱怨后脑勺痒。 |
+
+### 16.6 新增标记
+
+神格线的十一个标记和计数器 `god_acts` 已经并进 §12.7、§12.8。主线标记没有一个只在神的分支里立：`knot_cut`、`garrec_king`、`sun_terms`、`viswall_safe`、`charter_muster`、`plumwall_plea` 这几个神能提前或者换个法子立，凡人的路都在 §11 里。

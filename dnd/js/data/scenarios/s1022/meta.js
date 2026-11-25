@@ -16,14 +16,16 @@ const PROLOGUE_DONE = [
 const ACT1_DONE = [
   ...PROLOGUE_DONE, 'level 4', 'companion +liv', 'companion +barry', 'companion +vezina', LEDGER,
   'flag knows_watchword', 'flag knows_iacob_name', 'flag guardian_barons', 'flag acromis_quiet', 'flag melcor_dead',
-  'quest sleepers start', 'quest sleepers done', 'quest edith start', 'quest witness stage 2', 'quest dyren start', 'quest barry_boy start',
+  'quest sleepers start', 'quest sleepers done', 'quest edith start', 'quest edith stage 2', 'quest witness stage 2', 'quest dyren start', 'quest dyren stage 2', 'quest barry_boy start',
+  'quest sixteen_graves stage 3', { if: "origin == 'lorent'", then: ['quest lance stage 2'] },
 ];
 const ACT2_DONE = [
   ...ACT1_DONE, 'level 6', 'companion +valeran',
   'flag siege_certified', 'flag garrec_dead', 'flag body_left', 'flag liv_saw_body', 'flag knows_myrrh', 'flag golem_none',
   'flag iacob_pardoned', 'flag lucan_alva', 'flag edith_none', 'world unburied 7',
   'quest valeran_oath start', 'quest emperor_body start', 'quest emperor_body fail', 'quest liv_claim start', 'quest mountain start',
-  'quest canrec_trail start', 'quest witness stage 3', 'quest edith stage 3',
+  'quest canrec_trail start', 'quest witness stage 3', 'quest edith stage 3', 'quest mountain stage 2', 'quest liv_claim stage 2',
+  { if: "origin == 'lorent'", then: ['quest lance stage 3'] },
 ];
 const ACT3_DONE = [
   ...ACT2_DONE, 'level 8',
@@ -31,13 +33,14 @@ const ACT3_DONE = [
   'flag edict_softened', 'companion -barry', 'flag blame_silent', 'flag law_limited', 'flag knows_roster', 'flag doses_split',
   'world unburied 5', 'world communion 6', { if: 'flag.f_staff', then: ['world writ 4'], else: ['world writ 3'] },
   'quest white_year start', 'quest white_year done', 'quest vezina_eye start', 'quest vezina_eye done',
-  'quest dyren done', 'quest barry_boy done', 'quest edith done', 'quest witness stage 4',
+  'quest dyren done', 'quest barry_boy done', 'quest edith done', 'quest witness stage 4', 'quest sixteen_graves stage 4', 'quest canrec_trail stage 2',
 ];
 const ACT4_DONE = [
   ...ACT3_DONE, 'level 10',
   'flag crege_champions', 'flag valeran_stayed', 'flag wedding_blood', 'flag charter_league', 'flag knows_canrec_plan', 'flag liv_told',
   { if: 'item.jaher_letter < 1', then: ['item +jaher_letter'] },
-  'quest valeran_oath done', 'quest mountain done', 'quest liv_claim done', 'quest witness stage 5',
+  'quest valeran_oath done', 'quest mountain done', 'quest liv_claim done', 'quest witness stage 5', 'quest canrec_trail stage 3',
+  { if: "origin == 'lorent'", then: ['quest lance done'] },
 ];
 
 export const META = {

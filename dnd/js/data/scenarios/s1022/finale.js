@@ -191,19 +191,14 @@ export const SCENES = {
         "goto": "f_12",
         "effects": [
           "flag price_aldresia",
-          "item +silversong",
-          "flag book_locked",
-          "item -book_of_canrec",
-          "flag order_founder"
+          "item +silversong"
         ]
       },
       {
         "text": "（骨架）付账的是你",
         "goto": "f_12",
         "effects": [
-          "flag price_pc",
-          "flag book_wise",
-          "item -book_of_canrec"
+          "flag price_pc"
         ]
       },
       {
@@ -211,9 +206,7 @@ export const SCENES = {
         "goto": "f_12",
         "effects": [
           "flag price_companion",
-          "flag price_valeran",
-          "flag book_locked",
-          "item -book_of_canrec"
+          "flag price_valeran"
         ]
       },
       {
@@ -221,9 +214,7 @@ export const SCENES = {
         "goto": "f_12",
         "effects": [
           "flag price_companion",
-          "flag price_liv",
-          "flag book_wise",
-          "item -book_of_canrec"
+          "flag price_liv"
         ]
       },
       {
@@ -231,18 +222,14 @@ export const SCENES = {
         "goto": "f_12",
         "effects": [
           "flag price_emperor",
-          "unflag castan_alive",
-          "flag book_locked",
-          "item -book_of_canrec"
+          "unflag castan_alive"
         ]
       },
       {
         "text": "（骨架）一页一页念名字",
         "goto": "f_12",
         "effects": [
-          "flag price_names",
-          "flag book_wise",
-          "item -book_of_canrec"
+          "flag price_names"
         ]
       },
       {
@@ -262,9 +249,36 @@ export const SCENES = {
     ],
     "choices": [
       {
+        "text": "（骨架）书封进骑士团的库",
+        "if": "!flag.book_kept && !flag.book_locked && !flag.book_wise",
+        "once": true,
+        "effects": [
+          "flag book_locked",
+          "item -book_of_canrec"
+        ]
+      },
+      {
+        "text": "（骨架）书交给加里昂",
+        "if": "!flag.book_kept && !flag.book_locked && !flag.book_wise",
+        "once": true,
+        "effects": [
+          "flag book_wise",
+          "world writ +2",
+          "item -book_of_canrec"
+        ]
+      },
+      {
+        "text": "（骨架）骑士团你来建，不留名",
+        "if": "(flag.book_kept || flag.book_locked || flag.book_wise) && !flag.order_founder",
+        "once": true,
+        "effects": [
+          "flag order_founder"
+        ]
+      },
+      {
         "text": "（骨架）[神] 哪张椅子都不坐",
         "tag": "神",
-        "if": "is.god && !flag.book_kept && !(flag.castan_crowned && flag.castan_alive)",
+        "if": "(flag.book_locked || flag.book_wise) && is.god && !flag.book_kept && !(flag.castan_crowned && flag.castan_alive)",
         "effects": [
           "flag god_unseated",
           "var god_acts +1"
@@ -278,27 +292,27 @@ export const SCENES = {
       },
       {
         "text": "（骨架）把印交回去：缰绳",
-        "if": "!flag.book_kept && (flag.castan_crowned && flag.castan_alive) && !flag.knot_cut",
+        "if": "(flag.book_locked || flag.book_wise) && !flag.book_kept && (flag.castan_crowned && flag.castan_alive) && !flag.knot_cut",
         "goto": "end_bridle"
       },
       {
         "text": "（骨架）把印交回去：第五十四位",
-        "if": "!flag.book_kept && (flag.castan_crowned && flag.castan_alive) && flag.knot_cut",
+        "if": "(flag.book_locked || flag.book_wise) && !flag.book_kept && (flag.castan_crowned && flag.castan_alive) && flag.knot_cut",
         "goto": "end_fiftyfourth"
       },
       {
         "text": "（骨架）把印交回去：各回各船",
-        "if": "!flag.book_kept && !(flag.castan_crowned && flag.castan_alive) && world.communion <= 2",
+        "if": "(flag.book_locked || flag.book_wise) && !flag.book_kept && !(flag.castan_crowned && flag.castan_alive) && world.communion <= 2",
         "goto": "end_parting"
       },
       {
         "text": "（骨架）把印交回去：同席",
-        "if": "!flag.book_kept && !(flag.castan_crowned && flag.castan_alive) && world.communion > 2 && world.communion >= 8 && world.writ >= 4 && world.writ <= 6 && world.feud <= 3 && flag.blame_canrec && !flag.castan_crowned",
+        "if": "(flag.book_locked || flag.book_wise) && !flag.book_kept && !(flag.castan_crowned && flag.castan_alive) && world.communion > 2 && world.communion >= 8 && world.writ >= 4 && world.writ <= 6 && world.feud <= 3 && flag.blame_canrec && !flag.castan_crowned",
         "goto": "end_table"
       },
       {
         "text": "（骨架）把印交回去：监誓人的账",
-        "if": "!flag.book_kept && !(flag.castan_crowned && flag.castan_alive) && world.communion > 2 && !(world.communion >= 8 && world.writ >= 4 && world.writ <= 6 && world.feud <= 3 && flag.blame_canrec && !flag.castan_crowned)",
+        "if": "(flag.book_locked || flag.book_wise) && !flag.book_kept && !(flag.castan_crowned && flag.castan_alive) && world.communion > 2 && !(world.communion >= 8 && world.writ >= 4 && world.writ <= 6 && world.feud <= 3 && flag.blame_canrec && !flag.castan_crowned)",
         "goto": "end_ledger"
       }
     ]

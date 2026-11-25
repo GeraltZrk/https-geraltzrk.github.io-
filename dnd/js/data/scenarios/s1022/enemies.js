@@ -126,8 +126,8 @@ export const ENEMIES = {
   canrec_lich: {
     id: 'canrec_lich', name: '亵渎者坎雷克', en: 'Canrec the Defiler', type: 'undead', level: 12, era: [1022],
     desc: '巫妖，学究，被人打断了三十年。他边打边讲道理。他的命匣不像他，后脑勺一直痒。倒下不算完，书还在桌上，得有人去付账。',
-    hp: 480, ac: 18, init: 3, saves: { str: 1, dex: 3, con: 6, int: 9, wis: 7, cha: 5 },
-    ai: 'caster', immune: ['poison', 'necrotic'], resist: ['cold', 'slashing', 'piercing', 'bludgeoning'],
+    hp: 400, ac: 18, init: 3, saves: { str: 1, dex: 3, con: 6, int: 9, wis: 7, cha: 5 },
+    ai: 'caster', immune: ['poison', 'necrotic'], resist: ['cold', 'lightning'],
     condImmune: [...MINDLESS, 'paralyzed', 'stunned'], traits: { boss: true }, xp: 9000,
     attacks: [
       { name: '死灵射线', hit: 11, dmg: '4d10', type: 'necrotic', multi: 2, weight: 3, text: '{name}一边说话一边抬手，像在黑板上点一个错字。' },

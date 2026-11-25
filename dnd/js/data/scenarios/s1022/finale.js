@@ -173,7 +173,7 @@ const SP_YEARS = {
 };
 const ARREL = {
   title: '遭叛者',
-  intro: '他转过身来。冠是正的，脸是灰的。',
+  intro: '他转过身来。冠戴得很正，有人六十年里一直替他扶着。脸已经灰到了眼眶。',
   enemies: [{ id: 'arrel_revenant' }], noAwe: true,
   specials: [SP_BACK, SP_YEARS],
   win: { effects: ['xp 800'], goto: 'f_10' },
@@ -340,7 +340,8 @@ export const SCENES = {
       { if: 'party.valeran && is.mortal && is.longlived', speaker: '瓦勒兰', text: '我五十二了。恕我直言，您同那位太后一样，还是我头一回见的样子。这件事我想了三十年。' },
       { if: 'party.valeran && is.immortal', speaker: '瓦勒兰', text: '那位太后还是我头一回见她的样子，您也是。这件事我想了三十年，恕我直言，现在得想两份。' },
       { if: 'party.liv', speaker: '卡斯坦', text: '六十一。翅膀根早不疼了，没知觉了。掌玺大臣，趁我还飞得动，酒钱先结一下，三十一年的。' },
-      { if: 'party.liv && is.immortal', text: '她说这话的时候看的是桌上的酒壶，没看你的脸。这是近几年才有的。' },
+      { if: 'party.liv && is.immortal', text: '她说这话的时候看的是桌上的酒壶。1040 年以前她同你讲价，眼睛是钉在你脸上的。' },
+      { if: 'flag.winters_home', text: '你是最后一个到的，从本国赶来，路上换了三回路条。阿德蕾西娅翻名册找你，找了一阵，把你记在了“外来”那一栏。' },
       { if: 'party.barry', speaker: '巴里', text: '我家那孩子今年四十了。上回我当着人这么叫他，他等议事厅的门关上才敢答应。来，先垫一口，乳酪是三道卫的。' },
       { if: 'party.vezina && flag.vezina_eye', speaker: '薇齐娜', text: '今晚要起风，第三顶帐子的桩得再钉一遍。我没说要是。别问我怎么知道的，我也不想知道。' },
       { if: 'party.vezina && !flag.vezina_eye', speaker: '薇齐娜', text: '第十七本了。前十六本我昨晚翻了一遍，你三十一年里改过口的裁断有四桩。理论上不算多。' },
@@ -564,7 +565,7 @@ export const SCENES = {
     title: '达拉万之愚',
     loc: '科乌里亚 · 达拉万之愚',
     text: [
-      '达拉万之愚。快四百年前一位国王在这儿放过一场大水，水到今天没退。路是插柳条标出来的，柳条外头的泥没有底。',
+      '达拉万之愚。快四百年前，科尔巴里德人的国王达拉万为了淹死一群豺狼人，在这儿放了一场大水，连自己的兵一块淹了。水到今天没退。路是插柳条标出来的，柳条外头的泥没有底。',
       '沼里隔一阵冒一股火，有硫磺味。马不肯走，得蒙上眼牵着。',
       { if: 'party.vezina', speaker: '薇齐娜', text: '十四只。刚才是十五只。少的那只落到前头那排柱子上去了。' },
       { if: 'party.liv', speaker: '卡斯坦', text: '我在上头飞，你们在底下蹚。这种地我只管看，不管捞。' },
@@ -826,6 +827,7 @@ export const SCENES = {
         result: [
           '椅子是硬的。他很高兴，把那个字当见面礼念给你听了。烛火往同一边倒，前厅的笼子一齐响了一声。',
           { speaker: '阿德蕾西娅', text: '您坐下去的时候我数了一遍。屋里站着的活人少了一个。' },
+          { if: 'party.liv', speaker: '卡斯坦', text: '神排在皇帝后头。这把是给皇帝坐的，你坐错了，起来。' },
         ] },
       { text: '让他把话说完', goto: 'f_10b' },
     ],
@@ -1057,9 +1059,9 @@ export const SCENES = {
       '卢西安·西尔·维文是踩着雪上来的，靴子上糊满了沼泥。他在门口数了数桌边的椅子，把帽子摘了。',
       { speaker: '卢西安', text: '布勒瓦尔来了信，贾赫封我做科乌里亚的护国公。信是半年前写的，那时候他还不知道我们打不打得赢。' },
       { if: '!flag.book_kept', speaker: '卢西安', text: '这本书怎么办？我的兵要问的。他们头一句就会问烧不烧得掉。' },
-      { if: '!flag.price_aldresia && !flag.fx_pc_dead', speaker: '阿德蕾西娅', text: '大人，桌边四十一把椅子。我数了三遍，空着的那两把，我不想数第四遍。' },
+      { if: '!flag.price_aldresia && !flag.fx_pc_dead', speaker: '阿德蕾西娅', text: '大人，桌边四十一把椅子，三十九个戴冠的。我数了三遍。第三遍多出一个，是我自己坐下了。' },
       { if: 'party.barry', text: '巴里在厨房里找着一口锅，正拿雪擦。' },
-      { if: 'party.barry', speaker: '巴里', text: '对不住，这屋里没一样能吃的。我们威克斯有句老话，坟要挖得比恨深。这本书，我看得埋得比坟还深。' },
+      { if: 'party.barry', speaker: '巴里', text: '对不住，这屋里没一样能吃的，盐罐里装的是牙。那本书你们商量，我先把锅烧上。' },
       { if: 'party.vezina', speaker: '薇齐娜', text: '七只。昨天窗外还有四十只乌鸦。要是它们不回来（我说的是要是），这山上往后就清净了。' },
       { if: 'is.god', text: '院子里跪了一片十字军。领头的那个问，大人往后坐哪儿，他们好把那把椅子抬下山。' },
     ],
@@ -1075,7 +1077,7 @@ export const SCENES = {
         ok: { text: '他想了半天，说一天可以，两天他的兵要问。薇齐娜在门边听见了，转身去收拾她的本子。', effects: ['approval vezina +2'] },
         fail: { text: '他说渡鸦山上那帮看鸟的他心里有数，叫你少管。薇齐娜在门边听见了，一整天没同你说话。', effects: ['approval vezina -1'] } },
       { text: '封进骑士团的库里', if: '!flag.book_kept', goto: 'f_12b', effects: ['flag book_locked', 'item -book_of_canrec'],
-        result: '卢西安叫人找来一口装火药的铁箱，里头衬了铅。书放进去以后，他上了三道锁，钥匙分给三个人，自己不拿。' },
+        result: '卢西安叫人找来一口装火药的铁箱，里头衬了铅。{?flag.fx_burn_tried:他看了看你脸上的炉灰，叫人又衬了一层。|}书放进去以后，他上了三道锁，钥匙分给三个人，自己不拿。' },
       { text: '封箱之前，请收殓人给书里的人念一遍名分', tag: '旧礼', if: "!flag.book_kept && faction == 'rites'", goto: 'f_12b',
         effects: ['flag book_locked', 'item -book_of_canrec', 'rep wex +1', { if: 'party.barry', then: ['approval barry +1'] }],
         result: [
@@ -1108,8 +1110,8 @@ export const SCENES = {
       { speaker: '卢西安', text: '库得有人守，书得有人看，沼地里那帮烧人的也得有人管。这一摊事得立个骑士团。规矩我想好了三条，就是没人肯领头。' },
       { if: '!flag.price_aldresia && !flag.fx_pc_dead', speaker: '阿德蕾西娅', text: '名字别用我的。我才二十七，用上了往后不好改。' },
       { if: 'party.valeran', text: '瓦勒兰坐在一块碑上擦盾，盾面是空的，原来的纹章叫他刮掉了。' },
-      { if: 'party.valeran', speaker: '瓦勒兰', text: '恕我直言，骑士团头一年缺的不是枪，是一个肯记账的人。' },
-      { if: 'party.liv', speaker: '卡斯坦', text: '立骑士团好。朕给它定两条：守库的不许喝酒。这一条朕不算在内。' },
+      { if: 'party.valeran', speaker: '瓦勒兰', text: '恕我直言，骑士团头一年枪够使，记账的人不够。' },
+      { if: 'party.liv', speaker: '卡斯坦', text: '立骑士团好。朕给它定两条。头一条，守库的不许喝酒。第二条，头一条管不着朕。' },
       { if: 'flag.book_kept', text: '你怀里的书沉了一下。挖坟的人都没抬头，可离你最近的那几个，铲子慢了。' },
     ],
     choices: [

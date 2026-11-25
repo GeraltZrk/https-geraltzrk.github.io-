@@ -1,6 +1,6 @@
 // The play screen: event window (story), sidebar (desktop), bottom nav (mobile).
 import { h, rich, icon, button, bar, toast, confirmDialog, modal } from './dom.js';
-import { paint, paintPortrait, setBackdrop } from './art.js';
+import { paint, paintPortrait, setBackdrop, sceneArt } from './art.js';
 import * as R from '../core/rules.js';
 import { divineTitle } from '../core/state.js';
 import { renderCombat } from './combatView.js';
@@ -88,9 +88,13 @@ function eventView(app, view) {
   const st = eng.state;
   const box = h('section', { class: 'frame event' });
   if (view.title) box.appendChild(h('div', { class: 'frame-title' }, view.title));
-  const art = paint(h('div', { class: 'event-art' }), view.art);
-  if (view.chapter && view.type === 'scene') art.appendChild(h('div', { class: 'chapter' }, view.chapter));
-  box.appendChild(art);
+  // Scenes without a picture get no empty box; a chapter opening still gets a slim title band.
+  const chapter = view.chapter && view.type === 'scene' ? view.chapter : null;
+  if (sceneArt(view.art) || chapter) {
+    const art = paint(h('div', { class: 'event-art' + (sceneArt(view.art) ? '' : ' noart') }), view.art);
+    if (chapter) art.appendChild(h('div', { class: 'chapter' }, chapter));
+    box.appendChild(art);
+  }
 
   const body = h('div', { class: 'parch event-body' });
   if (view.type === 'result' && view.roll) body.appendChild(rollBox(view.roll));

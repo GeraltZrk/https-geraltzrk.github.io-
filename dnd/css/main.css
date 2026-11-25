@@ -208,6 +208,8 @@ textarea { min-height: 90px; resize: vertical; font-family: ui-monospace, monosp
 .event { align-self: start; overflow: hidden; }
 .event-art { position: relative; aspect-ratio: 16 / 7; max-height: min(36vh, 340px); width: 100%; background: var(--slate-3) center/cover no-repeat; border-bottom: 1px solid var(--gold-lo); }
 .event-art.sepia { aspect-ratio: 512 / 132; }
+.event-art.noart { aspect-ratio: auto; min-height: 46px; }
+.event-art.noart .chapter { padding-top: 14px; background: none; }
 .event-art .chapter { position: absolute; left: 0; right: 0; bottom: 0; padding: 26px 16px 8px; background: linear-gradient(transparent, rgba(8, 12, 14, .88)); font-family: var(--serif); color: #f6e9c6; letter-spacing: .2em; font-size: 14px; }
 .event-body { margin: 10px; padding: 16px 16px 10px; font-family: var(--serif); font-size: var(--fs); line-height: 1.9; }
 @media (min-width: 700px) { .event-body { margin: 14px; padding: 22px 26px 14px; } }

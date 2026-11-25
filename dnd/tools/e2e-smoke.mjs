@@ -114,7 +114,7 @@ async function run(name, contextOpts) {
   await shot('18-after');
   // godhood: switch it on from the cheat menu and make sure the scene still renders
   await openNav('作弊'); await page.waitForSelector('.modal-box');
-  const asc = page.locator('.modal-box .btn', { hasText: '升格为神' });
+  const asc = page.locator('.modal-box .btn', { hasText: '升神' });
   if (await asc.count()) { await asc.first().click(); await page.waitForTimeout(120); }
   await shot('21-ascended');
   if (await page.locator('.modal-head .icon-btn').count()) await page.locator('.modal-head .icon-btn').first().click();

@@ -136,7 +136,7 @@ const C4 = [{ id: 'cloakman', n: 4 }, { id: 'war_priest', name: '分形修会的
 const C3 = [{ id: 'cloakman', n: 3 }, { id: 'war_mage', name: '分形修会的施法者' }];
 const C2 = [{ id: 'cloakman' }, { id: 'war_mage', name: '分形修会的施法者', hpMult: 0.6 }];
 
-// ── 机房起火（7 级，noAwe）。五人约 54%，四人约 49%，三人约 50%，两人约 50%，一个人约 35%（伤得重，但打得赢）。
+// ── 机房起火（7 级，noAwe）。五人约 54%，四人约 49%，三人约 50%，两人约 50%，一个人约 60—70%（伤得重；输了也有出路）。
 const FIRE_BASE = {
   title: '炉门',
   intro: '四条胳膊一起抬了起来。它胸口那颗芯核叫了一声，十二颗跟着叫。',
@@ -167,7 +167,7 @@ const F5 = [{ id: 'war_pattern_screamer' }, { id: 'artificer_engineer', name: '�
 const F4 = [{ id: 'war_pattern_screamer', hpMult: 0.7 }, { id: 'secret_police', name: '特殊案件预防局的人' }];
 const F3 = [{ id: 'war_pattern_screamer', hpMult: 0.5 }, { id: 'secret_police', name: '特殊案件预防局的人' }];
 const F2 = [{ id: 'war_pattern_screamer', hpMult: 0.3 }];
-const F1 = [{ id: 'war_pattern_screamer', hpMult: 0.15 }];
+const F1 = [{ id: 'war_pattern_screamer', hpMult: 0.1 }];
 
 export const SCENES = {
   a3_01: {
@@ -488,7 +488,7 @@ export const SCENES = {
     title: '十四号',
     loc: '伊索贝尔港 · 卡尔希尔商栈',
     text: [
-      '埃塔隔着电报线把账本翻到了器材那一页，电报念出来是这样的：十四号，驮运用，二手，1820 年入账，每年折旧一成。八年折了八成，账面上它还值二十几个金冠。',
+      '埃塔的电报一来一回走了两天。头一封是她抄的账：十四号，驮运用，二手，1820 年入账，每年折旧一成。八年折了八成，账面上它还值二十几个金冠。',
       { speaker: '埃塔（电报）', text: '划到成员栏，要全团表决。划过去，它就不能再折旧。这八年提的折旧，一百九十二金冠，退给谁。' },
       { if: 'party.middlesday', speaker: '礼拜三', text: '（不确定。）退给我吧。（礼貌。）我可以拿它买一把伞。' },
       { if: 'party.bura', text: '布拉头一个举了手，举得很高，铰链跟着响了一下。' },
@@ -860,7 +860,7 @@ export const SCENES = {
     choices: [
       { text: '叫九台机器排成一排，一起上', if: '(party.middlesday || is.mechanim) && partysize >= 2 && flag.a3x_light && !flag.a3x_alarm', combat: { ...LEVEE_BASE, enemies: T4, allies: GIN_ALLIES } },
       { text: '叫九台机器排成一排，一起上', if: '(party.middlesday || is.mechanim) && partysize >= 2 && !(flag.a3x_light && !flag.a3x_alarm)', combat: { ...LEVEE_BASE, enemies: T5, allies: GIN_ALLIES } },
-      { text: '叫九台机器排成一排，一起上', if: '(party.middlesday || is.mechanim) && partysize <= 1', combat: { ...LEVEE_BASE, enemies: T3, allies: GIN_ALLIES } },
+      { text: '叫九台机器排成一排，一起上', if: '(party.middlesday || is.mechanim) && partysize <= 1', combat: { ...LEVEE_BASE, enemies: T1, allies: GIN_ALLIES } },
       { text: '动手', if: 'partysize >= 4 && flag.a3x_light && !flag.a3x_alarm', combat: { ...LEVEE_BASE, enemies: T4 } },
       { text: '动手', if: 'partysize >= 4 && !(flag.a3x_light && !flag.a3x_alarm)', combat: { ...LEVEE_BASE, enemies: T5 } },
       { text: '动手', if: 'partysize == 3 && flag.a3x_light && !flag.a3x_alarm', combat: { ...LEVEE_BASE, enemies: T3 } },
@@ -958,6 +958,7 @@ export const SCENES = {
     loc: '文森顿 · 城北机房外',
     text: [
       '夜里机房只留一个看门的，一条狗，三盏灯。账房在二楼，窗户朝着路灯。路灯整夜不灭，这在偷东西的人看来，是这座机房唯一的毛病。',
+      '看门的是个上了年纪的人类，腰里别着一串钥匙，一共十一把，走一步响一下。',
       { if: 'flag.a3x_jar_light', text: '别摇说过，哪几盏灯是从墙那边借的光。那几盏的影子淡，你们贴着那几盏灯底下走。' },
       { if: 'is.small', text: '二楼有个通风道，一尺见方，铁栅栏锈了一半。你钻得进去。' },
       { if: 'party.bura', text: '布拉留在街口望风。她靠着路灯杆，铰链一声没响。' },
@@ -1012,6 +1013,7 @@ export const SCENES = {
     loc: '文森顿 · 机房账房',
     text: [
       '柜子里码着三十几本账，封皮都是一个颜色。流水账、煤账（一本空的）、修理账、股东名册，混在一起，书脊上没有字。',
+      '你们只带了一盏遮光灯，灯油还够一刻钟。翻一本，灯芯就短一截。',
       { if: 'flag.a3x_engine_hint', text: '戴纽奇说漏的那句话还在你耳朵里：他也有股。有他的名字的那一本，就是名册。' },
       { if: 'flag.a3x_seen', text: '脚步声停在了楼梯拐角。有人在那儿点烟斗，点了三回才着。' },
     ],
@@ -1085,7 +1087,7 @@ export const SCENES = {
     loc: '真理之路 · 朝圣客栈',
     text: [
       '路上有家朝圣客栈，石头墙，门口挂着一块木牌，牌上刻着问答。答得上来的住干的那间，答不上来的住漏雨的那间，钱收一样多。信的和来查证的，客栈收一样多的钱。',
-      '今晚问的是：头一个听懂碎片的人是谁，她在密室边上住了几年。',
+      '今晚问的是：头一个听懂碎片的人是谁，别人回了海边，她住在了哪儿。',
       { if: 'is.divine', text: '老板看见你的打扮，请你带今晚的晚祷。堂屋里坐了十来个朝圣客，地精坐在最前排，锅放在膝盖上。' },
       '再往前只剩最后一段崖路。崖上凿着台阶，有些台阶被雨冲得只剩半截。',
     ],
@@ -1353,6 +1355,7 @@ export const SCENES = {
     loc: '伊索贝尔港 · 联盟巡回法庭',
     text: [
       '下午，法官问原告方，请求本庭怎么判。安德克利夫看了你一眼，他把这一条让给了公司。',
+      '书记官削了一支新铅笔。戴纽奇家的律师翻着一本很厚的判例集，翻到夹书签的那一页，用指甲压平。',
       { if: 'flag.m_testified || flag.m_dormant || flag.pc_testified', text: '记录上已经有了一个读数：芯核醒着的时候，那道口子开着；口子开着，里头有东西。' },
       { if: 'flag.engine_ledger', text: '机房的流水账摆在书记官桌上，每个月一颗“报废”，十二个月十二颗。' },
       { if: '!(flag.m_testified || flag.m_dormant || flag.pc_testified) && !flag.engine_ledger', text: '记录上什么也没有。戴纽奇家的律师在对面坐着，指甲修得很干净。' },

@@ -900,13 +900,13 @@ export const SCENES = {
     text: [
       { if: 'flag.korgus_rite', text: '三只皮袋，乌什卡往湖里倒了一袋，往风里扬了一袋，第三袋埋在平地的碎石底下，上面什么也没立。' },
       { if: 'flag.korgus_son', text: '使者扛着门板往北去了。长者郡在三百里外，他说走得到。' },
-      { if: 'flag.korgus_spike', text: '麻袋里的头往西去了，北城门上有颗钉子等着它。' },
+      { if: 'flag.korgus_spike', text: '麻袋里的头跟着边区兵回城了，北城门上有颗钉子等着它。' },
       { if: 'flag.korgus_sold', text: '瓦丽娜的学徒套了一辆大车，车上蒙着黑布，往湖东岸的营地去了。' },
       { if: 'flag.korgus_lake', text: '湖心的水已经平了，渔民的船都绕着那一片走。' },
       { if: 'flag.korgus_carver', text: '雕骨者的人走远了，盐粒撒了一路，引来一串鸟。' },
       '车上空了一半，拉起来轻得发飘。往后各营各帐问起杜坎森在哪儿，说法有七八种，没一种对得上。{?flag.korgus_son:长者郡的事，外人不知道。|}{?flag.korgus_carver:雕骨者的事，外人也不知道。|}',
       { if: 'flag.korgus_sold && party.ushka', speaker: '乌什卡', text: '第二回我走。我说过了，你记着。' },
-      { if: 'party.tan', speaker: '阿坦', text: '一具。一个去向。我记下了。' },
+      { if: 'party.tan', speaker: '阿坦', text: '从城里到这儿，十一天。席子换了两回，绳子换了三回。我都记在祈愿簿背面了，正面不够写。' },
       { if: "origin == 'grudge'", text: '账页还在你怀里：玛瑙之门，1424，记在杜坎森名下。划这一条，得写清楚尸首到了哪儿。' },
     ],
     choices: [

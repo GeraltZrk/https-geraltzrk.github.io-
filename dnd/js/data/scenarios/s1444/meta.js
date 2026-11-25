@@ -620,19 +620,22 @@ export const META = {
   epilogues: [
     // ---- 甲：世界局势
     {
-      if: 'world.embers <= 3 || flag.southgate_held', title: '{?world.embers <= 3:长者郡的集|第二回}',
+      if: 'world.embers <= 3 || (world.embers <= 7 && flag.southgate_held)', title: '{?world.embers <= 3:长者郡的集|第二回}',
       text: [
         { if: 'world.embers <= 3', text: '第二次潮没来。银现月 4 日的聚会一年比一年像牲口集，后来干脆就是牲口集。每年奈拉月 11 日，艾伦河上还是漂着断链和蘑菇。' },
         { if: 'world.embers <= 3 && flag.gurzan_treaty', text: '古尔赞放在门板桌上的那节断链，后来一直没人收走。' },
         { if: 'world.embers >= 4 && world.embers <= 7', text: '1472 年那一仗，{?flag.arosha_at_table:阿罗莎|蓝牙}砍了他的手。{?flag.laurens_stopped:洛朗那只空罐子到底没装上东西。|洛朗收了他的魂，罐子挂在腰上第三个。}嗜血者两代人之内散尽了，名字留下来吓唬小孩。' },
-        { if: 'world.embers >= 8', text: '南门守住了，守得很惨。往后三十年，边区兵不跟绿皮的同桌吃饭。' },
       ],
     },
     {
-      title: '皮克精之墓',
+      if: 'world.embers >= 8 && flag.southgate_held', title: '守住了',
+      text: ['南门守住了，守得很惨。城外的坑填了三回才填平。往后三十年，边区兵不跟绿皮的同桌吃饭，在一个灶上烧饭也不行。'],
+    },
+    {
+      title: '{?world.room >= 7:一口锅|皮克精之墓}',
       text: [
-        { if: 'world.room <= 2', text: '1467 年，灰烬玫瑰和马尔霍德洗了皮克精之墓。古拉德带着伤往西走，第二年让了位。到 1520 年代，维特斯克的码头按头卖兽人，价钱贴在门口。' },
-        { if: 'world.room >= 3 && world.room <= 6', text: '皮克精之墓没烧，康原还是丢了。1470 年代灰烬玫瑰来夺地，蓝牙出面保人，地鹰一家一家迁进了科琳塔尔的地界。那张地契压在一只木匣子底下。' },
+        { if: 'world.room <= 2 && !visited.end_sword', text: '1467 年，灰烬玫瑰和马尔霍德洗了皮克精之墓。古拉德带着伤往西走，第二年让了位。到 1520 年代，维特斯克的码头按头卖兽人，价钱贴在门口。' },
+        { if: '(world.room >= 3 && world.room <= 6) || (world.room <= 2 && visited.end_sword)', text: '皮克精之墓没烧，康原还是丢了。1470 年代灰烬玫瑰来夺地，蓝牙出面保人，地鹰一家一家迁进了科琳塔尔的地界。那张地契压在一只木匣子底下。' },
         { if: 'world.room >= 7', text: '皮克精之墓没烧。城里的歌往外传，下城有了地精坊。坊里的门把手装在两个高度。' },
       ],
     },
@@ -641,7 +644,7 @@ export const META = {
       text: [
         { if: 'world.unburied <= 2', text: '东坎诺的坟后来比村子还多，每座都有名字。埃斯蒂尔晚了一代人才成气候，瓦丽娜抱怨找不到料。' },
         { if: 'world.unburied >= 3 && world.unburied <= 6', text: '洛朗后来成了东坎诺头几个巫师王之一。瓦丽娜拿死人修城墙，管这叫节省。' },
-        { if: 'world.unburied >= 7', text: '城是死人守住的，那年冬天卡斯托纳斯没人挨饿。铁杖骑士团读了你们带回来的东西，得出的结论是：椅子既然空着，有本事的就该坐。' },
+        { if: 'world.unburied >= 7', text: '{?flag.bones_at_gate:南门是死人守住的。|东坎诺的死人比活人好使唤，拉车、垒墙、守夜都不要饷。}那年冬天卡斯托纳斯没人挨饿。铁杖骑士团读了你们带回来的东西，得出的结论是：椅子既然空着，有本事的就该坐。' },
         { if: 'flag.bilge_graves', text: '安本科斯特舱底区那排无名坟，后来每年有人去扫，扫的人也不知道里头是谁。' },
       ],
     },
@@ -771,27 +774,48 @@ export const META = {
       ],
     },
 
-    // ---- 丁：出身（每局只出一段）
+    // ---- 丁：出身（每局只出一张）
     {
-      title: '{nation}',
+      if: "origin == 'corintar'", title: '那截皮带',
       text: [
-        { if: "origin == 'corintar' && item.shield_strap && visited.end_sword", text: '那截盾带后来成了圣物，装在玻璃匣子里，摆在她倒下的那块空地边上。皮子上的铆钉孔有人数过，一共两个。' },
-        { if: "origin == 'corintar' && item.shield_strap && !visited.end_sword", text: '那截盾带一直在你身上，皮子磨得发亮。你死的时候，照你的意思陪了葬。' },
-        { if: "origin == 'corintar' && !item.shield_strap", text: '那截盾带早就不在你手里了。它后来去了哪儿，你问过两回，没问出来。' },
-        { if: "origin == 'sons'", text: '1473 年罗吉尔死了。旧部把王冠递给蓝牙，蓝牙没接，他大儿子也没接。王冠后来收在塔兰顿的库里，跟大公的佩剑放在一起。' },
-        { if: "origin == 'wex'", text: '最后一封报告{?var.honest_reports > var.false_reports:写的是实话|写得很好看}。巴兹伍德活到 1609 年，那封信他一直收在抽屉里，跟别的信分开放。' },
-        { if: "origin == 'grudge'", text: '账本上玛瑙之门那一页，{?flag.entry_struck:划掉了，旁边签着你的名字|还在，背面添了一行小字}。1475 年，那座堡重新有了主。' },
-        { if: "origin == 'tide'", text: '手背上还是那块绿。{?flag.road_ghurad:你跟着古拉德种了地。|}{?flag.road_arosha:你跟着阿罗莎，在林木之墙上站过岗。|}{?flag.road_gurzan:你走的是古尔赞那条路，走到了头。|}' },
+        { if: 'item.shield_strap && visited.end_sword', text: '那截盾带后来成了圣物，装在玻璃匣子里，摆在她倒下的那块空地边上。皮子上的铆钉孔有人数过，一共两个。' },
+        { if: 'item.shield_strap && !visited.end_sword', text: '那截盾带一直在你身上，皮子磨得发亮。你死的时候，照你的意思陪了葬。' },
+        { if: '!item.shield_strap', text: '那截盾带早就不在你手里了。它后来去了哪儿，你问过两回，没问出来。' },
+      ],
+    },
+    {
+      if: "origin == 'sons'", title: '那顶王冠',
+      text: ['1473 年罗吉尔死了。旧部把王冠递给蓝牙，蓝牙没接，他大儿子也没接。王冠后来收在塔兰顿的库里，跟大公的佩剑放在一起。'],
+    },
+    {
+      if: "origin == 'wex'", title: '最后一封报告',
+      text: ['最后一封报告{?var.honest_reports > var.false_reports:写的是实话|写得很好看}。巴兹伍德活到 1609 年，那封信他一直收在抽屉里，跟别的信分开放。'],
+    },
+    {
+      if: "origin == 'grudge'", title: '账本',
+      text: ['账本上玛瑙之门那一页，{?flag.entry_struck:划掉了，旁边签着你的名字|还在，背面添了一行小字}。1475 年，那座堡重新有了主。'],
+    },
+    {
+      if: "origin == 'tide'", title: '手背',
+      text: [
+        '手背上还是那块绿。',
+        { if: 'flag.road_ghurad', text: '你跟着古拉德种了地。头一年的麦子让雹子打了，第二年收了。' },
+        { if: 'flag.road_arosha', text: '你跟着阿罗莎，在林木之墙上站过岗。墙那边的人后来管你叫邻居。' },
+        { if: 'flag.road_gurzan', text: '你走的是古尔赞那条路，走到了头。路的尽头没有人等你。' },
       ],
     },
     // ---- 戊：阵营
     {
-      if: "faction in ['heirs','tried','crownless']", title: '那把椅子',
-      text: [
-        { if: "faction == 'heirs'", text: '谱上没写的事，后来有人补写了。补的那一笔你认不认，没人来问过你。' },
-        { if: "faction == 'tried'", text: '喊一嗓子有人应就算数。那天应声的人里，有几个是冲着你来的，你数过。' },
-        { if: "faction == 'crownless'", text: '椅子空着的那些年，头一个想坐上去的是晨星会。{?flag.southgate_held:你们拦住了，拦得不好看。|没人拦得住。}' },
-      ],
+      if: "faction == 'heirs'", title: '谱',
+      text: ['谱上没写的事，后来有人补写了。补的那一笔你认不认，没人来问过你。'],
+    },
+    {
+      if: "faction == 'tried'", title: '应声',
+      text: ['喊一嗓子有人应就算数。那天应声的人里，有几个是冲着你来的，你数过。'],
+    },
+    {
+      if: "faction == 'crownless'", title: '空椅子',
+      text: ['椅子空着的那些年，头一个想坐上去的是晨星会。{?flag.southgate_held:你们拦住了，拦得不好看。|没人拦得住。}'],
     },
 
     // ---- 己：神格与永生

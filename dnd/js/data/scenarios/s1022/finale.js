@@ -265,6 +265,7 @@ export const SCENES = {
   f_01b: {
     id: 'f_01b',
     title: '十二个冬天',
+    art: 'ev_castellos_is_dead',
     text: [
       { if: 'flag.charter_emperor', text: '十字军打的是皇帝的旗。东坎诺的兵年年来得齐，西边的一年比一年少，都说家里得留人看着东边。' },
       { if: 'flag.charter_league', text: '十字军打的是同盟的旗。军饷从洛伦泰内发，账也在洛伦泰内算，算得很细。' },
@@ -305,6 +306,7 @@ export const SCENES = {
   f_02: {
     id: 'f_02',
     title: '谁没熬过来',
+    art: 'ev_feyforest',
     chapter: '终章 · 最后一个冬天',
     loc: '科乌里亚 · 瓦洛森', date: '1053年奈拉月',
     text: [
@@ -445,6 +447,7 @@ export const SCENES = {
   f_03m: {
     id: 'f_03m',
     title: '切肉刀那天',
+    art: 'ck3_damesteeth',
     text: [
       '达梅里亚的营里挂着月牙旗。马里昂五十二岁，亲自来了。甲是新打的，旧的那副他说扣不上了。',
       { speaker: '马里昂', text: '切肉刀那天的事，我讲了三十一年，一回一个样。{?flag.p_knife_hanged:讲到绞架那一段，席上就没人接话。|讲到那三个老兵回家种地，席上总有人不信。}' },
@@ -888,6 +891,7 @@ export const SCENES = {
   f_11: {
     id: 'f_11',
     title: '谁付账',
+    art: 'ev_priest_phantom',
     text: [
       '坎雷克站起来了。他比坐着的时候矮，袍子下摆拖着地。那本书摊在桌上，页边自己在动。',
       { speaker: '坎雷克', text: '名册上还有空行，诸位可以自己挑。字我来写，我的字比你们的好。' },

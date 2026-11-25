@@ -1,5 +1,5 @@
 // Browser smoke test: drives a new game through the UI and saves screenshots.
-// Usage: node tools/e2e-smoke.mjs [baseUrl] [outDir]
+// Usage: node tools/e2e-smoke.mjs [baseUrl] [outDir] [campaign index 0-2] [steps]
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { chromium, devices } = require('playwright');
@@ -7,6 +7,8 @@ import fs from 'node:fs';
 
 const base = process.argv[2] || 'http://localhost:8765/';
 const out = process.argv[3] || '/tmp/anb-shots';
+const WHICH = parseInt(process.argv[4] || '0', 10);   // which campaign card to pick (0, 1, 2)
+const STEPS = parseInt(process.argv[5] || '40', 10);  // how many steps to walk
 fs.mkdirSync(out, { recursive: true });
 
 async function run(name, contextOpts) {
@@ -23,7 +25,7 @@ async function run(name, contextOpts) {
   await page.click('text=新的战役');
   await page.waitForSelector('.cards .card');
   await shot('02-scenario');
-  await page.locator('.cards .card').first().click();
+  await page.locator('.cards .card').nth(WHICH).click();
   await page.waitForSelector('.steps span.on:has-text("国家")');
   await shot('03-origin');
   await page.locator('.cards .card').first().click();
@@ -67,53 +69,57 @@ async function run(name, contextOpts) {
   for (const t of ['存档', '读档', '设置', '关于']) { await page.locator('.modal-box .tabs button', { hasText: t }).evaluate((e) => e.click()); await page.waitForTimeout(60); }
   await shot('13-system');
   await page.locator('.modal-head .icon-btn').click();
-  // play: buy potions (hub), then force the fight
-  const opts = page.locator('.options .opt');
-  const n = await opts.count();
-  for (let i = 0; i < n; i++) { const t = await opts.nth(i).innerText(); if (t.includes('药水')) { await opts.nth(i).click(); break; } }
-  await page.waitForTimeout(100);
-  await shot('14-result');
-  if (await page.locator('.continue-row .btn').count()) await page.locator('.continue-row .btn').click();
-  const force = page.locator('.options .opt:not([disabled])', { hasText: '剑柄' });
-  if (await force.count()) await force.first().click(); else await page.locator('.options .opt').first().click();
-  await page.waitForSelector('.rollbox, .combat, .event');
-  await shot('15-roll');
-  for (let guard = 0; guard < 6; guard++) {
-    if (await page.locator('.combat').count()) break;
-    const c = page.locator('.continue-row .btn');
-    if (await c.count()) await c.first().click(); else break;
-    await page.waitForTimeout(120);
-  }
-  if (await page.locator('.combat').count()) {
-    await shot('16-combat');
-    for (let turn = 0; turn < 40; turn++) {
-      if (await page.locator('.combat .continue-row .btn').count()) break;
-      const atk = page.locator('.actions .btn', { hasText: '攻击' }).first();
-      if (await atk.isEnabled()) { await atk.click(); await page.waitForTimeout(40); const tg = page.locator('.unit.target'); if (await tg.count()) await tg.first().click(); }
-      else { const end = page.locator('.actions .btn', { hasText: '结束回合' }); if (await end.count()) await end.click(); }
-      await page.waitForTimeout(40);
-    }
-    await shot('17-combat-end');
-    const done = page.locator('.combat .continue-row .btn');
-    if (await done.count()) await done.click();
-  }
-  await page.waitForTimeout(150);
-  await shot('18-after');
-  for (let guard = 0; guard < 8; guard++) {
+  // play: walk forward through whatever comes up (text, choices, rolls, fights, level-ups) for a number of steps
+  let steps = 0, fights = 0, shots = { roll: false, combat: false, level: false, result: false };
+  const levelUp = async () => {
     const lv = page.locator('.modal-box .btn.primary', { hasText: '确认升级' });
-    if (await lv.count()) {
-      const sub = page.locator('.modal-box .pick-list .pick');
-      if (await sub.count() && !(await page.locator('.modal-box .pick-list .pick.sel').count())) { await sub.first().click(); await page.waitForTimeout(60); }
-      for (let k = 0; k < 2; k++) { const plus = page.locator('.modal-box .abil .pm button:not([disabled])', { hasText: '+' }); if (await plus.count()) { await plus.first().click(); await page.waitForTimeout(40); } }
-      if (name === 'desktop' && guard === 1) await shot('19b-levelup-choices');
-      await lv.click(); await page.waitForTimeout(100); continue;
+    if (!(await lv.count())) return false;
+    const sub = page.locator('.modal-box .pick-list .pick');
+    if (await sub.count() && !(await page.locator('.modal-box .pick-list .pick.sel').count())) { await sub.first().click(); await page.waitForTimeout(60); }
+    for (let k = 0; k < 2; k++) { const plus = page.locator('.modal-box .abil .pm button:not([disabled])', { hasText: '+' }); if (await plus.count()) { await plus.first().click(); await page.waitForTimeout(40); } }
+    if (!shots.level) { shots.level = true; await shot('19-levelup'); }
+    await lv.click(); await page.waitForTimeout(100);
+    return true;
+  };
+  for (; steps < STEPS; steps++) {
+    if (await page.locator('.ending-head').count()) break;
+    if (await levelUp()) continue;
+    if (await page.locator('.modal-box').count()) { const x = page.locator('.modal-head .icon-btn'); if (await x.count()) { await x.first().click(); await page.waitForTimeout(60); continue; } }
+    if (await page.locator('.combat').count()) {
+      if (!shots.combat) { shots.combat = true; await shot('16-combat'); }
+      fights++;
+      for (let turn = 0; turn < 80; turn++) {
+        if (await page.locator('.combat .continue-row .btn').count()) break;
+        if (!(await page.locator('.combat').count())) break;
+        const atk = page.locator('.actions .btn', { hasText: '攻击' }).first();
+        if (await atk.count() && await atk.isEnabled()) { await atk.click(); await page.waitForTimeout(40); const tg = page.locator('.unit.target'); if (await tg.count()) await tg.first().click(); }
+        else { const end = page.locator('.actions .btn', { hasText: '结束回合' }); if (await end.count()) await end.click(); }
+        await page.waitForTimeout(40);
+      }
+      const done = page.locator('.combat .continue-row .btn');
+      if (await done.count()) await done.first().click();
+      await page.waitForTimeout(120);
+      continue;
     }
     const up = page.locator('.event-body .btn', { hasText: '升级' });
-    if (await up.count()) { await up.first().click(); await page.waitForTimeout(100); await shot('19-levelup'); continue; }
-    const c = page.locator('.continue-row .btn.primary');
-    if (await c.count() && !(await page.locator('.ending-head').count())) { await c.first().click(); await page.waitForTimeout(120); continue; }
-    break;
+    if (await up.count()) { await up.first().click(); await page.waitForTimeout(100); continue; }
+    if (await page.locator('.rollbox').count() && !shots.roll) { shots.roll = true; await shot('15-roll'); }
+    const cont = page.locator('.continue-row .btn');
+    if (await cont.count()) { if (!shots.result) { shots.result = true; await shot('14-result'); } await cont.first().click(); await page.waitForTimeout(100); continue; }
+    const opts = page.locator('.options .opt:not([disabled])');
+    const n = await opts.count();
+    if (n) { await opts.nth(steps % n).click(); await page.waitForTimeout(100); continue; }
+    await page.waitForTimeout(150);
   }
+  await shot('18-after');
+  // godhood: switch it on from the cheat menu and make sure the scene still renders
+  await openNav('作弊'); await page.waitForSelector('.modal-box');
+  const asc = page.locator('.modal-box .btn', { hasText: '升格为神' });
+  if (await asc.count()) { await asc.first().click(); await page.waitForTimeout(120); }
+  await shot('21-ascended');
+  if (await page.locator('.modal-head .icon-btn').count()) await page.locator('.modal-head .icon-btn').first().click();
+  await page.waitForTimeout(100);
+  console.log(`${name}: scenario ${WHICH}, ${steps} steps, ${fights} fight(s)`);
   await shot('20-end');
   await browser.close();
   return errors;

@@ -6,7 +6,9 @@ export const meta = {
     { title: 'Verify', detail: 'independent check of the skeleton against the bible and the data' },
   ],
 }
-const M = args.model ? { model: args.model } : {}
+const MODELS = args.models || {}
+const MM = (role) => { const m = MODELS[role] || args.model; return m ? { model: m } : {} }
+const M = MM('default')
 const S = args.scratch
 const G = args.game
 const ID = args.id
@@ -40,8 +42,8 @@ Follow ${G}/docs/STYLE_GUIDE.md strictly and run a lint: \`cd ${G} && node -e "i
 Return a short plain-text summary (entry count per group).`
 
 const [scaffold, codex] = await parallel([
-  () => agent(SCAFFOLD, { ...M, label: `scaffold:${ID}`, phase: 'Scaffold' }),
-  () => agent(CODEX, { ...M, label: `codex:${ID}`, phase: 'Scaffold' }),
+  () => agent(SCAFFOLD, { ...MM('check'), label: `scaffold:${ID}`, phase: 'Scaffold' }),
+  () => agent(CODEX, { ...MM('creative'), label: `codex:${ID}`, phase: 'Scaffold' }),
 ])
 
 phase('Verify')
@@ -54,7 +56,7 @@ Check and FIX directly:
 4. enemies.js / items.js: formats valid, numbers at the right level (run \`node tools/check-data.mjs --enc "<id>:1" --level <n>\` style spot checks if the class data is integrated; otherwise compare with the DATA_GUIDE table).
 5. Names: every Chinese proper noun in meta.js and codex.js matches the bible's 译名表.
 6. Canon spot-check of 20 facts in codex.js and the epilogues against the corpus.
-Return a plain-text report: what you fixed, what remains for the creative lead.`, { ...M, label: `verify-skeleton:${ID}`, phase: 'Verify' })
+Return a plain-text report: what you fixed, what remains for the creative lead.`, { ...MM('check'), label: `verify-skeleton:${ID}`, phase: 'Verify' })
 
 const cut = (x) => (typeof x === 'string' ? x.slice(0, 1200) : x)
 return { id: ID, scaffold: cut(scaffold), codex: cut(codex), verify: cut(verify) }

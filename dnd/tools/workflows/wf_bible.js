@@ -37,7 +37,9 @@ FIXED STRUCTURE (so three campaigns are comparable and can be built in parallel)
 - Keep the setting's own tone (see dossier 13 and the mod's event writing): grounded politics, dry humour, wonder that costs something. Villains have reasons.
 `
 
-const M = args.model ? { model: args.model } : {}
+const MODELS = args.models || {}
+const MM = (role) => { const m = MODELS[role] || args.model; return m ? { model: m } : {} }
+const M = MM('default')
 
 phase('Bible')
 const bibleA = await agent(`${BRIEF}
@@ -56,7 +58,7 @@ Part one sections:
 ## 8 同伴 — 4 个：id、名字、种族职业、来历、想要什么、怕什么、说话方式（给三句示范台词）、入队时机、赞同/反对什么、个人抉择（做错会离队或更糟）、在各结局里的下场。
 ## 9 重要人物 — 12–18 个 NPC：是谁（正史/虚构）、立场、想要什么、秘密、说话方式（一句示范台词）。
 ## 10 结局 — 5–7 个：id、标题、达成条件（用世界局势/标记/声望描述）、世界变成什么样、和正史的关系。再列后日谈卡片的矩阵（按世界局势、同伴、出身、阵营）。
-Write with the density of a working document: no filler, concrete names and dates. Return a short plain-text summary (title, origins, factions, companions, endings).`, { ...M, label: `bible:${ID}:story`, phase: 'Bible' })
+Write with the density of a working document: no filler, concrete names and dates. Return a short plain-text summary (title, origins, factions, companions, endings).`, { ...MM('creative'), label: `bible:${ID}:story`, phase: 'Bible' })
 
 const bibleB = await agent(`${BRIEF}
 YOUR JOB: you are the lead designer's scene planner. Part one of the ${ERA} campaign bible is at ${BIBLE} — read it completely, plus the pitches and judge reports in ${OUT}/ for material. APPEND part two (sections 11–16) to the same file (do not rewrite part one; if you find a contradiction in part one, fix it minimally and note it). Write in Chinese, using only the names in the bible's 译名表 (add to the table if you need a new name).
@@ -71,7 +73,7 @@ Each act must include: at least 2 fights and 6 checks, a hub scene (camp/court/t
 ## 14 本剧本需要的新敌人与物品 — named bosses and special foes not in the bestiary (id、名字、等级、概念、招牌招式), and story items (id、名字、作用).
 ## 16 神格线 — the game has a cheat that lets the player make the hero a GOD (永生、无敌、检定必成) at any moment, or only immortal; the commissioner requires story text, NPC reactions, available options and endings to change when it is on. Read ${G}/docs/CONTENT_GUIDE.md §10 for the rules (conditions is.god / is.immortal / is.mortal, the {god} token, per-act minimums, a divine ending, epilogue cards). Write: (1) 这个年代的人怎么看“一个活着的神”：各教会、法师、君主、平民、主要反派、四个同伴各自的反应和利害，要有设定依据（封神先例、万神会议、化身、各教义对新神的态度；查 ${S}/research/08_cosmology_gods_magic.md 和语料库）；(2) 分幕钩子表：序章每个出身 1 处，第一至四幕每幕至少 5 处，终章至少 3 处，逐条写场景 id（必须是 §11 里的场景）、凡人版本、神版本多了什么（文字反应、[神] 专属选项及其代价、改变了的检定或战斗）；(3) 每次时间跳跃处怎么写“别人老了你没变”（场景 id）；(4) 神格专属结局：ending id 与 end_ 场景 id、标题、终章里哪一场出现只有神能选的路、世界变成什么样、当神的代价（不是“赢麻了”）——把它也列进 §10 的结局表和 §11 的终章场景表；(5) 至少 4 张 is.god 和 1 张 is.immortal 的后日谈卡片梗概；(6) 新增标记并入 §12。
 ## 15 写作分工 — a table assigning the scenes to writers: 序章 ×5（可两人分），第一至四幕各一人，终章与结局一人；and for each the hand-over notes they must respect.
-Return a short plain-text summary: scene counts per section, number of flags, anything in part one you had to change.`, { ...M, label: `bible:${ID}:scenes`, phase: 'Bible' })
+Return a short plain-text summary: scene counts per section, number of flags, anything in part one you had to change.`, { ...MM('creative'), label: `bible:${ID}:scenes`, phase: 'Bible' })
 
 phase('Check')
 const check = await agent(`${BRIEF}
@@ -80,7 +82,7 @@ YOUR JOB: you are the canon and structure checker for the finished ${ERA} campai
 2. Names: every proper noun in the bible must appear in its 译名表 with one consistent Chinese form that matches ${S}/research/11_zh_glossary.json where an entry exists. Fix inconsistencies throughout the file.
 3. Structure: scene counts within the fixed structure; the god line (§16) meets docs/CONTENT_GUIDE.md §10 (hooks point at real scene ids, the divine ending is in §10 and §11, flags registered); every scene id unique; every goto target exists; the fixed joints hold; each act meets its minimums; every flag read is set earlier on all paths or has a fallback; every ending is reachable and its conditions are expressible with the bible's tracks/flags/reputations; premade characters use valid race/class/background ids from ${G}/js/data/ (check the files that exist); enemy and item ids used exist in ${G}/js/data/enemies_core.js / items_*.js or are listed in section 14.
 4. Voice: the player-facing Chinese blurbs and sample lines must pass ${G}/docs/STYLE_GUIDE.md; rewrite the ones that do not.
-Fix everything you can in the file, then append "## 17 核查记录" listing what you checked and changed and anything left for the creative lead to decide. Return a plain-text summary of the changes and the open questions.`, { ...M, label: `check:${ID}`, phase: 'Check' })
+Fix everything you can in the file, then append "## 17 核查记录" listing what you checked and changed and anything left for the creative lead to decide. Return a plain-text summary of the changes and the open questions.`, { ...MM('check'), label: `check:${ID}`, phase: 'Check' })
 
 const cut = (x) => (typeof x === 'string' ? x.slice(0, 1200) : x)
 return { id: ID, bibleA: cut(bibleA), bibleB: cut(bibleB), check: cut(check) }

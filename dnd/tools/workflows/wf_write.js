@@ -6,7 +6,9 @@ export const meta = {
     { title: 'Edit', detail: 'a second pair of eyes on each file: voice, consequences, god line' },
   ],
 }
-const M = args.model ? { model: args.model } : {}
+const MODELS = args.models || {}
+const MM = (role) => { const m = MODELS[role] || args.model; return m ? { model: m } : {} }
+const M = MM('default')
 const S = args.scratch
 const G = args.game
 const ID = args.id
@@ -55,7 +57,7 @@ const results = await pipeline(
   (p) => agent(`${CONTEXT}
 YOUR JOB: you are the writer of \`${p.file}\` — ${p.what}. Write ${DIR}/${p.file}.
 ${RULES}
-Return a plain-text report: scene count, total characters, checks, fights, how many scenes react to is.god / is.immortal, which exclusive options you wrote (origin/faction/class/race), any place where you departed from the bible and why, and the last output of check-part.`, { ...M, label: `write:${ID}:${p.file}`, phase: 'Write' }),
+Return a plain-text report: scene count, total characters, checks, fights, how many scenes react to is.god / is.immortal, which exclusive options you wrote (origin/faction/class/race), any place where you departed from the bible and why, and the last output of check-part.`, { ...MM('creative'), label: `write:${ID}:${p.file}`, phase: 'Write' }),
   (report, p) => agent(`${CONTEXT}
 YOUR JOB: you are the editor for \`${DIR}/${p.file}\` (${p.what}), which another writer has just finished. You did not write it; be the reader the commissioner will be. Read the file from top to bottom the way a player would, following branches.
 Fix directly in the file, keeping scene ids, joints and flags intact:
@@ -67,6 +69,6 @@ Fix directly in the file, keeping scene ids, joints and flags intact:
 After editing run \`cd ${G} && node tools/check-part.mjs ${ID} ${p.file}\` until 0 errors, 0 problems and 0 文风 warnings.
 Return a plain-text report: the ten most significant rewrites as before → after pairs (one line each), what you added, what you could not fix.
 The writer's own report, for context:
-${typeof report === 'string' ? report.slice(0, 3000) : ''}`, { ...M, label: `edit:${ID}:${p.file}`, phase: 'Edit' }).then(e => ({ file: p.file, writer: typeof report === 'string' ? report.slice(0, 500) : report, editor: typeof e === 'string' ? e.slice(0, 700) : e }))
+${typeof report === 'string' ? report.slice(0, 3000) : ''}`, { ...MM('creative'), label: `edit:${ID}:${p.file}`, phase: 'Edit' }).then(e => ({ file: p.file, writer: typeof report === 'string' ? report.slice(0, 500) : report, editor: typeof e === 'string' ? e.slice(0, 700) : e }))
 )
 return { id: ID, results: results.filter(Boolean) }

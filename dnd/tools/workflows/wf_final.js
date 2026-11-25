@@ -7,7 +7,9 @@ export const meta = {
     { title: 'Polish', detail: 'adversarial "does it sound human" pass and final verification' },
   ],
 }
-const M = args.model ? { model: args.model } : {}
+const MODELS = args.models || {}
+const MM = (role) => { const m = MODELS[role] || args.model; return m ? { model: m } : {} }
+const M = MM('default')
 const S = args.scratch
 const G = args.game
 const ID = args.id
@@ -30,12 +32,12 @@ YOUR JOB: integration. Seven writers wrote the scene files separately. Make the 
 3. Joints: read the last scene of each part and the first of the next back to back; fix seams (location, date, who is present, what was just decided).
 4. Chapters in meta.js: test each "jump to chapter" entry produces a sensible state (use a small node script with the engine: apply the effects and enter the scene) and fix the effects lists.
 5. World tracks and reputations: grep every effect; make sure each track moves in both directions across the campaign and that the endings' and epilogues' conditions use ranges the play can actually reach (use autoplay's ending distribution; no ending should take over 70% of random runs, none under 3% unless it is the divine ending or a deliberately hard one).
-Re-run until validate shows 0 errors and autoplay 0 problems with every ending reached at least once in 60 runs per origin (\`--runs=60\`). Return a plain-text report with the final tool output and what you changed.`, { ...M, label: `integrate:${ID}`, phase: 'Integrate' })
+Re-run until validate shows 0 errors and autoplay 0 problems with every ending reached at least once in 60 runs per origin (\`--runs=60\`). Return a plain-text report with the final tool output and what you changed.`, { ...MM('check'), label: `integrate:${ID}`, phase: 'Integrate' })
 
 phase('Review')
 ;[canon, continuity] = await parallel([
   () => agent(`${CONTEXT}
-YOUR JOB: canon check of the WRITTEN campaign (all scene files, codex.js, meta.js epilogues and endings). You are an Anbennar lore-keeper. Read everything. List at least 60 concrete setting claims the text makes or implies (who rules what in ${ERA}, who is alive and how old, relationships, dates, geography and travel, what the faiths teach, how magic works and who may use it, what is publicly known versus secret in this year, customs, coin, titles, how peoples treat each other) and check each against the corpus (mods outrank wiki; research dossiers are a guide, not a source). Also check for anachronisms in things and words (for example firearms, printing, Corinite terms before 1444, the Magisterium before it exists, modern idiom in medieval mouths). Fix errors directly in the files with the smallest change that keeps the scene working; keep the voice. Proper nouns must match the bible's 译名表. Run validate afterwards (0 errors). Return a plain-text report: what you checked, each error found and how you fixed it, and deliberate departures from canon you left alone (with reasons).`, { ...M, label: `canon:${ID}`, phase: 'Review' }),
+YOUR JOB: canon check of the WRITTEN campaign (all scene files, codex.js, meta.js epilogues and endings). You are an Anbennar lore-keeper. Read everything. List at least 60 concrete setting claims the text makes or implies (who rules what in ${ERA}, who is alive and how old, relationships, dates, geography and travel, what the faiths teach, how magic works and who may use it, what is publicly known versus secret in this year, customs, coin, titles, how peoples treat each other) and check each against the corpus (mods outrank wiki; research dossiers are a guide, not a source). Also check for anachronisms in things and words (for example firearms, printing, Corinite terms before 1444, the Magisterium before it exists, modern idiom in medieval mouths). Fix errors directly in the files with the smallest change that keeps the scene working; keep the voice. Proper nouns must match the bible's 译名表. Run validate afterwards (0 errors). Return a plain-text report: what you checked, each error found and how you fixed it, and deliberate departures from canon you left alone (with reasons).`, { ...MM('check'), label: `canon:${ID}`, phase: 'Review' }),
   () => agent(`${CONTEXT}
 YOUR JOB: continuity read-through. Read the whole campaign in play order (prologues, acts 1–4, finale, endings, epilogues) as one story, twice: once as a mortal of one origin, once imagining the hero is a god.
 Fix directly:
@@ -44,7 +46,7 @@ Fix directly:
 3. Memory: choices made early are acknowledged later (conditional paragraphs on flags, changed options). Add the missing callbacks — this is what makes a campaign feel written rather than assembled. Aim for at least 25 callbacks across the campaign.
 4. The god line and immortality: consistent treatment across acts (people who saw a miracle in Act 1 remember it in Act 3), the divine ending reachable and earned, time skips acknowledge immortality.
 5. Endings and epilogues: each ending scene and its text pay off the specific things the player did; epilogue cards do not contradict the ending they follow.
-Keep ids, flags and joints valid; run validate and autoplay (--runs=30) after editing: 0 errors, 0 problems. Return a plain-text report of what you changed and what you think is still weak.`, { ...M, label: `continuity:${ID}`, phase: 'Review' }),
+Keep ids, flags and joints valid; run validate and autoplay (--runs=30) after editing: 0 errors, 0 problems. Return a plain-text report of what you changed and what you think is still weak.`, { ...MM('creative'), label: `continuity:${ID}`, phase: 'Review' }),
 ])
 
 }
@@ -56,13 +58,13 @@ YOUR JOB: you are a native Chinese fiction editor who has read too much machine-
 For EVERY paragraph and line of dialogue ask: would a person running this game at a table actually say this sentence, this way? Mark it for rewriting if it: explains what someone feels or realises; ends on a moral, a foreshadowing or a neat aphorism; uses scenery that could be anywhere; leans on 仿佛/似乎/某种/一丝/缓缓/微微-type hedges and softeners; stacks adjectives or four-character phrases; builds sentences in matched pairs or threes; has every NPC speaking in the same complete, polite sentences; uses a translated-English structure (long attributive clauses before 的, "当……的时候" openers, passive 被 where Chinese would not use it); or says in twelve words what four would. Then rewrite: shorter, concrete, in the idiom of the speaker (a dwarf foreman, a Lorentish courtier and an orc do not share a vocabulary), with the humour dry. Keep meaning, ids, effects, conditions and structure. Do not add new stock phrases while removing old ones; vary rhythm; let some lines be blunt.
 Also fix choice labels that are not actions, and outcome texts that merely restate the choice.
 Work through the whole file; do not sample. When done run \`cd ${G} && node tools/check-part.mjs ${ID} ${f}\` (0 errors, 0 problems, 0 文风 warnings).
-Return a plain-text report: how many paragraphs you rewrote out of how many, and twelve before → after examples.`, { ...M, label: `polish:${ID}:${f}`, phase: 'Polish' })))
+Return a plain-text report: how many paragraphs you rewrote out of how many, and twelve before → after examples.`, { ...MM('creative'), label: `polish:${ID}:${f}`, phase: 'Polish' })))
 
 }
 if (STAGE === 'all' || STAGE === 'final') {
 phase('Polish')
 final = await agent(`${CONTEXT}
-YOUR JOB: final verification after several editors touched the files. Run validate (0 errors; list remaining warnings and fix the ones that matter, including every 文风 warning) and autoplay with --runs=60 (0 problems; every ending reached; report coverage). Fix whatever broke. Then play three full routes by reading (one mortal, one god, one with a different origin and faction) and fix any leftover seam or typo you meet. Return a plain-text report with the final tool outputs: scene count, total characters, endings distribution, coverage, godScenes, remaining warnings.`, { ...M, label: `final:${ID}`, phase: 'Polish' })
+YOUR JOB: final verification after several editors touched the files. Run validate (0 errors; list remaining warnings and fix the ones that matter, including every 文风 warning) and autoplay with --runs=60 (0 problems; every ending reached; report coverage). Fix whatever broke. Then play three full routes by reading (one mortal, one god, one with a different origin and faction) and fix any leftover seam or typo you meet. Return a plain-text report with the final tool outputs: scene count, total characters, endings distribution, coverage, godScenes, remaining warnings.`, { ...MM('check'), label: `final:${ID}`, phase: 'Polish' })
 }
 const cut = (x) => (typeof x === 'string' ? x.slice(0, 900) : x)
 return { id: ID, stage: STAGE, integrate: cut(integrate), canon: cut(canon), continuity: cut(continuity), polish: polish.map(p => typeof p === 'string' ? p.slice(0, 400) : p), final: typeof final === 'string' ? final.slice(0, 2000) : final }

@@ -152,7 +152,7 @@ export function passivesOf(ch, db, extraSources = []) {
   const out = { ac: 0, hit: 0, dmg: 0, spellHit: 0, spellDc: 0, spellDmg: 0, init: 0, hpPerLevel: 0, extraAttack: 0,
     critRange: 20, critDice: 0, sneak: false, resist: [], immune: [], vuln: [], condImmune: [], saveAdv: [], saveBonus: 0,
     skill: {}, skillAdv: [], regen: 0, lucky: false, unarmored: null, natArmor: 0, abil: {}, healBonus: 0, speed: 0 };
-  const add = (p) => {
+  const add = (p, stack) => {
     if (!p) return;
     for (const k of Object.keys(p)) {
       const v = p[k];
@@ -160,7 +160,7 @@ export function passivesOf(ch, db, extraSources = []) {
       else if (k === 'skill' || k === 'abil') { for (const s of Object.keys(v)) out[k][s] = (out[k][s] || 0) + v[s]; }
       else if (k === 'critRange') out.critRange = Math.min(out.critRange, v);
       else if (k === 'natArmor') out.natArmor = Math.max(out.natArmor, v);
-      else if (k === 'extraAttack') out.extraAttack = Math.max(out.extraAttack, v);
+      else if (k === 'extraAttack') out.extraAttack = stack ? out.extraAttack + v : Math.max(out.extraAttack, v);
       else if (typeof v === 'number') out[k] = (out[k] || 0) + v;
       else out[k] = v;
     }
@@ -185,7 +185,7 @@ export function passivesOf(ch, db, extraSources = []) {
     const it = eq[slot] && db.items[eq[slot]];
     if (it && it.passives) add(it.passives);
   }
-  for (const p of extraSources) add(p);
+  for (const p of extraSources) add(p, true); // conditions (haste…) stack on top of class features
   return out;
 }
 

@@ -62,7 +62,7 @@ function sheetTab(ctx) {
   box.appendChild(h('div', { class: 'kv' },
     kv('生命', `${ch.hp}/${ch.maxHp}`), kv('护甲等级', R.armorClass(ch, db, pas)), kv('先攻', R.fmtMod(R.abilMod(R.abilScore(ch, 'dex', pas)) + pas.init)),
     kv('攻击', `${prof.name} ${R.fmtMod(prof.hit)}`), kv('伤害', `${prof.dmg}${R.fmtMod(prof.dmgBonus)}`),
-    cls && cls.spellAbility ? kv('法术豁免 DC', R.spellDc(ch, db, pas)) : null, cls && cls.spellAbility ? kv('法术攻击', R.fmtMod(R.spellAttack(ch, db, pas))) : null));
+    cls && cls.caster ? kv('法术豁免 DC', R.spellDc(ch, db, pas)) : null, cls && cls.caster ? kv('法术攻击', R.fmtMod(R.spellAttack(ch, db, pas))) : null));
   if (ch.slotsMax && ch.slotsMax.some((n) => n > 0)) {
     const row = h('div', { class: 'slots', style: { marginTop: '10px' } }, h('span', null, '法术位'));
     ch.slotsMax.forEach((mx, i) => { if (mx > 0) row.appendChild(h('span', null, `${i + 1}环`, pips(ch.slots[i], mx))); });

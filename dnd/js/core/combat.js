@@ -714,9 +714,10 @@ function enemyAct(ctx, u) {
     const pool = living(c, u.side === 'enemy' ? 'ally' : 'enemy');
     if (!pool.length) break;
     const target = chooseTarget(ctx, u, pool);
-    const ar = attackRoll(ctx, u, target, (atk.hit || 0) + diff.hit, {});
+    const upas = unitPassives(ctx, u);
+    const ar = attackRoll(ctx, u, target, (atk.hit || 0) + diff.hit + (upas.hit || 0), {});
     if (!ar.hit) { logLine(c, `${u.name}用${atk.name}攻击${target.name}：${rollText(ar)}，未命中。`, 'miss'); continue; }
-    const dmg = R.rollDice(atk.dmg || '1', {}, { crit: ar.crit }).total + diff.dmg;
+    const dmg = R.rollDice(atk.dmg || '1', {}, { crit: ar.crit }).total + diff.dmg + (upas.dmg || 0);
     logLine(c, `${u.name}用${atk.name}攻击${target.name}：${rollText(ar)}，${ar.crit ? '重击！' : '命中。'}`, ar.crit ? 'hit crit' : 'hit');
     dealDamage(ctx, u, target, Math.max(1, dmg), atk.type || 'slashing');
     if (atk.extra && alive(target)) dealDamage(ctx, u, target, R.rollDice(atk.extra.dmg).total, atk.extra.type);

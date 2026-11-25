@@ -40,13 +40,6 @@
 const CONCLAVE = 'flag.southgate_held && !flag.compact_none && world.word >= 4';
 const OPEN = '(flag.southgate_held || world.embers < 8)';
 
-// 阿坦数谎：var.lies 新到 3、6、9 时问一回（第四幕问过的档位不再问）。
-const TAN_COUNTS = [
-  { if: 'var.lies >= 3 && !flag.a4_l3 && !flag.f_l3', then: ['flag f_l3', { if: 'party.tan', then: ['approval tan -1', 'flag f_tan_counts'] }] },
-  { if: 'var.lies >= 6 && !flag.a4_l6 && !flag.f_l6', then: ['flag f_l6', { if: 'party.tan', then: ['approval tan -1', 'flag f_tan_counts'] }] },
-  { if: 'var.lies >= 9 && !flag.a4_l9 && !flag.f_l9', then: ['flag f_l9', { if: 'party.tan', then: ['approval tan -1', 'flag f_tan_counts'] }] },
-];
-
 // f_08：证物和票。拿来的东西最多加 3。
 const EVIDENCE = [
   { if: 'flag.has_vote || is.divine', n: 2, why: '你在会上有一票' },
@@ -378,7 +371,6 @@ export const SCENES = {
       { if: 'flag.god_tried_raise', text: '蓝牙还是不跟你单独待在一处。今天他让阿罗莎坐在你们中间。' },
       { if: 'flag.god_sided_throne', text: '桌边有人小声说，这位在安本科斯特替皇帝挡过刀。说完往旁边挪了半个屁股。' },
     ],
-    enter: TAN_COUNTS,
     first: [{ if: 'flag.goblins_armed', then: ['flag underpass_held'] }],
     choices: [
       {
@@ -921,7 +913,7 @@ export const SCENES = {
       { if: 'flag.spirits_heard', text: '第六道试炼那两位树灵还在吵。年长的那位说，银的那位后来也上山来问过天。年轻的那位说他记错了，又说记错的是他自己。' },
       '誓石在山顶，比人矮，顶上叫人摸得发亮。誓词刻在背面，最后一句是：并永说真话。',
       '今晚有人想上去。你自己不能上，这是规矩，也是你们的行当：收尸队只管看着。',
-      { if: 'flag.compact_league', speaker: '卡莉斯塔', text: '我父亲说他不想要。我想。他八十一了，爪子和尾巴还没长出来，他着急。' },
+      { if: 'flag.compact_league', speaker: '卡莉斯塔', text: '我父亲说他不想要。我想要。他八十一了，这话他说了三十年。' },
       { if: 'world.room >= 6', speaker: '阿罗莎', text: '我不想当王。我想让兽人在这座城里有个说得上话的。没人肯当，那我来。' },
       { if: 'party.tan', speaker: '阿坦', text: '卡斯坦一世在这山上见的银龙。他上来的时候，也是夜里。' },
     ],
@@ -1439,7 +1431,7 @@ export const SCENES = {
       { if: 'flag.fourth_sat', text: '你坐在那把掉了漆的椅子上，坐了一冬。各殿的主祭轮流来回话，回完了倒退着出去。多米尼克来过三回，每回都问你和她是什么关系，每回都记。' },
       { if: 'flag.fourth_sat', text: '{?party.tan:阿坦问你晨祷的词要不要改。你说了。|守庙的姑娘问你晨祷的词要不要改。你说了。}第二天一早，椅子底下有人念晨祷。' },
       { if: 'flag.fourth_declined', text: '你出了帐篷，多米尼克追了你三条街。他问你凭什么：你明明能，你不肯，往后死在教战里的人算谁的。你没答。他站在第三条街的路口，把这句话记在了册子上。' },
-      { if: 'flag.fourth_undertaker', text: '丧事定在开春。抬的是一口空棺，杉木的，你们几个抬，前后各两个人。乌什卡说这是浪费：一个不会死的人，学了一身埋人的手艺。' },
+      { if: 'flag.fourth_undertaker', text: '丧事定在开春。抬的是一口空棺，杉木的，你们几个抬，前后各两个人。{?party.ushka:乌什卡说这是浪费：一个不会死的人，学了一身埋人的手艺。|守庙的姑娘在棺材后头跟了一路。}' },
       { if: '!flag.fourth_sat && !flag.fourth_declined && !flag.fourth_undertaker', text: '你站在那把空椅子前头，没坐，也没走。帐子里的人等了一夜。' },
       '那道军令还钉在庙门上。“事毕为止”四个字，你天天路过，天天看一眼。',
     ],

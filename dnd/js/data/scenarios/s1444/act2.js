@@ -206,7 +206,8 @@ export const SCENES = {
       { if: 'party.tan', text: '阿坦二十二了，下巴上冒出一圈软胡子。他说庙里没镜子，刮不了。' },
       { if: 'party.nixee', text: '妮克西的账本换到了第三本，头一本拿去垫了车轴。' },
       '玛瑙之门开在一面山壁上，门脸冲着北边一片烧秃了的坡。那儿从前是林子，狼多，矮人管它叫狼门。铁闸悬在半截，锈成了一整块。门洞底下搭着二十几顶帐篷，帐篷布上缝着阿斯拉银行的徽。',
-      '加莱尔·守昔者坐在门洞外头的界石上等你们。本子揣在怀里，没摊开。她父母随探险队进山勘测，说好开春回来，如今逾期四个月了。',
+      '加莱尔·守昔者坐在门洞外头的界石上等你们。本子揣在怀里，没摊开。她父母随探险队进山勘测，说好入冬前回来。如今冬天过完了，又过了一个多月。',
+      { if: 'is.immortal', text: '车底下那卷铺盖五年没晒，长了一层白毛。你没长。' },
       { if: 'is.immortal', text: '她从本子里抽出一张纸，是五年前给你画的速写。她举着纸对了对你的脸，然后撕了。' },
       { if: 'is.immortal', speaker: '加莱尔', text: '用不着再画了。我写“未见衰老”，对吗。' },
       { if: 'is.immortal && party.ushka', speaker: '乌什卡', text: '五年。你连指甲都没长坏。' },
@@ -229,12 +230,12 @@ export const SCENES = {
         ],
       },
       {
-        text: '拆开蓝牙的信使送来的那封信',
+        text: '拦下后头骑骡子追上来的那个人',
         if: '!flag.groundhawk_deed && rep.corintar >= 1',
         once: true,
         effects: ['flag groundhawk_deed', 'item +groundhawk_deed', 'world room +1', 'quest q_debt stage 2', { if: 'party.nixee', then: ['approval nixee +2'] }],
         result: [
-          '信使是骑骡子追上来的，路上跑死了一头。信里是康原的地契，蓝牙盖了印，背面一行字：欠她的，我先还一样。',
+          '是蓝牙的信使，路上跑死了一头骡子。他递过来一个油布包，里面是康原的地契，蓝牙盖了印，背面一行字：欠她的，我先还一样。',
           { if: 'party.nixee', speaker: '妮克西', text: '你收着。我的口袋我信不过。' },
         ],
       },
@@ -414,6 +415,19 @@ export const SCENES = {
         result: '贝尔格拉克念到那一条，停了停，看了你一眼，接着往下念。',
       },
       {
+        text: '在名单上找你家的姓',
+        tag: '矮人',
+        if: 'is.dwarf',
+        once: true,
+        req: 'gold >= 20', reqText: '需要 20 金冠',
+        effects: ['gold -20', 'rep companies +1', 'approval belgrak +1'],
+        result: [
+          '贝尔格拉克连问都没问，直接翻到第二百零七条：你曾祖父，欠红宝石领一个酒馆老板娘两桶黑麦酒，灰元一一九〇年。',
+          { speaker: '贝尔格拉克', text: '两桶，按今天的价，二十。利息我不算，老板娘埋了一百年了。' },
+          '你付了。他在那一条上划了一道，旁边写：曾孙还。',
+        ],
+      },
+      {
         text: '接下这趟活',
         effects: ['quest q_list start', 'gold +100'],
         result: [
@@ -470,17 +484,19 @@ export const SCENES = {
       },
       {
         text: '办一桌席，唱几段',
+        if: '!flag.a2_feast',
         once: true,
         check: { skill: 'performance', alt: ['persuasion'], dc: 12 },
-        ok: { text: '你唱到第三段，老兵们开始拿杯底敲桌子打拍子。基尔杜姆头一回没喊列队，因为大家自己站起来了。', effects: ['var prep +1', 'rep companies +1'] },
-        fail: { text: '你唱的是人类的歌。矮人们礼貌地听完，接着喝他们自己的。', effects: ['gold -10'] },
+        ok: { text: '你唱到第三段，老兵们开始拿杯底敲桌子打拍子。基尔杜姆头一回没喊列队，大家自己站起来了。', effects: ['flag a2_feast', 'var prep +1', 'rep companies +1'] },
+        fail: { text: '你唱的是人类的歌。矮人们客客气气听完，接着喝他们自己的。席钱照付。', effects: ['flag a2_feast', 'gold -10'] },
       },
       {
-        text: '跟老兵们拼酒',
+        text: '不唱了，跟老兵们拼酒',
+        if: '!flag.a2_feast',
         once: true,
         check: { abil: 'con', dc: 13, save: true },
-        ok: { text: '第七杯放下，对面那个老兵扶着桌子说你肚子里有一口井。这话在兵团里传开了，算是夸人。', effects: ['var prep +1', 'rep companies +1'] },
-        fail: { text: '第四杯你就看见了两个基尔杜姆。第二天你头疼到中午，布罗克替你多磨了一回铲子。', effects: ['hp -4'] },
+        ok: { text: '第七杯放下，对面那个老兵扶着桌子说你肚子里有一口井。这话在兵团里传开了，算是夸人。', effects: ['flag a2_feast', 'var prep +1', 'rep companies +1'] },
+        fail: { text: '第四杯你就看见了两个基尔杜姆。第二天你头疼到中午，布罗克替你多磨了一回铲子。', effects: ['flag a2_feast', 'hp -4'] },
       },
       {
         text: '给弟兄们先发一个月的饷',
@@ -524,7 +540,7 @@ export const SCENES = {
         text: '睡一整夜',
         once: true,
         effects: ['rest long'],
-        result: '门洞里的风是从山肚子里往外吹的，带着一股铁锈和凉水的味儿。你睡得很沉。',
+        result: '门洞里的风是从山肚子里往外吹的，一股铁锈和凉水的味儿。你一觉睡到出纳来点人头。',
       },
       {
         text: '出发',
@@ -588,7 +604,7 @@ export const SCENES = {
       '再往前，一直到第三段尽头，你们数出来三十一具。贝尔格拉克一具一具报年份，加莱尔一笔一笔记。有两具攥着手，分不清是谁的骨头。',
       { if: 'party.ushka', speaker: '乌什卡', text: '带出去，得一具一具裹。车上挤一挤，装得下。' },
       { speaker: '贝尔格拉克', text: '三十一。名字进账本，人进石头。账本我有，石头在红宝石领。' },
-      { if: 'is.god', text: '铁轨在你脚下嗡嗡地响，一段接一段，一直响到黑地里头。它在等一个肯给它通电的人。' },
+      { if: 'is.god', text: '你站的那一段轨在嗡嗡响。你往前走一步，前头那段也亮了一下，你退回来，它又暗了。' },
     ],
     choices: [
       {
@@ -615,6 +631,8 @@ export const SCENES = {
           '一个时辰，你们到了乔卡德枢纽。路上经过交轨大厅，转车台上的地精全跑上车顶看，有一个摔了下去。',
           '山里所有的东西都听见了。黑地里远远有骨号响了一声，又一声。',
           { speaker: '贝尔格拉克', text: '六千年，八十三段。你一个时辰。这一笔，账上没地方记。' },
+          { if: 'party.nixee', speaker: '妮克西', text: '交轨大厅住着几百户，全睡在车皮里。车皮这会儿在跑。他们醒了住哪儿，你想过没有。' },
+          { if: 'party.ushka', speaker: '乌什卡', text: '车跑得快了。死人还是那么多。' },
         ],
         goto: 'a2_08',
       },
@@ -627,7 +645,9 @@ export const SCENES = {
     art: 'ev_goblin_ambush',
     loc: '交轨大厅 · 转车台',
     text: [
-      '交轨大厅是众矮人之国的调车场，管全山的车和信。当年一张攻城的军需单子从这儿发出去，二十九门铜臼炮，四百多斗麦子，到货比约的时辰早三分钟，一粒麦子没少。贝尔格拉克说这件事的时候，声音比平时低。',
+      '交轨大厅是众矮人之国的调车场，管全山的车和信。贝尔格拉克一进门就讲起了一张快八千年前的军需单子。',
+      { speaker: '贝尔格拉克', text: '二十九门铜臼炮，七十六辆战车，四百一十三斗硬麦，约的是正午。卸完车离正午还差三分钟，一粒麦子没少。灰前六千五百三十八年。' },
+      '讲完他把帽子摘下来，过了一会儿才戴回去。',
       '如今转车台上一圈一圈停着几百节车皮，每节里都住着铁路潜伏者氏族的地精，晾着衣裳，冒着灶烟。',
       '头领布拉克坐在调度亭里，面前一块账板。他按车皮收钱。',
       { speaker: '布拉克', text: '兵团那两百个脑袋，基尔杜姆按团价付过了。你们另一张单子。一节车皮四十，人头一个十五，死人另算，一具五个。你们这车，一百五。' },
@@ -782,7 +802,7 @@ export const SCENES = {
       {
         text: '躺下，等蜡烛烧到第六道',
         effects: ['rest short'],
-        result: '你们轮流守夜。天亮是阿坦说了算的。他说亮了，大家就起来。',
+        result: '{?party.tan:你们轮流守夜。天亮是阿坦说了算的。他说亮了，大家就起来。|你们轮流守夜，谁也不知道外头几时天亮，睡够了就起来。}',
         goto: 'a2_08',
       },
     ],
@@ -803,6 +823,7 @@ export const SCENES = {
       { if: 'is.god', text: '加莱尔站在门口。你刚要开口，她先说了。' },
       { if: 'is.god', speaker: '加莱尔', text: '别。我要记的是他们死了。' },
       { if: '!is.god', text: '加莱尔站在门口，把本子打开，又合上。她没有进去。' },
+      { speaker: '加莱尔', text: '他们走得快吗。' },
     ],
     first: ['codex pastkeepers', 'quest q_parents stage 3', 'item +rubbing_book'],
     choices: [
@@ -827,7 +848,7 @@ export const SCENES = {
         fail: { text: '你看了半天，只看出他们是一起躺下的。手背被铅管的毛刺刮了一道。', effects: ['hp -2'] },
       },
       {
-        text: '她问你他们走得快不快。说快，没受什么罪',
+        text: '告诉她走得快，没受什么罪',
         effects: ['var lies +1', 'flag lied_to_garaele'],
         result: [
           '她点了点头，在本子上写了一行。她写得很慢，写完把那一行看了两遍。',
@@ -989,7 +1010,8 @@ export const SCENES = {
         effects: ['flag a2_struck_survey', 'rep companies -1', { if: 'party.garaele', then: ['approval garaele +2'] }],
         result: [
           '账本上有一条：守昔者夫妇，欠兵团护送费，四十金冠。你把它划了，在旁边写：人已入土，两清。',
-          '有个老兵嘟囔说钱是钱。加莱尔把你写的那行字抄进了她自己的本子。老兵们看你的眼神变了：这个人真敢划。',
+          '有个老兵嘟囔说钱是钱。旁边那个拿胳膊肘捅了他一下：{ta}连死人的账都敢划，你那笔当心点。',
+          '加莱尔把你写的那行字抄进了她自己的本子。',
         ],
       },
       {
@@ -1078,7 +1100,7 @@ export const SCENES = {
       { if: 'party.ushka', text: '乌什卡听了一会儿，哼出一句。是她小时候老萨满唱的，造兽人的那一位，名字叫杜坎尼尔。跟墙上那个，只差一个音。' },
       { if: '!party.ushka', text: '塌方那头有人在唱，是个老萨满。唱的是造兽人的那一位，叫杜坎尼尔。跟墙上那个，只差一个音。' },
       '塌方那头的嗓子又换了腔，骂人了。破碎之冠的旧杜坎信徒，骂杜坎森是假先知，把矮人的罪记到人类头上。',
-      { if: 'party.tan', speaker: '阿坦', text: '神都活着。只是从来不是我们的。他是他们的神，跟着他们走了。' },
+      { if: 'party.tan', speaker: '阿坦', text: '八位。头一位是王，刻在精灵的墙上。神都活着，只是从来不是我们的。' },
     ],
     first: ['flag castellar_seen', 'flag dookanil_known', 'item +shaft_rubbing', 'quest q_dragon stage 3', 'codex hul_jorkad', 'codex ducaniel', 'codex dookan'],
     choices: [
@@ -1100,7 +1122,7 @@ export const SCENES = {
         text: '探一探井底',
         once: true,
         check: { skill: 'arcana', dc: 14, party: true },
-        ok: { text: '底下有一道法术的残迹。很大，很旧，铅封压着它，压了六千年还没压住。你收回手的时候，指甲缝里是凉的。' },
+        ok: { text: '底下有一道法术的残迹，摊开来比这座堡还宽。铅封压了它六千年，没压死。你收回手，指甲缝里是凉的。' },
         fail: { text: '你刚探下去，有个东西往回顶了你一下。你坐在地上，耳朵里嗡了半天。', effects: ['damage 1d6'] },
       },
       {
@@ -1164,6 +1186,8 @@ export const SCENES = {
           '石头挪得动，三尺厚的铅也挪得动。你掀开一角，底下有个东西应了你一下。很旧，很大，不是冲你来的。',
           '全队都喊你停手。你没停，井壁裂了一道缝，又自己合上了。还是下不去。',
           '塌方那头的老萨满在喊：造物主翻身了。喊完他隔着石头问你：你是哪一位，替谁来开锁。',
+          { if: 'party.ushka', speaker: '乌什卡', text: '停手。底下那个应的不是你。' },
+          { if: 'party.garaele', text: '加莱尔在本子上记了一行：某神开井，未开。' },
         ],
       },
       {
@@ -1220,6 +1244,8 @@ export const SCENES = {
       { if: 'flag.brok_lives', text: '布罗克坐在闸边上擦铲子。铲刃上缺了一个口，他说缺得好，往后挖坑有个记号。' },
       { if: '!flag.brok_lives', text: '布罗克倒在闸口，铲子压在身子底下。兵团的人把他抬到墙根，跟别的几个并排放着。他的铲子没人去拿。' },
       '贝尔格拉克摊开名单，给你们讲议会之门。大厅三层拱廊，每层一百二十盏灯，尽头坐着一尊石头的王，眼睛是琥珀的。他爷爷给他数过灯，他自己没见过。讲的时候他眼睛是亮的。',
+      { if: 'party.garaele', speaker: '加莱尔', text: '灯是你爷爷数的。他自己见过吗。' },
+      { if: 'party.garaele', speaker: '贝尔格拉克', text: '他爷爷见过。' },
       { speaker: '贝尔格拉克', text: '明天我往深处去。愿意的跟着。照名单，一条一条，一直到议会之门。' },
       { speaker: '基尔杜姆', text: '合同到这儿就完了。' },
       { speaker: '贝尔格拉克', text: '合同完了。名单没完。' },
@@ -1229,7 +1255,7 @@ export const SCENES = {
         text: '听他报名单的时候，留心他先念谁',
         once: true,
         check: { skill: 'insight', dc: 14, adv: 'flag.a2_knows_belgrak' },
-        ok: { text: '名单的页边上有一行小字，没编号：雷萨格·铁眉，欠一句话。他念到那一页总是翻得很快。他往深处去，是因为深处没有雷萨格。', effects: ['flag a2_rethag'] },
+        ok: { text: '名单的页边上有一行小字，没编号：雷萨格·铁眉，欠一句话。他念到那一页总是翻得很快，翻过去以后，嗓门大了一截。', effects: ['flag a2_rethag'] },
         fail: { text: '你听了一晚上，只听出他念到第一百条就开始打哈欠。他发觉你在听，把名单卷起来了。', effects: ['approval belgrak -1'] },
       },
       {
@@ -1248,7 +1274,7 @@ export const SCENES = {
         fail: { text: '他听完，把名单折好揣回怀里，说了一句：三百一十二条，一条也不能少，少了就不是我的名单了。', effects: ['approval belgrak -1'] },
       },
       {
-        text: '拿她当年的事劝他划掉一条',
+        text: '讲科琳在血腐阶梯放走三个降兵的事，劝他划一条',
         tag: '科琳的队伍',
         if: "origin == 'corintar'",
         once: true,
@@ -1390,6 +1416,7 @@ export const SCENES = {
       { if: 'party.garaele', speaker: '加莱尔', text: '我只管记。可要记就得有人看。没人看的本子，跟没记一样。' },
       { if: 'party.nixee', speaker: '妮克西', text: '这种话最值钱的时候，是还没人说过的时候。说一回，掉一半。' },
       { if: 'party.tan', text: '阿坦什么也没说。他手里攥着那根蜡烛，攥得太紧，蜡上留下了指头印。' },
+      { if: '!party.ushka', text: '闸口外头有个半大的兽人小子等了你们三天。阿罗莎派他来打听山里的消息，他把你们的车认了出来。' },
     ],
     choices: [
       {
@@ -1403,13 +1430,16 @@ export const SCENES = {
         text: '托阿罗莎的信使把那句话带回氏族',
         if: '!party.ushka',
         effects: ['flag dookanil_told', 'world embers -1'],
-        result: '阿罗莎的信使是个半大的兽人小子。你把那句话说了三遍，他背了三遍，第三遍一个字没错。他走的时候没回头。',
+        result: '你把那句话说了三遍，他背了三遍，第三遍一个字没错。他走的时候没回头。',
         goto: 'a2_17b',
       },
       {
         text: '当笑话讲给兵团的人听',
-        effects: ['flag dookanil_told', 'flag dookanil_mocked', 'world embers +1', 'rep clans -2', 'rep companies +1'],
-        result: '兽人的神是个精灵，拿兽人当家伙使。老兵们笑得拍桌子，当晚就编了一段顺口溜。他们回东坎诺的路上，会在每一家酒馆唱一遍。',
+        effects: ['flag dookanil_told', 'flag dookanil_mocked', 'world embers +1', 'rep clans -2', 'rep companies +1', { if: 'party.ushka', then: ['approval ushka -2'] }],
+        result: [
+          '兽人的神是个精灵，拿兽人当家伙使。老兵们笑得拍桌子，当晚就编了一段顺口溜。他们回东坎诺的路上，会在每一家酒馆唱一遍。',
+          { if: 'party.ushka', text: '乌什卡没笑。她把木签插回腰里，到车那头去裹骨头了。' },
+        ],
         goto: 'a2_17b',
       },
       {
@@ -1424,11 +1454,11 @@ export const SCENES = {
         tag: '试炼',
         if: "faction == 'tried'",
         effects: ['flag dookanil_told', 'world embers -1', 'rep clans +1'],
-        result: '你站在闸口外的石墩上讲。讲完了，有个老脚夫说他不信；有个地精说他信，因为这么说对他们没坏处。信不信，各凭各的。你没劝谁。',
+        result: '你站在闸口外的石墩上讲，{?flag.khug_goblins_out:底下站着脚夫、骡夫和几个回来讨锅的地精。|底下站着脚夫、骡夫和门楼里下来的一家地精。}讲完了，有个老脚夫说他不信；有个地精说他信，因为这么说对地精没坏处。你没劝谁。',
         goto: 'a2_17b',
       },
       {
-        text: '谁也不说',
+        text: '{?flag.names_filed:别的谁也不说|谁也不说}',
         effects: [{ if: 'party.tan', then: ['approval tan -1'] }],
         result: '你把拓片卷好，塞回竹筒。阿坦看着竹筒，嘴动了一下，没出声。',
         goto: 'a2_17b',
@@ -1482,6 +1512,7 @@ export const SCENES = {
       { if: 'flag.belgrak_struck && !flag.belgrak_struck_by_god', text: '贝尔格拉克跟兵团一起走。半个兵团的人走在他后头，跟他隔着十步，背对着他扎营。他不在乎，名单上那道墨还在。' },
       { if: 'flag.belgrak_struck_by_god', text: '贝尔格拉克跟兵团一起走。兵团的人说，那一笔不算他划的。他回红宝石领以后，再没碰过账本。' },
       { if: 'flag.rail_woken', text: '阿斯拉银行已经在卖矮人之路头三段的股份，一股十金冠。交轨大厅的地精被探险队清了出去，转车台上的车皮挂了银行的牌子。' },
+      { if: 'flag.rail_woken && party.nixee', speaker: '妮克西', text: '银行给每户发了一张收条。规矩第一条是活着。第二条，收条不顶饭。' },
       { if: 'party.tan', text: '天亮的时候，阿坦在山外头念了晨祷，看着真的太阳念的。念完了，他还是低头看了一眼手里的蜡烛。' },
       { if: 'party.tan', speaker: '阿坦', text: '烧到第六道半了。山里的蜡烛，跟外头的一样快。' },
     ],
@@ -1495,15 +1526,15 @@ export const SCENES = {
     ],
     choices: [
       {
-        text: '写这一幕的报告，照实写',
+        text: '给巴兹伍德写报告，照实写',
         tag: '皇帝的差事',
         if: "origin == 'wex'",
         effects: ['var honest_reports +1', 'rep throne +1'],
-        result: '你写了矮人认的每一笔旧账，连“花仇”那一笔也写了。信鸽是探险队的，飞走的时候在门洞里绕了一圈。',
+        result: '你写了矮人认的每一笔旧账，连他们管丁香战争叫“花仇”也写了。信鸽是探险队的，飞走的时候在门洞里绕了一圈。',
         goto: 'a3_01',
       },
       {
-        text: '写这一幕的报告，写一份好看的',
+        text: '给巴兹伍德写报告，挑好看的写',
         tag: '皇帝的差事',
         if: "origin == 'wex'",
         effects: ['var false_reports +1'],
@@ -1511,7 +1542,7 @@ export const SCENES = {
         goto: 'a3_01',
       },
       {
-        text: '不写报告，往西走',
+        text: "{?origin == 'wex':不写报告，往西走|往西走}",
         effects: [{ if: "origin == 'wex'", then: ['rep throne -1'] }],
         result: [
           { if: "origin == 'wex'", text: '信鸽在笼子里又待了一个月。你喂它喂得很好。' },

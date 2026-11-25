@@ -1065,5 +1065,498 @@ export const SCENES = {
     ],
   },
 
+  a2_11: {
+    id: 'a2_11',
+    title: '炖菜',
+    art: 'ev_dark_forest',
+    loc: '头领林地 · 白石驿站',
+    text: [
+      '林子深处有一道烟。烟底下是座白石头的驿站，叫藤和青苔吃掉了一半。门楣上刻着一条喷火的银龙，翅膀磨得快看不见了。屋顶塌了一角，烟就从那儿出去。',
+      '屋里一个老人坐在火边，火烧的是松果。他看了你的脸很久，才拿下巴指了指石凳。',
+      { speaker: '守砖人', text: '坐。锅里还有。' },
+      '炖菜是萝卜、野葱和一种说不上名字的肉，很烫。他不报名字，也不问你们的。他问别的：外头如今谁管事，誓还算不算数，法师是不是还在给人看病，有的名字是不是不该大声说。每问一句，他都看着你把那一口咽下去。',
+      { if: "origin == 'ebonmarck'", text: '他看见了你的军团牌，少问了三句。' },
+      { if: 'party.valeran', speaker: '瓦勒兰', text: '恕我直言，老人家，不该大声说的名字，我连小声说都嫌多。' },
+      { if: 'party.barry', speaker: '巴里', text: '这里头搁了松子，对不对？对不住，我话多。我是说这锅炖得真好，火候是守出来的。' },
+      '你问起皇帝。他拿勺子在锅里搅了很久。',
+      { speaker: '守砖人', text: '没人给他套过什么。他二十三岁上的山，自己走到石头跟前，自己把誓说完的。有人伸手接住了，就这么回事。' },
+      { speaker: '守砖人', text: '接的人有罪。说的人也有。我替他守着，守的是后一样。' },
+      { if: 'is.god', text: '他给你也盛了一碗，看着你吃。你吃得不快不慢，一口没烫着。他把自己的勺子放下了。' },
+      { if: 'is.god', speaker: '守砖人', text: '我试的是人。烫不烫嘴，咽不咽得下去，眼睛后头有没有人。你这样的，我没试过，我试不了。' },
+    ],
+    choices: [
+      {
+        text: '琢磨他到底在试什么',
+        once: true,
+        check: { skill: 'insight', dc: 14, party: true },
+        ok: {
+          text: '他问的话没有一句要紧。他看的是你怎么答：答得太快的，是背过的；一个字不差的，是有人替你答的。他在看你眼睛后头有没有人。',
+          effects: ['flag a2x_keeper_read'],
+        },
+        fail: {
+          text: '你当他是想打听外头的消息，就把两个王国怎么收税讲了一遍，讲得很细。他听完，往你碗里添了一勺，把刚才那句又原样问了一回。',
+          effects: ['flag a2x_keeper_wary'],
+        },
+      },
+      {
+        text: '照实答他，一句不添',
+        check: {
+          skill: 'persuasion',
+          dc: 15,
+          adv: 'flag.a2x_keeper_read',
+          mods: [
+            { if: "origin == 'ebonmarck'", n: 3, why: '他认你的军团牌' },
+            { if: 'flag.a2x_keeper_wary', n: -2, why: '你方才答岔了' },
+            { if: 'flag.siege_hearing', n: 1, why: '你给过他儿子一场听证' },
+          ],
+        },
+        ok: {
+          text: [
+            { if: '!is.god', text: '他问完了，半天没说话，往火里添了一把松果。' },
+            { if: '!is.god', speaker: '守砖人', text: '你不是他的人。你还是……你。这就好，这说明没有全丢。' },
+            { if: 'is.god', text: '你每一句都答得挑不出毛病。他听完摇了摇头。' },
+            { if: 'is.god', speaker: '守砖人', text: '挑不出毛病的，我见过一个，在皇帝身后站了三十七年。我不赶你。我也不认你。' },
+          ],
+          goto: 'a2_11b',
+        },
+        fail: {
+          text: [
+            '有一句你答得太顺了。他的勺子在锅沿上停了一停。',
+            { speaker: '守砖人', text: '天亮以后，林子外头的路好走。' },
+            '他没再问别的。',
+          ],
+          effects: ['flag keeper_hostile'],
+          goto: 'a2_11b',
+        },
+      },
+    ],
+  },
+
+  a2_11b: {
+    id: 'a2_11b',
+    title: '又一碗',
+    text: [
+      '伊迪丝把碗舔干净了，顺口说了句还饿。',
+      '老人拿起勺子，给她盛了满满一碗，递过去。然后他愣住了，低头看了看自己的手，把勺子放回了锅里。屋里只剩松果烧裂的声音。',
+      { speaker: '守砖人', text: '这孩子是谁教的？' },
+      { speaker: '守砖人', text: '{?flag.keeper_hostile:不用等天亮了。|我方才的话收回。}带上她，出去。现在。' },
+      { if: 'party.liv', text: '卡斯坦的手按到了斧柄上。伊迪丝捧着那碗炖菜，没敢喝，也没放下。' },
+      { if: 'party.vezina', text: '薇齐娜的炭笔停在本子上方，没落下去。' },
+      { if: '!party.liv && !party.vezina', text: '伊迪丝捧着那碗炖菜，没敢喝，也没放下。门外的林子里有东西在走动。' },
+    ],
+    choices: [
+      {
+        text: '替她说话：没人教过她，她自己都不知道',
+        effects: ['approval vezina +1', 'approval barry +1'],
+        result: [
+          '你说她十三岁，帐篷城里捡的，要一碗汤就有人给三碗，她一直当是自己讨人喜欢。',
+          '老人看着伊迪丝。伊迪丝看着锅。',
+          { speaker: '守砖人', text: '那就别让人教她。' },
+          '他没再提赶人的事。{?flag.keeper_hostile:也没再同你说一个字。|}',
+        ],
+        goto: 'a2_12',
+      },
+      {
+        text: '让她自己说',
+        effects: ['approval liv +1'],
+        result: [
+          { speaker: '伊迪丝', text: '没人教。我跟谁说，谁都给。你不想给可以不给呀，我又没抢。' },
+          '老人的手在膝盖上攥了一下，又松开。他说他不想给，可是给了，这才是他要赶人的缘故。说完他到底没站起来。',
+        ],
+        goto: 'a2_12',
+      },
+    ],
+  },
+
+  a2_12: {
+    id: 'a2_12',
+    title: '地砖下',
+    loc: '白石驿站 · 夜',
+    text: [
+      { if: '!flag.keeper_hostile', text: '后半夜他站起来，走到屋角，跪下去，拿勺柄敲一块地砖。声音是空的。{?is.god:他是敲给伊迪丝听的，你只是也在屋里。|}' },
+      { if: 'flag.keeper_hostile', text: '后半夜你叫撬东西的声音弄醒了。{?party.liv:卡斯坦跪在屋角，拿斧刃别一块地砖。|屋角有块地砖叫人别开了一条缝，敲上去是空的。}守砖人提着柴刀站在门口，没动，也没拦。' },
+      '砖下是一个浅坑，铺着石灰和松针。里头躺着一个人，裹在军团的红斗篷里，瘦得只剩一把，胡子还是黑的。胸口压着一顶冠，乌钢的，不反光。',
+      { speaker: '守砖人', text: '快八年了。我只求一件事：烧了他。别给他修坟，别让人知道埋在哪儿。坟是给人找的。' },
+      { speaker: '守砖人', text: '你们不是头一拨。去年秋天来过一个人，一身没药味。他问遗体在哪，放了多久，烂到什么地步。皇帝还有个儿子活着，他一句没问。' },
+      { if: "origin == 'ebonmarck' && flag.p_old_coin", text: '老人从灶台缝里抠出一枚金币给你看，是那人留下的饭钱。旧帝国的足色金币，同乌霜领城里有人拿来打听皇帝的那种，是一个模子。' },
+      { if: 'party.vezina', text: '薇齐娜把“没药”两个字写下来，在底下画了两道。' },
+      { if: 'party.liv', speaker: '卡斯坦', text: '让我看看他的脸。' },
+    ],
+    first: ['flag knows_myrrh', 'flag liv_saw_body', 'quest emperor_body stage 3', 'quest canrec_trail start', 'codex castan_liii_2'],
+    choices: [
+      {
+        text: '把斗篷掀开，让她看',
+        if: 'party.liv',
+        effects: ['approval liv +2'],
+        result: [
+          '她蹲下去看了很久。',
+          { speaker: '卡斯坦', text: '比我想的矮。鼻子像。你们谁也别说不像。' },
+          '她把酒囊里剩的酒倒在了坑沿上，一滴没留。',
+        ],
+        goto: 'a2_12b',
+      },
+      {
+        text: '挡在前头：别看，他不是你想看的样子了',
+        if: 'party.liv',
+        effects: ['approval liv -3'],
+        result: '她没同你争。夜里你听见屋角有动静，没起来。第二天她的眼睛是肿的，一整天没同你说一个字。封你的官她没撤，只是不叫了。',
+        goto: 'a2_12b',
+      },
+    ],
+    next: 'a2_12b',
+  },
+
+  a2_12b: {
+    id: 'a2_12b',
+    title: '乌钢冠',
+    text: [
+      '那顶冠比看上去沉。冠圈内侧磨得发亮，是三十七年戴出来的。它不能随便戴：戴它的人得先过十道试炼，这规矩比乌霜家老。',
+      '守砖人说，抬皇帝来的五个兵里，有一个专管这顶冠，一路抱在怀里。他到这儿第三天死的，伤口烂了，死的时候冠还在怀里。',
+      { if: 'party.liv', text: '卡斯坦的眼睛一直跟着你的手。' },
+      { if: 'party.barry', speaker: '巴里', text: '对不住，我说句不中听的。这东西出了这间屋，就有人要为它死。留在他胸口上，它只是件陪葬。' },
+      { if: 'party.valeran', speaker: '瓦勒兰', text: '恕我直言，这顶冠在谁的行李里，恩特本一定想知道。我得写。' },
+    ],
+    choices: [
+      {
+        text: '把冠收进行李',
+        effects: ['item +ebonsteel_crown', 'approval liv +1'],
+        result: '你拿布包了三层。{?party.liv:卡斯坦说掌玺大臣管玺，顺手管管冠，天经地义。她说这话的时候没笑。|布包放在行李最底下，上头压着干粮。}',
+        goto: 'a2_12c',
+      },
+      {
+        text: '把冠留在他胸口上',
+        effects: ['approval barry +1'],
+        result: '你把他的两只手搭回冠上。守砖人看了你一眼，这是他今夜头一回正眼看你。',
+        goto: 'a2_12c',
+      },
+    ],
+  },
+
+  a2_12c: {
+    id: 'a2_12c',
+    title: '皇帝的去处',
+    text: [
+      '天快亮了。守砖人把话又说了一遍：烧了他。加雷克要的是一口棺材和一个准日子。和约上关于死皇帝一个字也没写。',
+      '能去的地方就这么几处。卡斯托纳斯西门外是乌霜家的坟园，头一位乌霜皇帝埋在那儿。北要塞在试炼山脚下，历代卡斯坦从那儿上山，照皇帝的规格办，只能在那儿。',
+      '万神道最体面，那是葬给整个卡斯塔诺的。再不然，这片林子够深，这堆松果也够烧。',
+      { if: 'party.valeran', speaker: '瓦勒兰', text: '恕我直言，埋在哪儿，哪儿往后就有人去磕头。您选的是往后谁去磕头。' },
+      { if: 'party.liv', speaker: '卡斯坦', text: '烧了他，我同你没完。别的随你。' },
+    ],
+    choices: [
+      {
+        text: '西门，葬进乌霜家的坟园',
+        req: "flag.garrec_king || flag.garrec_exile || origin == 'ebonmarck'",
+        reqText: '乌霜家没有活人能去开那座坟园了',
+        effects: ['flag body_westgate', 'world mantle +1'],
+        result: '你们拿驿站的门板钉了一口棺材。守砖人没拦，也没帮手，只把那件红斗篷重新给他裹了一遍，裹得比原先紧。',
+        goto: 'a2_13',
+      },
+      {
+        text: '北要塞，照皇帝的规格办',
+        effects: ['flag body_citadel', 'world mantle +2', 'rep escann +1'],
+        result: '信先走，棺材后走。北王国的回信只有一行：北要塞可以借，仪仗自备。',
+        goto: 'a2_13',
+      },
+      {
+        text: '万神道，葬给整个卡斯塔诺',
+        effects: ['flag body_pantheon', 'world mantle +2', 'rep dragon +1'],
+        result: '消息到卡斯托纳斯那天，万神道粥棚里的祭司把勺子放下，回去翻出了多年没穿的祭袍。',
+        goto: 'a2_13',
+      },
+      {
+        text: '就在这片林子里，悄悄埋了',
+        effects: ['flag body_quiet', 'world mantle -1'],
+        result: '坑挖在驿站后头第三棵老橡树底下，没立碑。守砖人说他记得住是哪一棵，他别的也没什么可记的。',
+        goto: 'a2_13',
+      },
+      {
+        text: '照守砖人的话，烧了他',
+        effects: ['flag body_burned', 'world mantle -2', 'world unburied -2', 'rep dragon -2', 'approval liv -2'],
+        result: '松果不够，守砖人把石凳边上的柴全搬了出来。火从后半夜烧到晌午。{?party.liv:卡斯坦站在上风口，一眼没看。|}',
+        goto: 'a2_13',
+      },
+      {
+        text: '把砖原样盖回去，谁也不告诉',
+        effects: ['flag body_left', 'world unburied +1', 'quest emperor_body fail'],
+        result: [
+          '守砖人看着你把砖放平，拿脚踩实。他没骂你。',
+          { speaker: '守砖人', text: '那我还得守多少年？' },
+          '你答不上来。{?item.ebonsteel_crown >= 1:冠在你的行李里，比刚才沉。|}',
+        ],
+        goto: 'a2_14',
+      },
+    ],
+  },
+
+  a2_13: {
+    id: 'a2_13',
+    title: '葬礼',
+    date: '1023年花终月',
+    text: [
+      '动身前，守砖人把他那把勺子给了你，勺柄上有一道敲地砖敲出来的沟。他说砖底下空了，勺子就只是勺子了。',
+      { if: 'flag.body_westgate', text: '西门外的坟园里，头一位乌霜皇帝的石椁旁边新开了一个穴。莱恩王派了个管家，温斯坦王谁也没派。最后一排站着沼泽堡那个独眼老兵，手里攥着他那坨铁。' },
+      { if: 'flag.body_westgate && flag.garrec_king', text: '加雷克带着乌霜边区的领主来了，黑龙旗打了一路。他扶棺的时候没戴手套。' },
+      { if: 'flag.body_westgate && !flag.garrec_king && flag.garrec_exile', text: '加雷克是拿着一天的安全文书来的，天黑前得出城。他在穴边站满了这一天。' },
+      { if: 'flag.body_citadel', text: '北要塞的校场上搭了灵台，朝着试炼山。温斯坦王亲自来了，站得比谁都直：替一位死皇帝办事，比招待一位活的便宜。克拉丽蒙德女王没来，托人带了一句话：埋深点。最后一排是万神道的祭司，没人请他们上台。' },
+      { if: 'flag.body_pantheon', text: '万神道两边的石像底下都站了人。主祭的是卡斯特洛斯的祭司，和约以后，这是他们头一回当众办事，袍子上的折痕压了多年。两位王都来了，一个站路左，一个站路右，谁也没过中线。最后一排是把军团牌挂到衣服外头来的老兵。' },
+      { if: 'flag.body_quiet', text: '夜里四个人抬，没点火把。坑在第三棵老橡树底下，守砖人领的路。填土的时候谁也没开口，只有铲子响。填平了，他拿松针把新土盖上，退后两步看了看，又盖了一层。' },
+      { if: 'flag.body_burned', text: '火灭了以后，守砖人拿他那口炖菜的锅装灰，装了大半锅，盖上盖子，拿草绳捆了两道。他说等来年开春，他自己提到艾伦河边去倒，倒在水深的地方。' },
+      { if: 'party.barry && !flag.body_burned', speaker: '巴里', text: '我们威克斯有句老话：坟要挖得比恨深。这一位，恨他的人多，得挖深些。对不住，我去看看大伙儿吃上没有。' },
+      { if: 'party.valeran', speaker: '瓦勒兰', text: '恕我直言。替一个当了三十七年傀儡的人办这一场，办给谁看？' },
+    ],
+    first: ['quest emperor_body done', 'item +stew_spoon'],
+    enter: [
+      { if: 'flag.body_westgate', then: ['loc 卡斯托纳斯 · 西门'] },
+      { if: 'flag.body_citadel && !flag.body_westgate', then: ['loc 北要塞'] },
+      { if: 'flag.body_pantheon && !flag.body_westgate && !flag.body_citadel', then: ['loc 卡斯托纳斯 · 万神道'] },
+    ],
+    choices: [
+      {
+        text: '主持葬礼，把该念的念全',
+        tag: '旧礼',
+        if: "faction == 'rites'",
+        once: true,
+        effects: ['world unburied -1'],
+        result: '你照老规矩来：净手，涂油，报名字，报年号，问三遍有没有人替他说话。{?flag.body_burned:灰不好涂油，你涂在了锅盖上。|}第三遍的时候，后头有个声音说：有。',
+      },
+      {
+        text: '照乌霜家的规矩办：斧子，盐，黑龙旗',
+        tag: '乌霜边区',
+        if: "origin == 'ebonmarck'",
+        once: true,
+        effects: ['rep dragon +1'],
+        result: "这是格鲁迪亚老家带来的规矩，会的人没几个了：一把斧子放右手，一撮盐放舌头底下，旗盖到胸口，不盖脸。{?class == 'cleric':经也是你念的。和约以后，你头一回穿着这身袍子站在人前。|}在场的黑卡斯塔诺人一个接一个，把拳头按在了心口上。",
+      },
+      {
+        text: '念悼词',
+        once: true,
+        check: { skill: 'performance', alt: ['religion'], dc: 13, party: true, mods: [{ if: "faction == 'rites'", n: 2, why: '这是你的本行' }] },
+        ok: {
+          text: '你没夸他，也没骂他。你说他二十三岁上山，六十岁倒在泥里，中间三十七年的事，记在别人账上。{?flag.body_quiet || flag.body_burned:守砖人听完，点了一下头。|底下很静。有个老兵哭出了声，旁边的人没笑话他。}',
+          effects: ['approval liv +1'],
+        },
+        fail: {
+          text: '{?flag.body_quiet || flag.body_burned:你把他的年号说错了一位。守砖人替你改了，改完再没看你。|你念到“三十七年”，后排有人笑了一声。声音不大，传得很远。}',
+          effects: [{ if: 'flag.body_quiet || flag.body_burned', then: ['approval liv -1'], else: ['rep escann -1'] }],
+        },
+      },
+      {
+        text: '答瓦勒兰：办给活人看，叫他们知道输家也有人埋',
+        if: 'party.valeran && !flag.a2x_funeral_answered',
+        once: true,
+        effects: ['flag a2x_funeral_answered', 'approval valeran +1'],
+        result: [{ speaker: '瓦勒兰', text: '恕我直言，这是我头一回听见一句站得住的理由。我照原话写回去。' }],
+      },
+      {
+        text: '答瓦勒兰：办给他儿子看',
+        if: 'party.valeran && !flag.a2x_funeral_answered',
+        once: true,
+        effects: ['flag a2x_funeral_answered', 'approval liv +1'],
+        result: [
+          { speaker: '瓦勒兰', text: '那么这是私事。恕我直言，私事不该用和约的印。' },
+          { if: 'party.liv', speaker: '卡斯坦', text: '他有个儿子，还有个没上谱的闺女。两个人看，不算私事。' },
+        ],
+      },
+      { text: '散了，往南去刀锋堡', goto: 'a2_14' },
+    ],
+  },
+
+  a2_14: {
+    id: 'a2_14',
+    title: '刀锋堡',
+    art: 'ev_excalibur',
+    loc: '刀锋边区 · 刀锋堡',
+    date: '1024年花始月',
+    text: [
+      '刀锋堡的大厅当中有一截石墩，墩上横着一把带鞘的剑。剑柄是龙骨磨的，柄头镶着一颗铜龙的牙。这就是卡林达尔。四年前克拉丽蒙德在试炼山上捡到它，拿它砍倒了术士王。',
+      '今天石墩前跪着一个黑卡斯塔诺的百夫长，手是松开的。照刀锋边区的规矩，不认女王的人都请去拔一下这把剑。剑认他，他走人，还能来争王位；剑不认，他就瞎了。守刃僧说瞎不疼，瞎了的可以留下，给剑上油。',
+      { speaker: '克拉丽蒙德', text: '他说刀锋边区是军团的南界，他只认卡斯坦，不认什么女王。那就让剑认一认他。监誓人来得巧，替我做个证。' },
+      { if: 'party.liv', speaker: '卡斯坦', text: '莫尔班平原那一仗，她同我爹的兵站一排。如今她拿这把剑给我爹的兵剜眼睛。这话你别替我传，我自己挑日子说。' },
+      { if: 'is.god', text: '克拉丽蒙德看了你一会儿，把剑连鞘转了半圈，柄朝着你。' },
+      { if: 'is.god', speaker: '克拉丽蒙德', text: '您先请。我想听听它怎么说。' },
+    ],
+    first: ['codex clarimonde', 'codex sapphire_eye'],
+    choices: [
+      {
+        text: '握住剑柄，拔卡林达尔',
+        if: 'is.god',
+        once: true,
+        effects: ['flag a2x_god_drew'],
+        result: [
+          '剑出鞘一半就亮了，亮得同刚出炉一样，厅里的人都拿手挡脸。你没瞎。',
+          { speaker: '克拉丽蒙德', text: '它认您。它也认过别人，认过我。这说明不了什么。' },
+        ],
+      },
+      {
+        text: '拦下试剑：俘虏该审，不该瞎',
+        if: "faction != 'sapphire'",
+        check: {
+          skill: 'persuasion',
+          dc: 15,
+          party: true,
+          mods: [{ if: 'rep.escann >= 3', n: 2, why: '东坎诺诸王认你' }],
+        },
+        ok: {
+          text: '你说和约管得着俘虏，管不着剑。她想了想，叫人把百夫长带了下去。“审可以。审完他要是还不认，剑还在这儿。”',
+          effects: ['rep dragon +1', 'approval valeran +1'],
+          goto: 'a2_14b',
+        },
+        fail: {
+          text: [
+            { speaker: '克拉丽蒙德', text: '和约上没写我的剑。' },
+            '百夫长自己伸了手。剑出鞘一寸，厅里白了一下。等你再睁开眼，他还跪着，眼珠成了两颗煮过的蛋白。他没叫，只问了一句天是不是黑了。',
+          ],
+          effects: ['approval liv -1'],
+          goto: 'a2_14b',
+        },
+      },
+      {
+        text: '以骑士团的名义拦下：赢了要留人',
+        tag: '蓝宝石',
+        if: "faction == 'sapphire'",
+        effects: ['rep dragon +1', 'approval valeran +1'],
+        result: '她是凯伦·长枪的扈从出身，这句话是她师父的。她把手从剑鞘上拿开了。“留。留到他肯改口，或者我改主意。”',
+        goto: 'a2_14b',
+      },
+      {
+        text: '让他拔',
+        effects: ['approval liv -1'],
+        result: '百夫长握住了剑柄。剑出鞘一寸，厅里白了一下。等你再睁开眼，他还跪着，眼珠成了两颗煮过的蛋白。他没叫，只问了一句天是不是黑了。守刃僧上来扶他，领他去学怎么给剑上油。',
+        goto: 'a2_14b',
+      },
+      {
+        text: '替他拔',
+        tag: '乌霜边区',
+        if: "origin == 'ebonmarck'",
+        effects: ['rep escann +1'],
+        result: [
+          '你握住剑柄，往外抽了一寸。剑没亮，也没烫手，同握着一截凉铁没两样。它没认你，也没伤你。',
+          { speaker: '克拉丽蒙德', text: '剑不肯断的案子，我也不断。把他的绳子解了。' },
+          '她说完又看了你很久。',
+        ],
+        goto: 'a2_14b',
+      },
+    ],
+  },
+
+  a2_14b: {
+    id: 'a2_14b',
+    title: '镐',
+    text: [
+      '人散了以后，她把你领到城墙上。墙根底下码着四十把新打的石镐，镐头上了油。',
+      { speaker: '克拉丽蒙德', text: '我砍下去的时候他话说到一半。后半句是什么，我夜里常替他往下编。编出来的没有一句是好话。' },
+      { speaker: '克拉丽蒙德', text: '那座山上有位子，就有人想坐。我要把通誓石的石阶毁了，一级不留。北要塞不让人上山，可拦不住监誓人。你带我的人上去。' },
+      '她没等你答，先叫人去备向导：你应不应，路她都借。{?party.liv:卡斯坦蹲在垛口上磨爪子，磨得很响。|}',
+      { if: "is.elf || origin == 'ibevar'", text: '你一进大厅就看出来了。那把剑的弧度，剑身上细细的颤，是先驱精灵的手艺，船上的祖器里有它的兄弟。这座堡里没有第二个人看得出来。' },
+      { if: 'is.god', speaker: '克拉丽蒙德', text: '我砍过一个自己封自己的王。您打不打算坐上去？' },
+    ],
+    choices: [
+      {
+        text: '告诉她：卡林达尔是先驱精灵打的',
+        tag: '精灵',
+        if: "is.elf || origin == 'ibevar'",
+        once: true,
+        effects: ['flag calindal_named', 'rep escann +1', 'rep elders -1'],
+        result: [
+          '她听完，拿拇指在剑柄上抹了一下。',
+          { speaker: '克拉丽蒙德', text: '精灵的剑，人类的手，砍的是人类的术士王。这话传出去，我的骑士们要高兴三年。你们的长老呢？' },
+          '长老们不会高兴：祖器流落在外头，还叫人拿去剜眼睛。',
+        ],
+      },
+      {
+        text: '答她：不坐',
+        if: 'is.god && !flag.a2x_god_asked',
+        once: true,
+        effects: ['flag a2x_god_asked', 'flag a2x_god_wont_sit', 'rep escann +1'],
+        result: [{ speaker: '克拉丽蒙德', text: '好。这句话到了山上，请您当着石头再说一遍。那儿说的才算数。' }],
+      },
+      {
+        text: '答她：还没想好',
+        if: 'is.god && !flag.a2x_god_asked',
+        once: true,
+        effects: ['flag a2x_god_asked', 'rep escann -1', 'approval liv +1'],
+        result: [
+          { speaker: '克拉丽蒙德', text: '又来一个想坐上去的。' },
+          '她叫人把镐的数目从四十改成了八十。',
+        ],
+      },
+      {
+        text: '答应帮她毁阶',
+        effects: ['flag clarimonde_pact', 'rep escann +1', 'approval liv -2'],
+        result: '她同你击了一下掌，手上全是茧。{?party.liv:卡斯坦从垛口上飞走了，天黑才回来，回来一句话没有。|}',
+        goto: 'a2_15',
+      },
+      {
+        text: '不答应：山上的事，到了山上再说',
+        effects: ['approval liv +1'],
+        result: [
+          { speaker: '克拉丽蒙德', text: '那你到了山上看一眼那块石头，再回头想想我的镐。' },
+          '向导是个少了两根指头的老猎户，第二天一早就等在了门口。',
+        ],
+        goto: 'a2_15',
+      },
+    ],
+  },
+
+  a2_15: {
+    id: 'a2_15',
+    title: '北要塞',
+    art: 'ev_forge',
+    loc: '北要塞',
+    date: '1024年花终月',
+    shop: {
+      name: '石匠的库房',
+      blurb: '布洛克的规矩：先报数，再看货，不还价。',
+      stock: ['ward_runestone', 'vigor_runestone', 'hold_shield', 'warhammer', 'greater_healing_potion', 'healing_potion', 'antidote'],
+    },
+    text: [
+      '北要塞贴着试炼山的山根，历代想当卡斯坦的人都从这道门出去。如今门上了三道栓。温斯坦王有令：谁也不许徒步上山。这道令没人违过，因为本来也没人上得去。走到半坡，路就自己拐回来。',
+      '要塞里管石头的是个岩石矮人，叫布洛克。他的账本摊在石案上，一页一道试炼。',
+      { speaker: '布洛克', text: '十道试炼，坏了七道半。头三道剩个壳子，誓石裂到了根。后头六道我只在山脚拿镜子照过，照见三处塌方。那半道是锻炉：炉子是好的，火没了。' },
+      '发饷的窗口后头坐着个哨兵。两年前他在坡上骂了句娘，从此撒不了谎，问什么答什么。百夫长把他调来管饷。北要塞头一回有了一本对得上的账，也头一回人人知道上头扣了多少。',
+      { if: 'party.vezina', speaker: '薇齐娜', text: '我问了他三个问题。三个他都答了，答到第三个他哭了。上了山，我的本子最好合着。' },
+      { if: 'is.gnome', text: '那个哨兵看见你，脱口说了句“这么小”，说完自己捂住了嘴。' },
+      { if: "origin == 'lorent'", text: '要塞西边的草场上，大捷比武会的围栏还立着，漆掉了一半。鲁本二世就是在那道栏里落的马。' },
+      { if: "origin == 'wex' && class == 'barbarian'", text: '山道的前半截你认得。四年前挑人上山，你走到半坡才下来。哪块石头松，哪一段要贴着崖走，脚还记着。' },
+      { if: 'is.god', speaker: '布洛克', text: '建造者巴尔加尔是干完了活，死了，过了几百年才封的。活着就封，工期没法算。我没说您不行，我是说这笔账我不会记。' },
+    ],
+    first: ['codex trialmount', 'codex trials', 'codex tourney'],
+    choices: [
+      {
+        text: '去比武场，照着开销账找那根断枪',
+        tag: '洛伦特',
+        if: "origin == 'lorent'",
+        once: true,
+        check: { skill: 'investigation', dc: 14, party: true, adv: 'item.lance_ledger >= 1 || flag.lance_asked' },
+        ok: {
+          text: '账上记着泪落月 27 日换枪一根，领枪的人画了押。司礼官的记数牌还钉在栏柱上，断枪就压在牌子底下的草里：枪头是钝的，木头是顺着纹裂的，没人锯过。是他自己的枪，自己的手。是失手。{?party.valeran:瓦勒兰把断枪翻过来看了两遍，说他照这个写。|}',
+          effects: ['flag lance_truth', 'quest lance stage 3'],
+        },
+        fail: {
+          text: '记数牌叫耗子啃了一半，草场去年让人犁过，断枪没找着。你雇了两个人翻了一天土，翻出来半副马镫。太后要的答复，你还是得带一个回去。',
+          effects: ['gold -10', 'quest lance stage 3'],
+        },
+      },
+      {
+        text: '同布洛克讲行话：问山上那座炉子的风口朝哪开',
+        tag: '矮人',
+        if: 'is.dwarf',
+        once: true,
+        effects: ['flag a2x_brok_shop'],
+        result: [
+          { speaker: '布洛克', text: '朝东，偏北一指。炉膛是整块凿的，老活儿，比这座要塞岁数大。你上去别动风门，先清灰道。灰道通了，火自己来。' },
+          '他说这些的时候，头一回抬眼看你。',
+        ],
+      },
+      {
+        text: '在炉边歇一晚',
+        once: true,
+        effects: ['rest short'],
+        result: '炉边的石头是暖的。布洛克半夜起来添了一回炭，顺手把你们的靴子挪得离火远了些，嘴里报了个数：三双烤裂了口。',
+      },
+      { text: '上山：不走石阶，走崖', goto: 'a2_16' },
+    ],
+  },
+
   // @@NEXT@@
 };

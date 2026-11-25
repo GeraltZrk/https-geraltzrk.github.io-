@@ -142,6 +142,94 @@ const GATE_FULL = {
   lose: { effects: ['flag fx_ald_hurt'], goto: 'f_08b' },
 };
 
+// 笼子、里门、大厅里的几场
+const SOUL = {
+  title: '翻了一页',
+  intro: '墙里出来一团灰白的东西，脸拉得很长，嘴一直张着。',
+  enemies: [{ id: 'bellowing_soul', name: '号魂' }], noAwe: true,
+  specials: [
+    { id: 'cage', name: '推倒一摞空笼子压住它', desc: '铁的，一人高，码到了梁上',
+      check: { skill: 'athletics', dc: 16 },
+      success: { text: '笼子是一只带一只倒的。铁栏穿过那团东西的时候，它叫的声音变了调。', dmgAll: '4d8', type: 'bludgeoning' },
+      fail: { text: '最底下那只笼子里还有人。你收了手，它没收。', selfDmg: '1d8', type: 'necrotic' } },
+  ],
+  win: { effects: ['xp 500'], goto: 'f_09' },
+  lose: { goto: 'f_09' },
+};
+const SP_BACK = {
+  id: 'back', name: '绕到他背后那道旧口子', desc: '994 年那一刀是从后面进去的',
+  check: { skill: 'acrobatics', dc: 16 },
+  success: { text: '你的剑尖找到了甲上那道口子。六十年前有人从这儿进去过，路是现成的。', dmgAll: '5d8', type: 'piercing' },
+  fail: { text: '想从他身边绕的人，他先出手。这一条他活着的时候就会。', selfDmg: '2d8', type: 'slashing' },
+};
+const SP_YEARS = {
+  id: 'years', name: '把今年是哪一年报给他听', desc: '他还以为是 994 年',
+  check: { skill: 'history', alt: ['persuasion'], dc: 17 },
+  success: { text: '你报了年份，又报了他孙子的岁数。他停了一停，剑尖垂下去半尺。', applyAll: { cond: 'stunned', turns: 1 } },
+  fail: { text: '他用六十年前的宫廷话回了你两个字：退下。' },
+};
+const ARREL = {
+  title: '遭叛者',
+  intro: '他转过身来。冠是正的，脸是灰的。',
+  enemies: [{ id: 'arrel_revenant' }], noAwe: true,
+  specials: [SP_BACK, SP_YEARS],
+  win: { effects: ['xp 800'], goto: 'f_10' },
+  lose: { goto: 'f_09b' },
+};
+const ARREL_MARION = {
+  title: '遭叛者',
+  intro: '马里昂叫了一声祖父。门口那位停了一停，剑尖垂下去半尺。你们趁这一停先动了手。',
+  enemies: [{ id: 'arrel_revenant', hpMult: 0.75 }], allies: [{ id: 'knight', name: '马里昂一世', hpMult: 1.5 }], noAwe: true,
+  specials: [SP_BACK, SP_YEARS],
+  win: { effects: ['xp 800'], goto: 'f_10' },
+  lose: { goto: 'f_09b' },
+};
+const SP_TOKEN = {
+  id: 'order', name: '把他最后那道令喊回给他', desc: '沼泽堡那天他喊的是：放下兵器',
+  check: { skill: 'intimidation', alt: ['performance'], dc: 17, adv: 'item.legion_token >= 1' },
+  success: { text: '“放下兵器！”他的手松了一下。三十七年里他自己做主下过的令，只有这一道。', applyAll: { cond: 'stunned', turns: 1 } },
+  fail: { text: '他抬起一只手。你们的手先于脑子松开了一下。', selfDmg: '2d6', type: 'psychic' },
+};
+const LIII = {
+  title: '左手边那位',
+  intro: '五十三世站直了。乌钢剑是从椅背后头抽出来的，抽得很慢。',
+  enemies: [{ id: 'castan_liii_revenant' }], noAwe: true,
+  specials: [SP_TOKEN],
+  win: { effects: ['flag fx_liii_done', 'xp 800'], goto: 'f_11' },
+  lose: { effects: ['flag fx_liii_done', 'flag fx_ald_hurt'], goto: 'f_11' },
+};
+const LIII_SPOON = {
+  title: '左手边那位',
+  intro: '五十三世站直了。他的眼睛还留在桌上那把木勺上，剑抽到一半才想起来往下抽。',
+  enemies: [{ id: 'castan_liii_revenant', hpMult: 0.7 }], noAwe: true,
+  specials: [SP_TOKEN],
+  win: { effects: ['flag fx_liii_done', 'xp 800'], goto: 'f_11' },
+  lose: { effects: ['flag fx_liii_done', 'flag fx_ald_hurt'], goto: 'f_11' },
+};
+const EMP_KILL = {
+  title: '被牵的皇帝',
+  intro: '皇帝转过身来，剑举得很平。他的嘴在动：别留手。',
+  enemies: [EMPEROR], allies: [ALD_NORM], noAwe: true,
+  specials: [
+    { id: 'name', name: '喊他的本名', desc: '眼睛后面还有人',
+      check: { skill: 'persuasion', alt: ['intimidation'], dc: 17 },
+      success: { text: '你喊的是名字，没带帝号。他挣出了一口气，剑停在半空，停了一整轮。', applyAll: { cond: 'stunned', turns: 1 } },
+      fail: { text: '他听见了。脚没听见。' } },
+  ],
+  win: { effects: ['unflag castan_alive', { if: 'flag.castan_liv', then: ['flag liv_dead'] }, 'xp 900'], goto: 'f_11' },
+  lose: { effects: ['flag fx_emp_foe'], goto: 'f_11' },
+};
+// 主战的友军：行 = muster 给的人（0／一队／两队），列 = 阿德蕾西娅（带伤／照常／你带出来的）
+const AL00 = [ALD_HALF];
+const AL01 = [ALD_NORM];
+const AL02 = [ALD_STRONG];
+const AL10 = [ALD_HALF, TEAM1];
+const AL11 = [ALD_NORM, TEAM1];
+const AL12 = [ALD_STRONG, TEAM1];
+const AL20 = [ALD_HALF, TEAM1, TEAM2, TEAM3];
+const AL21 = [ALD_NORM, TEAM1, TEAM2, TEAM3];
+const AL22 = [ALD_STRONG, TEAM1, TEAM2, TEAM3];
+
 // f_11c 的收尾（§11.6）：皇帝还被牵着、还活着、没人夺过缰绳，坎雷克倒下前把那个字念给了屋里的人。
 const CLOSE = {
   if: 'flag.castan_crowned && flag.castan_alive && !flag.knot_cut && !flag.bridle_pc && !flag.bridle_wise',
@@ -524,7 +612,7 @@ export const SCENES = {
           '他们停了。火把一支一支放低，放得很齐。',
           { speaker: '火刑队长', text: '那该烧谁？您给个名字，我们换一根柱子。' },
           { if: 'party.valeran', speaker: '瓦勒兰', text: '恕我直言，这些人是您的。' },
-          '{?flag.god_crusade:你叫他们把柱子上的神号凿掉。他们凿了，凿得很仔细，凿下来的石粉拿布包好，揣进了怀里。|他们跪下的时候问你神号怎么写，好往柱子上刻。瓦洛森那个学生是自己走的，走出很远才敢回头。}',
+          '{?flag.god_crusade:你叫他们把柱子上的神号凿掉。他们凿了，凿得很仔细，凿下来的石粉拿布包好，揣进了怀里。|他们跪下的时候问你神号怎么写，好往柱子上刻。柱子上那位是自己下来的，走出很远才敢回头。}',
         ] },
       { text: '结阵，从正面清过去', if: 'world.writ >= 4',
         combat: MIRE },
@@ -638,6 +726,306 @@ export const SCENES = {
       { text: '把他的枪横放在他胸口', if: '!flag.fx_ald_hurt', once: true, effects: ['rep escann +1', { if: 'party.valeran', then: ['approval valeran +1'] }],
         result: '枪比看上去轻。枪杆上刻着一行小字，是凯伦的名字，刻的人手不稳。' },
       { text: '进门', goto: 'f_09' },
+    ],
+  },
+
+  f_09: {
+    id: 'f_09',
+    title: '笼子',
+    loc: '山上的宅子 · 前厅',
+    text: [
+      '前厅有四十步深。笼子从地面码到梁上，铁的，一人高，每只挂一块木牌，牌上是数目。',
+      '有的笼子里的人已经白了，贴着栏杆站着，不出声。有的还在说话，说的是哪个村，家里还剩谁。稻草有些日子没换了。',
+      '里门口站着一个戴冠的人，背朝着你们。他后背的甲上有一道旧口子，是从后面捅进去的。达梅里亚的“遭叛者”阿雷尔二世，994 年死的。',
+      { if: 'flag.vezina_left && !flag.vezina_eye && !flag.vezina_freed && world.unburied <= 6', text: '左数第三排有一只笼子里坐着薇齐娜。她瘦了很多，手指在栏杆上一格一格地点，在数笼子。' },
+      { if: 'flag.vezina_left && !flag.vezina_eye && world.unburied >= 7', text: '左数第三排有一只笼子空着。木牌上的数目旁边多写了一个名字：薇齐娜·马尔尼德。字很工整，是她自己的笔迹。' },
+      { if: 'is.elf', text: '笼子里的人看见你的耳朵，有几个往后缩，有几个把手伸了出来。' },
+      { if: 'party.barry', text: '巴里把篮子里剩的饼掰开，从栏杆缝里一块一块递进去。这回他没说话。' },
+      { if: "origin == 'dameria'", text: '马里昂跟到了这儿。他看着里门口那个背影，头盔摘了，夹在胳膊底下。' },
+      { if: 'flag.fx_cages', text: '开过的那一排空着，笼门朝外敞着。' },
+    ],
+    first: ['codex ravenhill_2'],
+    choices: [
+      { text: '分清哪些笼子里的人还救得了，开锁', once: true,
+        check: { skill: 'medicine', dc: 16, party: true, adv: 'flag.fx_vezina_tip || is.elf' },
+        ok: { effects: ['flag fx_cages', 'xp 300'], combat: SOUL,
+          text: '木牌背面有针眼大的记号，白了的画圈，没白的画点。你照着点开了一排。出来四十一个，能自己走的二十六个。里门后面有人翻了一页书。' },
+        fail: { effects: ['flag fx_cages', 'hp -8'], combat: SOUL,
+          text: '你开到第五只，里头那个已经白了。他扑出来的时候阿德蕾西娅离着三步。你胳膊上多了一排牙印。里门后面有人翻了一页书。' } },
+      { text: '看木牌上的数目是照什么排的', tag: '施法者', if: 'is.caster', once: true,
+        check: { skill: 'arcana', dc: 16 },
+        ok: { effects: ['flag fx_tags_read'], text: '数目是页码。每只笼子对着那本书里的一页。人还没死，页已经留好了，页眉上写着名字。' },
+        fail: { effects: ['hp -5'], text: '你把手按在木牌上，想摸出法术的走向。牌是冰的，你半条胳膊麻到了天黑。' } },
+      { text: '开薇齐娜那只笼子', if: 'flag.vezina_left && !flag.vezina_eye && !flag.vezina_freed && world.unburied <= 6', once: true,
+        effects: ['flag vezina_freed', 'approval vezina +2'],
+        result: [
+          { speaker: '薇齐娜', text: '九百九十六只。有四只是空的，其中一只昨天还不空。你那年写给各国的那封信，我在里头背了很多遍，一遍也没背错。' },
+          '她出来以后先抬头数房梁上的乌鸦。一只也没有。她把你那页账要了过去，说往下她来翻。',
+        ] },
+      { text: '替他把六十年没办的葬礼办了', tag: '旧礼', if: "faction == 'rites'", goto: 'f_10', effects: ['world unburied -1', 'xp 800'],
+        result: [
+          '没有棺材，没有束腰，只有一小截奈拉特烛和他的全名。你把 994 年到今年的年数报给他听，一年一年地报。',
+          '报到第五十九年，他把剑放在地上，自己躺下了，两只手交叠在胸口。冠没摘。{?origin == \'dameria\':马里昂替他把冠扶正了。|}',
+        ] },
+      { text: '让马里昂先开口', tag: '达梅里亚', if: "origin == 'dameria'", combat: ARREL_MARION },
+      { text: '从他身边过去，过不去就打', combat: ARREL },
+    ],
+  },
+
+  f_09b: {
+    id: 'f_09b',
+    title: '空笼子',
+    text: [
+      '你是在一只空笼子里醒的，木牌上的数目还没写。他把你们扔进来，就回门口站着去了。',
+      '阿德蕾西娅在外头开锁，用的是她的发簪。里门是趁他转身的时候推开的。他听见了，没回头。',
+    ],
+    next: 'f_10',
+  },
+
+  f_10: {
+    id: 'f_10',
+    title: '死去的国王们',
+    art: 'ev_apostle',
+    loc: '山上的宅子 · 大厅',
+    text: [
+      '大厅里摆着一张长桌。两边的高背椅上坐满了人，都戴着冠，都不喘气。上首那位在写字，写完一行才抬头。屋里有没药味。',
+      { speaker: '坎雷克', text: '请坐，椅子不够。我写到 1053 年真霜月了，再有两页就到你们进门。劳驾等等，后脑勺痒，这得怪维纳克。' },
+      '他右手边的椅子空着，坐它的人在门口站岗。左手边{?flag.body_quiet || flag.body_left:坐着五十三世，冠是歪的，没人替他扶|那把也空着}。',
+      { if: '!flag.body_quiet && !flag.body_left', speaker: '坎雷克', text: '左边这把是留给先帝的。有人抢在我前头把他安顿了，安顿得还挺体面。我为这事三十年没睡好，虽然我本来也不睡。' },
+      { if: "origin == 'ebonmarck' && (flag.body_quiet || flag.body_left)", text: '五十三世的头朝你胸口的军团牌转了过来。{?flag.p_laid_arms:他把搁在膝头的剑拿起来，放到了桌上，剑柄朝外。|}{?flag.p_fought_on:他朝你点了一下头，手没离开剑柄。|}' },
+      { if: 'party.liv && flag.liv_saw_body && (flag.body_quiet || flag.body_left)', speaker: '卡斯坦', text: '爹。' },
+      { if: 'party.liv && flag.liv_saw_body && (flag.body_quiet || flag.body_left)', text: '她就叫了这一声。椅子上那位的脸朝着桌面。' },
+      { if: 'is.god', text: '他不怕你。他从书里抽出一张单子，把你这些年显过的本事一件一件念了，{?var.god_acts >= 4:念了半支蜡烛的工夫，|单子不长，}口气是在念荐书。念完他从桌子那头推过来一把椅子。' },
+      { if: 'is.god', speaker: '坎雷克', text: '誓词写的是“至我寿终之日”。我找了三十年没有寿终的人。您请坐。' },
+    ],
+    first: ['codex canrec', 'codex book_of_canrec', 'codex canrec_2', 'codex bridle_3'],
+    choices: [
+      { text: '问他那根缰绳到底是什么', once: true, effects: ['xp 150'],
+        result: [
+          { speaker: '坎雷克', text: '契约。誓词是条款，“至我寿终之日”是期限。我师父没碰过皇帝的脑子，他只是把契约上听誓的那一方换成了自己。' },
+          { speaker: '坎雷克', text: '亚科布同你讲的是手艺，林子里那个老兵同你讲的是罪。他们都没读过正文。{?flag.knows_why_watched:渡鸦山那帮看鸟的读过，他们选了坐着。|}' },
+        ] },
+      { text: '问他要这么多死人干什么', once: true, effects: ['xp 150'],
+        result: [
+          { speaker: '坎雷克', text: '活人会变卦：一袋金子，一记闷棍，一个字，就换了主子。死人不改口。' },
+          { speaker: '坎雷克', text: '这本是花名册。在册的都在位，没有逃的，没有欠饷的。至于当年往我这儿送尸首的那道令，是我师父下的。这不能怪收货的。' },
+          { if: 'flag.knows_canrec_plan', speaker: '坎雷克', text: '修山那一段你们读过我的信了，我不重讲。一位死了也还在位的皇帝，这主意有什么不好？' },
+        ] },
+      { text: '把守砖人的勺子放到五十三世面前', if: 'item.stew_spoon >= 1 && (flag.body_quiet || flag.body_left)', once: true, effects: ['flag fx_spoon'],
+        result: '他看了一眼。看了很久的一眼。坎雷克翻书的手停了，头一回露出没算到的样子。' },
+      { text: '在他推过来的椅子上坐下，听他讲完', tag: '神', if: 'is.god', once: true,
+        effects: ['var god_acts +1', 'flag knows_word',
+          { if: 'party.liv', then: ['approval liv -1'] }, { if: 'party.valeran', then: ['approval valeran -1'] },
+          { if: 'party.barry', then: ['approval barry -1'] }, { if: 'party.vezina', then: ['approval vezina -1'] }],
+        result: [
+          '椅子是硬的。他很高兴，把那个字当见面礼念给你听了。烛火往同一边倒，前厅的笼子一齐响了一声。',
+          { speaker: '阿德蕾西娅', text: '您坐下去的时候我数了一遍。屋里站着的活人少了一个。' },
+        ] },
+      { text: '让他把话说完', goto: 'f_10b' },
+    ],
+  },
+
+  f_10b: {
+    id: 'f_10b',
+    title: '那个字',
+    text: [
+      { if: 'flag.castan_crowned && flag.castan_alive && !flag.castan_pc', text: '坎雷克把笔搁下，朝你们身后看过去。站在那儿的是山上那位皇帝。{?flag.castan_garrec:加雷克，五十五岁，手里是他父亲那一路的剑。|}{?flag.castan_lucan:卢坎，三十四岁，耳朵尖冻得发红。|}{?flag.castan_liv:卡斯坦，六十一岁，嘴里还在嚼东西。|}' },
+      { if: 'flag.castan_crowned && flag.castan_alive', text: '他说了一个字。' },
+      { if: 'flag.castan_crowned && flag.castan_alive && !flag.knot_cut && !flag.castan_pc', text: '烛火往同一边倒。前厅的笼子一齐响了一声，是里头的人同时抓住了栏杆。皇帝的左脚往前迈了一步，右脚跟上了。眼睛还是自己的。' },
+      { if: 'flag.castan_crowned && flag.castan_alive && !flag.knot_cut && flag.castan_liv', speaker: '卡斯坦', text: '我的脚。掌玺大臣，朕的脚不听朕的。' },
+      { if: 'flag.castan_crowned && flag.castan_alive && !flag.knot_cut && flag.castan_pc', text: '烛火往同一边倒。前厅的笼子一齐响了一声。你的左脚往前迈了一步。你没叫它迈。' },
+      { if: 'flag.castan_crowned && flag.castan_alive && flag.knot_cut', text: '烛火晃了晃，又立直了。前厅没有动静。{?flag.castan_pc:你的脚还在原地。|皇帝低头看了看自己的脚，又抬头看了看他。}' },
+      { if: 'flag.castan_crowned && flag.castan_alive && flag.knot_cut', speaker: '坎雷克', text: '解了？谁解的？' },
+      { if: 'flag.castan_crowned && flag.castan_alive && flag.knot_cut', text: '他把那个字又念了一遍，念得很慢，像在核一笔对不上的账。' },
+      { if: '!(flag.castan_crowned && flag.castan_alive)', text: '坎雷克把笔搁下，朝你们身后看了看，又看了一遍。' },
+      { if: '!(flag.castan_crowned && flag.castan_alive)', speaker: '坎雷克', text: '{?flag.mountain_sealed:山封了。|三十三年，山上一个能用的人也没有。}我备了一个字，等了半辈子，如今没处念。那就照老办法点名。' },
+      { if: '!(flag.castan_crowned && flag.castan_alive)', text: '他把书翻到中间，手指按在一个名字上。' },
+      { if: 'party.vezina', text: '薇齐娜把本子合上了。上一回她这么干，是在试炼山的绳子底下。' },
+    ],
+    enter: ['unflag fx_emp_foe', 'unflag fx_emp_ally', 'unflag fx_pc_dragged'],
+    choices: [
+      { text: '把你知道的那半个字接上去', if: 'flag.castan_crowned && flag.castan_alive && !flag.knot_cut && !flag.castan_pc && flag.knows_word', goto: 'f_11',
+        effects: ['flag bridle_pc', { if: 'party.vezina', then: ['approval vezina -1'] }],
+        result: '你只会前半个。后半个他刚替你念了。两半合上的时候，皇帝的脚停了，回头看你。他看你的样子，同刚才看坎雷克没有两样。' },
+      { text: '朝伊迪丝点头', if: 'flag.castan_crowned && flag.castan_alive && !flag.knot_cut && !flag.castan_pc && world.writ >= 7', goto: 'f_11',
+        effects: ['flag bridle_wise', { if: 'party.vezina', then: ['approval vezina -1'] }, { if: 'party.valeran', then: ['approval valeran -1'] }],
+        result: [
+          '伊迪丝摘了一只手套。她说的话很短。皇帝的脚停了，转过身，朝她站着。',
+          { speaker: '伊迪丝', text: '接住了。我不松手，他就不走。这话你听着耳熟吧。' },
+        ] },
+      { text: '现在就动手，趁他还没走到桌边', if: 'flag.castan_crowned && flag.castan_alive && !flag.knot_cut && !flag.castan_pc', combat: EMP_KILL },
+      { text: '不动他，先对付桌子那头的', if: 'flag.castan_crowned && flag.castan_alive && !flag.knot_cut && !flag.castan_pc', goto: 'f_11',
+        effects: ['flag fx_emp_foe'],
+        result: '皇帝走到了坎雷克的椅子后面，转过身，拔了剑。他的嘴在动，没出声。看口型是两个字：快点。' },
+      { text: '咬住你知道的那半个字，把脚钉在地上', if: 'flag.castan_crowned && flag.castan_alive && !flag.knot_cut && flag.castan_pc && flag.knows_word', goto: 'f_11',
+        effects: ['flag bridle_pc'],
+        result: '两半个字在你嘴里合上了。脚停了。牵你的那根绳，另一头现在攥在你自己手里。' },
+      { text: '想站住', if: 'flag.castan_crowned && flag.castan_alive && !flag.knot_cut && flag.castan_pc && !flag.knows_word', goto: 'f_11',
+        effects: ['flag fx_pc_dragged'],
+        result: [
+          '你没站住。走到第四步，后脑勺上挨了一下重的，是剑柄。',
+          { speaker: '阿德蕾西娅', text: '沼泽堡的土办法。大人，您醒过来的这口气不长，省着用。' },
+        ] },
+      { text: '告诉他是谁解的', if: 'flag.castan_crowned && flag.castan_alive && flag.knot_cut', goto: 'f_11',
+        effects: [{ if: '!flag.castan_pc', then: ['flag fx_emp_ally'] }, 'xp 150'],
+        result: [
+          '{?flag.god_half_sentence:你说是你自己，顺手扯下来的。|}{?!flag.god_half_sentence && flag.knot_alarian:你说是塞纳蒂尔的阿拉里安，用的是一把竖琴。|}{?!flag.god_half_sentence && flag.knot_ravens:你说是渡鸦山那帮看鸟的。|}{?!flag.god_half_sentence && flag.knot_iacob:你说是亚科布，戴罪干的活。|}最后一股是一位半身人国王从兜里掏出来的。',
+          { speaker: '坎雷克', text: '三十三年。我等活人修山等了三十三年，他们修的时候顺手把我的字拆了。劳驾，这回是真痒。' },
+        ] },
+      { text: '不答，拔剑', if: 'flag.castan_crowned && flag.castan_alive && flag.knot_cut', goto: 'f_11',
+        effects: [{ if: '!flag.castan_pc', then: ['flag fx_emp_ally'] }, { if: 'party.liv', then: ['approval liv +1'] }],
+        result: '{?flag.castan_pc:你拔了剑。坎雷克把那个字念了第三遍，声音小了。|皇帝先拔的剑，站到了你左手边。坎雷克把那个字念了第三遍，声音小了。}' },
+      { text: '问他手指按着的是谁的名字', if: '!(flag.castan_crowned && flag.castan_alive)', goto: 'f_11', effects: ['xp 150'],
+        result: [
+          { speaker: '坎雷克', text: '屠夫原，四百零六座坟里的第三百九十一位。你们的账页上有他，我的册上也有。两本账对得上，这是我最得意的地方。' },
+        ] },
+      { text: '拔剑', if: '!(flag.castan_crowned && flag.castan_alive)', goto: 'f_11',
+        effects: [{ if: 'party.liv', then: ['approval liv +1'] }],
+        result: '他叹了口气，说他这辈子每回讲到要紧处，都有人拔剑。' },
+    ],
+  },
+
+  f_11: {
+    id: 'f_11',
+    title: '谁付账',
+    text: [
+      '坎雷克站起来了。他比坐着的时候矮，袍子下摆拖着地。那本书摊在桌上，页边自己在动。',
+      { speaker: '坎雷克', text: '名册上还有空行，诸位可以自己挑。字我来写，我的字比你们的好。' },
+      { if: 'flag.fx_emp_foe', text: '皇帝站在他椅子后面，{?flag.castan_liv:爪尖冲着地|剑已经出了鞘}。他一直看着你。' },
+      { if: 'flag.fx_emp_ally', text: '皇帝站在你左手边，把有誓烙的那只手按在{?flag.castan_liv:腰间的酒壶上|剑柄上}，说这一阵算山上欠山下的。' },
+      { if: 'flag.bridle_pc && flag.castan_crowned && flag.castan_alive && !flag.castan_pc', text: '皇帝站在你身后三步，一动不动。你不开口，他就不动。' },
+      { if: 'flag.bridle_wise && flag.castan_crowned && flag.castan_alive', text: '皇帝站在伊迪丝身后三步，一动不动。' },
+      { if: 'flag.fx_liii_up', text: '左手边的椅子响了一声。五十三世在起身，起得很慢，一只手先撑住了桌沿。阿德蕾西娅已经同书里出来的东西接上了，腾不出手。' },
+      { if: 'flag.fx_liii_done', text: '五十三世倒在他那把椅子旁边，冠滚到了桌子底下。' },
+      { if: 'flag.vezina_freed', text: '薇齐娜站在门边，手里是你那页账，眼睛在书和账页之间来回走。' },
+      { if: 'var.muster >= 2', text: '会师的人堵住了大厅的两扇门。' },
+    ],
+    enter: [
+      'var fx_ald =1',
+      { if: 'flag.winters_squire', then: ['var fx_ald +1'] },
+      { if: 'flag.fx_ald_hurt', then: ['var fx_ald -1'] },
+      { if: "(flag.body_quiet || flag.body_left) && !(origin == 'ebonmarck' && flag.p_laid_arms) && !flag.fx_liii_done", then: ['flag fx_liii_up'], else: ['unflag fx_liii_up'] },
+      'var fx_cfg =0',
+      { if: 'flag.fx_emp_foe', then: ['var fx_cfg +9'] },
+      { if: 'flag.fx_emp_ally && !flag.fx_emp_foe', then: ['var fx_cfg +18'] },
+      { if: 'var.muster >= 2 && var.muster < 4', then: ['var fx_cfg +3'] },
+      { if: 'var.muster >= 4', then: ['var fx_cfg +6'] },
+      { if: 'var.fx_ald == 1', then: ['var fx_cfg +1'] },
+      { if: 'var.fx_ald >= 2', then: ['var fx_cfg +2'] },
+    ],
+    choices: [
+      { text: '举起军团牌，替他把那道令再下一遍', tag: '乌霜边区', if: "flag.fx_liii_up && origin == 'ebonmarck'",
+        check: { skill: 'persuasion', alt: ['religion'], dc: 16, mods: [{ if: 'flag.fx_spoon', n: 2, why: '守砖人的勺子还在桌上' }] },
+        ok: { goto: 'f_11', effects: ['flag fx_liii_done', 'xp 800'],
+          text: '“放下兵器。”你用的是军团的喊法。他站了一会儿，把乌钢剑平放在桌上，坐了回去。这回他坐得比刚才直。' },
+        fail: { text: '他听见了，头朝你偏了偏。坎雷克在那头咳了一声，他的手又握紧了。', combat: LIII } },
+      { text: '先挡住五十三世', if: 'flag.fx_liii_up && flag.fx_spoon', combat: LIII_SPOON },
+      { text: '先挡住五十三世', if: 'flag.fx_liii_up && !flag.fx_spoon', combat: LIII },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 0', combat: { ...HALL, enemies: FOE, allies: AL00 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 1', combat: { ...HALL, enemies: FOE, allies: AL01 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 2', combat: { ...HALL, enemies: FOE, allies: AL02 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 3', combat: { ...HALL, enemies: FOE, allies: AL10 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 4', combat: { ...HALL, enemies: FOE, allies: AL11 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 5', combat: { ...HALL, enemies: FOE, allies: AL12 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 6', combat: { ...HALL, enemies: FOE, allies: AL20 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 7', combat: { ...HALL, enemies: FOE, allies: AL21 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 8', combat: { ...HALL, enemies: FOE, allies: AL22 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 9', combat: { ...HALL, enemies: FOE_EMP, allies: AL00 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 10', combat: { ...HALL, enemies: FOE_EMP, allies: AL01 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 11', combat: { ...HALL, enemies: FOE_EMP, allies: AL02 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 12', combat: { ...HALL, enemies: FOE_EMP, allies: AL10 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 13', combat: { ...HALL, enemies: FOE_EMP, allies: AL11 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 14', combat: { ...HALL, enemies: FOE_EMP, allies: AL12 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 15', combat: { ...HALL, enemies: FOE_EMP, allies: AL20 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 16', combat: { ...HALL, enemies: FOE_EMP, allies: AL21 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 17', combat: { ...HALL, enemies: FOE_EMP, allies: AL22 } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 18', combat: { ...HALL, enemies: FOE, allies: [...AL00, EMPEROR] } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 19', combat: { ...HALL, enemies: FOE, allies: [...AL01, EMPEROR] } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 20', combat: { ...HALL, enemies: FOE, allies: [...AL02, EMPEROR] } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 21', combat: { ...HALL, enemies: FOE, allies: [...AL10, EMPEROR] } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 22', combat: { ...HALL, enemies: FOE, allies: [...AL11, EMPEROR] } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 23', combat: { ...HALL, enemies: FOE, allies: [...AL12, EMPEROR] } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 24', combat: { ...HALL, enemies: FOE, allies: [...AL20, EMPEROR] } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 25', combat: { ...HALL, enemies: FOE, allies: [...AL21, EMPEROR] } },
+      { text: '动手', if: '!flag.fx_liii_up && var.fx_cfg == 26', combat: { ...HALL, enemies: FOE, allies: [...AL22, EMPEROR] } },
+    ],
+  },
+
+  f_11c: {
+    id: 'f_11c',
+    title: '谁付账',
+    text: [
+      { if: '!flag.fx_lost', text: '坎雷克倒在桌腿边上，袍子瘪下去一半，嘴还在动。号魂缩回了书里。书页鼓着，一下一下地往外顶。' },
+      { if: 'flag.fx_lost', text: '你们是被阿德蕾西娅一个人顶到爬起来的。坎雷克倒在桌腿边上。她靠着桌子站着，左边的甲全开了，血顺着剑往下走。' },
+      { speaker: '坎雷克', text: '倒下不算完。书还在，我那一页还在。谁撕我那一页，书里这些位松绑的时候，头一个撕的就是谁。这一条我写在序里了。' },
+      { if: 'flag.castan_crowned && flag.castan_alive && !flag.knot_cut && !flag.bridle_pc && !flag.bridle_wise && !flag.castan_pc', text: '他歪过头，把那个字又念了一遍。这回念得很清楚，是教人的念法。烛火倒向你们这一边。' },
+      { if: 'flag.winters_squire', speaker: '阿德蕾西娅', text: '您教过我，盖印之前先数人。我数过了，够一个人去。' },
+      { if: '!flag.winters_squire', speaker: '阿德蕾西娅', text: '大人，十三年前坟边上是我数的，今天也该我数。我数过了，够一个人去。' },
+      { if: 'is.immortal', speaker: '阿德蕾西娅', text: '您别往前站。您去不算数，您又不会死。书撕不动您，这笔账就一直挂着。' },
+      { if: 'flag.fx_pc_dragged', text: '你的脚又在往桌子那边挪。后脑勺上那一下顶不了多久。这口气够你走到书跟前，不够你走回来。' },
+      { if: 'flag.fx_lost && !flag.fx_pc_dragged', text: '她已经把手按在书上了。屋里别的人都还没站稳。' },
+    ],
+    first: [
+      { if: 'item.book_of_canrec < 1', then: ['item +book_of_canrec'] },
+      'quest crusade done', 'quest sixteen_graves done', 'quest canrec_trail done',
+    ],
+    choices: [
+      { text: '让阿德蕾西娅去', if: '!flag.fx_pc_dragged', goto: 'f_12',
+        effects: ['flag price_aldresia', 'item +silversong', CLOSE],
+        result: [
+          '她把银歌解下来放在你手里，说剑用不着陪着去。然后她把那一页撕了。',
+          '声音不大，是纸的声音。书里出来的东西只找了她一个人。你数到七，屋里静了。',
+        ] },
+      { text: '你自己去', if: '!flag.fx_pc_dragged && !flag.fx_lost', goto: 'f_12',
+        effects: ['flag price_pc', { if: 'is.mortal', then: ['flag fx_pc_dead', { if: 'flag.castan_pc', then: ['unflag castan_alive'] }] }, CLOSE],
+        result: [
+          { if: 'is.mortal', text: '你把印摘下来，塞给阿德蕾西娅。她没接稳，掉了一回。{?party.liv:卡斯坦骂了一句很长的。|}那一页比看上去厚，你撕了两下。' },
+          { if: 'is.mortal', text: '往下的事，是别人看见的。' },
+          { if: 'is.immortal', text: '那一页你撕了。书里的东西全扑在你身上，撕了很久，撕不动。它们停手的时候，你左手从腕子到肘弯多了一道白印。' },
+          { if: 'is.immortal', speaker: '阿德蕾西娅', text: '我说过不算数。您看，它们没走，它们拿您当自己人了。' },
+        ] },
+      { text: '让瓦勒兰去：他已经站出来了', if: '!flag.fx_pc_dragged && !flag.fx_lost && party.valeran && approval.valeran >= 6', goto: 'f_12',
+        effects: ['flag price_companion', 'flag price_valeran', 'companion -valeran', CLOSE],
+        result: [
+          { speaker: '瓦勒兰', text: '恕我直言，这一份该我。您还得回去交印，她才二十七。我五十二了，家父在莫尔班平原比我现在小十岁。' },
+          '他撕那一页之前先把手套摘了，叠好，放在桌角。',
+        ] },
+      { text: '让卡斯坦去：她把酒壶塞给你了', if: '!flag.fx_pc_dragged && !flag.fx_lost && party.liv && approval.liv >= 6 && !flag.liv_bridled', goto: 'f_12',
+        effects: ['flag price_companion', 'flag price_liv', 'companion -liv', CLOSE],
+        result: [
+          { speaker: '卡斯坦', text: '五十四世批了：这笔账朕来付。壶里还有一半，你替我喝，别洒。' },
+          '她是飞过去的，最后一回。翅膀扫倒了桌上三支蜡烛。',
+        ] },
+      { text: '喊皇帝的名字，叫他自己来', goto: 'f_12',
+        if: 'flag.fx_emp_foe && !flag.fx_lost && flag.castan_crowned && flag.castan_alive && ((flag.castan_garrec && rep.dragon >= 3) || (flag.castan_lucan && (flag.lucan_marion || flag.lucan_garrec || (flag.lucan_alva && flag.years_wards))) || (flag.castan_liv && approval.liv >= 4))',
+        effects: ['flag price_emperor', 'unflag castan_alive', { if: 'flag.castan_liv', then: ['flag liv_dead'] }],
+        result: [
+          '你喊的是名字，没带帝号。他挣开了半口气，同五十三世在沼泽堡喊停手那回一个样。这半口气他没拿来说话。',
+          '他走到桌边，把那一页撕了。书里出来的东西只找了他一个人。{?flag.castan_liv:她撕之前回头冲你喊了一句：酒钱不用结了。|}',
+        ] },
+      { text: '喊皇帝的名字，叫他自己来', once: true,
+        if: 'flag.fx_emp_foe && !flag.fx_lost && flag.castan_crowned && flag.castan_alive && !((flag.castan_garrec && rep.dragon >= 3) || (flag.castan_lucan && (flag.lucan_marion || flag.lucan_garrec || (flag.lucan_alva && flag.years_wards))) || (flag.castan_liv && approval.liv >= 4))',
+        effects: ['hp -5'],
+        result: '他的眼睛朝你转过来了。嘴张了张，脚没动。你同他之间那点交情，不够换这半口气。书页在你手边掀了一下，掀掉你一层皮。' },
+      { text: '走到书跟前，自己撕', if: 'flag.fx_pc_dragged', goto: 'f_12',
+        effects: ['flag price_emperor', { if: 'is.mortal', then: ['flag fx_pc_dead', 'unflag castan_alive'] }, CLOSE],
+        result: [
+          { if: 'is.mortal', text: '你走过去了。脚是别人在牵，手是你自己的。你把那一页撕了。阿德蕾西娅在你身后数数，数到一就停了。' },
+          { if: 'is.mortal', text: '往下的事，是别人看见的。' },
+          { if: 'is.immortal', text: '你走过去，把那一页撕了。书里的东西扑上来撕了很久，撕不动。有誓烙的那只手上从此多了一道白印。' },
+        ] },
+      { text: '不撕。从账页上的头一个名字念起', if: '!flag.fx_pc_dragged && !flag.fx_lost && world.unburied <= 3 && item.ledger_page >= 1 && flag.knows_roster', goto: 'f_12',
+        effects: ['flag price_names', CLOSE],
+        result: [
+          '{?is.god:你一夜就念完了。书里的魂同一夜全出去了，大厅的窗纸破了一半。|你念了头一个名字。书页平下去一点。第二个。阿德蕾西娅搬来一把椅子，这回你坐了。}',
+          '坎雷克那一页留在最后。{?flag.fx_walked:雾林里那些木牌上的名字，你念得最顺。|}他得先听完前面所有的。',
+        ] },
+      { text: '谁也别去。把书上的记号接过来', if: '!flag.fx_pc_dragged && !flag.fx_lost', goto: 'f_12',
+        effects: ['flag book_kept', CLOSE],
+        result: [
+          '你把手按在书脊上。记号换手的时候没有声音。坎雷克看着你，头一回没抱怨。',
+          { speaker: '坎雷克', text: '这一行我没想到。字还是我来写吧。你的字我看过，不行。' },
+        ] },
     ],
   },
 

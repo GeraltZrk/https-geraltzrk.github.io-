@@ -27,10 +27,10 @@
 // ────────────────────────────────────────────────────────────────
 
 // 五个序章的末场是同一张桌子、同一个人：拱廊，登记册，炭盆上的蜡锅，跺脚，“名字怎么写”问两遍，“下一位”。
-const DESK = '旧斗兽场的拱廊底下摆着一张桌子。桌上一本登记册，一只炭盆，盆上坐着一口小锅，锅里的蜡化了一半。书记官在桌子后头跺脚。';
+const DESK = '旧斗兽场的拱廊底下排着队。一张桌，一本登记册，一只炭盆，盆上坐着一口化蜡的小铜锅。书记官的两只脚在桌子底下轮流跺。';
 const DESK_GOD = { if: 'is.god', text: '写到一半，他抬头看了你一眼，低头，又抬头看了一眼。然后他把蜡锅往自己那边挪了半尺，接着写。' };
 const SEAL_OUT = [
-  '他从锅里舀了一勺蜡，浇在你那一行的末尾，拿一枚铜柄的印按下去，数到三才提起来。印擦干净，递给你。柄上缠着麻绳，还是热的。',
+  '他从桌下的匣子里数出一枚铜柄蜡印，柄上缠着麻绳，往蜡锅里蘸了一下，在你那一行的末尾按了个样，数到三才提起来。印擦干净，递给你，还是热的。',
   { speaker: '书记官', text: '明天在场子里当众再发一遍誓。印面别拿手摸，沾了油盖不清。下一位。' },
 ];
 const JAM = [
@@ -532,7 +532,7 @@ export const SCENES = {
         effects: ['item +lunatein_plank'],
         result: [
           { speaker: '老兵', text: '十个金冠。柜台我另找一块，酒馆不认字。' },
-          '他叫人把板子抬到一边，从板头凿下巴掌大的一角给你当收条。自己船的名字，你是花钱从自己人手里买回来的。',
+          '他叫人把板子抬到一边，从板头凿下巴掌大的一角给你当收条。十个金冠他数了两遍，夹进了记数的册子里。',
         ],
         goto: 'p_ibevar_06',
       },
@@ -569,7 +569,7 @@ export const SCENES = {
     date: '1022年埃斯玛月2日',
     text: [
       DESK,
-      { speaker: '书记官', text: '名字怎么写？……姓呢？' },
+      { speaker: '书记官', text: '名字。怎么写？姓呢？' },
       '你说船上下来的人不用姓，只记船名。{?is.elf:|你不是船上生的，可亲王的人都记在船名底下。}他把冻住的笔尖伸到蜡锅上头烤了烤，写了一遍，划掉。又写了一遍，又划掉。',
       { speaker: '书记官', text: '塔，卢纳，泰因。末一个字上头那一撇，朝左还是朝右？劳驾，名字怎么写，再说一遍。' },
       DESK_GOD,
@@ -1044,7 +1044,7 @@ export const SCENES = {
       { if: 'is.immortal && party.barry', text: '昨夜巴里一个人在车辕上坐到很晚，篮子搁在腿上，没打开。' },
       { if: 'is.immortal && party.barry', speaker: '巴里', text: '我家那孩子要是听说有人不会死，下一句准问：那巴里呢？这话我还没想好怎么答。' },
     ],
-    first: ['flag saw_empty_graves', 'quest sixteen_graves start', 'codex butchers_field'],
+    first: ['flag saw_empty_graves', 'quest sixteen_graves start', 'codex butchers_field', { if: 'item.ledger_page < 1', then: ['item +ledger_page'] }],
     choices: [
       {
         text: '下到坑边，量一量铲印',
@@ -1117,7 +1117,7 @@ export const SCENES = {
     date: '1022年埃斯玛月2日',
     text: [
       DESK,
-      { speaker: '书记官', text: '名字怎么写？' },
+      { speaker: '书记官', text: '名字。怎么写？' },
       '你报了。他写了半行，停下来，把冻住的笔尖伸到蜡锅上头烤了烤。',
       { speaker: '书记官', text: '劳驾，名字怎么写？头一遍我光听口音了。' },
       DESK_GOD,

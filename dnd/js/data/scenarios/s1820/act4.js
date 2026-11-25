@@ -266,10 +266,11 @@ export const SCENES = {
         ]
       },
       {
-        "text": "（待写）crown_ioriel",
+        "text": "（待写）crown_ioriel、charmed_once",
         "goto": "a4_10",
         "effects": [
-          "flag crown_ioriel"
+          "flag crown_ioriel",
+          "flag charmed_once"
         ]
       },
       {

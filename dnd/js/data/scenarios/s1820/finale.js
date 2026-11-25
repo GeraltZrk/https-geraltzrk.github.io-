@@ -358,6 +358,12 @@ export const SCENES = {
         "effects": [
           "flag sign_dragon",
           "flag partner_signed",
+          {
+            "if": "var.overruled >= 3",
+            "then": [
+              "flag struck_own_name"
+            ]
+          },
           "quest q_knock done"
         ]
       },

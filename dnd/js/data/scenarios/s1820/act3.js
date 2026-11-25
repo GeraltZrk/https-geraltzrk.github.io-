@@ -91,7 +91,19 @@ export const SCENES = {
     "text": [
       "（待写）"
     ],
-    "next": "a3_07"
+    "choices": [
+      {
+        "text": "（待写）dainuich_noticed",
+        "goto": "a3_07",
+        "effects": [
+          "flag dainuich_noticed"
+        ]
+      },
+      {
+        "text": "（待写）不设标记",
+        "goto": "a3_07"
+      }
+    ]
   },
   "a3_07": {
     "id": "a3_07",
@@ -128,7 +140,8 @@ export const SCENES = {
         "text": "（待写）contract_fraud",
         "goto": "a3_09",
         "effects": [
-          "flag contract_fraud"
+          "flag contract_fraud",
+          "var overruled +1"
         ]
       }
     ]

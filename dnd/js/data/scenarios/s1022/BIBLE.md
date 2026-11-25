@@ -2414,6 +2414,25 @@
 
 合计 60 条：人物 23，地理 11，势力 6，种族 2，信仰 4，魔法 8，历史 5，怪物 1。阿克罗米斯、克雷格、守砖人、德基南这几位不单立条目，写进 `plumwall`、`rose_and_moon`、`castan_liii`、`ravenseers` 里；卡林达尔写进 `clarimonde`，彗星写进 `edith`，鹰身女妖写进 `liv`，半精灵写进 `marion`。
 
+**补充条目（8 条，写 `codex.js` 时加的；连上面合计 68 条：人物 26，地理 12，势力 7，种族 2，信仰 4，魔法 11，历史 5，怪物 1）**
+
+引擎里 `codex <id>` 对已经解锁的条目是空操作，一条图鉴的正文也没法分段显示。所以带 * 的条目里，“随剧情补一段”的那一段单立成后缀条目，在补的那一场另写一句 `codex <后缀id>`。§11 里写着“`codex bridle`（补上……）”“`codex the_word`（补全）”“`codex canrec`（补全）”的三处，照下表换成后缀 id；其余几条 §11 没标，请各段作者在指定的场景补上。
+
+| id | 标题 | 分组 | 在哪一场解锁 | 写的是什么 |
+|---|---|---|---|---|
+| `castan_liii_2` | 五十三世：地砖下面 | 人物 | a2_12 | 白石驿站、守砖人、空地砖、乌钢冠，和那句“更早来过一个人，一身没药味”。守砖人写在这一条里（`castan_liii` 在 a2_07 就解锁了，那时还没见着他）。 |
+| `bridle_2` | 缰绳：守砖人的说法 | 魔法 | a2_18（原表的“补上‘罪’这一段”） | 第二种讲法：皇帝自己发的誓，旁人接住了；誓石上挂着半句话。 |
+| `nichmer_2` | 尼奇默：鸦巢里的说法 | 人物 | a3_08 | 他出身渡鸦先知会，想受鸦眼没受成（§13.2 说的“等 a3_08 再补”）。 |
+| `the_word_2` | 那个字：信里的说法 | 魔法 | a4_11（原表的“补全”） | 信差身上那封回信：写信的人会念，他等活人自己把山修好。 |
+| `ravenseers_2` | 渡鸦先知会：为什么坐着看 | 势力 | a4_11，只在立了 `knows_why_watched` 时 | 德基南一派和另一派的两种读法，谁读对了不判。德基南写在这一条里。 |
+| `ravenhill_2` | 山上的宅子：笼子 | 地理 | f_09 | 上千只笼子。这一条不逗趣。 |
+| `canrec_2` | 亵渎者坎雷克：他自己的话 | 人物 | f_10（原表的“补全”） | 巫妖、命匣、后脑勺痒、“死人不改口”；收尸的常令他推给师父。 |
+| `bridle_3` | 缰绳：坎雷克的说法 | 魔法 | f_10（原表的“补上‘契约’这一段”） | 第三种讲法：一份写到“寿终之日”的契约。三种讲法并排摆着，不判。 |
+
+其余带 * 的条目没有另立后一段，后来查出来的事放在别的条目里：`white_pestilence` 的名册放在 `book_of_canrec`（a3_19）；`trialmount` 的伤放在 `oathstone` 和 `bridle_2`（a2_18）；`ravenseers` 的内圈放在 `unkind`（a3_08）；`sleepers` 的常令放在 `canrec_2`（f_10）；`edith`、`edmund`、`book_of_canrec` 解锁的那一场已经过了揭示，各写成一条。`seventh_council` 在 a1_05 解锁，早于 a1_06 的表决，所以正文写的是“阿拉莉亚的名分吵得最久”，没写结果。
+
+配了图的条目（key 都在 `art.js` 里）：`barry` ck3_barry，`liv` ev_harpy_immortal_fight，`elves_fleet` ck3_landing，`sorcerer_war` ck3_damesteeth，`trialmount` ev_wex_precipice，`trials` ev_trails_basilisk，`bulwar_city` ev_surakes_sun_garden，`sun_cult` ev_sun_cult_priest，`ravenseers` ev_magic_study_and_relax，`unkind` ev_elven_eye，`rose_and_moon` ev_lilac_wars，`white_pestilence` ev_looming_death，`canrec_2` ev_apostle。别的条目没有对得上的图，没配。
+
 ---
 
 ## 14 本剧本需要的新敌人与物品

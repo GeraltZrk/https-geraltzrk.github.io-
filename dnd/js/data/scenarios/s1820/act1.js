@@ -97,7 +97,8 @@ export const SCENES = {
         "text": "（待写）skiplist_defied",
         "goto": "a1_09",
         "effects": [
-          "flag skiplist_defied"
+          "flag skiplist_defied",
+          "var overruled +1"
         ]
       },
       {

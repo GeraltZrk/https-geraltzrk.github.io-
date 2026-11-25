@@ -1035,6 +1035,7 @@ export const SCENES = {
     loc: '上城区 · 奥特拉克的宅子',
     text: [
       '上城区的宅子贴着崖壁，屋里的墙有一面就是山。奥特拉克元老六十上下，手腕上一只银镯子，旧得发黑。他开口先说了一句古卡斯塔诺语，加莱尔替你们翻：坐，鞋不用脱。',
+      { if: 'flag.a1_kite_man', text: '放风筝的瘦子比你们先到，蹲在门房里捧着一碗热茶，见你们进来，把脸埋进了碗里。' },
       '桌上一壶茶，一碟盐腌的萝卜干。兽人占城的二十年他没走。城里传世家那些年吃过兽人，他知道这话，从来不辩。',
       { speaker: '奥特拉克', text: '我要的就是你们。一辆哪儿都去、谁也不代表的车。焦塔顶上那只风筝，是放给你们看的。' },
       '他从一只锡筒里抽出一卷纸。抄本的抄本，字是古卡斯塔诺语，一半没人认得。认得的那半里有一句：王从灰烬那年起没再说过话，这五百年是我替他答的。',
@@ -1285,13 +1286,13 @@ export const SCENES = {
     choices: [
       {
         text: '说：是她自己走过去的',
-        check: { skill: 'persuasion', dc: 14, alt: ['religion'], mods: [{ if: 'flag.has_vote', n: 2, why: '你有一票' }, { if: 'flag.vigil_knelt || flag.sons_knelt', n: 1, why: '多米尼克把你算作自己人' }] },
+        check: { skill: 'persuasion', dc: 14, alt: ['religion'], mods: [{ if: 'flag.has_vote', n: 2, why: '你有一票' }, { if: 'flag.a1_votes_known', n: 1, why: '你知道票是怎么数的' }, { if: 'flag.vigil_knelt || flag.sons_knelt', n: 1, why: '多米尼克把你算作自己人' }] },
         ok: { text: '书记一字不改地记了下来。多米尼克把这句念了一遍，帐子里有人哭出了声。', effects: ['flag testimony_hers', 'world scale +2', 'rep corintar +1', { if: "origin == 'corintar'", then: ['world scale +1'] }], goto: 'a1_15b' },
         fail: { text: '书记替你润了色，记成“她受了感召”。你的原话没进文书。', effects: ['flag testimony_hers', 'world scale +1', 'rep corintar +1', { if: "origin == 'corintar'", then: ['world scale +1'] }], goto: 'a1_15b' },
       },
       {
         text: '说：那一仗是整支军打下来的',
-        check: { skill: 'persuasion', dc: 14, alt: ['religion'], mods: [{ if: 'flag.has_vote', n: 2, why: '你有一票' }] },
+        check: { skill: 'persuasion', dc: 14, alt: ['religion'], mods: [{ if: 'flag.has_vote', n: 2, why: '你有一票' }, { if: 'flag.a1_votes_known', n: 1, why: '你知道票是怎么数的' }] },
         ok: { text: '帐子里嗡了一声。几个团的祭司点头，科琳塔尔的人脸色难看。书记照原话记了。', effects: ['flag testimony_host', 'world scale -1', 'rep companies +1', 'rep corintar -1', { if: "origin == 'corintar'", then: ['world scale -1'] }], goto: 'a1_15b' },
         fail: { text: '书记记成了“全军与她同心”，你的话被磨掉了一半棱角。', effects: ['flag testimony_host', 'rep companies +1', 'rep corintar -1', { if: "origin == 'corintar'", then: ['world scale -1'] }], goto: 'a1_15b' },
       },
@@ -1589,6 +1590,7 @@ export const SCENES = {
       { if: 'flag.gurzan_grudge', text: '你们是被叫来对质的。他让你们站着，问的头一句是：我父亲在哪儿。' },
       { if: '!flag.gurzan_owes && !flag.gurzan_grudge', text: '在他眼里你们是路过的收尸人。他没叫你们坐，也没叫你们走。' },
       { if: 'flag.a1_dragged', text: '你们是被绑着拖进火圈的，绳子到了火边才割开。' },
+      { if: 'flag.a1_kin', text: '湖边那个缠白布的使者站在古尔赞身后。他用兽人话说了一句什么，古尔赞往旁边挪了挪，给你让出半块石头。' },
       { if: 'flag.p_surrendered', speaker: '古尔赞', text: '城里那个扔了刀的。我听说过你。扔刀不丢人，扔完了没跑，才丢人。' },
       { speaker: '古尔赞', text: '我父亲是不是杜坎的儿子，我不知道。我只知道他活着的时候，没人敢拿链子拴兽人。' },
       { if: 'flag.god_named_korgus', speaker: '古尔赞', text: '你在湖边说他是。那句话比你们早到了半个月。我该谢你，还是该问你凭什么。' },
@@ -1601,7 +1603,7 @@ export const SCENES = {
       {
         text: '听古尔赞说话，看他自己信不信',
         once: true,
-        check: { skill: 'insight', dc: 13, party: true },
+        check: { skill: 'insight', dc: 13, party: true, mods: [{ if: 'flag.a1_bear_read', n: 2, why: '你在河滩上读过那头熊' }] },
         ok: { text: '他说起他父亲，说的全是亲眼见的事：哪天打的哪座城，吃的什么，骂过谁。一句也没提杜坎。他不信。他认定氏族得信。', effects: ['flag a1_gurzan_doubt'] },
         fail: { text: '你盯着他那条空袖管看得太久了。火边有人哼了一声。', effects: ['rep clans -1'] },
       },
@@ -1623,7 +1625,7 @@ export const SCENES = {
       },
       {
         text: '劝酋长们各回各的地：他们要的是盖了印的纸',
-        check: { skill: 'persuasion', dc: 15, party: true, mods: [{ if: 'flag.compact_free', n: 2, why: '城约里有氏族的位子' }, { if: 'flag.groundhawk_deed', n: 2, why: '地鹰拿到了地契' }] },
+        check: { skill: 'persuasion', dc: 15, party: true, mods: [{ if: 'flag.compact_free', n: 2, why: '城约里有氏族的位子' }, { if: 'flag.groundhawk_deed', n: 2, why: '地鹰拿到了地契' }, { if: 'flag.a1_gurzan_doubt', n: 1, why: '你知道他自己不信' }] },
         ok: { text: '你把城约和地契的事说了。碎剑者的酋长问能不能也要一张。毒牙的没说话，可第二天她头一个拔营走了。', effects: ['flag moot_defused', 'world embers -1'], goto: 'a1_18b' },
         fail: { text: '酋长们听完，接着喝酒。没人理你。古尔赞叫人往火里添了一抱柴。', effects: ['rep clans -1'], goto: 'a1_18b' },
       },

@@ -14,9 +14,9 @@ const LIST = [
   {
     id: 'underpass_overseer', name: '链头监工', type: 'humanoid', level: 3,
     desc: '嗜血者的老兵，腰上缠着拴地精的主链，链子另一头还拴着四十个人。撤退的号他听见了，他舍不得这串脚夫。',
-    hp: 95, ac: 14, init: 0, saves: S(4, 1, 3, -1, 0, 0), xp: 300, ai: 'brute', traits: { boss: true },
+    hp: 70, ac: 14, init: 0, saves: S(4, 1, 3, -1, 0, 0), xp: 300, ai: 'brute', traits: { boss: true },
     attacks: [
-      { name: '链锤', hit: 5, dmg: '1d8+3', type: 'bludgeoning', multi: 2, weight: 3 },
+      { name: '链锤', hit: 5, dmg: '1d6+3', type: 'bludgeoning', multi: 2, weight: 3 },
       { name: '收链', hit: 5, dmg: '1d6+3', type: 'bludgeoning', apply: { cond: 'restrained', turns: 1, save: { abil: 'str', dc: 12 } }, recharge: 4, text: '{name}一抖手腕，铁链缠上来，把人往他跟前拽。' },
       { name: '甩链', dmg: '2d6', type: 'bludgeoning', aoe: { save: { abil: 'dex', dc: 12, half: true } }, recharge: 5, minRound: 2, weight: 6, text: '{name}抡圆了主链，链上拴着的地精跟着尖叫。' },
     ],
@@ -135,7 +135,7 @@ const LIST = [
   {
     id: 'bloodfeeder', name: '饮血者', type: 'aberration', level: 7,
     desc: '犯了血律的奎内赫人变成的东西。四肢着地，没有话，只认血。身上的树脂纹一道一道的，像树皮。',
-    hp: 100, ac: 15, init: 3, saves: S(4, 3, 4, -2, 1, -2), xp: 550, ai: 'brute', resist: ['necrotic'],
+    hp: 85, ac: 15, init: 3, saves: S(4, 3, 4, -2, 1, -2), xp: 550, ai: 'brute', resist: ['necrotic'],
     attacks: [
       { name: '扑咬', hit: 8, dmg: '2d8+4', type: 'piercing', multi: 2, lifesteal: true, weight: 3, text: '{name}扑上来，咬住了就不松口。' },
     ],
@@ -143,9 +143,9 @@ const LIST = [
   {
     id: 'bloodfeeder_matriarch', name: '老饮血者', type: 'aberration', level: 9,
     desc: '变得最久的一个，树脂纹已经长进了皮里。有人念血律的头三条，她会停一停，像在想自己从前是谁。',
-    hp: 400, ac: 17, init: 2, saves: S(5, 3, 5, -1, 2, 0), xp: 3000, ai: 'brute', traits: { boss: true }, resist: ['necrotic'],
+    hp: 320, ac: 17, init: 2, saves: S(5, 3, 5, -1, 2, 0), xp: 3000, ai: 'brute', traits: { boss: true }, resist: ['necrotic'],
     attacks: [
-      { name: '撕咬', hit: 10, dmg: '2d10+5', type: 'piercing', multi: 3, lifesteal: true, weight: 3 },
+      { name: '撕咬', hit: 10, dmg: '2d10+5', type: 'piercing', multi: 2, lifesteal: true, weight: 3 },
       { name: '唤群', dmg: '4d6', type: 'slashing', aoe: { save: { abil: 'dex', dc: 16, half: true } }, uses: 1, minRound: 2, weight: 9, text: '{name}仰起头叫了一声。林子里又爬出来两只，先扑的是离她最近的人。' },
       { name: '血雾', dmg: '4d8', type: 'necrotic', aoe: { save: { abil: 'con', dc: 16, half: true } }, apply: { cond: 'blinded', turns: 1 }, recharge: 5, minRound: 2, weight: 6, text: '{name}身上的树脂纹裂开了，喷出一片红雾。' },
     ],
@@ -153,7 +153,7 @@ const LIST = [
   {
     id: 'stone_votary', name: '守誓石像', type: 'construct', level: 8, ...CONSTRUCT,
     desc: '壁画神殿门口的石像，石头和法术，里头没有机括。它用一种没人会的话问你一句，答不上来就挨一下。',
-    hp: 115, ac: 18, init: -1, saves: S(5, -1, 5, 0, 2, 0), xp: 700, ai: 'brute', resist: ['slashing', 'piercing'],
+    hp: 100, ac: 18, init: -1, saves: S(5, -1, 5, 0, 2, 0), xp: 700, ai: 'brute', resist: ['slashing', 'piercing'],
     attacks: [
       { name: '石拳', hit: 9, dmg: '2d8+5', type: 'bludgeoning', multi: 2, weight: 3 },
       { name: '问话', dmg: '3d8', type: 'force', aoe: { save: { abil: 'int', dc: 15, half: true } }, recharge: 5, weight: 6, text: '{name}开口问了一句。没有人听得懂。' },
@@ -162,7 +162,7 @@ const LIST = [
   {
     id: 'mural_warden', name: '守门的', type: 'construct', level: 10, ...CONSTRUCT,
     desc: '三尊石像里最大的一尊，一条胳膊是后补的，补的人手艺差。它见到断权杖就会停手。',
-    hp: 460, ac: 19, init: -1, saves: S(6, -1, 6, 0, 3, 0), xp: 3600, ai: 'brute', traits: { boss: true }, resist: ['slashing', 'piercing'],
+    hp: 380, ac: 19, init: -1, saves: S(6, -1, 6, 0, 3, 0), xp: 3600, ai: 'brute', traits: { boss: true }, resist: ['slashing', 'piercing'],
     attacks: [
       { name: '石臂', hit: 11, dmg: '2d10+6', type: 'bludgeoning', multi: 3, weight: 3 },
       { name: '天幕', dmg: '4d10', type: 'force', aoe: { save: { abil: 'str', dc: 17, half: true } }, apply: { cond: 'prone', turns: 1 }, recharge: 5, minRound: 2, weight: 6, text: '{name}把那条后补的胳膊举过头顶。整间厅的顶压了下来。' },

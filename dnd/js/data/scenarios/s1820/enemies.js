@@ -51,10 +51,10 @@ export const ENEMIES = {
   cloakman: {
     id: 'cloakman', name: '披风卫', en: 'Cloakman', type: 'humanoid', level: 6,
     desc: '揭秘教会的武装。灰披风搭在左肩，剑脊上刻着分形的纹，挥起来有一股熨斗的味道。',
-    hp: 72, ac: 16, init: 2, saves: { str: 3, dex: 2, con: 3, int: 1, wis: 3, cha: 1 }, xp: 350, ai: 'cunning',
+    hp: 90, ac: 16, init: 2, saves: { str: 3, dex: 2, con: 3, int: 1, wis: 3, cha: 1 }, xp: 450, ai: 'cunning',
     attacks: [
-      { name: '咒刃', hit: 7, dmg: '1d8+4', type: 'slashing', extra: { dmg: '1d8', type: 'force' }, multi: 2, weight: 3 },
-      { name: '封口令', hit: 7, dmg: '1d6', type: 'psychic', apply: { cond: 'dazed', turns: 1, save: { abil: 'wis', dc: 14 } }, recharge: 4, text: '{name}念了一个词。你张嘴，什么也没出来。' },
+      { name: '咒刃', hit: 8, dmg: '2d6+4', type: 'slashing', extra: { dmg: '1d8', type: 'force' }, multi: 2, weight: 3 },
+      { name: '封口令', hit: 8, dmg: '2d6', type: 'psychic', apply: { cond: 'dazed', turns: 1, save: { abil: 'wis', dc: 14 } }, recharge: 4, text: '{name}念了一个词。你张嘴，什么也没出来。' },
       { name: '披风格挡', buff: { cond: 'shielded', turns: 2 }, recharge: 5, text: '{name}把披风往前一甩，挡在身前。' },
     ],
   },
@@ -71,13 +71,13 @@ export const ENEMIES = {
     ],
   },
   enthralled_officer: {
-    id: 'enthralled_officer', name: '被大咒迷住的军官', en: 'Enthralled Officer', type: 'humanoid', level: 7,
+    id: 'enthralled_officer', name: '被大咒迷住的军官', en: 'Enthralled Officer', type: 'humanoid', level: 8,
     desc: '洛伦特旗舰上的军官，制服一丝不苟，眼神很客气。他一点不记得自己反对过什么。',
-    hp: 100, ac: 16, init: 2, saves: { str: 3, dex: 2, con: 3, int: 1, wis: 0, cha: 2 }, xp: 500, ai: 'cunning',
+    hp: 130, ac: 16, init: 2, saves: { str: 3, dex: 2, con: 3, int: 1, wis: 0, cha: 2 }, xp: 650, ai: 'cunning',
     condImmune: ['frightened', 'charmed'],
     attacks: [
-      { name: '军刀', hit: 7, dmg: '2d6+4', type: 'slashing', multi: 2, weight: 3 },
-      { name: '手枪', hit: 7, dmg: '2d10+3', type: 'piercing', recharge: 4, text: '{name}抬枪的时候还说了一声“失礼”。' },
+      { name: '军刀', hit: 8, dmg: '2d8+4', type: 'slashing', multi: 2, weight: 3 },
+      { name: '手枪', hit: 8, dmg: '2d10+4', type: 'piercing', recharge: 4, text: '{name}抬枪的时候还说了一声“失礼”。' },
       { name: '无人反对', buff: { cond: 'emboldened', turns: 2, all: true }, uses: 1, text: '“无人反对。”{name}说。旁边几个人跟着点头。' },
     ],
   },

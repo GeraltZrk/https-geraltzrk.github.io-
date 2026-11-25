@@ -11,7 +11,7 @@
 //   p_anbennar_03  自备靴子    舱底区小酒馆，《论坛报》末版启事，传令员喊漩涡。卖铜扣（+5）／留着 → kept_buttons／
 //                  请传令员一杯（-1）→ pa_crier_friend。→ 04
 //   p_anbennar_04  堵路        半截楼后的窄巷，两个混混按着传令员。威吓 12 免战（kept_buttons 优势），败了开打；直接打；
-//                  [施法者] 冷火（奥秘 12）；掏五个金冠。战：cutpurse+vagrant_bandit（改名，六成血），传令员作 allies。
+//                  [施法者] 冷火（奥秘 12）；掏五个金冠。战：cutpurse+village_militia（改名，六成血；圣经写 vagrant_bandit，单人打太伤，换成出手轻一点的），传令员作 allies。
 //                  特技：集合哨（威吓 11，frightened）、踹倒木板。输：gold-10，pa_beaten。→ 05
 //   p_anbennar_05  入行礼      铸炉街，进错了铺子，被卫兵扔出来。特技／运动 11 落地（败 hp-2）；[矮人] 讲族名。codex c_forgeway。→ 05b
 //   p_anbennar_05b 三行字      布拉、楼梯、埃塔、章程。按 faction 起誓；当选队长；工钱先发谁（布拉好感）。→ 06
@@ -157,7 +157,7 @@ const FIGHT_ALLEY = {
   intro: '巷子窄，两个人只能一前一后上。传令员抡起了他的铜铃。',
   enemies: [
     { id: 'cutpurse', name: '舱底区的混混', hpMult: 0.6 },
-    { id: 'vagrant_bandit', name: '舱底区的混混', hpMult: 0.6 },
+    { id: 'village_militia', name: '舱底区的混混', hpMult: 0.6 },
   ],
   allies: [{ id: 'striker', name: '泰卢姆的传令员' }],
   specials: [
@@ -1174,7 +1174,8 @@ export const SCENES = {
       { speaker: '礼拜三', text: '（询问。）这里招不招人。' },
       { speaker: '布拉', text: '招。启事上就一条，自备靴子。（铰链咔的一声。）你没靴子。上来吧，第三级是松的。' },
       '楼上，白头发的矮人把一张纸压在账本上：一张卖契。',
-      { if: 'is.mechanim', text: '厂里告你们盗窃厂产，半条街都贴了。她天亮前去了一趟厂里，按废铁价把事了了，两台六个金冠。卖契上买主一栏写着“迟到者公司”。' },
+      { if: 'is.mechanim && flag.exit_sold', text: '买主一栏写着“迟到者公司”，天亮前签的，作价废铁，两台六个金冠。厂主收钱的时候没提报废班的事，她收卖契的时候也没提。' },
+      { if: 'is.mechanim && !flag.exit_sold', text: '厂里告你们盗窃厂产，半条街都贴了。她天亮前去了一趟厂里，按废铁价把事了了，两台六个金冠。卖契上买主一栏写着“迟到者公司”。' },
       { if: '!is.mechanim', text: '你上了全街的黑名单，罪名是盗窃厂产。她天亮前去了一趟厂里，按废铁价把十号买下了，三个金冠。卖契上买主一栏写着“迟到者公司”。' },
       { speaker: '埃塔', text: '我买的是器材。器材不起誓，人起誓。你们自己说，是哪一样。' },
       { if: 'is.god', speaker: '埃塔', text: '你不在卖契上。你在哪张纸上，我还没想好。' },

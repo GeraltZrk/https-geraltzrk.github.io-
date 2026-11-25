@@ -455,7 +455,7 @@ export const SCENES = {
         text: '驳回申辩',
         check: { skill: 'persuasion', dc: 13, adv: 'flag.a1x_plum_clue', dis: 'flag.a1x_plum_smiled' },
         ok: {
-          text: '你把那袋金子摆到桌上说：被慑住的人不收钱。大厅里静了一会儿，书记写下“驳回”。阿丽娅的念珠终于拨了一颗。',
+          text: '你说被慑住的人用不着收钱，普卢姆沃尔那年收没收，账房里查得到。大厅里静了一会儿，书记写下“驳回”。阿丽娅的念珠终于拨了一颗。',
           effects: ['flag a1x_plum_denied', 'rep moon +1'],
           goto: 'a1_05',
         },

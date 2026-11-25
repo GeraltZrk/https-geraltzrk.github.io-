@@ -51,14 +51,27 @@ WORKING METHOD
 4. Final self-review: pick your five weakest scenes and rewrite them.
 `
 
+
+const RESUME_NOTE = `
+NOTE: an earlier attempt at this job may have been cut off part-way. Look at the file first: if it already holds finished scenes (not the short stubs), keep the good ones and carry on from where it stopped rather than starting over.`
+const run = async (prompt, role, opts) => {
+  let r = null
+  try { r = await agent(prompt, { ...MM(role), ...opts }) } catch (e) { r = null }
+  if (r == null && MODELS.fallback) {
+    log(`${opts.label}: no result, retrying on ${MODELS.fallback}`)
+    try { r = await agent(prompt + RESUME_NOTE, { ...opts, model: MODELS.fallback, label: `${opts.label}:retry` }) } catch (e) { r = null }
+  }
+  return r
+}
+
 phase('Write')
 const results = await pipeline(
   PARTS,
-  (p) => agent(`${CONTEXT}
+  (p) => run(`${CONTEXT}
 YOUR JOB: you are the writer of \`${p.file}\` — ${p.what}. Write ${DIR}/${p.file}.
 ${RULES}
-Return a plain-text report: scene count, total characters, checks, fights, how many scenes react to is.god / is.immortal, which exclusive options you wrote (origin/faction/class/race), any place where you departed from the bible and why, and the last output of check-part.`, { ...MM('creative'), label: `write:${ID}:${p.file}`, phase: 'Write' }),
-  (report, p) => agent(`${CONTEXT}
+Return a plain-text report: scene count, total characters, checks, fights, how many scenes react to is.god / is.immortal, which exclusive options you wrote (origin/faction/class/race), any place where you departed from the bible and why, and the last output of check-part.`, 'creative', { label: `write:${ID}:${p.file}`, phase: 'Write' }),
+  (report, p) => report == null ? { file: p.file, failed: 'writer returned nothing' } : run(`${CONTEXT}
 YOUR JOB: you are the editor for \`${DIR}/${p.file}\` (${p.what}), which another writer has just finished. You did not write it; be the reader the commissioner will be. Read the file from top to bottom the way a player would, following branches.
 Fix directly in the file, keeping scene ids, joints and flags intact:
 1. VOICE. This is the main job. Hunt for anything that reads machine-written or like translated boilerplate: explained feelings, summarising last lines, stock scenery, three-part lists, symmetrical sentences, adjectives doing a noun's work, NPCs who all talk alike, options written as attitudes instead of actions, "epic" vocabulary. Rewrite those passages so they sound like a good game master talking: concrete, specific to this place and these people, dry where it can be funny. Check NPC and companion lines against their voice notes in the bible (§8–§9) — each should be recognisable without the speaker label. The linter (${G}/tools/style-lint.mjs) only catches the obvious; you must catch the rest.
@@ -69,6 +82,6 @@ Fix directly in the file, keeping scene ids, joints and flags intact:
 After editing run \`cd ${G} && node tools/check-part.mjs ${ID} ${p.file}\` until 0 errors, 0 problems and 0 文风 warnings.
 Return a plain-text report: the ten most significant rewrites as before → after pairs (one line each), what you added, what you could not fix.
 The writer's own report, for context:
-${typeof report === 'string' ? report.slice(0, 3000) : ''}`, { ...MM('creative'), label: `edit:${ID}:${p.file}`, phase: 'Edit' }).then(e => ({ file: p.file, writer: typeof report === 'string' ? report.slice(0, 500) : report, editor: typeof e === 'string' ? e.slice(0, 700) : e }))
+${typeof report === 'string' ? report.slice(0, 3000) : ''}`, 'creative', { label: `edit:${ID}:${p.file}`, phase: 'Edit' }).then(e => ({ file: p.file, writer: typeof report === 'string' ? report.slice(0, 500) : report, editor: typeof e === 'string' ? e.slice(0, 700) : e }))
 )
 return { id: ID, results: results.filter(Boolean) }

@@ -1274,6 +1274,7 @@ export const META = {
         "quest q_summit done",
         "quest q_jar stage 3",
         "quest q_partner stage 4",
+        "quest q_partner stage 5",
         "quest q_konwell done",
         "quest q_wastage done"
       ]
@@ -1569,6 +1570,7 @@ export const META = {
     "ration": {
       "title": "配给本",
       "subtitle": "阿兰蒂尔塔条约",
+      "art": "ev_hre",
       "text": [
         "阿兰蒂尔塔条约定稿那天，签字的人排了一上午。归零设了上限，每块晶体挂一张表，表上有编号、产地和下一回过秤的日子。",
         "门那边的气态晶体按份额运回来，拿彼岸认的东西换：人情、节日、真名。条约有一款写明，签约各方不得从人身上取魔法。",
@@ -1590,6 +1592,7 @@ export const META = {
     "charter": {
       "title": "特许状",
       "subtitle": "位面，按吨",
+      "art": "load_2",
       "text": [
         "海归了公司。气态晶体一船一船运回来，压成砖，码在新港的仓库里。安本科斯特的路灯再没暗过。",
         "妖精界有了自己的巨魔湾。锚地修了栈桥，桥头插着卡拉桑尼的旗。船员咳的痰是蓝的，保险行为这个另收一笔钱。",
@@ -1614,6 +1617,7 @@ export const META = {
     "quiet": {
       "title": "静世纪",
       "subtitle": "返港，无货",
+      "art": "ev_big_star_in_sky",
       "text": [
         "托拉普里亚卡的港务簿上记了一行：返港，无货。音叉沉在海里，没人去捞。",
         "没人肯放下子弹，门也关了。魔法在 1870 年代熄掉。再没有巫师王，面包师的儿子永远可以说不。老海堤的结界一段一段失效，修堤的人换成了石匠。",
@@ -1635,6 +1639,7 @@ export const META = {
     "rose": {
       "title": "玫瑰和约",
       "subtitle": "第三次法师和平",
+      "art": "ev_mages_estate",
       "text": [
         "黑弹按条约禁了。剩下的魔法交给魔杖托管会，托管会的章程写得很长，每一条都注了出处。",
         {
@@ -1659,6 +1664,7 @@ export const META = {
     "dragon": {
       "title": "他的帝国",
       "subtitle": "一个会回信的神",
+      "art": "ev_aakhet_dragon_smug",
       "text": [
         "他签了约，回了阿拉莫莱。进宫那天他走了一圈，说宫殿修得小。一万盏灯当晚照常点上了。",
         "世界的魔法成了他的窖藏。他任性，虚荣，记仇。跟董事会不一样的是，报纸骂得动他，骂他的信他每封都回。哈赫普拉不用再等了。",
@@ -1676,6 +1682,7 @@ export const META = {
     "gate": {
       "title": "开门",
       "subtitle": "一掌宽",
+      "art": "load_3",
       "text": [
         {
           "if": "flag.gate_key",
@@ -1707,6 +1714,7 @@ export const META = {
     "keeper": {
       "title": "守门人",
       "subtitle": "隔着钥匙孔",
+      "art": "ev_priest_phantom",
       "text": [
         "隔着钥匙孔立了一份约。门不开。崩塌之城的队伍开始往前挪，一百多年里头一回。活人起誓不再点魂炉，芯核依约算人。",
         "魔法照计划一年年少下去。教会学会了少说两句。",
@@ -1732,6 +1740,7 @@ export const META = {
     "seat": {
       "title": "空座",
       "subtitle": "升格者，待其身故后追认",
+      "art": "load_17",
       "divine": true,
       "text": [
         {
@@ -1862,10 +1871,6 @@ export const META = {
         {
           "if": "!flag.artheta",
           "text": "鸽子死了。达梅斯海德沿岸多出六面新旗，旧斗兽场里的议会照开，管的地方小了一半。后来这件事叫“不复联合”。"
-        },
-        {
-          "if": "!flag.artheta && origin == 'anbennar'",
-          "text": "你的退伍证换了一张。国名那一栏空着，办事员说等上头定了再填。"
         }
       ]
     },
@@ -2095,6 +2100,10 @@ export const META = {
           "text": "布拉没回来。马利安德的奴隶区后墙上有一排弹孔，数目是四十，跟她弄来的枪一样多。"
         },
         {
+          "if": "!flag.bura_alone && !party.bura",
+          "text": "布拉后来不在队里了。埃塔的账上她那一栏没划，欠饷十一个月，利息照记。"
+        },
+        {
           "if": "flag.bura_alone && world.chains <= 5",
           "text": "布拉一个人去的，一个人回来了。她没再进公司的门，每年泪落月托人给埃塔捎一句话：活着，饷还欠着。"
         },
@@ -2143,6 +2152,10 @@ export const META = {
         {
           "if": "flag.m_left",
           "text": "礼拜三回了铸炉街，领了头一回停工。工会的会员证上，出生地一栏填的是七号线。"
+        },
+        {
+          "if": "!party.middlesday && !flag.m_left && !flag.m_dormant",
+          "text": "礼拜三后来不在队里了。器材账上的十四号还留着，埃塔每年在旁边记一笔：下落待查。"
         },
         {
           "if": "flag.m_dormant && !flag.m_rewoken",
@@ -2201,6 +2214,10 @@ export const META = {
         {
           "if": "flag.guilhem_stayed",
           "text": "吉列姆留在了卡斯托纳斯，教那个洪裔女孩，后来又多了三个学生。他的头发全白了，学生们只见过白的。"
+        },
+        {
+          "if": "!flag.guilhem_stayed && !party.guilhem",
+          "text": "吉列姆后来不在队里了。梨林的果园每年秋天给公司寄一筐梨，寄件人一栏只写“理论上”。"
         },
         {
           "if": "party.guilhem && flag.sign_ration",
@@ -2273,8 +2290,20 @@ export const META = {
           "text": "龙想雇娜尔雯数灯。她数了一晚上，说数目不够。"
         },
         {
-          "if": "party.narwen && !flag.keeper_narwen && flag.sign_gate",
+          "if": "party.narwen && !flag.keeper_narwen && flag.sign_gate && flag.gate_key",
           "text": "门开了一掌宽，娜尔雯头一个走进门缝。没人见她出来，门口留着她的灯。"
+        },
+        {
+          "if": "party.narwen && !flag.keeper_narwen && flag.sign_gate && flag.gate_forced",
+          "text": "撞锤退下来以后，娜尔雯在门槛那道印子旁边坐了一夜。天亮她回了船上，往后再没碰过那本鸣声记录。"
+        },
+        {
+          "if": "party.narwen && flag.keeper_self",
+          "text": "留在门口的是你，不是她。娜尔雯回了塔里，每年在本子上给你空一行，等你托人带数回来。"
+        },
+        {
+          "if": "flag.narwen_custodian && !party.narwen && !flag.keeper_narwen && !flag.narwen_dead",
+          "text": "娜尔雯以保管人的身份把碎片押回了阿兰蒂尔塔。交接单上她签了字，又在背面添了一行：途中鸣声，另册。"
         },
         {
           "if": "party.narwen && (flag.seat_sat || flag.seat_locked || flag.seat_carried)",
@@ -2331,8 +2360,16 @@ export const META = {
           "text": "补发的军饷到了。十一个月，带利息，信封上的番号是 1810 年的。"
         },
         {
-          "if": "origin == 'anbennar' && !flag.dove_honoured && world.dove <= 6",
-          "text": "你领到一张新的退伍证，国名那一栏空着。"
+          "if": "origin == 'anbennar' && !flag.dove_honoured && world.dove <= 3 && !flag.artheta",
+          "text": "你领到一张新的退伍证，国名那一栏空着，办事员说等上头定了再填。"
+        },
+        {
+          "if": "origin == 'anbennar' && !flag.dove_honoured && world.dove <= 3 && flag.artheta",
+          "text": "补发的军饷到了，十一个月，带利息。汇票上的日子是破晓那天，你一直没去兑。"
+        },
+        {
+          "if": "origin == 'anbennar' && !flag.dove_honoured && world.dove >= 4 && world.dove <= 6",
+          "text": "补发的军饷还是“另候通知”。你把那张遣散单钉在了门后，每年泪落月看一眼日子。"
         },
         {
           "if": "origin == 'lorent' && !flag.crown_ioriel",

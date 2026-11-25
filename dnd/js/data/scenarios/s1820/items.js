@@ -24,7 +24,7 @@ export const ITEMS = {
   tour_letter: Q('tour_letter', '游学团的介绍信', 'Karshyray Tour Letter',
     '卡尔希尔游学团的介绍信，三种文字。坎诺的客栈老板看完会把它还给你，然后说没房了。'),
   skiplist_telegram: Q('skiplist_telegram', '十三个字的电报', 'The Skip-List Telegram',
-    '陆军部发给第三催收巡回队的电报：投票不稳的区，暂缓施术。后面列着四个区名。'),
+    '陆军部追到驳船上的一封电报，十三个字：“梨林等四区公投不稳，暂缓施术。”'),
   korashi_grain: Q('korashi_grain', '一粒寇拉希', 'A Grain of Korashi',
     '从一个战斗法师肩膀里取出来的黑晶，米粒大。法师碰了它，几天施不了法。'),
   druznar_plates: Q('druznar_plates', '德鲁兹纳的底片（抄件）', "Druznar's Plates (Copies)",

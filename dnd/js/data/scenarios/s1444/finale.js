@@ -5754,7 +5754,7 @@ export const SCENES = {
     "text": "给神王办丧事：请阿坦把第四十一句念完",
     "if": "(flag.southgate_held || world.embers < 8)",
     "req": "world.word >= 7 && world.peace >= 5 && world.scale >= -2 && world.scale <= 2 && flag.conclave_held && party.tan && flag.tan_told && (flag.wall_rubbed || flag.staff_home)",
-    "reqText": "话传得够远，太平还在，天平不偏；会开成了；阿坦在，也说了；手里有拓片或那根杖",
+    "reqText": "要话传得够远、太平还在、天平不偏。还要会开成了，阿坦在场也开了口，手里有拓片或者那根杖",
     "result": [
      "阿坦接过权杖头掂了掂，说明天一早就念。",
      {

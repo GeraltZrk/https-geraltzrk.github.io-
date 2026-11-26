@@ -3366,7 +3366,7 @@ export const SCENES = {
     "text": "签《配给本》：剩下的魔力按份额分",
     "if": "!(flag.gate_key || flag.gate_forced)",
     "req": "flag.article_ration && flag.court_signs && world.press >= 7 && world.chains <= 4 && ((rep.republic >= 3) + (rep.wand >= 3) + (rep.charter >= 3) + (rep.church >= 3) + (rep.union >= 3) + (rep.south >= 3) + (rep.partner >= 3)) >= 3 && (!is.god || partysize >= 1 || !flag.etta_left)",
-    "reqText": "要配给条款、平潮庭肯签、见报 7、枷锁不过 4、三方声望 3；神落笔不算，身边得有个凡人",
+    "reqText": "要配给条款、平潮庭肯签、见报到 7、枷锁不超过 4、三方声望到 3。神落笔不算数，身边得有个凡人",
     "effects": [
      "flag sign_ration",
      "approval guilhem +1",
@@ -3414,7 +3414,7 @@ export const SCENES = {
     "text": "签《玫瑰和约》：禁黑弹，魔法交托管会管",
     "if": "!(flag.gate_key || flag.gate_forced)",
     "req": "flag.article_ban && rep.wand >= 4 && (flag.crown_castine || flag.crown_ioriel) && (!is.god || partysize >= 1 || !flag.etta_left)",
-    "reqText": "要禁令条款、王冠与魔杖 4、洛伦特有人拿主意；神落笔不算，身边得有个凡人",
+    "reqText": "要禁令条款、王冠与魔杖的声望到 4、洛伦特有人拿主意。神落笔不算数，身边得有个凡人",
     "effects": [
      "flag sign_rose",
      "rep wand +2",
@@ -3429,7 +3429,7 @@ export const SCENES = {
     "text": "在合伙人那份文件上签字",
     "if": "!(flag.gate_key || flag.gate_forced)",
     "req": "rep.partner >= 4 && !flag.partner_exposed && flag.signed_partner_paper && !flag.partner_dead",
-    "reqText": "要合伙人 4、没揭穿他、签过他的文件、他还活着",
+    "reqText": "要合伙人的声望到 4、没揭穿过他、签过他的文件、他还活着",
     "effects": [
      "flag sign_dragon",
      "flag partner_signed",
@@ -3450,7 +3450,7 @@ export const SCENES = {
     "text": "签《守门人》：门不开，请娜尔雯留下守着",
     "if": "!(flag.gate_key || flag.gate_forced)",
     "req": "flag.gate_knock && world.press >= 6 && world.chains <= 3 && (party.narwen || flag.narwen_custodian) && !flag.narwen_dead",
-    "reqText": "要敲过门、见报 6、枷锁不过 3、娜尔雯在",
+    "reqText": "要敲过门、见报到 6、枷锁不超过 3、娜尔雯在队里",
     "effects": [
      "flag sign_keeper",
      "flag keeper_narwen",
@@ -3464,7 +3464,7 @@ export const SCENES = {
     "text": "签《守门人》：门不开，你自己留下守着",
     "if": "!(flag.gate_key || flag.gate_forced)",
     "req": "flag.gate_knock && world.press >= 6 && world.chains <= 3",
-    "reqText": "要敲过门、见报 6、枷锁不过 3",
+    "reqText": "要敲过门、见报到 6、枷锁不超过 3",
     "effects": [
      "flag sign_keeper",
      "flag keeper_self",

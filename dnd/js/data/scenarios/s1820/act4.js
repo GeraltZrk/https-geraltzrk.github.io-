@@ -1146,7 +1146,7 @@ export const SCENES = {
    {
     "text": "替禁令那份说话：禁黑弹，剩下的交魔杖托管",
     "req": "rep.wand >= 3 || rep.church >= 3",
-    "reqText": "要王冠与魔杖或者揭秘教会当你是自己人（≥3）",
+    "reqText": "要王冠与魔杖或者揭秘教会的声望到 3",
     "check": {
      "skill": "persuasion",
      "dc": 17,
@@ -1212,7 +1212,7 @@ export const SCENES = {
    {
     "text": "替特许那份说话：海归肯出船的人",
     "req": "rep.charter >= 3",
-    "reqText": "要特许商当你是自己人（≥3）",
+    "reqText": "要特许商的声望到 3",
     "check": {
      "skill": "persuasion",
      "dc": 15,

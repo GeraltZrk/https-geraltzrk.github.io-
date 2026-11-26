@@ -61,9 +61,10 @@ for (const id of inIds) {
   if (/没吭声|没说话|没接话|不吭声|没出声/.test(s) && /没吭声|没说话|没接话|不吭声|没出声/.test(e.orig) === false) note.push(`@${id} 新添了“没吭声”一类的节拍`);
 }
 const ratio = nEnd ? nComma / nEnd : 9;
-if (nEnd >= 12 && ratio < 2.0) must.push(`整块叙述里逗号只有句号的 ${ratio.toFixed(1)} 倍，太碎了，一般是两倍半到四倍：把说同一件事的碎句连起来`);
-else if (nEnd >= 12 && ratio < 2.3) note.push(`整块叙述里逗号是句号的 ${ratio.toFixed(1)} 倍，偏碎：看看有没有说同一件事却断开了的句子（短卡片、短条目本来句子就短，不必硬并）`);
-if (nEnd >= 12 && ratio > 4.6) note.push(`整块叙述里逗号是句号的 ${ratio.toFixed(1)} 倍，偏多：看看是不是把不相干的几件事用逗号串在了一起，换了一件事就该打句号`);
+const SHORT_FORM = /^(meta|codex|data)-/.test(chunk);   // cards, blurbs and encyclopedia entries: sentences are naturally short, so no ratio target
+if (!SHORT_FORM && nEnd >= 12 && ratio < 2.0) must.push(`整块叙述里逗号只有句号的 ${ratio.toFixed(1)} 倍，太碎了，一般是两倍半到四倍：把说同一件事的碎句连起来`);
+else if (!SHORT_FORM && nEnd >= 12 && ratio < 2.3) note.push(`整块叙述里逗号是句号的 ${ratio.toFixed(1)} 倍，偏碎：看看有没有说同一件事却断开了的句子（短卡片、短条目本来句子就短，不必硬并）`);
+if (nEnd >= 12 && ratio > (SHORT_FORM ? 3.2 : 4.6)) note.push(`整块叙述里逗号是句号的 ${ratio.toFixed(1)} 倍，偏多：看看是不是把不相干的几件事用逗号串在了一起，换了一件事就该打句号`);
 const sp = speech ? speechPart / speech : 1;
 if (speech >= 8 && sp < 0.4) note.push(`台词里带语气词或垫话的只有 ${(100 * sp).toFixed(0)}%，看看是不是有人说话像念稿（喊口令的、皇帝、黑枝亲王这类人除外）`);
 const lr = oldLen ? newLen / oldLen : 1;
@@ -71,6 +72,6 @@ if (lr > 1.7) note.push(`整块比原文长了 ${(lr).toFixed(2)} 倍，看看�
 if (lr < 0.85) note.push(`整块只有原文的 ${(lr).toFixed(2)} 倍，看看有没有丢内容`);
 if (must.length) { console.log('必须改：'); for (const x of must.slice(0, 60)) console.log('  ' + x); if (must.length > 60) console.log(`  ……还有 ${must.length - 60} 处`); }
 if (note.length) { console.log('留意：'); for (const x of note.slice(0, 40)) console.log('  ' + x); if (note.length > 40) console.log(`  ……还有 ${note.length - 40} 处`); }
-console.log(`总结：${rewritten} 条；叙述逗号/句号 = ${ratio.toFixed(1)}；台词带语气词 ${(100 * sp).toFixed(0)}%；长度是原文的 ${lr.toFixed(2)} 倍；必须改 ${must.length} 处，留意 ${note.length} 处`);
+console.log(`总结：${rewritten} 条；叙述逗号/句号 = ${ratio.toFixed(1)}${SHORT_FORM ? '（条目和卡片不设下限，一件事一句就好，别为了凑逗号把两件事并成一句）' : ''}；台词带语气词 ${(100 * sp).toFixed(0)}%；长度是原文的 ${lr.toFixed(2)} 倍；必须改 ${must.length} 处，留意 ${note.length} 处`);
 console.log(must.length ? 'FAIL' : 'OK');
 process.exit(must.length ? 1 : 0);

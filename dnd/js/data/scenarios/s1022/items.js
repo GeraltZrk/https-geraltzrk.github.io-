@@ -7,7 +7,7 @@ export const ITEMS = {
   "quest": true,
   "slot": "trinket",
   "value": 0,
-  "desc": "一枚铜柄的蜡印，印面刻着条约的纹样，柄上缠了几圈麻绳，和约派你去看着人发誓，凭的就是这枚印。挂在身上，说服 +1。",
+  "desc": "一枚铜柄的蜡印，印面刻着条约的纹样，柄上缠了几圈麻绳。和约派你去看着人发誓，凭的就是这枚印。挂在身上，说服 +1。",
   "passives": {
    "skill": {
     "persuasion": 1
@@ -36,7 +36,7 @@ export const ITEMS = {
   "en": "Legion Token",
   "quest": true,
   "value": 0,
-  "desc": "黑卡斯塔诺军团的铁牌，一面铸着乌霜家的黑龙，另一面是番号，沉睡的老兵认它，沼泽堡的守军认它，就连死了的皇帝也认它。"
+  "desc": "黑卡斯塔诺军团的铁牌，一面铸着乌霜家的黑龙，另一面是番号。沉睡的老兵认它，沼泽堡的守军认它，连死了的皇帝也认它。"
  },
  "ibenion_writ": {
   "id": "ibenion_writ",
@@ -44,7 +44,7 @@ export const ITEMS = {
   "en": "Ibenion's Writ",
   "quest": true,
   "value": 0,
-  "desc": "伊贝尼昂亲笔写在船帆布上的手令，折了三折，精灵的使者见了它，都得先站起身来。"
+  "desc": "伊贝尼昂亲笔写在船帆布上的手令，折了三折。精灵的使者见了它，都得先站起身来。"
  },
  "ledger_page": {
   "id": "ledger_page",
@@ -60,7 +60,7 @@ export const ITEMS = {
   "en": "Holy Oil",
   "quest": true,
   "value": 0,
-  "desc": "一小瓶行涂油礼用的油，瓶口拿蜡封着，往额头上一抹，一次即位也好，一纸判词也好，就都算数了，可惜只有这一瓶。"
+  "desc": "一小瓶行涂油礼用的油，瓶口拿蜡封着。往额头上一抹，一次即位也好，一纸判词也好，神就算认了。只有这一瓶。"
  },
  "lance_ledger": {
   "id": "lance_ledger",
@@ -84,7 +84,7 @@ export const ITEMS = {
   "name": "奈拉特烛",
   "en": "Nerat's Flame",
   "value": 20,
-  "desc": "瓦洛森和大墓地都有卖的葬礼蜡烛，蜡是黑的，烛芯是红的，点着以后的两轮里，死人都会绕着拿蜡烛的人走（被攻击时对方劣势）。",
+  "desc": "瓦洛森和大墓地都有卖的葬礼蜡烛，蜡是黑的，烛芯是红的。点着以后的两轮里，死人都会绕着拿蜡烛的人走（被攻击时对方劣势）。",
   "use": {
    "target": "self",
    "apply": {
@@ -101,7 +101,7 @@ export const ITEMS = {
   "quest": true,
   "relic": true,
   "value": 0,
-  "desc": "卡斯塔诺的乌钢冠，冠圈里侧已经磨得发亮了，这顶冠可不能随便戴，想戴它的人，得先过了十道试炼才行。"
+  "desc": "卡斯塔诺皇帝的乌钢冠，冠圈里侧已经磨得发亮。这顶冠不能随便戴，想戴它的人，得先过十道试炼。"
  },
  "oathstone_chip": {
   "id": "oathstone_chip",
@@ -110,7 +110,7 @@ export const ITEMS = {
   "quest": true,
   "relic": true,
   "value": 0,
-  "desc": "指甲盖大的一块灰石头，在手里握久了会发烫。只要带着它，你许下的诺就都得兑现，可全队的欺瞒检定劣势。"
+  "desc": "指甲盖大的一块灰石头，在手里握久了会发烫。只要带着它，你许下的诺就都得兑现，全队的欺瞒检定劣势。"
  },
  "lab_samples": {
   "id": "lab_samples",
@@ -118,7 +118,7 @@ export const ITEMS = {
   "en": "Laboratory Samples",
   "quest": true,
   "value": 0,
-  "desc": "六只封了蜡的陶罐，都贴着坎雷克亲笔写的字签，最早的那只上头写着 980 年，拿稻草裹好，千万别摔了。"
+  "desc": "几只封了蜡的陶罐，都贴着坎雷克亲笔写的签。拿稻草裹好，千万别摔了。"
  },
  "jaher_letter": {
   "id": "jaher_letter",
@@ -150,6 +150,6 @@ export const ITEMS = {
   "en": "Tile-keeper's Spoon",
   "quest": true,
   "value": 0,
-  "desc": "一把木勺，勺柄老拿来敲地砖，都敲出一道沟来了。什么用处也没有。"
+  "desc": "一把木勺，勺柄老拿来敲地砖，都磨出一道沟了。什么用处也没有。"
  }
 };

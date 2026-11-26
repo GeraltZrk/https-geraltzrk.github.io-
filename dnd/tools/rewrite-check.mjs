@@ -61,7 +61,8 @@ for (const id of inIds) {
   if (/没吭声|没说话|没接话|不吭声|没出声/.test(s) && /没吭声|没说话|没接话|不吭声|没出声/.test(e.orig) === false) note.push(`@${id} 新添了“没吭声”一类的节拍`);
 }
 const ratio = nEnd ? nComma / nEnd : 9;
-if (nEnd >= 12 && ratio < 2.3) must.push(`整块叙述里逗号只有句号的 ${ratio.toFixed(1)} 倍，太碎了，一般是两倍半到四倍：把说同一件事的碎句连起来`);
+if (nEnd >= 12 && ratio < 2.0) must.push(`整块叙述里逗号只有句号的 ${ratio.toFixed(1)} 倍，太碎了，一般是两倍半到四倍：把说同一件事的碎句连起来`);
+else if (nEnd >= 12 && ratio < 2.3) note.push(`整块叙述里逗号是句号的 ${ratio.toFixed(1)} 倍，偏碎：看看有没有说同一件事却断开了的句子（短卡片、短条目本来句子就短，不必硬并）`);
 if (nEnd >= 12 && ratio > 4.6) note.push(`整块叙述里逗号是句号的 ${ratio.toFixed(1)} 倍，偏多：看看是不是把不相干的几件事用逗号串在了一起，换了一件事就该打句号`);
 const sp = speech ? speechPart / speech : 1;
 if (speech >= 8 && sp < 0.4) note.push(`台词里带语气词或垫话的只有 ${(100 * sp).toFixed(0)}%，看看是不是有人说话像念稿（喊口令的、皇帝、黑枝亲王这类人除外）`);

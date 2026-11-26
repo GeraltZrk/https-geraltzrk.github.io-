@@ -4,7 +4,7 @@ export const ITEMS = {
   "id": "discharge_papers",
   "name": "退伍文书",
   "en": "Discharge Papers",
-  "desc": "治安军开的遣散单，盖着连部的章，只是事由那一栏的墨迹，看着比签名的要旧，补发的军饷写的是“另候通知”。",
+  "desc": "治安军开的遣散单，盖着连部的章。事由那一栏的墨迹看着比签名的要旧，像是早就填好了的。补发的军饷写的是“另候通知”。",
   "value": 0,
   "quest": true
  },
@@ -12,7 +12,7 @@ export const ITEMS = {
   "id": "old_uniform",
   "name": "没领章的旧制服",
   "en": "Old Uniform, Unbadged",
-  "desc": "1810 年发的呢子制服，领章已经拆掉了，铜扣倒还在，穿着它，老连队的人一眼就认得出你。",
+  "desc": "1810 年发的呢子制服，领章已经拆掉了，铜扣还在。穿着它，老连队的人一眼就认得出你。",
   "value": 0,
   "quest": true,
   "slot": "trinket"
@@ -21,7 +21,7 @@ export const ITEMS = {
   "id": "embassy_codebook",
   "name": "使馆密码本",
   "en": "Embassy Codebook",
-  "desc": "洛伦特驻安本科斯特使馆的密码本，只有巴掌大，书脊是假的，要给使馆写报告，就得用它。",
+  "desc": "洛伦特驻安本科斯特使馆的密码本，只有巴掌大，书脊是假的。要给使馆写报告，就得用它。",
   "value": 0,
   "quest": true
  },
@@ -38,7 +38,7 @@ export const ITEMS = {
   "id": "wicker_trunk",
   "name": "藤箱",
   "en": "Wicker Trunk",
-  "desc": "巨魔湾编的藤箱，有一边的搭扣坏了，只好拿麻绳捆着，里头装着三件衬衫和一本航海日志。",
+  "desc": "巨魔湾编的藤箱，有一边的搭扣坏了，只好拿麻绳捆着。里头装着三件衬衫和一本航海日志。",
   "value": 0,
   "quest": true
  },
@@ -62,7 +62,7 @@ export const ITEMS = {
   "id": "line7_tag",
   "name": "七号线的工牌",
   "en": "Line Seven Tag",
-  "desc": "一块黄铜工牌，上头冲着“七号线·夜班”和一个工位号，背面不知是谁用钉子划了一道。",
+  "desc": "一块黄铜工牌，上头冲着“七号线·夜班”和一个工位号。背面不知是谁用钉子划了一道。",
   "value": 0,
   "quest": true,
   "slot": "trinket"
@@ -71,7 +71,7 @@ export const ITEMS = {
   "id": "spire_chip",
   "name": "尖碑上掉下来的石片",
   "en": "Spire Chip",
-  "desc": "一片指甲盖大的黑石头，下雨天摸上去是温的，卡尔希尔的孩子都拿它当护身符。",
+  "desc": "一片指甲盖大的黑石头，下雨天摸上去是温的。卡尔希尔的孩子都拿它当护身符。",
   "value": 0,
   "quest": true
  },
@@ -79,7 +79,7 @@ export const ITEMS = {
   "id": "tour_letter",
   "name": "游学团的介绍信",
   "en": "Karshyray Tour Letter",
-  "desc": "卡尔希尔游学团的介绍信，用三种文字写的，坎诺的客栈老板看完了会把它还给你，然后告诉你没房了。",
+  "desc": "卡尔希尔游学团的介绍信，用三种文字写的。坎诺的客栈老板看完了会把它还给你，然后告诉你没房了。",
   "value": 0,
   "quest": true
  },
@@ -95,7 +95,7 @@ export const ITEMS = {
   "id": "korashi_grain",
   "name": "一粒寇拉希",
   "en": "A Grain of Korashi",
-  "desc": "从一个战斗法师的肩膀里取出来的黑晶，只有米粒那么大，法师要是碰了它，好几天都施不了法。",
+  "desc": "从一个战斗法师的肩膀里取出来的黑晶，只有米粒那么大。法师要是碰了它，好几天都施不了法。",
   "value": 0,
   "quest": true
  },
@@ -103,7 +103,7 @@ export const ITEMS = {
   "id": "druznar_plates",
   "name": "德鲁兹纳的底片（抄件）",
   "en": "Druznar's Plates (Copies)",
-  "desc": "暗望所的玻璃底片，这一份是翻拍的，一年一张，每一张上的光点都比前一年少。",
+  "desc": "暗望所的玻璃底片，这一份是翻拍的。一年一张，每一张上的光点都比前一年少。",
   "value": 0,
   "quest": true
  },
@@ -119,7 +119,7 @@ export const ITEMS = {
   "id": "ancardia_ledger",
   "name": "军需处的回扣账",
   "en": "Ancardian Quartermaster Ledger",
-  "desc": "安卡迪亚兵站镇军需处的私账，法师登记费那一栏记着两个数，当中的差额进了一个军官的口袋。",
+  "desc": "安卡迪亚兵站镇军需处的私账。法师登记费那一栏记着两个数，当中的差额进了一个军官的口袋。",
   "value": 0,
   "quest": true
  },
@@ -143,7 +143,7 @@ export const ITEMS = {
   "id": "engine_ledger",
   "name": "机房的流水账",
   "en": "Engine House Ledger",
-  "desc": "文森顿那座机房的流水账，机房不烧煤，账上自然也没有煤钱，只有一栏写着“芯核更换”。",
+  "desc": "文森顿那座机房的流水账。机房不烧煤，账上也就没有煤钱，只有一栏写着“芯核更换”。",
   "value": 0,
   "quest": true
  },
@@ -151,7 +151,7 @@ export const ITEMS = {
   "id": "phrase_record",
   "name": "鸣声记录",
   "en": "Fragment Tone Record",
-  "desc": "分形修会记的鸣声，一百多年的数都在这儿了，可翻到最后几页，翻来覆去只记着两个词。",
+  "desc": "分形修会记的鸣声，一百多年的数都在这儿了。翻到最后几页，翻来覆去只记着两个词。",
   "value": 0,
   "quest": true
  },
@@ -159,7 +159,7 @@ export const ITEMS = {
   "id": "torrieth_rubbing",
   "name": "托丽丝刻痕的拓片",
   "en": "Rubbing of Torrieth's Marks",
-  "desc": "从密室墙上的刻痕拓下来的，炭粉都还没定住，当中有个方方的印子，跟碎片里那块黑东西一般大。",
+  "desc": "从密室墙上的刻痕拓下来的，炭粉都还没定住。当中有个方方的印子，跟碎片里那块黑东西一般大。",
   "value": 0,
   "quest": true
  },
@@ -175,7 +175,7 @@ export const ITEMS = {
   "id": "tuning_fork",
   "name": "达姆斯塔尔音叉",
   "en": "Damestear Tuning Fork",
-  "desc": "这把音叉调的是某个位面的频率，叉齿是拿晶体磨出来的，敲它一下，满船的杯子都跟着响。",
+  "desc": "这把音叉调的是某个位面的频率，叉齿是拿晶体磨出来的。敲它一下，满船的杯子都跟着响。",
   "value": 0,
   "quest": true,
   "relic": true
@@ -192,7 +192,7 @@ export const ITEMS = {
   "id": "torrieth_tally",
   "name": "托丽丝的刻痕本",
   "en": "Torrieth's Tally",
-  "desc": "天门前那条小船上的刻痕，前后一百六十八年，有人一道一道地抄进了这个本子里，抄到最后一道，后面就是空白了。",
+  "desc": "天门前那条小船上的刻痕，前后一百六十八年，有人一道一道地抄进了这个本子里。抄到最后一道，后面就是空白了。",
   "value": 0,
   "quest": true
  },

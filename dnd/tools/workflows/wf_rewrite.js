@@ -10,6 +10,7 @@ const EXTRA = {
   codex: 'This batch is codex entries (the in-game encyclopedia). Write them as plain, clear explanatory prose, the way a well-written Chinese reference or a knowledgeable person would explain the thing; no storytelling tricks. The one-line summaries (一句话简介) must stay within 15 characters.',
   data: 'This batch is enemy and item descriptions and enemies\' attack lines. Keep each to one or two natural sentences. In attack lines {name} is the enemy\'s name and must stay.',
 }
+const RESUME = new Set(args.resume || [])
 phase('Rewrite')
 const results = await pipeline(args.chunks, (chunk) => agent(`You are rewriting the Chinese story text of a tabletop-style RPG set in the Anbennar world (campaign ${ID}). The person who commissioned the game read the current text and said all of it reads as if an AI wrote it. He then approved a new voice from samples. Your job is to carry that approved voice through one batch of text.
 
@@ -19,7 +20,7 @@ Read, completely and in this order:
 3. ${W}/in/${chunk}.txt : your batch. Numbered lines, each tagged with what it is (narration, a character's line, an option label, a success or failure result, a fight special, and so on).
 ${EXTRA[chunk.split('-')[0]] ? '\n' + EXTRA[chunk.split('-')[0]] + '\n' : ''}
 Then write ${W}/out/${chunk}.txt : one line per number, "@编号 改好的文字", same order, nothing else.
-
+${RESUME.has(chunk) ? `\nA complete FIRST DRAFT of this batch already exists at ${W}/out/${chunk}.txt, left by an earlier attempt that was cut off before its revision pass. Do not start over. Read the draft alongside the source, then revise it in place with targeted edits: its sentences are still too choppy in places (join what belongs together, break where the subject changes), fix what the checker reports, and give it the final read described below.\n` : ''}
 How to work:
 - Go scene by scene. First understand what is happening (the old text is terse and leaves a lot implied: work out who is who and what is going on from the lines themselves), then tell it the way a good Chinese novelist or a good translator would.
 - Rewrite, do not patch. The old sentences are chopped into fragments: join them into flowing sentences, put in the connective words, let people talk like people. But change no facts: follow the guide's hard rules (内容不变、专有名词不变、记号原样、带条件的行各自成立、一条对一条).

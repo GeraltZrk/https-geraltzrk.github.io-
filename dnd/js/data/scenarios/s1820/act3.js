@@ -1,1646 +1,5806 @@
-// act3.js：s1820《泪尽》第三幕 · 货单（圣经 §11.4、§12.5、§16.2、§16.3）。1828 年银现月至泪落月，6 级 → 8 级。
-// 只改本文件；自检：node tools/check-part.mjs s1820 act3.js
-//
-// ── 提纲（谁在场 / 改什么 / 去哪）──────────────────────────────────────────
-// a3_01  报纸摘要二   铸炉街账房，五年剪报（读 line_* hoard_* rite_given plates_* blood_* oto_exposed report2_* backpay_suit
-//                     guilhem_stayed）。first：tears −1 dove −1 doors +1。唯一选择：魂秤专利 gauge_open／_sold／_burned。
-//                     [不死] 埃塔撕页、布拉要一个数、夜间恩主的名片。→ 02
-// a3_02  病榻         阿兰蒂尔塔。贝尔纳二世、伊莲、灰磨的信。洞悉／宗教 14 → bernal_confided。[神] 面相三答。
-//                     埃塔电报：种植园的合同签了。quest q_bill／q_phrase start。→ 03
-// a3_03  一件活，两份合同  伊索贝尔港海关。说服／欺瞒 14（[印] 保税单；bought_free 赎身契；[机械人] 填“用途：本人”）。
-//                     败：−100 金冠，a3x_escorted。→ 03b
-// a3_03b 炸鱼         安德克利夫夜访，布拉拿他的姓开一回玩笑。渡口单子／说已签约／要船钱。→ 04
-// a3_04  商栈（枢纽）  卡尔希尔商栈后院。商店、长休。埃塔→04m（m_member 表决）；蒂尔妲（a3x_tilda_calibrated）；
-//                     布拉擦枪；娜尔雯回信；别摇的灯（a3x_jar_light）；乌戈（ugo_papers → a3x_met_ugo）；
-//                     [卡尔希尔] karshyr_message；[巨魔湾] cousin_tip。→ 05
-// a3_04m 十四号       器材栏划不划。→ 04
-// a3_05  镇议会       塞斯提尔边区。说服 15 → town_shelters。[巨魔湾] 先领进谷仓 → town_vote_skipped。→ 06
-// a3_06  第二道菜底下  戴纽奇的晚宴。洞悉 15 → dainuich_noticed；察觉 14 → a3x_counted（败 a3x_alarm）；[贵族] a3x_engine_hint。
-//                     签收（planter_list_signed）／去看机器（a3x_invited）／揣走。[神] 红衣收割者归不归您管；[不死] reaper_file。→ 07
-// a3_07  轧棉机报人名  轧棉房。十一号背名字；内莉、老科尔、阿萨、霍布、马蒂。隐匿 14 党（败 a3x_alarm）；奥秘／调查 14 → cores_1810。
-//                     [无主者]×2、[机械人]、[绿皮]。接托比（a3x_toby）。→ 08
-// a3_08  团务会：两份合同  无解的抉择。contract_planters／_line／_fraud；[印] 合同自始无效；[盾] 布拉押欠饷；表决。→ 09
-// a3_09  布拉的枪     bura_alone／_armed／_line（[盾] 或好感 ≥ 6，说服 15，败了回到本场）。→ 10
-// a3_10  河堤         追奴队。[伪造] 欺瞒 16；[武人] 推木栅；a3x_counted 摸哨；乌戈的渡口（a3x_ford）。
-//                     [神] 谁也不许过 → levee_sanctuary → 10s。contract_planters → 10p。→ 10b
-// a3_10b 堤上（战斗） 按人数分档；a3x_light 减一档；礼拜三或机械人主角时可叫九台机器上堤（allies）。输 → levee_lost。→ 11
-// a3_10p 劫囚（战斗） 你在追奴队这边。赢 → levee_recovered；输 → 人跑了，钱照付一半。→ 11
-// a3_10s 庇护所       神格分支的余波。→ 11
-// a3_11  不烧煤的机房  灰磨领参观。quest q_engine start。[奇械] 倒过来的秤。→ 11b
-// a3_11b—11e 夜里偷账  隐匿 15（[小个子] 通风道）、巧手 15 或硬撬、调查 14；过两关 → engine_ledger partner_engine_share。
-//                     过不了两关：半本账，体质豁免 13。→ 12
-// a3_12  真理之路     first：level 7。背锅的地精。求生 14 过河。→ 12b
-// a3_12b 朝圣客栈     问答（宗教 13，short rest）；[神职] 带晚祷；运动 14 崖路。→ 13
-// a3_13  四根柱子     台座还在响。三种读法当场吵。察觉 14 拓片；奥秘 15（[施法者] 定住那个音）。[神] 换调、礼拜三问你造过我们吗。
-//                     [机械人] 多听半个音。→ 13b
-// a3_13b 披风卫       交笔记（巧手 14 藏一份）／娜尔雯压资历／动手（cloakmen_fought）。→ 14
-// a3_14  两个词       娜尔雯的抉择。phrase_published／_sold（两家）／_kept／_signed（[灯] 或好感 ≥ 5）。rector_*。→ 15
-// a3_15  证词         礼拜三的抉择。上秤（奥秘 16 党）／不许去／[无主者·机械人] 自己上／[神] 按住口子。→ 15b
-// a3_15b 裁定         ruling_cores／_both（[印] 门槛降一）／engine_licensed；[灯] 当庭念账。→ 16
-// a3_16  机房起火     战斗 noAwe，按人数分档。拔调速器、放汽、念编号（warpattern_spared）、抢芯核（cores_saved）。→ 17
-// a3_17  洇河口       数人（读 levee_* town_shelters bura_* contract_planters a3x_toby）。说服 16 → ynns_free_soil。
-//                     [洛伦特] 林卫上将：回绝／交两个／拿别针唬他。quest q_bill done。→ 18
-// a3_18  穿好料子的客人  瓦伦盖尔特。partner_known。历史 15、洞悉 15。两人读出两个意思。[神] 两个节换你不显灵。→ 19
-// a3_19  第三份报告   report3_full／_edited／_lie；鱼馆问好（report3_named_bronze）；另抄一份（按出身）。→ 20
-// a3_20  数流星       first：level 8。照 tears 报数。不在的人留下的东西。[神] 别摇那一句。→ a4_01
-//
-// 本段自用标记（前缀 a3x_，只在本文件里设、本文件里读）：
-//   a3x_bernal_asked a3x_greymill_letter a3x_ferrylist a3x_escorted a3x_member_no a3x_tilda_calibrated a3x_jar_light
-//   a3x_met_ugo a3x_counted a3x_alarm a3x_engine_hint a3x_invited a3x_toby a3x_light a3x_ford a3x_seen a3x_decoded
-//   a3x_zerat a3x_festivals a3x_fest_no a3x_glade_done a3x_home_done a3x_void a3x_god_answered
-//   计数器 var.a3x_pass（偷账过了几关）
-//
-// 清单上有名字的人（统稿时并入译名表，崖下兽人照巨魔湾的叫法起英文名）：
-//   内莉（Nelly）厨娘，儿子托比（Toby）九岁，在隔壁庄园；老科尔（Old Cole）六十一岁，不走，留下给追的人指错路；
-//   阿萨（Asa）撑过船，认得洇河口前头的渡口；霍布（Hob）脚踝被镣磨烂，走不快；马蒂（Matty）十四岁，会数数，
-//   替机器把编号记在鞋底。九台轧棉机械人编号七到十五，十一号背名字，屋里的人叫它“念经的”。
-//
-// 与圣经的出入（照正史和 codex.js）：碎片当年悬在台座上方，两样没挨着（§11.4 只说“空台座”）；a3_12 的同路人照圣经写地精。
-// 战斗按五人满编调过强度（check-data 实测），三人以下用 hpMult 减血，见各 ENC 常量。
-
-// ── 河堤：追奴队（6 级）。T5 五人掉血约 36%，T4 四人约 41%，T3 三人约 47%，T2 两人约 46%。
-const LEVEE_SPECIALS = [
-  { id: 'sluice', name: '开水闸', desc: '把堤上的闸门摇开，让河水灌进他们那半边',
-    check: { skill: 'athletics', dc: 14, party: true },
-    success: { text: '闸门的铁轮转了半圈就卡住了，再一推，河水整片翻上来。马站不住，人也站不住，对面那半边堤成了一条沟。', dmgAll: '3d6', end: 'win' },
-    fail: { text: '铁轮锈死了。你推得手心起泡，它只往下滴了几滴水。', selfDmg: '1d6' } },
-  { id: 'narrow', name: '堵住最窄的那一段', desc: '堤顶只容两匹马并排，有一段只容一匹',
-    check: { skill: 'athletics', alt: ['intimidation'], dc: 15 },
-    success: { text: '你站到最窄的那一段上，后面的马挤成一团，前面的人退不回去。', applyAll: { cond: 'restrained', turns: 1 } },
-    fail: { text: '马比你想的高。你被撞下了堤坡，滚了两圈才停住。', selfDmg: '1d8' } },
-  { id: 'lantern', name: '打翻防风灯', desc: '那盏灯挂在柳树上，狗认气味，人认灯',
-    check: { skill: 'sleight', alt: ['acrobatics'], dc: 13 },
-    success: { text: '灯掉进了芦苇里。追奴队的人看不见，狗还在叫，叫的方向全不对。', applyAll: { cond: 'blinded', turns: 1 } },
-    fail: { text: '灯晃了两下没掉。领头的人顺着你扔的石头，看见了你。' } },
-];
-const LEVEE_BASE = {
-  title: '河堤',
-  intro: '防风灯挂在柳树上，照着堤顶一小块地方。狗先扑了上来。',
-  noAwe: false,
-  specials: LEVEE_SPECIALS,
-  fleeable: true,
-  win: { effects: ['rep union +1'], goto: 'a3_11' },
-  lose: { effects: [{ if: 'flag.a3x_ford', then: ['hp -6'], else: ['flag levee_lost', 'unflag levee_recovered', 'world chains +1'] }], goto: 'a3_11' },
-  reward: ['item +healing_potion 2', 'gold +60'],
-};
-const T5 = [{ id: 'catcher_captain' }, { id: 'makata_ganger', n: 3, name: '追奴队的打手' }, { id: 'catch_hound', n: 3 }, { id: 'dragoon', n: 2, name: '骑马的追奴' }];
-const T4 = [{ id: 'catcher_captain' }, { id: 'makata_ganger', n: 2, name: '追奴队的打手' }, { id: 'catch_hound', n: 3 }, { id: 'dragoon', name: '骑马的追奴' }];
-const T3 = [{ id: 'catcher_captain' }, { id: 'makata_ganger', name: '追奴队的打手' }, { id: 'catch_hound', n: 2 }];
-const T2 = [{ id: 'catcher_captain' }, { id: 'catch_hound', n: 2 }];
-const T1 = [{ id: 'catcher_captain', hpMult: 0.55 }, { id: 'catch_hound' }];
-const GIN_ALLIES = [{ id: 'striker', n: 2, name: '轧棉机械人' }];
-
-// ── 劫囚：你在追奴队这边（6 级）。五人约 36%，四人约 33%，三人约 30%，两人约 50%。
-const RESCUE_BASE = {
-  title: '劫囚',
-  intro: '芦苇里站起来七八个人。打头的那个把半边遮着的灯放在地上，抽出了刀。',
-  specials: [
-    { id: 'reeds', name: '点着芦苇', desc: '风往河那边吹',
-      check: { skill: 'survival', alt: ['nature'], dc: 14 },
-      success: { text: '芦苇烧起来，烟往河上卷。对面的人一边咳一边往后退。', dmgAll: '2d6', type: 'fire' },
-      fail: { text: '芦苇是湿的。火苗冒了一下就灭了，烟全扑在你脸上。', selfDmg: '1d4' } },
-    { id: 'shout', name: '喊出悬赏单上的价钱', desc: '让他们知道追奴队按人头领钱，死的不值钱',
-      check: { skill: 'intimidation', alt: ['persuasion'], dc: 15 },
-      success: { text: '你把价钱喊了一遍。对面有两个人停了手，他们听懂了：追奴队不想打死人，他们可以不死。', applyAll: { cond: 'dazed', turns: 1 } },
-      fail: { text: '对面有人回了一句：“那你值多少？”' } },
-  ],
-  fleeable: true,
-  win: { effects: ['flag levee_recovered', 'unflag levee_lost', 'world chains +1', 'rep charter +1'], goto: 'a3_11' },
-  lose: { effects: ['world chains -1', 'gold +150'], goto: 'a3_11' },
-};
-const R5 = [{ id: 'rival_blade', n: 3, name: '暗线的刀手' }, { id: 'rival_mage', n: 2, name: '暗线的法师' }, { id: 'war_priest', name: '科琳教的随军修士' }, { id: 'revolutionary', n: 3, name: '暗线的人' }];
-const R4 = [{ id: 'rival_blade', n: 3, name: '暗线的刀手' }, { id: 'rival_mage', name: '暗线的法师' }, { id: 'war_priest', name: '科琳教的随军修士' }, { id: 'revolutionary', n: 2, name: '暗线的人' }];
-const R3 = [{ id: 'rival_blade', n: 2, name: '暗线的刀手' }, { id: 'rival_mage', name: '暗线的法师' }, { id: 'revolutionary', n: 2, name: '暗线的人' }];
-const R2 = [{ id: 'rival_blade', name: '暗线的刀手' }, { id: 'rival_mage', name: '暗线的法师' }, { id: 'revolutionary', name: '暗线的人' }];
-
-// ── 密室：披风卫（7 级）。五人约 35%，四人约 30%，三人约 30%，两人约 31%。
-const CLOAK_BASE = {
-  title: '四根柱子底下',
-  intro: '披风卫把剑抽出来的时候，剑身上的咒文亮了一下，台座跟着高了半个音。',
-  specials: [
-    { id: 'pillar', name: '敲一根柱子', desc: '柱子是空心的，敲一下，整间屋子都响',
-      check: { skill: 'athletics', dc: 14, party: true },
-      success: { text: '柱子响了。声音在屋里绕了三圈，每个人的耳朵里都是那个音。', applyAll: { cond: 'dazed', turns: 1 } },
-      fail: { text: '柱子没响，响的是你的手腕。', selfDmg: '1d6' } },
-    { id: 'stairs', name: '踹倒台阶上的灯架', desc: '他们是从四十一级台阶上下来的',
-      check: { skill: 'acrobatics', alt: ['athletics'], dc: 13 },
-      success: { text: '灯架滚下台阶，油泼了一路。后面下来的人踩上去，滑倒了两个。', dmgAll: '2d6', type: 'fire' },
-      fail: { text: '灯架倒向了你这边。' , selfDmg: '1d6', type: 'fire' } },
-  ],
-  fleeable: true,
-  win: { effects: ['rep church -1'], goto: 'a3_14' },
-  lose: { effects: ['item -phrase_record'], goto: 'a3_14' },
-};
-const C5 = [{ id: 'cloakman', n: 4 }, { id: 'war_priest', name: '分形修会的修士' }, { id: 'war_mage', n: 2, name: '分形修会的施法者' }];
-const C4 = [{ id: 'cloakman', n: 4 }, { id: 'war_priest', name: '分形修会的修士' }, { id: 'war_mage', name: '分形修会的施法者' }];
-const C3 = [{ id: 'cloakman', n: 3 }, { id: 'war_mage', name: '分形修会的施法者' }];
-const C2 = [{ id: 'cloakman' }, { id: 'war_mage', name: '分形修会的施法者', hpMult: 0.6 }];
-
-// ── 机房起火（7 级，noAwe）。五人约 54%，四人约 49%，三人约 50%，两人约 50%，一个人约 60—70%（伤得重；输了也有出路）。
-const FIRE_BASE = {
-  title: '炉门',
-  intro: '四条胳膊一起抬了起来。它胸口那颗芯核叫了一声，十二颗跟着叫。',
-  noAwe: true,
-  specials: [
-    { id: 'governor', name: '拔掉调速器', desc: '它背上有一根铜杆，连着炉子',
-      check: { skill: 'sleight', alt: ['athletics'], dc: 15, party: true },
-      success: { text: '铜杆拔了出来，带出一串火星。四条胳膊同时停在半空。', applyAll: { cond: 'stunned', turns: 1 } },
-      fail: { text: '铜杆烫手。你松开的时候，掌心留下了一道印子。', selfDmg: '1d8', type: 'fire' } },
-    { id: 'steam', name: '放锅炉的汽', desc: '锅炉上有三个阀门，一个是放汽的',
-      check: { skill: 'athletics', alt: ['investigation'], dc: 14 },
-      success: { text: '白汽从炉膛边上喷出来，整排扫过去。', dmgAll: '3d6', type: 'fire' },
-      fail: { text: '你拧开的那个阀门是进水的。地上多了一摊水，别的什么也没变。' } },
-    { id: 'number', name: '念出它的编号，问它今天礼拜几', desc: '它胸口铜牌上的编号还看得清',
-      check: { skill: 'persuasion', alt: ['insight'], dc: 16, adv: 'party.middlesday || is.mechanim' },
-      success: { text: '它的四条胳膊慢慢放了下来。“礼拜三。”它说。那天是礼拜四，没人纠正它。', effects: ['flag warpattern_spared'], end: 'win' },
-      fail: { text: '它听见了编号，没听见后半句。胸口那颗叫得更响了。' } },
-    { id: 'cores', name: '把炉膛里那十二颗抢出来', desc: '炉膛的门开着一条缝',
-      check: { skill: 'athletics', dc: 15, party: true },
-      success: { text: '十二颗，一颗一颗夹出来，放进一只铁皮桶。桶底垫了一件外套，外套烧了个洞。', effects: ['flag cores_saved', 'world chains -1'] },
-      fail: { text: '炉膛口的火舌卷了出来。你缩回手，手套没了。', selfDmg: '2d6', type: 'fire' } },
-  ],
-  fleeable: false,
-  win: { effects: [{ if: 'flag.engine_licensed', then: [], else: ['flag engine_burned'] }, 'quest q_engine done', 'rest short'], goto: 'a3_17' },
-  lose: { effects: ['flag engine_burned', { if: 'flag.cores_saved', then: ['unflag cores_saved', 'world chains +1'] }, 'quest q_engine done', 'rest short'], goto: 'a3_17' },
-};
-const F5 = [{ id: 'war_pattern_screamer' }, { id: 'artificer_engineer', name: '财团的奇械师' }, { id: 'secret_police', name: '特殊案件预防局的人' }];
-const F4 = [{ id: 'war_pattern_screamer', hpMult: 0.7 }, { id: 'secret_police', name: '特殊案件预防局的人' }];
-const F3 = [{ id: 'war_pattern_screamer', hpMult: 0.5 }, { id: 'secret_police', name: '特殊案件预防局的人' }];
-const F2 = [{ id: 'war_pattern_screamer', hpMult: 0.3 }];
-const F1 = [{ id: 'war_pattern_screamer', hpMult: 0.1 }];
-
+// s1820 / act3.js：数据文件。正文按 docs/STYLE_GUIDE.md（第二版）重写过，由 tools/rewrite-apply.mjs 写回。
 export const SCENES = {
-  a3_01: {
-    id: 'a3_01',
-    title: '报纸摘要二',
-    chapter: '第三幕 · 货单',
-    art: 'ev_castellos_is_dead',
-    loc: '安本科斯特 · 铸炉街',
-    date: '1828年银现月',
-    text: [
-      '埃塔把五年的剪报钉在了账房的墙上，一条一枚图钉。图钉论斤买，她嫌贵，一条只钉一个角。楼下的蜡烛铺换了招牌，字还是那几个字，漆新了。',
-      { if: 'flag.line_castonath', text: '《泰卢姆时报》，1825 年：卡斯托纳斯通了煤气灯。八座塔，租出去三座，租客里有一家卖帽子的。', cls: 'letter' },
-      { if: 'flag.line_ancardia', text: '《斗兽场哨兵报》，1825 年：安卡迪亚的兵车开进了卡斯托纳斯，车头挂着阿斯拉银行的旗。东坎诺是坐着兵车统一的。', cls: 'letter' },
-      { if: 'flag.line_none', text: '《安本科斯特论坛报》，1824 年：阿斯拉银行停兑三天。门口排队的人里，有两个是公司的老主顾。', cls: 'letter' },
-      { if: 'flag.hoard_sealed', text: '同一年，魔法领地的窖藏上了三道印，钥匙分给了三家。', cls: 'letter' },
-      { if: 'flag.hoard_milled', text: '同一年，窖藏磨成了子弹。军需处的收条上写着“旧料再用”。', cls: 'letter' },
-      { if: 'flag.rite_given', text: '伊萨受了礼。王家巫师的名册上，空席从六个变成了五个。', cls: 'letter' },
-      { if: '!flag.rite_given', text: '伊萨没受礼。王家巫师的名册上，空席还是六个。', cls: 'letter' },
-      { if: 'flag.plates_printed', text: '德鲁兹纳的底片印成了一本小册子，四个铜子一本，退回来的比卖出去的多。', cls: 'letter' },
-      { if: 'flag.plates_sold', text: '底片归了银团。银团的年报里没有一个字提到彗星。', cls: 'letter' },
-      { if: 'flag.box_plates', text: '底片还在埃塔的铁箱里，压在 1789 年那张欠条底下。', cls: 'letter' },
-      { if: 'flag.blood_published', text: '血账见了报。东坎诺两国互相抗议，两封抗议书写得一样长。', cls: 'letter' },
-      { if: 'flag.blood_sold', text: '血账卖了出去。买主没留姓名，付的是汇票。', cls: 'letter' },
-      { if: 'flag.blood_burned', text: '血账烧了。埃塔在账上记的是：纸，一册，自然损耗。', cls: 'letter' },
-      { if: 'flag.blood_reported', text: '血账交了上去。上头回了一封信，两个字：已阅。', cls: 'letter' },
-      { if: 'flag.box_blood', text: '血账在铁箱里，和底片挨着。', cls: 'letter' },
-      { if: 'flag.oto_exposed', text: '莫雷塞德的奥托调去管马料了。听说他嫌马吃得多。', cls: 'letter' },
-      { text: '合伙人入了血的股，十一个月后又撤了。{?flag.report2_full:他撤得比别的股东早一个月。|}', cls: 'letter' },
-      { text: '《洛伦特日报》：洛伦特在境内禁了寇拉希。社论只有一句话：洛伦泰内有人会算账。', cls: 'letter' },
-      { text: '《加韦顿观察》，去年冬天：布西拉尔以外，头一回有人自己试出了一个频率。报上没说是谁，配了一张很糊的照片。', cls: 'letter' },
-      { if: 'flag.backpay_suit', text: '欠饷的官司判了，给一半。布拉把判词裱了起来，挂在床头，比她那张科琳像大一圈。', cls: 'letter' },
-      { if: 'flag.guilhem_stayed', text: '还有吉列姆一封信。信纸上印着塔的徽记，正文三页，两页在讲学生的作业。', cls: 'letter' },
-      { speaker: '埃塔', text: '血的股，他入了十一个月。代理人的原话：嫌浅。这两个字我记在“备注”那一栏了。' },
-      { if: 'party.guilhem', text: '吉列姆的头发全灰了。他说是咖啡的事，大夫说不是。' },
-      { if: 'is.immortal', text: '埃塔又把你的养老金算了一遍。算完，她把那一页撕下来，团成一团，扔进了炉子。' },
-      { if: 'is.immortal && party.bura', speaker: '布拉', text: '一百年以后，你还记不记得我叫什么。（铰链咔的一声。）别说记得。给我个数。' },
-      { if: 'is.immortal', text: '同一个礼拜，信箱里多了一张名片。维文帝国的某位“夜间恩主”，没有地址，背面一行字：幸会，同道。' },
-      '最底下压着蒂尔妲的信，邮戳是加韦顿的。卡拉桑尼出价买魂秤的专利，八百金冠。图纸上要公司副署，因为秤是拿公司的十四号器材校准的。',
-      { speaker: '蒂尔妲（信）', text: '签不签？汇票不等人（我也不等（我在等另一张汇票））。第三页有我的签名，第四页给你们留了地方。' },
-      { if: 'party.middlesday', speaker: '礼拜三', text: '（陈述。）十四号器材就是我。（礼貌。）他们要买的那杆秤，量过我三回。' },
+ "a3_01": {
+  "id": "a3_01",
+  "title": "报纸摘要二",
+  "chapter": "第三幕 · 货单",
+  "art": "ev_castellos_is_dead",
+  "loc": "安本科斯特 · 铸炉街",
+  "date": "1828年银现月",
+  "text": [
+   "埃塔把这五年攒下的剪报全钉在了账房的墙上，一条剪报一枚图钉，图钉是论斤买的，她嫌贵，所以每条只钉一个角。楼下那家蜡烛铺倒是换了招牌，字还是原来那几个字，只是漆是新刷的。",
+   {
+    "if": "flag.line_castonath",
+    "text": "《泰卢姆时报》1825 年登过一条，说卡斯托纳斯通上了煤气灯，城里那八座塔租出去了三座，租客里头还有一家是卖帽子的。",
+    "cls": "letter"
+   },
+   {
+    "if": "flag.line_ancardia",
+    "text": "《斗兽场哨兵报》1825 年登过一条，说安卡迪亚的兵车开进了卡斯托纳斯，车头上挂的是阿斯拉银行的旗，东坎诺就这么坐着兵车统一了。",
+    "cls": "letter"
+   },
+   {
+    "if": "flag.line_none",
+    "text": "《安本科斯特论坛报》1824 年登过一条，说阿斯拉银行停兑了三天，在门口排队的人里头，有两个还是公司的老主顾。",
+    "cls": "letter"
+   },
+   {
+    "if": "flag.hoard_sealed",
+    "text": "也是那一年，魔法领地的窖藏贴上了三道封印，钥匙分给了三家。",
+    "cls": "letter"
+   },
+   {
+    "if": "flag.hoard_milled",
+    "text": "也是那一年，窖藏全给磨成了子弹，军需处开的收条上写的是“旧料再用”。",
+    "cls": "letter"
+   },
+   {
+    "if": "flag.rite_given",
+    "text": "伊萨受了礼，王家巫师名册上的空席也就从六个变成了五个。",
+    "cls": "letter"
+   },
+   {
+    "if": "!flag.rite_given",
+    "text": "伊萨没有受礼，王家巫师名册上的空席还是六个。",
+    "cls": "letter"
+   },
+   {
+    "if": "flag.plates_printed",
+    "text": "德鲁兹纳的底片印成了小册子，四个铜子一本，可惜退回来的比卖出去的还多。",
+    "cls": "letter"
+   },
+   {
+    "if": "flag.plates_sold",
+    "text": "底片归了银团，银团后来出的年报里，一个字也没提到彗星。",
+    "cls": "letter"
+   },
+   {
+    "if": "flag.box_plates",
+    "text": "底片还锁在埃塔的铁箱里，就压在 1789 年那张欠条底下。",
+    "cls": "letter"
+   },
+   {
+    "if": "flag.blood_published",
+    "text": "血账登了报，东坎诺那两国互相递了抗议书，两封抗议书写得一般长。",
+    "cls": "letter"
+   },
+   {
+    "if": "flag.blood_sold",
+    "text": "血账卖出去了，买主没留姓名，付的是一张汇票。",
+    "cls": "letter"
+   },
+   {
+    "if": "flag.blood_burned",
+    "text": "血账烧掉了，埃塔在账上只记了一笔“纸，一册，自然损耗”。",
+    "cls": "letter"
+   },
+   {
+    "if": "flag.blood_reported",
+    "text": "血账交上去了，上头回了一封信，信上只有“已阅”两个字。",
+    "cls": "letter"
+   },
+   {
+    "if": "flag.box_blood",
+    "text": "血账也锁在铁箱里，跟底片挨着放。",
+    "cls": "letter"
+   },
+   {
+    "if": "flag.oto_exposed",
+    "text": "莫雷塞德的奥托给调去管马料了，听说他还嫌马吃得太多。",
+    "cls": "letter"
+   },
+   {
+    "text": "合伙人入了血的股，过了十一个月又撤了出来。{?flag.report2_full:比起别的股东，他还早撤了一个月。|}",
+    "cls": "letter"
+   },
+   {
+    "text": "《洛伦特日报》上说，洛伦特在境内把寇拉希给禁了，那天的社论通篇只有一句话，“洛伦泰内有人会算账”。",
+    "cls": "letter"
+   },
+   {
+    "text": "去年冬天的《加韦顿观察》上说，在布西拉尔以外，头一回有人自己试出了一个频率，可报上没说这人是谁，只配了一张糊得厉害的照片。",
+    "cls": "letter"
+   },
+   {
+    "if": "flag.backpay_suit",
+    "text": "欠饷的官司判下来了，只判给一半，布拉还是把判词裱了起来挂在床头，比她那张科琳像还大着一圈。",
+    "cls": "letter"
+   },
+   {
+    "if": "flag.guilhem_stayed",
+    "text": "还有吉列姆寄来的一封信，信纸上印着塔的徽记，正文一共三页，倒有两页是在讲学生的作业。",
+    "cls": "letter"
+   },
+   {
+    "speaker": "埃塔",
+    "text": "十一个月，合伙人在血上头的股一共就入了这么久。他那位代理人的原话是两个字，嫌浅，这两个字我给记在“备注”那一栏里了。"
+   },
+   {
+    "if": "party.guilhem",
+    "text": "吉列姆的头发全灰了，他自己说是咖啡喝出来的，大夫说不是。"
+   },
+   {
+    "if": "is.immortal",
+    "text": "埃塔把你的养老金又从头算了一遍，算完以后，她把那一页撕下来团成一团，扔进了炉子。"
+   },
+   {
+    "if": "is.immortal && party.bura",
+    "speaker": "布拉",
+    "text": "再过一百年，你还记不记得我叫什么？（铰链咔的一声。）别跟我说记得，给我个数。"
+   },
+   {
+    "if": "is.immortal",
+    "text": "也是那个礼拜，信箱里多出来一张名片，是维文帝国某位“夜间恩主”的，上头没写地址，只在背面有一行字，写的是“幸会，同道”。"
+   },
+   "压在最底下的是蒂尔妲的信，盖的是加韦顿的邮戳。信上说卡拉桑尼出八百金冠要买魂秤的专利，可图纸上得有公司副署才行，因为那杆秤当初是拿公司的十四号器材校准的。",
+   {
+    "speaker": "蒂尔妲（信）",
+    "text": "签还是不签呀？汇票可不等人（我也不等（好吧，我是在等另一张汇票））。第三页上我已经签好名了，第四页给你们留着地方呢。"
+   },
+   {
+    "if": "party.middlesday",
+    "speaker": "礼拜三",
+    "text": "（陈述。）十四号器材说的就是我。（礼貌。）他们要买的那杆秤，前后量过我三回。"
+   }
+  ],
+  "first": [
+   "world tears -1",
+   "world dove -1",
+   "world doors +1",
+   {
+    "if": "is.god",
+    "then": [
+     "codex c_apotheosis"
+    ]
+   }
+  ],
+  "choices": [
+   {
+    "text": "把图纸送去专利局公开备案，谁都能抄",
+    "effects": [
+     "flag gauge_open",
+     "unflag gauge_sold",
+     "unflag gauge_burned",
+     "world press +1",
+     "rep union +1"
     ],
-    first: [
-      'world tears -1',
-      'world dove -1',
-      'world doors +1',
-      { if: 'is.god', then: ['codex c_apotheosis'] },
+    "result": "专利局的书记员一连问了三遍，“谁都能抄”这几个字是不是写错了，其实并没有写错。结果才到第二个月，铸炉街上就有人照着图纸做出了一杆。",
+    "goto": "a3_02"
+   },
+   {
+    "text": "副署，卖给卡拉桑尼",
+    "effects": [
+     "flag gauge_sold",
+     "unflag gauge_open",
+     "unflag gauge_burned",
+     "gold +800",
+     "rep charter +2",
+     "world chains +1",
+     "approval middlesday -2"
     ],
-    choices: [
-      {
-        text: '把图纸送去专利局公开备案，谁都能抄',
-        effects: ['flag gauge_open', 'unflag gauge_sold', 'unflag gauge_burned', 'world press +1', 'rep union +1'],
-        result: '专利局的书记员问了三遍，“谁都能抄”是不是写错了。没写错。第二个月，铸炉街就有人照着图纸做了一杆。',
-        goto: 'a3_02',
-      },
-      {
-        text: '副署，卖给卡拉桑尼',
-        effects: ['flag gauge_sold', 'unflag gauge_open', 'unflag gauge_burned', 'gold +800', 'rep charter +2', 'world chains +1', 'approval middlesday -2'],
-        result: '汇票第二天就兑了。礼拜三在器材账上自己那一行旁边，用铅笔添了一个价钱。',
-        goto: 'a3_02',
-      },
-      {
-        text: '把图纸烧了',
-        effects: ['flag gauge_burned', 'unflag gauge_open', 'unflag gauge_sold', 'approval middlesday +1'],
-        result: '图纸在炉子里卷了边才着。蒂尔妲的回信只有一句：秤我脑子里还有一杆，下一杆不叫秤。',
-        goto: 'a3_02',
-      },
+    "result": "汇票第二天就兑出来了，礼拜三翻开器材账，在它自己那一行旁边拿铅笔添上了一个价钱。",
+    "goto": "a3_02"
+   },
+   {
+    "text": "把图纸烧了",
+    "effects": [
+     "flag gauge_burned",
+     "unflag gauge_open",
+     "unflag gauge_sold",
+     "approval middlesday +1"
     ],
-  },
-
-  a3_02: {
-    id: 'a3_02',
-    title: '病榻',
-    art: 'ev_piety',
-    loc: '阿兰蒂尔塔 · 总院长的卧房',
-    text: [
-      '总院长的卧房在三楼，窗户朝着月河。贝尔纳二世躺在一张窄床上，被子盖到胸口。床头柜上一杯水，一本没合上的祈祷书。他当了二十七年总院长，屋里没有一样金的东西。',
-      '床边站着真言师伊莲·西纳·阿尔科，手里一本小册子，老人每喘一口气她记一笔。文森顿的灰磨大监院没来，来的是他一封信，十一页，搁在水杯旁边，还没拆。',
-      { if: 'party.narwen', speaker: '娜尔雯', text: '上回我进这间屋，是 1666 年。那回屋里的人站着，第二天就走了，没带伞。' },
-      { speaker: '贝尔纳二世', text: '修女。把你的本子带到那条路的尽头去。碎片原来待的地方。在那儿，听一回。' },
-      '他停了一下，嘴又动了动，把后半句咽了回去。',
-      { if: '!party.narwen', text: '他要的修女不在。他把话说给你听，叫你转告。伊莲在册子上记了一笔：口信，经俗人转交。' },
-      { if: 'is.god', text: '他看见你，撑着坐起来一点。伊莲伸手去扶，没扶住。' },
-      { if: 'is.god', speaker: '贝尔纳二世', text: '您是祂的一个面相吗。我想在走之前，把这一栏填上。' },
-      { if: 'is.god', text: '伊莲翻开了一本新册子，封面上写着：鉴定，卷一。' },
-      '出门的时候，埃塔的电报追到了塔下：马利安德的种植园财团雇了“这家出了名的老公司”，追回走失的财物。合同她已经签了，定金很厚。',
+    "result": "图纸扔进炉子里，先卷了边才烧起来。蒂尔妲的回信只有一句话，说秤在她脑子里还有一杆，不过下一杆就不叫秤了。",
+    "goto": "a3_02"
+   }
+  ]
+ },
+ "a3_02": {
+  "id": "a3_02",
+  "title": "病榻",
+  "art": "ev_piety",
+  "loc": "阿兰蒂尔塔 · 总院长的卧房",
+  "text": [
+   "总院长的卧房在三楼，窗户正对着月河。贝尔纳二世躺在一张窄床上，被子盖到胸口，床头柜上放着一杯水，还有一本没合上的祈祷书。他当了二十七年的总院长，可这间屋里连一样金的东西都找不出来。",
+   "守在床边的是真言师伊莲·西纳·阿尔科，她手里拿着一本小册子，老人每喘一口气，她就往上记一笔。文森顿的灰磨大监院人没有来，只来了一封信，足足十一页，就搁在水杯旁边，到现在还没拆。",
+   {
+    "if": "party.narwen",
+    "speaker": "娜尔雯",
+    "text": "上回我进这间屋子，还是 1666 年的事呢。那一回屋里的人是站着的，第二天他就走了，连伞都没带。"
+   },
+   {
+    "speaker": "贝尔纳二世",
+    "text": "修女啊，你把你那个本子带上，一直带到那条路的尽头，带到碎片原先待的那个地方去。到了那儿，你就听上一回。"
+   },
+   "说到这儿他停了一下，嘴唇又动了动，到底还是把后半句咽了回去。",
+   {
+    "if": "!party.narwen",
+    "text": "可惜他要找的那位修女不在，他只好把话说给你听，叫你替他转告。伊莲在册子上记了一笔，写的是“口信，经俗人转交”。"
+   },
+   {
+    "if": "is.god",
+    "text": "他一看见你，就撑着身子坐起来了一点，伊莲伸手去扶，却没扶住。"
+   },
+   {
+    "if": "is.god",
+    "speaker": "贝尔纳二世",
+    "text": "您是祂的一个面相吗？我想趁着还没走，把这一栏给填上。"
+   },
+   {
+    "if": "is.god",
+    "text": "伊莲翻开了一本新册子，封面上写着“鉴定，卷一”。"
+   },
+   "你们出门的时候，埃塔的电报一路追到了塔底下。电报上说，马利安德的种植园财团雇了“这家出了名的老公司”去追回走失的财物，合同她已经签了，定金给得很厚。"
+  ],
+  "first": [
+   "quest q_bill start",
+   "quest q_phrase start",
+   "codex c_ravelian_church"
+  ],
+  "choices": [
+   {
+    "text": "答他：是",
+    "tag": "神",
+    "if": "is.god && !flag.a3x_bernal_asked",
+    "once": true,
+    "effects": [
+     "flag a3x_bernal_asked",
+     "rep church +1",
+     "var cult +1"
     ],
-    first: ['quest q_bill start', 'quest q_phrase start', 'codex c_ravelian_church'],
-    choices: [
-      {
-        text: '答他：是',
-        tag: '神',
-        if: 'is.god && !flag.a3x_bernal_asked',
-        once: true,
-        effects: ['flag a3x_bernal_asked', 'rep church +1', 'var cult +1'],
-        result: '他闭上眼睛，点了一下头。第二个礼拜，热忱派的小报上多了一面旗，旗上印着你的侧脸，鼻子画大了。',
-      },
-      {
-        text: '答他：不是',
-        tag: '神',
-        if: 'is.god && !flag.a3x_bernal_asked',
-        once: true,
-        effects: ['flag a3x_bernal_asked', 'approval narwen +1', 'rep church -1'],
-        result: '伊莲在册子上写：天赋异禀的法师，见附录。博学派当天就把这一卷归了档，热忱派说归早了。',
-      },
-      {
-        text: '反问他：您觉得呢',
-        tag: '神',
-        if: 'is.god && !flag.a3x_bernal_asked',
-        once: true,
-        effects: ['flag a3x_bernal_asked', 'approval narwen -1'],
-        result: '他笑了，笑着笑着咳起来，咳了很久。伊莲把你请到了门外。',
-      },
-      {
-        text: '听他咽回去的那半句',
-        check: { skill: 'insight', alt: ['religion'], dc: 14, mods: [{ if: 'flag.heard_hum', n: 1, why: '隔着地板听过它一声' }] },
-        ok: { text: '那半句是：“这些年，它反复只说一句。”他说完看了伊莲一眼。伊莲的笔停着，没记。', effects: ['flag bernal_confided'], goto: 'a3_03' },
-        fail: { text: '你只听见他咳。伊莲合上册子，记下了你的名字，和你站的位置。', effects: ['rep church -1'], goto: 'a3_03' },
-      },
-      {
-        text: '替娜尔雯举着灯，等他睡着',
-        if: 'party.narwen',
-        effects: ['approval narwen +1'],
-        result: '他睡着以前，娜尔雯数了他的呼吸，一百一十二下。她没说为什么要数。',
-        goto: 'a3_03',
-      },
-      {
-        text: '把灰磨那封信拆开，念给他听',
-        effects: ['flag a3x_greymill_letter', 'rep church +1'],
-        result: '信里写的是文森顿穷人街上的路灯，一共四百一十盏，一盏一盏写了地址。老人听到第二百盏，睡着了。',
-        goto: 'a3_03',
-      },
+    "result": "他闭上眼睛点了一下头，到了第二个礼拜，热忱派的小报上就多了一面旗，旗上印的是你的侧脸，只是鼻子给画大了。"
+   },
+   {
+    "text": "答他：不是",
+    "tag": "神",
+    "if": "is.god && !flag.a3x_bernal_asked",
+    "once": true,
+    "effects": [
+     "flag a3x_bernal_asked",
+     "approval narwen +1",
+     "rep church -1"
     ],
-  },
-
-  a3_03: {
-    id: 'a3_03',
-    title: '一件活，两份合同',
-    art: 'ev_high_temple_city',
-    loc: '巨魔湾 · 伊索贝尔港',
-    date: '1828年哈兰娜月',
-    text: [
-      '伊索贝尔港的海关在码头尽头，一栋刷白的木楼，门口两根旗杆。一根挂联盟的旗，一根挂昨天的表决结果：码头税，赞成四十一，反对三十九。',
-      '关员戴着袖套，面前一摞表格。他要看兽人的身份文书，要看机器的卖契。{?party.bura:布拉把文书递过去，关员没接，先看了看她的下巴。|}',
-      { speaker: '关员', text: '联盟什么都投票。码头税投，路灯投，礼拜天开不开酒馆也投。只有谁是财物不投，那是早定了的。' },
-      { if: 'is.greenskin', text: '他也朝你伸出了手。你是来办事的，他是来查你的，这两件事在这张柜台上分不开。' },
-      { if: 'flag.bought_free', text: '你从怀里掏出镇议会那张赎身契。关员念了两遍，第二遍念出了声，后面排队的人都听见了。' },
-      { if: 'is.mechanim', text: '他推过来两张“随行器材”表，一张给礼拜三，一张给你。表上有一栏叫“用途”。' },
-      { if: 'party.middlesday && !is.mechanim', text: '礼拜三那张表上有一栏叫“用途”。它看了很久，没有动笔。' },
+    "result": "伊莲在册子上写的是“天赋异禀的法师，见附录”，博学派当天就把这一卷归了档，热忱派却说归得太早了。"
+   },
+   {
+    "text": "反问他：您觉得呢",
+    "tag": "神",
+    "if": "is.god && !flag.a3x_bernal_asked",
+    "once": true,
+    "effects": [
+     "flag a3x_bernal_asked",
+     "approval narwen -1"
     ],
-    first: ['codex c_concord'],
-    choices: [
+    "result": "他笑了，笑着笑着就咳了起来，咳了好半天都停不下来，伊莲只好把你请到了门外。"
+   },
+   {
+    "text": "听他咽回去的那半句",
+    "check": {
+     "skill": "insight",
+     "alt": [
+      "religion"
+     ],
+     "dc": 14,
+     "mods": [
       {
-        text: '递上阿斯拉银行开的保税单',
-        tag: '印',
-        if: "faction == 'seal'",
-        effects: ['rep charter +1'],
-        result: '保税单上有阿斯拉银行的章。关员看见那个章，把两张表一起收进了抽屉，没再要文书。',
-        goto: 'a3_03b',
-      },
-      {
-        text: '把镇议会的赎身契拍在柜台上',
-        tag: '绿皮',
-        if: 'flag.bought_free',
-        effects: ['approval bura +1'],
-        result: '关员又念了一遍，念到“全镇摊付”四个字停住了。他给你们三个人都盖了章，章盖得很用力。',
-        goto: 'a3_03b',
-      },
-      {
-        text: '在“用途”一栏写：本人',
-        tag: '机械人',
-        if: 'is.mechanim',
-        effects: ['gold -100', 'approval middlesday +2'],
-        result: '关员看了很久，在旁边批了两个字：待议。待议的意思是下个月再表决。这个月先交一百金冠的保证金。',
-        goto: 'a3_03b',
-      },
-      {
-        text: '跟关员讲道理，或者讲点别的',
-        check: { skill: 'persuasion', alt: ['deception'], dc: 14, party: true, mods: [{ if: 'rep.charter >= 3', n: 2, why: '特许商那边的熟面孔' }] },
-        ok: { text: '他在表上盖了章。章盖歪了，他没重盖。', goto: 'a3_03b' },
-        fail: { text: '他收了一百金冠的保证金，另附一条：兽人上街，须由雇主陪同。', effects: ['gold -100', 'flag a3x_escorted'], goto: 'a3_03b' },
-      },
-    ],
-  },
-
-  a3_03b: {
-    id: 'a3_03b',
-    title: '炸鱼',
-    loc: '伊索贝尔港 · 码头边的客栈',
-    text: [
-      '当晚有人敲客栈的门，敲三下，停一下，再敲一下。来人穿一件旧黑袍，没戴教会的徽章，手里拎着一包热的炸鱼，纸都油透了。',
-      '他是伊索贝尔港的大监院，莫里斯·安德克利夫。讲台上他能把一座教堂说得没人咳嗽，进了屋只说短句。',
-      { speaker: '莫里斯·安德克利夫', text: '同一批人。二十三个，外加九台机器。我要你们把他们送到洇河口。那儿两面旗，谁的拘票都不好使。' },
-      { speaker: '莫里斯·安德克利夫', text: '靠你得来的自由，你一走就没了。所以我不要你解放谁。我要你送一趟货。' },
-      { if: 'party.bura', speaker: '布拉', text: '（铰链咔的一声。）安德克利夫。翻成我们的话，就是崖下。崖下的人砍甘蔗，崖下的老爷讲道。' },
-      { if: 'party.bura', text: '大监院把炸鱼往她那边推了推。她吃了。这个玩笑，她后来没再开过。' },
-      { if: 'party.narwen', speaker: '娜尔雯', text: '他是废奴派。文森顿的大监院是他的老对头，两家吵了好几代人。我们这趟走文森顿。' },
-    ],
-    first: ['codex c_undercliffe'],
-    choices: [
-      {
-        text: '收下他手抄的渡口单子',
-        effects: ['flag a3x_ferrylist', 'rep church +1'],
-        result: '单子上七个渡口，每个后面写着船家的名字，和一句暗号。暗号都是晚祷词里的句子，挑的是平常不大念的那几句。',
-        goto: 'a3_04',
-      },
-      {
-        text: '告诉他公司已经签了另一份',
-        effects: ['rep charter +1'],
-        result: '他点点头，把单子留在桌上，鱼也留下了。“签了的，也有办法不办到。”说完他就走了。',
-        goto: 'a3_04',
-      },
-      {
-        text: '问他教会出不出这趟的船钱',
-        effects: ['flag a3x_ferrylist', 'gold +150', 'rep union -1'],
-        result: '他从袍子里数出一百五十金冠，全是零钱。“三个礼拜天的捐款。”第二天暗线上就传开了：迟到者公司收教会的钱办事。',
-        goto: 'a3_04',
-      },
-    ],
-  },
-
-  a3_04: {
-    id: 'a3_04',
-    title: '商栈',
-    art: 'ev_anb_global_trade',
-    loc: '伊索贝尔港 · 卡尔希尔商栈',
-    text: [
-      '隔离法底下，肯把屋子租给一个兽人、一台机器和一个罐子里的仙子的，伊索贝尔港只有一家：卡尔希尔商栈。后院晾着鱼干，墙角码着盛夏群岛运来的椰壳，账房的蜥蜴人一天换两回水。',
-      '伊索贝尔港有个外号，叫不夜城。荆棘道的戏院半夜才散场，桥区的酒馆天亮才关门。后院的墙矮，外头的灯照进来，晾着的鱼干都有影子。',
-      { if: 'is.lizardfolk', text: '账房听出了你的口音，往你碗里多舀了一勺鱼汤，没收钱。罐子里那位管你叫“勿摇”的同乡，你没纠正她。' },
-      { if: "origin == 'karshyr'", text: '商栈的老掌柜认出你是游学团的人。他请你喝茶，喝完才说正事：他想托你带一句话回家。' },
-      { if: "origin == 'concord'", text: '塞斯提尔边区离这儿两天的路。码头上有人认出了你，问那笔四百金冠的账还清了没有。' },
-      { if: 'flag.a3x_escorted && party.bura', text: '布拉每回出门，都得有人跟着。她出门三回，三回都是去码头后面。' },
-    ],
-    shop: {
-      name: '卡尔希尔商栈',
-      blurb: '鱼干、药、火驱枪，柜台上刻着一行字：不赊账。',
-      stock: ['greater_healing_potion', 'healing_potion', 'antidote', 'strong_antitoxin', 'gnomish_smoke_bomb', 'sparkdrive_rifle', 'rosemetal_saber', 'breastplate', 'elven_cloak'],
-      markup: 1.1,
+       "if": "flag.heard_hum",
+       "n": 1,
+       "why": "隔着地板听过它一声"
+      }
+     ]
     },
-    choices: [
-      {
-        text: '把十四号器材的事拿到团里表决',
-        if: '!flag.m_member && !flag.a3x_member_no',
-        goto: 'a3_04m',
-      },
-      {
-        text: '去见蒂尔妲',
-        if: '!flag.gauge_burned',
-        once: true,
-        effects: ['flag a3x_tilda_calibrated', 'approval middlesday +1'],
-        result: '她是大监院请来的鉴定人，带着那杆秤，秤盘上缠着胶布（第三页的签名还在（我看过了））。她说开庭以前，可以先给礼拜三校一回。',
-      },
-      {
-        text: '拆开蒂尔妲的信',
-        if: 'flag.gauge_burned',
-        once: true,
-        effects: ['approval middlesday -1'],
-        result: '信纸是卡拉桑尼的，抬头印着金字。正文一行：你们烧了图纸，我只好去给烧图纸的人画图（别回信（他们拆信））。',
-      },
-      {
-        text: '坐下来，陪布拉擦枪',
-        if: 'party.bura',
-        once: true,
-        effects: ['approval bura +1'],
-        result: '她去看过码头后面的奴隶区了。整晚她只说了一个数：四十。你问四十什么，她接着擦枪。',
-      },
-      {
-        text: '替娜尔雯回塔里的信',
-        if: 'party.narwen',
-        once: true,
-        effects: ['approval narwen +1'],
-        result: '塔里来信说，老人还撑着，今天喝了半碗汤。她的回信写了三行，都是数字。',
-      },
-      {
-        text: '问别摇晚上睡不睡得着',
-        once: true,
-        effects: ['flag a3x_jar_light'],
-        result: '她说这儿的夜太亮，亮得不对。“城北那一片，路灯的光发白。那是芯核的光，从墙那边借的。”她数了七盏，说文森顿那边更多。',
-      },
-      {
-        text: '去码头找乌戈',
-        if: 'flag.ugo_papers',
-        once: true,
-        effects: ['flag a3x_met_ugo', 'approval bura +1'],
-        result: '乌戈如今是暗线上的列车员。他把你领到一张旧海图前，洇河口以南的每一个渡口，他都用指甲掐过一道印。',
-      },
-      {
-        text: '答应替老掌柜带那句话回家',
-        tag: '卡尔希尔',
-        if: "origin == 'karshyr'",
-        once: true,
-        effects: ['flag karshyr_message', 'rep south +1'],
-        result: '那句话是：“他们管会说话的货叫器材，管不会说话的叫人手。记清楚，别弄反。”',
-      },
-      {
-        text: '去找在种植园当账房的表亲',
-        tag: '巨魔湾',
-        if: "origin == 'concord'",
-        once: true,
-        effects: ['flag cousin_tip'],
-        result: '你表亲在戴纽奇家管了十一年账。他压低声音说，文森顿那座机房的股东名册，锁在机房账房左手第二个柜子里。说完要你保证没见过他。',
-      },
-      {
-        text: '在后院的吊床上睡一整夜',
-        once: true,
-        effects: ['rest long'],
-        result: '鱼干的味儿一夜没散。你醒来的时候，账房的蜥蜴人已经换过一回水了。',
-      },
-      {
-        text: '动身去塞斯提尔边区',
-        goto: 'a3_05',
-      },
+    "ok": {
+     "text": "他咽回去的那半句是：“这些年，它翻来覆去只说一句话。”说完他看了伊莲一眼，伊莲的笔停在纸上，这一句她没有记。",
+     "effects": [
+      "flag bernal_confided"
+     ],
+     "goto": "a3_03"
+    },
+    "fail": {
+     "text": "你只听见他在咳嗽，伊莲合上册子之前，把你的名字记了下来，连你站在哪儿也一块儿记上了。",
+     "effects": [
+      "rep church -1"
+     ],
+     "goto": "a3_03"
+    }
+   },
+   {
+    "text": "替娜尔雯举着灯，等他睡着",
+    "if": "party.narwen",
+    "effects": [
+     "approval narwen +1"
     ],
+    "result": "他睡着以前，娜尔雯一直在数他的呼吸，一共数了一百一十二下，至于为什么要数，她没有说。",
+    "goto": "a3_03"
+   },
+   {
+    "text": "把灰磨那封信拆开，念给他听",
+    "effects": [
+     "flag a3x_greymill_letter",
+     "rep church +1"
+    ],
+    "result": "信里写的原来是文森顿穷人街上的路灯，一共四百一十盏，一盏一盏都写上了地址，老人听到第二百盏就睡着了。",
+    "goto": "a3_03"
+   }
+  ]
+ },
+ "a3_03": {
+  "id": "a3_03",
+  "title": "一件活，两份合同",
+  "art": "ev_high_temple_city",
+  "loc": "巨魔湾 · 伊索贝尔港",
+  "date": "1828年哈兰娜月",
+  "text": [
+   "伊索贝尔港的海关设在码头尽头，是一栋刷成白色的木楼，门口立着两根旗杆。一根挂的是联盟的旗，另一根挂的是昨天的表决结果，表决的是码头税，赞成四十一票，反对三十九票。",
+   "柜台后面的关员戴着袖套，面前堆着一摞表格，兽人他要看身份文书，机器他要看卖契。{?party.bura:布拉把文书递了过去，关员却不急着接，先盯着她的下巴看了看。|}",
+   {
+    "speaker": "关员",
+    "text": "我们联盟什么事都要投票，码头税要投，路灯要投，连礼拜天酒馆开不开门也得投。只有谁算财物这一条不用投，那是早就定下来的。"
+   },
+   {
+    "if": "is.greenskin",
+    "text": "他也朝你伸出手来要文书。你是来办事的，他是来查你的，到了这张柜台上，这两件事就分不开了。"
+   },
+   {
+    "if": "flag.bought_free",
+    "text": "你从怀里掏出镇议会给的那张赎身契，关员念了两遍，第二遍还念出了声，后头排队的人全都听见了。"
+   },
+   {
+    "if": "is.mechanim",
+    "text": "他推过来两张“随行器材”表，一张是给礼拜三的，另一张是给你的，表上有一栏叫“用途”。"
+   },
+   {
+    "if": "party.middlesday && !is.mechanim",
+    "text": "礼拜三那张表上有一栏叫“用途”，它对着这一栏看了很久，一直没有动笔。"
+   }
+  ],
+  "first": [
+   "codex c_concord"
+  ],
+  "choices": [
+   {
+    "text": "递上阿斯拉银行开的保税单",
+    "tag": "印",
+    "if": "faction == 'seal'",
+    "effects": [
+     "rep charter +1"
+    ],
+    "result": "保税单上盖着阿斯拉银行的章，关员一看见那个章，就把两张表一块儿收进了抽屉，文书也不再要了。",
+    "goto": "a3_03b"
+   },
+   {
+    "text": "把镇议会的赎身契拍在柜台上",
+    "tag": "绿皮",
+    "if": "flag.bought_free",
+    "effects": [
+     "approval bura +1"
+    ],
+    "result": "关员又念了一遍，念到“全镇摊付”这四个字就停住了，随后他给你们三个人都盖了章，每一个都盖得很用力。",
+    "goto": "a3_03b"
+   },
+   {
+    "text": "在“用途”一栏写：本人",
+    "tag": "机械人",
+    "if": "is.mechanim",
+    "effects": [
+     "gold -100",
+     "approval middlesday +2"
+    ],
+    "result": "关员看了很久，在旁边批了“待议”两个字，意思是下个月再表决，这个月得先交一百金冠的保证金。",
+    "goto": "a3_03b"
+   },
+   {
+    "text": "跟关员讲道理，或者讲点别的",
+    "check": {
+     "skill": "persuasion",
+     "alt": [
+      "deception"
+     ],
+     "dc": 14,
+     "party": true,
+     "mods": [
+      {
+       "if": "rep.charter >= 3",
+       "n": 2,
+       "why": "特许商那边的熟面孔"
+      }
+     ]
+    },
+    "ok": {
+     "text": "他总算在表上盖了章，章盖歪了，他也没有重盖。",
+     "goto": "a3_03b"
+    },
+    "fail": {
+     "text": "他收了一百金冠的保证金，还另外附了一条，兽人上街须由雇主陪同。",
+     "effects": [
+      "gold -100",
+      "flag a3x_escorted"
+     ],
+     "goto": "a3_03b"
+    }
+   }
+  ]
+ },
+ "a3_03b": {
+  "id": "a3_03b",
+  "title": "炸鱼",
+  "loc": "伊索贝尔港 · 码头边的客栈",
+  "text": [
+   "当天晚上有人来敲客栈的门，先敲三下，停一停，再敲一下。来的人穿着一件旧黑袍，身上没戴教会的徽章，手里拎着一包热乎乎的炸鱼，包鱼的纸都叫油浸透了。",
+   "这人就是伊索贝尔港的大监院莫里斯·安德克利夫。他站在讲台上，能把一整座教堂讲得没有一个人咳嗽，可进了屋，说的全是短话。",
+   {
+    "speaker": "莫里斯·安德克利夫",
+    "text": "我说的也是那一批人，二十三个，外加九台机器。我要你们把他们送到洇河口去，那地方插着两面旗，谁的拘票拿过去都不好使。"
+   },
+   {
+    "speaker": "莫里斯·安德克利夫",
+    "text": "靠着你才得来的自由，你一走也就没了。所以我不要你去解放谁，我只要你送一趟货。"
+   },
+   {
+    "if": "party.bura",
+    "speaker": "布拉",
+    "text": "（铰链咔的一声。）安德克利夫，这个姓翻成我们的话就是崖下。崖下的人在砍甘蔗，崖下的老爷在讲道。"
+   },
+   {
+    "if": "party.bura",
+    "text": "大监院把炸鱼往她那边推了推，她也就吃了。这个玩笑，她后来再也没有开过。"
+   },
+   {
+    "if": "party.narwen",
+    "speaker": "娜尔雯",
+    "text": "他是废奴派的人。文森顿那位大监院是他的老对头了，两家已经吵了好几代人。可我们这一趟，走的正是文森顿。"
+   }
+  ],
+  "first": [
+   "codex c_undercliffe"
+  ],
+  "choices": [
+   {
+    "text": "收下他手抄的渡口单子",
+    "effects": [
+     "flag a3x_ferrylist",
+     "rep church +1"
+    ],
+    "result": "单子上列了七个渡口，每个渡口后面都写着船家的名字，还有一句暗号，暗号全是晚祷词里的句子，挑的还是平常不大有人念的那几句。",
+    "goto": "a3_04"
+   },
+   {
+    "text": "告诉他公司已经签了另一份",
+    "effects": [
+     "rep charter +1"
+    ],
+    "result": "他点了点头，把单子留在桌上，炸鱼也留下了，临走只说了一句：“签了的合同，也有办法不照着办。”",
+    "goto": "a3_04"
+   },
+   {
+    "text": "问他教会出不出这趟的船钱",
+    "effects": [
+     "flag a3x_ferrylist",
+     "gold +150",
+     "rep union -1"
+    ],
+    "result": "他从袍子里数出一百五十金冠，全是零钱，说这是三个礼拜天收上来的捐款。谁知第二天暗线上就传开了，说迟到者公司是收了教会的钱才办事的。",
+    "goto": "a3_04"
+   }
+  ]
+ },
+ "a3_04": {
+  "id": "a3_04",
+  "title": "商栈",
+  "art": "ev_anb_global_trade",
+  "loc": "伊索贝尔港 · 卡尔希尔商栈",
+  "text": [
+   "有隔离法管着，肯把屋子租给一个兽人、一台机器外加一个装在罐子里的仙子的，整个伊索贝尔港只有卡尔希尔商栈这一家。商栈的后院晾着鱼干，墙角码着从盛夏群岛运来的椰壳，账房是个蜥蜴人，一天要换两回水。",
+   "伊索贝尔港有个外号叫不夜城，荆棘道的戏院要到半夜才散场，桥区的酒馆要到天亮才关门。商栈后院的墙矮，外头的灯光照得进来，连晾着的鱼干都照出了影子。",
+   {
+    "if": "is.lizardfolk",
+    "text": "账房听出了你的口音，往你碗里多舀了一勺鱼汤，也没多收钱。罐子里那位打这以后就管你叫“勿摇”的同乡，你也没去纠正她。"
+   },
+   {
+    "if": "origin == 'karshyr'",
+    "text": "商栈的老掌柜认出你是游学团的人，先请你喝了茶，等茶喝完才说起正事，原来他想托你捎一句话回家。"
+   },
+   {
+    "if": "origin == 'concord'",
+    "text": "塞斯提尔边区离这儿不过两天的路，码头上果然有人认出了你，还问你那笔四百金冠的账还清了没有。"
+   },
+   {
+    "if": "flag.a3x_escorted && party.bura",
+    "text": "布拉每回出门都得有人跟着，她一共出了三回门，三回去的都是码头后面。"
+   }
+  ],
+  "shop": {
+   "name": "卡尔希尔商栈",
+   "blurb": "这里卖鱼干、卖药，也卖火驱枪，柜台上刻着“不赊账”三个字。",
+   "stock": [
+    "greater_healing_potion",
+    "healing_potion",
+    "antidote",
+    "strong_antitoxin",
+    "gnomish_smoke_bomb",
+    "sparkdrive_rifle",
+    "rosemetal_saber",
+    "breastplate",
+    "elven_cloak"
+   ],
+   "markup": 1.1
   },
-
-  a3_04m: {
-    id: 'a3_04m',
-    title: '十四号',
-    loc: '伊索贝尔港 · 卡尔希尔商栈',
-    text: [
-      '埃塔的电报一来一回走了两天。头一封是她抄的账：十四号，驮运用，二手，1820 年入账，每年折旧一成。八年折了八成，账面上它还值二十几个金冠。',
-      { speaker: '埃塔（电报）', text: '划到成员栏，要全团表决。划过去，它就不能再折旧。这八年提的折旧，一百九十二金冠，退给谁。' },
-      { if: 'party.middlesday', speaker: '礼拜三', text: '（不确定。）退给我吧。（礼貌。）我可以拿它买一把伞。' },
-      { if: 'party.bura', text: '布拉头一个举了手，举得很高，铰链跟着响了一下。' },
-      { if: 'party.guilhem', speaker: '吉列姆', text: '成员登记表第四栏是“出生地”。理论上，七号线算一个地方。' },
+  "choices": [
+   {
+    "text": "把十四号器材的事拿到团里表决",
+    "if": "!flag.m_member && !flag.a3x_member_no",
+    "goto": "a3_04m"
+   },
+   {
+    "text": "去见蒂尔妲",
+    "if": "!flag.gauge_burned",
+    "once": true,
+    "effects": [
+     "flag a3x_tilda_calibrated",
+     "approval middlesday +1"
     ],
-    choices: [
-      {
-        text: '举手：划',
-        effects: ['flag m_member', 'unflag a3x_member_no', 'world chains -1', 'approval middlesday +2'],
-        result: '举起来的手里有一只是礼拜三自己的。埃塔回电：成员，礼拜三，1811 年生，七号线。折旧款记在它名下，没说买不买伞。',
-        goto: 'a3_04',
-      },
-      {
-        text: '不划，账先放着',
-        effects: ['flag a3x_member_no', 'approval middlesday -1'],
-        result: '埃塔回电只有一个字：存。礼拜三把行李码齐，背上，下楼去等你们。',
-        goto: 'a3_04',
-      },
+    "result": "蒂尔妲原来是大监院请来的鉴定人，那杆秤她也带来了，秤盘上还缠着胶布（第三页的签名还在（我看过了）），她说开庭以前，可以先给礼拜三校一回。"
+   },
+   {
+    "text": "拆开蒂尔妲的信",
+    "if": "flag.gauge_burned",
+    "once": true,
+    "effects": [
+     "approval middlesday -1"
     ],
-  },
-
-  a3_05: {
-    id: 'a3_05',
-    title: '镇议会',
-    loc: '塞斯提尔边区 · 一个小镇',
-    text: [
-      '镇子的名字地图上有，路牌上没有，路牌三年前被表决拆了。议会开在教堂的地下室：一张长桌，十一个人，一壶凉茶。桌头挂一块黑板，写着本月议题，第四条是“某冒险公司旧账（1789）”。',
-      { if: "origin == 'concord'", text: '这是你的镇。黑板上那笔账就是你。桌头记录的是你小时候的先生，他抬头看了你一眼，在纸上写下你的名字，又划掉，改成“债务本人”。' },
-      '暗线上的人要在镇上的谷仓里过三夜，镇议会照例得表决。头一个发言的议员提议，先成立一个委员会，研究这件事该怎么表决。',
-      { speaker: '议员', text: '我不反对收留。我反对不按程序收留。程序是我们唯一比种植园强的地方。' },
-      { if: 'party.narwen', speaker: '娜尔雯', text: '他说得不全错。程序慢，可程序记得住事。人记不住。' },
+    "result": "信纸是卡拉桑尼的，抬头印着金字，正文只有一行，写的是“你们把图纸烧了，我只好去给烧图纸的人画图啦（别回信（他们会拆信的））”。"
+   },
+   {
+    "text": "坐下来，陪布拉擦枪",
+    "if": "party.bura",
+    "once": true,
+    "effects": [
+     "approval bura +1"
     ],
-    choices: [
-      {
-        text: '站起来，提请当场表决',
-        check: {
-          skill: 'persuasion', dc: 15,
-          mods: [
-            { if: "origin == 'concord'", n: 2, why: '这是你老家，你有权提请表决' },
-            { if: 'rep.church >= 3', n: 1, why: '教会那边有人替你说过话' },
-            { if: 'flag.log_amended', n: -2, why: '对面翻出了你 1820 年那页航海日志' },
-          ],
-        },
-        ok: { text: '七比四。谷仓的钥匙交到你手里的时候，还是热的。', effects: ['flag town_shelters', 'world chains -1', 'rep union +1'], goto: 'a3_06' },
-        fail: { text: '议案搁到下个月。委员会成立了，三个人，头一回会定在雨季以后。那三夜，暗线上的人睡在河边的芦苇里，霍布的脚泡烂了。', effects: ['rep union -1'], goto: 'a3_06' },
-      },
-      {
-        text: '不等表决，先把人领进谷仓',
-        tag: '巨魔湾',
-        if: "origin == 'concord'",
-        effects: ['flag town_shelters', 'flag town_vote_skipped', 'world chains -1', 'rep charter -1'],
-        result: '人进了谷仓，表决第二天才开。镇上从此有一半人不跟你说话，另一半人见了你先看看左右。',
-        goto: 'a3_06',
-      },
-      {
-        text: '找镇上的科琳教小堂借地方',
-        if: 'party.bura',
-        check: { skill: 'religion', alt: ['persuasion'], dc: 13, party: true },
-        ok: { text: '小堂的执事是个独眼的半兽人。他听布拉念完一段科琳的祷词，开了后门，只说了一句：别点灯。', effects: ['world chains -1', 'approval bura +1'], goto: 'a3_06' },
-        fail: { text: '执事说小堂归镇议会管，借地方也得表决。布拉谢了他，出门踢了一脚门槛。', effects: ['approval bura -1'], goto: 'a3_06' },
-      },
+    "result": "码头后面的奴隶区她已经去看过了，这一整晚她只说了一个数，四十。你问她四十个什么，她也不说，只管接着擦枪。"
+   },
+   {
+    "text": "替娜尔雯回塔里的信",
+    "if": "party.narwen",
+    "once": true,
+    "effects": [
+     "approval narwen +1"
     ],
-  },
-
-  a3_06: {
-    id: 'a3_06',
-    title: '第二道菜底下',
-    loc: '马利安德 · 戴纽奇庄园',
-    text: [
-      '马利安德的庄园出名的是门廊深、树荫厚。戴纽奇家的门廊能并排停四辆马车。太阳落山以前，没人请你们进屋，管家端来柠檬水，杯子外头结着水珠。',
-      '天黑才开席。长桌上二十四根蜡烛，银盘子，三道汤。威廉·戴纽奇坐在主位，袖口熨得笔直，面前一副刀叉摆得端端正正，一晚上没动过。上菜的是戴镣的手，镣子裹了布，碰着盘子不响。',
-      { speaker: '威廉·戴纽奇', text: '请用。我看着你们吃就很高兴。合同在第二道菜底下，不急。' },
-      '第二道是烤鸭。盘子底下压着一张清单：二十三个人名，九个编号。{?party.bura:布拉的铰链整晚没响过。|}',
-      { if: 'is.god', speaker: '威廉·戴纽奇', text: '恕我冒昧。红衣收割者，归不归您管？' },
-      { if: 'is.god', text: '他问得很客气，像在打听你住的客栈收不收狗。' },
-      { if: 'is.immortal', speaker: '威廉·戴纽奇', text: '他们给您立过案了。那种卷宗的封皮是红的，我认得。' },
+    "result": "塔里来信说老人还撑着，今天喝下去半碗汤，她的回信一共写了三行，三行全是数字。"
+   },
+   {
+    "text": "问别摇晚上睡不睡得着",
+    "once": true,
+    "effects": [
+     "flag a3x_jar_light"
     ],
-    first: ['quest q_bill stage 2', 'codex c_dainuich', 'codex c_undercliff_orcs', { if: 'is.immortal', then: ['flag reaper_file'] }],
-    choices: [
-      {
-        text: '盯着他的刀叉，看他吃不吃',
-        once: true,
-        check: { skill: 'insight', dc: 15 },
-        ok: { text: '你数了。一整晚没有人给他斟过酒，他的杯子是满的，满得一滴不少。', effects: ['flag dainuich_noticed'] },
-        fail: { text: '你盯久了。他笑着问你是不是嫌银器不够亮，叫人换了一套，换的时候多看了你两眼。', effects: ['rep charter -1'] },
-      },
-      {
-        text: '数清屋里屋外有多少人手',
-        once: true,
-        check: { skill: 'perception', dc: 14, party: true },
-        ok: { text: '屋里六个，门廊上四个，马厩那边两条狗。换岗是十一点，换岗的人要先去厨房喝一碗汤。', effects: ['flag a3x_counted'] },
-        fail: { text: '你数到第九个就乱了，有一个人进出了两回。第二回他手里没端东西，看的是你。', effects: ['flag a3x_alarm'] },
-      },
-      {
-        text: '照规矩回敬主人一杯',
-        tag: '贵族',
-        if: 'is.noble',
-        once: true,
-        effects: ['flag a3x_engine_hint', 'rep charter +1'],
-        result: '他很满意，多留你喝了一杯。你喝，他看。临走他说漏了一句：文森顿那座不烧煤的机房，他也有股。',
-      },
-      {
-        text: '在清单上签收',
-        effects: ['flag planter_list_signed', 'rep charter +1'],
-        result: '他把笔递过来。笔杆是热的，有人一直握着它等你。',
-        goto: 'a3_07',
-      },
-      {
-        text: '说要先看看那几台“有毛病的”轧棉机',
-        effects: ['flag a3x_invited'],
-        result: '他叫管事提了灯带你们去，说机器在轧棉房，夜里也不停。',
-        goto: 'a3_07',
-      },
-      {
-        text: '把清单折好揣进怀里，不签',
-        effects: ['approval bura +1'],
-        result: '他看着你揣进怀里，叫人上了第三道。第三道是甜的，他也没动。',
-        goto: 'a3_07',
-      },
+    "result": "她说这儿的夜里太亮了，而且亮得不对劲。“城北那一片的路灯，光是发白的，那是芯核的光，是从墙那边借过来的。”她数出来七盏，还说文森顿那边更多。"
+   },
+   {
+    "text": "去码头找乌戈",
+    "if": "flag.ugo_papers",
+    "once": true,
+    "effects": [
+     "flag a3x_met_ugo",
+     "approval bura +1"
     ],
-  },
-
-  a3_07: {
-    id: 'a3_07',
-    title: '轧棉机报人名',
-    art: 'ev_mechanim_awakening',
-    loc: '戴纽奇庄园 · 轧棉房',
-    text: [
-      '轧棉房在甘蔗地边上，后半夜还亮着一盏灯。九台轧棉机械人站成一排，锁在同一根梁上，胸口各一块铜牌，七号到十五号。地上铺着草席，二十三个人坐的坐、躺的躺，有个人在补鞋。',
-      '机器和人互相藏着对方。管事来查，机器就转得响一点，盖住说话声；人替机器把出了毛病的齿轮拿布包起来，免得它被拉去回炉。十一号一直在背名字，跟它锁在同一根梁上的每一个人，一个不落。',
-      { speaker: '十一号', text: '内莉。老科尔。阿萨。霍布。马蒂。托比，不在。……' },
-      { speaker: '内莉', text: '我们走。可我儿子托比在隔壁庄园，九岁。不带上他，我不走。' },
-      { speaker: '老科尔', text: '我六十一了，走不动。我留下，给追的人指路。指错的那条。' },
-      '阿萨撑过船，认得洇河口前头的三个渡口里的两个。霍布的脚踝被镣磨烂了，裹着烟叶。马蒂十四岁，会数数，替十一号把编号记在鞋底上。他们问你的只有一句：你站哪边。',
-      { if: "origin == 'unowned' && is.mechanim", text: '你用机器的语速说了一句话，人听着像一声哨子。九台同时停了工，十一号也不背了，转过头来看你。' },
-      { if: "origin == 'unowned' && !is.mechanim", text: '你蹲下去看芯核座上的厂印：七号线，1811 年的料。这种座子你在那条线上拧过，一班拧四十个。' },
-      { if: "is.mechanim && origin != 'unowned'", text: '九台机器先转过头来，问你今天礼拜几。' },
-      { if: 'is.greenskin', text: '屋里的人先跟你说话。他们问你在这家公司是干什么的，你说是队长，他们不大信，又问了一遍。' },
-      { if: 'party.middlesday', speaker: '礼拜三', text: '（高兴。）十一号跟我是一炉的料。（担心。）它背名字，是怕自己忘了。' },
+    "result": "乌戈如今在暗线上当列车员，他把你领到一张旧海图跟前，洇河口往南的每一个渡口，他都拿指甲在图上掐过一道印子。"
+   },
+   {
+    "text": "答应替老掌柜带那句话回家",
+    "tag": "卡尔希尔",
+    "if": "origin == 'karshyr'",
+    "once": true,
+    "effects": [
+     "flag karshyr_message",
+     "rep south +1"
     ],
-    choices: [
-      {
-        text: '压低声音，别让管事听见',
-        once: true,
-        check: { skill: 'stealth', dc: 14, party: true, adv: 'flag.a3x_invited' },
-        ok: { text: '管事提着灯走过两回，什么也没看见。第二回他打了个哈欠。' },
-        fail: { text: '草席底下压着一只空罐头，被你一脚踩响了。管事吹了三声哨子，马厩那边的狗跟着叫。', effects: ['flag a3x_alarm'] },
-      },
-      {
-        text: '看看它们芯核的料',
-        once: true,
-        check: { skill: 'arcana', alt: ['investigation'], dc: 14, party: true },
-        ok: { text: '纹路是新刻的，晶体的底子却发青。那是 1810 年落下的那一批。早醒的，都是这一批。', effects: ['flag cores_1810'] },
-        fail: { text: '纹路太细，灯太暗。你看得眼睛发酸，只看出九颗是同一个厂出的。十一号背名字的时候，把你也背了进去。', effects: ['hp -2'] },
-      },
-      {
-        text: '答应内莉，先去隔壁庄园接托比',
-        once: true,
-        effects: ['flag a3x_toby', 'rep charter -1', 'approval bura +1'],
-        result: '隔壁庄园的狗认得内莉，没叫。托比睡在马槽里，抱出来的时候还没醒。第二天，隔壁的主人给戴纽奇写了封信，抱怨走失了一个孩子。',
-      },
-      {
-        text: '告诉他们你站哪边，回去开会',
-        goto: 'a3_08',
-      },
+    "result": "老掌柜要捎的那句话是：“他们管会说话的货叫器材，管不会说话的叫人手。你可得记清楚了，千万别弄反。”"
+   },
+   {
+    "text": "去找在种植园当账房的表亲",
+    "tag": "巨魔湾",
+    "if": "origin == 'concord'",
+    "once": true,
+    "effects": [
+     "flag cousin_tip"
     ],
-  },
-
-  a3_08: {
-    id: 'a3_08',
-    title: '团务会：两份合同',
-    art: 'ev_multi_racial_merc',
-    loc: '马利安德城外 · 河边的空货栈',
-    date: '1828年苏伦月',
-    text: [
-      '河边有座空货栈，原先堆棉包，地上还有一层棉絮，走一步扬一下。公司在这儿开团务会。一只空箱子翻过来当桌子，埃塔的电报压在上面，拿一块石头镇着。',
-      { if: 'party.bura', speaker: '布拉', text: '合同上写的是“追回财物”。你过来，指给我看，哪一个是财物。' },
-      { if: 'party.middlesday', speaker: '礼拜三', text: '（陈述。）屋里三十二个。（更正。）三十三。我刚才没数我自己。' },
-      { if: 'party.narwen', speaker: '娜尔雯', text: '我站大监院那边。可要悄悄地办。动静一大，教会就得出来表态，表态这种事，一拖就是二十年。' },
-      { if: 'party.guilhem', speaker: '吉列姆', text: '最糟的是骗。理论上，两头骗是两倍的糟。实际上……实际上我没算过。' },
-      { text: '埃塔电：三百八十二年，没毁过一回约。', cls: 'letter' },
-      { speaker: '别摇', text: '问一句。你们这儿，说话不算数的人，后来都怎么样了。' },
-      '多数人站暗线。剩下的，看你。',
+    "result": "你这位表亲在戴纽奇家管了十一年的账，他压低了嗓门告诉你，文森顿那座机房的股东名册，就锁在机房账房左手边第二个柜子里，说完还要你保证，就当从来没见过他。"
+   },
+   {
+    "text": "在后院的吊床上睡一整夜",
+    "once": true,
+    "effects": [
+     "rest long"
     ],
-    choices: [
-      {
-        text: '照种植园的合同办，把人追回来',
-        effects: ['flag contract_planters', 'unflag contract_line', 'unflag contract_fraud', 'world chains +2', 'rep charter +2', 'rep union -3', 'var overruled +1', 'approval bura -1', 'approval middlesday -1', 'approval narwen -1'],
-        result: '你在合同背面签了字。布拉把枪擦了第二遍，没抬头。',
-        goto: 'a3_09',
-      },
-      {
-        text: '走暗线，把人送去洇河口',
-        if: "faction != 'seal' && !(faction == 'shield' && party.bura)",
-        effects: ['flag contract_line', 'unflag contract_planters', 'unflag contract_fraud', 'flag contract_broken', 'world chains -2', 'rep charter -2', 'rep union +2'],
-        result: '埃塔回电两个字：收到。后面跟着违约金的数目，比定金多一倍。',
-        goto: 'a3_09',
-      },
-      {
-        text: '走暗线；布拉要拿欠饷抵违约金，收下',
-        tag: '盾',
-        if: "faction == 'shield' && party.bura",
-        effects: ['flag contract_line', 'unflag contract_planters', 'unflag contract_fraud', 'flag contract_broken', 'world chains -2', 'rep charter -2', 'rep union +2', 'approval bura +2'],
-        result: '布拉把那张裱起来的判词从包袱里抽出来，拍在箱子上。“一半的饷，够赔吧。”埃塔回电：够。',
-        goto: 'a3_09',
-      },
-      {
-        text: '引合同：在共和国地界上签的约，不得以人为标的',
-        tag: '印',
-        if: "faction == 'seal'",
-        effects: ['flag contract_line', 'unflag contract_planters', 'unflag contract_fraud', 'world chains -2', 'rep charter -1', 'rep union +2'],
-        result: '合同是在安本科斯特签的。追人的那一条自始无效，公司没毁约；机器那一条还有效，得等法庭。埃塔回电：条款第六款，我早看见了，等你自己看见。',
-        goto: 'a3_09',
-      },
-      {
-        text: '两头都办：给财团交一叠假的报废单和死亡登记',
-        effects: ['flag contract_fraud', 'unflag contract_planters', 'unflag contract_line', 'world chains -1', 'var overruled +1', 'approval guilhem -1'],
-        result: '吉列姆替你拟了第一张死亡登记。写完，他把笔放下，说他手抖。',
-        goto: 'a3_09',
-      },
-      {
-        text: '举手表决',
-        effects: ['flag contract_line', 'unflag contract_planters', 'unflag contract_fraud', 'flag contract_broken', 'world chains -2', 'rep charter -2', 'rep union +2', 'approval bura +1', 'approval middlesday +1'],
-        result: '你也举了手。礼拜三把自己那只手举得很直，数了一遍，又数了一遍。',
-        goto: 'a3_09',
-      },
+    "result": "鱼干的味儿一整夜都没散，等你醒过来，账房那个蜥蜴人已经换过一回水了。"
+   },
+   {
+    "text": "动身去塞斯提尔边区",
+    "goto": "a3_05"
+   }
+  ]
+ },
+ "a3_04m": {
+  "id": "a3_04m",
+  "title": "十四号",
+  "loc": "伊索贝尔港 · 卡尔希尔商栈",
+  "text": [
+   "跟埃塔打电报，一来一回走了两天，头一封是她照着账本抄来的，写着十四号，驮运用，二手，1820 年入账，每年折旧一成。八年下来折掉了八成，眼下在账面上它只值二十几个金冠了。",
+   {
+    "speaker": "埃塔（电报）",
+    "text": "划入成员栏，须全团表决。划过去以后，不得再提折旧。八年已提折旧一百九十二金冠，退给谁？"
+   },
+   {
+    "if": "party.middlesday",
+    "speaker": "礼拜三",
+    "text": "（不确定。）退给我吧。（礼貌。）有了这笔钱，我可以去买一把伞。"
+   },
+   {
+    "if": "party.bura",
+    "text": "布拉头一个举起了手，举得老高，下巴上的铰链也跟着响了一下。"
+   },
+   {
+    "if": "party.guilhem",
+    "speaker": "吉列姆",
+    "text": "成员登记表的第四栏要填“出生地”。七号线嘛，理论上也算得上一个地方。"
+   }
+  ],
+  "choices": [
+   {
+    "text": "举手：划",
+    "effects": [
+     "flag m_member",
+     "unflag a3x_member_no",
+     "world chains -1",
+     "approval middlesday +2"
     ],
-  },
-
-  a3_09: {
-    id: 'a3_09',
-    title: '布拉的枪',
-    art: 'ev_corinite_war',
-    loc: '马利安德 · 奴隶区后墙',
-    text: [
-      '奴隶区的后墙是土坯的，墙根长着蓖麻。墙下四只长木箱，撬开了一只，里面是油纸包着的枪，四十条，枪托上烙着拉姆斯盖特军火的字号。',
-      { if: 'party.bura', speaker: '布拉', text: '共和国欠我十一个月的饷。我欠科琳一条命。今天先还这一笔。' },
-      { if: '!party.bura', text: '布拉不在。箱盖上有一行粉笔字：先还这一笔。粉笔是从教堂里拿的，写到最后一个字断了。' },
-      '墙那边有人在唱晚祷，词是揭秘教的词，调子慢一半。他们和主人进同一座教堂，走不同的门。',
-      { if: 'flag.contract_planters && party.bura', text: '你签过种植园的合同。这件事她知道。她把箱盖扣上了一半，等你开口。' },
+    "result": "举起来的那些手里头，有一只是礼拜三自己的。埃塔回电说，礼拜三已经登成了成员，1811 年生，出生地七号线，折旧款也记到了它名下，至于买不买伞，电报上没提。",
+    "goto": "a3_04"
+   },
+   {
+    "text": "不划，账先放着",
+    "effects": [
+     "flag a3x_member_no",
+     "approval middlesday -1"
     ],
-    first: ['quest q_bura stage 2'],
-    choices: [
+    "result": "埃塔的回电只有一个“存”字，礼拜三把行李码整齐了背到背上，先下楼去等你们了。",
+    "goto": "a3_04"
+   }
+  ]
+ },
+ "a3_05": {
+  "id": "a3_05",
+  "title": "镇议会",
+  "loc": "塞斯提尔边区 · 一个小镇",
+  "text": [
+   "这个镇子的名字地图上有，路牌上却没有，因为路牌三年前就让一次表决给拆掉了。镇议会开在教堂的地下室里，一张长桌边上坐着十一个人，桌上摆着一壶凉茶，桌子那头挂着一块黑板，写的是本月的议题，其中第四条是“某冒险公司旧账（1789）”。",
+   {
+    "if": "origin == 'concord'",
+    "text": "这就是你老家的镇子，黑板上那笔账就是你。坐在桌头做记录的是你小时候的先生，他抬头看了你一眼，在纸上写下你的名字，接着又划掉，改成了“债务本人”。"
+   },
+   "暗线上的人要在镇上的谷仓里住三夜，照规矩镇议会得先表决。头一个发言的议员却提议先成立一个委员会，专门研究这件事该怎么表决。",
+   {
+    "speaker": "议员",
+    "text": "收留我是不反对的，我反对的是不按程序收留。我们比种植园强的地方，说到底也就只有程序这一条啊。"
+   },
+   {
+    "if": "party.narwen",
+    "speaker": "娜尔雯",
+    "text": "他这话也不全错。程序是慢，可程序记得住事情，人呢，人记得住吗？"
+   }
+  ],
+  "choices": [
+   {
+    "text": "站起来，提请当场表决",
+    "check": {
+     "skill": "persuasion",
+     "dc": 15,
+     "mods": [
       {
-        text: '拦住她，照雇主的合同办',
-        if: 'party.bura',
-        effects: ['flag bura_alone', 'unflag bura_armed', 'unflag bura_line', 'companion -bura', 'quest q_bura fail'],
-        result: '她把枪一条一条码回箱子，码得很齐。然后她扛起一箱，一个人走了，没回头。铰链响了一声，就一声。',
-        goto: 'a3_10',
+       "if": "origin == 'concord'",
+       "n": 2,
+       "why": "这是你老家，你有权提请表决"
       },
       {
-        text: '帮她把枪发下去',
-        if: 'party.bura',
-        effects: ['flag bura_armed', 'unflag bura_alone', 'unflag bura_line', 'world chains -2', 'rep charter -2', 'flag wanted_concord', 'approval bura +2', 'quest q_bura done', { if: 'flag.contract_planters', then: ['flag contract_broken'] }],
-        result: '四十条枪，一人一条。教会怎么教唱诗，她就怎么教装弹：一句一句来，错了重来。天亮以前，墙那边的歌停了。',
-        goto: 'a3_10',
+       "if": "rep.church >= 3",
+       "n": 1,
+       "why": "教会那边有人替你说过话"
       },
       {
-        text: '劝她把人带上暗线，枪留给不肯走的',
-        tag: '盾',
-        if: "party.bura && !flag.contract_planters && faction == 'shield'",
-        once: true,
-        check: { skill: 'persuasion', dc: 15, mods: [{ if: 'approval.bura >= 6', n: 2, why: '她信你' }] },
-        ok: { text: '她想了很久，铰链响了两回。最后她撬开第二箱，只拿出十条。“不肯走的，给这个。肯走的，跟我。”', effects: ['flag bura_line', 'unflag bura_alone', 'unflag bura_armed', 'world chains -1', 'approval bura +1', 'quest q_bura done'], goto: 'a3_10' },
-        fail: { text: '“你说的是对的。”她说，“可你说晚了十一个月。”她站着，等你在剩下的两条路里挑一条。', effects: ['approval bura -1'], goto: 'a3_09' },
-      },
-      {
-        text: '劝她把人带上暗线，枪留给不肯走的',
-        if: "party.bura && !flag.contract_planters && faction != 'shield' && approval.bura >= 6",
-        once: true,
-        check: { skill: 'persuasion', dc: 15 },
-        ok: { text: '她想了很久，铰链响了两回。最后她撬开第二箱，只拿出十条。“不肯走的，给这个。肯走的，跟我。”', effects: ['flag bura_line', 'unflag bura_alone', 'unflag bura_armed', 'world chains -1', 'approval bura +1', 'quest q_bura done'], goto: 'a3_10' },
-        fail: { text: '“你说的是对的。”她说，“可你说晚了十一个月。”她站着，等你在剩下的两条路里挑一条。', effects: ['approval bura -1'], goto: 'a3_09' },
-      },
-      {
-        text: '把箱子留在墙根，去追她',
-        if: '!party.bura',
-        effects: ['flag bura_alone', 'unflag bura_armed', 'unflag bura_line', 'quest q_bura fail'],
-        result: '你追到河边，只看见泥地上一串脚印，往北去了。脚印很深，她扛着一箱。',
-        goto: 'a3_10',
-      },
+       "if": "flag.log_amended",
+       "n": -2,
+       "why": "对面翻出了你 1820 年那页航海日志"
+      }
+     ]
+    },
+    "ok": {
+     "text": "表决结果是七比四，通过了，谷仓的钥匙交到你手里的时候，摸着还是热的。",
+     "effects": [
+      "flag town_shelters",
+      "world chains -1",
+      "rep union +1"
+     ],
+     "goto": "a3_06"
+    },
+    "fail": {
+     "text": "议案给搁到了下个月，委员会倒是成立了，一共三个人，头一回开会定在雨季以后。那三夜，暗线上的人只好睡在河边的芦苇丛里，霍布的脚都泡烂了。",
+     "effects": [
+      "rep union -1"
+     ],
+     "goto": "a3_06"
+    }
+   },
+   {
+    "text": "不等表决，先把人领进谷仓",
+    "tag": "巨魔湾",
+    "if": "origin == 'concord'",
+    "effects": [
+     "flag town_shelters",
+     "flag town_vote_skipped",
+     "world chains -1",
+     "rep charter -1"
     ],
-  },
-
-  a3_10: {
-    id: 'a3_10',
-    title: '河堤',
-    loc: '马利安德以北 · 河堤',
-    text: [
-      '河堤高出甘蔗地一人多，堤顶只容两匹马并排。追奴队来了九个人，四条狗，一盏防风灯。领头的把悬赏单举到灯底下，一个字一个字地念。',
-      { speaker: '追奴队长', text: '……走失财物，兽人二十三口，机械九具。送回者每口赏四十金冠，机械另议……' },
-      { if: 'party.middlesday', text: '念到“财物”两个字，礼拜三把背上的行李一件一件卸在地上，码齐了，最小的一件放在最上面。' },
-      '身后的甘蔗地里蹲着二十三个人。{?flag.a3x_toby:内莉怀里抱着托比，捂着他的嘴。|内莉把脸埋在膝盖上。}老科尔没跟来，他留在庄园里，给追的人指错的路。',
-      { if: 'flag.contract_planters', text: '你站在追奴队这一边。堤下的芦苇里有东西在动，是暗线的人，来劫人的。追奴队长把悬赏单塞进怀里，冲你点了点头：该你们了。' },
-      { if: 'flag.a3x_alarm && !flag.contract_planters', text: '庄园那边的哨子还在吹。又来了一骑，马上的人一边跑一边装弹。' },
-      { if: 'is.god', text: '狗先不叫了。追奴队的马往后退，退到堤边上，一只前蹄踩空了。' },
+    "result": "人是进了谷仓，表决却到第二天才开。打那以后，镇上有一半的人不跟你说话了，另外一半见了你，也要先看看左右有没有人。",
+    "goto": "a3_06"
+   },
+   {
+    "text": "找镇上的科琳教小堂借地方",
+    "if": "party.bura",
+    "check": {
+     "skill": "religion",
+     "alt": [
+      "persuasion"
+     ],
+     "dc": 13,
+     "party": true
+    },
+    "ok": {
+     "text": "小堂的执事是个独眼的半兽人，他听布拉念完一段科琳的祷词，就去开了后门，只嘱咐了一句别点灯。",
+     "effects": [
+      "world chains -1",
+      "approval bura +1"
+     ],
+     "goto": "a3_06"
+    },
+    "fail": {
+     "text": "执事说小堂归镇议会管，要借地方也得先表决，布拉向他道了谢，出门的时候照着门槛踢了一脚。",
+     "effects": [
+      "approval bura -1"
+     ],
+     "goto": "a3_06"
+    }
+   }
+  ]
+ },
+ "a3_06": {
+  "id": "a3_06",
+  "title": "第二道菜底下",
+  "loc": "马利安德 · 戴纽奇庄园",
+  "text": [
+   "马利安德的庄园向来以门廊深、树荫厚出名，戴纽奇家的门廊宽得能并排停下四辆马车。太阳落山以前，一直没有人请你们进屋，只有管家端来了柠檬水，杯子外头凝着一层水珠。",
+   "等到天黑了才开席。长桌上点着二十四根蜡烛，摆的是银盘子，光汤就上了三道。威廉·戴纽奇坐在主位上，袖口熨得笔直，面前那副刀叉摆得端端正正，一整晚都没有动过。上菜的那些手都戴着镣，镣子上裹了布，碰着盘子也不出声。",
+   {
+    "speaker": "威廉·戴纽奇",
+    "text": "请用，请用。我光是看着各位吃，心里就很高兴了。合同就压在第二道菜底下，不着急的。"
+   },
+   "第二道菜是烤鸭，盘子底下果然压着一张清单，上面是二十三个人名，外加九个编号。{?party.bura:这一整晚，布拉的铰链一声都没有响过。|}",
+   {
+    "if": "is.god",
+    "speaker": "威廉·戴纽奇",
+    "text": "恕我冒昧问一句，红衣收割者那些人，归不归您管哪？"
+   },
+   {
+    "if": "is.god",
+    "text": "他问得客客气气，就好像在打听你住的那家客栈让不让带狗。"
+   },
+   {
+    "if": "is.immortal",
+    "speaker": "威廉·戴纽奇",
+    "text": "他们已经给您立过案了。那种卷宗的封皮是红颜色的，我认得出来。"
+   }
+  ],
+  "first": [
+   "quest q_bill stage 2",
+   "codex c_dainuich",
+   "codex c_undercliff_orcs",
+   {
+    "if": "is.immortal",
+    "then": [
+     "flag reaper_file"
+    ]
+   }
+  ],
+  "choices": [
+   {
+    "text": "盯着他的刀叉，看他吃不吃",
+    "once": true,
+    "check": {
+     "skill": "insight",
+     "dc": 15
+    },
+    "ok": {
+     "text": "你数过了，这一整晚没有人给他斟过一回酒，可他的杯子始终是满的，满得一滴都不少。",
+     "effects": [
+      "flag dainuich_noticed"
+     ]
+    },
+    "fail": {
+     "text": "你盯得太久了，他笑着问你是不是嫌银器不够亮，还叫人换了一套上来，换的时候，他多看了你两眼。",
+     "effects": [
+      "rep charter -1"
+     ]
+    }
+   },
+   {
+    "text": "数清屋里屋外有多少人手",
+    "once": true,
+    "check": {
+     "skill": "perception",
+     "dc": 14,
+     "party": true
+    },
+    "ok": {
+     "text": "屋里有六个，门廊上有四个，马厩那边还有两条狗，他们十一点换岗，换岗的人照例要先去厨房喝一碗汤。",
+     "effects": [
+      "flag a3x_counted"
+     ]
+    },
+    "fail": {
+     "text": "你数到第九个就数乱了，因为有一个人进进出出走了两回，第二回他手里什么也没端，眼睛看的是你。",
+     "effects": [
+      "flag a3x_alarm"
+     ]
+    }
+   },
+   {
+    "text": "照规矩回敬主人一杯",
+    "tag": "贵族",
+    "if": "is.noble",
+    "once": true,
+    "effects": [
+     "flag a3x_engine_hint",
+     "rep charter +1"
     ],
-    choices: [
-      {
-        text: '把报废单和死亡登记递给追奴队长',
-        if: 'flag.contract_fraud',
-        once: true,
-        check: { skill: 'deception', dc: 16, party: true, mods: [{ if: 'flag.planter_list_signed', n: -2, why: '清单上有你的签收' }] },
-        ok: { text: '他借着灯看了很久，看到第七张骂了一句，把两个人和骑马的打发了回去。“剩下的我得亲眼看看尸首。”', effects: ['flag a3x_light'] },
-        fail: { text: '他翻到第三张就笑了。那张死亡登记上的日子是礼拜天，马利安德的公证所礼拜天不开门。他把单子收好，说要寄给联盟的法庭。', effects: ['flag wanted_concord'] },
-      },
-      {
-        text: '先去把堤上最窄那段的木栅推倒',
-        tag: '武人',
-        if: 'is.martial && !flag.contract_planters',
-        once: true,
-        check: { skill: 'athletics', dc: 14 },
-        ok: { text: '木栅倒进了河里。最窄那一段只剩一人宽，马过不来，骑马的只好下马。', effects: ['flag a3x_light'] },
-        fail: { text: '木栅倒了，你也跟着滑下去半截，膝盖磕在石头上。', effects: ['hp -6'] },
-      },
-      {
-        text: '趁十一点换岗，先摸掉放哨的两个',
-        if: 'flag.a3x_counted && !flag.contract_planters',
-        once: true,
-        check: { skill: 'stealth', dc: 14, party: true },
-        ok: { text: '换岗的人还在厨房喝汤。放哨的两个被你们捆在柳树上，嘴里塞着他们自己的帽子。', effects: ['flag a3x_light'] },
-        fail: { text: '放哨的那个回头了。他没喊，他吹的是哨子。', effects: ['flag a3x_alarm'] },
-      },
-      {
-        text: '让乌戈先带甘蔗地里的人下渡口',
-        if: 'flag.a3x_met_ugo && !flag.contract_planters',
-        once: true,
-        effects: ['flag a3x_ford', 'approval bura +1'],
-        result: '乌戈打了一声唿哨。甘蔗地里的人弯着腰走了，一个跟一个，霍布让阿萨背着。剩下的事归你们。',
-      },
-      {
-        text: '站到堤上，说一句：谁也不许过',
-        tag: '神',
-        if: 'is.god && !flag.contract_planters',
-        effects: ['flag levee_sanctuary', 'world chains -3', 'rep charter -3', 'rep church -1', 'var cult +1'],
-        goto: 'a3_10s',
-      },
-      {
-        text: '上堤',
-        if: '!flag.contract_planters',
-        goto: 'a3_10b',
-      },
-      {
-        text: '跟追奴队一起下堤，堵住芦苇',
-        if: 'flag.contract_planters',
-        goto: 'a3_10p',
-      },
-      {
-        text: '站着别动，让暗线的人把人带走',
-        if: 'flag.contract_planters',
-        effects: ['world chains -1', 'rep charter -2', 'rep union +1', 'approval narwen +1'],
-        result: '你把枪背回了肩上。追奴队长看了你一眼，在本子上记了一笔。暗线的人从你身边过去，有一个停下来，跟你说了声谢谢。',
-        goto: 'a3_11',
-      },
+    "result": "他很满意，又多留你喝了一杯，你喝着，他在旁边看着。临走的时候他说漏了一句，文森顿那座不烧煤的机房，原来他也有股份。"
+   },
+   {
+    "text": "在清单上签收",
+    "effects": [
+     "flag planter_list_signed",
+     "rep charter +1"
     ],
-  },
-
-  a3_10b: {
-    id: 'a3_10b',
-    title: '堤上',
-    loc: '马利安德以北 · 河堤',
-    text: [
-      '防风灯挂到了堤边的柳树上。追奴队长把马刀抽出来，又插了回去，换了一根套索。他按人头领钱，死的不值钱。',
-      { if: 'flag.a3x_light && !flag.a3x_alarm', text: '对面少了几个人。剩下的那几个也看得出来，往后瞄了好几回。' },
-      { if: 'flag.a3x_ford', text: '甘蔗地里已经空了。乌戈的唿哨从下游传过来，又短又急，意思是：还要一刻钟。' },
-      { speaker: '追奴队长', text: '我不想打死谁。打死了不值钱。你们让开，我少记你们一笔。' },
-      { if: 'party.middlesday || is.mechanim', text: '九台轧棉机械人跟着你们上了堤，镣子还拖在脚后头。十一号不背名字了，它在数对面有几个人。' },
+    "result": "他把笔递了过来，笔杆是热的，想必有人一直握着它，就等着你来签。",
+    "goto": "a3_07"
+   },
+   {
+    "text": "说要先看看那几台“有毛病的”轧棉机",
+    "effects": [
+     "flag a3x_invited"
     ],
-    choices: [
-      { text: '叫九台机器排成一排，一起上', if: '(party.middlesday || is.mechanim) && partysize >= 2 && flag.a3x_light && !flag.a3x_alarm', combat: { ...LEVEE_BASE, enemies: T4, allies: GIN_ALLIES } },
-      { text: '叫九台机器排成一排，一起上', if: '(party.middlesday || is.mechanim) && partysize >= 2 && !(flag.a3x_light && !flag.a3x_alarm)', combat: { ...LEVEE_BASE, enemies: T5, allies: GIN_ALLIES } },
-      { text: '叫九台机器排成一排，一起上', if: '(party.middlesday || is.mechanim) && partysize <= 1', combat: { ...LEVEE_BASE, enemies: T1, allies: GIN_ALLIES } },
-      { text: '动手', if: 'partysize >= 4 && flag.a3x_light && !flag.a3x_alarm', combat: { ...LEVEE_BASE, enemies: T4 } },
-      { text: '动手', if: 'partysize >= 4 && !(flag.a3x_light && !flag.a3x_alarm)', combat: { ...LEVEE_BASE, enemies: T5 } },
-      { text: '动手', if: 'partysize == 3 && flag.a3x_light && !flag.a3x_alarm', combat: { ...LEVEE_BASE, enemies: T3 } },
-      { text: '动手', if: 'partysize == 3 && !(flag.a3x_light && !flag.a3x_alarm)', combat: { ...LEVEE_BASE, enemies: T4 } },
-      { text: '动手', if: 'partysize == 2 && flag.a3x_light && !flag.a3x_alarm', combat: { ...LEVEE_BASE, enemies: T2 } },
-      { text: '动手', if: 'partysize == 2 && !(flag.a3x_light && !flag.a3x_alarm)', combat: { ...LEVEE_BASE, enemies: T3 } },
-      { text: '动手', if: 'partysize <= 1', combat: { ...LEVEE_BASE, enemies: T1 } },
+    "result": "他叫管事提上灯带你们过去，说那些机器都在轧棉房里，夜里也不停工。",
+    "goto": "a3_07"
+   },
+   {
+    "text": "把清单折好揣进怀里，不签",
+    "effects": [
+     "approval bura +1"
     ],
-  },
-
-  a3_10p: {
-    id: 'a3_10p',
-    title: '劫囚',
-    loc: '马利安德以北 · 河堤',
-    text: [
-      '芦苇里出来七八个人，有拿刀的，有拿猎枪的。打头的是个半身人，手里一盏遮了半边的灯。他看见你们外套上的铜牌，愣了一下。',
-      { speaker: '打头的半身人', text: '迟到者公司？我爹说过你们。他说你们是先护人、后算账的那一家。' },
-      '他身后有个崖下兽人，是阿萨，手里攥着一根撑船的竹篙。甘蔗地里的人已经起身了，往芦苇这边挪。',
-      { if: 'party.bura', text: '布拉没拔枪。她站在你身后，你听得见她的铰链一下一下地响。' },
-      { if: 'party.narwen', speaker: '娜尔雯', text: '你签的字。我不拦你。我也不帮你。' },
+    "result": "他眼看着你把清单揣进怀里，只叫人上了第三道菜，第三道是甜的，他照样没动。",
+    "goto": "a3_07"
+   }
+  ]
+ },
+ "a3_07": {
+  "id": "a3_07",
+  "title": "轧棉机报人名",
+  "art": "ev_mechanim_awakening",
+  "loc": "戴纽奇庄园 · 轧棉房",
+  "text": [
+   "轧棉房就在甘蔗地边上，到了后半夜还亮着一盏灯。九台轧棉机械人站成一排，全锁在同一根梁上，每台胸口都钉着一块铜牌，从七号排到十五号。地上铺着草席，二十三个人坐的坐、躺的躺，其中有一个正在补鞋。",
+   "机器和人原来一直在互相打掩护。管事过来查的时候，机器就转得响一些，好把说话声盖住，人呢，就拿布把机器出了毛病的齿轮包起来，免得它们给拉去回炉。十一号嘴里一直在背名字，跟它锁在同一根梁上的每一个人，它一个都不落下。",
+   {
+    "speaker": "十一号",
+    "text": "内莉。老科尔。阿萨。霍布。马蒂。托比，不在。……"
+   },
+   {
+    "speaker": "内莉",
+    "text": "我们走。可我儿子托比还在隔壁那家庄园里呢，他才九岁，不带上他，我是不会走的。"
+   },
+   {
+    "speaker": "老科尔",
+    "text": "我都六十一啦，走不动了。我就留在这儿吧，等追的人来了，我给他们指路，指那条错的。"
+   },
+   "阿萨从前撑过船，洇河口前头那三个渡口，他认得其中两个。霍布的脚踝叫镣子磨烂了，上头裹着烟叶，马蒂今年才十四岁，倒已经会数数了，替十一号把编号都记在了鞋底上。他们要问你的只有一句话，就是你站在哪一边。",
+   {
+    "if": "origin == 'unowned' && is.mechanim",
+    "text": "你用机器的语速说了一句话，在人听来就像是一声哨子，九台机器一齐停了工，十一号也不背名字了，转过头来看着你。"
+   },
+   {
+    "if": "origin == 'unowned' && !is.mechanim",
+    "text": "你蹲下去看芯核座上的厂印，是七号线出的，用的是 1811 年的料，这种座子你当年在那条线上拧过，一个班要拧四十个。"
+   },
+   {
+    "if": "is.mechanim && origin != 'unowned'",
+    "text": "九台机器先朝你转过头来，问你今天是礼拜几。"
+   },
+   {
+    "if": "is.greenskin",
+    "text": "屋里的人先开口跟你说话，他们问你在这家公司里是干什么的，你说是队长，他们不怎么相信，又问了一遍。"
+   },
+   {
+    "if": "party.middlesday",
+    "speaker": "礼拜三",
+    "text": "（高兴。）十一号跟我是同一炉的料。（担心。）它一直背名字，是因为怕自己忘了。"
+   }
+  ],
+  "choices": [
+   {
+    "text": "压低声音，别让管事听见",
+    "once": true,
+    "check": {
+     "skill": "stealth",
+     "dc": 14,
+     "party": true,
+     "adv": "flag.a3x_invited"
+    },
+    "ok": {
+     "text": "管事提着灯来回走过两趟，什么也没看见，走第二趟的时候还打了个哈欠。"
+    },
+    "fail": {
+     "text": "草席底下压着一只空罐头，偏偏叫你一脚踩响了，管事连吹了三声哨子，马厩那边的狗也跟着叫了起来。",
+     "effects": [
+      "flag a3x_alarm"
+     ]
+    }
+   },
+   {
+    "text": "看看它们芯核的料",
+    "once": true,
+    "check": {
+     "skill": "arcana",
+     "alt": [
+      "investigation"
+     ],
+     "dc": 14,
+     "party": true
+    },
+    "ok": {
+     "text": "纹路是新刻上去的，晶体的底子却发青，可见是 1810 年落下的那一批，醒得早的机器，用的都是这一批料。",
+     "effects": [
+      "flag cores_1810"
+     ]
+    },
+    "fail": {
+     "text": "纹路太细，灯又太暗，你看得眼睛都酸了，也只看出这九颗是同一个厂出的。十一号再背名字的时候，把你也背了进去。",
+     "effects": [
+      "hp -2"
+     ]
+    }
+   },
+   {
+    "text": "答应内莉，先去隔壁庄园接托比",
+    "once": true,
+    "effects": [
+     "flag a3x_toby",
+     "rep charter -1",
+     "approval bura +1"
     ],
-    choices: [
-      { text: '动手', if: 'partysize >= 4', combat: { ...RESCUE_BASE, enemies: R5 } },
-      { text: '动手', if: 'partysize == 3', combat: { ...RESCUE_BASE, enemies: R4 } },
-      { text: '动手', if: 'partysize == 2', combat: { ...RESCUE_BASE, enemies: R3 } },
-      { text: '动手', if: 'partysize <= 1', combat: { ...RESCUE_BASE, enemies: R2 } },
-      {
-        text: '把枪放下，让他们过去',
-        effects: ['world chains -1', 'rep charter -2', 'rep union +1', 'approval narwen +1'],
-        result: '你把枪放在了地上。半身人从你身边走过去，没道谢，他把灯的另外半边也遮上了。',
-        goto: 'a3_11',
-      },
+    "result": "隔壁庄园的狗认得内莉，所以没有叫，托比就睡在马槽里，把他抱出来的时候他还没醒。第二天，隔壁那位主人给戴纽奇写了一封信，抱怨自家走失了一个孩子。"
+   },
+   {
+    "text": "告诉他们你站哪边，回去开会",
+    "goto": "a3_08"
+   }
+  ]
+ },
+ "a3_08": {
+  "id": "a3_08",
+  "title": "团务会：两份合同",
+  "art": "ev_multi_racial_merc",
+  "loc": "马利安德城外 · 河边的空货栈",
+  "date": "1828年苏伦月",
+  "text": [
+   "河边有一座空货栈，原先是堆棉包的，地上到现在还积着一层棉絮，走一步就扬起来一片。公司的团务会就在这儿开，一只空箱子翻过来当桌子，埃塔的电报摆在上面，拿一块石头压着。",
+   {
+    "if": "party.bura",
+    "speaker": "布拉",
+    "text": "合同上写的是“追回财物”。你过来，指给我看看，这里头哪一个是财物。"
+   },
+   {
+    "if": "party.middlesday",
+    "speaker": "礼拜三",
+    "text": "（陈述。）屋里一共三十二个。（更正。）是三十三个，我刚才忘了数我自己。"
+   },
+   {
+    "if": "party.narwen",
+    "speaker": "娜尔雯",
+    "text": "我站在大监院那一边。不过这件事得悄悄地办，动静一闹大，教会就非得出来表态不可，而表态这种事，一拖可就是二十年。"
+   },
+   {
+    "if": "party.guilhem",
+    "speaker": "吉列姆",
+    "text": "最糟的办法就是骗。两头都骗的话，理论上是两倍的糟。实际上呢……实际上我没算过。"
+   },
+   {
+    "text": "埃塔在电报里说，这三百八十二年，公司没有毁过一回约。",
+    "cls": "letter"
+   },
+   {
+    "speaker": "别摇",
+    "text": "我问一句啊，在你们这儿，说话不算数的人，后来都落了个什么下场？"
+   },
+   "多数人都站在暗线那一边，剩下的就看你了。"
+  ],
+  "choices": [
+   {
+    "text": "照种植园的合同办，把人追回来",
+    "effects": [
+     "flag contract_planters",
+     "unflag contract_line",
+     "unflag contract_fraud",
+     "world chains +2",
+     "rep charter +2",
+     "rep union -3",
+     "var overruled +1",
+     "approval bura -1",
+     "approval middlesday -1",
+     "approval narwen -1"
     ],
-  },
-
-  a3_10s: {
-    id: 'a3_10s',
-    title: '庇护所',
-    loc: '马利安德以北 · 河堤',
-    text: [
-      '你站到堤上，说了一句：谁也不许过。狗趴下了。追奴队长把悬赏单折起来，折成很小的一块，塞进靴子里，掉转了马头。',
-      '甘蔗地里的二十三个人从你身边走过去，有人摸了摸你的袖子。往后三个月，这段河堤叫“神的庇护所”。联盟议会花了一整个会期辩论：神的庇护所，算不算外国管辖。',
-      '种植园主们开始买枪。拉姆斯盖特的代理人在马利安德开了一家门面。安德克利夫派人送来一张便条。',
-      { speaker: '莫里斯·安德克利夫（便条）', text: '谢谢。别再替我干活。' },
-      { if: 'party.bura', speaker: '布拉', text: '我当了二十年兵，头一回仗没打就赢了。（铰链咔的一声。）我不喜欢。' },
-      { if: 'party.middlesday', speaker: '礼拜三', text: '（不确定。）十一号问我，你是不是也有编号。我说不知道。' },
+    "result": "你在合同背面签了字，布拉把枪又擦了第二遍，头都没抬。",
+    "goto": "a3_09"
+   },
+   {
+    "text": "走暗线，把人送去洇河口",
+    "if": "faction != 'seal' && !(faction == 'shield' && party.bura)",
+    "effects": [
+     "flag contract_line",
+     "unflag contract_planters",
+     "unflag contract_fraud",
+     "flag contract_broken",
+     "world chains -2",
+     "rep charter -2",
+     "rep union +2"
     ],
-    next: 'a3_11',
-  },
-
-  a3_11: {
-    id: 'a3_11',
-    title: '不烧煤的机房',
-    art: 'ev_damestear_core',
-    loc: '文森顿 · 城北',
-    date: '1828年泰苏伦月',
-    text: [
-      '文森顿是为一条路生的城。当年探险队找到碎片，队长不干了，回到海边要了一块地住下，城就照他的名字叫。城北有座机房，红砖墙，三根烟囱，一根也不冒烟。',
-      '科尔班·灰磨大监院亲自领路。他和气，个子不高，袍子的袖口磨得发亮。锅炉房里闻不到煤味，只有一股热铁皮的气味。炉膛里排着十二颗芯核，蓝得发白，每一颗都在响，调门各不一样。',
-      { speaker: '科尔班·灰磨', text: '先驱精灵偷了一回，法师又把它锁了八百年。我们只是把灯点到穷人的街上。你听见的那个声音，是机器在响。' },
-      '穷人街上的路灯是这座机房点的，四百一十盏，不收钱。',
-      { if: 'flag.a3x_greymill_letter', speaker: '科尔班·灰磨', text: '我那封信，听说是你念给老人听的。念到第几盏了？' },
-      { if: 'is.artificer', text: '你看得懂炉膛的接法。进线和出线对调了：指针那头接着芯核，表盘那头接着路灯。这是一杆倒过来的秤。' },
-      { if: 'party.middlesday', speaker: '礼拜三', text: '（害怕。）第四颗在叫名字。（更正。）在叫编号。它不记得自己叫什么了。' },
-      { if: 'party.guilhem', speaker: '吉列姆', text: '不用法师，不用晶体，一年四百一十盏灯。理论上我该高兴。我回去想想，为什么高兴不起来。' },
+    "result": "埃塔的回电只有“收到”两个字，后面跟着一笔违约金的数目，比定金整整多出一倍。",
+    "goto": "a3_09"
+   },
+   {
+    "text": "走暗线，布拉要拿欠饷抵违约金，收下",
+    "tag": "盾",
+    "if": "faction == 'shield' && party.bura",
+    "effects": [
+     "flag contract_line",
+     "unflag contract_planters",
+     "unflag contract_fraud",
+     "flag contract_broken",
+     "world chains -2",
+     "rep charter -2",
+     "rep union +2",
+     "approval bura +2"
     ],
-    first: ['quest q_engine start', 'codex c_soul_engine', 'codex c_greymill'],
-    choices: [
-      {
-        text: '夸他的路灯',
-        effects: ['rep church +1'],
-        result: '他高兴得像个学徒，领你们去看路灯的开关：一根铜杆，一拉，半条街就亮了。',
-        goto: 'a3_11b',
-      },
-      {
-        text: '问他炉膛里那颗为什么叫',
-        effects: ['approval middlesday +1'],
-        result: '“那是机器在响。”他又说了一遍，说得很慢，好像说慢一点就更真一点。',
-        goto: 'a3_11b',
-      },
-      {
-        text: '指给他看：进线和出线接反了',
-        tag: '奇械',
-        if: 'is.artificer',
-        effects: ['rep church -1', 'approval guilhem +1'],
-        result: '他看了很久，说：“我知道。”然后请你们去喝茶。茶是好茶，他一口没喝。',
-        goto: 'a3_11b',
-      },
+    "result": "布拉从包袱里抽出那张裱好的判词，一巴掌拍在箱子上，问一半的饷够不够赔。埃塔的回电只有一个“够”字。",
+    "goto": "a3_09"
+   },
+   {
+    "text": "引合同：在共和国地界上签的约，不得以人为标的",
+    "tag": "印",
+    "if": "faction == 'seal'",
+    "effects": [
+     "flag contract_line",
+     "unflag contract_planters",
+     "unflag contract_fraud",
+     "world chains -2",
+     "rep charter -1",
+     "rep union +2"
     ],
-  },
-
-  a3_11b: {
-    id: 'a3_11b',
-    title: '夜里',
-    loc: '文森顿 · 城北机房外',
-    text: [
-      '夜里机房只留一个看门的，一条狗，三盏灯。账房在二楼，窗户朝着路灯。路灯整夜不灭，这在偷东西的人看来，是这座机房唯一的毛病。',
-      '看门的是个上了年纪的人类，腰里别着一串钥匙，一共十一把，走一步响一下。',
-      { if: 'flag.a3x_jar_light', text: '别摇说过，哪几盏灯是从墙那边借的光。那几盏的影子淡，你们贴着那几盏灯底下走。' },
-      { if: 'is.small', text: '二楼有个通风道，一尺见方，铁栅栏锈了一半。你钻得进去。' },
-      { if: 'party.bura', text: '布拉留在街口望风。她靠着路灯杆，铰链一声没响。' },
+    "result": "这份合同是在安本科斯特签的，所以追人的那一条从一开头就无效，公司算不上毁约，可机器那一条还有效，得等法庭来判。埃塔回电说，第六款她早就看见了，就等着你自己看见。",
+    "goto": "a3_09"
+   },
+   {
+    "text": "两头都办：给财团交一叠假的报废单和死亡登记",
+    "effects": [
+     "flag contract_fraud",
+     "unflag contract_planters",
+     "unflag contract_line",
+     "world chains -1",
+     "var overruled +1",
+     "approval guilhem -1"
     ],
-    choices: [
-      {
-        text: '从通风道钻进去',
-        tag: '小个子',
-        if: 'is.small',
-        effects: ['var a3x_pass +1'],
-        result: '通风道里全是灰。你从另一头爬出来，像刚从面粉袋里钻出来。',
-        goto: 'a3_11c',
-      },
-      {
-        text: '摸过院子，翻进二楼',
-        check: { skill: 'stealth', dc: 15, party: true, mods: [{ if: 'flag.a3x_jar_light', n: 2, why: '别摇数过的那几盏灯' }] },
-        ok: { text: '狗睡得很沉，看门的在数自己的工钱，数到一半又从头数。', effects: ['var a3x_pass +1'], goto: 'a3_11c' },
-        fail: { text: '狗叫了两声。看门的提着灯出来转了一圈，又回去了。他记下了。', effects: ['flag a3x_seen'], goto: 'a3_11c' },
-      },
+    "result": "头一张死亡登记是吉列姆替你拟的，写完他把笔放下，说自己的手在抖。",
+    "goto": "a3_09"
+   },
+   {
+    "text": "举手表决",
+    "effects": [
+     "flag contract_line",
+     "unflag contract_planters",
+     "unflag contract_fraud",
+     "flag contract_broken",
+     "world chains -2",
+     "rep charter -2",
+     "rep union +2",
+     "approval bura +1",
+     "approval middlesday +1"
     ],
-  },
-
-  a3_11c: {
-    id: 'a3_11c',
-    title: '保险柜',
-    loc: '文森顿 · 机房账房',
-    text: [
-      '账房里一张写字台，一只保险柜，柜门的铭牌是北方联盟一家厂子的。墙上钉着十二颗芯核的出厂单，每张单子上一个编号，没有名字。',
-      { if: 'flag.cousin_tip', text: '左手第二个柜子。你表亲说的就是这个。' },
-      { if: 'flag.a3x_seen', text: '楼下有脚步声，一步一步上楼梯，不快。' },
-      '锁是三道簧的。外头的路灯照进来，照得锁眼发蓝。',
+    "result": "你也举了手，礼拜三把它自己那只手举得笔直，然后把举起来的手数了一遍，又数了一遍。",
+    "goto": "a3_09"
+   }
+  ]
+ },
+ "a3_09": {
+  "id": "a3_09",
+  "title": "布拉的枪",
+  "art": "ev_corinite_war",
+  "loc": "马利安德 · 奴隶区后墙",
+  "text": [
+   "奴隶区的后墙是土坯砌的，墙根底下长着蓖麻，墙下摆着四只长木箱，其中一只已经撬开了，里面是拿油纸包着的枪，四十条，枪托上都烙着拉姆斯盖特军火的字号。",
+   {
+    "if": "party.bura",
+    "speaker": "布拉",
+    "text": "共和国欠着我十一个月的饷，我欠着科琳一条命。今天，我先还这一笔。"
+   },
+   {
+    "if": "!party.bura",
+    "text": "布拉不在这儿，箱盖上留着一行粉笔字，写的是“先还这一笔”。粉笔是从教堂里拿来的，写到最后一个字的时候断了。"
+   },
+   "墙那边有人在唱晚祷，词是揭秘教的词，调子却慢了一半。他们跟主人进的是同一座教堂，走的却不是同一扇门。",
+   {
+    "if": "flag.contract_planters && party.bura",
+    "text": "你签过种植园的合同，这件事她是知道的，她把箱盖扣上了一半，等着你先开口。"
+   }
+  ],
+  "first": [
+   "quest q_bura stage 2"
+  ],
+  "choices": [
+   {
+    "text": "拦住她，照雇主的合同办",
+    "if": "party.bura",
+    "effects": [
+     "flag bura_alone",
+     "unflag bura_armed",
+     "unflag bura_line",
+     "companion -bura",
+     "quest q_bura fail"
     ],
-    choices: [
-      {
-        text: '慢慢拨开那三道簧',
-        check: { skill: 'sleight', dc: 15, party: true, mods: [{ if: 'is.artificer', n: 2, why: '这种锁你修过' }] },
-        ok: { text: '第三道簧弹开的时候，柜门自己往外让了一指宽。', effects: ['var a3x_pass +1'], goto: 'a3_11d' },
-        fail: { text: '锁簧响了一声。楼下的狗又叫了。柜门是开了，开得很响。', effects: ['flag a3x_seen'], goto: 'a3_11d' },
-      },
-      {
-        text: '拿撬棍硬撬',
-        check: { skill: 'athletics', dc: 13, party: true },
-        ok: { text: '柜门开了，铰链也断了。整条街都听得见。', effects: ['var a3x_pass +1', 'flag a3x_seen'], goto: 'a3_11d' },
-        fail: { text: '撬棍弯了，柜门没弯。你们只好去翻写字台的抽屉。', effects: ['flag a3x_seen'], goto: 'a3_11d' },
-      },
+    "result": "她把枪一条一条码回箱子里，码得整整齐齐，然后扛起一箱，一个人走了，连头也没回。铰链响了一声，就只响了那么一声。",
+    "goto": "a3_10"
+   },
+   {
+    "text": "帮她把枪发下去",
+    "if": "party.bura",
+    "effects": [
+     "flag bura_armed",
+     "unflag bura_alone",
+     "unflag bura_line",
+     "world chains -2",
+     "rep charter -2",
+     "flag wanted_concord",
+     "approval bura +2",
+     "quest q_bura done",
+     {
+      "if": "flag.contract_planters",
+      "then": [
+       "flag contract_broken"
+      ]
+     }
     ],
-  },
-
-  a3_11d: {
-    id: 'a3_11d',
-    title: '三十几本',
-    loc: '文森顿 · 机房账房',
-    text: [
-      '柜子里码着三十几本账，封皮都是一个颜色。流水账、煤账（一本空的）、修理账、股东名册，混在一起，书脊上没有字。',
-      '你们只带了一盏遮光灯，灯油还够一刻钟。翻一本，灯芯就短一截。',
-      { if: 'flag.a3x_engine_hint', text: '戴纽奇说漏的那句话还在你耳朵里：他也有股。有他的名字的那一本，就是名册。' },
-      { if: 'flag.a3x_seen', text: '脚步声停在了楼梯拐角。有人在那儿点烟斗，点了三回才着。' },
+    "result": "四十条枪发下去，一人一条。教会是怎么教人唱诗的，她就怎么教他们装弹，一句一句地来，错了就从头再来。天亮以前，墙那边的歌声停了。",
+    "goto": "a3_10"
+   },
+   {
+    "text": "劝她把人带上暗线，枪留给不肯走的",
+    "tag": "盾",
+    "if": "party.bura && !flag.contract_planters && faction == 'shield'",
+    "once": true,
+    "check": {
+     "skill": "persuasion",
+     "dc": 15,
+     "mods": [
+      {
+       "if": "approval.bura >= 6",
+       "n": 2,
+       "why": "她信你"
+      }
+     ]
+    },
+    "ok": {
+     "text": "她想了很久，铰链响了两回，最后她撬开第二只箱子，只从里头拿出来十条。“不肯走的，给他们这个。肯走的，跟我走。”",
+     "effects": [
+      "flag bura_line",
+      "unflag bura_alone",
+      "unflag bura_armed",
+      "world chains -1",
+      "approval bura +1",
+      "quest q_bura done"
+     ],
+     "goto": "a3_10"
+    },
+    "fail": {
+     "text": "“你说得对，”她说，“可惜你晚说了十一个月。”她就站在那儿，等你在剩下的两条路里头挑一条。",
+     "effects": [
+      "approval bura -1"
+     ],
+     "goto": "a3_09"
+    }
+   },
+   {
+    "text": "劝她把人带上暗线，枪留给不肯走的",
+    "if": "party.bura && !flag.contract_planters && faction != 'shield' && approval.bura >= 6",
+    "once": true,
+    "check": {
+     "skill": "persuasion",
+     "dc": 15
+    },
+    "ok": {
+     "text": "她想了很久，铰链响了两回，最后她撬开第二只箱子，只从里头拿出来十条。“不肯走的，给他们这个。肯走的，跟我走。”",
+     "effects": [
+      "flag bura_line",
+      "unflag bura_alone",
+      "unflag bura_armed",
+      "world chains -1",
+      "approval bura +1",
+      "quest q_bura done"
+     ],
+     "goto": "a3_10"
+    },
+    "fail": {
+     "text": "“你说得对，”她说，“可惜你晚说了十一个月。”她就站在那儿，等你在剩下的两条路里头挑一条。",
+     "effects": [
+      "approval bura -1"
+     ],
+     "goto": "a3_09"
+    }
+   },
+   {
+    "text": "把箱子留在墙根，去追她",
+    "if": "!party.bura",
+    "effects": [
+     "flag bura_alone",
+     "unflag bura_armed",
+     "unflag bura_line",
+     "quest q_bura fail"
     ],
-    choices: [
+    "result": "你一直追到河边，只看见泥地上有一串脚印往北去了，脚印踩得很深，因为她肩上扛着一箱枪。",
+    "goto": "a3_10"
+   }
+  ]
+ },
+ "a3_10": {
+  "id": "a3_10",
+  "title": "河堤",
+  "loc": "马利安德以北 · 河堤",
+  "text": [
+   "河堤比甘蔗地高出一人多，堤顶窄得只容得下两匹马并排走。追奴队来了九个人，带着四条狗和一盏防风灯，领头的把悬赏单举到灯底下，一个字一个字地往下念。",
+   {
+    "speaker": "追奴队长",
+    "text": "……走失财物，兽人二十三口，机械九具。送回者每口赏四十金冠，机械另议……"
+   },
+   {
+    "if": "party.middlesday",
+    "text": "一听他念到“财物”两个字，礼拜三就把背上的行李一件一件卸到地上，码得整整齐齐，最小的那件放在最上头。"
+   },
+   "你们身后的甘蔗地里蹲着那二十三个人。{?flag.a3x_toby:内莉怀里抱着托比，一只手捂着他的嘴。|内莉把脸埋在膝盖上。}老科尔没有跟来，他留在了庄园里，好给追的人指一条错路。",
+   {
+    "if": "flag.contract_planters",
+    "text": "这一回你站在追奴队这一边，堤下的芦苇丛里有东西在动，那是暗线的人，他们是来劫人的。追奴队长把悬赏单塞进怀里，冲你点了点头，意思是该你们上了。"
+   },
+   {
+    "if": "flag.a3x_alarm && !flag.contract_planters",
+    "text": "庄园那边的哨子还在吹，这时候又赶来了一个骑马的，人在马上一边跑一边装弹。"
+   },
+   {
+    "if": "is.god",
+    "text": "先是狗不叫了，接着追奴队的马直往后退，一直退到堤边上，有一只前蹄都踩空了。"
+   }
+  ],
+  "choices": [
+   {
+    "text": "把报废单和死亡登记递给追奴队长",
+    "if": "flag.contract_fraud",
+    "once": true,
+    "check": {
+     "skill": "deception",
+     "dc": 16,
+     "party": true,
+     "mods": [
       {
-        text: '一本一本翻，找对那两本',
-        check: { skill: 'investigation', dc: 14, party: true, adv: 'flag.cousin_tip || flag.a3x_engine_hint' },
-        ok: { text: '流水账是最厚的那本，股东名册是最薄的。薄的那本封皮上有一块指印，是常被人翻的。', effects: ['var a3x_pass +1'], goto: 'a3_11e' },
-        fail: { text: '你翻到第十一本，楼梯拐角的烟斗灭了。', goto: 'a3_11e' },
-      },
+       "if": "flag.planter_list_signed",
+       "n": -2,
+       "why": "清单上有你的签收"
+      }
+     ]
+    },
+    "ok": {
+     "text": "他凑在灯底下看了半天，看到第七张的时候骂了一句，把手下的两个人和那个骑马的都打发回去了。“剩下的这些，我得亲眼看看尸首才行。”",
+     "effects": [
+      "flag a3x_light"
+     ]
+    },
+    "fail": {
+     "text": "他才翻到第三张就笑了，原来那张死亡登记上填的日子是个礼拜天，而马利安德的公证所礼拜天是不开门的。他把单子收好，说回头要寄给联盟的法庭。",
+     "effects": [
+      "flag wanted_concord"
+     ]
+    }
+   },
+   {
+    "text": "先去把堤上最窄那段的木栅推倒",
+    "tag": "武人",
+    "if": "is.martial && !flag.contract_planters",
+    "once": true,
+    "check": {
+     "skill": "athletics",
+     "dc": 14
+    },
+    "ok": {
+     "text": "木栅整个倒进了河里，这一来，最窄的那一段只剩下一人宽，马过不来，骑马的只好下马。",
+     "effects": [
+      "flag a3x_light"
+     ]
+    },
+    "fail": {
+     "text": "木栅是倒了，可你也跟着滑下去半截，膝盖结结实实磕在了石头上。",
+     "effects": [
+      "hp -6"
+     ]
+    }
+   },
+   {
+    "text": "趁十一点换岗，先摸掉放哨的两个",
+    "if": "flag.a3x_counted && !flag.contract_planters",
+    "once": true,
+    "check": {
+     "skill": "stealth",
+     "dc": 14,
+     "party": true
+    },
+    "ok": {
+     "text": "换岗的人这会儿还在厨房里喝汤，放哨的那两个叫你们捆在了柳树上，嘴里塞的是他们自己的帽子。",
+     "effects": [
+      "flag a3x_light"
+     ]
+    },
+    "fail": {
+     "text": "放哨的那个偏偏回了头，他倒是没喊，可他吹响了哨子。",
+     "effects": [
+      "flag a3x_alarm"
+     ]
+    }
+   },
+   {
+    "text": "让乌戈先带甘蔗地里的人下渡口",
+    "if": "flag.a3x_met_ugo && !flag.contract_planters",
+    "once": true,
+    "effects": [
+     "flag a3x_ford",
+     "approval bura +1"
     ],
-  },
-
-  a3_11e: {
-    id: 'a3_11e',
-    title: '代持账户',
-    loc: '文森顿 · 城北',
-    text: [
-      { if: 'var.a3x_pass >= 2', text: '你们拿到了流水账，还有股东名册。名册第三页有一行代持账户，户名是一串数字，开户行在安本科斯特。埃塔账上，合伙人的汇票也是这家行开的。' },
-      { if: 'var.a3x_pass >= 2', text: '流水账上没有煤钱。每个月一笔“芯核更换”，十二颗里每月换一颗，换下来的那颗记作“报废”。' },
-      { if: 'var.a3x_pass < 2', text: '你们只抓到半本流水账，后半本还锁在柜子里。看门的已经上了楼，手里的灯在门缝底下晃。' },
-      '外头的路灯一盏挨一盏，照得街上没有一块暗处。',
+    "result": "乌戈打了一声唿哨，甘蔗地里的人就弯着腰走了，一个跟着一个，霍布是让阿萨背着走的。剩下的事，就归你们了。"
+   },
+   {
+    "text": "站到堤上，说一句：谁也不许过",
+    "tag": "神",
+    "if": "is.god && !flag.contract_planters",
+    "effects": [
+     "flag levee_sanctuary",
+     "world chains -3",
+     "rep charter -3",
+     "rep church -1",
+     "var cult +1"
     ],
-    choices: [
-      {
-        text: '揣好账本和名册，从后门走',
-        if: 'var.a3x_pass >= 2',
-        effects: ['flag engine_ledger', 'item +engine_ledger', 'flag partner_engine_share'],
-        result: '后门外是一条窄巷，巷口一盏路灯，灯底下坐着个讨饭的，看了你们一眼，又低头睡了。',
-        goto: 'a3_12',
-      },
-      {
-        text: '抱着半本账，翻窗跑',
-        if: 'var.a3x_pass < 2',
-        check: { abil: 'con', dc: 13, save: true },
-        ok: { text: '你们跑过三条街。最后一条街的路灯一盏一盏在身后亮着，亮得像是在给追的人指路。', goto: 'a3_12' },
-        fail: { text: '第三条街口你摔进了排水沟。半本账护住了，膝盖没护住。', effects: ['hp -8'], goto: 'a3_12' },
-      },
+    "goto": "a3_10s"
+   },
+   {
+    "text": "上堤",
+    "if": "!flag.contract_planters",
+    "goto": "a3_10b"
+   },
+   {
+    "text": "跟追奴队一起下堤，堵住芦苇",
+    "if": "flag.contract_planters",
+    "goto": "a3_10p"
+   },
+   {
+    "text": "站着别动，让暗线的人把人带走",
+    "if": "flag.contract_planters",
+    "effects": [
+     "world chains -1",
+     "rep charter -2",
+     "rep union +1",
+     "approval narwen +1"
     ],
-  },
-
-  a3_12: {
-    id: 'a3_12',
-    title: '真理之路',
-    art: 'ev_dark_forest',
-    loc: '真理之路',
-    date: '1828年伊什达月',
-    text: [
-      '暗线的人跟着乌戈那样的列车员走水路，去洇河口。公司陪着娜尔雯的本子走另一条路，朝圣的路，从文森顿往诺鲁因腹地去。路很长，两头并不近，早年走一趟是拿命换的。',
-      '同路的朝圣客里有个地精，背着一口铁锅，一路上非说碎片是个方块。他说他舅舅见过，他舅舅是听一个修士说的。',
-      { speaker: '背锅的地精', text: '方的。四个角。你们管它叫菱形，那是你们站的地方不对。' },
-      { if: 'party.narwen', speaker: '娜尔雯', text: '上回我走这条路，是一百多年前。那回没下雨。' },
-      { if: 'party.narwen', text: '这回下了，下了九天。' },
-      { if: '!party.narwen', text: '娜尔雯的本子在你包里，拿油布包了三层。这回下了雨，下了九天。' },
-      '第九天，路被一条涨水的河截断了。',
+    "result": "你把枪背回了肩上，追奴队长看了你一眼，在本子上记了一笔。暗线的人从你身边走过去，其中有一个停下脚步，跟你说了一声谢谢。",
+    "goto": "a3_11"
+   }
+  ]
+ },
+ "a3_10b": {
+  "id": "a3_10b",
+  "title": "堤上",
+  "loc": "马利安德以北 · 河堤",
+  "text": [
+   "防风灯已经挂到了堤边的柳树上，追奴队长把马刀抽出来，又插了回去，换成了一根套索。他是按人头领钱的，死的不值钱。",
+   {
+    "if": "flag.a3x_light && !flag.a3x_alarm",
+    "text": "对面少了几个人，剩下的那几个自己也看得出来，往身后瞄了好几回。"
+   },
+   {
+    "if": "flag.a3x_ford",
+    "text": "甘蔗地里已经没有人了，乌戈的唿哨从下游传了过来，又短又急，意思是还要一刻钟。"
+   },
+   {
+    "speaker": "追奴队长",
+    "text": "我可不想打死谁，打死了就不值钱了。你们把路让开，我就少记你们一笔。"
+   },
+   {
+    "if": "party.middlesday || is.mechanim",
+    "text": "九台轧棉机械人也跟着你们上了堤，镣子还拖在脚后头，十一号这会儿不背名字了，它在数对面一共有几个人。"
+   }
+  ],
+  "choices": [
+   {
+    "text": "叫九台机器排成一排，一起上",
+    "if": "(party.middlesday || is.mechanim) && partysize >= 2 && flag.a3x_light && !flag.a3x_alarm",
+    "combat": {
+     "title": "河堤",
+     "intro": "防风灯挂在柳树上，只照得亮堤顶上的一小块地方，头一个扑上来的是狗。",
+     "noAwe": false,
+     "specials": [
+      {
+       "id": "sluice",
+       "name": "开水闸",
+       "desc": "把堤上的闸门摇开，让河水灌进他们那半边",
+       "check": {
+        "skill": "athletics",
+        "dc": 14,
+        "party": true
+       },
+       "success": {
+        "text": "闸门的铁轮才转了半圈就卡住了，你再使劲一推，河水整片整片地翻了上来。马站不住，人也站不住，对面那半边堤一下子成了一条水沟。",
+        "dmgAll": "3d6",
+        "end": "win"
+       },
+       "fail": {
+        "text": "铁轮早就锈死了，你推得手心都起了泡，闸门也只往下滴了几滴水。",
+        "selfDmg": "1d6"
+       }
+      },
+      {
+       "id": "narrow",
+       "name": "堵住最窄的那一段",
+       "desc": "堤顶只容两匹马并排，有一段更窄，只容得下一匹",
+       "check": {
+        "skill": "athletics",
+        "alt": [
+         "intimidation"
+        ],
+        "dc": 15
+       },
+       "success": {
+        "text": "你站到了最窄的那一段上，后头的马挤成了一团，前头的人又退不回去。",
+        "applyAll": {
+         "cond": "restrained",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "马比你想的要高，你叫它一下撞下了堤坡，滚了两圈才停住。",
+        "selfDmg": "1d8"
+       }
+      },
+      {
+       "id": "lantern",
+       "name": "打翻防风灯",
+       "desc": "那盏灯就挂在柳树上，狗认的是气味，人认的是灯",
+       "check": {
+        "skill": "sleight",
+        "alt": [
+         "acrobatics"
+        ],
+        "dc": 13
+       },
+       "success": {
+        "text": "灯掉进了芦苇丛里，追奴队的人什么也看不见了，狗倒还在叫，可叫的方向全都不对。",
+        "applyAll": {
+         "cond": "blinded",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "灯晃了两下，没有掉下来，领头的顺着你扔过去的石头一看，就看见了你。"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "rep union +1"
+      ],
+      "goto": "a3_11"
+     },
+     "lose": {
+      "effects": [
+       {
+        "if": "flag.a3x_ford",
+        "then": [
+         "hp -6"
+        ],
+        "else": [
+         "flag levee_lost",
+         "unflag levee_recovered",
+         "world chains +1"
+        ]
+       }
+      ],
+      "goto": "a3_11"
+     },
+     "reward": [
+      "item +healing_potion 2",
+      "gold +60"
+     ],
+     "enemies": [
+      {
+       "id": "catcher_captain"
+      },
+      {
+       "id": "makata_ganger",
+       "n": 2,
+       "name": "追奴队的打手"
+      },
+      {
+       "id": "catch_hound",
+       "n": 3
+      },
+      {
+       "id": "dragoon",
+       "name": "骑马的追奴"
+      }
+     ],
+     "allies": [
+      {
+       "id": "striker",
+       "n": 2,
+       "name": "轧棉机械人"
+      }
+     ]
+    }
+   },
+   {
+    "text": "叫九台机器排成一排，一起上",
+    "if": "(party.middlesday || is.mechanim) && partysize >= 2 && !(flag.a3x_light && !flag.a3x_alarm)",
+    "combat": {
+     "title": "河堤",
+     "intro": "防风灯挂在柳树上，只照得亮堤顶上的一小块地方，头一个扑上来的是狗。",
+     "noAwe": false,
+     "specials": [
+      {
+       "id": "sluice",
+       "name": "开水闸",
+       "desc": "把堤上的闸门摇开，让河水灌进他们那半边",
+       "check": {
+        "skill": "athletics",
+        "dc": 14,
+        "party": true
+       },
+       "success": {
+        "text": "闸门的铁轮才转了半圈就卡住了，你再使劲一推，河水整片整片地翻了上来。马站不住，人也站不住，对面那半边堤一下子成了一条水沟。",
+        "dmgAll": "3d6",
+        "end": "win"
+       },
+       "fail": {
+        "text": "铁轮早就锈死了，你推得手心都起了泡，闸门也只往下滴了几滴水。",
+        "selfDmg": "1d6"
+       }
+      },
+      {
+       "id": "narrow",
+       "name": "堵住最窄的那一段",
+       "desc": "堤顶只容两匹马并排，有一段更窄，只容得下一匹",
+       "check": {
+        "skill": "athletics",
+        "alt": [
+         "intimidation"
+        ],
+        "dc": 15
+       },
+       "success": {
+        "text": "你站到了最窄的那一段上，后头的马挤成了一团，前头的人又退不回去。",
+        "applyAll": {
+         "cond": "restrained",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "马比你想的要高，你叫它一下撞下了堤坡，滚了两圈才停住。",
+        "selfDmg": "1d8"
+       }
+      },
+      {
+       "id": "lantern",
+       "name": "打翻防风灯",
+       "desc": "那盏灯就挂在柳树上，狗认的是气味，人认的是灯",
+       "check": {
+        "skill": "sleight",
+        "alt": [
+         "acrobatics"
+        ],
+        "dc": 13
+       },
+       "success": {
+        "text": "灯掉进了芦苇丛里，追奴队的人什么也看不见了，狗倒还在叫，可叫的方向全都不对。",
+        "applyAll": {
+         "cond": "blinded",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "灯晃了两下，没有掉下来，领头的顺着你扔过去的石头一看，就看见了你。"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "rep union +1"
+      ],
+      "goto": "a3_11"
+     },
+     "lose": {
+      "effects": [
+       {
+        "if": "flag.a3x_ford",
+        "then": [
+         "hp -6"
+        ],
+        "else": [
+         "flag levee_lost",
+         "unflag levee_recovered",
+         "world chains +1"
+        ]
+       }
+      ],
+      "goto": "a3_11"
+     },
+     "reward": [
+      "item +healing_potion 2",
+      "gold +60"
+     ],
+     "enemies": [
+      {
+       "id": "catcher_captain"
+      },
+      {
+       "id": "makata_ganger",
+       "n": 3,
+       "name": "追奴队的打手"
+      },
+      {
+       "id": "catch_hound",
+       "n": 3
+      },
+      {
+       "id": "dragoon",
+       "n": 2,
+       "name": "骑马的追奴"
+      }
+     ],
+     "allies": [
+      {
+       "id": "striker",
+       "n": 2,
+       "name": "轧棉机械人"
+      }
+     ]
+    }
+   },
+   {
+    "text": "叫九台机器排成一排，一起上",
+    "if": "(party.middlesday || is.mechanim) && partysize <= 1",
+    "combat": {
+     "title": "河堤",
+     "intro": "防风灯挂在柳树上，只照得亮堤顶上的一小块地方，头一个扑上来的是狗。",
+     "noAwe": false,
+     "specials": [
+      {
+       "id": "sluice",
+       "name": "开水闸",
+       "desc": "把堤上的闸门摇开，让河水灌进他们那半边",
+       "check": {
+        "skill": "athletics",
+        "dc": 14,
+        "party": true
+       },
+       "success": {
+        "text": "闸门的铁轮才转了半圈就卡住了，你再使劲一推，河水整片整片地翻了上来。马站不住，人也站不住，对面那半边堤一下子成了一条水沟。",
+        "dmgAll": "3d6",
+        "end": "win"
+       },
+       "fail": {
+        "text": "铁轮早就锈死了，你推得手心都起了泡，闸门也只往下滴了几滴水。",
+        "selfDmg": "1d6"
+       }
+      },
+      {
+       "id": "narrow",
+       "name": "堵住最窄的那一段",
+       "desc": "堤顶只容两匹马并排，有一段更窄，只容得下一匹",
+       "check": {
+        "skill": "athletics",
+        "alt": [
+         "intimidation"
+        ],
+        "dc": 15
+       },
+       "success": {
+        "text": "你站到了最窄的那一段上，后头的马挤成了一团，前头的人又退不回去。",
+        "applyAll": {
+         "cond": "restrained",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "马比你想的要高，你叫它一下撞下了堤坡，滚了两圈才停住。",
+        "selfDmg": "1d8"
+       }
+      },
+      {
+       "id": "lantern",
+       "name": "打翻防风灯",
+       "desc": "那盏灯就挂在柳树上，狗认的是气味，人认的是灯",
+       "check": {
+        "skill": "sleight",
+        "alt": [
+         "acrobatics"
+        ],
+        "dc": 13
+       },
+       "success": {
+        "text": "灯掉进了芦苇丛里，追奴队的人什么也看不见了，狗倒还在叫，可叫的方向全都不对。",
+        "applyAll": {
+         "cond": "blinded",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "灯晃了两下，没有掉下来，领头的顺着你扔过去的石头一看，就看见了你。"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "rep union +1"
+      ],
+      "goto": "a3_11"
+     },
+     "lose": {
+      "effects": [
+       {
+        "if": "flag.a3x_ford",
+        "then": [
+         "hp -6"
+        ],
+        "else": [
+         "flag levee_lost",
+         "unflag levee_recovered",
+         "world chains +1"
+        ]
+       }
+      ],
+      "goto": "a3_11"
+     },
+     "reward": [
+      "item +healing_potion 2",
+      "gold +60"
+     ],
+     "enemies": [
+      {
+       "id": "catcher_captain",
+       "hpMult": 0.55
+      },
+      {
+       "id": "catch_hound"
+      }
+     ],
+     "allies": [
+      {
+       "id": "striker",
+       "n": 2,
+       "name": "轧棉机械人"
+      }
+     ]
+    }
+   },
+   {
+    "text": "动手",
+    "if": "partysize >= 4 && flag.a3x_light && !flag.a3x_alarm",
+    "combat": {
+     "title": "河堤",
+     "intro": "防风灯挂在柳树上，只照得亮堤顶上的一小块地方，头一个扑上来的是狗。",
+     "noAwe": false,
+     "specials": [
+      {
+       "id": "sluice",
+       "name": "开水闸",
+       "desc": "把堤上的闸门摇开，让河水灌进他们那半边",
+       "check": {
+        "skill": "athletics",
+        "dc": 14,
+        "party": true
+       },
+       "success": {
+        "text": "闸门的铁轮才转了半圈就卡住了，你再使劲一推，河水整片整片地翻了上来。马站不住，人也站不住，对面那半边堤一下子成了一条水沟。",
+        "dmgAll": "3d6",
+        "end": "win"
+       },
+       "fail": {
+        "text": "铁轮早就锈死了，你推得手心都起了泡，闸门也只往下滴了几滴水。",
+        "selfDmg": "1d6"
+       }
+      },
+      {
+       "id": "narrow",
+       "name": "堵住最窄的那一段",
+       "desc": "堤顶只容两匹马并排，有一段更窄，只容得下一匹",
+       "check": {
+        "skill": "athletics",
+        "alt": [
+         "intimidation"
+        ],
+        "dc": 15
+       },
+       "success": {
+        "text": "你站到了最窄的那一段上，后头的马挤成了一团，前头的人又退不回去。",
+        "applyAll": {
+         "cond": "restrained",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "马比你想的要高，你叫它一下撞下了堤坡，滚了两圈才停住。",
+        "selfDmg": "1d8"
+       }
+      },
+      {
+       "id": "lantern",
+       "name": "打翻防风灯",
+       "desc": "那盏灯就挂在柳树上，狗认的是气味，人认的是灯",
+       "check": {
+        "skill": "sleight",
+        "alt": [
+         "acrobatics"
+        ],
+        "dc": 13
+       },
+       "success": {
+        "text": "灯掉进了芦苇丛里，追奴队的人什么也看不见了，狗倒还在叫，可叫的方向全都不对。",
+        "applyAll": {
+         "cond": "blinded",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "灯晃了两下，没有掉下来，领头的顺着你扔过去的石头一看，就看见了你。"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "rep union +1"
+      ],
+      "goto": "a3_11"
+     },
+     "lose": {
+      "effects": [
+       {
+        "if": "flag.a3x_ford",
+        "then": [
+         "hp -6"
+        ],
+        "else": [
+         "flag levee_lost",
+         "unflag levee_recovered",
+         "world chains +1"
+        ]
+       }
+      ],
+      "goto": "a3_11"
+     },
+     "reward": [
+      "item +healing_potion 2",
+      "gold +60"
+     ],
+     "enemies": [
+      {
+       "id": "catcher_captain"
+      },
+      {
+       "id": "makata_ganger",
+       "n": 2,
+       "name": "追奴队的打手"
+      },
+      {
+       "id": "catch_hound",
+       "n": 3
+      },
+      {
+       "id": "dragoon",
+       "name": "骑马的追奴"
+      }
+     ]
+    }
+   },
+   {
+    "text": "动手",
+    "if": "partysize >= 4 && !(flag.a3x_light && !flag.a3x_alarm)",
+    "combat": {
+     "title": "河堤",
+     "intro": "防风灯挂在柳树上，只照得亮堤顶上的一小块地方，头一个扑上来的是狗。",
+     "noAwe": false,
+     "specials": [
+      {
+       "id": "sluice",
+       "name": "开水闸",
+       "desc": "把堤上的闸门摇开，让河水灌进他们那半边",
+       "check": {
+        "skill": "athletics",
+        "dc": 14,
+        "party": true
+       },
+       "success": {
+        "text": "闸门的铁轮才转了半圈就卡住了，你再使劲一推，河水整片整片地翻了上来。马站不住，人也站不住，对面那半边堤一下子成了一条水沟。",
+        "dmgAll": "3d6",
+        "end": "win"
+       },
+       "fail": {
+        "text": "铁轮早就锈死了，你推得手心都起了泡，闸门也只往下滴了几滴水。",
+        "selfDmg": "1d6"
+       }
+      },
+      {
+       "id": "narrow",
+       "name": "堵住最窄的那一段",
+       "desc": "堤顶只容两匹马并排，有一段更窄，只容得下一匹",
+       "check": {
+        "skill": "athletics",
+        "alt": [
+         "intimidation"
+        ],
+        "dc": 15
+       },
+       "success": {
+        "text": "你站到了最窄的那一段上，后头的马挤成了一团，前头的人又退不回去。",
+        "applyAll": {
+         "cond": "restrained",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "马比你想的要高，你叫它一下撞下了堤坡，滚了两圈才停住。",
+        "selfDmg": "1d8"
+       }
+      },
+      {
+       "id": "lantern",
+       "name": "打翻防风灯",
+       "desc": "那盏灯就挂在柳树上，狗认的是气味，人认的是灯",
+       "check": {
+        "skill": "sleight",
+        "alt": [
+         "acrobatics"
+        ],
+        "dc": 13
+       },
+       "success": {
+        "text": "灯掉进了芦苇丛里，追奴队的人什么也看不见了，狗倒还在叫，可叫的方向全都不对。",
+        "applyAll": {
+         "cond": "blinded",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "灯晃了两下，没有掉下来，领头的顺着你扔过去的石头一看，就看见了你。"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "rep union +1"
+      ],
+      "goto": "a3_11"
+     },
+     "lose": {
+      "effects": [
+       {
+        "if": "flag.a3x_ford",
+        "then": [
+         "hp -6"
+        ],
+        "else": [
+         "flag levee_lost",
+         "unflag levee_recovered",
+         "world chains +1"
+        ]
+       }
+      ],
+      "goto": "a3_11"
+     },
+     "reward": [
+      "item +healing_potion 2",
+      "gold +60"
+     ],
+     "enemies": [
+      {
+       "id": "catcher_captain"
+      },
+      {
+       "id": "makata_ganger",
+       "n": 3,
+       "name": "追奴队的打手"
+      },
+      {
+       "id": "catch_hound",
+       "n": 3
+      },
+      {
+       "id": "dragoon",
+       "n": 2,
+       "name": "骑马的追奴"
+      }
+     ]
+    }
+   },
+   {
+    "text": "动手",
+    "if": "partysize == 3 && flag.a3x_light && !flag.a3x_alarm",
+    "combat": {
+     "title": "河堤",
+     "intro": "防风灯挂在柳树上，只照得亮堤顶上的一小块地方，头一个扑上来的是狗。",
+     "noAwe": false,
+     "specials": [
+      {
+       "id": "sluice",
+       "name": "开水闸",
+       "desc": "把堤上的闸门摇开，让河水灌进他们那半边",
+       "check": {
+        "skill": "athletics",
+        "dc": 14,
+        "party": true
+       },
+       "success": {
+        "text": "闸门的铁轮才转了半圈就卡住了，你再使劲一推，河水整片整片地翻了上来。马站不住，人也站不住，对面那半边堤一下子成了一条水沟。",
+        "dmgAll": "3d6",
+        "end": "win"
+       },
+       "fail": {
+        "text": "铁轮早就锈死了，你推得手心都起了泡，闸门也只往下滴了几滴水。",
+        "selfDmg": "1d6"
+       }
+      },
+      {
+       "id": "narrow",
+       "name": "堵住最窄的那一段",
+       "desc": "堤顶只容两匹马并排，有一段更窄，只容得下一匹",
+       "check": {
+        "skill": "athletics",
+        "alt": [
+         "intimidation"
+        ],
+        "dc": 15
+       },
+       "success": {
+        "text": "你站到了最窄的那一段上，后头的马挤成了一团，前头的人又退不回去。",
+        "applyAll": {
+         "cond": "restrained",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "马比你想的要高，你叫它一下撞下了堤坡，滚了两圈才停住。",
+        "selfDmg": "1d8"
+       }
+      },
+      {
+       "id": "lantern",
+       "name": "打翻防风灯",
+       "desc": "那盏灯就挂在柳树上，狗认的是气味，人认的是灯",
+       "check": {
+        "skill": "sleight",
+        "alt": [
+         "acrobatics"
+        ],
+        "dc": 13
+       },
+       "success": {
+        "text": "灯掉进了芦苇丛里，追奴队的人什么也看不见了，狗倒还在叫，可叫的方向全都不对。",
+        "applyAll": {
+         "cond": "blinded",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "灯晃了两下，没有掉下来，领头的顺着你扔过去的石头一看，就看见了你。"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "rep union +1"
+      ],
+      "goto": "a3_11"
+     },
+     "lose": {
+      "effects": [
+       {
+        "if": "flag.a3x_ford",
+        "then": [
+         "hp -6"
+        ],
+        "else": [
+         "flag levee_lost",
+         "unflag levee_recovered",
+         "world chains +1"
+        ]
+       }
+      ],
+      "goto": "a3_11"
+     },
+     "reward": [
+      "item +healing_potion 2",
+      "gold +60"
+     ],
+     "enemies": [
+      {
+       "id": "catcher_captain"
+      },
+      {
+       "id": "makata_ganger",
+       "name": "追奴队的打手"
+      },
+      {
+       "id": "catch_hound",
+       "n": 2
+      }
+     ]
+    }
+   },
+   {
+    "text": "动手",
+    "if": "partysize == 3 && !(flag.a3x_light && !flag.a3x_alarm)",
+    "combat": {
+     "title": "河堤",
+     "intro": "防风灯挂在柳树上，只照得亮堤顶上的一小块地方，头一个扑上来的是狗。",
+     "noAwe": false,
+     "specials": [
+      {
+       "id": "sluice",
+       "name": "开水闸",
+       "desc": "把堤上的闸门摇开，让河水灌进他们那半边",
+       "check": {
+        "skill": "athletics",
+        "dc": 14,
+        "party": true
+       },
+       "success": {
+        "text": "闸门的铁轮才转了半圈就卡住了，你再使劲一推，河水整片整片地翻了上来。马站不住，人也站不住，对面那半边堤一下子成了一条水沟。",
+        "dmgAll": "3d6",
+        "end": "win"
+       },
+       "fail": {
+        "text": "铁轮早就锈死了，你推得手心都起了泡，闸门也只往下滴了几滴水。",
+        "selfDmg": "1d6"
+       }
+      },
+      {
+       "id": "narrow",
+       "name": "堵住最窄的那一段",
+       "desc": "堤顶只容两匹马并排，有一段更窄，只容得下一匹",
+       "check": {
+        "skill": "athletics",
+        "alt": [
+         "intimidation"
+        ],
+        "dc": 15
+       },
+       "success": {
+        "text": "你站到了最窄的那一段上，后头的马挤成了一团，前头的人又退不回去。",
+        "applyAll": {
+         "cond": "restrained",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "马比你想的要高，你叫它一下撞下了堤坡，滚了两圈才停住。",
+        "selfDmg": "1d8"
+       }
+      },
+      {
+       "id": "lantern",
+       "name": "打翻防风灯",
+       "desc": "那盏灯就挂在柳树上，狗认的是气味，人认的是灯",
+       "check": {
+        "skill": "sleight",
+        "alt": [
+         "acrobatics"
+        ],
+        "dc": 13
+       },
+       "success": {
+        "text": "灯掉进了芦苇丛里，追奴队的人什么也看不见了，狗倒还在叫，可叫的方向全都不对。",
+        "applyAll": {
+         "cond": "blinded",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "灯晃了两下，没有掉下来，领头的顺着你扔过去的石头一看，就看见了你。"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "rep union +1"
+      ],
+      "goto": "a3_11"
+     },
+     "lose": {
+      "effects": [
+       {
+        "if": "flag.a3x_ford",
+        "then": [
+         "hp -6"
+        ],
+        "else": [
+         "flag levee_lost",
+         "unflag levee_recovered",
+         "world chains +1"
+        ]
+       }
+      ],
+      "goto": "a3_11"
+     },
+     "reward": [
+      "item +healing_potion 2",
+      "gold +60"
+     ],
+     "enemies": [
+      {
+       "id": "catcher_captain"
+      },
+      {
+       "id": "makata_ganger",
+       "n": 2,
+       "name": "追奴队的打手"
+      },
+      {
+       "id": "catch_hound",
+       "n": 3
+      },
+      {
+       "id": "dragoon",
+       "name": "骑马的追奴"
+      }
+     ]
+    }
+   },
+   {
+    "text": "动手",
+    "if": "partysize == 2 && flag.a3x_light && !flag.a3x_alarm",
+    "combat": {
+     "title": "河堤",
+     "intro": "防风灯挂在柳树上，只照得亮堤顶上的一小块地方，头一个扑上来的是狗。",
+     "noAwe": false,
+     "specials": [
+      {
+       "id": "sluice",
+       "name": "开水闸",
+       "desc": "把堤上的闸门摇开，让河水灌进他们那半边",
+       "check": {
+        "skill": "athletics",
+        "dc": 14,
+        "party": true
+       },
+       "success": {
+        "text": "闸门的铁轮才转了半圈就卡住了，你再使劲一推，河水整片整片地翻了上来。马站不住，人也站不住，对面那半边堤一下子成了一条水沟。",
+        "dmgAll": "3d6",
+        "end": "win"
+       },
+       "fail": {
+        "text": "铁轮早就锈死了，你推得手心都起了泡，闸门也只往下滴了几滴水。",
+        "selfDmg": "1d6"
+       }
+      },
+      {
+       "id": "narrow",
+       "name": "堵住最窄的那一段",
+       "desc": "堤顶只容两匹马并排，有一段更窄，只容得下一匹",
+       "check": {
+        "skill": "athletics",
+        "alt": [
+         "intimidation"
+        ],
+        "dc": 15
+       },
+       "success": {
+        "text": "你站到了最窄的那一段上，后头的马挤成了一团，前头的人又退不回去。",
+        "applyAll": {
+         "cond": "restrained",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "马比你想的要高，你叫它一下撞下了堤坡，滚了两圈才停住。",
+        "selfDmg": "1d8"
+       }
+      },
+      {
+       "id": "lantern",
+       "name": "打翻防风灯",
+       "desc": "那盏灯就挂在柳树上，狗认的是气味，人认的是灯",
+       "check": {
+        "skill": "sleight",
+        "alt": [
+         "acrobatics"
+        ],
+        "dc": 13
+       },
+       "success": {
+        "text": "灯掉进了芦苇丛里，追奴队的人什么也看不见了，狗倒还在叫，可叫的方向全都不对。",
+        "applyAll": {
+         "cond": "blinded",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "灯晃了两下，没有掉下来，领头的顺着你扔过去的石头一看，就看见了你。"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "rep union +1"
+      ],
+      "goto": "a3_11"
+     },
+     "lose": {
+      "effects": [
+       {
+        "if": "flag.a3x_ford",
+        "then": [
+         "hp -6"
+        ],
+        "else": [
+         "flag levee_lost",
+         "unflag levee_recovered",
+         "world chains +1"
+        ]
+       }
+      ],
+      "goto": "a3_11"
+     },
+     "reward": [
+      "item +healing_potion 2",
+      "gold +60"
+     ],
+     "enemies": [
+      {
+       "id": "catcher_captain"
+      },
+      {
+       "id": "catch_hound",
+       "n": 2
+      }
+     ]
+    }
+   },
+   {
+    "text": "动手",
+    "if": "partysize == 2 && !(flag.a3x_light && !flag.a3x_alarm)",
+    "combat": {
+     "title": "河堤",
+     "intro": "防风灯挂在柳树上，只照得亮堤顶上的一小块地方，头一个扑上来的是狗。",
+     "noAwe": false,
+     "specials": [
+      {
+       "id": "sluice",
+       "name": "开水闸",
+       "desc": "把堤上的闸门摇开，让河水灌进他们那半边",
+       "check": {
+        "skill": "athletics",
+        "dc": 14,
+        "party": true
+       },
+       "success": {
+        "text": "闸门的铁轮才转了半圈就卡住了，你再使劲一推，河水整片整片地翻了上来。马站不住，人也站不住，对面那半边堤一下子成了一条水沟。",
+        "dmgAll": "3d6",
+        "end": "win"
+       },
+       "fail": {
+        "text": "铁轮早就锈死了，你推得手心都起了泡，闸门也只往下滴了几滴水。",
+        "selfDmg": "1d6"
+       }
+      },
+      {
+       "id": "narrow",
+       "name": "堵住最窄的那一段",
+       "desc": "堤顶只容两匹马并排，有一段更窄，只容得下一匹",
+       "check": {
+        "skill": "athletics",
+        "alt": [
+         "intimidation"
+        ],
+        "dc": 15
+       },
+       "success": {
+        "text": "你站到了最窄的那一段上，后头的马挤成了一团，前头的人又退不回去。",
+        "applyAll": {
+         "cond": "restrained",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "马比你想的要高，你叫它一下撞下了堤坡，滚了两圈才停住。",
+        "selfDmg": "1d8"
+       }
+      },
+      {
+       "id": "lantern",
+       "name": "打翻防风灯",
+       "desc": "那盏灯就挂在柳树上，狗认的是气味，人认的是灯",
+       "check": {
+        "skill": "sleight",
+        "alt": [
+         "acrobatics"
+        ],
+        "dc": 13
+       },
+       "success": {
+        "text": "灯掉进了芦苇丛里，追奴队的人什么也看不见了，狗倒还在叫，可叫的方向全都不对。",
+        "applyAll": {
+         "cond": "blinded",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "灯晃了两下，没有掉下来，领头的顺着你扔过去的石头一看，就看见了你。"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "rep union +1"
+      ],
+      "goto": "a3_11"
+     },
+     "lose": {
+      "effects": [
+       {
+        "if": "flag.a3x_ford",
+        "then": [
+         "hp -6"
+        ],
+        "else": [
+         "flag levee_lost",
+         "unflag levee_recovered",
+         "world chains +1"
+        ]
+       }
+      ],
+      "goto": "a3_11"
+     },
+     "reward": [
+      "item +healing_potion 2",
+      "gold +60"
+     ],
+     "enemies": [
+      {
+       "id": "catcher_captain"
+      },
+      {
+       "id": "makata_ganger",
+       "name": "追奴队的打手"
+      },
+      {
+       "id": "catch_hound",
+       "n": 2
+      }
+     ]
+    }
+   },
+   {
+    "text": "动手",
+    "if": "partysize <= 1",
+    "combat": {
+     "title": "河堤",
+     "intro": "防风灯挂在柳树上，只照得亮堤顶上的一小块地方，头一个扑上来的是狗。",
+     "noAwe": false,
+     "specials": [
+      {
+       "id": "sluice",
+       "name": "开水闸",
+       "desc": "把堤上的闸门摇开，让河水灌进他们那半边",
+       "check": {
+        "skill": "athletics",
+        "dc": 14,
+        "party": true
+       },
+       "success": {
+        "text": "闸门的铁轮才转了半圈就卡住了，你再使劲一推，河水整片整片地翻了上来。马站不住，人也站不住，对面那半边堤一下子成了一条水沟。",
+        "dmgAll": "3d6",
+        "end": "win"
+       },
+       "fail": {
+        "text": "铁轮早就锈死了，你推得手心都起了泡，闸门也只往下滴了几滴水。",
+        "selfDmg": "1d6"
+       }
+      },
+      {
+       "id": "narrow",
+       "name": "堵住最窄的那一段",
+       "desc": "堤顶只容两匹马并排，有一段更窄，只容得下一匹",
+       "check": {
+        "skill": "athletics",
+        "alt": [
+         "intimidation"
+        ],
+        "dc": 15
+       },
+       "success": {
+        "text": "你站到了最窄的那一段上，后头的马挤成了一团，前头的人又退不回去。",
+        "applyAll": {
+         "cond": "restrained",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "马比你想的要高，你叫它一下撞下了堤坡，滚了两圈才停住。",
+        "selfDmg": "1d8"
+       }
+      },
+      {
+       "id": "lantern",
+       "name": "打翻防风灯",
+       "desc": "那盏灯就挂在柳树上，狗认的是气味，人认的是灯",
+       "check": {
+        "skill": "sleight",
+        "alt": [
+         "acrobatics"
+        ],
+        "dc": 13
+       },
+       "success": {
+        "text": "灯掉进了芦苇丛里，追奴队的人什么也看不见了，狗倒还在叫，可叫的方向全都不对。",
+        "applyAll": {
+         "cond": "blinded",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "灯晃了两下，没有掉下来，领头的顺着你扔过去的石头一看，就看见了你。"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "rep union +1"
+      ],
+      "goto": "a3_11"
+     },
+     "lose": {
+      "effects": [
+       {
+        "if": "flag.a3x_ford",
+        "then": [
+         "hp -6"
+        ],
+        "else": [
+         "flag levee_lost",
+         "unflag levee_recovered",
+         "world chains +1"
+        ]
+       }
+      ],
+      "goto": "a3_11"
+     },
+     "reward": [
+      "item +healing_potion 2",
+      "gold +60"
+     ],
+     "enemies": [
+      {
+       "id": "catcher_captain",
+       "hpMult": 0.55
+      },
+      {
+       "id": "catch_hound"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "a3_10p": {
+  "id": "a3_10p",
+  "title": "劫囚",
+  "loc": "马利安德以北 · 河堤",
+  "text": [
+   "芦苇丛里钻出来七八个人，有拿刀的，也有拿猎枪的，打头的是个半身人，手里提着一盏遮住了半边的灯，他一看见你们外套上的铜牌，就愣了一下。",
+   {
+    "speaker": "打头的半身人",
+    "text": "迟到者公司？我爹跟我说起过你们。他说你们是先护着人、回头再算账的那一家。"
+   },
+   "他身后站着个崖下兽人，那是阿萨，手里攥着一根撑船用的竹篙，甘蔗地里的人已经站起来了，正往芦苇这边挪。",
+   {
+    "if": "party.bura",
+    "text": "布拉没有拔枪，她就站在你身后，你听得见她的铰链在一下一下地响。"
+   },
+   {
+    "if": "party.narwen",
+    "speaker": "娜尔雯",
+    "text": "字是你签的。我不拦着你，可我也不会帮你。"
+   }
+  ],
+  "choices": [
+   {
+    "text": "动手",
+    "if": "partysize >= 4",
+    "combat": {
+     "title": "劫囚",
+     "intro": "芦苇丛里站起来七八个人，打头的那个把遮了半边的灯放到地上，抽出了刀。",
+     "specials": [
+      {
+       "id": "reeds",
+       "name": "点着芦苇",
+       "desc": "风正往河那边吹",
+       "check": {
+        "skill": "survival",
+        "alt": [
+         "nature"
+        ],
+        "dc": 14
+       },
+       "success": {
+        "text": "芦苇烧了起来，烟直往河面上卷，对面的人一边咳一边往后退。",
+        "dmgAll": "2d6",
+        "type": "fire"
+       },
+       "fail": {
+        "text": "芦苇是湿的，火苗才冒了一下就灭了，烟倒全扑在了你脸上。",
+        "selfDmg": "1d4"
+       }
+      },
+      {
+       "id": "shout",
+       "name": "喊出悬赏单上的价钱",
+       "desc": "让他们知道追奴队是按人头领钱的，死的不值钱",
+       "check": {
+        "skill": "intimidation",
+        "alt": [
+         "persuasion"
+        ],
+        "dc": 15
+       },
+       "success": {
+        "text": "你把价钱大声喊了一遍，对面有两个人停了手，因为他们听明白了，追奴队并不想打死人，他们用不着死。",
+        "applyAll": {
+         "cond": "dazed",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "对面有人回了你一句：“那你又值多少？”"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "flag levee_recovered",
+       "unflag levee_lost",
+       "world chains +1",
+       "rep charter +1"
+      ],
+      "goto": "a3_11"
+     },
+     "lose": {
+      "effects": [
+       "world chains -1",
+       "gold +150"
+      ],
+      "goto": "a3_11"
+     },
+     "enemies": [
+      {
+       "id": "rival_blade",
+       "n": 3,
+       "name": "暗线的刀手"
+      },
+      {
+       "id": "rival_mage",
+       "n": 2,
+       "name": "暗线的法师"
+      },
+      {
+       "id": "war_priest",
+       "name": "科琳教的随军修士"
+      },
+      {
+       "id": "revolutionary",
+       "n": 3,
+       "name": "暗线的人"
+      }
+     ]
+    }
+   },
+   {
+    "text": "动手",
+    "if": "partysize == 3",
+    "combat": {
+     "title": "劫囚",
+     "intro": "芦苇丛里站起来七八个人，打头的那个把遮了半边的灯放到地上，抽出了刀。",
+     "specials": [
+      {
+       "id": "reeds",
+       "name": "点着芦苇",
+       "desc": "风正往河那边吹",
+       "check": {
+        "skill": "survival",
+        "alt": [
+         "nature"
+        ],
+        "dc": 14
+       },
+       "success": {
+        "text": "芦苇烧了起来，烟直往河面上卷，对面的人一边咳一边往后退。",
+        "dmgAll": "2d6",
+        "type": "fire"
+       },
+       "fail": {
+        "text": "芦苇是湿的，火苗才冒了一下就灭了，烟倒全扑在了你脸上。",
+        "selfDmg": "1d4"
+       }
+      },
+      {
+       "id": "shout",
+       "name": "喊出悬赏单上的价钱",
+       "desc": "让他们知道追奴队是按人头领钱的，死的不值钱",
+       "check": {
+        "skill": "intimidation",
+        "alt": [
+         "persuasion"
+        ],
+        "dc": 15
+       },
+       "success": {
+        "text": "你把价钱大声喊了一遍，对面有两个人停了手，因为他们听明白了，追奴队并不想打死人，他们用不着死。",
+        "applyAll": {
+         "cond": "dazed",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "对面有人回了你一句：“那你又值多少？”"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "flag levee_recovered",
+       "unflag levee_lost",
+       "world chains +1",
+       "rep charter +1"
+      ],
+      "goto": "a3_11"
+     },
+     "lose": {
+      "effects": [
+       "world chains -1",
+       "gold +150"
+      ],
+      "goto": "a3_11"
+     },
+     "enemies": [
+      {
+       "id": "rival_blade",
+       "n": 3,
+       "name": "暗线的刀手"
+      },
+      {
+       "id": "rival_mage",
+       "name": "暗线的法师"
+      },
+      {
+       "id": "war_priest",
+       "name": "科琳教的随军修士"
+      },
+      {
+       "id": "revolutionary",
+       "n": 2,
+       "name": "暗线的人"
+      }
+     ]
+    }
+   },
+   {
+    "text": "动手",
+    "if": "partysize == 2",
+    "combat": {
+     "title": "劫囚",
+     "intro": "芦苇丛里站起来七八个人，打头的那个把遮了半边的灯放到地上，抽出了刀。",
+     "specials": [
+      {
+       "id": "reeds",
+       "name": "点着芦苇",
+       "desc": "风正往河那边吹",
+       "check": {
+        "skill": "survival",
+        "alt": [
+         "nature"
+        ],
+        "dc": 14
+       },
+       "success": {
+        "text": "芦苇烧了起来，烟直往河面上卷，对面的人一边咳一边往后退。",
+        "dmgAll": "2d6",
+        "type": "fire"
+       },
+       "fail": {
+        "text": "芦苇是湿的，火苗才冒了一下就灭了，烟倒全扑在了你脸上。",
+        "selfDmg": "1d4"
+       }
+      },
+      {
+       "id": "shout",
+       "name": "喊出悬赏单上的价钱",
+       "desc": "让他们知道追奴队是按人头领钱的，死的不值钱",
+       "check": {
+        "skill": "intimidation",
+        "alt": [
+         "persuasion"
+        ],
+        "dc": 15
+       },
+       "success": {
+        "text": "你把价钱大声喊了一遍，对面有两个人停了手，因为他们听明白了，追奴队并不想打死人，他们用不着死。",
+        "applyAll": {
+         "cond": "dazed",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "对面有人回了你一句：“那你又值多少？”"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "flag levee_recovered",
+       "unflag levee_lost",
+       "world chains +1",
+       "rep charter +1"
+      ],
+      "goto": "a3_11"
+     },
+     "lose": {
+      "effects": [
+       "world chains -1",
+       "gold +150"
+      ],
+      "goto": "a3_11"
+     },
+     "enemies": [
+      {
+       "id": "rival_blade",
+       "n": 2,
+       "name": "暗线的刀手"
+      },
+      {
+       "id": "rival_mage",
+       "name": "暗线的法师"
+      },
+      {
+       "id": "revolutionary",
+       "n": 2,
+       "name": "暗线的人"
+      }
+     ]
+    }
+   },
+   {
+    "text": "动手",
+    "if": "partysize <= 1",
+    "combat": {
+     "title": "劫囚",
+     "intro": "芦苇丛里站起来七八个人，打头的那个把遮了半边的灯放到地上，抽出了刀。",
+     "specials": [
+      {
+       "id": "reeds",
+       "name": "点着芦苇",
+       "desc": "风正往河那边吹",
+       "check": {
+        "skill": "survival",
+        "alt": [
+         "nature"
+        ],
+        "dc": 14
+       },
+       "success": {
+        "text": "芦苇烧了起来，烟直往河面上卷，对面的人一边咳一边往后退。",
+        "dmgAll": "2d6",
+        "type": "fire"
+       },
+       "fail": {
+        "text": "芦苇是湿的，火苗才冒了一下就灭了，烟倒全扑在了你脸上。",
+        "selfDmg": "1d4"
+       }
+      },
+      {
+       "id": "shout",
+       "name": "喊出悬赏单上的价钱",
+       "desc": "让他们知道追奴队是按人头领钱的，死的不值钱",
+       "check": {
+        "skill": "intimidation",
+        "alt": [
+         "persuasion"
+        ],
+        "dc": 15
+       },
+       "success": {
+        "text": "你把价钱大声喊了一遍，对面有两个人停了手，因为他们听明白了，追奴队并不想打死人，他们用不着死。",
+        "applyAll": {
+         "cond": "dazed",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "对面有人回了你一句：“那你又值多少？”"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "flag levee_recovered",
+       "unflag levee_lost",
+       "world chains +1",
+       "rep charter +1"
+      ],
+      "goto": "a3_11"
+     },
+     "lose": {
+      "effects": [
+       "world chains -1",
+       "gold +150"
+      ],
+      "goto": "a3_11"
+     },
+     "enemies": [
+      {
+       "id": "rival_blade",
+       "name": "暗线的刀手"
+      },
+      {
+       "id": "rival_mage",
+       "name": "暗线的法师"
+      },
+      {
+       "id": "revolutionary",
+       "name": "暗线的人"
+      }
+     ]
+    }
+   },
+   {
+    "text": "把枪放下，让他们过去",
+    "effects": [
+     "world chains -1",
+     "rep charter -2",
+     "rep union +1",
+     "approval narwen +1"
     ],
-    first: ['level 7', 'codex c_path_of_truth'],
-    choices: [
-      {
-        text: '找一段能蹚过去的浅滩',
-        check: { skill: 'survival', alt: ['nature'], dc: 14, party: true },
-        ok: { text: '你们找到一段浅滩，水只到腰。地精把锅顶在头上，第一个过了河。', goto: 'a3_12b' },
-        fail: { text: '水等了一天才退。干粮泡了一半，你们借地精的锅煮了一锅糊糊，人人都冻得发抖。', effects: ['hp -5'], goto: 'a3_12b' },
-      },
+    "result": "你把枪放在了地上，半身人从你身边走了过去，没有道谢，只把灯的另外半边也遮上了。",
+    "goto": "a3_11"
+   }
+  ]
+ },
+ "a3_10s": {
+  "id": "a3_10s",
+  "title": "庇护所",
+  "loc": "马利安德以北 · 河堤",
+  "text": [
+   "你站到堤上，只说了一句谁也不许过，狗就全都趴下了。追奴队长把悬赏单折了又折，折成很小的一块塞进靴子里，然后掉转了马头。",
+   "甘蔗地里的二十三个人从你身边走了过去，有人还伸手摸了摸你的袖子。往后的三个月里，这段河堤就叫“神的庇护所”。联盟议会为这个花了整整一个会期来辩论，神的庇护所到底算不算外国管辖。",
+   "种植园主们开始买枪了，拉姆斯盖特的代理人干脆在马利安德开了一家门面。安德克利夫也派人送来了一张便条。",
+   {
+    "speaker": "莫里斯·安德克利夫（便条）",
+    "text": "谢谢。往后别再替我干活了。"
+   },
+   {
+    "if": "party.bura",
+    "speaker": "布拉",
+    "text": "我当了二十年的兵，仗还没打就赢了，这是头一回。（铰链咔的一声。）我不喜欢这样。"
+   },
+   {
+    "if": "party.middlesday",
+    "speaker": "礼拜三",
+    "text": "（不确定。）十一号问我，你是不是也有个编号。我跟它说，我不知道。"
+   }
+  ],
+  "next": "a3_11"
+ },
+ "a3_11": {
+  "id": "a3_11",
+  "title": "不烧煤的机房",
+  "art": "ev_damestear_core",
+  "loc": "文森顿 · 城北",
+  "date": "1828年泰苏伦月",
+  "text": [
+   "文森顿这座城是为了一条路才有的。当年探险队找到了碎片，队长却不想再干了，回到海边要了块地住下来，后来这地方成了城，就拿他的名字当了城名。城北有座红砖墙的机房，竖着三根烟囱，可哪一根也不冒烟。",
+   "领路的是科尔班·灰磨大监院本人，他个子不高，待人和和气气，袍子的袖口都磨得发亮了。锅炉房里一点煤味也闻不到，只有一股热铁皮的气味，炉膛里排着十二颗芯核，蓝得发白，颗颗都在响，调门却各不一样。",
+   {
+    "speaker": "科尔班·灰磨",
+    "text": "这东西啊，先驱精灵偷过一回，后来法师们又把它锁了八百年，我们做的不过是把灯点到穷人住的街上去罢了。至于你听见的那个声音，那是机器在响。"
+   },
+   "穷人街上的路灯全靠这座机房点着，一共四百一十盏，一个钱也不收。",
+   {
+    "if": "flag.a3x_greymill_letter",
+    "speaker": "科尔班·灰磨",
+    "text": "我听说，我那封信是你念给老人听的，念到第几盏了呀？"
+   },
+   {
+    "if": "is.artificer",
+    "text": "炉膛的接法你是看得懂的，进线和出线对调过了，指针那头接的是芯核，表盘那头接的是路灯，说白了，这就是一杆倒过来用的秤。"
+   },
+   {
+    "if": "party.middlesday",
+    "speaker": "礼拜三",
+    "text": "（害怕。）第四颗在叫一个名字。（更正。）不对，它叫的是编号，它已经不记得自己叫什么了。"
+   },
+   {
+    "if": "party.guilhem",
+    "speaker": "吉列姆",
+    "text": "不用法师，也不用晶体，一年到头点着四百一十盏灯，理论上我该高兴才对。可我就是高兴不起来，为什么呢，我得回去好好想想。"
+   }
+  ],
+  "first": [
+   "quest q_engine start",
+   "codex c_soul_engine",
+   "codex c_greymill"
+  ],
+  "choices": [
+   {
+    "text": "夸他的路灯",
+    "effects": [
+     "rep church +1"
     ],
-  },
-
-  a3_12b: {
-    id: 'a3_12b',
-    title: '朝圣客栈',
-    loc: '真理之路 · 朝圣客栈',
-    text: [
-      '路上有家朝圣客栈，石头墙，门口挂着一块木牌，牌上刻着问答。答得上来的住干的那间，答不上来的住漏雨的那间，钱收一样多。信的和来查证的，客栈收一样多的钱。',
-      '今晚问的是：头一个听懂碎片的人是谁，别人回了海边，她住在了哪儿。',
-      { if: 'is.divine', text: '老板看见你的打扮，请你带今晚的晚祷。堂屋里坐了十来个朝圣客，地精坐在最前排，锅放在膝盖上。' },
-      '再往前只剩最后一段崖路。崖上凿着台阶，有些台阶被雨冲得只剩半截。',
+    "result": "他高兴得像个学徒，当下就领你们去看路灯的开关，其实就是一根铜杆，他伸手一拉，半条街都亮了。",
+    "goto": "a3_11b"
+   },
+   {
+    "text": "问他炉膛里那颗为什么叫",
+    "effects": [
+     "approval middlesday +1"
     ],
-    choices: [
-      {
-        text: '答木牌上的问题',
-        once: true,
-        check: { skill: 'religion', alt: ['history'], dc: 13, party: true },
-        ok: { text: '“托丽丝。她在密室边上搭了营，一住好些年。”老板把干的那间钥匙给了你。', effects: ['rest short'] },
-        fail: { text: '你答了个年份，差了二十年。漏雨那间屋顶上，雨水滴进一只铜盆，响了一整夜。', effects: ['hp -2'] },
-      },
-      {
-        text: '带今晚的晚祷',
-        tag: '神职',
-        if: 'is.divine',
-        once: true,
-        effects: ['rest short', 'approval narwen +1'],
-        result: '你念完了。{?party.narwen:娜尔雯坐在后排听完，散场时纠正了你一个年份，1638 年，不是 1636 年。|地精说你念得比他舅舅好。}',
-      },
-      {
-        text: '爬最后那段崖路',
-        check: { skill: 'athletics', alt: ['acrobatics'], dc: 14, party: true },
-        ok: { text: '你们拿绳子把人一个一个吊上去。崖顶上有一块平地，平地底下就是那间密室。', goto: 'a3_13' },
-        fail: { text: '半截台阶在你脚下塌了。你抓住一根树根，挂了一会儿，被人拽了上去，手心磨掉一层皮。', effects: ['hp -6'], goto: 'a3_13' },
-      },
+    "result": "“那是机器在响。”他又说了一遍，这回说得很慢，好像说得慢一点，这话就能更真一点。",
+    "goto": "a3_11b"
+   },
+   {
+    "text": "指给他看：进线和出线接反了",
+    "tag": "奇械",
+    "if": "is.artificer",
+    "effects": [
+     "rep church -1",
+     "approval guilhem +1"
     ],
-  },
-
-  a3_13: {
-    id: 'a3_13',
-    title: '四根柱子',
-    art: 'load_7',
-    loc: '诺鲁因 · 四根柱子的密室',
-    text: [
-      '密室在地下，下去要走四十一级台阶。四根柱子撑着屋顶，粗得像树干，柱身上的纹路谁也认不得，比先驱精灵的帝国还老。屋子正当中，一方石头台座。',
-      '照 1585 年的记载，碎片当年悬在台座上方，两样没挨着。碎片运去坎诺两百多年了，台座还在响。声音又高又快，一口气说完就停，停一会儿再说。',
-      { if: 'party.middlesday', speaker: '礼拜三', text: '（陈述。）它说的一直是“他们”。剩下两个词。一个是“门”。（不确定。）另一个，既能当命令，也能当陈述。' },
-      { if: '!party.middlesday', text: '你们对着娜尔雯的译码表，一个音一个音地对。对到最后剩两个词：一个是“门”，另一个，既能当命令，也能当陈述。' },
-      { if: 'is.mechanim', text: '你不用译码。那个音一进耳朵就是字。你听见的比礼拜三多半个音，那半个音很轻，是一口气。' },
-      { if: 'party.guilhem', speaker: '吉列姆', text: '把门关上。理论上这是一道命令，有命令就有下命令的人。' },
-      { if: 'party.narwen', speaker: '娜尔雯', text: '门关着。它在报告。一百多年来它一直在报告。' },
-      { if: 'party.bura', speaker: '布拉', text: '门是从里面关的。（铰链咔的一声。）当兵的都听得出来，是有人在里头守着。' },
-      { if: '!party.guilhem && !party.narwen && !party.bura', speaker: '别摇', text: '三种念法都对。你们的话就这个毛病。' },
-      { if: 'party.narwen', text: '娜尔雯趴到台座底下，拿手指摸到了几道刻痕。她说那是托丽丝的记号。又说，1666 年以后那些声音里，有一个她认得。' },
-      { if: 'is.god', text: '你一进门，台座换了调。你听见的那一句，和礼拜三听见的不是同一句。两句都记了下来，记在同一页上，中间空着一行。' },
-      { if: 'is.god && flag.fragment_hushed && party.narwen', text: '娜尔雯先看了你一眼，才去看台座。' },
-      { if: 'is.god && party.middlesday', speaker: '礼拜三', text: '（害怕。）你造过我们吗。' },
+    "result": "他盯着看了很久，才说了一句“我知道”，然后就请你们去喝茶，茶是好茶，可他自己一口也没喝。",
+    "goto": "a3_11b"
+   }
+  ]
+ },
+ "a3_11b": {
+  "id": "a3_11b",
+  "title": "夜里",
+  "loc": "文森顿 · 城北机房外",
+  "text": [
+   "到了夜里，机房只留一个看门的，带着一条狗，点着三盏灯。账房在二楼，窗户正对着路灯，偏偏这些路灯整夜都不灭，在想偷东西的人看来，这座机房也就这一个毛病。",
+   "看门的是个上了年纪的人类，腰里别着一串钥匙，一共十一把，他每走一步，钥匙就跟着响一下。",
+   {
+    "if": "flag.a3x_jar_light",
+    "text": "别摇早就说过，哪几盏灯的光是从墙那边借来的，那几盏照出来的影子淡，你们就专挑那几盏灯底下贴着走。"
+   },
+   {
+    "if": "is.small",
+    "text": "二楼有条通风道，只有一尺见方，好在铁栅栏已经锈掉了一半，凭你的个头是钻得进去的。"
+   },
+   {
+    "if": "party.bura",
+    "text": "布拉留在街口望风，她靠在路灯杆上，下巴的铰链一声也没响。"
+   }
+  ],
+  "choices": [
+   {
+    "text": "从通风道钻进去",
+    "tag": "小个子",
+    "if": "is.small",
+    "effects": [
+     "var a3x_pass +1"
     ],
-    first: ['item +phrase_record', 'codex c_chamber', 'codex c_torrieth', 'codex c_phrase', 'quest q_phrase stage 2'],
-    choices: [
+    "result": "通风道里积满了灰，等你从另一头爬出来，活像刚从面粉袋里钻出来的。",
+    "goto": "a3_11c"
+   },
+   {
+    "text": "摸过院子，翻进二楼",
+    "check": {
+     "skill": "stealth",
+     "dc": 15,
+     "party": true,
+     "mods": [
       {
-        text: '答它：没有',
-        tag: '神',
-        if: 'is.god && party.middlesday && !flag.a3x_god_answered',
-        once: true,
-        effects: ['flag a3x_god_answered', 'approval middlesday +1'],
-        result: '（陈述。）好。（不确定。）那是谁。它没等你回答，转过去接着听台座了。',
-      },
+       "if": "flag.a3x_jar_light",
+       "n": 2,
+       "why": "别摇数过的那几盏灯"
+      }
+     ]
+    },
+    "ok": {
+     "text": "狗睡得很沉，看门的正在数自己的工钱，数到一半又从头数起，你们就这么摸了过去。",
+     "effects": [
+      "var a3x_pass +1"
+     ],
+     "goto": "a3_11c"
+    },
+    "fail": {
+     "text": "狗叫了两声，看门的提着灯出来转了一圈，又回去了，不过这件事他记在了心里。",
+     "effects": [
+      "flag a3x_seen"
+     ],
+     "goto": "a3_11c"
+    }
+   }
+  ]
+ },
+ "a3_11c": {
+  "id": "a3_11c",
+  "title": "保险柜",
+  "loc": "文森顿 · 机房账房",
+  "text": [
+   "账房里摆着一张写字台和一只保险柜，看柜门上的铭牌，是北方联盟一家厂子造的，墙上钉着十二颗芯核的出厂单，每张单子上都只有一个编号，没有名字。",
+   {
+    "if": "flag.cousin_tip",
+    "text": "你表亲说的就是这个，左手边第二个柜子。"
+   },
+   {
+    "if": "flag.a3x_seen",
+    "text": "楼下响起了脚步声，有人正一步一步地上楼梯，走得并不快。"
+   },
+   "锁是三道簧的，外头的路灯照进来，把锁眼照得发蓝。"
+  ],
+  "choices": [
+   {
+    "text": "慢慢拨开那三道簧",
+    "check": {
+     "skill": "sleight",
+     "dc": 15,
+     "party": true,
+     "mods": [
       {
-        text: '答它：不知道',
-        tag: '神',
-        if: 'is.god && party.middlesday && !flag.a3x_god_answered',
-        once: true,
-        effects: ['flag a3x_god_answered', 'approval middlesday -1'],
-        result: '（害怕。）神也不知道。（陈述。）我记下了。它在自己的停机日志上添了一行。',
-      },
-      {
-        text: '在台座底下找那些刻痕',
-        once: true,
-        check: { skill: 'perception', alt: ['investigation'], dc: 14, party: true },
-        ok: { text: '刻痕在台座北面，七道一组，一共二十四组。你们拿炭条拓了下来，拓到最后一组，炭条断了。', effects: ['item +torrieth_rubbing'] },
-        fail: { text: '你在台座底下摸了半天，摸到的是一窝蝎子。拓片没拓成。', effects: ['hp -3'] },
-      },
-      {
-        text: '跟着那个音，把译码对完',
-        once: true,
-        check: { skill: 'arcana', alt: ['religion'], dc: 15, party: true, adv: 'is.caster || is.divine' },
-        ok: { text: '你对上了。两个词，三种念法，哪一种都不多一个音，也不少一个。', effects: ['flag a3x_decoded'] },
-        fail: { text: '那个音钻进脑子里，你头疼了一整夜。第二天早上，你梦里还是它。', effects: ['hp -4'] },
-      },
-      {
-        text: '用法术把那个音定在半空，慢慢听',
-        tag: '施法者',
-        if: 'is.caster && !flag.a3x_decoded',
-        once: true,
-        effects: ['flag a3x_decoded', 'approval narwen -1'],
-        result: '{?world.tears <= 2:法术只撑了十几口气就散了，刚够你听一遍。|音定住了，一个一个排在空中。}台座的调门跟着低了半个音。娜尔雯皱了眉，把这件事记进了本子。',
-      },
-      {
-        text: '台阶上有脚步声，收拾东西',
-        goto: 'a3_13b',
-      },
+       "if": "is.artificer",
+       "n": 2,
+       "why": "这种锁你修过"
+      }
+     ]
+    },
+    "ok": {
+     "text": "第三道簧一弹开，柜门就自己往外让出了一指宽。",
+     "effects": [
+      "var a3x_pass +1"
+     ],
+     "goto": "a3_11d"
+    },
+    "fail": {
+     "text": "锁簧当的响了一声，楼下的狗又叫了起来，柜门倒是开了，只是开得太响了。",
+     "effects": [
+      "flag a3x_seen"
+     ],
+     "goto": "a3_11d"
+    }
+   },
+   {
+    "text": "拿撬棍硬撬",
+    "check": {
+     "skill": "athletics",
+     "dc": 13,
+     "party": true
+    },
+    "ok": {
+     "text": "柜门是撬开了，可铰链也跟着断了，那一声响整条街都听得见。",
+     "effects": [
+      "var a3x_pass +1",
+      "flag a3x_seen"
+     ],
+     "goto": "a3_11d"
+    },
+    "fail": {
+     "text": "撬棍都弯了，柜门却纹丝没动，你们只好转头去翻写字台的抽屉。",
+     "effects": [
+      "flag a3x_seen"
+     ],
+     "goto": "a3_11d"
+    }
+   }
+  ]
+ },
+ "a3_11d": {
+  "id": "a3_11d",
+  "title": "三十几本",
+  "loc": "文森顿 · 机房账房",
+  "text": [
+   "柜子里码着三十几本账，封皮全是一个颜色，书脊上也没有字，流水账、修理账、股东名册都混在一块儿，还有一本煤账，里头是空的。",
+   "你们只带了一盏遮光灯，灯油顶多还够烧一刻钟，每翻一本，灯芯就短下去一截。",
+   {
+    "if": "flag.a3x_engine_hint",
+    "text": "戴纽奇说漏嘴的那句话你还记得清清楚楚，他说他也有股，这么说来，哪一本上有他的名字，哪一本就是名册。"
+   },
+   {
+    "if": "flag.a3x_seen",
+    "text": "脚步声在楼梯拐角停住了，有人站在那儿点烟斗，点了三回才点着。"
+   }
+  ],
+  "choices": [
+   {
+    "text": "一本一本翻，找对那两本",
+    "check": {
+     "skill": "investigation",
+     "dc": 14,
+     "party": true,
+     "adv": "flag.cousin_tip || flag.a3x_engine_hint"
+    },
+    "ok": {
+     "text": "流水账是最厚的那一本，股东名册是最薄的那一本，薄的那本封皮上还有一块指印，看得出常有人翻。",
+     "effects": [
+      "var a3x_pass +1"
+     ],
+     "goto": "a3_11e"
+    },
+    "fail": {
+     "text": "你才翻到第十一本，楼梯拐角那只烟斗就灭了。",
+     "goto": "a3_11e"
+    }
+   }
+  ]
+ },
+ "a3_11e": {
+  "id": "a3_11e",
+  "title": "代持账户",
+  "loc": "文森顿 · 城北",
+  "text": [
+   {
+    "if": "var.a3x_pass >= 2",
+    "text": "流水账和股东名册你们都拿到手了，名册第三页上有一行代持账户，户名是一串数字，开户行在安本科斯特，而埃塔的账上，合伙人的汇票也正是这家行开的。"
+   },
+   {
+    "if": "var.a3x_pass >= 2",
+    "text": "流水账上一笔煤钱也没有，倒是每个月都有一笔“芯核更换”，十二颗里头每个月换掉一颗，换下来的那一颗记作“报废”。"
+   },
+   {
+    "if": "var.a3x_pass < 2",
+    "text": "你们只抢到了半本流水账，后半本还锁在柜子里，这时候看门的已经上了楼，手里那盏灯的光就在门缝底下晃。"
+   },
+   "外头的路灯一盏挨着一盏，把整条街照得连一块暗处都没有。"
+  ],
+  "choices": [
+   {
+    "text": "揣好账本和名册，从后门走",
+    "if": "var.a3x_pass >= 2",
+    "effects": [
+     "flag engine_ledger",
+     "item +engine_ledger",
+     "flag partner_engine_share"
     ],
-  },
-
-  a3_13b: {
-    id: 'a3_13b',
-    title: '披风卫',
-    loc: '诺鲁因 · 四根柱子的密室',
-    text: [
-      '台阶上下来六个人，披风都搭在左肩，剑上带咒。后面跟着两个分形修会的人，背着仪器箱。领头的递过来一张文书，盖着文森顿大监院的章。',
-      { speaker: '披风卫队长', text: '奉大监院令，封存此室。另，那台会说神的话的机器，随我们回文森顿。' },
-      { if: 'party.middlesday', speaker: '礼拜三', text: '（礼貌。）我不说神的话。（陈述。）我只说它说的话。' },
-      { if: '!party.middlesday && is.mechanim', text: '他说这句话的时候，看着的是你。' },
-      { if: '!party.middlesday && !is.mechanim', text: '他四下看了一圈，没找到机器，改口要你们的笔记。' },
-      { if: 'flag.cloakmen_fought', text: '他们队里有人认得你们。那人的披风上有一道补过的口子。' },
+    "result": "后门外头是一条窄巷，巷口有盏路灯，灯底下坐着个讨饭的，他抬头看了你们一眼，又低下头接着睡了。",
+    "goto": "a3_12"
+   },
+   {
+    "text": "抱着半本账，翻窗跑",
+    "if": "var.a3x_pass < 2",
+    "check": {
+     "abil": "con",
+     "dc": 13,
+     "save": true
+    },
+    "ok": {
+     "text": "你们一口气跑过了三条街，最后那条街上的路灯一盏一盏在身后亮着，亮得就像在给追的人指路。",
+     "goto": "a3_12"
+    },
+    "fail": {
+     "text": "跑到第三条街口，你一头摔进了排水沟，半本账是护住了，膝盖可没护住。",
+     "effects": [
+      "hp -8"
+     ],
+     "goto": "a3_12"
+    }
+   }
+  ]
+ },
+ "a3_12": {
+  "id": "a3_12",
+  "title": "真理之路",
+  "art": "ev_dark_forest",
+  "loc": "真理之路",
+  "date": "1828年伊什达月",
+  "text": [
+   "暗线上的人跟着乌戈那样的列车员走水路，往洇河口去。公司走的是另一条路，要陪着娜尔雯的本子走朝圣的路，从文森顿往诺鲁因腹地去。这条路很长，两头离得远，早年间走一趟是要拿命去换的。",
+   "同路的朝圣客里有个地精，背着一口铁锅，一路上非说碎片是个方块不可，他说他舅舅见过，再一问，他舅舅也是听一个修士说的。",
+   {
+    "speaker": "背锅的地精",
+    "text": "方的，四个角！你们管它叫菱形，那是因为你们站的地方不对嘛。"
+   },
+   {
+    "if": "party.narwen",
+    "speaker": "娜尔雯",
+    "text": "上回我走这条路，还是一百多年前的事了，那一回可没下雨。"
+   },
+   {
+    "if": "party.narwen",
+    "text": "这回倒是下了，一连下了九天。"
+   },
+   {
+    "if": "!party.narwen",
+    "text": "娜尔雯的本子收在你包里，拿油布裹了三层，偏偏这回路上下了雨，一连下了九天。"
+   },
+   "到了第九天，一条涨了水的河把路截断了。"
+  ],
+  "first": [
+   "level 7",
+   "codex c_path_of_truth"
+  ],
+  "choices": [
+   {
+    "text": "找一段能蹚过去的浅滩",
+    "check": {
+     "skill": "survival",
+     "alt": [
+      "nature"
+     ],
+     "dc": 14,
+     "party": true
+    },
+    "ok": {
+     "text": "你们找到了一段浅滩，水只没到腰，地精把锅顶在头上，头一个蹚过了河。",
+     "goto": "a3_12b"
+    },
+    "fail": {
+     "text": "你们等了一整天水才退下去，干粮泡坏了一半，只好借地精的锅煮了一锅糊糊，人人都冻得直发抖。",
+     "effects": [
+      "hp -5"
+     ],
+     "goto": "a3_12b"
+    }
+   }
+  ]
+ },
+ "a3_12b": {
+  "id": "a3_12b",
+  "title": "朝圣客栈",
+  "loc": "真理之路 · 朝圣客栈",
+  "text": [
+   "路上有家朝圣客栈，石头垒的墙，门口挂着块木牌，牌上刻着问答的题目。答得上来的住干的那间，答不上来的住漏雨的那间，房钱却是一样的。来的人有真信的，也有来查证的，客栈收的钱也都一样。",
+   "今晚木牌上问的是，头一个听懂碎片的人是谁，别人都回了海边，她又住在了哪儿。",
+   {
+    "if": "is.divine",
+    "text": "老板一看你这身打扮，就请你来带今晚的晚祷，堂屋里坐了十来个朝圣客，地精坐在最前排，那口锅就搁在膝盖上。"
+   },
+   "再往前走，就只剩最后一段崖路了，崖上凿着台阶，有些已经让雨水冲得只剩下半截。"
+  ],
+  "choices": [
+   {
+    "text": "答木牌上的问题",
+    "once": true,
+    "check": {
+     "skill": "religion",
+     "alt": [
+      "history"
+     ],
+     "dc": 13,
+     "party": true
+    },
+    "ok": {
+     "text": "“是托丽丝，她在密室边上搭了个营，一住就是好些年。”你答完，老板就把干的那间的钥匙给了你。",
+     "effects": [
+      "rest short"
+     ]
+    },
+    "fail": {
+     "text": "你答了个年份，偏偏还差了二十年，结果住进了漏雨的那间，，雨水从屋顶滴进一只铜盆，叮叮咚咚响了一整夜。",
+     "effects": [
+      "hp -2"
+     ]
+    }
+   },
+   {
+    "text": "带今晚的晚祷",
+    "tag": "神职",
+    "if": "is.divine",
+    "once": true,
+    "effects": [
+     "rest short",
+     "approval narwen +1"
     ],
-    choices: [
-      {
-        text: '交出笔记让他们查，袖子里藏一份',
-        check: { skill: 'sleight', dc: 14, party: true },
-        ok: { text: '他们翻了三遍，没翻到你袖子里那几页。队长收了笔记，没再提机器的事。', effects: ['rep church +1', 'approval middlesday -1'], goto: 'a3_14' },
-        fail: { text: '他们连袖子也翻了。笔记一页没剩，好在娜尔雯背得下来，她一路背到了山脚。', effects: ['item -phrase_record', 'rep church +1', 'approval middlesday -1'], goto: 'a3_14' },
-      },
-      {
-        text: '让娜尔雯拿资历压他们',
-        if: 'party.narwen',
-        check: { skill: 'religion', alt: ['persuasion'], dc: 15, party: true },
-        ok: { text: '她报了自己入会的年份：1659。队长的祖父那年还没生。他们退回台阶顶上，站岗站到你们走。', goto: 'a3_14' },
-        fail: { text: '队长听完年份，客客气气地说，文书上盖的章比他祖父年轻，可章就是章。他收走了笔记。', effects: ['item -phrase_record', 'rep church -1'], goto: 'a3_14' },
-      },
-      { text: '动手', if: 'partysize >= 4', effects: ['flag cloakmen_fought', 'rep church -2'], combat: { ...CLOAK_BASE, enemies: C5 } },
-      { text: '动手', if: 'partysize == 3', effects: ['flag cloakmen_fought', 'rep church -2'], combat: { ...CLOAK_BASE, enemies: C4 } },
-      { text: '动手', if: 'partysize == 2', effects: ['flag cloakmen_fought', 'rep church -2'], combat: { ...CLOAK_BASE, enemies: C3 } },
-      { text: '动手', if: 'partysize <= 1', effects: ['flag cloakmen_fought', 'rep church -2'], combat: { ...CLOAK_BASE, enemies: C2 } },
+    "result": "你把晚祷念完了。{?party.narwen:娜尔雯坐在后排从头听到尾，散场的时候纠正了你一个年份，说是 1638 年，不是 1636 年。|地精说，你念得比他舅舅好。}"
+   },
+   {
+    "text": "爬最后那段崖路",
+    "check": {
+     "skill": "athletics",
+     "alt": [
+      "acrobatics"
+     ],
+     "dc": 14,
+     "party": true
+    },
+    "ok": {
+     "text": "你们拿绳子把人一个一个吊了上去，崖顶上有块平地，那间密室就在平地底下。",
+     "goto": "a3_13"
+    },
+    "fail": {
+     "text": "半截台阶在你脚底下塌了，亏得你一把抓住了树根，在半空挂了一会儿才让人拽上去，手心磨掉了一层皮。",
+     "effects": [
+      "hp -6"
+     ],
+     "goto": "a3_13"
+    }
+   }
+  ]
+ },
+ "a3_13": {
+  "id": "a3_13",
+  "title": "四根柱子",
+  "art": "load_7",
+  "loc": "诺鲁因 · 四根柱子的密室",
+  "text": [
+   "密室在地底下，要走四十一级台阶才下得去。屋顶由四根柱子撑着，根根粗得像树干，柱身上的纹路谁也不认得，比先驱精灵的帝国还要老。屋子正当中摆着一方石头台座。",
+   "照 1585 年的记载，碎片当年是悬在台座上方的，两样东西并没有挨着。如今碎片运去坎诺已经两百多年了，台座却还在响，声音又高又快，一口气说完就停下来，停一会儿又接着说。",
+   {
+    "if": "party.middlesday",
+    "speaker": "礼拜三",
+    "text": "（陈述。）它说的一直是“他们”。剩下还有两个词，一个是“门”。（不确定。）另一个词，既可以当命令讲，也可以当陈述讲。"
+   },
+   {
+    "if": "!party.middlesday",
+    "text": "你们拿着娜尔雯的译码表，一个音一个音地对过去，对到最后还剩两个词，一个是“门”，另一个既可以当命令讲，也可以当陈述讲。"
+   },
+   {
+    "if": "is.mechanim",
+    "text": "你用不着译码，那个音一进耳朵就成了字。你听见的比礼拜三还多出半个音，那半个音很轻，是一口气。"
+   },
+   {
+    "if": "party.guilhem",
+    "speaker": "吉列姆",
+    "text": "意思是“把门关上”。理论上这是一道命令，既然有命令，那就得有个下命令的人。"
+   },
+   {
+    "if": "party.narwen",
+    "speaker": "娜尔雯",
+    "text": "是“门关着”。它是在报告，这一百多年来，它一直都在报告。"
+   },
+   {
+    "if": "party.bura",
+    "speaker": "布拉",
+    "text": "门是从里面关上的。（铰链咔的一声。）当过兵的都听得出来，这是有人在里头守着。"
+   },
+   {
+    "if": "!party.guilhem && !party.narwen && !party.bura",
+    "speaker": "别摇",
+    "text": "三种念法都对，你们的话就是有这个毛病。"
+   },
+   {
+    "if": "party.narwen",
+    "text": "娜尔雯趴到台座底下，用手指摸到了几道刻痕，她说那是托丽丝留的记号，还说，1666 年以后的那些声音里头，有一个是她认得的。"
+   },
+   {
+    "if": "is.god",
+    "text": "你一进门，台座就换了调门。你听见的那一句，跟礼拜三听见的不是同一句，两句都记了下来，记在同一页纸上，中间空了一行。"
+   },
+   {
+    "if": "is.god && flag.fragment_hushed && party.narwen",
+    "text": "娜尔雯先看了你一眼，然后才去看台座。"
+   },
+   {
+    "if": "is.god && party.middlesday",
+    "speaker": "礼拜三",
+    "text": "（害怕。）你造过我们吗？"
+   }
+  ],
+  "first": [
+   "item +phrase_record",
+   "codex c_chamber",
+   "codex c_torrieth",
+   "codex c_phrase",
+   "quest q_phrase stage 2"
+  ],
+  "choices": [
+   {
+    "text": "答它：没有",
+    "tag": "神",
+    "if": "is.god && party.middlesday && !flag.a3x_god_answered",
+    "once": true,
+    "effects": [
+     "flag a3x_god_answered",
+     "approval middlesday +1"
     ],
-  },
-
-  a3_14: {
-    id: 'a3_14',
-    title: '两个词',
-    art: 'ev_the_heroine',
-    loc: '真理之路 · 朝圣客栈',
-    date: '1828年花终月',
-    text: [
-      '回程又住进那家朝圣客栈。半夜，客栈的传音石响了。老板披着衣服去接，接完站在楼梯口，半天没说话。',
-      '贝尔纳二世去世了。教廷要选新的总院长，一边是真言师伊莲·西纳·阿尔科，一边是文森顿的灰磨大监院。你手里这份记录落到谁手里，票就往哪边走。客栈里正好住着两个人，一个替伊莲跑腿，一个替灰磨跑腿，都是今晚到的。',
-      { if: 'party.narwen', speaker: '娜尔雯', text: '它出了那间屋，就不是它了，是一张传单。我听了一百六十二年，不是为了听一张传单。' },
-      { if: 'party.narwen', text: '她把本子抱在怀里，眼镜摘下来擦了一遍，又擦了一遍。' },
-      { if: '!party.narwen', text: '娜尔雯没跟来。记录里夹着她一张字条：别让它出那间屋。' },
-      { if: 'flag.bernal_confided', text: '你想起老人咽回去的那半句：这些年，它反复只说一句。' },
+    "result": "（陈述。）好。（不确定。）那是谁造的？它没等你回答，就转过身去接着听台座了。"
+   },
+   {
+    "text": "答它：不知道",
+    "tag": "神",
+    "if": "is.god && party.middlesday && !flag.a3x_god_answered",
+    "once": true,
+    "effects": [
+     "flag a3x_god_answered",
+     "approval middlesday -1"
     ],
-    first: ['quest q_narwen stage 2'],
-    choices: [
-      {
-        text: '不管她，交给史家会登出来',
-        effects: ['flag phrase_published', 'unflag phrase_sold', 'unflag phrase_kept', 'unflag phrase_signed', 'world press +2', 'rep church -2', 'flag rector_erudite', 'unflag rector_zealot', 'flag narwen_left', 'companion -narwen', 'quest q_phrase done', 'quest q_narwen fail'],
-        result: '史家会的人连夜抄了三份。娜尔雯天亮前走了，往阿兰蒂尔塔去，伞忘在了门后。',
-        goto: 'a3_15',
-      },
-      {
-        text: '卖给伊莲的人',
-        effects: ['flag phrase_sold', 'unflag phrase_published', 'unflag phrase_kept', 'unflag phrase_signed', 'flag rector_erudite', 'unflag rector_zealot', 'gold +500', 'world press -1', 'flag narwen_left', 'companion -narwen', 'quest q_phrase done', 'quest q_narwen fail'],
-        result: '伊莲的人数了五百金冠，又写了一张收条，收条上的字比钱还工整。娜尔雯没说话，第二天就回了塔。',
-        goto: 'a3_15',
-      },
-      {
-        text: '卖给灰磨的人',
-        effects: ['flag phrase_sold', 'unflag phrase_published', 'unflag phrase_kept', 'unflag phrase_signed', 'flag rector_zealot', 'unflag rector_erudite', 'gold +800', 'world press -1', 'flag narwen_left', 'companion -narwen', 'quest q_phrase done', 'quest q_narwen fail'],
-        result: '他付了八百金冠，当着你的面把记录塞进了炉子。他买来是为了埋掉。娜尔雯看着炉子烧完，才走。',
-        goto: 'a3_15',
-      },
-      {
-        text: '替她守住，锁进埃塔的铁箱',
-        effects: ['flag phrase_kept', 'unflag phrase_published', 'unflag phrase_sold', 'unflag phrase_signed', 'flag box_phrase', 'flag rector_zealot', 'unflag rector_erudite', 'approval narwen +2', 'quest q_phrase done'],
-        result: '两个跑腿的都空着手走了。一个月以后，灰磨当选，票数差了三张。娜尔雯在本子上记下了这个数。',
-        goto: 'a3_15',
-      },
-      {
-        text: '劝她自己署名公开',
-        tag: '灯',
-        if: "party.narwen && faction == 'lantern'",
-        once: true,
-        check: { skill: 'persuasion', dc: 15, mods: [{ if: 'flag.bernal_confided', n: 2, why: '老人咽回去的那半句' }, { if: 'flag.heard_hum', n: 1, why: '你也听过它一声' }, { if: 'flag.a3x_decoded', n: 1, why: '你自己对过译码' }] },
-        ok: { text: '她想了一夜。天亮的时候，她在记录的末尾签了名：分形修会，娜尔雯·望月，1659 年入会。签完她说，上回有人这么签名，是托丽丝。', effects: ['flag phrase_signed', 'unflag phrase_published', 'unflag phrase_sold', 'unflag phrase_kept', 'world press +2', 'flag rector_erudite', 'unflag rector_zealot', 'approval narwen +1', 'quest q_phrase done'], goto: 'a3_15' },
-        fail: { text: '“还不行。”她说，“我还没问它那句话。”她把本子抱紧了一点。', effects: ['approval narwen -1'], goto: 'a3_14' },
-      },
-      {
-        text: '劝她自己署名公开',
-        if: "party.narwen && faction != 'lantern' && approval.narwen >= 5",
-        once: true,
-        check: { skill: 'persuasion', dc: 15, mods: [{ if: 'flag.bernal_confided', n: 2, why: '老人咽回去的那半句' }, { if: 'flag.heard_hum', n: 1, why: '你也听过它一声' }, { if: 'flag.a3x_decoded', n: 1, why: '你自己对过译码' }] },
-        ok: { text: '她想了一夜。天亮的时候，她在记录的末尾签了名：分形修会，娜尔雯·望月，1659 年入会。签完她说，上回有人这么签名，是托丽丝。', effects: ['flag phrase_signed', 'unflag phrase_published', 'unflag phrase_sold', 'unflag phrase_kept', 'world press +2', 'flag rector_erudite', 'unflag rector_zealot', 'approval narwen +1', 'quest q_phrase done'], goto: 'a3_15' },
-        fail: { text: '“还不行。”她说，“我还没问它那句话。”她把本子抱紧了一点。', effects: ['approval narwen -1'], goto: 'a3_14' },
-      },
+    "result": "（害怕。）连神也不知道。（陈述。）我记下了。它在自己的停机日志上又添了一行。"
+   },
+   {
+    "text": "在台座底下找那些刻痕",
+    "once": true,
+    "check": {
+     "skill": "perception",
+     "alt": [
+      "investigation"
+     ],
+     "dc": 14,
+     "party": true
+    },
+    "ok": {
+     "text": "刻痕在台座的北面，七道一组，一共二十四组，你们拿炭条一组一组拓了下来，拓到最后一组，炭条断了。",
+     "effects": [
+      "item +torrieth_rubbing"
+     ]
+    },
+    "fail": {
+     "text": "你在台座底下摸了半天，摸到的却是一窝蝎子，拓片自然也没拓成。",
+     "effects": [
+      "hp -3"
+     ]
+    }
+   },
+   {
+    "text": "跟着那个音，把译码对完",
+    "once": true,
+    "check": {
+     "skill": "arcana",
+     "alt": [
+      "religion"
+     ],
+     "dc": 15,
+     "party": true,
+     "adv": "is.caster || is.divine"
+    },
+    "ok": {
+     "text": "你对上了，两个词，三种念法，不管哪一种都是一个音不多，一个音不少。",
+     "effects": [
+      "flag a3x_decoded"
+     ]
+    },
+    "fail": {
+     "text": "那个音钻进了你脑子里，害你头疼了一整夜，到第二天早上，你梦里还是它。",
+     "effects": [
+      "hp -4"
+     ]
+    }
+   },
+   {
+    "text": "用法术把那个音定在半空，慢慢听",
+    "tag": "施法者",
+    "if": "is.caster && !flag.a3x_decoded",
+    "once": true,
+    "effects": [
+     "flag a3x_decoded",
+     "approval narwen -1"
     ],
-  },
-
-  a3_15: {
-    id: 'a3_15',
-    title: '证词',
-    loc: '伊索贝尔港 · 联盟巡回法庭',
-    date: '1828年泪落月',
-    text: [
-      '巡回法庭借的是伊索贝尔港的旧谷物交易所。柜台改成了证人席，墙上的价目板没擦干净，还写着“棉，每包”。旁听席坐满了，一半是种植园的账房，一半是码头上的人，中间隔着一排治安员。',
-      '法官同意采信魂秤对一颗醒着的芯核的读数，条件是当庭上秤。秤一接上，那道口子会被拉开一下。拉开多久，蒂尔妲也说不准{?flag.gauge_burned:，这杆秤是她凭记忆重做的|}。',
-      { speaker: '莫里斯·安德克利夫', text: '我不要恩赐。我要一个判例。判例管得了下一个。' },
-      { if: 'party.middlesday', speaker: '礼拜三', text: '（担心。）我可能会睡过去。（礼貌。）睡过去以前，我想先把名字说完。' },
-      { if: 'is.god', speaker: '法官', text: '本庭不采信神迹。请证人上秤。' },
-      { if: 'is.god', text: '你不用秤也看得见芯核里有什么。这不算证据。法院门口有人开了盘口，赌你会不会流血，一赔七。' },
+    "result": "{?world.tears <= 2:法术只撑了十几口气就散了，刚够你听上一遍。|那个音给定住了，一个一个排在半空里。}台座的调门也跟着低了半个音，娜尔雯皱起眉头，把这件事记进了本子。"
+   },
+   {
+    "text": "台阶上有脚步声，收拾东西",
+    "goto": "a3_13b"
+   }
+  ]
+ },
+ "a3_13b": {
+  "id": "a3_13b",
+  "title": "披风卫",
+  "loc": "诺鲁因 · 四根柱子的密室",
+  "text": [
+   "台阶上下来了六个人，披风一律搭在左肩上，剑上都带着咒，后头还跟着两个分形修会的人，背着仪器箱。领头的递过来一张文书，上面盖着文森顿大监院的章。",
+   {
+    "speaker": "披风卫队长",
+    "text": "奉大监院之令，此室即刻封存。另外，那台会说神的话的机器，要跟我们回文森顿。"
+   },
+   {
+    "if": "party.middlesday",
+    "speaker": "礼拜三",
+    "text": "（礼貌。）我不说神的话。（陈述。）我说的只是它说的话。"
+   },
+   {
+    "if": "!party.middlesday && is.mechanim",
+    "text": "他说这句话的时候，眼睛看着的是你。"
+   },
+   {
+    "if": "!party.middlesday && !is.mechanim",
+    "text": "他四下里看了一圈，没找着什么机器，就改了口，要你们把笔记交出来。"
+   },
+   {
+    "if": "flag.cloakmen_fought",
+    "text": "他们队里有个人认得你们，那人的披风上有一道补过的口子。"
+   }
+  ],
+  "choices": [
+   {
+    "text": "交出笔记让他们查，袖子里藏一份",
+    "check": {
+     "skill": "sleight",
+     "dc": 14,
+     "party": true
+    },
+    "ok": {
+     "text": "他们把笔记翻了三遍，也没翻出你藏在袖子里的那几页，队长收走了笔记，机器的事没有再提。",
+     "effects": [
+      "rep church +1",
+      "approval middlesday -1"
+     ],
+     "goto": "a3_14"
+    },
+    "fail": {
+     "text": "他们连袖子也翻了，笔记一页都没给你剩下，好在娜尔雯全背得下来，她一路背到了山脚。",
+     "effects": [
+      "item -phrase_record",
+      "rep church +1",
+      "approval middlesday -1"
+     ],
+     "goto": "a3_14"
+    }
+   },
+   {
+    "text": "让娜尔雯拿资历压他们",
+    "if": "party.narwen",
+    "check": {
+     "skill": "religion",
+     "alt": [
+      "persuasion"
+     ],
+     "dc": 15,
+     "party": true
+    },
+    "ok": {
+     "text": "她报了自己入会的年份，1659 年，那一年队长的祖父都还没出生呢，他们只好退回到台阶顶上，一直站岗站到你们离开。",
+     "goto": "a3_14"
+    },
+    "fail": {
+     "text": "队长听完年份，客客气气地说，文书上盖的这个章是比他祖父年轻，可章就是章，说完就把笔记收走了。",
+     "effects": [
+      "item -phrase_record",
+      "rep church -1"
+     ],
+     "goto": "a3_14"
+    }
+   },
+   {
+    "text": "动手",
+    "if": "partysize >= 4",
+    "effects": [
+     "flag cloakmen_fought",
+     "rep church -2"
     ],
-    first: ['quest q_middlesday stage 2'],
-    choices: [
+    "combat": {
+     "title": "四根柱子底下",
+     "intro": "披风卫一把剑抽出来，剑身上的咒文就亮了一下，台座的声音也跟着高了半个音。",
+     "specials": [
       {
-        text: '让礼拜三上秤',
-        if: 'party.middlesday',
-        check: {
-          skill: 'arcana', dc: 16, party: true,
-          mods: [
-            { if: 'flag.engine_ledger', n: 3, why: '账本替它少挨了半刻钟' },
-            { if: 'flag.gauge_tested_m', n: 1, why: '它上过一回秤' },
-            { if: 'flag.m_member', n: 1, why: '名册上它是成员' },
-            { if: 'flag.a3x_tilda_calibrated', n: 1, why: '蒂尔妲开庭前校过' },
-            { if: 'flag.gauge_open', n: 1, why: '图纸公开了，人人校得了' },
-            { if: 'flag.gauge_sold', n: -1, why: '秤是卡拉桑尼的' },
-            { if: 'flag.gauge_burned', n: -2, why: '那杆秤是凭记忆重做的' },
-          ],
-        },
-        ok: { text: '指针摆过去，又摆回来。礼拜三醒着下了秤，第一句话是：（陈述。）内莉。老科尔。阿萨。霍布。马蒂。它把名字说完了。', effects: ['flag m_testified', 'unflag m_dormant', 'unflag m_left', 'quest q_middlesday done'], goto: 'a3_15b' },
-        fail: { text: '指针摆过去，没有摆回来。礼拜三说到“阿萨”就停了，眼睛还亮着，人不在了。法警把它抬下了证人席，它还在公司的名单上。', effects: ['flag m_dormant', 'unflag m_testified', 'unflag m_left', 'companion -middlesday', 'quest q_middlesday fail'], goto: 'a3_15b' },
+       "id": "pillar",
+       "name": "敲一根柱子",
+       "desc": "柱子是空心的，敲一下，整间屋子都跟着响",
+       "check": {
+        "skill": "athletics",
+        "dc": 14,
+        "party": true
+       },
+       "success": {
+        "text": "柱子响了，声音在屋里绕了三圈，人人耳朵里都是那个音。",
+        "applyAll": {
+         "cond": "dazed",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "柱子没响，响的是你的手腕。",
+        "selfDmg": "1d6"
+       }
       },
       {
-        text: '不许它去',
-        if: 'party.middlesday',
-        effects: ['flag m_left', 'unflag m_testified', 'unflag m_dormant', 'companion -middlesday', 'quest q_middlesday fail'],
-        result: '（愤怒。）那我自己去别处说。它把行李码齐，买了一张回安本科斯特的船票。一个月后，铸炉街头一回停了工，领头的是一台机器。',
-        goto: 'a3_15b',
+       "id": "stairs",
+       "name": "踹倒台阶上的灯架",
+       "desc": "他们是从四十一级台阶上下来的",
+       "check": {
+        "skill": "acrobatics",
+        "alt": [
+         "athletics"
+        ],
+        "dc": 13
+       },
+       "success": {
+        "text": "灯架滚下了台阶，灯油泼了一路，后面下来的人一脚踩上去，当场滑倒了两个。",
+        "dmgAll": "2d6",
+        "type": "fire"
+       },
+       "fail": {
+        "text": "灯架朝你这边倒了过来。",
+        "selfDmg": "1d6",
+        "type": "fire"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "rep church -1"
+      ],
+      "goto": "a3_14"
+     },
+     "lose": {
+      "effects": [
+       "item -phrase_record"
+      ],
+      "goto": "a3_14"
+     },
+     "enemies": [
+      {
+       "id": "cloakman",
+       "n": 4
       },
       {
-        text: '你自己上秤',
-        tag: '机械人',
-        if: "origin == 'unowned' && is.mechanim",
-        check: {
-          abil: 'con', dc: 15, save: true,
-          mods: [
-            { if: 'flag.engine_ledger', n: 3, why: '账本替你少挨了半刻钟' },
-            { if: 'flag.a3x_tilda_calibrated', n: 1, why: '蒂尔妲开庭前校过' },
-            { if: 'flag.gauge_open', n: 1, why: '图纸公开了' },
-            { if: 'flag.gauge_sold', n: -1, why: '秤是卡拉桑尼的' },
-            { if: 'flag.gauge_burned', n: -2, why: '凭记忆重做的秤' },
-          ],
-        },
-        ok: { text: '口子拉开的那一下，你听见了台座的那个音。然后你醒着下了秤，法官在记录上写下了你在七号线的工位号。', effects: ['flag pc_testified'], goto: 'a3_15b' },
-        fail: { text: '你下秤的时候，法官问你今天礼拜几。你答了，答的是去年的日子。读数照样算数。', effects: ['flag pc_testified', 'flag pc_lost_year'], goto: 'a3_15b' },
+       "id": "war_priest",
+       "name": "分形修会的修士"
       },
       {
-        text: '用手替它按住那道口子',
-        tag: '神',
-        if: 'is.god && party.middlesday',
-        effects: ['flag a3x_void', 'var cult +1', 'approval middlesday +1'],
-        result: '秤上的指针一动没动。礼拜三没有睡过去，读数作废。法官在记录上写：证人受到超自然干预。门口的赌档宣布这一局不算，钱一个子儿也没退。',
-        goto: 'a3_15b',
-      },
-      {
-        text: '没有可以上秤的证人，直接请求裁定',
-        if: "!party.middlesday && !(origin == 'unowned' && is.mechanim)",
-        goto: 'a3_15b',
-      },
+       "id": "war_mage",
+       "n": 2,
+       "name": "分形修会的施法者"
+      }
+     ]
+    }
+   },
+   {
+    "text": "动手",
+    "if": "partysize == 3",
+    "effects": [
+     "flag cloakmen_fought",
+     "rep church -2"
     ],
-  },
-
-  a3_15b: {
-    id: 'a3_15b',
-    title: '裁定',
-    loc: '伊索贝尔港 · 联盟巡回法庭',
-    text: [
-      '下午，法官问原告方，请求本庭怎么判。安德克利夫看了你一眼，他把这一条让给了公司。',
-      '书记官削了一支新铅笔。戴纽奇家的律师翻着一本很厚的判例集，翻到夹书签的那一页，用指甲压平。',
-      { if: 'flag.m_testified || flag.m_dormant || flag.pc_testified', text: '记录上已经有了一个读数：芯核醒着的时候，那道口子开着；口子开着，里头有东西。' },
-      { if: 'flag.engine_ledger', text: '机房的流水账摆在书记官桌上，每个月一颗“报废”，十二个月十二颗。' },
-      { if: '!(flag.m_testified || flag.m_dormant || flag.pc_testified) && !flag.engine_ledger', text: '记录上什么也没有。戴纽奇家的律师在对面坐着，指甲修得很干净。' },
-      '三种判法，哪一种都留着一样东西不判。',
+    "combat": {
+     "title": "四根柱子底下",
+     "intro": "披风卫一把剑抽出来，剑身上的咒文就亮了一下，台座的声音也跟着高了半个音。",
+     "specials": [
+      {
+       "id": "pillar",
+       "name": "敲一根柱子",
+       "desc": "柱子是空心的，敲一下，整间屋子都跟着响",
+       "check": {
+        "skill": "athletics",
+        "dc": 14,
+        "party": true
+       },
+       "success": {
+        "text": "柱子响了，声音在屋里绕了三圈，人人耳朵里都是那个音。",
+        "applyAll": {
+         "cond": "dazed",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "柱子没响，响的是你的手腕。",
+        "selfDmg": "1d6"
+       }
+      },
+      {
+       "id": "stairs",
+       "name": "踹倒台阶上的灯架",
+       "desc": "他们是从四十一级台阶上下来的",
+       "check": {
+        "skill": "acrobatics",
+        "alt": [
+         "athletics"
+        ],
+        "dc": 13
+       },
+       "success": {
+        "text": "灯架滚下了台阶，灯油泼了一路，后面下来的人一脚踩上去，当场滑倒了两个。",
+        "dmgAll": "2d6",
+        "type": "fire"
+       },
+       "fail": {
+        "text": "灯架朝你这边倒了过来。",
+        "selfDmg": "1d6",
+        "type": "fire"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "rep church -1"
+      ],
+      "goto": "a3_14"
+     },
+     "lose": {
+      "effects": [
+       "item -phrase_record"
+      ],
+      "goto": "a3_14"
+     },
+     "enemies": [
+      {
+       "id": "cloakman",
+       "n": 4
+      },
+      {
+       "id": "war_priest",
+       "name": "分形修会的修士"
+      },
+      {
+       "id": "war_mage",
+       "name": "分形修会的施法者"
+      }
+     ]
+    }
+   },
+   {
+    "text": "动手",
+    "if": "partysize == 2",
+    "effects": [
+     "flag cloakmen_fought",
+     "rep church -2"
     ],
-    choices: [
+    "combat": {
+     "title": "四根柱子底下",
+     "intro": "披风卫一把剑抽出来，剑身上的咒文就亮了一下，台座的声音也跟着高了半个音。",
+     "specials": [
       {
-        text: '把机房的流水账当庭念出来',
-        tag: '灯',
-        if: "faction == 'lantern' && flag.engine_ledger",
-        once: true,
-        effects: ['world press +1'],
-        result: '你念了十二个月的“报废”。念到第九个月，旁听席上有人站起来走了，是戴纽奇家的账房。',
+       "id": "pillar",
+       "name": "敲一根柱子",
+       "desc": "柱子是空心的，敲一下，整间屋子都跟着响",
+       "check": {
+        "skill": "athletics",
+        "dc": 14,
+        "party": true
+       },
+       "success": {
+        "text": "柱子响了，声音在屋里绕了三圈，人人耳朵里都是那个音。",
+        "applyAll": {
+         "cond": "dazed",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "柱子没响，响的是你的手腕。",
+        "selfDmg": "1d6"
+       }
       },
       {
-        text: '只请求判芯核：醒着的芯核不是财物',
-        if: 'flag.m_testified || flag.m_dormant || flag.pc_testified || flag.engine_ledger',
-        effects: ['flag ruling_cores', 'unflag ruling_both', 'unflag engine_licensed', 'world chains -1', 'world press +1'],
-        result: '法官判了。醒着的芯核不得登记为财物。散庭的时候，码头上的人往外走，戴镣的那几个还得从后门走。',
-        goto: 'a3_16',
+       "id": "stairs",
+       "name": "踹倒台阶上的灯架",
+       "desc": "他们是从四十一级台阶上下来的",
+       "check": {
+        "skill": "acrobatics",
+        "alt": [
+         "athletics"
+        ],
+        "dc": 13
+       },
+       "success": {
+        "text": "灯架滚下了台阶，灯油泼了一路，后面下来的人一脚踩上去，当场滑倒了两个。",
+        "dmgAll": "2d6",
+        "type": "fire"
+       },
+       "fail": {
+        "text": "灯架朝你这边倒了过来。",
+        "selfDmg": "1d6",
+        "type": "fire"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "rep church -1"
+      ],
+      "goto": "a3_14"
+     },
+     "lose": {
+      "effects": [
+       "item -phrase_record"
+      ],
+      "goto": "a3_14"
+     },
+     "enemies": [
+      {
+       "id": "cloakman",
+       "n": 3
       },
       {
-        text: '把芯核和戴镣的人写进同一张裁定',
-        if: "(flag.m_testified || flag.m_dormant || flag.pc_testified) && flag.engine_ledger && faction != 'seal'",
-        req: 'world.press >= 4 || rep.church >= 3',
-        reqText: '要见报到 4，或者教会的声望到 3',
-        effects: ['flag ruling_both', 'unflag ruling_cores', 'unflag engine_licensed', 'world chains -2', 'world press +1', 'rep charter -2'],
-        result: '法官判了，一张纸管了两样。当晚联盟议会紧急开会，马利安德的议员退席，退了一半又回来，联盟差点为此散伙。',
-        goto: 'a3_16',
-      },
-      {
-        text: '由你写结案陈词：芯核和戴镣的人一并裁定',
-        tag: '印',
-        if: "(flag.m_testified || flag.m_dormant || flag.pc_testified) && flag.engine_ledger && faction == 'seal'",
-        req: 'world.press >= 3 || rep.church >= 3',
-        reqText: '要见报到 3，或者教会的声望到 3',
-        effects: ['flag ruling_both', 'unflag ruling_cores', 'unflag engine_licensed', 'world chains -2', 'world press +1', 'rep charter -2'],
-        result: '你的陈词只有一页，引的全是联盟自己的法条。法官照着判了。当晚马利安德的议员退席，联盟差点为此散伙。',
-        goto: 'a3_16',
-      },
-      {
-        text: '和解：给机房发执照，换它不再收醒过的芯核',
-        effects: ['flag engine_licensed', 'unflag ruling_cores', 'unflag ruling_both', 'world chains +1', 'rep charter +2'],
-        result: '执照第二天就发下来了，一张纸，三个章。文森顿穷人街上的四百一十盏路灯，当晚照常亮。',
-        goto: 'a3_16',
-      },
+       "id": "war_mage",
+       "name": "分形修会的施法者"
+      }
+     ]
+    }
+   },
+   {
+    "text": "动手",
+    "if": "partysize <= 1",
+    "effects": [
+     "flag cloakmen_fought",
+     "rep church -2"
     ],
-  },
-
-  a3_16: {
-    id: 'a3_16',
-    title: '机房起火',
-    art: 'ev_damestear_core',
-    loc: '文森顿 · 城北机房',
-    text: [
-      { if: 'flag.engine_licensed', text: '裁定下来的当夜，机房起了火。放火的是暗线上气不过的人，他们说，执照就是许可。' },
-      { if: '!flag.engine_licensed', text: '裁定下来的当夜，机房起了火。火是从账房烧起来的，放火的人穿着财团的号衣，是来烧账的。' },
-      '炉膛里十二颗芯核还在响，火一近，调门全往高里走。挡在炉门前的是一台四条胳膊的战争型，胸口那颗芯核叫得最响。它还在执行最后一道命令：守住炉门。',
-      { if: 'party.middlesday', speaker: '礼拜三', text: '（愤怒。）那一颗我认识。七号线，1811 年三月的料。别打它胸口。' },
-      { if: '!party.middlesday', text: '它胸口的铜牌被火烤得发红，编号还看得清：七号线，1811。' },
-      '街上的路灯一盏一盏地暗下去，从机房这头往外暗。穷人街上的人端着盆出来看火。',
+    "combat": {
+     "title": "四根柱子底下",
+     "intro": "披风卫一把剑抽出来，剑身上的咒文就亮了一下，台座的声音也跟着高了半个音。",
+     "specials": [
+      {
+       "id": "pillar",
+       "name": "敲一根柱子",
+       "desc": "柱子是空心的，敲一下，整间屋子都跟着响",
+       "check": {
+        "skill": "athletics",
+        "dc": 14,
+        "party": true
+       },
+       "success": {
+        "text": "柱子响了，声音在屋里绕了三圈，人人耳朵里都是那个音。",
+        "applyAll": {
+         "cond": "dazed",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "柱子没响，响的是你的手腕。",
+        "selfDmg": "1d6"
+       }
+      },
+      {
+       "id": "stairs",
+       "name": "踹倒台阶上的灯架",
+       "desc": "他们是从四十一级台阶上下来的",
+       "check": {
+        "skill": "acrobatics",
+        "alt": [
+         "athletics"
+        ],
+        "dc": 13
+       },
+       "success": {
+        "text": "灯架滚下了台阶，灯油泼了一路，后面下来的人一脚踩上去，当场滑倒了两个。",
+        "dmgAll": "2d6",
+        "type": "fire"
+       },
+       "fail": {
+        "text": "灯架朝你这边倒了过来。",
+        "selfDmg": "1d6",
+        "type": "fire"
+       }
+      }
+     ],
+     "fleeable": true,
+     "win": {
+      "effects": [
+       "rep church -1"
+      ],
+      "goto": "a3_14"
+     },
+     "lose": {
+      "effects": [
+       "item -phrase_record"
+      ],
+      "goto": "a3_14"
+     },
+     "enemies": [
+      {
+       "id": "cloakman"
+      },
+      {
+       "id": "war_mage",
+       "name": "分形修会的施法者",
+       "hpMult": 0.6
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "a3_14": {
+  "id": "a3_14",
+  "title": "两个词",
+  "art": "ev_the_heroine",
+  "loc": "真理之路 · 朝圣客栈",
+  "date": "1828年花终月",
+  "text": [
+   "回程的路上，你们又住进了那家朝圣客栈。半夜里客栈的传音石响了，老板披着衣服去接，接完了站在楼梯口，半天说不出话来。",
+   "原来是贝尔纳二世去世了。教廷要选新的总院长，一边是真言师伊莲·西纳·阿尔科，另一边是文森顿的灰磨大监院，而你手里这份记录落到谁手上，票就往谁那边走。巧的是客栈里正好住着两个人，一个替伊莲跑腿，一个替灰磨跑腿，都是今晚才到的。",
+   {
+    "if": "party.narwen",
+    "speaker": "娜尔雯",
+    "text": "它一出那间屋子，就不是它了，就成了一张传单。我听了一百六十二年，可不是为了听一张传单。"
+   },
+   {
+    "if": "party.narwen",
+    "text": "她把本子抱在怀里，摘下眼镜擦了一遍，又擦了一遍。"
+   },
+   {
+    "if": "!party.narwen",
+    "text": "娜尔雯没有跟来，记录里夹着她留的一张字条，写的是：别让它出那间屋。"
+   },
+   {
+    "if": "flag.bernal_confided",
+    "text": "你想起了老人咽回去的那半句话，说的是这些年来，它翻来覆去只说一句。"
+   }
+  ],
+  "first": [
+   "quest q_narwen stage 2"
+  ],
+  "choices": [
+   {
+    "text": "不管她，交给史家会登出来",
+    "effects": [
+     "flag phrase_published",
+     "unflag phrase_sold",
+     "unflag phrase_kept",
+     "unflag phrase_signed",
+     "world press +2",
+     "rep church -2",
+     "flag rector_erudite",
+     "unflag rector_zealot",
+     "flag narwen_left",
+     "companion -narwen",
+     "quest q_phrase done",
+     "quest q_narwen fail"
     ],
-    choices: [
-      { text: '冲进炉房', if: 'partysize >= 4', combat: { ...FIRE_BASE, enemies: F5 } },
-      { text: '冲进炉房', if: 'partysize == 3', combat: { ...FIRE_BASE, enemies: F4 } },
-      { text: '冲进炉房', if: 'partysize == 2', combat: { ...FIRE_BASE, enemies: F3 } },
-      { text: '冲进炉房', if: 'partysize == 1', combat: { ...FIRE_BASE, enemies: F2 } },
-      { text: '冲进炉房', if: 'partysize <= 0', combat: { ...FIRE_BASE, enemies: F1 } },
+    "result": "史家会的人连夜抄了三份，娜尔雯天没亮就走了，是往阿兰蒂尔塔去的，伞落在了门后头。",
+    "goto": "a3_15"
+   },
+   {
+    "text": "卖给伊莲的人",
+    "effects": [
+     "flag phrase_sold",
+     "unflag phrase_published",
+     "unflag phrase_kept",
+     "unflag phrase_signed",
+     "flag rector_erudite",
+     "unflag rector_zealot",
+     "gold +500",
+     "world press -1",
+     "flag narwen_left",
+     "companion -narwen",
+     "quest q_phrase done",
+     "quest q_narwen fail"
     ],
-  },
-
-  a3_17: {
-    id: 'a3_17',
-    title: '洇河口',
-    loc: '洇河口 · 码头',
-    text: [
-      '洇河口有两面旗，两座税关。联盟的税关在南岸，萨尔达的税关在北岸，中间一条河，河上漂着运棺材的驳船和收过路钱的小艇。博克人的王庭在河心的岛上，两家都管它，所以哪一家的拘票都递不进去。',
-      { if: 'flag.engine_burned', text: '文森顿的火烧了两天。烟顺着河往下走，到洇河口的时候已经看不见了，只剩一股热铁皮的气味。' },
-      { if: '!flag.engine_burned', text: '文森顿的机房保住了。听说穷人街上的路灯第二天就亮了，比先前还亮一点。' },
-      { if: 'flag.contract_planters', text: '你是追到这儿来的。他们踩上码头的时候，你站在船头，一步也跟不过去。码头上的人看着你，像看一条靠错了岸的船。' },
-      { if: '!flag.contract_planters && flag.levee_lost', text: '下船的是十四个。九个在河堤上被抓了回去，霍布是其中一个，他的脚走不快。' },
-      { if: '!flag.contract_planters && !flag.levee_lost', text: '二十三个人都下了船。{?flag.a3x_toby:托比是第二十四个，算不算在清单上，没人知道。|}阿萨替船家撑了最后一段，内莉上岸先找了一口井。' },
-      { if: 'flag.town_shelters', text: '塞斯提尔边区那个镇的谷仓收过他们三夜。马蒂在谷仓的墙上刻了个记号，说下一拨人看得懂。' },
-      { if: 'flag.levee_sanctuary', text: '他们是从“神的庇护所”那段堤上走过来的。有人还留着你袖口上的一根线头，拿布包着。' },
-      { if: 'flag.bura_alone && world.chains <= 5', text: '码头上有人捎来布拉的消息：她带着一队人往北走了，多少人没说，只说她走在最后。' },
-      { if: 'flag.bura_alone && world.chains > 5', text: '布拉的消息，码头上没人说得清。有人说在北边见过一个下巴是黄铜的兽人，有人说那是去年的事。' },
-      { if: 'flag.bura_armed', text: '下船的人里，有三个背着拉姆斯盖特的枪，枪托上的字号拿泥糊住了。' },
-      { if: 'flag.bura_line', text: '布拉站在码头上数人，数一个，拍一下肩。' },
-      { if: "origin == 'lorent'", text: '血林外海停着三条洛伦特的船。林卫上将的分舰队放下一条小艇，靠到码头上，艇上的人要见你。' },
-      { if: "origin != 'lorent'", text: '天边停着几条船，挂的是洛伦特的旗，没靠过来。' },
+    "result": "伊莲的人数出五百金冠给你，又写了一张收条，收条上的字比钱还要工整，娜尔雯什么也没说，第二天就回塔里去了。",
+    "goto": "a3_15"
+   },
+   {
+    "text": "卖给灰磨的人",
+    "effects": [
+     "flag phrase_sold",
+     "unflag phrase_published",
+     "unflag phrase_kept",
+     "unflag phrase_signed",
+     "flag rector_zealot",
+     "unflag rector_erudite",
+     "gold +800",
+     "world press -1",
+     "flag narwen_left",
+     "companion -narwen",
+     "quest q_phrase done",
+     "quest q_narwen fail"
     ],
-    first: ['quest q_bill done'],
-    choices: [
-      {
-        text: '去河心的王庭，请他们把“不认拘票”写成一句明文',
-        once: true,
-        check: {
-          skill: 'persuasion', dc: 16, party: true,
-          mods: [
-            { if: 'flag.town_shelters', n: 1, why: '塞斯提尔边区开过先例' },
-            { if: 'rep.south >= 3', n: 1, why: '南岸的人替你说话' },
-            { if: 'flag.ruling_both', n: 1, why: '伊索贝尔港的裁定刚登了报' },
-          ],
-        },
-        ok: { text: '博克人的老王听完，叫书记写了一句：本岛不认两岸拘票。他盖了章，又说这句话两岸都会骂。联盟和萨尔达为此又吵了六年。', effects: ['flag ynns_free_soil', 'world chains -1'] },
-        fail: { text: '老王收下了你们带去的礼，说要先问问河神。河神的意思，要等到雨季以后。', effects: ['gold -50'] },
-      },
-      {
-        text: '上小艇见林卫上将',
-        tag: '洛伦特',
-        if: "origin == 'lorent' && !flag.a3x_glade_done",
-        goto: 'a3_17b',
-      },
-      {
-        text: '去萨尔达税关隔壁的鱼馆吃饭',
-        goto: 'a3_18',
-      },
+    "result": "他付了八百金冠，当着你的面就把记录塞进了炉子，原来他买下来就是为了埋掉，娜尔雯一直看着炉子里烧完了，才走。",
+    "goto": "a3_15"
+   },
+   {
+    "text": "替她守住，锁进埃塔的铁箱",
+    "effects": [
+     "flag phrase_kept",
+     "unflag phrase_published",
+     "unflag phrase_sold",
+     "unflag phrase_signed",
+     "flag box_phrase",
+     "flag rector_zealot",
+     "unflag rector_erudite",
+     "approval narwen +2",
+     "quest q_phrase done"
     ],
-  },
-
-  a3_17b: {
-    id: 'a3_17b',
-    title: '林卫上将',
-    loc: '洇河口外 · 洛伦特的小艇',
-    text: [
-      '小艇上坐着的就是埃雷拉斯·林卫本人。他是 1449 年生的精灵，比他封锁的每一块殖民地都老。制服上的金线磨白了，帽子放在膝盖上。',
-      { speaker: '埃雷拉斯·林卫', text: '那枚别针我认得。女王的侍读戴这个。你们船上有几个是从血林那边跑出来的，我要人，照名单。' },
-      '他递过来一张名单，两个名字。都不在二十三个人里，可都在你们船上。{?party.bura:布拉在码头上看着这条小艇，手搭在枪套上。|}',
+    "result": "两个跑腿的都空着手走了，过了一个月，灰磨当选了，票数只差三张，娜尔雯把这个数记在了本子上。",
+    "goto": "a3_15"
+   },
+   {
+    "text": "劝她自己署名公开",
+    "tag": "灯",
+    "if": "party.narwen && faction == 'lantern'",
+    "once": true,
+    "check": {
+     "skill": "persuasion",
+     "dc": 15,
+     "mods": [
+      {
+       "if": "flag.bernal_confided",
+       "n": 2,
+       "why": "老人咽回去的那半句"
+      },
+      {
+       "if": "flag.heard_hum",
+       "n": 1,
+       "why": "你也听过它一声"
+      },
+      {
+       "if": "flag.a3x_decoded",
+       "n": 1,
+       "why": "你自己对过译码"
+      }
+     ]
+    },
+    "ok": {
+     "text": "她想了整整一夜，天亮的时候，她在记录的末尾签上了名字：分形修会，娜尔雯·望月，1659 年入会。签完她说，上回有人这么签名，还是托丽丝。",
+     "effects": [
+      "flag phrase_signed",
+      "unflag phrase_published",
+      "unflag phrase_sold",
+      "unflag phrase_kept",
+      "world press +2",
+      "flag rector_erudite",
+      "unflag rector_zealot",
+      "approval narwen +1",
+      "quest q_phrase done"
+     ],
+     "goto": "a3_15"
+    },
+    "fail": {
+     "text": "“还不行，”她说，“那句话我还没问它呢。”说着，她把本子抱得更紧了一点。",
+     "effects": [
+      "approval narwen -1"
+     ],
+     "goto": "a3_14"
+    }
+   },
+   {
+    "text": "劝她自己署名公开",
+    "if": "party.narwen && faction != 'lantern' && approval.narwen >= 5",
+    "once": true,
+    "check": {
+     "skill": "persuasion",
+     "dc": 15,
+     "mods": [
+      {
+       "if": "flag.bernal_confided",
+       "n": 2,
+       "why": "老人咽回去的那半句"
+      },
+      {
+       "if": "flag.heard_hum",
+       "n": 1,
+       "why": "你也听过它一声"
+      },
+      {
+       "if": "flag.a3x_decoded",
+       "n": 1,
+       "why": "你自己对过译码"
+      }
+     ]
+    },
+    "ok": {
+     "text": "她想了整整一夜，天亮的时候，她在记录的末尾签上了名字：分形修会，娜尔雯·望月，1659 年入会。签完她说，上回有人这么签名，还是托丽丝。",
+     "effects": [
+      "flag phrase_signed",
+      "unflag phrase_published",
+      "unflag phrase_sold",
+      "unflag phrase_kept",
+      "world press +2",
+      "flag rector_erudite",
+      "unflag rector_zealot",
+      "approval narwen +1",
+      "quest q_phrase done"
+     ],
+     "goto": "a3_15"
+    },
+    "fail": {
+     "text": "“还不行，”她说，“那句话我还没问它呢。”说着，她把本子抱得更紧了一点。",
+     "effects": [
+      "approval narwen -1"
+     ],
+     "goto": "a3_14"
+    }
+   }
+  ]
+ },
+ "a3_15": {
+  "id": "a3_15",
+  "title": "证词",
+  "loc": "伊索贝尔港 · 联盟巡回法庭",
+  "date": "1828年泪落月",
+  "text": [
+   "巡回法庭借用的是伊索贝尔港的旧谷物交易所，柜台改成了证人席，墙上的价目板没擦干净，还留着“棉，每包”几个字。旁听席坐得满满的，一半是种植园的账房，一半是码头上的人，中间隔着一排治安员。",
+   "法官同意采信魂秤对一颗醒着的芯核的读数，条件是得当庭上秤。可秤一接上，那道口子就会给拉开一下，到底拉开多久，连蒂尔妲也说不准{?flag.gauge_burned:，何况这杆秤还是她凭记忆重做的|}。",
+   {
+    "speaker": "莫里斯·安德克利夫",
+    "text": "我不要谁的恩赐，我要的是一个判例。有了判例，下一个人的事它也管得了。"
+   },
+   {
+    "if": "party.middlesday",
+    "speaker": "礼拜三",
+    "text": "（担心。）我可能会睡过去。（礼貌。）睡过去之前，我想先把那些名字说完。"
+   },
+   {
+    "if": "is.god",
+    "speaker": "法官",
+    "text": "本庭不采信神迹，请证人上秤。"
+   },
+   {
+    "if": "is.god",
+    "text": "你不用秤也看得见芯核里头有什么，可这不能算证据，倒是法院门口已经有人开了盘口，赌你会不会流血，一赔七。"
+   }
+  ],
+  "first": [
+   "quest q_middlesday stage 2"
+  ],
+  "choices": [
+   {
+    "text": "让礼拜三上秤",
+    "if": "party.middlesday",
+    "check": {
+     "skill": "arcana",
+     "dc": 16,
+     "party": true,
+     "mods": [
+      {
+       "if": "flag.engine_ledger",
+       "n": 3,
+       "why": "账本替它少挨了半刻钟"
+      },
+      {
+       "if": "flag.gauge_tested_m",
+       "n": 1,
+       "why": "它上过一回秤"
+      },
+      {
+       "if": "flag.m_member",
+       "n": 1,
+       "why": "名册上它是成员"
+      },
+      {
+       "if": "flag.a3x_tilda_calibrated",
+       "n": 1,
+       "why": "蒂尔妲开庭前校过"
+      },
+      {
+       "if": "flag.gauge_open",
+       "n": 1,
+       "why": "图纸公开了，人人校得了"
+      },
+      {
+       "if": "flag.gauge_sold",
+       "n": -1,
+       "why": "秤是卡拉桑尼的"
+      },
+      {
+       "if": "flag.gauge_burned",
+       "n": -2,
+       "why": "那杆秤是凭记忆重做的"
+      }
+     ]
+    },
+    "ok": {
+     "text": "指针摆了过去，又摆了回来。礼拜三是醒着下的秤，下来头一句话是：（陈述。）内莉。老科尔。阿萨。霍布。马蒂。它把名字说完了。",
+     "effects": [
+      "flag m_testified",
+      "unflag m_dormant",
+      "unflag m_left",
+      "quest q_middlesday done"
+     ],
+     "goto": "a3_15b"
+    },
+    "fail": {
+     "text": "指针摆了过去，却没有再摆回来。礼拜三说到“阿萨”就停住了，眼睛还亮着，可人已经不在了。法警把它抬下了证人席，公司的名单上还留着它。",
+     "effects": [
+      "flag m_dormant",
+      "unflag m_testified",
+      "unflag m_left",
+      "companion -middlesday",
+      "quest q_middlesday fail"
+     ],
+     "goto": "a3_15b"
+    }
+   },
+   {
+    "text": "不许它去",
+    "if": "party.middlesday",
+    "effects": [
+     "flag m_left",
+     "unflag m_testified",
+     "unflag m_dormant",
+     "companion -middlesday",
+     "quest q_middlesday fail"
     ],
-    choices: [
+    "result": "（愤怒。）那我就自己到别处去说。它把行李码整齐，买了一张回安本科斯特的船票，一个月以后，铸炉街头一回停了工，领头的是一台机器。",
+    "goto": "a3_15b"
+   },
+   {
+    "text": "你自己上秤",
+    "tag": "机械人",
+    "if": "origin == 'unowned' && is.mechanim",
+    "check": {
+     "abil": "con",
+     "dc": 15,
+     "save": true,
+     "mods": [
       {
-        text: '回绝他',
-        effects: ['flag a3x_glade_done', 'flag gladeguard_refused', 'rep wand -2', 'rep union +1'],
-        result: '他把名单折好，收回口袋，戴上帽子。“女王会知道的。”他说。“女王什么都知道。”',
-        goto: 'a3_17',
+       "if": "flag.engine_ledger",
+       "n": 3,
+       "why": "账本替你少挨了半刻钟"
       },
       {
-        text: '交两个人给他，做做样子',
-        effects: ['flag a3x_glade_done', 'rep wand +1', 'world chains +1', 'approval bura -3'],
-        result: '两个人上了小艇，没回头。林卫上将向你致了礼，礼行得很标准。',
-        goto: 'a3_17',
+       "if": "flag.a3x_tilda_calibrated",
+       "n": 1,
+       "why": "蒂尔妲开庭前校过"
       },
       {
-        text: '拿白玫瑰别针唬他：这两个是使馆要的人',
-        check: { skill: 'deception', dc: 16, adv: 'item.whiterose_pin' },
-        ok: { text: '他看了别针很久，又看了你很久。“使馆的事，我不过问。”小艇划走了，两个人还在你们船上。', effects: ['flag a3x_glade_done'], goto: 'a3_17' },
-        fail: { text: '“使馆上个月的公文里没这两个人。”他说。他没要人，可他把你的名字记进了航海日志。', effects: ['flag a3x_glade_done', 'rep wand -1'], goto: 'a3_17' },
+       "if": "flag.gauge_open",
+       "n": 1,
+       "why": "图纸公开了"
       },
+      {
+       "if": "flag.gauge_sold",
+       "n": -1,
+       "why": "秤是卡拉桑尼的"
+      },
+      {
+       "if": "flag.gauge_burned",
+       "n": -2,
+       "why": "凭记忆重做的秤"
+      }
+     ]
+    },
+    "ok": {
+     "text": "口子拉开的那一下，你听见了台座的那个音，随后你醒着下了秤，法官在记录上写下了你在七号线的工位号。",
+     "effects": [
+      "flag pc_testified"
+     ],
+     "goto": "a3_15b"
+    },
+    "fail": {
+     "text": "你下了秤，法官问你今天礼拜几，你答是答了，答的却是去年的日子，不过读数照样算数。",
+     "effects": [
+      "flag pc_testified",
+      "flag pc_lost_year"
+     ],
+     "goto": "a3_15b"
+    }
+   },
+   {
+    "text": "用手替它按住那道口子",
+    "tag": "神",
+    "if": "is.god && party.middlesday",
+    "effects": [
+     "flag a3x_void",
+     "var cult +1",
+     "approval middlesday +1"
     ],
-  },
-
-  a3_18: {
-    id: 'a3_18',
-    title: '穿好料子的客人',
-    art: 'ev_dragon_fly',
-    loc: '洇河口 · 萨尔达税关隔壁的鱼馆',
-    text: [
-      '鱼馆在萨尔达税关隔壁，门口挂着一串晒干的鲶鱼。你们刚坐下，上游来了一位客人，料子很好，耳朵尖，脸色白里透青，是遗迹精灵的样子。他自己找过来拼桌，点了全店的鱼。',
-      { speaker: '穿好料子的客人', text: '你身上有青铜味儿。替我问他好。' },
-      '他叫瓦伦盖尔特，三百八十四岁，洇河上游有人供着他，身体很好。他拿同行的口气聊当神这门买卖：什一税怎么收，节庆排在哪个月，头一回歉收那年该说什么。',
-      { speaker: '瓦伦盖尔特', text: '什一税要秋天收，人手里有粮。春天收，他们就开始问你到底保佑了什么。' },
-      '然后他说起了你们的合伙人。没人拜的老家伙会累。阿赫特到现在还喘着气，兴许只因为有个被他扔下的帝国，每天黄昏给他点灯，一万盏。',
-      { speaker: '瓦伦盖尔特', text: '他穿着你们共和国的将军制服。泽拉特那一仗以后，他再没飞过。他说那一仗是平手。他输的仗都叫平手。' },
-      { if: 'party.bura', speaker: '布拉', text: '醉话。龙喝多了也是醉话。' },
-      { if: 'party.narwen', speaker: '娜尔雯', text: '他没撒谎。他什么都往外说，所以没人信。我信一半。' },
-      { if: 'party.guilhem', speaker: '吉列姆', text: '将军给我们写过推荐信。理论上，龙也会签字。实际上，我得回去对一对笔迹。' },
-      { if: 'party.middlesday', speaker: '礼拜三', text: '（陈述。）合伙人的汇票是安本科斯特一家行开的。（不确定。）龙也用银行吗。' },
-      { if: '!party.bura && !party.narwen && !party.guilhem && !party.middlesday', speaker: '别摇', text: '他说的是真话。真话最便宜，所以他到处送。' },
-      { if: '!party.bura && !party.narwen && !party.guilhem && !party.middlesday', text: '第二天埃塔的回电到了：一头龙？账上没这一栏。我划一栏。' },
-      { if: 'is.god', text: '他看见你，又叫了一壶酒，换了个座位，坐到你正对面。' },
-      { if: 'is.god', speaker: '瓦伦盖尔特', text: '香火钱你怎么入账？我这儿三七开，三成归庙，七成修堤。洇河上有两个节，我让给你，日子随你挑。条件是你别在我的地界上显灵。' },
+    "result": "秤上的指针一动也没动，礼拜三没有睡过去，读数却作废了。法官在记录上写的是：证人受到超自然干预。门口的赌档宣布这一局不算，可钱一个子儿也没退。",
+    "goto": "a3_15b"
+   },
+   {
+    "text": "没有可以上秤的证人，直接请求裁定",
+    "if": "!party.middlesday && !(origin == 'unowned' && is.mechanim)",
+    "goto": "a3_15b"
+   }
+  ]
+ },
+ "a3_15b": {
+  "id": "a3_15b",
+  "title": "裁定",
+  "loc": "伊索贝尔港 · 联盟巡回法庭",
+  "text": [
+   "到了下午，法官问原告一方，请求本庭怎么判，安德克利夫看了你一眼，这一条他让给公司来说。",
+   "书记官削好了一支新铅笔，对面戴纽奇家的律师翻着一本厚厚的判例集，翻到夹着书签的那一页，用指甲把它压平。",
+   {
+    "if": "flag.m_testified || flag.m_dormant || flag.pc_testified",
+    "text": "记录上已经有了一个读数，说的是芯核醒着的时候，那道口子是开着的，口子开着，里头就有东西。"
+   },
+   {
+    "if": "flag.engine_ledger",
+    "text": "机房的流水账就摆在书记官的桌上，每个月一颗“报废”，十二个月就是十二颗。"
+   },
+   {
+    "if": "!(flag.m_testified || flag.m_dormant || flag.pc_testified) && !flag.engine_ledger",
+    "text": "记录上什么也没有，戴纽奇家的律师就坐在对面，指甲修得干干净净。"
+   },
+   "判法有三种，可不管哪一种，都得留下一样东西不判。"
+  ],
+  "choices": [
+   {
+    "text": "把机房的流水账当庭念出来",
+    "tag": "灯",
+    "if": "faction == 'lantern' && flag.engine_ledger",
+    "once": true,
+    "effects": [
+     "world press +1"
     ],
-    first: ['flag partner_known', 'quest q_partner stage 3', 'codex c_varlengeilt', 'codex c_aakhet', 'codex c_hakhepra'],
-    choices: [
-      {
-        text: '跟他提萨拉哈德沙漠那一仗',
-        once: true,
-        check: { skill: 'history', dc: 15, party: true },
-        ok: { text: '他笑得很开心，拍着桌子说：“平手！他到今天还说是平手！”然后多送了你一句：泽拉特那门炮是卡塔拉什亚造的，专打龙鳞，他是掉进湖里的。', effects: ['flag a3x_zerat'] },
-        fail: { text: '你把泽拉特和萨拉哈德说反了。他耐心地纠正了你，又加了两条鱼，账记在你们桌上。', effects: ['gold -30'] },
-      },
-      {
-        text: '看他说的是不是真话',
-        once: true,
-        check: { skill: 'insight', dc: 15 },
-        ok: { text: '他没撒谎。他说话的时候手一直在剥鱼刺，一根没落下，说到阿赫特的时候也没停。', effects: ['approval narwen +1'] },
-        fail: { text: '你看不出来。他说什么都是同一副笑脸，说自己的生日和说别人的死期，一样高兴。', effects: ['approval bura +1'] },
-      },
-      {
-        text: '收下那两个节',
-        tag: '神',
-        if: 'is.god && !flag.a3x_festivals && !flag.a3x_fest_no',
-        once: true,
-        effects: ['flag a3x_festivals', 'var cult +1', 'rep south +1', 'rep church -1'],
-        result: '他把两个节的日子写在餐巾上，推给你。往后洇河上游的人，每年有两天朝你那个方向烧香。揭秘教的院长听说了，写了一封很长的信。',
-      },
-      {
-        text: '回绝他',
-        tag: '神',
-        if: 'is.god && !flag.a3x_festivals && !flag.a3x_fest_no',
-        once: true,
-        effects: ['flag a3x_fest_no', 'rep south -1'],
-        result: '“随你。”他耸耸肩，“头一回他们原谅你。第二回他们换神。”他把餐巾揉成一团，擦了擦手。',
-      },
-      {
-        text: '结账，去电报房',
-        goto: 'a3_19',
-      },
+    "result": "你把十二个月的“报废”一笔一笔念了出来，念到第九个月，旁听席上有人站起来走了，那是戴纽奇家的账房。"
+   },
+   {
+    "text": "只请求判芯核：醒着的芯核不是财物",
+    "if": "flag.m_testified || flag.m_dormant || flag.pc_testified || flag.engine_ledger",
+    "effects": [
+     "flag ruling_cores",
+     "unflag ruling_both",
+     "unflag engine_licensed",
+     "world chains -1",
+     "world press +1"
     ],
-  },
-
-  a3_19: {
-    id: 'a3_19',
-    title: '第三份报告',
-    loc: '洇河口 · 电报房',
-    text: [
-      '洇河口的电报房在联盟税关的二楼。一根线通伊索贝尔港，再转安本科斯特。报务员是个半身人，按字收钱，标点另算，问号最贵。',
-      '这回你知道读报告的是谁了。埃塔的回电先到了，只有一行：照常写，我照常记。',
-      { if: 'flag.partner_engine_share', speaker: '埃塔（电报）', text: '另：机房的股，他上个月也撤了。代理人原话：供不起。' },
-      { if: 'flag.report2_named_general', text: '上一回你在抬头写了“将军阁下”。他回过一封亲笔信，谈的是天气。' },
-      { if: 'flag.a3x_zerat', text: '你手里还有鱼馆那位多送的一句：泽拉特那门炮，专打龙鳞。' },
-      { if: "origin == 'concord'", text: '镇议会也来了电报，点名要一份抄件。电报的落款是“全体议员”，下面列着表决结果，十一比零。' },
+    "result": "法官判了，醒着的芯核不得登记为财物，可散庭的时候，码头上的人都往大门外走，戴着镣的那几个却还得走后门。",
+    "goto": "a3_16"
+   },
+   {
+    "text": "把芯核和戴镣的人写进同一张裁定",
+    "if": "(flag.m_testified || flag.m_dormant || flag.pc_testified) && flag.engine_ledger && faction != 'seal'",
+    "req": "world.press >= 4 || rep.church >= 3",
+    "reqText": "要见报到 4，或者教会的声望到 3",
+    "effects": [
+     "flag ruling_both",
+     "unflag ruling_cores",
+     "unflag engine_licensed",
+     "world chains -2",
+     "world press +1",
+     "rep charter -2"
     ],
-    choices: [
-      { text: '另抄一份，寄给老连队的文书', tag: '安本纳尔', if: "origin == 'anbennar' && !flag.a3x_home_done", once: true, effects: ['flag a3x_home_done', 'var home_copies +1', 'rep republic +1'], result: '老连队的文书回了一张明信片，上面是旧斗兽场，背面写：收到，别再惹事。' },
-      { text: '给使馆的那份照实写', tag: '洛伦特', if: "origin == 'lorent' && !flag.a3x_home_done", once: true, effects: ['flag a3x_home_done', 'var home_copies +1', 'rep wand +1'], result: '你拿使馆的密码本译了一遍，译到“青铜”两个字，密码本里没有，只好拼。' },
-      { text: '给使馆的那份写薄一点', tag: '洛伦特', if: "origin == 'lorent' && !flag.a3x_home_done", once: true, effects: ['flag a3x_home_done', 'var home_copies +1', 'var embassy_gap +1', { if: 'flag.codebook_seen', then: ['rep republic +1'] }], result: '使馆那份只写了鱼。{?flag.codebook_seen:共和国海关早抄过那本密码，他们读到的也是鱼。|}' },
-      { text: '照镇议会的要求抄一份', tag: '巨魔湾', if: "origin == 'concord' && !flag.a3x_home_done", once: true, effects: ['flag a3x_home_done', 'var home_copies +1', 'rep charter +1'], result: '抄件寄走了。一个月以后镇议会回电：已阅，下月表决是否存档。' },
-      { text: '念给法德伦的工会听', tag: '无主者', if: "origin == 'unowned' && !flag.a3x_home_done", once: true, effects: ['flag a3x_home_done', 'var home_copies +1', 'rep union +1'], result: '你把稿子寄给铸炉街，工会的人在礼拜天的会上念了一遍。法德伦听完，只问了一句：机器那条，判没判。' },
-      { text: '写进考察笔记', tag: '卡尔希尔', if: "origin == 'karshyr' && !flag.a3x_home_done", once: true, effects: ['flag a3x_home_done', 'var home_copies +1', 'rep south +1'], result: '考察笔记已经写到第三本。题目改过两回，这一回又改了：一家有限责任的冒险公司，和它的股东。' },
-      {
-        text: '写全',
-        effects: ['flag report3_full', 'unflag report3_edited', 'unflag report3_lie', 'rep partner +1'],
-        result: '报务员数了字，三百一十一个，标点四十二个。他问要不要省掉几个标点，你说不用。',
-        goto: 'a3_20',
-      },
-      {
-        text: '写全，末尾加一句：鱼馆里有人问您好',
-        effects: ['flag report3_full', 'flag report3_named_bronze', 'unflag report3_edited', 'unflag report3_lie', 'rep partner -1'],
-        result: '报务员把这句念了一遍，问要不要加标点。{?flag.report2_named_general:这是你第二回在纸上点破他。|}这一回，他没有回电。',
-        goto: 'a3_20',
-      },
-      {
-        text: '删掉鱼馆那一段',
-        effects: ['flag report3_edited', 'unflag report3_full', 'unflag report3_lie'],
-        result: '删完只剩一百零四个字。埃塔回电：短了。没说短在哪儿。',
-        goto: 'a3_20',
-      },
-      {
-        text: '编一份：货送到了，别的一切照常',
-        check: { skill: 'deception', dc: 15 },
-        ok: { text: '电报写得平平整整，读起来像一张收据。汇票照常到了，一分不少。', effects: ['flag report3_lie', 'unflag report3_full', 'unflag report3_edited', 'rep partner -1'], goto: 'a3_20' },
-        fail: { text: '汇票照常到了，附了一行字：“洇河口的鱼好吃吗。”你没跟他说过你在洇河口吃过鱼。', effects: ['flag report3_lie', 'unflag report3_full', 'unflag report3_edited', 'rep partner -1', 'flag partner_knows_lie'], goto: 'a3_20' },
-      },
+    "result": "法官判了，一张纸管了两样，可当天晚上联盟议会紧急开会，马利安德的议员退了席，退到一半又回来了，联盟差一点就为这件事散了伙。",
+    "goto": "a3_16"
+   },
+   {
+    "text": "由你写结案陈词：芯核和戴镣的人一并裁定",
+    "tag": "印",
+    "if": "(flag.m_testified || flag.m_dormant || flag.pc_testified) && flag.engine_ledger && faction == 'seal'",
+    "req": "world.press >= 3 || rep.church >= 3",
+    "reqText": "要见报到 3，或者教会的声望到 3",
+    "effects": [
+     "flag ruling_both",
+     "unflag ruling_cores",
+     "unflag engine_licensed",
+     "world chains -2",
+     "world press +1",
+     "rep charter -2"
     ],
-  },
-
-  a3_20: {
-    id: 'a3_20',
-    title: '数流星',
-    art: 'ev_big_star_in_sky',
-    loc: '洇河口 · 鱼馆的屋顶',
-    text: [
-      '鱼馆的屋顶是平的，晒着渔网。泪落月的夜里，洇河口的人都上房，带一张草席、一壶酒。河上两座税关都熄了灯，这是一年里两家唯一说好的一件事。',
-      { if: 'world.tears >= 7', text: '那一夜落了三百多颗。有人数乱了，从头再数，又数乱了。' },
-      { if: 'world.tears == 6', text: '那一夜落了二百来颗。' },
-      { if: 'world.tears == 5', text: '那一夜落了一百五十颗上下。' },
-      { if: 'world.tears == 4', text: '那一夜落了九十多颗。' },
-      { if: 'world.tears == 3', text: '那一夜落了五十颗上下。' },
-      { if: 'world.tears == 2', text: '那一夜落了二十几颗。' },
-      { if: 'world.tears == 1', text: '那一夜落下来的，一只手数得过来。' },
-      { if: 'world.tears <= 0', text: '那一夜一颗也没有。屋顶上的人坐到后半夜，把酒喝完，下楼了。' },
-      '1809 年的历书上，这一栏写的是“数不过来”。',
-      { if: 'party.bura', speaker: '布拉', text: '（铰链咔的一声。）比去年少。比明年多。' },
-      { if: '!party.bura', text: '布拉不在。草席上放着她的一颗铰链螺丝，是她走那天落在行李里的。' },
-      { if: 'party.middlesday', speaker: '礼拜三', text: '（陈述。）我数到了。（礼貌。）要我报给埃塔吗。' },
-      { if: 'flag.m_left', text: '礼拜三不在。屋角码着它的行李，最小的一件放在最上面。' },
-      { if: 'flag.m_dormant', text: '礼拜三坐在屋顶上，面朝南。它没有数。' },
-      { if: 'party.guilhem', speaker: '吉列姆', text: '我小时候在梨林数过一回，数到一千就睡着了。理论上那一年还有更多。' },
-      { if: 'party.narwen', speaker: '娜尔雯', text: '上回我在屋顶上数，是 1810 年。那回数不过来，我数的是天上空着的地方。' },
-      { if: 'flag.narwen_left', text: '娜尔雯不在。她的备用眼镜搁在烟囱上，镜片朝天。' },
-      { if: 'world.tears <= 2', text: '罐子里别摇的光暗得只剩一个点。' },
-      { if: 'is.god', speaker: '别摇', text: '现在我欠你的，这辈子还不清了。这个我不原谅。' },
+    "result": "你的陈词只有一页纸，引的全是联盟自己的法条，法官就照着判了，可当天晚上马利安德的议员退了席，联盟差一点就为这件事散了伙。",
+    "goto": "a3_16"
+   },
+   {
+    "text": "和解：给机房发执照，换它不再收醒过的芯核",
+    "effects": [
+     "flag engine_licensed",
+     "unflag ruling_cores",
+     "unflag ruling_both",
+     "world chains +1",
+     "rep charter +2"
     ],
-    first: ['level 8'],
-    next: 'a4_01',
-  },
+    "result": "执照第二天就发下来了，一张纸上盖着三个章，文森顿穷人街上那四百一十盏路灯，当天晚上照常亮了。",
+    "goto": "a3_16"
+   }
+  ]
+ },
+ "a3_16": {
+  "id": "a3_16",
+  "title": "机房起火",
+  "art": "ev_damestear_core",
+  "loc": "文森顿 · 城北机房",
+  "text": [
+   {
+    "if": "flag.engine_licensed",
+    "text": "裁定下来的当天夜里，机房就起了火，放火的是暗线上那些气不过的人，照他们的说法，发了执照就等于是许可。"
+   },
+   {
+    "if": "!flag.engine_licensed",
+    "text": "裁定下来的当天夜里，机房就起了火，火是从账房烧起来的，放火的人穿着财团的号衣，是专门来烧账的。"
+   },
+   "炉膛里那十二颗芯核还在响，火一烧近，调门就全往高处走。挡在炉门前头的是一台四条胳膊的战争型，胸口那颗芯核叫得最响，它还在执行最后一道命令，守住炉门。",
+   {
+    "if": "party.middlesday",
+    "speaker": "礼拜三",
+    "text": "（愤怒。）那一颗我认识，是七号线 1811 年三月的料。别打它的胸口。"
+   },
+   {
+    "if": "!party.middlesday",
+    "text": "它胸口的铜牌叫火烤得发红，上头的编号倒还看得清，七号线，1811。"
+   },
+   "街上的路灯一盏接一盏暗了下去，是从机房这头往外暗的，穷人街上的人都端着盆出来看火。"
+  ],
+  "choices": [
+   {
+    "text": "冲进炉房",
+    "if": "partysize >= 4",
+    "combat": {
+     "title": "炉门",
+     "intro": "四条胳膊一齐抬了起来，它胸口那颗芯核叫了一声，那十二颗也跟着叫了起来。",
+     "noAwe": true,
+     "specials": [
+      {
+       "id": "governor",
+       "name": "拔掉调速器",
+       "desc": "它背上有一根铜杆，连着炉子",
+       "check": {
+        "skill": "sleight",
+        "alt": [
+         "athletics"
+        ],
+        "dc": 15,
+        "party": true
+       },
+       "success": {
+        "text": "铜杆一拔出来，带出了一串火星，四条胳膊同时停在了半空。",
+        "applyAll": {
+         "cond": "stunned",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "铜杆烫得握不住，你一松手，掌心已经留下了一道印子。",
+        "selfDmg": "1d8",
+        "type": "fire"
+       }
+      },
+      {
+       "id": "steam",
+       "name": "放锅炉的汽",
+       "desc": "锅炉上有三个阀门，其中一个是放汽的",
+       "check": {
+        "skill": "athletics",
+        "alt": [
+         "investigation"
+        ],
+        "dc": 14
+       },
+       "success": {
+        "text": "白汽从炉膛边上喷了出来，一整排扫了过去。",
+        "dmgAll": "3d6",
+        "type": "fire"
+       },
+       "fail": {
+        "text": "你拧开的偏偏是进水的阀门，地上多了一摊水，别的什么也没变。"
+       }
+      },
+      {
+       "id": "number",
+       "name": "念出它的编号，问它今天礼拜几",
+       "desc": "它胸口铜牌上的编号还看得清",
+       "check": {
+        "skill": "persuasion",
+        "alt": [
+         "insight"
+        ],
+        "dc": 16,
+        "adv": "party.middlesday || is.mechanim"
+       },
+       "success": {
+        "text": "它的四条胳膊慢慢放了下来。“礼拜三。”它说。其实那天是礼拜四，可谁也没去纠正它。",
+        "effects": [
+         "flag warpattern_spared"
+        ],
+        "end": "win"
+       },
+       "fail": {
+        "text": "编号它是听见了，后半句却没听见，胸口那颗芯核叫得更响了。"
+       }
+      },
+      {
+       "id": "cores",
+       "name": "把炉膛里那十二颗抢出来",
+       "desc": "炉膛的门开着一条缝",
+       "check": {
+        "skill": "athletics",
+        "dc": 15,
+        "party": true
+       },
+       "success": {
+        "text": "十二颗芯核一颗一颗夹了出来，放进一只铁皮桶里，桶底垫着一件外套，外套给烧出了一个洞。",
+        "effects": [
+         "flag cores_saved",
+         "world chains -1"
+        ]
+       },
+       "fail": {
+        "text": "炉膛口的火舌一下卷了出来，你赶紧缩手，手是缩回来了，手套却没了。",
+        "selfDmg": "2d6",
+        "type": "fire"
+       }
+      }
+     ],
+     "fleeable": false,
+     "win": {
+      "effects": [
+       {
+        "if": "flag.engine_licensed",
+        "then": [],
+        "else": [
+         "flag engine_burned"
+        ]
+       },
+       "quest q_engine done",
+       "rest short"
+      ],
+      "goto": "a3_17"
+     },
+     "lose": {
+      "effects": [
+       "flag engine_burned",
+       {
+        "if": "flag.cores_saved",
+        "then": [
+         "unflag cores_saved",
+         "world chains +1"
+        ]
+       },
+       "quest q_engine done",
+       "rest short"
+      ],
+      "goto": "a3_17"
+     },
+     "enemies": [
+      {
+       "id": "war_pattern_screamer"
+      },
+      {
+       "id": "artificer_engineer",
+       "name": "财团的奇械师"
+      },
+      {
+       "id": "secret_police",
+       "name": "特殊案件预防局的人"
+      }
+     ]
+    }
+   },
+   {
+    "text": "冲进炉房",
+    "if": "partysize == 3",
+    "combat": {
+     "title": "炉门",
+     "intro": "四条胳膊一齐抬了起来，它胸口那颗芯核叫了一声，那十二颗也跟着叫了起来。",
+     "noAwe": true,
+     "specials": [
+      {
+       "id": "governor",
+       "name": "拔掉调速器",
+       "desc": "它背上有一根铜杆，连着炉子",
+       "check": {
+        "skill": "sleight",
+        "alt": [
+         "athletics"
+        ],
+        "dc": 15,
+        "party": true
+       },
+       "success": {
+        "text": "铜杆一拔出来，带出了一串火星，四条胳膊同时停在了半空。",
+        "applyAll": {
+         "cond": "stunned",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "铜杆烫得握不住，你一松手，掌心已经留下了一道印子。",
+        "selfDmg": "1d8",
+        "type": "fire"
+       }
+      },
+      {
+       "id": "steam",
+       "name": "放锅炉的汽",
+       "desc": "锅炉上有三个阀门，其中一个是放汽的",
+       "check": {
+        "skill": "athletics",
+        "alt": [
+         "investigation"
+        ],
+        "dc": 14
+       },
+       "success": {
+        "text": "白汽从炉膛边上喷了出来，一整排扫了过去。",
+        "dmgAll": "3d6",
+        "type": "fire"
+       },
+       "fail": {
+        "text": "你拧开的偏偏是进水的阀门，地上多了一摊水，别的什么也没变。"
+       }
+      },
+      {
+       "id": "number",
+       "name": "念出它的编号，问它今天礼拜几",
+       "desc": "它胸口铜牌上的编号还看得清",
+       "check": {
+        "skill": "persuasion",
+        "alt": [
+         "insight"
+        ],
+        "dc": 16,
+        "adv": "party.middlesday || is.mechanim"
+       },
+       "success": {
+        "text": "它的四条胳膊慢慢放了下来。“礼拜三。”它说。其实那天是礼拜四，可谁也没去纠正它。",
+        "effects": [
+         "flag warpattern_spared"
+        ],
+        "end": "win"
+       },
+       "fail": {
+        "text": "编号它是听见了，后半句却没听见，胸口那颗芯核叫得更响了。"
+       }
+      },
+      {
+       "id": "cores",
+       "name": "把炉膛里那十二颗抢出来",
+       "desc": "炉膛的门开着一条缝",
+       "check": {
+        "skill": "athletics",
+        "dc": 15,
+        "party": true
+       },
+       "success": {
+        "text": "十二颗芯核一颗一颗夹了出来，放进一只铁皮桶里，桶底垫着一件外套，外套给烧出了一个洞。",
+        "effects": [
+         "flag cores_saved",
+         "world chains -1"
+        ]
+       },
+       "fail": {
+        "text": "炉膛口的火舌一下卷了出来，你赶紧缩手，手是缩回来了，手套却没了。",
+        "selfDmg": "2d6",
+        "type": "fire"
+       }
+      }
+     ],
+     "fleeable": false,
+     "win": {
+      "effects": [
+       {
+        "if": "flag.engine_licensed",
+        "then": [],
+        "else": [
+         "flag engine_burned"
+        ]
+       },
+       "quest q_engine done",
+       "rest short"
+      ],
+      "goto": "a3_17"
+     },
+     "lose": {
+      "effects": [
+       "flag engine_burned",
+       {
+        "if": "flag.cores_saved",
+        "then": [
+         "unflag cores_saved",
+         "world chains +1"
+        ]
+       },
+       "quest q_engine done",
+       "rest short"
+      ],
+      "goto": "a3_17"
+     },
+     "enemies": [
+      {
+       "id": "war_pattern_screamer",
+       "hpMult": 0.7
+      },
+      {
+       "id": "secret_police",
+       "name": "特殊案件预防局的人"
+      }
+     ]
+    }
+   },
+   {
+    "text": "冲进炉房",
+    "if": "partysize == 2",
+    "combat": {
+     "title": "炉门",
+     "intro": "四条胳膊一齐抬了起来，它胸口那颗芯核叫了一声，那十二颗也跟着叫了起来。",
+     "noAwe": true,
+     "specials": [
+      {
+       "id": "governor",
+       "name": "拔掉调速器",
+       "desc": "它背上有一根铜杆，连着炉子",
+       "check": {
+        "skill": "sleight",
+        "alt": [
+         "athletics"
+        ],
+        "dc": 15,
+        "party": true
+       },
+       "success": {
+        "text": "铜杆一拔出来，带出了一串火星，四条胳膊同时停在了半空。",
+        "applyAll": {
+         "cond": "stunned",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "铜杆烫得握不住，你一松手，掌心已经留下了一道印子。",
+        "selfDmg": "1d8",
+        "type": "fire"
+       }
+      },
+      {
+       "id": "steam",
+       "name": "放锅炉的汽",
+       "desc": "锅炉上有三个阀门，其中一个是放汽的",
+       "check": {
+        "skill": "athletics",
+        "alt": [
+         "investigation"
+        ],
+        "dc": 14
+       },
+       "success": {
+        "text": "白汽从炉膛边上喷了出来，一整排扫了过去。",
+        "dmgAll": "3d6",
+        "type": "fire"
+       },
+       "fail": {
+        "text": "你拧开的偏偏是进水的阀门，地上多了一摊水，别的什么也没变。"
+       }
+      },
+      {
+       "id": "number",
+       "name": "念出它的编号，问它今天礼拜几",
+       "desc": "它胸口铜牌上的编号还看得清",
+       "check": {
+        "skill": "persuasion",
+        "alt": [
+         "insight"
+        ],
+        "dc": 16,
+        "adv": "party.middlesday || is.mechanim"
+       },
+       "success": {
+        "text": "它的四条胳膊慢慢放了下来。“礼拜三。”它说。其实那天是礼拜四，可谁也没去纠正它。",
+        "effects": [
+         "flag warpattern_spared"
+        ],
+        "end": "win"
+       },
+       "fail": {
+        "text": "编号它是听见了，后半句却没听见，胸口那颗芯核叫得更响了。"
+       }
+      },
+      {
+       "id": "cores",
+       "name": "把炉膛里那十二颗抢出来",
+       "desc": "炉膛的门开着一条缝",
+       "check": {
+        "skill": "athletics",
+        "dc": 15,
+        "party": true
+       },
+       "success": {
+        "text": "十二颗芯核一颗一颗夹了出来，放进一只铁皮桶里，桶底垫着一件外套，外套给烧出了一个洞。",
+        "effects": [
+         "flag cores_saved",
+         "world chains -1"
+        ]
+       },
+       "fail": {
+        "text": "炉膛口的火舌一下卷了出来，你赶紧缩手，手是缩回来了，手套却没了。",
+        "selfDmg": "2d6",
+        "type": "fire"
+       }
+      }
+     ],
+     "fleeable": false,
+     "win": {
+      "effects": [
+       {
+        "if": "flag.engine_licensed",
+        "then": [],
+        "else": [
+         "flag engine_burned"
+        ]
+       },
+       "quest q_engine done",
+       "rest short"
+      ],
+      "goto": "a3_17"
+     },
+     "lose": {
+      "effects": [
+       "flag engine_burned",
+       {
+        "if": "flag.cores_saved",
+        "then": [
+         "unflag cores_saved",
+         "world chains +1"
+        ]
+       },
+       "quest q_engine done",
+       "rest short"
+      ],
+      "goto": "a3_17"
+     },
+     "enemies": [
+      {
+       "id": "war_pattern_screamer",
+       "hpMult": 0.5
+      },
+      {
+       "id": "secret_police",
+       "name": "特殊案件预防局的人"
+      }
+     ]
+    }
+   },
+   {
+    "text": "冲进炉房",
+    "if": "partysize == 1",
+    "combat": {
+     "title": "炉门",
+     "intro": "四条胳膊一齐抬了起来，它胸口那颗芯核叫了一声，那十二颗也跟着叫了起来。",
+     "noAwe": true,
+     "specials": [
+      {
+       "id": "governor",
+       "name": "拔掉调速器",
+       "desc": "它背上有一根铜杆，连着炉子",
+       "check": {
+        "skill": "sleight",
+        "alt": [
+         "athletics"
+        ],
+        "dc": 15,
+        "party": true
+       },
+       "success": {
+        "text": "铜杆一拔出来，带出了一串火星，四条胳膊同时停在了半空。",
+        "applyAll": {
+         "cond": "stunned",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "铜杆烫得握不住，你一松手，掌心已经留下了一道印子。",
+        "selfDmg": "1d8",
+        "type": "fire"
+       }
+      },
+      {
+       "id": "steam",
+       "name": "放锅炉的汽",
+       "desc": "锅炉上有三个阀门，其中一个是放汽的",
+       "check": {
+        "skill": "athletics",
+        "alt": [
+         "investigation"
+        ],
+        "dc": 14
+       },
+       "success": {
+        "text": "白汽从炉膛边上喷了出来，一整排扫了过去。",
+        "dmgAll": "3d6",
+        "type": "fire"
+       },
+       "fail": {
+        "text": "你拧开的偏偏是进水的阀门，地上多了一摊水，别的什么也没变。"
+       }
+      },
+      {
+       "id": "number",
+       "name": "念出它的编号，问它今天礼拜几",
+       "desc": "它胸口铜牌上的编号还看得清",
+       "check": {
+        "skill": "persuasion",
+        "alt": [
+         "insight"
+        ],
+        "dc": 16,
+        "adv": "party.middlesday || is.mechanim"
+       },
+       "success": {
+        "text": "它的四条胳膊慢慢放了下来。“礼拜三。”它说。其实那天是礼拜四，可谁也没去纠正它。",
+        "effects": [
+         "flag warpattern_spared"
+        ],
+        "end": "win"
+       },
+       "fail": {
+        "text": "编号它是听见了，后半句却没听见，胸口那颗芯核叫得更响了。"
+       }
+      },
+      {
+       "id": "cores",
+       "name": "把炉膛里那十二颗抢出来",
+       "desc": "炉膛的门开着一条缝",
+       "check": {
+        "skill": "athletics",
+        "dc": 15,
+        "party": true
+       },
+       "success": {
+        "text": "十二颗芯核一颗一颗夹了出来，放进一只铁皮桶里，桶底垫着一件外套，外套给烧出了一个洞。",
+        "effects": [
+         "flag cores_saved",
+         "world chains -1"
+        ]
+       },
+       "fail": {
+        "text": "炉膛口的火舌一下卷了出来，你赶紧缩手，手是缩回来了，手套却没了。",
+        "selfDmg": "2d6",
+        "type": "fire"
+       }
+      }
+     ],
+     "fleeable": false,
+     "win": {
+      "effects": [
+       {
+        "if": "flag.engine_licensed",
+        "then": [],
+        "else": [
+         "flag engine_burned"
+        ]
+       },
+       "quest q_engine done",
+       "rest short"
+      ],
+      "goto": "a3_17"
+     },
+     "lose": {
+      "effects": [
+       "flag engine_burned",
+       {
+        "if": "flag.cores_saved",
+        "then": [
+         "unflag cores_saved",
+         "world chains +1"
+        ]
+       },
+       "quest q_engine done",
+       "rest short"
+      ],
+      "goto": "a3_17"
+     },
+     "enemies": [
+      {
+       "id": "war_pattern_screamer",
+       "hpMult": 0.3
+      }
+     ]
+    }
+   },
+   {
+    "text": "冲进炉房",
+    "if": "partysize <= 0",
+    "combat": {
+     "title": "炉门",
+     "intro": "四条胳膊一齐抬了起来，它胸口那颗芯核叫了一声，那十二颗也跟着叫了起来。",
+     "noAwe": true,
+     "specials": [
+      {
+       "id": "governor",
+       "name": "拔掉调速器",
+       "desc": "它背上有一根铜杆，连着炉子",
+       "check": {
+        "skill": "sleight",
+        "alt": [
+         "athletics"
+        ],
+        "dc": 15,
+        "party": true
+       },
+       "success": {
+        "text": "铜杆一拔出来，带出了一串火星，四条胳膊同时停在了半空。",
+        "applyAll": {
+         "cond": "stunned",
+         "turns": 1
+        }
+       },
+       "fail": {
+        "text": "铜杆烫得握不住，你一松手，掌心已经留下了一道印子。",
+        "selfDmg": "1d8",
+        "type": "fire"
+       }
+      },
+      {
+       "id": "steam",
+       "name": "放锅炉的汽",
+       "desc": "锅炉上有三个阀门，其中一个是放汽的",
+       "check": {
+        "skill": "athletics",
+        "alt": [
+         "investigation"
+        ],
+        "dc": 14
+       },
+       "success": {
+        "text": "白汽从炉膛边上喷了出来，一整排扫了过去。",
+        "dmgAll": "3d6",
+        "type": "fire"
+       },
+       "fail": {
+        "text": "你拧开的偏偏是进水的阀门，地上多了一摊水，别的什么也没变。"
+       }
+      },
+      {
+       "id": "number",
+       "name": "念出它的编号，问它今天礼拜几",
+       "desc": "它胸口铜牌上的编号还看得清",
+       "check": {
+        "skill": "persuasion",
+        "alt": [
+         "insight"
+        ],
+        "dc": 16,
+        "adv": "party.middlesday || is.mechanim"
+       },
+       "success": {
+        "text": "它的四条胳膊慢慢放了下来。“礼拜三。”它说。其实那天是礼拜四，可谁也没去纠正它。",
+        "effects": [
+         "flag warpattern_spared"
+        ],
+        "end": "win"
+       },
+       "fail": {
+        "text": "编号它是听见了，后半句却没听见，胸口那颗芯核叫得更响了。"
+       }
+      },
+      {
+       "id": "cores",
+       "name": "把炉膛里那十二颗抢出来",
+       "desc": "炉膛的门开着一条缝",
+       "check": {
+        "skill": "athletics",
+        "dc": 15,
+        "party": true
+       },
+       "success": {
+        "text": "十二颗芯核一颗一颗夹了出来，放进一只铁皮桶里，桶底垫着一件外套，外套给烧出了一个洞。",
+        "effects": [
+         "flag cores_saved",
+         "world chains -1"
+        ]
+       },
+       "fail": {
+        "text": "炉膛口的火舌一下卷了出来，你赶紧缩手，手是缩回来了，手套却没了。",
+        "selfDmg": "2d6",
+        "type": "fire"
+       }
+      }
+     ],
+     "fleeable": false,
+     "win": {
+      "effects": [
+       {
+        "if": "flag.engine_licensed",
+        "then": [],
+        "else": [
+         "flag engine_burned"
+        ]
+       },
+       "quest q_engine done",
+       "rest short"
+      ],
+      "goto": "a3_17"
+     },
+     "lose": {
+      "effects": [
+       "flag engine_burned",
+       {
+        "if": "flag.cores_saved",
+        "then": [
+         "unflag cores_saved",
+         "world chains +1"
+        ]
+       },
+       "quest q_engine done",
+       "rest short"
+      ],
+      "goto": "a3_17"
+     },
+     "enemies": [
+      {
+       "id": "war_pattern_screamer",
+       "hpMult": 0.1
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "a3_17": {
+  "id": "a3_17",
+  "title": "洇河口",
+  "loc": "洇河口 · 码头",
+  "text": [
+   "洇河口飘着两面旗，设着两座税关，联盟的在南岸，萨尔达的在北岸，中间隔着一条河，河上漂的是运棺材的驳船和收过路钱的小艇。博克人的王庭在河心的岛上，两家都说归自己管，这一来，哪一家的拘票都递不进去。",
+   {
+    "if": "flag.engine_burned",
+    "text": "文森顿的那场火烧了两天，烟顺着河往下游飘，飘到洇河口已经看不见了，只剩下一股热铁皮的气味。"
+   },
+   {
+    "if": "!flag.engine_burned",
+    "text": "文森顿的机房保住了，听说穷人街上的路灯第二天就亮了，比先前还亮了一点。"
+   },
+   {
+    "if": "flag.contract_planters",
+    "text": "你是一路追到这儿来的，可他们踩上码头的时候，你站在船头，一步也跟不过去，码头上的人都看着你，像在看一条靠错了岸的船。"
+   },
+   {
+    "if": "!flag.contract_planters && flag.levee_lost",
+    "text": "下了船的只有十四个，另外九个在河堤上给抓了回去，霍布就在这九个里头，他那双脚走不快。"
+   },
+   {
+    "if": "!flag.contract_planters && !flag.levee_lost",
+    "text": "二十三个人全都下了船。{?flag.a3x_toby:托比是第二十四个，他该不该算在清单上，谁也不知道。|}最后那一段水路是阿萨替船家撑的，内莉一上岸，先去找了一口井。"
+   },
+   {
+    "if": "flag.town_shelters",
+    "text": "塞斯提尔边区的那个镇子，让他们在谷仓里住了三夜，马蒂在谷仓墙上刻了个记号，说下一拨人看得懂。"
+   },
+   {
+    "if": "flag.levee_sanctuary",
+    "text": "他们是从“神的庇护所”那段堤上走过来的，有人到现在还留着你袖口上的一根线头，拿布包着。"
+   },
+   {
+    "if": "flag.bura_alone && world.chains <= 5",
+    "text": "码头上有人捎来了布拉的消息，说她带着一队人往北走了，有多少人没说，只说她走在最后头。"
+   },
+   {
+    "if": "flag.bura_alone && world.chains > 5",
+    "text": "布拉的消息，码头上没有一个人说得清，有人说在北边见过一个黄铜下巴的兽人，也有人说那都是去年的事了。"
+   },
+   {
+    "if": "flag.bura_armed",
+    "text": "下船的人里头有三个背着拉姆斯盖特的枪，枪托上的字号都拿泥糊住了。"
+   },
+   {
+    "if": "flag.bura_line",
+    "text": "布拉站在码头上数人，数一个，就在那人肩上拍一下。"
+   },
+   {
+    "if": "origin == 'lorent'",
+    "text": "血林外海停着三条洛伦特的船，那是林卫上将的分舰队，他们放下一条小艇靠到了码头上，艇上的人说要见你。"
+   },
+   {
+    "if": "origin != 'lorent'",
+    "text": "天边停着几条船，挂的是洛伦特的旗，一直没有靠过来。"
+   }
+  ],
+  "first": [
+   "quest q_bill done"
+  ],
+  "choices": [
+   {
+    "text": "去河心的王庭，请他们把“不认拘票”写成一句明文",
+    "once": true,
+    "check": {
+     "skill": "persuasion",
+     "dc": 16,
+     "party": true,
+     "mods": [
+      {
+       "if": "flag.town_shelters",
+       "n": 1,
+       "why": "塞斯提尔边区开过先例"
+      },
+      {
+       "if": "rep.south >= 3",
+       "n": 1,
+       "why": "南岸的人替你说话"
+      },
+      {
+       "if": "flag.ruling_both",
+       "n": 1,
+       "why": "伊索贝尔港的裁定刚登了报"
+      }
+     ]
+    },
+    "ok": {
+     "text": "博克人的老王听完，叫书记写下了一句话：本岛不认两岸拘票。他盖上章，又说这句话两岸都要骂的，果然，联盟和萨尔达为了这句话又吵了六年。",
+     "effects": [
+      "flag ynns_free_soil",
+      "world chains -1"
+     ]
+    },
+    "fail": {
+     "text": "老王收下了你们带去的礼，说这事得先问问河神，而河神的意思是，要等雨季过了再说。",
+     "effects": [
+      "gold -50"
+     ]
+    }
+   },
+   {
+    "text": "上小艇见林卫上将",
+    "tag": "洛伦特",
+    "if": "origin == 'lorent' && !flag.a3x_glade_done",
+    "goto": "a3_17b"
+   },
+   {
+    "text": "去萨尔达税关隔壁的鱼馆吃饭",
+    "goto": "a3_18"
+   }
+  ]
+ },
+ "a3_17b": {
+  "id": "a3_17b",
+  "title": "林卫上将",
+  "loc": "洇河口外 · 洛伦特的小艇",
+  "text": [
+   "坐在小艇上的正是埃雷拉斯·林卫本人。他是个 1449 年出生的精灵，比他封锁的哪一块殖民地都要老，制服上的金线已经磨白了，帽子搁在膝盖上。",
+   {
+    "speaker": "埃雷拉斯·林卫",
+    "text": "那枚别针我认得，是女王的侍读才戴的。你们船上有几个人是从血林那边跑出来的，这些人我要带走，就照名单来。"
+   },
+   "他递过来一张名单，上面有两个名字，都不在那二十三个人里头，可人确实都在你们船上。{?party.bura:布拉在码头上盯着这条小艇，一只手搭在枪套上。|}"
+  ],
+  "choices": [
+   {
+    "text": "回绝他",
+    "effects": [
+     "flag a3x_glade_done",
+     "flag gladeguard_refused",
+     "rep wand -2",
+     "rep union +1"
+    ],
+    "result": "他把名单折好收回口袋，又把帽子戴上。“女王会知道的，”他说，“女王什么都知道。”",
+    "goto": "a3_17"
+   },
+   {
+    "text": "交两个人给他，做做样子",
+    "effects": [
+     "flag a3x_glade_done",
+     "rep wand +1",
+     "world chains +1",
+     "approval bura -3"
+    ],
+    "result": "那两个人上了小艇，头也没回，林卫上将向你致了个礼，礼行得一丝不苟。",
+    "goto": "a3_17"
+   },
+   {
+    "text": "拿白玫瑰别针唬他：这两个是使馆要的人",
+    "check": {
+     "skill": "deception",
+     "dc": 16,
+     "adv": "item.whiterose_pin"
+    },
+    "ok": {
+     "text": "他盯着别针看了很久，又盯着你看了很久，才说：“使馆的事，我不过问。”小艇划走了，那两个人还留在你们船上。",
+     "effects": [
+      "flag a3x_glade_done"
+     ],
+     "goto": "a3_17"
+    },
+    "fail": {
+     "text": "“使馆上个月的公文里可没有这两个人。”他说。人他倒是没要，可你的名字给他记进了航海日志。",
+     "effects": [
+      "flag a3x_glade_done",
+      "rep wand -1"
+     ],
+     "goto": "a3_17"
+    }
+   }
+  ]
+ },
+ "a3_18": {
+  "id": "a3_18",
+  "title": "穿好料子的客人",
+  "art": "ev_dragon_fly",
+  "loc": "洇河口 · 萨尔达税关隔壁的鱼馆",
+  "text": [
+   "鱼馆就在萨尔达税关的隔壁，门口挂着一串晒干的鲶鱼。你们刚坐下，就从上游来了一位客人，衣裳料子很好，耳朵是尖的，脸色白里透青，看样子是个遗迹精灵。他自己找过来跟你们拼桌，把全店的鱼都点了一遍。",
+   {
+    "speaker": "穿好料子的客人",
+    "text": "你身上有股青铜味儿啊，回头替我向他问个好。"
+   },
+   "他叫瓦伦盖尔特，今年三百八十四岁，洇河上游有人供奉着他，身体好得很，他拿同行的口气跟你聊起当神这门买卖来，什一税该怎么收，节庆排在哪个月，头一回歉收那年该说些什么。",
+   {
+    "speaker": "瓦伦盖尔特",
+    "text": "什一税得在秋天收，那时候人家手里有粮嘛。你要是春天去收，他们可就要问你了，你到底保佑了我们什么呀？"
+   },
+   "接着他说起了你们的合伙人。他说没人拜的老家伙是会累的，阿赫特到今天还喘着气，兴许只是因为有个让他扔下不管的帝国，每天黄昏还给他点灯，一点就是一万盏。",
+   {
+    "speaker": "瓦伦盖尔特",
+    "text": "他现在穿的是你们共和国的将军制服。泽拉特那一仗打完，他就再也没飞过，他还说那一仗是平手呢。告诉你吧，凡是他打输的仗，他都管它叫平手。"
+   },
+   {
+    "if": "party.bura",
+    "speaker": "布拉",
+    "text": "醉话。龙喝多了，说的也是醉话。"
+   },
+   {
+    "if": "party.narwen",
+    "speaker": "娜尔雯",
+    "text": "他没撒谎。他什么都往外说，所以才没人信他，我呢，信一半。"
+   },
+   {
+    "if": "party.guilhem",
+    "speaker": "吉列姆",
+    "text": "将军可是给我们写过推荐信的。理论上，龙也是会签字的。实际上呢，我得回去把笔迹对一对。"
+   },
+   {
+    "if": "party.middlesday",
+    "speaker": "礼拜三",
+    "text": "（陈述。）合伙人的汇票是安本科斯特一家银行开的。（不确定。）龙也用银行吗？"
+   },
+   {
+    "if": "!party.bura && !party.narwen && !party.guilhem && !party.middlesday",
+    "speaker": "别摇",
+    "text": "他说的都是真话。真话最不值钱，所以他才到处送人。"
+   },
+   {
+    "if": "!party.bura && !party.narwen && !party.guilhem && !party.middlesday",
+    "text": "第二天，埃塔的回电到了，上面写着：一头龙？账上没这一栏。我划一栏。"
+   },
+   {
+    "if": "is.god",
+    "text": "他一看见你，就又叫了一壶酒，还换了个座位，坐到了你的正对面。"
+   },
+   {
+    "if": "is.god",
+    "speaker": "瓦伦盖尔特",
+    "text": "香火钱你是怎么入账的呀？我这儿是三七开，三成归庙里，七成拿去修堤。洇河上有两个节，我可以让给你，日子随你挑，条件只有一个，你别在我的地界上显灵。"
+   }
+  ],
+  "first": [
+   "flag partner_known",
+   "quest q_partner stage 3",
+   "codex c_varlengeilt",
+   "codex c_aakhet",
+   "codex c_hakhepra"
+  ],
+  "choices": [
+   {
+    "text": "跟他提萨拉哈德沙漠那一仗",
+    "once": true,
+    "check": {
+     "skill": "history",
+     "dc": 15,
+     "party": true
+    },
+    "ok": {
+     "text": "他笑得开心极了，拍着桌子说：“平手！他到今天还说是平手！”笑完又多送了你一句，说泽拉特那门炮是卡塔拉什亚造的，专打龙鳞，他是掉进湖里去的。",
+     "effects": [
+      "flag a3x_zerat"
+     ]
+    },
+    "fail": {
+     "text": "你把泽拉特和萨拉哈德说反了，他耐着性子给你纠正过来，顺手又加了两条鱼，账记在你们这一桌上。",
+     "effects": [
+      "gold -30"
+     ]
+    }
+   },
+   {
+    "text": "看他说的是不是真话",
+    "once": true,
+    "check": {
+     "skill": "insight",
+     "dc": 15
+    },
+    "ok": {
+     "text": "他没撒谎，说话的时候手上一直在剔鱼刺，一根也没落下，就连说到阿赫特的时候也没停。",
+     "effects": [
+      "approval narwen +1"
+     ]
+    },
+    "fail": {
+     "text": "你实在看不出来，他不管说什么都是同一副笑脸，说自己的生日也好，说别人的死期也好，都是一样高兴。",
+     "effects": [
+      "approval bura +1"
+     ]
+    }
+   },
+   {
+    "text": "收下那两个节",
+    "tag": "神",
+    "if": "is.god && !flag.a3x_festivals && !flag.a3x_fest_no",
+    "once": true,
+    "effects": [
+     "flag a3x_festivals",
+     "var cult +1",
+     "rep south +1",
+     "rep church -1"
+    ],
+    "result": "他把两个节的日子写在餐巾上，推到你面前，从今往后，洇河上游的人每年有两天要朝着你那个方向烧香。揭秘教的院长听说了这件事，写了一封很长的信。"
+   },
+   {
+    "text": "回绝他",
+    "tag": "神",
+    "if": "is.god && !flag.a3x_festivals && !flag.a3x_fest_no",
+    "once": true,
+    "effects": [
+     "flag a3x_fest_no",
+     "rep south -1"
+    ],
+    "result": "“随你吧。”他耸了耸肩，“头一回他们会原谅你，到了第二回，他们可就换神了。”说完他把餐巾揉成一团，擦了擦手。"
+   },
+   {
+    "text": "结账，去电报房",
+    "goto": "a3_19"
+   }
+  ]
+ },
+ "a3_19": {
+  "id": "a3_19",
+  "title": "第三份报告",
+  "loc": "洇河口 · 电报房",
+  "text": [
+   "洇河口的电报房在联盟税关的二楼，只有一根线，先通到伊索贝尔港，再转安本科斯特。报务员是个半身人，按字数收钱，标点另算，其中问号最贵。",
+   "这一回，你已经知道读报告的人是谁了。埃塔的回电先到了，只有一行字：照常写，我照常记。",
+   {
+    "if": "flag.partner_engine_share",
+    "speaker": "埃塔（电报）",
+    "text": "另：机房的股，他上个月也撤了。代理人原话：供不起。"
+   },
+   {
+    "if": "flag.report2_named_general",
+    "text": "上一回你在报告的抬头写了“将军阁下”，他给你回过一封亲笔信，信里谈的是天气。"
+   },
+   {
+    "if": "flag.a3x_zerat",
+    "text": "你手里还攥着鱼馆那位客人多送的一句话，泽拉特那门炮是专打龙鳞的。"
+   },
+   {
+    "if": "origin == 'concord'",
+    "text": "镇议会也来了电报，点名要一份抄件，电报的落款是“全体议员”，底下还列着表决的结果，十一比零。"
+   }
+  ],
+  "choices": [
+   {
+    "text": "另抄一份，寄给老连队的文书",
+    "tag": "安本纳尔",
+    "if": "origin == 'anbennar' && !flag.a3x_home_done",
+    "once": true,
+    "effects": [
+     "flag a3x_home_done",
+     "var home_copies +1",
+     "rep republic +1"
+    ],
+    "result": "老连队的文书给你回了一张明信片，正面印着旧斗兽场，背面写着：收到，别再惹事。"
+   },
+   {
+    "text": "给使馆的那份照实写",
+    "tag": "洛伦特",
+    "if": "origin == 'lorent' && !flag.a3x_home_done",
+    "once": true,
+    "effects": [
+     "flag a3x_home_done",
+     "var home_copies +1",
+     "rep wand +1"
+    ],
+    "result": "你拿使馆的密码本把报告译了一遍，译到“青铜”两个字，密码本里偏偏没有，只好硬拼出来。"
+   },
+   {
+    "text": "给使馆的那份写薄一点",
+    "tag": "洛伦特",
+    "if": "origin == 'lorent' && !flag.a3x_home_done",
+    "once": true,
+    "effects": [
+     "flag a3x_home_done",
+     "var home_copies +1",
+     "var embassy_gap +1",
+     {
+      "if": "flag.codebook_seen",
+      "then": [
+       "rep republic +1"
+      ]
+     }
+    ],
+    "result": "给使馆的那一份，你只写了鱼。{?flag.codebook_seen:共和国海关早就把那本密码抄去了，他们读到的也只有鱼。|}"
+   },
+   {
+    "text": "照镇议会的要求抄一份",
+    "tag": "巨魔湾",
+    "if": "origin == 'concord' && !flag.a3x_home_done",
+    "once": true,
+    "effects": [
+     "flag a3x_home_done",
+     "var home_copies +1",
+     "rep charter +1"
+    ],
+    "result": "抄件寄走了。过了一个月，镇议会回电说：已阅，下月表决是否存档。"
+   },
+   {
+    "text": "念给法德伦的工会听",
+    "tag": "无主者",
+    "if": "origin == 'unowned' && !flag.a3x_home_done",
+    "once": true,
+    "effects": [
+     "flag a3x_home_done",
+     "var home_copies +1",
+     "rep union +1"
+    ],
+    "result": "你把稿子寄到了铸炉街，工会的人在礼拜天的会上念了一遍，法德伦听完只问了一句，机器那一条到底判了没有。"
+   },
+   {
+    "text": "写进考察笔记",
+    "tag": "卡尔希尔",
+    "if": "origin == 'karshyr' && !flag.a3x_home_done",
+    "once": true,
+    "effects": [
+     "flag a3x_home_done",
+     "var home_copies +1",
+     "rep south +1"
+    ],
+    "result": "考察笔记已经写到第三本了，题目先前改过两回，这一回又改了，改成《一家有限责任的冒险公司，和它的股东》。"
+   },
+   {
+    "text": "写全",
+    "effects": [
+     "flag report3_full",
+     "unflag report3_edited",
+     "unflag report3_lie",
+     "rep partner +1"
+    ],
+    "result": "报务员数了数，字是三百一十一个，标点四十二个，他问你要不要省掉几个标点，你说不用。",
+    "goto": "a3_20"
+   },
+   {
+    "text": "写全，末尾加一句：鱼馆里有人问您好",
+    "effects": [
+     "flag report3_full",
+     "flag report3_named_bronze",
+     "unflag report3_edited",
+     "unflag report3_lie",
+     "rep partner -1"
+    ],
+    "result": "报务员把这句话念了一遍，问你要不要加标点。{?flag.report2_named_general:这已经是你第二回在纸上点破他了。|}这一回，读报告的那位没有回电。",
+    "goto": "a3_20"
+   },
+   {
+    "text": "删掉鱼馆那一段",
+    "effects": [
+     "flag report3_edited",
+     "unflag report3_full",
+     "unflag report3_lie"
+    ],
+    "result": "删完只剩下一百零四个字。埃塔回电说：短了。可短在哪儿，电报上没说。",
+    "goto": "a3_20"
+   },
+   {
+    "text": "编一份：货送到了，别的一切照常",
+    "check": {
+     "skill": "deception",
+     "dc": 15
+    },
+    "ok": {
+     "text": "电报写得平平整整，读起来就像一张收据，汇票照常寄到了，一分钱也没少。",
+     "effects": [
+      "flag report3_lie",
+      "unflag report3_full",
+      "unflag report3_edited",
+      "rep partner -1"
+     ],
+     "goto": "a3_20"
+    },
+    "fail": {
+     "text": "汇票照常到了，只是多附了一行字：“洇河口的鱼好吃吗。”可你从没跟他说过，你在洇河口吃过鱼。",
+     "effects": [
+      "flag report3_lie",
+      "unflag report3_full",
+      "unflag report3_edited",
+      "rep partner -1",
+      "flag partner_knows_lie"
+     ],
+     "goto": "a3_20"
+    }
+   }
+  ]
+ },
+ "a3_20": {
+  "id": "a3_20",
+  "title": "数流星",
+  "art": "ev_big_star_in_sky",
+  "loc": "洇河口 · 鱼馆的屋顶",
+  "text": [
+   "鱼馆的屋顶是平的，上头晒着渔网，每到泪落月的夜里，洇河口的人都要上房顶，带上一张草席、一壶酒。河上的两座税关也都熄了灯，一年到头，两家说得拢的事就只有这一件。",
+   {
+    "if": "world.tears >= 7",
+    "text": "那一夜落了三百多颗，有人数着数着就乱了，只好从头再数，数着数着又乱了。"
+   },
+   {
+    "if": "world.tears == 6",
+    "text": "那一夜落了二百来颗。"
+   },
+   {
+    "if": "world.tears == 5",
+    "text": "那一夜落了一百五十颗上下。"
+   },
+   {
+    "if": "world.tears == 4",
+    "text": "那一夜落了九十多颗。"
+   },
+   {
+    "if": "world.tears == 3",
+    "text": "那一夜落了五十颗上下。"
+   },
+   {
+    "if": "world.tears == 2",
+    "text": "那一夜落了二十几颗。"
+   },
+   {
+    "if": "world.tears == 1",
+    "text": "那一夜落下来的，一只手就数得过来。"
+   },
+   {
+    "if": "world.tears <= 0",
+    "text": "那一夜一颗也没落，屋顶上的人坐到了后半夜，把酒喝完，也就下楼去了。"
+   },
+   "1809 年的历书上，这一栏写的是“数不过来”。",
+   {
+    "if": "party.bura",
+    "speaker": "布拉",
+    "text": "（铰链咔的一声。）比去年少，比明年多。"
+   },
+   {
+    "if": "!party.bura",
+    "text": "布拉不在，草席上放着一颗她的铰链螺丝，是她走的那天落在行李里的。"
+   },
+   {
+    "if": "party.middlesday",
+    "speaker": "礼拜三",
+    "text": "（陈述。）我数完了。（礼貌。）要我把数报给埃塔吗？"
+   },
+   {
+    "if": "flag.m_left",
+    "text": "礼拜三不在，它的行李码在屋角，最小的一件放在最上头。"
+   },
+   {
+    "if": "flag.m_dormant",
+    "text": "礼拜三坐在屋顶上，脸朝着南边，它没有数。"
+   },
+   {
+    "if": "party.guilhem",
+    "speaker": "吉列姆",
+    "text": "我小时候在梨林也数过一回，数到一千就睡着了。理论上，那一年落下来的还不止这些呢。"
+   },
+   {
+    "if": "party.narwen",
+    "speaker": "娜尔雯",
+    "text": "上回我在屋顶上数，是 1810 年。那一回实在数不过来，我就改数天上空着的地方了。"
+   },
+   {
+    "if": "flag.narwen_left",
+    "text": "娜尔雯不在，她那副备用眼镜搁在烟囱上，镜片朝着天。"
+   },
+   {
+    "if": "world.tears <= 2",
+    "text": "罐子里，别摇的光已经暗得只剩一个小点了。"
+   },
+   {
+    "if": "is.god",
+    "speaker": "别摇",
+    "text": "现在我欠你的，这辈子都还不清了。这件事，我可不原谅你。"
+   }
+  ],
+  "first": [
+   "level 8"
+  ],
+  "next": "a4_01"
+ }
 };

@@ -28,16 +28,17 @@ for (const [file, list] of Object.entries(byFile)) {
   const data = clone(mod[exp]);
   const get = (p) => p.reduce((o, k) => (o == null ? o : o[k]), data);
   const drops = [];
+  let stale = 0;
   for (const [e, t] of list) {
     const parent = get(e.path.slice(0, -1)); const key = e.path[e.path.length - 1];
-    if (parent == null || parent[key] !== e.orig) { console.log(`  跳过 ${e.id}：原文已经变了`); continue; }
+    if (parent == null || parent[key] !== e.orig) { stale++; continue; }   // already rewritten by an earlier run, or moved
     if (t === '∅') drops.push(e.path); else parent[key] = t;
   }
   drops.sort((a, b) => b[b.length - 1] - a[a.length - 1]);
   for (const p of drops) { const arr = get(p.slice(0, -1)); if (Array.isArray(arr)) arr.splice(p[p.length - 1], 1); }
   const head = `// ${id} / ${file}：数据文件。正文按 docs/STYLE_GUIDE.md（第二版）重写过，由 tools/rewrite-apply.mjs 写回。\n`;
   fs.writeFileSync(path.join(dir, file), `${head}export const ${exp} = ${JSON.stringify(data, null, 1)};\n`);
-  console.log(`  ${file}: ${list.length} 条`);
+  console.log(`  ${file}: 写入 ${list.length - stale} 条${stale ? `，另有 ${stale} 条之前已经写过` : ''}`);
 }
 console.log(`写回 ${applied.length} 块：${applied.join(' ')}`);
 if (skipped.length) console.log(`没写回：${skipped.join('、')}`);

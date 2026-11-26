@@ -1,56 +1,207 @@
-// s1820《泪尽》的剧情物品（圣经第 14.2 节）。全是任务物品：quest: true，value 0，卖不掉。
-// 饰品位的几样（旧制服、白玫瑰别针、七号线工牌）没有数值，只给场景条件读。
-const Q = (id, name, en, desc, extra = {}) => ({ id, name, en, desc, value: 0, quest: true, ...extra });
-
+// s1820 / items.js：数据文件。正文按 docs/STYLE_GUIDE.md（第二版）重写过，由 tools/rewrite-apply.mjs 写回。
 export const ITEMS = {
-  discharge_papers: Q('discharge_papers', '退伍文书', 'Discharge Papers',
-    '治安军的遣散单，盖着连部的章。事由一栏的墨比签名旧。补发的军饷“另候通知”。'),
-  old_uniform: Q('old_uniform', '没领章的旧制服', 'Old Uniform, Unbadged',
-    '1810 年发的呢子制服，领章拆了，铜扣还在。穿着它，老连队的人认得你。', { slot: 'trinket' }),
-  embassy_codebook: Q('embassy_codebook', '使馆密码本', 'Embassy Codebook',
-    '洛伦特驻安本科斯特使馆的密码本，巴掌大，书脊是假的。给使馆写报告要用它。'),
-  whiterose_pin: Q('whiterose_pin', '白玫瑰别针', 'Whiterose Pin',
-    '白玫瑰王庭发的银别针。洛伦特的人见了它，说话会客气一点。', { slot: 'trinket' }),
-  wicker_trunk: Q('wicker_trunk', '藤箱', 'Wicker Trunk',
-    '巨魔湾编的藤箱，一边的搭扣坏了，用麻绳捆着。里面是三件衬衫和一本航海日志。'),
-  debt_writ: Q('debt_writ', '镇议会的抵债文书', 'Town Council Debt Writ',
-    '塞斯提尔边区一个小镇的镇议会开的文书：欠迟到者公司四百金冠，1789 年的账，以人抵债。第二十次表决，全票通过。'),
-  bill_of_sale: Q('bill_of_sale', '卖契', 'Bill of Sale',
-    '铸炉街自动机厂开的卖契，按废铁价。买主一栏写着一家公司的名字。'),
-  line7_tag: Q('line7_tag', '七号线的工牌', 'Line Seven Tag',
-    '黄铜工牌，冲着“七号线·夜班”和一个工位号。背面有人用钉子划了一道。', { slot: 'trinket' }),
-  spire_chip: Q('spire_chip', '尖碑上掉下来的石片', 'Spire Chip',
-    '指甲盖大的一片黑石头，雨天摸着是温的。卡尔希尔的孩子拿它当护身符。'),
-  tour_letter: Q('tour_letter', '游学团的介绍信', 'Karshyray Tour Letter',
-    '卡尔希尔游学团的介绍信，三种文字。坎诺的客栈老板看完会把它还给你，然后说没房了。'),
-  skiplist_telegram: Q('skiplist_telegram', '十三个字的电报', 'The Skip-List Telegram',
-    '陆军部追到驳船上的一封电报，十三个字：“梨林等四区公投不稳，暂缓施术。”'),
-  korashi_grain: Q('korashi_grain', '一粒寇拉希', 'A Grain of Korashi',
-    '从一个战斗法师肩膀里取出来的黑晶，米粒大。法师碰了它，几天施不了法。'),
-  druznar_plates: Q('druznar_plates', '德鲁兹纳的底片（抄件）', "Druznar's Plates (Copies)",
-    '暗望所的玻璃底片，翻拍的。每一张上的光点都比前一年的少。'),
-  cellar_book: Q('cellar_book', '地窖的血账', 'The Cellar Book',
-    '魔法领地放血房的账，一行一个学徒：日子、血量、换了多少佣兵的饷。'),
-  ancardia_ledger: Q('ancardia_ledger', '军需处的回扣账', 'Ancardian Quartermaster Ledger',
-    '安卡迪亚兵站镇军需处的私账。法师的登记费一栏有两个数，差额进了一个军官的口袋。'),
-  yamina_copy: Q('yamina_copy', '雅米娜账本的抄件', "Copy of Yamina's Ledger",
-    '两栏：1810 年以来每道咒的产出，对着开出去的子弹数。抄的人手抖了，有一页抄了两遍。'),
-  share_register: Q('share_register', '银团的股东名册', 'Syndicate Share Register',
-    '阿斯拉银行牵头的银团名册。有一个代持账户，入股日期在你那份报告发出之后。'),
-  engine_ledger: Q('engine_ledger', '机房的流水账', 'Engine House Ledger',
-    '文森顿那座机房的流水账。不烧煤，账上也没有煤钱，只有一栏“芯核更换”。'),
-  phrase_record: Q('phrase_record', '鸣声记录', 'Fragment Tone Record',
-    '分形修会的鸣声记录，一百多年的数。最后几页反复只记了两个词。'),
-  torrieth_rubbing: Q('torrieth_rubbing', '托丽丝刻痕的拓片', "Rubbing of Torrieth's Marks",
-    '密室墙上的刻痕拓下来的，炭粉还没定住。当中一个方形的印子，和碎片里那块黑东西一样大。'),
-  partner_paper: Q('partner_paper', '合伙人的转让文件', "The Partner's Transfer Papers",
-    '五成一的股份转让文件，条款很公道。签名栏的墨是青铜色的。'),
-  tuning_fork: Q('tuning_fork', '达姆斯塔尔音叉', 'Damestear Tuning Fork',
-    '一把调到某个位面频率的音叉，叉齿是晶体磨的，敲一下，船上的杯子都跟着响。', { relic: true }),
-  draft_treaty: Q('draft_treaty', '草约', 'Draft Treaty',
-    '第二次阿兰蒂尔大峰会的草约，页边写满了各国代表的批注。通过的是哪一份条款，看封面上的戳。'),
-  torrieth_tally: Q('torrieth_tally', '托丽丝的刻痕本', "Torrieth's Tally",
-    '天门前那条小船上的刻痕，一百六十八年，有人一道一道抄进了本子里。最后一道后面是空白。'),
-  jam_jar: Q('jam_jar', '一只空果酱罐', 'An Empty Jam Jar',
-    '罐子还在，标签也在，上面写着“别摇”。盖子拧松了半圈。'),
+ "discharge_papers": {
+  "id": "discharge_papers",
+  "name": "退伍文书",
+  "en": "Discharge Papers",
+  "desc": "治安军开的遣散单，盖着连部的章，只是事由那一栏的墨迹，看着比签名的要旧，补发的军饷写的是“另候通知”。",
+  "value": 0,
+  "quest": true
+ },
+ "old_uniform": {
+  "id": "old_uniform",
+  "name": "没领章的旧制服",
+  "en": "Old Uniform, Unbadged",
+  "desc": "1810 年发的呢子制服，领章已经拆掉了，铜扣倒还在，穿着它，老连队的人一眼就认得出你。",
+  "value": 0,
+  "quest": true,
+  "slot": "trinket"
+ },
+ "embassy_codebook": {
+  "id": "embassy_codebook",
+  "name": "使馆密码本",
+  "en": "Embassy Codebook",
+  "desc": "洛伦特驻安本科斯特使馆的密码本，只有巴掌大，书脊是假的，要给使馆写报告，就得用它。",
+  "value": 0,
+  "quest": true
+ },
+ "whiterose_pin": {
+  "id": "whiterose_pin",
+  "name": "白玫瑰别针",
+  "en": "Whiterose Pin",
+  "desc": "白玫瑰王庭发的银别针，洛伦特的人见了它，说话会客气一点。",
+  "value": 0,
+  "quest": true,
+  "slot": "trinket"
+ },
+ "wicker_trunk": {
+  "id": "wicker_trunk",
+  "name": "藤箱",
+  "en": "Wicker Trunk",
+  "desc": "巨魔湾编的藤箱，有一边的搭扣坏了，只好拿麻绳捆着，里头装着三件衬衫和一本航海日志。",
+  "value": 0,
+  "quest": true
+ },
+ "debt_writ": {
+  "id": "debt_writ",
+  "name": "镇议会的抵债文书",
+  "en": "Town Council Debt Writ",
+  "desc": "塞斯提尔边区一个小镇的镇议会开的文书，说的是 1789 年的一笔旧账，镇上欠着迟到者公司四百金冠，拿人来抵债。这事表决到第二十次，全票通过了。",
+  "value": 0,
+  "quest": true
+ },
+ "bill_of_sale": {
+  "id": "bill_of_sale",
+  "name": "卖契",
+  "en": "Bill of Sale",
+  "desc": "铸炉街自动机厂开的卖契，是按废铁的价钱卖的，买主那一栏写着一家公司的名字。",
+  "value": 0,
+  "quest": true
+ },
+ "line7_tag": {
+  "id": "line7_tag",
+  "name": "七号线的工牌",
+  "en": "Line Seven Tag",
+  "desc": "一块黄铜工牌，上头冲着“七号线·夜班”和一个工位号，背面不知是谁用钉子划了一道。",
+  "value": 0,
+  "quest": true,
+  "slot": "trinket"
+ },
+ "spire_chip": {
+  "id": "spire_chip",
+  "name": "尖碑上掉下来的石片",
+  "en": "Spire Chip",
+  "desc": "一片指甲盖大的黑石头，下雨天摸上去是温的，卡尔希尔的孩子都拿它当护身符。",
+  "value": 0,
+  "quest": true
+ },
+ "tour_letter": {
+  "id": "tour_letter",
+  "name": "游学团的介绍信",
+  "en": "Karshyray Tour Letter",
+  "desc": "卡尔希尔游学团的介绍信，用三种文字写的，坎诺的客栈老板看完了会把它还给你，然后告诉你没房了。",
+  "value": 0,
+  "quest": true
+ },
+ "skiplist_telegram": {
+  "id": "skiplist_telegram",
+  "name": "十三个字的电报",
+  "en": "The Skip-List Telegram",
+  "desc": "陆军部一路追到驳船上来的电报，统共十三个字：“梨林等四区公投不稳，暂缓施术。”",
+  "value": 0,
+  "quest": true
+ },
+ "korashi_grain": {
+  "id": "korashi_grain",
+  "name": "一粒寇拉希",
+  "en": "A Grain of Korashi",
+  "desc": "从一个战斗法师的肩膀里取出来的黑晶，只有米粒那么大，法师要是碰了它，好几天都施不了法。",
+  "value": 0,
+  "quest": true
+ },
+ "druznar_plates": {
+  "id": "druznar_plates",
+  "name": "德鲁兹纳的底片（抄件）",
+  "en": "Druznar's Plates (Copies)",
+  "desc": "暗望所的玻璃底片，这一份是翻拍的，一年一张，每一张上的光点都比前一年少。",
+  "value": 0,
+  "quest": true
+ },
+ "cellar_book": {
+  "id": "cellar_book",
+  "name": "地窖的血账",
+  "en": "The Cellar Book",
+  "desc": "魔法领地放血房的账本，一行记一个学徒，哪天放的、放了多少血、换来了多少佣兵的饷，都写在上面。",
+  "value": 0,
+  "quest": true
+ },
+ "ancardia_ledger": {
+  "id": "ancardia_ledger",
+  "name": "军需处的回扣账",
+  "en": "Ancardian Quartermaster Ledger",
+  "desc": "安卡迪亚兵站镇军需处的私账，法师登记费那一栏记着两个数，当中的差额进了一个军官的口袋。",
+  "value": 0,
+  "quest": true
+ },
+ "yamina_copy": {
+  "id": "yamina_copy",
+  "name": "雅米娜账本的抄件",
+  "en": "Copy of Yamina's Ledger",
+  "desc": "账分两栏，一栏是 1810 年以来每道咒的产出，另一栏是对应开出去的子弹数。抄账的人手抖了，有一页抄了两遍。",
+  "value": 0,
+  "quest": true
+ },
+ "share_register": {
+  "id": "share_register",
+  "name": "银团的股东名册",
+  "en": "Syndicate Share Register",
+  "desc": "阿斯拉银行牵头的那个银团的名册，里头有一个代持账户，入股的日子排在你那份报告发出去之后。",
+  "value": 0,
+  "quest": true
+ },
+ "engine_ledger": {
+  "id": "engine_ledger",
+  "name": "机房的流水账",
+  "en": "Engine House Ledger",
+  "desc": "文森顿那座机房的流水账，机房不烧煤，账上自然也没有煤钱，只有一栏写着“芯核更换”。",
+  "value": 0,
+  "quest": true
+ },
+ "phrase_record": {
+  "id": "phrase_record",
+  "name": "鸣声记录",
+  "en": "Fragment Tone Record",
+  "desc": "分形修会记的鸣声，一百多年的数都在这儿了，可翻到最后几页，翻来覆去只记着两个词。",
+  "value": 0,
+  "quest": true
+ },
+ "torrieth_rubbing": {
+  "id": "torrieth_rubbing",
+  "name": "托丽丝刻痕的拓片",
+  "en": "Rubbing of Torrieth's Marks",
+  "desc": "从密室墙上的刻痕拓下来的，炭粉都还没定住，当中有个方方的印子，跟碎片里那块黑东西一般大。",
+  "value": 0,
+  "quest": true
+ },
+ "partner_paper": {
+  "id": "partner_paper",
+  "name": "合伙人的转让文件",
+  "en": "The Partner's Transfer Papers",
+  "desc": "一份转让五成一股份的文件，条款开得很公道，只是签名栏里的墨是青铜色的。",
+  "value": 0,
+  "quest": true
+ },
+ "tuning_fork": {
+  "id": "tuning_fork",
+  "name": "达姆斯塔尔音叉",
+  "en": "Damestear Tuning Fork",
+  "desc": "这把音叉调的是某个位面的频率，叉齿是拿晶体磨出来的，敲它一下，满船的杯子都跟着响。",
+  "value": 0,
+  "quest": true,
+  "relic": true
+ },
+ "draft_treaty": {
+  "id": "draft_treaty",
+  "name": "草约",
+  "en": "Draft Treaty",
+  "desc": "第二次阿兰蒂尔大峰会的草约，页边上写满了各国代表的批注。最后通过的是哪一份条款，要看封面上盖的戳。",
+  "value": 0,
+  "quest": true
+ },
+ "torrieth_tally": {
+  "id": "torrieth_tally",
+  "name": "托丽丝的刻痕本",
+  "en": "Torrieth's Tally",
+  "desc": "天门前那条小船上的刻痕，前后一百六十八年，有人一道一道地抄进了这个本子里，抄到最后一道，后面就是空白了。",
+  "value": 0,
+  "quest": true
+ },
+ "jam_jar": {
+  "id": "jam_jar",
+  "name": "一只空果酱罐",
+  "en": "An Empty Jam Jar",
+  "desc": "罐子还在，标签也还在，上面写着“别摇”，只是盖子给拧松了半圈。",
+  "value": 0,
+  "quest": true
+ }
 };

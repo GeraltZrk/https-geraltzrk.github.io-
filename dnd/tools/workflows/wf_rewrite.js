@@ -15,7 +15,7 @@ const results = await pipeline(args.chunks, (chunk) => agent(`You are rewriting 
 
 Read, completely and in this order:
 1. ${G}/docs/STYLE_GUIDE.md : the rules and the three approved samples. This is the standard. Study how each 改后 differs from its 原文.
-2. ${G}/js/data/scenarios/${ID}/VOICES.md : how each character talks.
+2. ${G}/js/data/scenarios/${ID}/VOICES.md : how each character talks. For a speaker it does not list, grep ${G}/js/data/scenarios/${ID}/BIBLE.md for the name (sections 8 and 9 describe every character) and use the personality you find there, not the old sample lines.
 3. ${W}/in/${chunk}.txt : your batch. Numbered lines, each tagged with what it is (narration, a character's line, an option label, a success or failure result, a fight special, and so on).
 ${EXTRA[chunk.split('-')[0]] ? '\n' + EXTRA[chunk.split('-')[0]] + '\n' : ''}
 Then write ${W}/out/${chunk}.txt : one line per number, "@编号 改好的文字", same order, nothing else.

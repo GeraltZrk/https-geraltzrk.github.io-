@@ -18,6 +18,7 @@ for (const name of chunks) {
   for (const line of fs.readFileSync(f, 'utf8').split('\n')) { const m = line.match(/^@(\S+)\s+(.*)$/); if (m) text.set(m[1], m[2].trim()); }
   applied.push(name);
 }
+for (const e of Object.values(map)) if (e.aliasOf && text.has(e.aliasOf)) text.set(e.id, text.get(e.aliasOf));   // repeats take the text of their first occurrence
 const byFile = {};
 for (const [eid, t] of text) { const e = map[eid]; if (e) (byFile[e.file] = byFile[e.file] || []).push([e, t]); }
 const clone = (v) => JSON.parse(JSON.stringify(v));

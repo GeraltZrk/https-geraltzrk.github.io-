@@ -103,31 +103,35 @@ walkPlain('items.js', 'ITEMS', 'it', ITEMS, [], (kp, node) => `物品「${node.n
 
 if (SURVEY) { console.log(Object.entries(survey).sort((a, b) => b[1] - a[1]).map(([k, c]) => `${k}=${c}`).join('  ')); }
 
+// ---- exact repeats: rewrite once, reuse everywhere (fight blocks are repeated across branches) ----
+const firstOf = new Map();
+for (const e of entries) { if (e.drop) continue; const p0 = firstOf.get(e.orig); if (p0) e.aliasOf = p0; else firstOf.set(e.orig, e.id); }
+
 // ---- chunks ----
 fs.mkdirSync(path.join(work, 'in'), { recursive: true }); fs.mkdirSync(path.join(work, 'out'), { recursive: true });
 const chunks = [];
-const header = (name, i, total) => `# ${id} 第 ${name} 块\n# 每一行的格式是：@编号 〔这一行是什么〕 原文\n# 你交回的文件里，每一行写成：@编号 改好的文字（一行一条，编号照抄，不要方括号里的说明，不要空行以外的别的东西）。\n# 不带条件的旁白如果并进了上一条，这一条写：@编号 ∅\n`;
+const header = (name, i, total) => `# ${id} 第 ${name} 块\n# 每一行的格式是：@编号 〔这一行是什么〕 原文\n# 你交回的文件里，每一行写成：@编号 改好的文字（一行一条，编号照抄，不要方括号里的说明，不要空行以外的别的东西）。\n# 不带条件的旁白如果并进了上一条，这一条写：@编号 ∅\n# 以 # 开头、写着“同 @某号”的行，是别处已经改过的重复文字，放在这里只为让你看懂上下文，不用交。\n`;
 function flush(name, list, head) {
   if (!list.length) return;
   const lines = [header(name)];
   let last = null;
   for (const e of list) {
     if (e.scene && e.scene !== last) { const si = sceneInfo[e.scene]; lines.push(`\n=== 场景 ${e.scene}${si.title ? `《${si.title}》` : ''}${si.loc ? `　地点：${si.loc}` : ''}${si.date ? `　日期：${si.date}` : ''}`); last = e.scene; }
-    lines.push(`@${e.id} 〔${e.kind}〕 ${e.orig}`);
+    lines.push(e.aliasOf ? `# （同 @${e.aliasOf}，不用交）〔${e.kind}〕 ${e.orig}` : `@${e.id} 〔${e.kind}〕 ${e.orig}`);
   }
   fs.writeFileSync(path.join(work, 'in', name + '.txt'), lines.join('\n') + '\n');
-  chunks.push({ name, ids: list.length, chars: list.reduce((a, e) => a + e.orig.length, 0) });
+  chunks.push({ name, ids: list.filter((e) => !e.aliasOf).length, chars: list.reduce((a, e) => a + (e.aliasOf ? 0 : e.orig.length), 0) });
 }
 for (const f of parts) {
   const list = entries.filter((e) => e.file === f);
   const scenes = [...new Set(list.map((e) => e.scene))];
-  const total = list.reduce((a, e) => a + e.orig.length, 0);
+  const total = list.reduce((a, e) => a + (e.aliasOf ? 0 : e.orig.length), 0);
   const k = Math.max(1, Math.round(total / CHUNK));
   const target = total / k;
   let cur = [], size = 0, idx = 1;
   for (const sid of scenes) {
     const sl = list.filter((e) => e.scene === sid);
-    const sz = sl.reduce((a, e) => a + e.orig.length, 0);
+    const sz = sl.reduce((a, e) => a + (e.aliasOf ? 0 : e.orig.length), 0);
     if (cur.length && size + sz / 2 > target && idx < k) { flush(`${f.replace('.js', '')}-${idx++}`, cur); cur = []; size = 0; }
     cur.push(...sl); size += sz;
   }

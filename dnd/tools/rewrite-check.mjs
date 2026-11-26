@@ -18,7 +18,8 @@ for (const line of fs.readFileSync(outPath, 'utf8').split('\n')) {
   out.set(m[1], m[2].trim());
 }
 const inSet = new Set(inIds);
-for (const id of inIds) if (!out.has(id)) must.push(`@${id} 漏了`);
+const PARTIAL = process.argv.includes('--partial');   // a reviewer's pass: only changed lines are handed in, no style statistics
+if (!PARTIAL) for (const id of inIds) if (!out.has(id)) must.push(`@${id} 漏了`);
 for (const id of out.keys()) if (!inSet.has(id)) must.push(`@${id} 不是这一块的编号`);
 
 const tokens = (s) => { const t = []; for (const m of s.matchAll(/\{([^{}]*)\}/g)) { const x = m[1]; if (x.startsWith('?')) t.push('?' + x.slice(1).split(':')[0].trim()); else if (/^m:.*\|f:/.test(x)) t.push('m|f'); else t.push(x); } return t.sort().join(' '); };
@@ -32,7 +33,7 @@ for (const id of inIds) {
   if (t === undefined) { prev = e; continue; }
   if (t === '∅') {
     if (!e.drop) must.push(`@${id} 不能并掉：只有场景正文里不带条件的旁白可以写 ∅`);
-    else if (!prev || prev.scene !== e.scene || !prev.drop || out.get(prev.id) === undefined) must.push(`@${id} 写了 ∅，可上一条不是同一场的普通旁白，没处可并`);
+    else if (!PARTIAL && (!prev || prev.scene !== e.scene || !prev.drop || out.get(prev.id) === undefined)) must.push(`@${id} 写了 ∅，可上一条不是同一场的普通旁白，没处可并`);
     prev = e; continue;   // a dropped line keeps "prev" pointing at a narration line of the same kind
   }
   prev = e; rewritten++;
@@ -42,12 +43,13 @@ for (const id of inIds) {
   if (/[{}]/.test(rest)) must.push(`@${id} 花括号的写法不对`);
   const s = strip(t);
   oldLen += strip(e.orig).length; newLen += s.length;
-  for (const [re, label] of BANNED) if (re.test(s)) must.push(`@${id} 用了禁用的套话：${label}`);
+  for (const [re, label] of BANNED) if (re.test(s)) (PARTIAL ? note : must).push(`@${id} 用了禁用的套话：${label}`);   // on a read-through the reviewer decides
   if (/——/.test(s)) must.push(`@${id} 有破折号`);
   if (/；/.test(s)) must.push(`@${id} 有分号`);
   if (e.label) { if (s.length > 44) must.push(`@${id} 选项太长（${s.length} 字，最多 40）`); continue; }
   if (/一句话简介/.test(e.kind)) { if (s.length > 15) must.push(`@${id} 简介超过 15 个字`); continue; }
   const commas = count(s, /，/g), ends = count(s, /[。！？]/g);
+  if (PARTIAL) continue;
   if (e.speech) {
     if (s.length >= 12) { speech++; if (PART.test(s)) speechPart++; }
     if (s.length >= 60 && ends >= 4 && commas / ends < 1.2) note.push(`@${id} 这段台词句号太密（${ends} 个句号，${commas} 个逗号），人说话是一口气往下说的`);
@@ -62,7 +64,7 @@ for (const id of inIds) {
 }
 const ratio = nEnd ? nComma / nEnd : 9;
 const SHORT_FORM = /^(meta|codex|data)-/.test(chunk);   // cards, blurbs and encyclopedia entries: sentences are naturally short, so no ratio target
-if (!SHORT_FORM && nEnd >= 12 && ratio < 2.0) must.push(`整块叙述里逗号只有句号的 ${ratio.toFixed(1)} 倍，太碎了，一般是两倍半到四倍：把说同一件事的碎句连起来`);
+if (!PARTIAL && !SHORT_FORM && nEnd >= 12 && ratio < 2.0) must.push(`整块叙述里逗号只有句号的 ${ratio.toFixed(1)} 倍，太碎了，一般是两倍半到四倍：把说同一件事的碎句连起来`);
 else if (!SHORT_FORM && nEnd >= 12 && ratio < 2.3) note.push(`整块叙述里逗号是句号的 ${ratio.toFixed(1)} 倍，偏碎：看看有没有说同一件事却断开了的句子（短卡片、短条目本来句子就短，不必硬并）`);
 if (nEnd >= 12 && ratio > (SHORT_FORM ? 3.2 : 4.6)) note.push(`整块叙述里逗号是句号的 ${ratio.toFixed(1)} 倍，偏多：看看是不是把不相干的几件事用逗号串在了一起，换了一件事就该打句号`);
 const sp = speech ? speechPart / speech : 1;

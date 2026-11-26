@@ -5,7 +5,8 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { execFileSync } from 'node:child_process';
 
-const [id, work, ...only] = process.argv.slice(2);
+const PARTIAL = process.argv.includes('--partial');
+const [id, work, ...only] = process.argv.slice(2).filter((x) => !x.startsWith('--'));
 const dir = path.resolve('js/data/scenarios', id);
 const map = JSON.parse(fs.readFileSync(path.join(work, 'map.json'), 'utf8'));
 const chunks = JSON.parse(fs.readFileSync(path.join(work, 'chunks.json'), 'utf8')).map((c) => c.name).filter((n) => !only.length || only.includes(n));
@@ -14,7 +15,7 @@ const applied = [], skipped = [];
 for (const name of chunks) {
   const f = path.join(work, 'out', name + '.txt');
   if (!fs.existsSync(f)) { skipped.push(name + '（没有交回）'); continue; }
-  try { execFileSync('node', ['tools/rewrite-check.mjs', work, name], { stdio: 'pipe' }); } catch (e) { skipped.push(name + '（检查没过）'); continue; }
+  try { execFileSync('node', ['tools/rewrite-check.mjs', work, name, ...(PARTIAL ? ['--partial'] : [])], { stdio: 'pipe' }); } catch (e) { skipped.push(name + '（检查没过）'); continue; }
   for (const line of fs.readFileSync(f, 'utf8').split('\n')) { const m = line.match(/^@(\S+)\s+(.*)$/); if (m) text.set(m[1], m[2].trim()); }
   applied.push(name);
 }

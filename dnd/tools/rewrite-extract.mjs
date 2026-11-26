@@ -9,6 +9,16 @@ import { pathToFileURL } from 'node:url';
 const [id, work] = process.argv.slice(2);
 const CHUNK = parseInt((process.argv.find((a) => a.startsWith('--chunk=')) || '--chunk=9000').split('=')[1], 10);
 const SURVEY = process.argv.includes('--survey');
+const COMPACT = process.argv.includes('--compact');   // short tags, no repeated lines: for reading the whole thing through
+const bibleText = fs.existsSync(path.resolve('js/data/scenarios', id, 'BIBLE.md')) ? fs.readFileSync(path.resolve('js/data/scenarios', id, 'BIBLE.md'), 'utf8').split('\n') : [];
+function brief(sid) {
+  const i = bibleText.findIndex((l) => l.includes('`' + sid + '｜') || l.includes('`' + sid + '`｜') || l.includes('`' + sid + '` ｜'));
+  if (i < 0) return '';
+  const out = [];
+  for (let j = i + 1; j < bibleText.length && out.join('').length < 380; j++) { const l = bibleText[j].trim(); if (!l) { if (out.length) break; continue; } if (/^[`*#]/.test(l) && /｜/.test(l)) break; out.push(l.replace(/\*\*/g, '')); }
+  return out.join(' ').slice(0, 380);
+}
+const short = (kind) => kind.replace(/^选项/, 'O').replace(/战斗里的特殊行动「([^」]*)」的说明/, 'X说明「$1」').replace(/^「([^」]*)」成功/, 'X成「$1」').replace(/^「([^」]*)」失败/, 'X败「$1」').replace(/战斗开场/, '开战').replace(/结果·/, 'R·').replace(/成功·/, '成·').replace(/失败·/, '败·').replace(/打赢·/, '赢·').replace(/打输·/, '输·').replace(/旁白/, 'N').replace(/台词·/, 'S:').replace(/ \[if /g, ' ?[');
 const dir = path.resolve('js/data/scenarios', id);
 const imp = async (f) => import(pathToFileURL(path.join(dir, f)).href);
 const hasCJK = (s) => /[一-鿿]/.test(s);
@@ -113,10 +123,11 @@ const chunks = [];
 const header = (name, i, total) => `# ${id} 第 ${name} 块\n# 每一行的格式是：@编号 〔这一行是什么〕 原文\n# 你交回的文件里，每一行写成：@编号 改好的文字（一行一条，编号照抄，不要方括号里的说明，不要空行以外的别的东西）。\n# 不带条件的旁白如果并进了上一条，这一条写：@编号 ∅\n# 以 # 开头、写着“同 @某号”的行，是别处已经改过的重复文字，放在这里只为让你看懂上下文，不用交。\n`;
 function flush(name, list, head) {
   if (!list.length) return;
-  const lines = [header(name)];
+  const lines = [COMPACT ? `# ${id} ${name}` : header(name)];
   let last = null;
   for (const e of list) {
-    if (e.scene && e.scene !== last) { const si = sceneInfo[e.scene]; lines.push(`\n=== 场景 ${e.scene}${si.title ? `《${si.title}》` : ''}${si.loc ? `　地点：${si.loc}` : ''}${si.date ? `　日期：${si.date}` : ''}`); last = e.scene; }
+    if (e.scene && e.scene !== last) { const si = sceneInfo[e.scene]; lines.push(`\n=== 场景 ${e.scene}${si.title ? `《${si.title}》` : ''}${si.loc ? `　地点：${si.loc}` : ''}${si.date ? `　日期：${si.date}` : ''}`); if (COMPACT) { const b = brief(e.scene); if (b) lines.push(`（设计意图）${b}`); } last = e.scene; }
+    if (COMPACT) { if (!e.aliasOf) lines.push(`@${e.id} ${short(e.kind)}| ${e.orig}`); continue; }
     lines.push(e.aliasOf ? `# （同 @${e.aliasOf}，不用交）〔${e.kind}〕 ${e.orig}` : `@${e.id} 〔${e.kind}〕 ${e.orig}`);
   }
   fs.writeFileSync(path.join(work, 'in', name + '.txt'), lines.join('\n') + '\n');

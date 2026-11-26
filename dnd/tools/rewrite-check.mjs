@@ -56,11 +56,13 @@ for (const id of inIds) {
   if (s.length >= 50) { nComma += commas; nEnd += ends; }
   if (s.length >= 80 && ends >= 4 && commas / ends < 1.5) must.push(`@${id} 句子太碎（${ends} 个句号，${commas} 个逗号），连起来说`);
   if (s.length >= 30) { const shorts = s.split(/[。！？]/).filter((x) => x.trim() && x.trim().length <= 6).length; if (shorts >= 2) note.push(`@${id} 里有 ${shorts} 个六字以内的短句`); }
+  { const longest = Math.max(...s.split(/[。！？]/).map((x) => x.length)); if (longest > 130) must.push(`@${id} 有一句话长到 ${longest} 个字，一逗到底了，找个说完一件事的地方断开`); else if (longest > 95) note.push(`@${id} 有一句话长到 ${longest} 个字，看看是不是该断开`); }
   if (/：(?!“)/.test(s)) note.push(`@${id} 旁白里用了冒号（冒号只用来引出别人的话）`);
   if (/没吭声|没说话|没接话|不吭声|没出声/.test(s) && /没吭声|没说话|没接话|不吭声|没出声/.test(e.orig) === false) note.push(`@${id} 新添了“没吭声”一类的节拍`);
 }
 const ratio = nEnd ? nComma / nEnd : 9;
-if (nEnd >= 12 && ratio < 2.8) must.push(`整块叙述里逗号只有句号的 ${ratio.toFixed(1)} 倍，至少要 3 倍：把碎句连起来`);
+if (nEnd >= 12 && ratio < 2.3) must.push(`整块叙述里逗号只有句号的 ${ratio.toFixed(1)} 倍，太碎了，一般是两倍半到四倍：把说同一件事的碎句连起来`);
+if (nEnd >= 12 && ratio > 4.6) note.push(`整块叙述里逗号是句号的 ${ratio.toFixed(1)} 倍，偏多：看看是不是把不相干的几件事用逗号串在了一起，换了一件事就该打句号`);
 const sp = speech ? speechPart / speech : 1;
 if (speech >= 8 && sp < 0.4) note.push(`台词里带语气词或垫话的只有 ${(100 * sp).toFixed(0)}%，看看是不是有人说话像念稿（喊口令的、皇帝、黑枝亲王这类人除外）`);
 const lr = oldLen ? newLen / oldLen : 1;

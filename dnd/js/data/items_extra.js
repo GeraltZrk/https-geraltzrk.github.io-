@@ -291,7 +291,7 @@ export const ITEMS_EXTRA = {
   },
   pearl_of_dame: {
     id: 'pearl_of_dame', name: '月神明珠', en: 'Pearl of the Dame', relic: true, slot: 'trinket',
-    desc: '珍珠边地采珠人捞上来的一颗大珠子，献给了哈拉尔一世，从此是珍珠边地的王权器物。洞悉 +2，游说 +1。',
+    desc: '珍珠边地采珠人捞上来的一颗大珠子，献给了哈拉尔一世。从此是珍珠边地的王权器物。洞悉 +2，游说 +1。',
     enTerms: { '珍珠边地': 'Pearlsedge', '哈拉尔一世': 'Harald I' },
     passives: { skill: { insight: 2, persuasion: 1 } }, value: 20000,
   },
@@ -430,7 +430,7 @@ export const ITEMS_EXTRA = {
   },
   haste_potion: {
     id: 'haste_potion', name: '加速药剂', en: 'Potion of Speed',
-    desc: '一名同伴「加速」3 回合：护甲等级 +2，攻击动作多打一下。',
+    desc: '一名同伴「加速」3 回合：护甲等级 +2，执行攻击动作时可额外攻击一次。',
     use: { target: 'ally', apply: { cond: 'hasted', turns: 3 }, outside: false }, value: 700,
   },
   stoneskin_potion: {
@@ -440,13 +440,13 @@ export const ITEMS_EXTRA = {
   },
   troll_blood_tonic: {
     id: 'troll_blood_tonic', name: '巨魔血酊', en: 'Troll-blood Tonic',
-    desc: '巨魔血兑烈酒，腥。一名同伴「再生」4 回合：每回合开始恢复 1d6 生命。',
+    desc: '巨魔血兑烈酒，腥。一名同伴「再生」4 回合：每回合开始时恢复 1d6 生命。',
     enTerms: { '巨魔': 'Troll' },
     use: { target: 'ally', apply: { cond: 'regenerating', turns: 4 }, outside: false }, value: 250,
   },
   damestear_dust: {
     id: 'damestear_dust', name: '达姆斯塔尔粉', en: 'Damestear Dust',
-    desc: '抹在牙龈上，一下子劲儿就上来了，可这东西有毒。你受到 2d6 毒素伤害，然后「加速」3 回合：护甲等级 +2，攻击动作多打一下。',
+    desc: '抹在牙龈上，一下子劲儿就上来了，可这东西有毒。你受到 2d6 毒素伤害，然后「加速」3 回合：护甲等级 +2，执行攻击动作时可额外攻击一次。',
     enTerms: { '达姆斯塔尔': 'Damestear' },
     use: { target: 'self', dmg: '2d6', dmgType: 'poison', apply: { cond: 'hasted', turns: 3 }, outside: false }, value: 300,
   },
@@ -470,18 +470,18 @@ export const ITEMS_EXTRA = {
   },
   blessed_water_jar: {
     id: 'blessed_water_jar', name: '大罐圣水', en: 'Jar of Holy Water',
-    desc: '一整罐泼出去。至多 3 个敌人各做敏捷豁免（DC 8+熟练加值+敏捷调整值），失败受 2d6 光耀伤害，成功减半。',
+    desc: '一整罐泼出去。最多 3 名敌人各做敏捷豁免（DC 8+熟练加值+敏捷调整值），失败受 2d6 光耀伤害，成功减半。',
     use: { target: 'enemies', maxTargets: 3, save: { abil: 'dex', half: true }, dcAbil: 'dex', dmg: '2d6', dmgType: 'radiant', outside: false }, value: 120,
   },
   magebane_grenade: {
     id: 'magebane_grenade', name: '破法弹', en: 'Magebane Grenade',
-    desc: '瓷壳里装一张法术卷轴和一粒达姆斯塔尔，摔碎了闪光加巨响。至多 3 个敌人各做体质豁免（DC 8+熟练加值+敏捷调整值），失败「晕眩」2 回合，攻击劣势，不造成伤害。',
+    desc: '瓷壳里装一张法术卷轴和一粒达姆斯塔尔，摔碎了闪光加巨响。最多 3 名敌人各做体质豁免（DC 8+熟练加值+敏捷调整值），失败「晕眩」2 回合，攻击时具有劣势，不造成伤害。',
     enTerms: { '达姆斯塔尔': 'Damestear' },
     use: { target: 'enemies', maxTargets: 3, save: { abil: 'con' }, dcAbil: 'dex', apply: { cond: 'dazed', turns: 2 }, outside: false }, value: 150, era: [1444, 1836],
   },
   goblin_bomb: {
     id: 'goblin_bomb', name: '地精炸药包', en: 'Goblin Satchel Bomb',
-    desc: '地精的说法是“反正能炸”。至多 3 个敌人各做敏捷豁免（DC 8+熟练加值+敏捷调整值），失败受 3d6 火焰伤害，成功减半。',
+    desc: '地精的说法是“反正能炸”。最多 3 名敌人各做敏捷豁免（DC 8+熟练加值+敏捷调整值），失败受 3d6 火焰伤害，成功减半。',
     enTerms: { '地精': 'Goblin' },
     use: { target: 'enemies', maxTargets: 3, save: { abil: 'dex', half: true }, dcAbil: 'dex', dmg: '3d6', dmgType: 'fire', outside: false }, value: 150, era: [1444, 1836],
   },
@@ -499,7 +499,7 @@ export const ITEMS_EXTRA = {
   },
   sulfur_grenade: {
     id: 'sulfur_grenade', name: '炼狱硫磺弹', en: 'Infernal Sulfur Grenade',
-    desc: '黄烟，呛得人流眼泪。至多 3 个敌人各做体质豁免（DC 8+熟练加值+敏捷调整值），失败受 2d6 毒素伤害并「中毒」2 回合，成功伤害减半。',
+    desc: '黄烟，呛得人流眼泪。最多 3 名敌人各做体质豁免（DC 8+熟练加值+敏捷调整值），失败受 2d6 毒素伤害并「中毒」2 回合，成功伤害减半。',
     enTerms: { '炼狱硫磺': 'Infernal Sulfur' },
     use: { target: 'enemies', maxTargets: 3, save: { abil: 'con', half: true }, dcAbil: 'dex', dmg: '2d6', dmgType: 'poison', apply: { cond: 'poisoned', turns: 2 }, outside: false }, value: 180, era: [1836],
   },
@@ -553,7 +553,7 @@ export const ITEMS_EXTRA = {
   },
   candor_ale: {
     id: 'candor_ale', name: '坎多尔酒', en: 'Candor Ale',
-    desc: '铜石镇铜壶里酿的淡色烈酒，甜，后劲大。你恢复 1d6 生命并得 2d6 点临时生命，但「晕眩」2 回合，攻击劣势。',
+    desc: '铜石镇铜壶里酿的淡色烈酒，甜，后劲大。你恢复 1d6 生命并得 2d6 点临时生命，但「晕眩」2 回合，攻击时具有劣势。',
     enTerms: { '铜石镇': 'Coppertown' },
     use: { target: 'self', heal: '1d6', tempHp: '2d6', apply: { cond: 'dazed', turns: 2 } }, value: 20,
   },
@@ -565,7 +565,7 @@ export const ITEMS_EXTRA = {
   },
   yanshen_tea: {
     id: 'yanshen_tea', name: '烟州大叶茶', en: 'Yanshen Large-leaf Tea',
-    desc: '烟州人说精灵的小叶茶是从他们这儿偷去改的。恢复 1d4 生命，解除恐慌和晕眩。',
+    desc: '烟州人说精灵的小叶茶是从他们这里偷去改的。恢复 1d4 生命，解除恐慌和晕眩。',
     enTerms: { '烟州': 'Yanshen' },
     use: { target: 'ally', heal: '1d4', cleanse: ['frightened', 'dazed'] }, value: 25,
   },
@@ -640,7 +640,7 @@ export const ITEMS_EXTRA = {
   },
   cairn_stone: {
     id: 'cairn_stone', name: '试炼山宝石冢的宝石', en: 'Gem from the Trialmount Cairn',
-    desc: '卡斯坦试炼里每个候选人都要往“人类之冠”宝石冢上添一块，这块是从那儿掉下来的。拿去卖不太吉利。',
+    desc: '卡斯坦试炼里每个候选人都要往“人类之冠”宝石冢上添一块，这块是从那里掉下来的。拿去卖不太吉利。',
     enTerms: { '卡斯坦试炼': 'Trials of Castan', '人类之冠': 'Crown of mankind (gem cairn)', '试炼山': 'Trialmount' },
     value: 300,
   },

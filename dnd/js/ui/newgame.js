@@ -4,7 +4,7 @@ import { paint, paintFlag, paintPortrait, portraitsFor, setBackdrop } from './ar
 import * as R from '../core/rules.js';
 import { buildCharacter, defaultCheats } from '../core/state.js';
 
-const STEPS = ['剧本', '国家', '阵营', '人物', '出发'];
+const STEPS = ['剧本', '出身', '阵营', '角色', '出发'];
 const COST = { 8: 0, 9: 1, 10: 2, 11: 3, 12: 4, 13: 5, 14: 7, 15: 9 };
 const ARRAY = [15, 14, 13, 12, 10, 8];
 
@@ -23,7 +23,7 @@ export function renderNewGame(app) {
   const page = h('div', { class: 'page' });
   page.appendChild(h('div', { class: 'page-head' },
     h('button', { class: 'icon-btn', type: 'button', 'aria-label': '返回', onclick: () => (p.step === 0 ? app.toTitle() : go(p.step - 1)) }, icon('back')),
-    h('h2', null, ['选择剧本', '选择国家与出身', '选择阵营', '选择人物', '整装出发'][p.step])));
+    h('h2', null, ['选择剧本', '选择出身', '选择阵营', '选择角色', '确认并出发'][p.step])));
   page.appendChild(h('div', { class: 'steps' }, STEPS.map((s, i) => h('span', { class: i === p.step ? 'on' : i < p.step ? 'done' : '' }, `${i + 1} ${s}`))));
 
   if (p.step === 0) page.appendChild(stepScenario(app, p, go));
@@ -89,10 +89,10 @@ function stepCharacter(app, p, sc, go) {
   const mode = p.charMode || 'premade';
   const pre = premadesFor(sc, p.originId);
   box.appendChild(h('div', { class: 'tabs', style: { margin: 0 } },
-    h('button', { type: 'button', class: mode === 'premade' ? 'on' : '', onclick: () => go(3, { charMode: 'premade' }) }, '现成人物'),
-    h('button', { type: 'button', class: mode === 'custom' ? 'on' : '', onclick: () => go(3, { charMode: 'custom' }) }, '自己捏一个')));
+    h('button', { type: 'button', class: mode === 'premade' ? 'on' : '', onclick: () => go(3, { charMode: 'premade' }) }, '预设角色'),
+    h('button', { type: 'button', class: mode === 'custom' ? 'on' : '', onclick: () => go(3, { charMode: 'custom' }) }, '自建角色')));
   if (mode === 'premade') {
-    if (!pre.length) box.appendChild(h('p', { class: 'muted' }, '这个出身没有现成人物，自己捏一个吧。'));
+    if (!pre.length) box.appendChild(h('p', { class: 'muted' }, '这个出身暂时没有预设角色，请自建角色。'));
     const cards = h('div', { class: 'cards' });
     for (const c of pre) {
       const cls = db.classes[c.cls];
@@ -143,7 +143,7 @@ function customBuilder(app, p, sc, go) {
       racePanel.appendChild(subs);
     }
     const era = eraNote(race, sc.era);
-    racePanel.appendChild(h('p', { class: 'small muted', style: { margin: '10px 0 0', lineHeight: 1.7 } }, [race.desc, race.trait ? `特性：${race.trait}` : '', era ? `这个年代：${era}` : ''].filter(Boolean).join('　')));
+    racePanel.appendChild(h('p', { class: 'small muted', style: { margin: '10px 0 0', lineHeight: 1.7 } }, [race.desc, race.trait ? `特性：${race.trait}` : '', era ? `在本剧本中的处境：${era}` : ''].filter(Boolean).join('　')));
   }
   box.appendChild(racePanel);
 
@@ -157,7 +157,7 @@ function customBuilder(app, p, sc, go) {
   }
   clsPanel.appendChild(classes);
   const cls = db.classes[c.cls];
-  if (cls) clsPanel.appendChild(h('p', { class: 'small muted', style: { margin: '10px 0 0', lineHeight: 1.7 } }, [cls.desc, eraNote(cls, sc.era) ? `这个年代：${eraNote(cls, sc.era)}` : ''].filter(Boolean).join('　')));
+  if (cls) clsPanel.appendChild(h('p', { class: 'small muted', style: { margin: '10px 0 0', lineHeight: 1.7 } }, [cls.desc, eraNote(cls, sc.era) ? `在本剧本中的处境：${eraNote(cls, sc.era)}` : ''].filter(Boolean).join('　')));
   box.appendChild(clsPanel);
 
   // background
@@ -175,9 +175,9 @@ function customBuilder(app, p, sc, go) {
   const abPanel = h('div', { class: 'frame panel' }, h('h3', null, '属性'));
   const spent = R.ABILS.reduce((s, a) => s + (COST[c.abil[a]] ?? 99), 0);
   abPanel.appendChild(h('div', { class: 'tabs', style: { margin: '0 0 8px' } },
-    h('button', { type: 'button', class: c.method === 'buy' ? 'on' : '', onclick: () => { c.method = 'buy'; for (const a of R.ABILS) c.abil[a] = 8; if (cls) autoBuy(c, cls); redraw(); } }, '购点（27 点）'),
-    h('button', { type: 'button', class: c.method === 'array' ? 'on' : '', onclick: () => { c.method = 'array'; c.rolled = ARRAY.slice(); assignByClass(c, db); redraw(); } }, '标准数组'),
-    h('button', { type: 'button', class: c.method === 'roll' ? 'on' : '', onclick: () => { c.method = 'roll'; c.rolled = roll4d6(); assignByClass(c, db); redraw(); } }, '掷骰 4d6')));
+    h('button', { type: 'button', class: c.method === 'buy' ? 'on' : '', onclick: () => { c.method = 'buy'; for (const a of R.ABILS) c.abil[a] = 8; if (cls) autoBuy(c, cls); redraw(); } }, '分配属性点（27 点）'),
+    h('button', { type: 'button', class: c.method === 'array' ? 'on' : '', onclick: () => { c.method = 'array'; c.rolled = ARRAY.slice(); assignByClass(c, db); redraw(); } }, '使用标准属性值'),
+    h('button', { type: 'button', class: c.method === 'roll' ? 'on' : '', onclick: () => { c.method = 'roll'; c.rolled = roll4d6(); assignByClass(c, db); redraw(); } }, '掷 4d6 决定属性')));
   if (c.method === 'buy') abPanel.appendChild(h('p', { class: 'small muted' }, `已用 ${spent} / 27 点。8 到 13 每点 1 点，14 和 15 各 2 点。`));
   if (c.method === 'roll') abPanel.appendChild(h('div', { class: 'row', style: { marginBottom: '8px' } }, h('span', { class: 'small muted' }, `掷出：${(c.rolled || []).join('、')}（已按职业自动分配）`), button('重掷', () => { c.rolled = roll4d6(); assignByClass(c, db); redraw(); }, { class: 'small', icon: 'dice' })));
   const bonus = raceBonus(db, c);
@@ -205,14 +205,14 @@ function customBuilder(app, p, sc, go) {
       const has = c.profs.includes(s);
       const isFixed = fixed.has(s);
       picks.appendChild(h('button', { type: 'button', class: 'pick' + (has || isFixed ? ' sel' : ''), disabled: isFixed || (!has && c.profs.length >= cls.skills.n), onclick: () => { c.profs = has ? c.profs.filter((x) => x !== s) : [...c.profs, s]; redraw(); } },
-        h('b', null, R.SKILLS[s].name), h('span', null, isFixed ? '背景已提供' : R.ABIL_NAMES[R.SKILLS[s].abil])));
+        h('b', null, R.SKILLS[s].name), h('span', null, isFixed ? '已由背景获得' : R.ABIL_NAMES[R.SKILLS[s].abil])));
     }
     skPanel.appendChild(picks);
     box.appendChild(skPanel);
   }
 
   // identity
-  const idPanel = h('div', { class: 'frame panel' }, h('h3', null, '名字与样貌'));
+  const idPanel = h('div', { class: 'frame panel' }, h('h3', null, '姓名和外貌'));
   const nameInput = h('input', { type: 'text', value: c.name, maxlength: 16, placeholder: '角色名', oninput: (e) => { c.name = e.target.value; } });
   idPanel.appendChild(h('div', { class: 'row' }, h('div', { class: 'grow' }, field('名字', nameInput)),
     button('随机', () => { c.name = randomName(db, c, sc); redraw(); }, { class: 'small', icon: 'dice' })));
@@ -234,7 +234,7 @@ function customBuilder(app, p, sc, go) {
   if (!c.cls) problems.push('职业');
   if (!c.background) problems.push('背景');
   if (cls && cls.skills && c.profs.length < cls.skills.n) problems.push('技能');
-  if (c.method === 'buy' && spent > 27) problems.push('属性点超了');
+  if (c.method === 'buy' && spent > 27) problems.push('已超出可用属性点');
   box.appendChild(h('div', { class: 'sticky-foot' }, button(problems.length ? `还差：${problems.join('、')}` : '下一步', () => { if (!c.name.trim()) c.name = randomName(db, c, sc); go(4, { charMode: 'custom', premadeId: null }); }, { class: 'primary', disabled: !!problems.length })));
   return box;
 }
@@ -300,12 +300,12 @@ function stepConfirm(app, p, sc, go) {
         h('div', { class: 'sub' }, `${race.name} · ${cls.name}`), h('div', { class: 'sub' }, `${sc.title}　${origin ? origin.name : ''}${faction ? ' · ' + faction.name : ''}`))),
     h('div', { class: 'abil-grid', style: { marginTop: '12px' } }, R.ABILS.map((a) => h('div', { class: 'abil' }, h('span', { class: 'nm' }, R.ABIL_NAMES[a]), h('b', null, String(ch.abil[a])), h('span', { class: 'md' }, R.fmtMod(R.abilMod(ch.abil[a])))))),
     h('div', { class: 'kv', style: { marginTop: '10px' } }, h('div', null, h('span', null, '生命'), h('b', null, String(ch.maxHp))), h('div', null, h('span', null, '护甲等级'), h('b', null, String(R.armorClass(ch, db)))),
-      h('div', null, h('span', null, '熟练技能'), h('b', null, ch.profs.map((s) => R.SKILLS[s].name).join('、') || '—'))),
+      h('div', null, h('span', null, '已熟练的技能'), h('b', null, ch.profs.map((s) => R.SKILLS[s].name).join('、') || '—'))),
     ch.bio ? h('p', { class: 'small', style: { margin: '12px 0 0', lineHeight: 1.8 } }, ch.bio) : null));
 
   const diffPanel = h('div', { class: 'frame panel' }, h('h3', null, '战斗难度'));
   const picks = h('div', { class: 'pick-list' });
-  for (const [id, name, d] of [['story', '故事', '敌人更脆、更容易失手。想专心看剧情就选这个。'], ['normal', '标准', '按规则来。'], ['hard', '硬核', '敌人更耐打，下手更重。']]) {
+  for (const [id, name, d] of [['story', '故事', '敌人生命较低，也更难命中。适合想专心看剧情的玩家。'], ['normal', '标准', '使用标准战斗规则。'], ['hard', '硬核', '敌人生命更高，造成的伤害也更高。']]) {
     picks.appendChild(h('button', { type: 'button', class: 'pick' + (p.difficulty === id ? ' sel' : ''), onclick: () => { p.difficulty = id; app.refresh(); } }, h('b', null, name), h('span', null, d)));
   }
   diffPanel.appendChild(picks);
@@ -314,13 +314,13 @@ function stepConfirm(app, p, sc, go) {
   const cheatPanel = h('div', { class: 'frame panel' }, h('h3', null, '作弊（随时可以在游戏里的“作弊”菜单改）'));
   const sw = (label, desc, key) => h('label', { class: 'switch', style: { marginBottom: '6px' } }, h('div', null, h('div', null, label), h('div', { class: 'd' }, desc)),
     h('input', { type: 'checkbox', checked: !!p.cheats[key], onchange: (e) => { p.cheats[key] = e.target.checked; p.cheats.used = Object.keys(p.cheats).some((k) => !['used', 'showDc', 'fixedRoll'].includes(k) && p.cheats[k] === true); } }));
-  cheatPanel.appendChild(sw('开局即为神', '带着神格开始：永生、无敌、检定必成，剧情和选项会把你当神来写', 'ascended'));
-  cheatPanel.appendChild(sw('永生', '不会死，也不会老', 'immortal'));
-  cheatPanel.appendChild(sw('无敌', '我方不受伤害', 'god'));
-  cheatPanel.appendChild(sw('检定必成', '骰子永远站在你这边', 'autoSuccess'));
-  cheatPanel.appendChild(sw('无限资源', '法术位和消耗品用不完', 'infRes'));
-  cheatPanel.appendChild(sw('解锁全部选项', '无视一切前置条件', 'unlockAll'));
-  cheatPanel.appendChild(h('p', { class: 'small muted', style: { margin: '6px 0 0' } }, '游戏内的作弊菜单更全：改等级和属性、加物品和金钱、改世界局势与各方声望、跳章节、直接看结局。'));
+  cheatPanel.appendChild(sw('开局即为神', '以神明身份进入剧情。你不会老死或受伤，检定自动成功，还能遇到神明专属的对白与选项。', 'ascended'));
+  cheatPanel.appendChild(sw('永生', '角色不会衰老或死亡', 'immortal'));
+  cheatPanel.appendChild(sw('无敌', '队伍成员不会受到伤害', 'god'));
+  cheatPanel.appendChild(sw('检定必成', '所有检定自动成功', 'autoSuccess'));
+  cheatPanel.appendChild(sw('无限资源', '使用法术位或消耗品时，数量不会减少', 'infRes'));
+  cheatPanel.appendChild(sw('解锁全部选项', '可选择原本条件不足的选项', 'unlockAll'));
+  cheatPanel.appendChild(h('p', { class: 'small muted', style: { margin: '6px 0 0' } }, '开始后仍可在作弊菜单中调整人物、背包、世界局势和声望，也能跳到指定章节或结局。'));
   box.appendChild(cheatPanel);
 
   box.appendChild(h('div', { class: 'sticky-foot' }, button('开始冒险', () => app.startGame({ scenarioId: sc.id, originId: p.originId, factionId: p.factionId, character: ch, difficulty: p.difficulty, cheats: Object.assign(defaultCheats(), p.cheats) }), { class: 'primary' })));

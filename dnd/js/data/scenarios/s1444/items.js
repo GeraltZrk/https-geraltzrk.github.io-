@@ -1,11 +1,11 @@
-// s1444 / items.js：数据文件。正文按 docs/STYLE_GUIDE.md（第二版）重写过，由 tools/rewrite-apply.mjs 写回。
+// s1444 / items.js：数据文件。正文按 docs/STYLE_GUIDE.md（第三版）修订过。
 export const ITEMS = {
  "shield_strap": {
   "id": "shield_strap",
   "name": "一截盾带",
   "relic": true,
   "value": 0,
-  "desc": "一截牛皮盾带，一头还连着两颗铆钉。这是抬科琳的时候从她那面裂了的盾上崩下来的，你捡了以后一直没还回去。"
+  "desc": "一截牛皮盾带，一头还连着两颗铆钉。这是抬科琳的时候从她那面裂了的盾上崩下来的。你捡了以后一直没还回去。"
  },
  "moon_badge": {
   "id": "moon_badge",
@@ -33,7 +33,7 @@ export const ITEMS = {
   "name": "兵团的账本",
   "relic": true,
   "value": 0,
-  "desc": "拿油布包着，足有四十斤重，里头一共记了三百一十二条。谁背着它，谁就有权当场划账。"
+  "desc": "拿油布包着，足有四十斤重，里面一共记了三百一十二条。谁背着它，谁就有权当场划账。"
  },
  "chain_link": {
   "id": "chain_link",
@@ -74,14 +74,14 @@ export const ITEMS = {
   "name": "康原的地契",
   "relic": true,
   "value": 0,
-  "desc": "地契上盖着蓝牙的印，墨到现在还有点洇。妮克西信不过自己的口袋，就叫你替她收着。"
+  "desc": "地契上盖着蓝牙的印，墨到现在还有点洇。妮克西信不过自己的口袋，就让你替她收着。"
  },
  "compact_copy": {
   "id": "compact_copy",
   "name": "城约的抄本",
   "quest": true,
   "value": 0,
-  "desc": "就在那张门板桌上誊出来的，底下按着一排手印，有大的也有小的，其中有一个还是绿的。"
+  "desc": "就在那张门板桌上誊出来的，下面按着一排手印，有大的也有小的，其中有一个还是绿的。"
  },
  "petition_book": {
   "id": "petition_book",
@@ -94,7 +94,7 @@ export const ITEMS = {
   "id": "dagrite_shard",
   "name": "达格银碎片",
   "value": 120,
-  "desc": "从死铁道上撬下来的一块，摸上去手直发麻。把它扔出去，能叫一个敌人受 3d6 闪电伤害。",
+  "desc": "从死铁道上撬下来的一块，摸上去手直发麻。把它扔出去，能让一个敌人受 3d6 闪电伤害。",
   "use": {
    "target": "enemy",
    "dmg": "3d6",
@@ -107,21 +107,21 @@ export const ITEMS = {
   "name": "车皮签",
   "quest": true,
   "value": 0,
-  "desc": "一块磨得发亮的铁片，上头打着铁路潜伏者的记号。手里有了它，回程就不用再交过路费了。"
+  "desc": "一块磨得发亮的铁片，上面打着铁路潜伏者的记号。手里有了它，回程就不用再交过路费了。"
  },
  "rubbing_book": {
   "id": "rubbing_book",
   "name": "守昔者的拓片本",
   "relic": true,
   "value": 0,
-  "desc": "加莱尔父母留下的本子，里头有一百多页拓片，每一页的右下角都写着日期，还有两个人名字的缩写。"
+  "desc": "加莱尔父母留下的本子，里面有一百多页拓片，每一页的右下角都写着日期，还有两个人名字的缩写。"
  },
  "shaft_rubbing": {
   "id": "shaft_rubbing",
   "name": "竖井口的拓片",
   "quest": true,
   "value": 0,
-  "desc": "一张油纸，上头拓的是精灵兵刻下的值夜祷词。祷词里提了两个名字，一个是天上那位的，一个是主将的。"
+  "desc": "一张油纸，上面拓的是精灵兵刻下的值夜祷词。祷词里提了两个名字，一个是天上那位的，一个是主将的。"
  },
  "safe_conduct": {
   "id": "safe_conduct",
@@ -135,7 +135,7 @@ export const ITEMS = {
   "name": "一本信条",
   "quest": true,
   "value": 0,
-  "desc": "多米尼克托你带到西边去的，薄薄的一本，翻开头一页只写了一句话，剑与盾。"
+  "desc": "多米尼克托你带到西边去的，薄薄的一本，翻开第一页只写了一句话，剑与盾。"
  },
  "garden_sketch": {
   "id": "garden_sketch",
@@ -156,14 +156,14 @@ export const ITEMS = {
   "name": "航海志的抄页",
   "quest": true,
   "value": 0,
-  "desc": "月焰号值夜簿上第四十年的那一页，神殿的方位也一并记在上头。字是连夜抄下来的，有几处已经洇开了。"
+  "desc": "月焰号值夜簿上第四十年的那一页，神殿的方位也一并记在上面。字是连夜抄下来的，有几处已经洇开了。"
  },
  "digger_oath": {
   "id": "digger_oath",
   "name": "按了手印的口供",
   "quest": true,
   "value": 0,
-  "desc": "口供上说，那天晚上他就在门外，里头一共抬出来三具，其中有一具是烧死的。底下按了一个手印，按得很重。"
+  "desc": "口供上说，那天晚上他就在门外，里面一共抬出来三具，其中有一具是烧死的。下面按了一个手印，按得很重。"
  },
  "wound_cast": {
   "id": "wound_cast",
@@ -228,7 +228,7 @@ export const ITEMS = {
   "name": "阿鲁恩的笔记",
   "quest": true,
   "value": 0,
-  "desc": "一捆木精灵用的树皮纸，拿草绳扎着。里头写的是帷幕当初究竟是为了挡什么才立起来的。"
+  "desc": "一捆木精灵用的树皮纸，拿草绳扎着。里面写的是帷幕当初究竟是为了挡什么才立起来的。"
  },
  "fey_token": {
   "id": "fey_token",
@@ -260,7 +260,7 @@ export const ITEMS = {
   "name": "壁画的拓片",
   "relic": true,
   "value": 0,
-  "desc": "这是最后一幅，拓了四张纸才拓全。画上一只手拿着杖，另一条胳膊齐腕断了，底下还有两个字。"
+  "desc": "这是最后一幅，拓了四张纸才拓全。画上一只手拿着杖，另一条胳膊齐腕断了，下面还有两个字。"
  },
  "broken_scepter": {
   "id": "broken_scepter",
@@ -289,7 +289,7 @@ export const ITEMS = {
   "name": "游行用的权杖头",
   "value": 0,
   "relic": true,
-  "desc": "一截铜包木的权杖头，原先是插在游行用的长杆上的，杆子早就不知丢到哪儿去了。阿坦拿它当圣徽，有时候也拿它敲人。",
+  "desc": "一截铜包木的权杖头。原先是插在游行用的长杆上的，杆子早就不知丢到哪里去了。阿坦拿它当圣徽，有时候也拿它敲人。",
   "weapon": {
    "dmg": "1d6",
    "type": "bludgeoning",

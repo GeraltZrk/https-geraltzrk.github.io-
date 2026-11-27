@@ -1,4 +1,4 @@
-// s1444 / enemies.js：数据文件。正文按 docs/STYLE_GUIDE.md（第二版）重写过，由 tools/rewrite-apply.mjs 写回。
+// s1444 / enemies.js：数据文件。正文按 docs/STYLE_GUIDE.md（第三版）修订过。
 export const ENEMIES = {
  "underpass_overseer": {
   "id": "underpass_overseer",
@@ -45,7 +45,7 @@ export const ENEMIES = {
      }
     },
     "recharge": 4,
-    "text": "{name}手腕一抖，铁链就缠了上来，把人直往他跟前拽。"
+    "text": "{name}手腕一抖，铁链就缠了上来，把人直往他面前拽。"
    },
    {
     "name": "甩链",
@@ -109,7 +109,7 @@ export const ENEMIES = {
      }
     },
     "weight": 3,
-    "text": "{name}凑到你耳朵边上，用死人的嗓音问了你一句话。"
+    "text": "{name}凑到你耳朵旁边，用死人的嗓音问了你话。"
    },
    {
     "name": "起来",
@@ -264,7 +264,7 @@ export const ENEMIES = {
     "dmg": "3d6+4",
     "type": "piercing",
     "recharge": 5,
-    "text": "{name}从没点灯的那一边悄没声地扎了过来。"
+    "text": "{name}从没点灯的那一边悄无声息地扎了过来。"
    }
   ]
  },
@@ -367,7 +367,7 @@ export const ENEMIES = {
     "dmg": "2d8+4",
     "type": "bludgeoning",
     "recharge": 4,
-    "text": "{name}挨了一下，一声都没吭，下一锤反倒砸得更狠了。"
+    "text": "{name}挨了一下，咬紧牙关，下一锤反倒砸得更狠了。"
    }
   ]
  },
@@ -465,7 +465,7 @@ export const ENEMIES = {
   "name": "达拉斯",
   "type": "humanoid",
   "level": 7,
-  "desc": "他话少，针线活倒是好得很，收尸队用的寿衣有不少是他缝的。动起手来他只冲着一个人去，出过头一刀，后面就只招架了。",
+  "desc": "他寡言，针线却细。收尸队用的寿衣，许多出自他手。真要拔刀，他只找一个对手，只攻第一招，此后便专心招架。",
   "hp": 90,
   "ac": 15,
   "init": 4,
@@ -487,7 +487,7 @@ export const ENEMIES = {
     "type": "piercing",
     "uses": 1,
     "weight": 20,
-    "text": "{name}从人堆里走了出来，手里是一把窄刃的刀，从头到尾一句话也没说。"
+    "text": "{name}从人群中走了出来，手里是一把窄刃的刀。"
    },
    {
     "name": "招架反刺",
@@ -600,7 +600,7 @@ export const ENEMIES = {
      "all": true
     },
     "uses": 1,
-    "text": "{name}朝一个人抬了抬下巴，他手下的人就全都转过去了。"
+    "text": "{name}朝一个人抬抬下巴，他手下的人就全都转过去了。"
    },
    {
     "name": "灭口的弩",
@@ -609,7 +609,7 @@ export const ENEMIES = {
     "type": "piercing",
     "recharge": 5,
     "weight": 6,
-    "text": "{name}从斗篷底下端出了一把早就上好弦的重弩。"
+    "text": "{name}从斗篷下面端出了一把早就上好弦的重弩。"
    },
    {
     "name": "齐射",
@@ -712,7 +712,7 @@ export const ENEMIES = {
     "uses": 1,
     "minRound": 2,
     "weight": 9,
-    "text": "{name}仰起头叫了一声，林子里应声又爬出来两只，头一个扑的就是离她最近的人。"
+    "text": "{name}仰起头叫了一声，林子里应声又爬出来两只，第一个扑的就是离她最近的人。"
    },
    {
     "name": "血雾",
@@ -752,7 +752,7 @@ export const ENEMIES = {
    "asleep",
    "paralyzed"
   ],
-  "desc": "壁画神殿门口的石像，全靠石头和法术撑着，里头并没有机括。它会用一种谁也不会说的话问你一句，你答不上来，就得挨它一下。",
+  "desc": "壁画神殿门口的石像，全靠石头和法术撑着，里面并没有机括。它会用一种谁也不会说的话问你一句，你答不上来，就得挨它一下。",
   "hp": 100,
   "ac": 18,
   "init": -1,
@@ -792,7 +792,7 @@ export const ENEMIES = {
     },
     "recharge": 5,
     "weight": 6,
-    "text": "{name}开口问了一句话，可在场的人谁也听不懂。"
+    "text": "{name}开口问话，可在场的人谁也听不懂。"
    }
   ]
  },
@@ -812,7 +812,7 @@ export const ENEMIES = {
    "asleep",
    "paralyzed"
   ],
-  "desc": "三尊石像里个头最大的一尊，有一条胳膊是后来补上去的，补的人手艺实在不怎么样，不过它只要见到断权杖，就会停手。",
+  "desc": "三尊石像里个头最大的一尊，有一条胳膊是后来补上去的，补的人手艺实在不怎么样。不过它只要见到断权杖，就会停手。",
   "hp": 380,
   "ac": 19,
   "init": -1,
@@ -966,7 +966,7 @@ export const ENEMIES = {
     "recharge": 5,
     "minRound": 2,
     "weight": 6,
-    "text": "{name}把袖子一抖，一团黑羽就扑了出来，碰到哪儿，哪儿就冒烟。"
+    "text": "{name}把袖子一抖，一团黑羽就扑了出来，碰到哪里，哪里就冒烟。"
    },
    {
     "name": "开价",
@@ -991,7 +991,7 @@ export const ENEMIES = {
   "name": "二次绿潮的老兵",
   "type": "humanoid",
   "level": 8,
-  "desc": "二十八年前他们跟过杜坎森，如今又跟着他儿子。他们亲眼见过一个刀枪不入的人死在卖咸鱼的摊子边上。",
+  "desc": "二十八年前他们跟过杜坎森，如今又跟着他儿子。他们亲眼见过一个刀枪不入的人死在卖咸鱼的摊子旁边。",
   "hp": 120,
   "ac": 16,
   "init": 1,
@@ -1092,7 +1092,7 @@ export const ENEMIES = {
     "name": "聚",
     "heal": "3d10+10",
     "uses": 1,
-    "text": "{name}把断链举过头顶吼了一声，他身后的人也都跟着吼了回来。"
+    "text": "{name}把断链举过头顶吼了一声。他身后的人也都跟着吼了回来。"
    },
    {
     "name": "聚拢",
@@ -1110,7 +1110,7 @@ export const ENEMIES = {
   "name": "古尔赞·熊心",
   "type": "humanoid",
   "level": 11,
-  "desc": "四十八岁，只剩一只眼和半条胳膊，肩上披着灰吻的熊皮。他这一趟来就是要看看你会不会流血。真要是打输了，他会断一只手逃走，不会战死在这儿。",
+  "desc": "四十八岁，只剩一只眼和半条胳膊，肩上披着灰吻的熊皮。他这一趟来就是要看看你会不会流血。真要是打输了，他会断一只手逃走，不会战死在这里。",
   "hp": 520,
   "ac": 18,
   "init": 2,
@@ -1177,7 +1177,7 @@ export const ENEMIES = {
   "name": "洛朗·西尔·普拉斯",
   "type": "humanoid",
   "level": 11,
-  "desc": "剑之誓约的头领，是个法师骑士，腰上挂着一排装魂的罐子。照他自己的说法，他跟你们算是同行，只不过比你们多走了一步。",
+  "desc": "剑之誓约的头领，是个法师骑士，腰上挂着一排装魂的罐子。按他自己的说法，他跟你们算是同行，只不过比你们多走了一步。",
   "hp": 480,
   "ac": 18,
   "init": 2,
@@ -1226,7 +1226,7 @@ export const ENEMIES = {
     },
     "recharge": 4,
     "weight": 5,
-    "text": "{name}伸手按住了你的额头，接着你就听见自己说出了一句实话。"
+    "text": "{name}伸手按住了你的额头。接着你就听见自己说出了一句实话。"
    },
    {
     "name": "开罐",
@@ -1242,7 +1242,7 @@ export const ENEMIES = {
     "uses": 2,
     "minRound": 2,
     "weight": 7,
-    "text": "{name}拍开了一只罐子上的封蜡，里头的东西吼叫着冲了出来。"
+    "text": "{name}拍开了一只罐子上的封蜡，里面的东西吼叫着冲了出来。"
    }
   ]
  },
@@ -1289,7 +1289,7 @@ export const ENEMIES = {
   "name": "洛萨恩·蓝牙",
   "type": "humanoid",
   "level": 10,
-  "desc": "四十七岁的半兽人，科琳塔尔的大团长，左边獠牙上系着一截蓝布。跟你做对手的时候，他只打到你倒地为止。",
+  "desc": "四十七岁的半兽人，科琳塔尔的大团长，左边獠牙上系着一截蓝布。跟你做对手时，他只打到你倒地为止。",
   "hp": 160,
   "ac": 19,
   "init": 1,
@@ -1323,7 +1323,7 @@ export const ENEMIES = {
      "all": true
     },
     "uses": 2,
-    "text": "{name}把盾往前一顶，身边的人就全都缩到盾后头去了。"
+    "text": "{name}把盾往前一顶，身边的人就全都缩到盾后面去了。"
    },
    {
     "name": "盾击",

@@ -33,11 +33,11 @@ export function openSystem(app, tab = 'main') {
 
   const mainTab = () => h('div', { class: 'list' },
     button('继续游戏', m.close, { class: 'primary block' }),
-    button('退回上一步', () => { if (app.engine.undo()) { m.close(); app.refresh(); toast('已退回上一步'); } else toast('没有可以退回的步骤', 'bad'); }, { class: 'block', icon: 'undo', disabled: !app.engine.canUndo() }),
+    button('回到上一步', () => { if (app.engine.undo()) { m.close(); app.refresh(); toast('已回到上一步'); } else toast('已经是最早可返回的位置。', 'bad'); }, { class: 'block', icon: 'undo', disabled: !app.engine.canUndo() }),
     button('存档', () => { current = 'save'; draw(); }, { class: 'block', icon: 'save' }),
     button('读档', () => { current = 'load'; draw(); }, { class: 'block' }),
     button('设置', () => { current = 'settings'; draw(); }, { class: 'block', icon: 'gear' }),
-    button('返回标题画面', () => confirmDialog('返回标题画面？当前进度已自动保存。', () => { m.close(); app.toTitle(); }), { class: 'block ghost' }));
+    button('返回主菜单', () => confirmDialog('回到主菜单？当前进度已自动保存。', () => { m.close(); app.toTitle(); }), { class: 'block ghost' }));
 
   const saveTab = () => {
     const saves = State.listSaves();
@@ -47,11 +47,11 @@ export function openSystem(app, tab = 'main') {
       box.appendChild(h('div', { class: 'li' }, h('div', { class: 'grow' }, h('b', null, `存档 ${s}`), h('div', { class: 'd' }, saveLine(app, info)), info ? h('div', { class: 'd' }, `${info.title || ''}　${fmtWhen(info.when)}`) : null),
         button('保存', () => { const go = () => { app.save(s); draw(); }; if (info) confirmDialog(`覆盖存档 ${s}？`, go); else go(); }, { class: 'small primary' })));
     }
-    box.appendChild(h('div', { class: 'section-title' }, '导出存档码（换设备时用）'));
+    box.appendChild(h('div', { class: 'section-title' }, '导出存档码以便换设备继续'));
     const ta = h('textarea', { readonly: true, onfocus: (e) => e.target.select() });
     ta.value = State.exportCode(app.state);
     box.appendChild(ta);
-    box.appendChild(button('复制存档码', async () => { try { await navigator.clipboard.writeText(ta.value); toast('已复制'); } catch (e) { ta.select(); toast('请手动复制文本框里的内容'); } }, { class: 'block' }));
+    box.appendChild(button('复制存档码', async () => { try { await navigator.clipboard.writeText(ta.value); toast('已复制'); } catch (e) { ta.select(); toast('请选中文本框中的存档码并复制。'); } }, { class: 'block' }));
     return box;
   };
 
@@ -68,11 +68,11 @@ export function openSystem(app, tab = 'main') {
         button('读取', async () => { const ok = await app.resume(State.loadSlot(s)); if (ok) { m.close(); toast('已读取'); } }, { class: 'small primary' }),
         s !== 'auto' ? button('删除', () => confirmDialog(`删除存档 ${s}？`, () => { State.deleteSlot(s); draw(); }), { class: 'small ghost' }) : null));
     }
-    if (!any) box.appendChild(h('p', { class: 'muted' }, '还没有存档。'));
+    if (!any) box.appendChild(h('p', { class: 'muted' }, '暂无可读取的存档。'));
     box.appendChild(h('div', { class: 'section-title' }, '导入存档码'));
-    const ta = h('textarea', { placeholder: '把存档码粘贴到这里' });
+    const ta = h('textarea', { placeholder: '在此粘贴已导出的存档码' });
     box.appendChild(ta);
-    box.appendChild(button('导入并读取', async () => { const st = State.importCode(ta.value); if (!st) { toast('存档码无效', 'bad'); return; } const ok = await app.resume(st); if (ok) { m.close(); toast('已读取'); } }, { class: 'block' }));
+    box.appendChild(button('导入并载入游戏', async () => { const st = State.importCode(ta.value); if (!st) { toast('未能识别存档码，请检查是否复制完整。', 'bad'); return; } const ok = await app.resume(st); if (ok) { m.close(); toast('已读取'); } }, { class: 'block' }));
     return box;
   };
 
@@ -84,10 +84,10 @@ export function openSystem(app, tab = 'main') {
     const size = h('select', { onchange: (e) => { app.settings.textSize = e.target.value; app.applySettings(); } },
       [['s', '小'], ['m', '标准'], ['l', '大'], ['xl', '特大']].map(([v, l]) => h('option', { value: v, selected: app.settings.textSize === v }, l)));
     const box = h('div', { class: 'list' }, field('正文字号', size),
-      toggle('显示检定难度与成功率', '选项旁标出 DC 和大致成功率', 'showDc'),
-      toggle('同伴自动行动', '关闭后，战斗中由你亲自指挥每个同伴', 'autoCompanions'),
-      toggle('选择前再确认一次', '防止手滑点错选项', 'confirmChoices'),
-      toggle('减少动画', '关掉骰子翻滚等动效', 'reducedMotion'));
+      toggle('预览检定难度和成功率', '在选项旁显示需要达到的点数（DC）和预计成功率。', 'showDc'),
+      toggle('同伴自动行动', '关闭后，你将在战斗中逐个指挥同伴。', 'autoCompanions'),
+      toggle('点击剧情选项后再次确认', '开启后，需要确认才会执行选项。', 'confirmChoices'),
+      toggle('减少动态效果', '关闭骰子翻滚等动画。', 'reducedMotion'));
     if (inGame) {
       const diff = h('select', { onchange: (e) => { app.state.difficulty = e.target.value; toast('难度已调整'); } },
         [['story', '故事（轻松）'], ['normal', '标准'], ['hard', '硬核']].map(([v, l]) => h('option', { value: v, selected: app.state.difficulty === v }, l)));

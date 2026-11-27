@@ -181,7 +181,7 @@ export function renderCombat(app) {
 
   const acts = Combat.availableActions(ctx);
   const sheet = cur.sheet === 'pc' ? eng.state.pc : eng.state.companions[cur.sheet];
-  const hint = ui.pending ? '点选一个目标' : `轮到 ${cur.name}`;
+  const hint = ui.pending ? '选择一个目标' : `轮到 ${cur.name}`;
   box.appendChild(h('div', { class: 'hint' }, hint, ui.pending ? h('button', { class: 'btn small ghost', style: { marginLeft: '8px' }, type: 'button', onclick: () => { ui.pending = null; app.refresh(); } }, '取消') : null));
 
   const bar2 = h('div', { class: 'actions' });
@@ -192,7 +192,7 @@ export function renderCombat(app) {
   bar2.appendChild(h('button', { class: 'btn', type: 'button', disabled: !acts.abilities.length, onclick: () => openAbilities(app, acts) },
     icon('spark'), h('span', null, sheet && app.db.classes[sheet.cls] && app.db.classes[sheet.cls].caster ? '法术' : '能力'), h('small', null, `${usable} 项可用`)));
   bar2.appendChild(h('button', { class: 'btn', type: 'button', disabled: !acts.items.length, onclick: () => openItems(app, acts) }, icon('flask'), h('span', null, '物品'), h('small', null, `${acts.items.length} 种`)));
-  bar2.appendChild(h('button', { class: 'btn', type: 'button', disabled: c.acted, onclick: () => { Combat.dodgeAction(ctx); afterAction(app); } }, icon('shield'), h('span', null, '防御'), h('small', null, '敌人攻击劣势')));
+  bar2.appendChild(h('button', { class: 'btn', type: 'button', disabled: c.acted, onclick: () => { Combat.dodgeAction(ctx); afterAction(app); } }, icon('shield'), h('span', null, '防御'), h('small', null, '敌人攻击你时处于劣势')));
   if (acts.specials.length) bar2.appendChild(h('button', { class: 'btn', type: 'button', onclick: () => openSpecials(app, acts) }, icon('eye'), h('span', null, '见机行事'), h('small', null, `${acts.specials.length} 个机会`)));
   if (c.enc.fleeable !== false) bar2.appendChild(h('button', { class: 'btn', type: 'button', disabled: !acts.canFlee, onclick: () => { Combat.fleeAction(ctx, eng.combatCheck()); afterAction(app); } }, icon('run'), h('span', null, '逃跑'), h('small', null, '杂技/运动/隐匿')));
   bar2.appendChild(h('button', { class: 'btn primary', type: 'button', onclick: () => endTurn(app) }, icon('next'), h('span', null, '结束回合')));

@@ -1,4 +1,4 @@
-// s1820 / items.js：数据文件。正文按 docs/STYLE_GUIDE.md（第二版）重写过，由 tools/rewrite-apply.mjs 写回。
+// s1820 / items.js：数据文件。正文按 docs/STYLE_GUIDE.md（第三版）修订过。
 export const ITEMS = {
  "discharge_papers": {
   "id": "discharge_papers",
@@ -38,7 +38,7 @@ export const ITEMS = {
   "id": "wicker_trunk",
   "name": "藤箱",
   "en": "Wicker Trunk",
-  "desc": "巨魔湾编的藤箱，有一边的搭扣坏了，只好拿麻绳捆着。里头装着三件衬衫和一本航海日志。",
+  "desc": "巨魔湾编的藤箱，有一边的搭扣坏了，只好拿麻绳捆着。里面装着三件衬衫和一本航海日志。",
   "value": 0,
   "quest": true
  },
@@ -62,7 +62,7 @@ export const ITEMS = {
   "id": "line7_tag",
   "name": "七号线的工牌",
   "en": "Line Seven Tag",
-  "desc": "一块黄铜工牌，上头冲着“七号线·夜班”和一个工位号。背面不知是谁用钉子划了一道。",
+  "desc": "一块黄铜工牌，上面冲着“七号线·夜班”和一个工位号。背面不知是谁用钉子划了一道。",
   "value": 0,
   "quest": true,
   "slot": "trinket"
@@ -95,7 +95,7 @@ export const ITEMS = {
   "id": "korashi_grain",
   "name": "一粒寇拉希",
   "en": "A Grain of Korashi",
-  "desc": "从一个战斗法师的肩膀里取出来的黑晶，只有米粒那么大。法师要是碰了它，好几天都施不了法。",
+  "desc": "从一个战斗法师的肩膀里取出来的黑魔晶，只有米粒那么大。法师要是碰了它，好几天都施不了法。",
   "value": 0,
   "quest": true
  },
@@ -127,15 +127,15 @@ export const ITEMS = {
   "id": "yamina_copy",
   "name": "雅米娜账本的抄件",
   "en": "Copy of Yamina's Ledger",
-  "desc": "账分两栏，一栏是 1810 年以来每道咒的产出，另一栏是对应开出去的子弹数。抄账的人手抖了，有一页抄了两遍。",
+  "desc": "账分两栏，一栏是 1810 年以来每道咒的产出。另一栏是对应开出去的子弹数。抄账的人手抖了，有一页抄了两遍。",
   "value": 0,
   "quest": true
  },
  "share_register": {
   "id": "share_register",
-  "name": "银团的股东名册",
+  "name": "银行团的股东名册",
   "en": "Syndicate Share Register",
-  "desc": "阿斯拉银行牵头的那个银团的名册，里头有一个代持账户，入股的日子排在你那份报告发出去之后。",
+  "desc": "阿斯拉银行牵头的那个银行团的名册，里面有一个代持账户，入股的日子排在你那份报告发出去之后。",
   "value": 0,
   "quest": true
  },
@@ -151,7 +151,7 @@ export const ITEMS = {
   "id": "phrase_record",
   "name": "鸣声记录",
   "en": "Fragment Tone Record",
-  "desc": "分形修会记的鸣声，一百多年的数都在这儿了。翻到最后几页，翻来覆去只记着两个词。",
+  "desc": "分形修会记的鸣声，一百多年的记录都在这里了。翻到最后几页，翻来覆去只记着两个词。",
   "value": 0,
   "quest": true
  },
@@ -175,7 +175,7 @@ export const ITEMS = {
   "id": "tuning_fork",
   "name": "达姆斯塔尔音叉",
   "en": "Damestear Tuning Fork",
-  "desc": "这把音叉调的是某个位面的频率，叉齿是拿晶体磨出来的。敲它一下，满船的杯子都跟着响。",
+  "desc": "这把音叉调的是某个位面的频率，叉齿是拿魔晶磨出来的。敲它一下，满船的杯子都跟着响。",
   "value": 0,
   "quest": true,
   "relic": true
@@ -184,7 +184,7 @@ export const ITEMS = {
   "id": "draft_treaty",
   "name": "草约",
   "en": "Draft Treaty",
-  "desc": "第二次阿兰蒂尔大峰会的草约，页边上写满了各国代表的批注。最后通过的是哪一份条款，要看封面上盖的戳。",
+  "desc": "第二次阿兰蒂尔大峰会的草约，页旁边写满了各国代表的批注。最后通过的是哪一份条款，要看封面上盖的戳。",
   "value": 0,
   "quest": true
  },
@@ -192,7 +192,7 @@ export const ITEMS = {
   "id": "torrieth_tally",
   "name": "托丽丝的刻痕本",
   "en": "Torrieth's Tally",
-  "desc": "天门前那条小船上的刻痕，前后一百六十八年，有人一道一道地抄进了这个本子里。抄到最后一道，后面就是空白了。",
+  "desc": "天门前那条小船上的刻痕，前后一百六十八年。有人一道一道地抄进了这个本子里。抄到最后一道，后面就是空白了。",
   "value": 0,
   "quest": true
  },
@@ -200,7 +200,7 @@ export const ITEMS = {
   "id": "jam_jar",
   "name": "一只空果酱罐",
   "en": "An Empty Jam Jar",
-  "desc": "罐子还在，标签也还在，上面写着“别摇”，只是盖子给拧松了半圈。",
+  "desc": "罐子还在，标签也还在，上面写着“别摇”，只是盖子被拧松了半圈。",
   "value": 0,
   "quest": true
  }

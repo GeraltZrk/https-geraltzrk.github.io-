@@ -70,7 +70,7 @@ function d20Face(roll) {
 }
 
 function rollBox(roll) {
-  const verdict = roll.divine && roll.success ? '神力所至' : roll.crit ? '大成功！' : roll.fumble ? '大失败！' : roll.success ? '成功' : '失败';
+  const verdict = roll.divine && roll.success ? '神力使检定自动成功' : roll.crit ? '大成功！' : roll.fumble ? '大失败！' : roll.success ? '成功' : '失败';
   const cls = roll.crit ? 'crit' : roll.success ? 'ok' : 'fail';
   const parts = [`d20 掷出 ${roll.kept}`];
   if (roll.dice.length > 1) parts[0] = `d20 掷出 ${roll.dice.join(' 与 ')}（${roll.mode === 'adv' ? '优势，取高' : '劣势，取低'} ${roll.kept}）`;
@@ -114,7 +114,7 @@ function eventView(app, view) {
   } else if (view.next) {
     box.appendChild(h('div', { class: 'continue-row' }, button('继续', act(() => eng.proceed()), { class: 'primary' })));
   } else if (view.deadEnd) {
-    box.appendChild(h('div', { class: 'continue-row' }, button('这条路还没写完——返回上一步', act(() => eng.undo()), { class: 'ghost' })));
+    box.appendChild(h('div', { class: 'continue-row' }, button('这个分支到此结束，返回上一步', act(() => eng.undo()), { class: 'ghost' })));
   } else {
     const opts = h('div', { class: 'options' });
     if (view.shop) opts.appendChild(h('button', { class: 'opt shop', type: 'button', onclick: () => openShop(app) }, h('span', { class: 'n' }, icon('coin', 14)), h('span', { class: 't' }, `看看${view.shop.name}的货`), h('span', { class: 'meta' }, h('span', null, `${view.shop.stock.length} 样`))));
@@ -171,11 +171,11 @@ function openShop(app) {
       if (!shop.stock.length) list.appendChild(h('p', { class: 'muted' }, '货架是空的。'));
     } else {
       const ids = Object.keys(st.inv).filter((id) => eng.sellPrice(id) > 0);
-      if (!ids.length) list.appendChild(h('p', { class: 'muted' }, '你身上没有他肯收的东西。'));
+      if (!ids.length) list.appendChild(h('p', { class: 'muted' }, '你没有这家店收购的物品。'));
       for (const id of ids) {
         const it = app.db.items[id];
         list.appendChild(h('div', { class: 'li' }, h('div', { class: 'grow' }, h('b', null, it.name, ` ×${st.inv[id]}`), h('div', { class: 'd' }, it.desc || '')),
-          button(`卖 ${eng.sellPrice(id)}`, () => { if (eng.sell(id)) { app.autosave(); draw(); } else toast('穿在身上的卖不了', 'bad'); }, { class: 'small' })));
+          button(`卖 ${eng.sellPrice(id)}`, () => { if (eng.sell(id)) { app.autosave(); draw(); } else toast('请先卸下装备再出售', 'bad'); }, { class: 'small' })));
       }
     }
     m.body.appendChild(list);
@@ -216,8 +216,8 @@ function endingView(app, view) {
     stat(st.stats.checksPassed, '检定成功'), stat(st.stats.checksFailed, '检定失败'), stat(st.stats.nat20, '天然 20'), stat(st.stats.nat1, '天然 1'), stat(mins + ' 分', '游玩时间'),
     stat(st.cheats.used ? '用过' : '没用', '作弊')));
   box.appendChild(h('div', { class: 'continue-row row', style: { gap: '10px', flexWrap: 'wrap' } },
-    button('回到上一个抉择', () => { eng.undo(); app.refresh(); }, { class: 'ghost', icon: 'undo', disabled: !eng.canUndo() }),
-    button('返回标题', () => app.toTitle(), { class: 'primary' })));
+    button('回到上一处选择', () => { eng.undo(); app.refresh(); }, { class: 'ghost', icon: 'undo', disabled: !eng.canUndo() }),
+    button('返回主菜单', () => app.toTitle(), { class: 'primary' })));
   return box;
 }
 
@@ -226,16 +226,16 @@ function stat(v, label) { return h('div', null, h('b', null, String(v)), h('span
 function gameOverView(app, view) {
   const eng = app.engine;
   const box = h('section', { class: 'frame event' });
-  box.appendChild(h('div', { class: 'frame-title' }, '全军覆没'));
+  box.appendChild(h('div', { class: 'frame-title' }, '队伍落败'));
   const body = h('div', { class: 'parch event-body' });
-  body.appendChild(h('p', null, '最后一个还站着的人也倒下了。骰子不总是站在你这边。'));
-  body.appendChild(h('p', { class: 'aside' }, '可以退回战斗之前重来，也可以在系统菜单里读取存档，或者干脆打开作弊菜单。'));
+  body.appendChild(h('p', null, '最后一名还能作战的队员也倒下了。'));
+  body.appendChild(h('p', { class: 'aside' }, '你可以回到开战前再试一次，也可以从存档继续，或打开作弊菜单调整队伍。'));
   box.appendChild(body);
   box.appendChild(h('div', { class: 'options' },
-    button('退回战斗之前', () => { if (eng.undo()) app.refresh(); else toast('没有可以退回的步骤', 'bad'); }, { class: 'primary block', icon: 'undo' }),
+    button('回到开战前', () => { if (eng.undo()) app.refresh(); else toast('已经是最早可返回的位置。', 'bad'); }, { class: 'primary block', icon: 'undo' }),
     button('读取存档', () => openSystem(app, 'load'), { class: 'block', icon: 'save' }),
     button('作弊菜单', () => openCheats(app), { class: 'block ghost', icon: 'wand' }),
-    button('返回标题', () => app.toTitle(), { class: 'block ghost' })));
+    button('返回主菜单', () => app.toTitle(), { class: 'block ghost' })));
   return box;
 }
 

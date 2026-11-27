@@ -62,7 +62,7 @@ function sheetTab(ctx) {
   box.appendChild(h('div', { class: 'kv' },
     kv('生命', `${ch.hp}/${ch.maxHp}`), kv('护甲等级', R.armorClass(ch, db, pas)), kv('先攻', R.fmtMod(R.abilMod(R.abilScore(ch, 'dex', pas)) + pas.init)),
     kv('攻击', `${prof.name} ${R.fmtMod(prof.hit)}`), kv('伤害', `${prof.dmg}${R.fmtMod(prof.dmgBonus)}`),
-    cls && cls.caster ? kv('法术豁免 DC', R.spellDc(ch, db, pas)) : null, cls && cls.caster ? kv('法术攻击', R.fmtMod(R.spellAttack(ch, db, pas))) : null));
+    cls && cls.caster ? kv('法术豁免难度（DC）', R.spellDc(ch, db, pas)) : null, cls && cls.caster ? kv('法术攻击', R.fmtMod(R.spellAttack(ch, db, pas))) : null));
   if (ch.slotsMax && ch.slotsMax.some((n) => n > 0)) {
     const row = h('div', { class: 'slots', style: { marginTop: '10px' } }, h('span', null, '法术位'));
     ch.slotsMax.forEach((mx, i) => { if (mx > 0) row.appendChild(h('span', null, `${i + 1}环`, pips(ch.slots[i], mx))); });
@@ -117,7 +117,7 @@ function invTab(ctx) {
   const list = h('div', { class: 'list' });
   const equippedBy = (id) => partySheets(st).filter((c) => Object.values(c.equip).includes(id)).length;
   const ids = Object.keys(st.inv).filter((id) => st.inv[id] > 0);
-  if (!ids.length) list.appendChild(h('p', { class: 'muted' }, '空空如也。'));
+  if (!ids.length) list.appendChild(h('p', { class: 'muted' }, '背包里还没有物品。'));
   for (const id of ids) {
     const it = db.items[id] || { name: id, desc: '' };
     const free = st.inv[id] - equippedBy(id);
@@ -181,7 +181,7 @@ function questTab(ctx) {
   const st = app.state;
   const defs = app.scenario.quests || {};
   const ids = Object.keys(st.quests).filter((id) => st.quests[id].stage > 0 || st.quests[id].done);
-  if (!ids.length) return h('p', { class: 'muted' }, '还没有接到任何差事。');
+  if (!ids.length) return h('p', { class: 'muted' }, '目前没有进行中的任务。');
   const box = h('div', { class: 'list' });
   const order = (q) => (q.done ? 2 : q.failed ? 3 : 1);
   ids.sort((a, b) => order(st.quests[a]) - order(st.quests[b]));
@@ -239,7 +239,7 @@ function worldTab(ctx) {
   const box = h('div');
   const tracks = (app.scenario.tracks || []).filter((t) => !t.hidden || st.flags[t.revealFlag]);
   box.appendChild(h('div', { class: 'section-title' }, '世界局势'));
-  if (!tracks.length) box.appendChild(h('p', { class: 'muted' }, '风还没起。'));
+  if (!tracks.length) box.appendChild(h('p', { class: 'muted' }, '目前没有可显示的局势变化。'));
   for (const t of tracks) box.appendChild(trackRow(t, st.world[t.key] || 0, true));
   const reps = app.scenario.reputations || [];
   if (reps.length) {
@@ -272,7 +272,7 @@ function logTab(ctx) {
   const st = app.state;
   const box = h('div', { class: 'list' });
   const items = st.log.slice(-80).reverse();
-  if (!items.length) return h('p', { class: 'muted' }, '还没有记录。');
+  if (!items.length) return h('p', { class: 'muted' }, '尚无旅程记录。');
   for (const l of items) box.appendChild(h('div', { class: 'li' }, icon(l.t === 'choice' ? 'next' : 'scroll', 16), h('div', { class: 'grow' }, h('div', null, l.text), h('div', { class: 'd' }, l.date || ''))));
   return box;
 }

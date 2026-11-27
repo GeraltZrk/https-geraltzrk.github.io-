@@ -1,4 +1,4 @@
-// s1820 / enemies.js：数据文件。正文按 docs/STYLE_GUIDE.md（第二版）重写过，由 tools/rewrite-apply.mjs 写回。
+// s1820 / enemies.js：数据文件。正文按 docs/STYLE_GUIDE.md（第三版）修订过。
 export const ENEMIES = {
  "lianne_warmage": {
   "id": "lianne_warmage",
@@ -6,7 +6,7 @@ export const ENEMIES = {
   "en": "Lianne síl Gabelaire",
   "type": "humanoid",
   "level": 4,
-  "desc": "她原是魔杖贵族出身的战斗法师，后来给清洗了，肩膀里还嵌着三粒寇拉希。今天她施不了法，只能拿军刀指着配给车，嘴比手里的刀还快。",
+  "desc": "她原是魔杖贵族出身的战斗法师，后来被清洗了，肩膀里还嵌着三粒寇拉希。今天她施不了法，只能拿军刀指着配给车，嘴比手里的刀还快。",
   "hp": 150,
   "ac": 15,
   "init": 2,
@@ -46,7 +46,7 @@ export const ENEMIES = {
     "text": "{name}把枪托抵在肩上，那根枪管原来是一支磨短了的魔杖。"
    },
    {
-    "name": "摔晶体",
+    "name": "摔魔晶",
     "dmg": "3d6",
     "type": "force",
     "aoe": {
@@ -58,7 +58,7 @@ export const ENEMIES = {
     },
     "recharge": 6,
     "minRound": 3,
-    "text": "{name}从车上抓起一块配给晶体，狠狠砸在你们脚边。"
+    "text": "{name}从车上抓起一块配给魔晶，狠狠砸在你们脚边。"
    },
    {
     "name": "谁也不许退",
@@ -118,7 +118,7 @@ export const ENEMIES = {
      }
     },
     "recharge": 4,
-    "text": "{name}这一针扎得很准，他已经扎过几百回了。"
+    "text": "{name}这一针扎得很准，他已经扎过几百次了。"
    },
    {
     "name": "掀翻血罐",
@@ -210,7 +210,7 @@ export const ENEMIES = {
     "recharge": 5,
     "minRound": 2,
     "weight": 8,
-    "text": "{name}端起霰弹枪，朝着人堆里就放了一枪。"
+    "text": "{name}端起霰弹枪，朝人群放了一枪。"
    },
    {
     "name": "放狗",
@@ -320,7 +320,7 @@ export const ENEMIES = {
      }
     },
     "recharge": 4,
-    "text": "{name}念了一个词。你再张嘴的时候，什么声音也发不出来了。"
+    "text": "{name}念了一个词。你再张嘴时，什么声音也发不出来了。"
    },
    {
     "name": "披风格挡",
@@ -339,7 +339,7 @@ export const ENEMIES = {
   "en": "Four-Armed War Pattern",
   "type": "construct",
   "level": 9,
-  "desc": "它胸口那颗芯核是醒着的，偏偏给接在了炉子上，所以一直在叫。可它到现在还在执行最后一道命令：守住炉门。",
+  "desc": "它胸口那颗芯核是醒着的，偏偏被接在了炉子上，所以一直在叫。可它到现在还在执行最后一道命令：守住炉门。",
   "hp": 420,
   "ac": 18,
   "init": 1,
@@ -447,7 +447,7 @@ export const ENEMIES = {
     "dmg": "2d10+4",
     "type": "piercing",
     "recharge": 4,
-    "text": "{name}抬起枪来的时候，嘴里还说了一声“失礼”。"
+    "text": "{name}抬起枪来时，嘴里还说了一声“失礼”。"
    },
    {
     "name": "无人反对",
@@ -457,7 +457,7 @@ export const ENEMIES = {
      "all": true
     },
     "uses": 1,
-    "text": "“无人反对。”{name}这么一说，旁边几个人也都跟着点了点头。"
+    "text": "“无人反对。”{name}这么一说，旁边几个人也都跟着点点头。"
    }
   ]
  },
@@ -605,7 +605,7 @@ export const ENEMIES = {
   "en": "Siphon Ram",
   "type": "construct",
   "level": 10,
-  "desc": "这台机器架在“红利号”的船头，管子一直伸到天上，把妖精界的空气一舱一舱压成晶体。图纸第三页上明明写着“秤”，接口却是反着装的。",
+  "desc": "这台机器架在“红利号”的船头，管子一直伸到天上，把妖精界的空气一舱一舱压成魔晶。图纸第三页上明明写着“秤”，接口却是反着装的。",
   "hp": 450,
   "ac": 18,
   "init": 0,
@@ -664,7 +664,7 @@ export const ENEMIES = {
     "recharge": 5,
     "minRound": 2,
     "weight": 8,
-    "text": "{name}的泵换了一档，你只觉得肺里的气直往外跑，全给它抽了去。"
+    "text": "{name}的泵换了一档，你只觉得肺里的气直往外跑，全被它抽走了。"
    },
    {
     "name": "撞击",
@@ -747,7 +747,7 @@ export const ENEMIES = {
     "recharge": 5,
     "minRound": 2,
     "weight": 8,
-    "text": "{name}张开了嘴，海面上的雾一下子全朝他那边吸了过去。"
+    "text": "{name}张开了嘴，海面上的雾一下全朝他那边吸了过去。"
    },
    {
     "name": "威仪",
@@ -775,7 +775,7 @@ export const ENEMIES = {
     "name": "这是平手",
     "heal": "8d10+20",
     "uses": 1,
-    "text": "{name}落在水面上，喘了好一会儿才开口：“这一回合不算。”"
+    "text": "{name}落在水面上，喘了好一会儿才开口：“这次合不算。”"
    }
   ]
  },
@@ -911,7 +911,7 @@ export const ENEMIES = {
     "recharge": 5,
     "minRound": 2,
     "weight": 8,
-    "text": "{name}翻开簿子，从头一行念了起来。"
+    "text": "{name}翻开簿子，从第一行念了起来。"
    },
    {
     "name": "添人",
@@ -979,7 +979,7 @@ export const ENEMIES = {
     "recharge": 5,
     "minRound": 2,
     "weight": 8,
-    "text": "{name}张开嘴，出来的却是那块晶体的声音，又高又快。"
+    "text": "{name}张开嘴，出来的却是那块魔晶的声音，又高又快。"
    },
    {
     "name": "殉道之祷",

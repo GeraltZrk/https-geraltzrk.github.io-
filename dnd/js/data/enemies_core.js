@@ -57,7 +57,7 @@ const LIST = [
   },
   {
     id: 'grey_wolf', name: '灰狼', en: 'Grey Wolf', type: 'beast', level: 1, era: ANY,
-    desc: '林子边上的灰影子，肋骨一根根数得出来。它们不出声，绕着火堆转圈。',
+    desc: '林子旁边的灰影子，肋骨一根根数得出来。它们不出声，绕着火堆转圈。',
     hp: 11, ac: 12, init: 2, saves: S(1, 2, 1, -4, 1, -2), xp: 30, ai: 'cunning', traits: { packTactics: true },
     attacks: [
       { name: '撕咬', hit: 3, dmg: '1d6+1', type: 'piercing', weight: 3 },
@@ -119,7 +119,7 @@ const LIST = [
     hp: 20, ac: 8, init: -2, saves: S(1, -2, 3, -4, -2, -3), xp: 30, ai: 'brute', ...UNDEAD,
     attacks: [
       { name: '抓挠', hit: 4, dmg: '1d8+2', type: 'bludgeoning', weight: 3 },
-      { name: '病咬', hit: 3, dmg: '1d4+1', type: 'piercing', apply: { cond: 'poisoned', turns: 3, save: { abil: 'con', dc: 11 } }, text: '{name}一口咬下来，伤口边上马上泛白。' },
+      { name: '病咬', hit: 3, dmg: '1d4+1', type: 'piercing', apply: { cond: 'poisoned', turns: 3, save: { abil: 'con', dc: 11 } }, text: '{name}一口咬下来，伤口旁边马上泛白。' },
     ],
   },
 
@@ -213,7 +213,7 @@ const LIST = [
   },
   {
     id: 'line_rifleman', name: '线列步兵', en: 'Line Rifleman', type: 'humanoid', level: 2, era: E1836,
-    desc: '蓝外套，白绑腿，刺刀上了枪。他们排成两排，前排跪下，后排的枪口从前排耳朵边上伸出来。',
+    desc: '蓝外套，白绑腿，刺刀上了枪。他们排成两排，前排跪下，后排的枪口从前排耳朵旁边伸出来。',
     hp: 17, ac: 12, init: 0, saves: S(1, 2, 1, 0, 0, 0), xp: 50, ai: 'brute',
     attacks: [
       { name: '刺刀', hit: 4, dmg: '1d6+2', type: 'piercing', weight: 2 },
@@ -246,7 +246,7 @@ const LIST = [
   // =========================================================================
   {
     id: 'sellsword', name: '佣兵', en: 'Sellsword', type: 'humanoid', level: 3, era: ANY,
-    desc: '甲是拼的，左肩一块右肩一块，剑倒是好剑。他问你出多少，听完摇了摇头。',
+    desc: '甲是拼的，左肩一块右肩一块，剑倒是好剑。他问你出多少，听完摇摇头。',
     hp: 30, ac: 15, init: 1, saves: S(3, 1, 2, 0, 0, 0), xp: 100, ai: 'brute',
     attacks: [
       { name: '长剑', hit: 5, dmg: '1d8+3', type: 'slashing', multi: 2, weight: 3 },
@@ -313,7 +313,7 @@ const LIST = [
   },
   {
     id: 'gnoll_slaver', name: '豺狼人奴贩', en: 'Gnoll Slaver', type: 'humanoid', level: 3, era: E1444,
-    desc: '他腰上缠了三圈铁链，链子头上是项圈。豺狼人管这一行叫“克拉的活儿”，克拉是头一个干这行的。',
+    desc: '他腰上缠了三圈铁链，链子头上是项圈。豺狼人管这一行叫“克拉的活儿”，克拉是第一个干这行的。',
     enTerms: { '克拉': 'Krah' },
     hp: 36, ac: 13, init: 1, saves: S(3, 1, 3, -1, 0, 0), xp: 100, ai: 'cunning',
     attacks: [
@@ -390,7 +390,7 @@ const LIST = [
   },
   {
     id: 'reaver_jarl', name: '掠夺者首领', en: 'Reaver Chieftain', type: 'humanoid', level: 3, era: E1022,
-    desc: '他戴着一顶缀满耳朵的熊皮帽，胡子里夹着铁环。黑冰纪元过去四十多年了，他还当这片海岸是他家的。',
+    desc: '他戴着一顶缀满耳朵的熊皮帽，胡子里夹着铁环。黑冰纪元过去四十多年了。他还当这片海岸是他家的。',
     enTerms: { '黑冰纪元': 'Era of Black Ice' },
     hp: 120, ac: 15, init: 1, saves: S(4, 1, 4, 0, 1, 2), xp: 300, ai: 'brute', traits: { boss: true },
     attacks: [
@@ -436,7 +436,7 @@ const LIST = [
   },
   {
     id: 'witch_hunter', name: '猎巫人', en: 'Witch-Hunter', type: 'humanoid', level: 4, era: ANY,
-    desc: '黑斗篷，宽檐帽，脖子上挂着一串没打孔的铁片。他先看你们里头谁带着法器，再决定先打谁。',
+    desc: '黑斗篷，宽檐帽，脖子上挂着一串没打孔的铁片。他先看你们里面谁带着法器，再决定先打谁。',
     hp: 44, ac: 15, init: 2, saves: S(2, 3, 2, 1, 3, 1), xp: 150, ai: 'cunning', condImmune: ['charmed', 'frightened'], resist: ['psychic'],
     attacks: [
       { name: '银刃', hit: 6, dmg: '1d8+3', type: 'slashing', multi: 2, weight: 3 },
@@ -527,7 +527,7 @@ const LIST = [
   },
   {
     id: 'fleshwrought_beast', name: '塑肉兽', en: 'Fleshwrought Beast (Ciprian the Depraved)', type: 'monstrosity', level: 4, era: E1022,
-    desc: '熊的身子，狼的头，背上长着第三条胳膊。堕落者奇普里安的变化术留下来的东西，没人敢烧它的窝。',
+    desc: '熊的身子，狼的头，背上长着第三条胳膊。堕落者奇普里安的变化术留下来的东西。没人敢烧它的窝。',
     enTerms: { '堕落者奇普里安': 'Ciprian the Depraved' },
     hp: 50, ac: 13, init: 1, saves: S(4, 1, 4, -3, 0, -2), xp: 150, ai: 'brute',
     attacks: [
@@ -573,7 +573,7 @@ const LIST = [
   // =========================================================================
   {
     id: 'assassin', name: '刺客', en: 'Assassin', type: 'humanoid', level: 5, era: ANY,
-    desc: '一身灰，脸长得让人记不住。你上回见他的时候，他在楼下端菜。',
+    desc: '一身灰，脸长得让人记不住。你上次见他时，他在楼下端菜。',
     hp: 58, ac: 15, init: 4, saves: S(1, 5, 2, 2, 2, 1), xp: 250, ai: 'cunning',
     attacks: [
       { name: '双匕', hit: 7, dmg: '1d6+4', type: 'piercing', extra: { dmg: '1d6', type: 'poison' }, multi: 2, weight: 3 },
@@ -666,7 +666,7 @@ const LIST = [
   },
   {
     id: 'ogre', name: '食人魔', en: 'Ogre', type: 'giant', level: 5, era: ANY,
-    desc: '三米高，肚子比磨盘还圆，扛着一截带根的树。它闻了闻你，咂了咂嘴。',
+    desc: '三米高，肚子比磨盘还圆，扛着一截带根的树。它闻闻你，咂了咂嘴。',
     hp: 72, ac: 12, init: -1, saves: S(5, -1, 4, -3, -2, -2), xp: 250, ai: 'brute',
     attacks: [
       { name: '树干棒', hit: 7, dmg: '2d8+4', type: 'bludgeoning', multi: 2, weight: 3 },
@@ -779,7 +779,7 @@ const LIST = [
     hp: 76, ac: 14, init: 3, saves: S(4, 3, 3, -4, 2, -1), xp: 350, ai: 'cunning',
     attacks: [
       { name: '喙与爪', hit: 7, dmg: '2d6+4', type: 'slashing', multi: 2, weight: 3 },
-      { name: '俯冲', hit: 8, dmg: '3d8+4', type: 'piercing', apply: { cond: 'prone', turns: 1, save: { abil: 'str', dc: 15 } }, recharge: 5, text: '{name}拔高，收翅，像石头一样砸下来。' },
+      { name: '俯冲', hit: 8, dmg: '3d8+4', type: 'piercing', apply: { cond: 'prone', turns: 1, save: { abil: 'str', dc: 15 } }, recharge: 5, text: '{name}拔高，收翅，像石第一样砸下来。' },
     ],
   },
   {
@@ -813,7 +813,7 @@ const LIST = [
   },
   {
     id: 'deep_crow', name: '深渊鸦', en: 'Deep Crow', type: 'monstrosity', level: 6, era: ANY,
-    desc: '一只像牛那么大的乌鸦，喙分成两片，像剪子。头上一簇红眼睛挤在一块儿，每只都在看你。',
+    desc: '一只像牛那么大的乌鸦，喙分成两片，像剪子。头上一簇红眼睛挤在一起，每只都在看你。',
     hp: 72, ac: 15, init: 3, saves: S(3, 3, 3, -2, 2, -1), xp: 350, ai: 'cunning', traits: { packTactics: true },
     attacks: [
       { name: '剪喙', hit: 7, dmg: '2d6+4', type: 'slashing', multi: 2, weight: 3 },
@@ -841,7 +841,7 @@ const LIST = [
   },
   {
     id: 'hobgoblin_banneret', name: '命令秩序旗官', en: 'Command Banner-Officer', type: 'humanoid', level: 6, era: E1444,
-    desc: '背上插一面三角旗，旗上是一头老虎。他吹的哨子是铜的，吹一声，他手下的兵就换一个阵。',
+    desc: '背上插一面三角旗，旗上是一头老虎。他吹的哨子是铜的，吹一声。他手下的兵就换一个阵。',
     enTerms: { '命令秩序': 'The Command' },
     hp: 86, ac: 18, init: 2, saves: S(4, 2, 3, 2, 2, 2), xp: 350, ai: 'cunning',
     attacks: [
@@ -891,7 +891,7 @@ const LIST = [
   },
   {
     id: 'hag_mother', name: '鬼婆之母', en: 'Coven Mother (hag)', type: 'fey', level: 6, era: ANY,
-    desc: '她坐在一口能装下一头牛的锅边，锅里在煮东西，你不想知道是什么。鬼婆凑满三个才成一个巫会，她是另外两个的娘。',
+    desc: '她坐在一口能装下一头牛的锅边，锅里在煮东西。你不想知道是什么。鬼婆凑满三个才成一个巫会，她是另外两个的娘。',
     hp: 320, ac: 16, init: 2, saves: S(4, 2, 4, 3, 4, 4), xp: 1050, ai: 'caster', traits: { boss: true }, resist: ['psychic', 'cold'], condImmune: ['charmed', 'frightened'],
     attacks: [
       { name: '铁指甲', hit: 8, dmg: '2d8+5', type: 'slashing', multi: 3, weight: 3 },
@@ -937,7 +937,7 @@ const LIST = [
   },
   {
     id: 'treant', name: '树人', en: 'Treant', type: 'plant', level: 7, era: ANY,
-    desc: '那棵橡树刚才不在那儿。它的脾气看人怎么待过它：这一棵身上有好几道斧痕。',
+    desc: '那棵橡树刚才不在那里。它的脾气看人怎么待过它：这一棵身上有好几道斧痕。',
     hp: 105, ac: 16, init: -1, saves: S(6, -1, 5, 1, 3, 1), xp: 550, ai: 'brute', resist: ['bludgeoning', 'piercing'], vuln: ['fire'],
     attacks: [
       { name: '枝臂', hit: 8, dmg: '2d8+5', type: 'bludgeoning', multi: 2, weight: 3 },
@@ -966,7 +966,7 @@ const LIST = [
   },
   {
     id: 'gorebeak', name: '血喙钩爪怪', en: 'Gorebeak', type: 'undead', level: 7, era: LATE,
-    desc: '一只钩爪怪，可是瘦得皮包骨，嘴边一圈干血。血灾逼它喝过自己的血，它就不再是活物了。',
+    desc: '一只钩爪怪，可是瘦得皮包骨，嘴边一圈干血。血灾逼它喝过自己的血。它就不再是活物了。',
     enTerms: { '血灾': 'Bloodscourge' },
     hp: 104, ac: 15, init: 2, saves: S(5, 2, 4, -2, 1, -1), xp: 550, ai: 'brute', ...UNDEAD, traits: { regen: 4 },
     attacks: [
@@ -1105,7 +1105,7 @@ const LIST = [
   },
   {
     id: 'wroth_knight', name: '怒王子的骑士', en: 'Wroth Knight of Kazraiel', type: 'fiend', level: 8, era: ANY,
-    desc: '一身焦黑的板甲，接缝里往外冒火。头盔里没有脸，只有一团红光。它为怒王子卡兹拉伊尔打仗，从不问为什么。',
+    desc: '一身焦黑的板甲，接缝里往外冒火。头盔里没有脸，只有一团红光。它为怒王子卡兹拉伊尔打仗，从不问为什么？',
     enTerms: { '怒王子卡兹拉伊尔': 'Kazraiel, the Wroth Prince' },
     hp: 112, ac: 17, init: 1, saves: S(6, 1, 5, 1, 2, 3), xp: 700, ai: 'brute', resist: ['fire', 'cold'], immune: ['poison'], condImmune: ['poisoned', 'frightened'],
     attacks: [
@@ -1126,7 +1126,7 @@ const LIST = [
   },
   {
     id: 'precursor_sentinel', name: '先驱哨兵', en: 'Precursor Sentinel', type: 'construct', level: 8, era: LATE,
-    desc: '银白色的金属人，没有一条焊缝，脸是一块光滑的镜子。它守在先驱精灵的废墟门口，问了你一句话，用的是没人会的语言。',
+    desc: '银白色的金属人，没有一条焊缝，脸是一块光滑的镜子。它守在先驱精灵的废墟门口，问了你话，用的是没人会的语言。',
     enTerms: { '先驱精灵': 'Precursor Elves' },
     hp: 112, ac: 18, init: 2, saves: S(5, 2, 5, 3, 3, 0), xp: 700, ai: 'cunning', ...CONSTRUCT, resist: ['force', 'lightning'],
     attacks: [
@@ -1176,7 +1176,7 @@ const LIST = [
   },
   {
     id: 'frost_giant', name: '霜巨人', en: 'Frost Giant', type: 'giant', level: 9, era: ANY,
-    desc: '六米高，胡子上挂着冰，披着一张猛犸皮。他说霜王格鲁德的宫殿还在海底下，他迟早要把它捞上来。',
+    desc: '六米高，胡子上挂着冰，披着一张猛犸皮。他说霜王格鲁德的宫殿还在海下面，他迟早要把它捞上来。',
     enTerms: { '格鲁德': 'Frost King Gerud' },
     hp: 110, ac: 15, init: -1, saves: S(7, -1, 6, 0, 2, 1), xp: 1000, ai: 'brute', immune: ['cold'],
     attacks: [
@@ -1288,7 +1288,7 @@ const LIST = [
   },
   {
     id: 'fire_giant', name: '火巨人', en: 'Fire Giant', type: 'giant', level: 10, era: ANY,
-    desc: '皮肤像炭，头发像炉火，在禁原的火山边上打铁。他的剑比你的马长。',
+    desc: '皮肤像炭，头发像炉火，在禁原的火山旁边打铁。他的剑比你的马长。',
     enTerms: { '禁原': 'Forbidden Plains' },
     hp: 160, ac: 18, init: -1, saves: S(7, -1, 6, 0, 2, 1), xp: 1200, ai: 'brute', immune: ['fire'],
     attacks: [

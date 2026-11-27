@@ -17,57 +17,57 @@ export const ABILITIES_RACES = {
   race_human_all_in: {
     id: 'race_human_all_in', name: '豁出去', en: 'All In', kind: 'feature', quick: true, target: 'self', ai: 'buff',
     selfApply: { cond: 'focused', turns: 1 }, cost: { uses: 1, per: 'short' },
-    desc: '附赠动作。到这一回合结束前，你的攻击检定有优势。每次短休后可用 1 次。',
+    desc: '附赠动作。到本回合结束前，你的攻击检定具有优势。每次短休后可以使用 1 次。',
   },
   race_halfling_second_breakfast: {
     id: 'race_halfling_second_breakfast', name: '加餐', en: 'Second Breakfast', kind: 'feature', quick: true, target: 'self', ai: 'heal',
     heal: '1d6+lvl', cost: { uses: 1, per: 'short' },
-    desc: '附赠动作。从兜里摸出点吃的塞进嘴里，恢复 1d6+等级 点生命。每次短休后可用 1 次。',
+    desc: '附赠动作。从兜里摸出点吃的塞进嘴里，恢复 1d6+等级 点生命。每次短休后可以使用 1 次。',
   },
   race_gnome_misdirection: {
     id: 'race_gnome_misdirection', name: '障眼法', en: 'Misdirection', kind: 'feature', quick: true, target: 'self',
     hide: true, cost: { uses: 1, per: 'short' },
-    desc: '附赠动作。一点小幻术让对面看花了眼：你进入隐匿，下一次攻击有优势。每次短休后可用 1 次。',
+    desc: '附赠动作。一点小幻术让对面看花了眼：你进入隐匿，下一次攻击具有优势。每次短休后可以使用 1 次。',
   },
   race_goblin_dirty_trick: {
     id: 'race_goblin_dirty_trick', name: '下黑手', en: 'Dirty Trick', kind: 'feature', quick: true, target: 'enemy', ai: 'control',
     save: { abil: 'dex' }, dcAbil: 'dex', apply: { cond: 'exposed', turns: 1 }, cost: { uses: 1, per: 'short' },
-    desc: '附赠动作。撒把沙子，踩一脚，朝裆下来一下。目标过敏捷豁免（DC 8+熟练加值+敏捷调整值），失败则露出破绽：到它下个回合结束前，打它的攻击都有优势。每次短休后可用 1 次。',
+    desc: '附赠动作。撒把沙子，踩一脚，朝裆下来一下。目标需进行敏捷豁免（DC 8+熟练加值+敏捷调整值），失败则露出破绽：在其下一回合结束前，打它的攻击都有优势。每次短休后可以使用 1 次。',
   },
   race_hobgoblin_orders: {
     id: 'race_hobgoblin_orders', name: '传令', en: 'Orders', kind: 'feature', quick: true, target: 'ally', ai: 'buff',
     apply: { cond: 'inspired', turns: 5 }, cost: { uses: 1, per: 'short' },
-    desc: '附赠动作。点一个同伴（也可以是自己），喊出口令：他下一次攻击检定额外 +1d6。每次短休后可用 1 次。',
+    desc: '附赠动作。选择一名同伴（也可以是自己），喊出口令：他下一次攻击检定额外 +1d6。每次短休后可以使用 1 次。',
   },
   race_kobold_snare: {
     id: 'race_kobold_snare', name: '下套', en: 'Snare', kind: 'feature', target: 'enemy', ai: 'control',
     save: { abil: 'dex' }, dcAbil: 'dex', apply: { cond: 'restrained', turns: 2 }, cost: { uses: 1, per: 'short' },
-    desc: '甩出一副夹子或者一根绊索。目标过敏捷豁免（DC 8+熟练加值+敏捷调整值），失败则被束缚，至多 2 回合：它攻击有劣势，打它有优势；它每回合结束时可以用力量豁免挣脱。占用主要行动，每次短休后可用 1 次。',
+    desc: '甩出一副夹子或者一根绊索。目标需进行敏捷豁免（DC 8+熟练加值+敏捷调整值），失败则被束缚，至多 2 回合：它攻击有劣势，打它有优势；它每回合结束时可以用力量豁免挣脱。消耗主要行动，每次短休后可以使用 1 次。',
   },
   race_gnoll_bite: {
     id: 'race_gnoll_bite', name: '碎骨咬', en: 'Bone-cracking Bite', kind: 'feature', quick: true, target: 'enemy',
     save: { abil: 'dex' }, dcAbil: 'str', dmg: '1d8+mod', dmgType: 'piercing', apply: { cond: 'bleeding', turns: 3 }, cost: { uses: 1, per: 'short' },
-    desc: '附赠动作。照着胳膊或者腿咬下去。目标过敏捷豁免（DC 8+熟练加值+力量调整值），失败则受到 1d8+力量调整值 点穿刺伤害，并流血 3 回合（每回合开始受 1d4 伤害）。每次短休后可用 1 次。',
+    desc: '附赠动作。照着胳膊或者腿咬下去。目标需进行敏捷豁免（DC 8+熟练加值+力量调整值），失败则受到 1d8+力量调整值 点穿刺伤害，并流血 3 回合（每回合开始受 1d4 伤害）。每次短休后可以使用 1 次。',
   },
   race_harpy_screech: {
     id: 'race_harpy_screech', name: '尖啸', en: 'Screech', kind: 'feature', target: 'enemies', ai: 'control',
     save: { abil: 'con', half: true }, dcAbil: 'cha', dmg: '1d8+lvl', dmgType: 'thunder', apply: { cond: 'dazed', turns: 1 }, cost: { uses: 1, per: 'short' },
-    desc: '张嘴一声尖啸。所有敌人受到 1d8+等级 点雷鸣伤害，体质豁免（DC 8+熟练加值+魅力调整值）成功则减半；豁免失败的还会晕眩，到它下个回合结束前攻击有劣势。占用主要行动，每次短休后可用 1 次。',
+    desc: '张嘴一声尖啸。所有敌人受到 1d8+等级 点雷鸣伤害，体质豁免（DC 8+熟练加值+魅力调整值）成功则减半；豁免失败的还会晕眩，在其下一回合结束前攻击有劣势。消耗主要行动，每次短休后可以使用 1 次。',
   },
   race_ogre_hunger: {
     id: 'race_ogre_hunger', name: '饿劲', en: 'The Hunger', kind: 'feature', quick: true, target: 'self', ai: 'buff',
     selfApply: { cond: 'emboldened', turns: 2 }, cost: { uses: 1, per: 'long' },
-    desc: '附赠动作。放任肚子里那股饿劲冲上头：这一回合和下一回合，武器命中 +2、伤害 +2。每次长休后可用 1 次。',
+    desc: '附赠动作。放任肚子里那股饿劲冲上面：本回合和下一回合，武器命中 +2、伤害 +2。每次长休后可以使用 1 次。',
   },
   race_centaur_charge: {
     id: 'race_centaur_charge', name: '冲撞', en: 'Charge', kind: 'maneuver', target: 'enemy', attack: 'weapon',
     weaponExtra: '1d6+lvl', extraType: 'bludgeoning', dcAbil: 'str', apply: { cond: 'prone', turns: 1, save: { abil: 'str' } }, cost: { uses: 1, per: 'short' },
-    desc: '四蹄发力撞上去：做一次武器攻击，命中后额外造成 1d6+等级 点钝击伤害。被撞中的目标再过力量豁免（DC 8+熟练加值+力量调整值），失败则倒地 1 回合。占用主要行动，每次短休后可用 1 次。',
+    desc: '四蹄发力撞上去：进行一次武器攻击，命中后额外造成 1d6+等级 点钝击伤害。被撞中的目标随后进行力量豁免（DC 8+熟练加值+力量调整值），失败则倒地 1 回合。消耗主要行动，每次短休后可以使用 1 次。',
   },
   race_harimari_roar: {
     id: 'race_harimari_roar', name: '虎啸', en: 'Roar', kind: 'feature', target: 'enemies', ai: 'control',
     save: { abil: 'wis' }, dcAbil: 'str', apply: { cond: 'frightened', turns: 2 }, cost: { uses: 1, per: 'short' },
-    desc: '一声三公里外都听得见的吼。所有敌人过感知豁免（DC 8+熟练加值+力量调整值），失败则恐慌至多 2 回合：攻击有劣势，每回合结束时可以再豁免一次。占用主要行动，每次短休后可用 1 次。',
+    desc: '一声三公里外都听得见的吼。所有敌人须进行感知豁免（DC 8+熟练加值+力量调整值），失败则恐慌至多 2 回合：攻击有劣势，每回合结束时可以再豁免一次。消耗主要行动，每次短休后可以使用 1 次。',
   },
 
   // =========================================================================

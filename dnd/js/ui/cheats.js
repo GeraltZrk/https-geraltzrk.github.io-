@@ -47,7 +47,7 @@ export function openCheats(app) {
     const DOMAINS = ['战争', '月亮', '太阳', '死亡', '知识', '自由', '丰饶', '风暴', '命运', '匠艺', '盗贼', '骰子'];
     if (s.cheats.ascended) {
       box.appendChild(h('div', { class: 'li on' }, h('div', { class: 'grow' }, h('b', null, `${s.pc.name}，${divineTitle(s)}`),
-        h('div', { class: 'd' }, '你现在是神。凡人会跪、会怕、会求你、也会有人想弑神；很多场合多出只有神才有的选项，结局和后日谈也会跟着改写。'))));
+        h('div', { class: 'd' }, '你现在是神。凡人会跪、会怕、会求你，也会有人想弑神。很多场合会多出只有神才有的选项，结局和后日谈也会跟着改写。'))));
     } else {
       box.appendChild(h('div', { class: 'li' }, h('div', { class: 'grow' }, h('b', null, '升格为神'),
         h('div', { class: 'd' }, '主角获得神格：永生、无敌、检定必成、资源无限，学会神罚、神言、神恩。之后的剧情文本、人物反应、可选项和结局都会把你当神来写。随时可以褪去神性。'))));
@@ -62,7 +62,7 @@ export function openCheats(app) {
         ? button('褪去神性，变回凡人', () => { setAscended(s, app.db, false); app.autosave(); app.refresh(); draw(); toast('神性散了。你又会流血了。', 'cheat'); }, { class: 'danger' })
         : button('升神', () => { if (!s.cheats.divineDomain && !s.cheats.divineName) s.cheats.divineDomain = DOMAINS[Math.floor(Math.random() * DOMAINS.length)]; setAscended(s, app.db, true); app.autosave(); app.refresh(); draw(); toast(`${s.pc.name}成了${divineTitle(s)}`, 'cheat', 3600); }, { class: 'primary', icon: 'star' })));
     box.appendChild(h('div', { class: 'section-title' }, '只要其中一样'));
-    box.appendChild(sw('永生', '不升神，只是不会死也不会老。倒下会自己站起来；隔了几十年的剧情里别人老了，你没有。', 'immortal'));
+    box.appendChild(sw('永生', '不升神，只是不会死也不会老。倒下会自己站起来。隔了几十年的剧情里别人老了，你没有。', 'immortal'));
     box.appendChild(sw('无敌', '我方不受任何伤害', 'god'));
     return box;
   }
@@ -95,7 +95,7 @@ export function openCheats(app) {
     const nameInput = h('input', { type: 'text', value: pc.name, maxlength: 16, onchange: (e) => { pc.name = e.target.value.trim() || pc.name; used(); app.refresh(); } });
     box.appendChild(field('名字', nameInput));
     box.appendChild(field('性别称谓', h('select', { onchange: (e) => { pc.gender = e.target.value; used(); app.refresh(); } }, [['m', '他'], ['f', '她']].map(([v, l]) => h('option', { value: v, selected: pc.gender === v }, l)))));
-    box.appendChild(h('div', { class: 'li' }, h('div', { class: 'grow' }, h('b', null, '等级'), h('div', { class: 'd' }, '调高会补发升级；调低会直接生效')),
+    box.appendChild(h('div', { class: 'li' }, h('div', { class: 'grow' }, h('b', null, '等级'), h('div', { class: 'd' }, '调高会补发升级，调低会直接生效')),
       num(pc.level + pc.pendingLevels, (v) => {
         const lv = Math.max(1, Math.min(R.MAX_LEVEL, Math.round(v)));
         if (lv > pc.level + pc.pendingLevels) { ensureLevel(s, db, lv); while (pc.pendingLevels > 0) { const before = pc.level; levelUp(s, db, {}); if (pc.level === before) break; } }
@@ -213,7 +213,7 @@ export function openCheats(app) {
     const eng = app.engine;
     const box = h('div', { class: 'list' });
     const jump = (id) => { used(); eng.snapshot(); s.combat = null; s.phase = 'scene'; eng.enter(id); m.close(); app.refresh(); window.scrollTo(0, 0); toast('已跳转', 'cheat'); };
-    box.appendChild(h('div', { class: 'row' }, button('退回上一步', () => { if (eng.undo()) { app.refresh(); toast('已退回', 'cheat'); } }, { class: 'small', icon: 'undo', disabled: !eng.canUndo() }),
+    box.appendChild(h('div', { class: 'row' }, button('回到上一步', () => { if (eng.undo()) { app.refresh(); toast('已退回', 'cheat'); } }, { class: 'small', icon: 'undo', disabled: !eng.canUndo() }),
       button('完成所有进行中的任务', () => { for (const id of Object.keys(s.quests)) if (!s.quests[id].failed) s.quests[id].done = true; used(); app.refresh(); toast('任务全部完成', 'cheat'); }, { class: 'small' }),
       button('解锁全部图鉴', () => { for (const id of Object.keys(Object.assign({}, app.db.codex, sc.codex))) s.codex[id] = true; used(); app.autosave(); toast('图鉴已全部解锁', 'cheat'); }, { class: 'small' })));
     if (sc.chapters && sc.chapters.length) {

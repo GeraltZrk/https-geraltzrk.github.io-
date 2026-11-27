@@ -1,4 +1,4 @@
-// s1022 / items.js：数据文件。正文按 docs/STYLE_GUIDE.md（第二版）重写过，由 tools/rewrite-apply.mjs 写回。
+// s1022 / items.js：数据文件。正文按 docs/STYLE_GUIDE.md（第三版）修订过。
 export const ITEMS = {
  "witness_seal": {
   "id": "witness_seal",
@@ -20,7 +20,7 @@ export const ITEMS = {
   "en": "Palace Badge",
   "quest": true,
   "value": 0,
-  "desc": "达梅里斯堡的银腰牌，背面刻着一弯月亮，有了它，国王的内室和军需库都进得去。"
+  "desc": "达梅里斯堡的银腰牌，背面刻着一弯月亮。有了它，国王的内室和军需库都进得去。"
  },
  "ioriel_letter": {
   "id": "ioriel_letter",
@@ -28,7 +28,7 @@ export const ITEMS = {
   "en": "Ioriel's Letter",
   "quest": true,
   "value": 0,
-  "desc": "信上封的是玫瑰色的蜡，里头只写了一句话，问的是克雷格·达梅里斯那一枪。"
+  "desc": "信上封的是玫瑰色的蜡，里面只写了一句话，问的是克雷格·达梅里斯那一枪。"
  },
  "legion_token": {
   "id": "legion_token",
@@ -44,7 +44,7 @@ export const ITEMS = {
   "en": "Ibenion's Writ",
   "quest": true,
   "value": 0,
-  "desc": "伊贝尼昂亲笔写在船帆布上的手令，折了三折。精灵的使者见了它，都得先站起身来。"
+  "desc": "伊贝尼昂亲笔写在船帆布上的手令，折了三折。精灵的使者见了它，都得先站起身。"
  },
  "ledger_page": {
   "id": "ledger_page",
@@ -52,7 +52,7 @@ export const ITEMS = {
   "en": "Necropolis Ledger Page",
   "quest": true,
   "value": 0,
-  "desc": "福尔卡德亲手抄下来的一页账，记的是屠夫原那四百零六座坟，一行一个名字，名字后面注着束腰发了没有。"
+  "desc": "福尔卡德亲手抄下来的一页账，记的是屠夫原那四百零六座坟。一行一个名字，名字后面注着束腰发了没有。"
  },
  "holy_oil": {
   "id": "holy_oil",
@@ -68,7 +68,7 @@ export const ITEMS = {
   "en": "Tourney Accounts",
   "quest": true,
   "value": 0,
-  "desc": "大捷比武会的开销账，是红宝石矮人记的，哪天换了几根枪，是谁领走的，一笔都没落下。"
+  "desc": "大捷比武会的开销账，是红宝石矮人记的，哪天换了几根枪，是谁领走的。一笔都没落下。"
  },
  "lunatein_plank": {
   "id": "lunatein_plank",
@@ -150,6 +150,6 @@ export const ITEMS = {
   "en": "Tile-keeper's Spoon",
   "quest": true,
   "value": 0,
-  "desc": "一把木勺，勺柄老拿来敲地砖，都磨出一道沟了。什么用处也没有。"
+  "desc": "一把木勺，勺柄常用来敲地砖，都磨出一道沟了。什么用处也没有。"
  }
 };

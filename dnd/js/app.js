@@ -88,10 +88,10 @@ export class App {
   }
 
   async resume(state) {
-    if (!state) { toast('读取失败：存档损坏或不存在', 'bad'); return false; }
+    if (!state) { toast('无法读取。存档可能已损坏或被删除。', 'bad'); return false; }
     try {
       const scenario = await this.loadScenario(state.scenario);
-      if (!scenario.scenes[state.scene]) { toast('读取失败：存档与当前版本不兼容', 'bad'); return false; }
+      if (!scenario.scenes[state.scene]) { toast('无法读取。这个存档与当前游戏版本不兼容。', 'bad'); return false; }
       this.attach(scenario, state);
       this.engine.start();
       this.show('play');
@@ -116,7 +116,7 @@ export class App {
   save(slot) {
     if (!this.engine) return false;
     const ok = State.saveSlot(slot, this.engine.state, { title: this.scenario.title });
-    toast(ok ? '已存档' : '存档失败（浏览器禁止了本地存储）', ok ? 'info' : 'bad');
+    toast(ok ? '已存档' : '无法保存。浏览器已禁用本地存储。', ok ? 'info' : 'bad');
     return ok;
   }
 

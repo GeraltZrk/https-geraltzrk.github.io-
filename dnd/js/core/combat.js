@@ -128,7 +128,7 @@ function divineAwe(ctx) {
   const { state, db } = ctx;
   const c = state.combat;
   const mindless = ['construct', 'undead', 'plant', 'elemental', 'aberration'];
-  logLine(c, `${state.pc.name}没有拔武器。光是站在那儿就够了。`, 'special');
+  logLine(c, `${state.pc.name}没有拔武器。光是站在那里就够了。`, 'special');
   for (const u of unitsOf(c, 'enemy')) {
     if (u.boss || mindless.includes(u.def.type) || c.enc.noAwe) continue;
     const roll = R.d20().kept + ((u.def.saves && u.def.saves.wis) || 0);

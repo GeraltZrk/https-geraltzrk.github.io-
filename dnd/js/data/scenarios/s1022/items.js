@@ -28,7 +28,7 @@ export const ITEMS = {
   "en": "Ioriel's Letter",
   "quest": true,
   "value": 0,
-  "desc": "信上封的是玫瑰色的蜡，里面只写了一句话，问的是克雷格·达梅里斯那一枪。"
+  "desc": "洛伦特太后伊奥瑞尔的信，封的是玫瑰色的蜡，里面只写了一句话，问的是克雷格·达梅里斯刺死她丈夫的那一枪。"
  },
  "legion_token": {
   "id": "legion_token",
@@ -68,7 +68,7 @@ export const ITEMS = {
   "en": "Tourney Accounts",
   "quest": true,
   "value": 0,
-  "desc": "大捷比武会的开销账，是红宝石矮人记的，哪天换了几根枪，是谁领走的。一笔都没落下。"
+  "desc": "大捷比武会的开销账，是红宝石矮人记的，哪天换了几根枪、是谁领走的，一笔都没落下。"
  },
  "lunatein_plank": {
   "id": "lunatein_plank",
@@ -77,7 +77,7 @@ export const ITEMS = {
   "quest": true,
   "slot": "trinket",
   "value": 0,
-  "desc": "巴掌大的一块船板，早就让海盐浸透了，摸上去凉凉的。带在身上，同精灵说话时说服检定 +1。"
+  "desc": "巴掌大的一块船板，早就被海盐浸透了，摸上去凉凉的。带在身上，同精灵说话时说服检定 +1。"
  },
  "nerat_candle": {
   "id": "nerat_candle",

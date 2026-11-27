@@ -7,9 +7,9 @@
 export const ITEMS_EXTRA = {
   // ---------------------------------------------------------------------------
   // Aliases kept for the demo scenario.
-  potion: { id: 'potion', name: '治疗药水', en: 'Potion of Healing', desc: '恢复 2d4+2 点生命，倒地的人也能灌下去。和普通治疗药水是一样东西。', use: { target: 'ally', heal: '2d4+2', revive: true }, value: 50 },
+  potion: { id: 'potion', name: '治疗药水', en: 'Potion of Healing', desc: '恢复 2d4+2 点生命，倒地的人也能灌下去。和普通治疗药水是同一种东西。', use: { target: 'ally', heal: '2d4+2', revive: true }, value: 50 },
   staff: { id: 'staff', name: '木杖', en: 'Wooden Staff', desc: '一根走路用的木杖，打人 1d6 钝击。', weapon: { dmg: '1d6', type: 'bludgeoning', props: [] }, value: 2 },
-  chain: { id: 'chain', name: '链甲', en: 'Chain Mail', desc: '护甲等级 16，不加敏捷。和普通链甲是一样东西。', armor: { base: 16, dexCap: 0, type: 'heavy' }, value: 75 },
+  chain: { id: 'chain', name: '链甲', en: 'Chain Mail', desc: '护甲等级 16，不加敏捷。和普通链甲是同一种东西。', armor: { base: 16, dexCap: 0, type: 'heavy' }, value: 75 },
 
   // ---------------------------------------------------------------------------
   // Weapons. +1 around level 4, +2 around level 8.
@@ -33,13 +33,13 @@ export const ITEMS_EXTRA = {
   },
   precursor_spellblade: {
     id: 'precursor_spellblade', name: '先驱咒刃', en: 'Precursor Spellblade',
-    desc: '剑身是空的，里面灌着达姆斯塔尔，既是剑也是施法器。施法者拿它用施法属性攻击；命中和伤害 +2，法术 DC +1。',
+    desc: '剑身是空的，里面灌着魔晶，既是剑也是施法器。施法者拿它用施法属性攻击，命中和伤害 +2，法术 DC +1。',
     enTerms: { '先驱': 'Precursor', '达姆斯塔尔': 'Damestear' },
     weapon: { dmg: '1d8', type: 'slashing', props: ['versatile', 'casting'], bonus: 2 }, passives: { spellDc: 1 }, value: 4500,
   },
   elven_longbow: {
     id: 'elven_longbow', name: '精灵传家长弓', en: 'Elven Heirloom Longbow',
-    desc: '月港精灵的旧弓，弓臂换过三回，弓把还是原来那个。命中和伤害 +1。',
+    desc: '月港精灵的旧弓，弓臂换过三次，弓把还是原来那个。命中和伤害 +1。',
     enTerms: { '月港': 'Moonhaven' },
     weapon: { dmg: '1d8', type: 'piercing', props: ['ranged', 'two_handed'], bonus: 1 }, value: 900,
   },
@@ -81,13 +81,13 @@ export const ITEMS_EXTRA = {
   },
   damestear_dagger: {
     id: 'damestear_dagger', name: '达姆斯塔尔匕首', en: 'Damestear-edged Dagger',
-    desc: '刃口镶了一线达姆斯塔尔，法师拿它当施法器用。施法者用施法属性攻击；命中和伤害 +1。',
+    desc: '刃口镶了一线达姆斯塔尔，也就是能储存魔力的魔晶，法师拿它当施法器用。施法者用施法属性攻击，命中和伤害 +1。',
     enTerms: { '达姆斯塔尔': 'Damestear' },
     weapon: { dmg: '1d4', type: 'piercing', props: ['finesse', 'light', 'casting'], bonus: 1 }, value: 900,
   },
   damestear_longsword: {
     id: 'damestear_longsword', name: '达姆斯塔尔刃长剑', en: 'Damestear-edged Longsword',
-    desc: '刃上的达姆斯塔尔挨一下亮一下，砍得深了会炸出一团光。命中和伤害 +1，重击额外 +1d6。',
+    desc: '刃上的魔晶挨一下亮一下，砍得深了会炸出一团光。命中和伤害 +1，重击额外 +1d6。',
     enTerms: { '达姆斯塔尔': 'Damestear' },
     weapon: { dmg: '1d8', type: 'slashing', props: ['versatile'], bonus: 1 }, passives: { critDice: 1 }, value: 1200,
   },
@@ -123,7 +123,7 @@ export const ITEMS_EXTRA = {
   },
   wandlock_pistol: {
     id: 'wandlock_pistol', name: '魔杖枪', en: 'Wandlock',
-    desc: '奇械师的随身家伙：枪托里塞了一节魔杖，扣扳机打出一团力场。施法者用施法属性攻击；1d10 力场伤害，命中和伤害 +1。',
+    desc: '奇械师随身带的手枪：枪托里塞了一节魔杖，扣扳机打出一团力场。施法者用施法属性攻击，1d10 力场伤害，命中和伤害 +1。',
     enTerms: { '奇械师': 'Artificer' },
     weapon: { dmg: '1d10', type: 'force', props: ['ranged', 'light', 'casting'], bonus: 1 }, value: 1100, era: [1836],
   },
@@ -213,7 +213,7 @@ export const ITEMS_EXTRA = {
   // Canon relics.
   calindal: {
     id: 'calindal', name: '卡林达尔', en: 'Calindal, the Gleaming Blade', relic: true,
-    desc: '屠龙者埃勒卡斯特斩赤铜龙阿洛斯的先驱咒刃，660 年丢在试炼山，1021 年克拉丽蒙德把它带回刀锋边区；绿潮攻破刀锋堡时碎了。挨一下就闪一下：命中和伤害 +3，施法者用施法属性攻击，可用「护目炽光」。',
+    desc: '屠龙者埃勒卡斯特斩赤铜龙阿洛斯的先驱咒刃，660 年丢在试炼山，1021 年克拉丽蒙德把它带回刀锋边区，绿潮攻破刀锋堡时碎了。挨一下就闪一下：命中和伤害 +3，施法者用施法属性攻击，可用「护目炽光」。',
     enTerms: { '屠龙者埃勒卡斯特': 'Elecast Dragonsbane', '赤铜龙阿洛斯': 'Alos the Copper', '试炼山': 'Trialmount', '克拉丽蒙德': 'Clarimonde of Oldhaven', '刀锋边区': 'Blademarches', '绿潮': 'Greentide', '刀锋堡': 'Bladeskeep', '先驱': 'Precursor' },
     weapon: { dmg: '2d6', type: 'slashing', props: ['two_handed', 'casting'], bonus: 3 }, grants: ['cleric_sun_flare'], value: 60000, era: [1022, 1836],
   },
@@ -231,7 +231,7 @@ export const ITEMS_EXTRA = {
   },
   saerasyar: {
     id: 'saerasyar', name: '塞拉斯亚尔', en: 'Saerasyar, the Green-Flamed Sword', relic: true,
-    desc: '穆纳克勒斯起义时从奴隶主手里夺来的先驱咒刃，一拔出来就烧起蓝绿色的火；拿它作恶的人会和剑一起炸掉。伤害算火焰，命中和伤害 +2。',
+    desc: '穆纳克勒斯起义时从奴隶主手里夺来的先驱咒刃，一拔出来就烧起蓝绿色的火。拿它作恶的人会和剑一起炸掉。伤害算火焰，命中和伤害 +2。',
     enTerms: { '穆纳克勒斯': 'Munakles', '先驱': 'Precursor' },
     weapon: { dmg: '1d8', type: 'fire', props: ['finesse'], bonus: 2 }, value: 40000, era: [1444, 1836],
   },
@@ -243,7 +243,7 @@ export const ITEMS_EXTRA = {
   },
   ulrics_lance: {
     id: 'ulrics_lance', name: '乌尔里克之枪', en: "Ulric's Lance", relic: true,
-    desc: '第一位狮鹫骑士乌尔里克王子的骑枪，做得极长，好够到天上的龙，在地上从来没人用过。伤害 1d12+2，但地上太笨，命中不加。',
+    desc: '第一位狮鹫骑士乌尔里克王子的骑枪，做得极长，好够到天上的龙，在地上从来没人用过。伤害 1d12+2，但在地上太笨重，命中不加。',
     enTerms: { '乌尔里克': 'Ulric', '狮鹫骑士': 'Griffon knight' },
     weapon: { dmg: '1d12', type: 'piercing', props: ['two_handed'], bonus: 2 }, passives: { hit: -2 }, value: 15000, era: [1022, 1444],
   },
@@ -291,7 +291,7 @@ export const ITEMS_EXTRA = {
   },
   pearl_of_dame: {
     id: 'pearl_of_dame', name: '月神明珠', en: 'Pearl of the Dame', relic: true, slot: 'trinket',
-    desc: '珍珠边地采珠人捞上来的一颗大珠子，献给了哈拉尔一世。从此是珍珠边地的王权器物。洞悉 +2，游说 +1。',
+    desc: '珍珠边地采珠人捞上来的一颗大珠子，献给了哈拉尔一世，从此成了珍珠边地的王权器物。洞悉 +2，游说 +1。',
     enTerms: { '珍珠边地': 'Pearlsedge', '哈拉尔一世': 'Harald I' },
     passives: { skill: { insight: 2, persuasion: 1 } }, value: 20000,
   },
@@ -303,7 +303,7 @@ export const ITEMS_EXTRA = {
   },
   book_of_canrec: {
     id: 'book_of_canrec', name: '坎雷克之书', en: 'Book of Canrec', relic: true, slot: 'trinket',
-    desc: '亵渎者坎雷克的书，白色瘟疫死者的魂都绑在里面，翻页时能听见喊声。法术伤害 +2，可用戏法「丧钟」；你受到的光耀伤害加倍。',
+    desc: '亵渎者坎雷克的书，白色瘟疫死者的魂都绑在里面，翻页时能听见喊声。法术伤害 +2，可用戏法「丧钟」。你受到的光耀伤害加倍。',
     enTerms: { '亵渎者坎雷克': 'Canrec the Defiler', '白色瘟疫': 'White Pestilence' },
     passives: { spellDmg: 2, vuln: ['radiant'] }, grants: ['toll_the_dead'], value: 25000, era: [1022],
   },
@@ -315,7 +315,7 @@ export const ITEMS_EXTRA = {
   },
   eye_of_the_dame: {
     id: 'eye_of_the_dame', name: '月神之眼', en: 'Eye of the Dame', relic: true, slot: 'trinket',
-    desc: '拳头大的泪滴形达姆斯塔尔，474 年黑龙扎马洛特砸塌达梅纳斯议会时丢了，至今没找着。法术攻击、法术 DC、法术伤害各 +2，可用「一撮达姆斯塔尔」；传说用满一年零一天的人会烧成一团火。',
+    desc: '拳头大的泪滴形魔晶，474 年黑龙扎马洛特砸塌达梅纳斯议会时丢了，至今没有找到。法术攻击、法术 DC、法术伤害各 +2，可用「一撮达姆斯塔尔」。传说用满一年零一天的人会烧成一团火。',
     enTerms: { '达姆斯塔尔': 'Damestear', '黑龙扎马洛特': 'Zaamalot the Black', '达梅纳斯': 'Damenath' },
     passives: { spellHit: 2, spellDc: 2, spellDmg: 2 }, grants: ['wizard_damestear'], value: 100000,
   },
@@ -381,7 +381,7 @@ export const ITEMS_EXTRA = {
   },
   gnomish_shock_glove: {
     id: 'gnomish_shock_glove', name: '侏儒电击手套', en: 'Gnomish Shock Glove', slot: 'trinket',
-    desc: '手背上一块达姆斯塔尔电池，握拳就放电。可用戏法「电爪」：法术攻击带优势，1d6 闪电伤害（5 级 2d6，11 级 3d6）。',
+    desc: '手背上一块魔晶电池，握拳就放电。可用戏法「电爪」：法术攻击带优势，1d6 闪电伤害（5 级 2d6，11 级 3d6）。',
     enTerms: { '侏儒': 'Gnome', '达姆斯塔尔': 'Damestear' },
     grants: ['shocking_grasp'], value: 700,
   },
@@ -399,13 +399,13 @@ export const ITEMS_EXTRA = {
   },
   magisterium_signet: {
     id: 'magisterium_signet', name: '魔导院徽戒', en: 'Magisterium Signet', slot: 'trinket',
-    desc: '魔导院正式法师的戒指，镶一颗小达姆斯塔尔，盖印用，也帮着收束法术。法术 DC +1。',
+    desc: '魔导院正式法师的戒指，镶一颗小魔晶，盖印用，也帮着收束法术。法术 DC +1。',
     enTerms: { '魔导院': 'Magisterium', '达姆斯塔尔': 'Damestear' },
     passives: { spellDc: 1 }, value: 2500,
   },
   damestear_ring: {
     id: 'damestear_ring', name: '达姆斯塔尔戒指', en: 'Damestear Ring', slot: 'trinket',
-    desc: '戒面一粒满灌的达姆斯塔尔，发着淡蓝的光；空了会变成土绿色。法术攻击 +1，法术伤害 +1。',
+    desc: '戒面一粒满灌的魔晶，发着淡蓝的光，空了会变成土绿色。法术攻击 +1，法术伤害 +1。',
     enTerms: { '达姆斯塔尔': 'Damestear' },
     passives: { spellHit: 1, spellDmg: 1 }, value: 3000,
   },
@@ -446,7 +446,7 @@ export const ITEMS_EXTRA = {
   },
   damestear_dust: {
     id: 'damestear_dust', name: '达姆斯塔尔粉', en: 'Damestear Dust',
-    desc: '抹在牙龈上，一下子劲儿就上来了，可这东西有毒。你受到 2d6 毒素伤害，然后「加速」3 回合：护甲等级 +2，执行攻击动作时可额外攻击一次。',
+    desc: '魔晶磨成的粉，抹在牙龈上立刻提神，可这东西有毒。你受到 2d6 毒素伤害，然后「加速」3 回合：护甲等级 +2，执行攻击动作时可额外攻击一次。',
     enTerms: { '达姆斯塔尔': 'Damestear' },
     use: { target: 'self', dmg: '2d6', dmgType: 'poison', apply: { cond: 'hasted', turns: 3 }, outside: false }, value: 300,
   },
@@ -475,7 +475,7 @@ export const ITEMS_EXTRA = {
   },
   magebane_grenade: {
     id: 'magebane_grenade', name: '破法弹', en: 'Magebane Grenade',
-    desc: '瓷壳里装一张法术卷轴和一粒达姆斯塔尔，摔碎了闪光加巨响。最多 3 名敌人各做体质豁免（DC 8+熟练加值+敏捷调整值），失败「晕眩」2 回合，攻击时具有劣势，不造成伤害。',
+    desc: '瓷壳里装一张法术卷轴和一粒魔晶，摔碎了闪光加巨响。最多 3 名敌人各做体质豁免（DC 8+熟练加值+敏捷调整值），失败「晕眩」2 回合，攻击时具有劣势，不造成伤害。',
     enTerms: { '达姆斯塔尔': 'Damestear' },
     use: { target: 'enemies', maxTargets: 3, save: { abil: 'con' }, dcAbil: 'dex', apply: { cond: 'dazed', turns: 2 }, outside: false }, value: 150, era: [1444, 1836],
   },
@@ -541,13 +541,13 @@ export const ITEMS_EXTRA = {
   // Food and drink.
   rubenaire_red: {
     id: 'rubenaire_red', name: '鲁本奈尔红酒', en: 'Rubenaire Red',
-    desc: '洛伦特最常见的红酒，一股草药和泥土味。恢复 1d4 生命；战斗中喝还能「坚定」3 回合：豁免 +2，免疫恐慌。',
+    desc: '洛伦特最常见的红酒，一股草药和泥土味。恢复 1d4 生命，战斗中喝还能「坚定」3 回合：豁免 +2，免疫恐慌。',
     enTerms: { '鲁本奈尔': 'Rubenaire', '洛伦特': 'Lorent' },
     use: { target: 'ally', heal: '1d4', apply: { cond: 'steadfast', turns: 3 } }, value: 15,
   },
   krakzol_ale: {
     id: 'krakzol_ale', name: '酒匠大厅烈麦酒', en: 'Krakzol Ale',
-    desc: '酒匠大厅的矮人酿的，东洲那帮醉拳师父也只喝这个。恢复 1d4 生命；战斗中喝再得 1d8 点临时生命。',
+    desc: '酒匠大厅的矮人酿的，东洲的醉拳师父也只喝这个。恢复 1d4 生命，战斗中喝再得 1d8 点临时生命。',
     enTerms: { '酒匠大厅': 'Hul-az-Krakazol', '东洲': 'Haless' },
     use: { target: 'ally', heal: '1d4', tempHp: '1d8' }, value: 12,
   },

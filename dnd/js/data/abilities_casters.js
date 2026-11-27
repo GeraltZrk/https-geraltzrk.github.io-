@@ -6,10 +6,10 @@ export const ABILITIES_CASTERS = {
   wizard_mage_armor: { id: 'wizard_mage_armor', name: '法师护甲', en: 'Mage Armor', kind: 'feature', passives: { natArmor: 13 },
     desc: '每天起床先给自己套一层看不见的力场。不穿甲时护甲等级为 13 + 敏捷调整值。' },
   wizard_damestear: { id: 'wizard_damestear', name: '一撮达姆斯塔尔', en: 'Pinch of Damestear', kind: 'feature', quick: true, target: 'self', grantAction: true, cost: { uses: 1, per: 'long' },
-    desc: '附赠动作。把一撮达姆斯塔尔粉抹在牙龈上：本回合可以再行动一次，比如连放两个法术。每次长休 1 次。法师沾上这东西很难戒，所以一天只许自己一撮。',
+    desc: '附赠动作。达姆斯塔尔是能储存魔力的晶体，人称魔晶。把一撮魔晶粉抹在牙龈上：本回合可以再行动一次，比如连放两个法术。每次长休 1 次。法师一旦沾上就很难戒掉，所以一天只许自己一撮。',
     enTerms: { '达姆斯塔尔': 'Damestear' } },
   wizard_archmage: { id: 'wizard_archmage', name: '法术精通', en: 'Spell Mastery', kind: 'feature', passives: { spellDc: 1, spellHit: 1 },
-    desc: '咒词和手势早就不用过脑子了。法术 DC +1，法术攻击 +1。' },
+    desc: '咒词和手势早已烂熟，不必再想。法术 DC +1，法术攻击 +1。' },
   // -- 贤者会传人
   wizard_council_ward: { id: 'wizard_council_ward', name: '法盾结界', en: "Mageshield's Ward", kind: 'feature', quick: true, target: 'self', tempHp: 'lvl+lvl+mod', selfApply: { cond: 'shielded', turns: 3 }, cost: { uses: 1, per: 'short' },
     desc: '附赠动作。防护学派的第一课，创派的是精灵将军塞隆达尔·法盾。获得 2×等级+智力调整值 点临时生命，护甲等级 +2 到你之后第 2 个回合结束。每次短休 1 次。',
@@ -18,7 +18,7 @@ export const ABILITIES_CASTERS = {
     desc: '科尔文·洛伦蒂斯留下的练法：同一个咒，练到每次都多烧一寸。你的法术每次造成伤害时 +2（每个目标、每道射线各算一次）。',
     enTerms: { '科尔文·洛伦蒂斯': 'Korvin Lorentis' } },
   wizard_council_storm: { id: 'wizard_council_storm', name: '飞弹风暴', en: 'Magic Missile Storm', kind: 'feature', target: 'enemies', dmg: '4d4+4', dmgType: 'force', cost: { uses: 1, per: 'short' },
-    desc: '精灵语念作“Mór\'ineil Reian\'áith”，许多大光箭。所有敌人各受 4d4+4 力场伤害，不用掷命中，也没有豁免。不耗法术位，每次短休 1 次。' },
+    desc: '精灵语念作“Mór\'ineil Reian\'áith”，意思是“许多大光箭”。所有敌人各受 4d4+4 力场伤害，不用掷命中，也没有豁免。不耗法术位，每次短休 1 次。' },
   // -- 禁术师
   wizard_forbidden_compel: { id: 'wizard_forbidden_compel', name: '强令', en: 'Compel', kind: 'feature', target: 'enemy', save: { abil: 'wis' }, apply: { cond: 'stunned', turns: 2 }, cost: { uses: 1, per: 'short' },
     desc: '直接伸手进别人的脑子里攥住。一个敌人做感知豁免（法术 DC）。失败「震慑」2 回合：无法行动，被打有优势，中途不能再豁免。每次短休 1 次。术士王尼希默就是这么管住一位皇帝的。',
@@ -26,7 +26,7 @@ export const ABILITIES_CASTERS = {
   wizard_forbidden_drain: { id: 'wizard_forbidden_drain', name: '汲命', en: 'Life Leech', kind: 'feature', passives: { regen: 2, resist: ['necrotic'] },
     desc: '你身边的草先黄，你的伤口先好。战斗中每回合开始时恢复 2 点生命，黯蚀伤害对你减半。' },
   wizard_forbidden_dominion: { id: 'wizard_forbidden_dominion', name: '黑暗领域', en: 'Black Demesne', kind: 'feature', passives: { spellDc: 1, condImmune: ['charmed', 'frightened'] },
-    desc: '信“法师理应统治”的人，把自己说了算的地盘叫这个名字。法术 DC +1，免疫魅惑和恐慌：这两样只有你对别人用的份。',
+    desc: '信奉“法师理应统治”的人，把自己掌权的地方叫作这个名字。法术 DC +1，免疫魅惑和恐慌：这两样只有你对别人用的份。',
     enTerms: { '黑暗领域': 'Black Demesne' } },
 
   // ================================================================== 术士
@@ -52,7 +52,7 @@ export const ABILITIES_CASTERS = {
     desc: '消耗 2 点术法点，把一个敌人怎么死说给它听。感知豁免（法术 DC）。失败受 3d8 心灵伤害（9 级 5d8）并「咒缚」4 回合（护甲等级 -1，豁免 -2），成功只受一半伤害。卜者女王杜妮查用这门本事咒过整个凄凉谷。',
     enTerms: { '卜者女王杜妮查': 'Dunicha the Augur Queen', '凄凉谷': 'Forlorn Vale' } },
   sorcerer_augur_sight: { id: 'sorcerer_augur_sight', name: '卜者之眼', en: "Augur's Eye", kind: 'feature', passives: { spellDc: 1, saveBonus: 1, saveAdv: ['dex', 'wis'] },
-    desc: '法术 DC +1，所有豁免再 +1；战斗之外的敏捷和感知豁免有优势。你总是提前半步。' },
+    desc: '法术 DC +1，所有豁免再 +1。战斗之外的敏捷和感知豁免有优势。你总是提前半步。' },
 
   // ================================================================== 邪术师
   warlock_curse: { id: 'warlock_curse', name: '咒缚', en: 'Hex', kind: 'feature', quick: true, target: 'enemy', dmg: '1d6', dmgByLevel: { 5: '2d6', 11: '3d6' }, dmgType: 'necrotic', apply: { cond: 'hexed', turns: 4 }, cost: { uses: 2, per: 'short' },
@@ -91,7 +91,7 @@ export const ABILITIES_CASTERS = {
   cleric_potent: { id: 'cleric_potent', name: '神威加身', en: 'Potent Prayers', kind: 'feature', passives: { spellDmg: 2 },
     desc: '你的法术每次造成伤害时 +2（每个目标各算一次），戏法也算。' },
   cleric_miracle: { id: 'cleric_miracle', name: '神迹', en: 'Miracle', kind: 'feature', target: 'allies', heal: '4d8+lvl', cleanse: 'all', cost: { uses: 1, per: 'long' },
-    desc: '神术是求来的，神不一定回回都应；这一次祂应了。还站着的同伴每人恢复 4d8+等级 点生命，并解除所有负面状态。每次长休 1 次。' },
+    desc: '神术是求来的，神不一定每次都应，这一次祂应了。还站着的同伴每人恢复 4d8+等级 点生命，并解除所有负面状态。每次长休 1 次。' },
   cleric_capstone: { id: 'cleric_capstone', name: '神眷', en: 'Divine Favour', kind: 'feature', passives: { healBonus: 2, spellDc: 1 },
     desc: '法术 DC +1，你的每次治疗多恢复 2 点。' },
   // -- 王庭祭司
@@ -116,7 +116,7 @@ export const ABILITIES_CASTERS = {
 
   // ================================================================== 德鲁伊
   druid_wild_shape: { id: 'druid_wild_shape', name: '荒野变形', en: 'Wild Shape', kind: 'feature', quick: true, target: 'self', tempHp: 'lvl', selfApply: { cond: 'beast_form', turns: 10 }, cost: { res: 'wild', n: 1 },
-    desc: '附赠动作，花 1 次变形，化成野兽 10 回合。获得等同于等级的临时生命；不穿甲时天生护甲 14；武器命中 +1、伤害 +3。变了形照样能施法。' },
+    desc: '附赠动作，花 1 次变形，化成野兽 10 回合。获得等同于等级的临时生命，不穿甲时天生护甲 14，武器命中 +1、伤害 +3。变形后照样能施法。' },
   druid_primal: { id: 'druid_primal', name: '原初之力', en: 'Primal Power', kind: 'feature', passives: { spellDmg: 2 },
     desc: '雷更响，霜更硬。你的法术每次造成伤害时 +2（每个目标各算一次）。' },
   druid_archdruid: { id: 'druid_archdruid', name: '老树之躯', en: 'Old Growth', kind: 'feature', passives: { spellDc: 1, regen: 2 },
@@ -136,11 +136,11 @@ export const ABILITIES_CASTERS = {
   druid_shifter_frenzy: { id: 'druid_shifter_frenzy', name: '扑咬', en: 'Pounce', kind: 'feature', passives: { extraAttack: 1 },
     desc: '攻击动作可以出手两次。' },
   druid_shifter_titan: { id: 'druid_shifter_titan', name: '巨兽化', en: 'Great Beast', kind: 'feature', quick: true, target: 'self', tempHp: 'lvl+lvl+lvl', selfApply: { cond: 'raging', turns: 10 }, cost: { uses: 1, per: 'long' },
-    desc: '附赠动作。再大一圈，持续 10 回合。获得 3×等级 点临时生命；武器伤害 +2；挥砍、穿刺、钝击伤害减半。可以和荒野变形叠着用。每次长休 1 次。' },
+    desc: '附赠动作。再大一圈，持续 10 回合。获得 3×等级 点临时生命，武器伤害 +2，挥砍、穿刺、钝击伤害减半。可以和荒野变形叠着用。每次长休 1 次。' },
 
   // ================================================================== 吟游诗人
   bard_inspiration: { id: 'bard_inspiration', name: '诗人激励', en: 'Bardic Inspiration', kind: 'feature', quick: true, target: 'ally', apply: { cond: 'inspired', turns: 5 }, cost: { res: 'inspiration', n: 1 },
-    desc: '附赠动作，花 1 次激励，冲一名同伴喊一句对路的话。他 5 回合内的下一次攻击检定 +1d6。' },
+    desc: '附赠动作，花 1 次激励，对一名同伴喊一句鼓劲的话。他 5 回合内的下一次攻击检定 +1d6。' },
   bard_jack: { id: 'bard_jack', name: '万事通', en: 'Jack of All Trades', kind: 'feature',
     passives: { skill: { athletics: 1, acrobatics: 1, sleight: 1, stealth: 1, arcana: 1, history: 1, investigation: 1, nature: 1, religion: 1, animal: 1, insight: 1, medicine: 1, perception: 1, survival: 1, deception: 1, intimidation: 1, performance: 1, persuasion: 1 } },
     desc: '什么都听过一点，什么都会一点。所有技能检定 +1。' },
@@ -149,10 +149,10 @@ export const ABILITIES_CASTERS = {
   bard_secrets: { id: 'bard_secrets', name: '魔法奥秘', en: 'Magical Secrets', kind: 'feature', passives: {},
     desc: '诗人什么都听，听多了就会。你从法师那里偷学了「心灵遥控」，照常用自己的法术位和魅力施放。' },
   bard_virtuoso: { id: 'bard_virtuoso', name: '名家', en: 'Virtuoso', kind: 'feature', passives: { spellDc: 1, saveBonus: 1 },
-    desc: '法术 DC +1，所有豁免 +1。到了这个份上，连敌人都想听你把这段唱完。' },
+    desc: '法术 DC +1，所有豁免 +1。到了这个地步，连敌人都想听你把这段唱完。' },
   // -- 斯卡尔德
   bard_skald_hardy: { id: 'bard_skald_hardy', name: '北地筋骨', en: 'Northern Sinew', kind: 'feature', passives: { hpPerLevel: 1, ac: 1, hit: 1, dmg: 2 },
-    desc: '斯卡尔德挨村走，冬天也走，路上什么都碰得见。每级生命 +1，护甲等级 +1，武器命中 +1、伤害 +2。',
+    desc: '北地的吟游诗人斯卡尔德挨村走，冬天也走，路上什么都碰得见。每级生命 +1，护甲等级 +1，武器命中 +1、伤害 +2。',
     enTerms: { '斯卡尔德': 'Skald' } },
   bard_skald_wartale: { id: 'bard_skald_wartale', name: '战歌', en: 'War Tale', kind: 'feature', quick: true, target: 'allies', apply: { cond: 'emboldened', turns: 3 }, selfApply: { cond: 'emboldened', turns: 3 }, cost: { res: 'inspiration', n: 1 },
     desc: '附赠动作，花 1 次激励，吟一段《吉亚隆德与屠巨人者》。全队「鼓舞」3 回合：武器命中 +2，伤害 +2。',

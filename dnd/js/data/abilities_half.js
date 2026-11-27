@@ -19,7 +19,7 @@ export const ABILITIES_HALF = {
   paladin_lay_on_hands: {
     id: 'paladin_lay_on_hands', name: '圣疗', en: 'Lay on Hands', kind: 'feature', target: 'ally', dcAbil: 'cha', ai: 'heal',
     heal: '1d8+lvl+mod', revive: true, cleanse: ['poisoned'], cost: { res: 'lay', n: 1 },
-    desc: '手按在伤口上。一名同伴恢复 1d8+等级+魅力调整值 点生命，顺带解毒；倒地的人也能救起来，对自己也能用。花 1 次圣疗，次数长休恢复。',
+    desc: '手按在伤口上。一名同伴恢复 1d8+等级+魅力调整值 点生命，顺带解毒。倒地的人也能救起来，对自己也能用。花 1 次圣疗，次数长休恢复。',
   },
   paladin_divine_sense: P('paladin_divine_sense', '神圣感知', '亡灵和邪魔离近了，你的圣徽会发烫。洞悉和宗教检定 +2。', { skill: { insight: 2, religion: 2 } }, { en: 'Divine Sense' }),
   paladin_fighting_style: P('paladin_fighting_style', '扈从出身', '当扈从那几年，替骑士扛甲、喂马、挨揍。每级生命 +1，运动检定 +2。', { hpPerLevel: 1, skill: { athletics: 2 } }, { en: 'Squire training' }),
@@ -70,7 +70,7 @@ export const ABILITIES_HALF = {
   paladin_crusader_enmity: {
     id: 'paladin_crusader_enmity', name: '誓敌', en: 'Vow of Enmity', kind: 'feature', quick: true, target: 'enemy',
     apply: { cond: 'exposed', turns: 2 }, cost: { res: 'oath', n: 1 },
-    desc: '附赠动作。指着一个敌人立誓：今天你和它只走一个。目标「破绽」2 回合，谁打它都有优势。没有豁免。花 1 次引导神力。',
+    desc: '附赠动作。指着一个敌人立誓：今天你和它只能活一个。目标「破绽」2 回合，谁打它都有优势。没有豁免。花 1 次引导神力。',
   },
   paladin_crusader_all_in: {
     id: 'paladin_crusader_all_in', name: '义怒一击', en: 'Righteous violence', kind: 'maneuver', target: 'enemy', attack: 'weapon',
@@ -106,7 +106,7 @@ export const ABILITIES_HALF = {
   ranger_feral_senses: P('ranger_feral_senses', '野性感知', '背后有东西你也知道。护甲等级 +1，察觉检定有优势。', { ac: 1, skillAdv: ['perception'] }, { en: 'Feral Senses' }),
 
   // —— 法拉赫猎手（法拉赫神殿的猎人祭司）
-  ranger_falah_cloak: P('ranger_falah_cloak', '绿斗篷', '法拉赫的祭司人人一件绿斗篷，进了林子就找不着。隐匿和自然检定 +2。', { skill: { stealth: 2, nature: 2 } }, { en: 'Green cloak of the Falah priesthood', enTerms: { '法拉赫': 'Falah' } }),
+  ranger_falah_cloak: P('ranger_falah_cloak', '绿斗篷', '猎神法拉赫的祭司人人一件绿斗篷，进了林子就找不到人。隐匿和自然检定 +2。', { skill: { stealth: 2, nature: 2 } }, { en: 'Green cloak of the Falah priesthood', enTerms: { '法拉赫': 'Falah' } }),
   ranger_falah_bane_arrow: {
     id: 'ranger_falah_bane_arrow', name: '克制箭', en: 'Temple of Falah armory', kind: 'maneuver', target: 'enemy', attack: 'weapon',
     advantage: true, weaponExtra: '1d6+lvl', cost: { res: 'focus', n: 1 },
@@ -125,18 +125,18 @@ export const ABILITIES_HALF = {
   ranger_griffon_strike: {
     id: 'ranger_griffon_strike', name: '狮鹫扑击', en: 'Griffon strike', kind: 'maneuver', quick: true, target: 'enemy', attack: 'spell', dcAbil: 'wis',
     dmg: '1d6+mod', dmgByLevel: { 5: '1d10+mod', 11: '2d8+mod' }, dmgType: 'slashing',
-    desc: '附赠动作。打个唿哨，它就从上面扑下来。命中加值是熟练+感知；造成 1d6+感知调整值 挥砍伤害，5 级起 1d10，11 级起 2d8。不花猎技。',
+    desc: '附赠动作。打个唿哨，狮鹫就从空中扑下来。命中加值是熟练+感知，造成 1d6+感知调整值 挥砍伤害，5 级起 1d10，11 级起 2d8。不花猎技。',
   },
   ranger_griffon_screech: {
     id: 'ranger_griffon_screech', name: '俯冲尖啸', en: 'Ironclaw screech', kind: 'feature', quick: true, target: 'enemies', dcAbil: 'wis', ai: 'control',
     save: { abil: 'wis' }, apply: { cond: 'frightened', turns: 2 }, cost: { res: 'focus', n: 1 },
-    desc: '附赠动作。铁爪种狮鹫扎进人堆之前会先叫一声，马尔霍德的敌人都认得这一嗓子。所有敌人做感知豁免（DC 8+熟练+感知）。失败则「恐慌」最多 2 回合：攻击有劣势，每回合结束可再豁免。消耗 1 点猎技。',
+    desc: '附赠动作。铁爪种狮鹫扎进人堆之前会先叫一声，马尔霍德的敌人都认得这一声。所有敌人做感知豁免（DC 8+熟练+感知）。失败则「恐慌」最多 2 回合：攻击有劣势，每回合结束可再豁免。消耗 1 点猎技。',
     enTerms: { '铁爪种': 'Ironclaw Griffon', '马尔霍德': 'Marrhold' },
   },
   ranger_griffon_dive: {
     id: 'ranger_griffon_dive', name: '收翅俯冲', en: 'Griffon dive', kind: 'maneuver', target: 'enemy', attack: 'spell', dcAbil: 'wis', advantage: true,
     dmg: '5d8+mod', dmgType: 'slashing', apply: { cond: 'prone', turns: 1, save: { abil: 'str' } }, cost: { res: 'focus', n: 2 },
-    desc: '你压低身子，它收起翅膀。一次有优势的攻击（熟练+感知），命中造成 5d8+感知调整值 挥砍伤害；目标做力量豁免（DC 8+熟练+感知），失败「倒地」1 回合。代替整个攻击动作。消耗 2 点猎技。',
+    desc: '你压低身子，它收起翅膀。一次有优势的攻击（熟练+感知），命中造成 5d8+感知调整值 挥砍伤害。目标做力量豁免（DC 8+熟练+感知），失败「倒地」1 回合。代替整个攻击动作。消耗 2 点猎技。',
   },
 
   // =========================================================================
@@ -157,14 +157,14 @@ export const ABILITIES_HALF = {
   artificer_flashbang: {
     id: 'artificer_flashbang', name: '闪光弹', en: 'Flash charge', kind: 'feature', target: 'enemies', maxTargets: 3,
     save: { abil: 'con', half: true }, dmg: '2d6', dmgByLevel: { 9: '3d6' }, dmgType: 'thunder', apply: { cond: 'blinded', turns: 1 }, cost: { res: 'gadgets', n: 1 },
-    desc: '镁粉里掺一点达姆斯塔尔碎屑，炸开又亮又响。最多 3 名敌人做体质豁免（法术 DC）。失败受 2d6 雷鸣伤害（9 级 3d6），并「目盲」到它下回合结束：攻击有劣势，打它有优势。成功则只受一半伤害，不会目盲。花 1 份备料。',
+    desc: '镁粉里掺一点魔晶碎屑，炸开又亮又响。最多 3 名敌人做体质豁免（法术 DC）。失败受 2d6 雷鸣伤害（9 级 3d6），并「目盲」到它下回合结束：攻击有劣势，打它有优势。成功则只受一半伤害，不会目盲。花 1 份备料。',
     enTerms: { '达姆斯塔尔': 'Damestear' },
   },
-  artificer_repeater: P('artificer_repeater', '连发机括', '杖芯后面加了一个转轮，扣一下扳机能放两发；到了 1800 年代，这东西就是转轮手枪。攻击动作可以打两下。', { extraAttack: 1 }, { en: 'Repeating mechanism (Extra Attack)' }),
+  artificer_repeater: P('artificer_repeater', '连发机括', '杖芯后面加了一个转轮，扣一下扳机能放两发。到了 1800 年代，这东西就是转轮手枪。攻击动作可以打两下。', { extraAttack: 1 }, { en: 'Repeating mechanism (Extra Attack)' }),
   artificer_genius: P('artificer_genius', '灵光一闪', '脑子转得比咒快。所有豁免 +1，奥秘检定 +2。', { saveBonus: 1, skill: { arcana: 2 } }, { en: 'Flash of Genius' }),
-  artificer_veteran: P('artificer_veteran', '熟能生巧', '同一张图纸做到第一百遍，误差就没了。法术 DC +1；法术和武器每次造成伤害时各 +2。', { spellDc: 1, spellDmg: 2, dmg: 2 }, { en: 'Practised hand' }),
-  artificer_masterwork: P('artificer_masterwork', '压箱底', '身上每一件东西都是自己做的，没有一件还是第一版。护甲等级 +1，法术攻击 +1；法术和武器每次造成伤害时再各 +2。', { ac: 1, spellHit: 1, spellDmg: 2, dmg: 2 }, { en: 'Masterwork kit' }),
-  artificer_soul: P('artificer_soul', '奇械之魂', '口袋里总有一件能救命的小玩意。所有豁免 +1，每级生命 +1。', { saveBonus: 1, hpPerLevel: 1 }, { en: 'Soul of Artifice' }),
+  artificer_veteran: P('artificer_veteran', '熟能生巧', '同一张图纸做到第一百遍，误差就没了。法术 DC +1，法术和武器每次造成伤害时各 +2。', { spellDc: 1, spellDmg: 2, dmg: 2 }, { en: 'Practised hand' }),
+  artificer_masterwork: P('artificer_masterwork', '压箱底', '身上每一件东西都是自己做的，没有一件还是第一版。护甲等级 +1，法术攻击 +1，法术和武器每次造成伤害时再各 +2。', { ac: 1, spellHit: 1, spellDmg: 2, dmg: 2 }, { en: 'Masterwork kit' }),
+  artificer_soul: P('artificer_soul', '奇械之魂', '口袋里总有一件能救命的小物件。所有豁免 +1，每级生命 +1。', { saveBonus: 1, hpPerLevel: 1 }, { en: 'Soul of Artifice' }),
 
   // —— 符文匠（矮人符文术）
   artificer_runesmith_armor: P('artificer_runesmith_armor', '符文兵甲', '甲片内侧刻着一行护身的符文，兵器上刻着一个“破”字，都是你自己的手笔。护甲等级 +1，武器伤害 +3。', { ac: 1, dmg: 3 }, { en: 'Runic arms and armour', enTerms: { '符文': 'Runic Magic' } }),
@@ -189,7 +189,7 @@ export const ABILITIES_HALF = {
   artificer_inventor_turret: {
     id: 'artificer_inventor_turret', name: '机关炮台', en: 'Portable turret', kind: 'feature', quick: true, target: 'enemy', attack: 'spell',
     dmg: '2d6+mod', dmgByLevel: { 5: '2d8+mod', 9: '3d8+mod' }, dmgType: 'piercing', cost: { res: 'charge', n: 1 },
-    desc: '附赠动作。背上卸下来的铁匣子，支开就是一架会转的小弩炮；到了 1800 年代，里面换成了枪管。法术攻击，命中造成 2d6+智力调整值 穿刺伤害，5 级 2d8，9 级 3d8。每开一炮消耗 1 点蓄能。',
+    desc: '附赠动作。背上卸下来的铁匣子，支开就是一架会转的小弩炮。到了 1800 年代，里面换成了枪管。法术攻击，命中造成 2d6+智力调整值 穿刺伤害，5 级 2d8，9 级 3d8。每开一炮消耗 1 点蓄能。',
   },
   artificer_inventor_sparkdrive: {
     id: 'artificer_inventor_sparkdrive', name: '火驱枪', en: 'Sparkdrive Rifle', kind: 'feature', target: 'enemy', attack: 'spell', advantage: true,
@@ -200,7 +200,7 @@ export const ABILITIES_HALF = {
   artificer_inventor_overload: {
     id: 'artificer_inventor_overload', name: '过载', en: 'Damestear overload', kind: 'feature', target: 'enemies',
     save: { abil: 'dex', half: true }, dmg: '8d6', dmgType: 'lightning', cost: { res: 'charge', n: 3 },
-    desc: '拔掉保险，让芯子里的达姆斯塔尔一次放空。所有敌人做敏捷豁免（法术 DC）。失败受 8d6 闪电伤害，成功减半。花 3 点蓄能。',
+    desc: '拔掉保险，让芯子里的魔晶一次放空。所有敌人做敏捷豁免（法术 DC）。失败受 8d6 闪电伤害，成功减半。花 3 点蓄能。',
     enTerms: { '达姆斯塔尔': 'Damestear' },
   },
 };

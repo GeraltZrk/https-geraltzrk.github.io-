@@ -9,9 +9,9 @@ export const CLASSES_HALF = {
     id: 'paladin', name: '圣武士', en: 'Paladin', short: '穿重甲作战，命中时可用神力重创敌人',
     desc: '你以誓言侍奉神明，披重甲，持剑盾，也会治伤。命中敌人时，可以消耗法术位发动至圣斩，把神力灌入武器。',
     era: {
-      1022: '凯伦·长枪的骑士道刚传开，蓝宝石之眼骑士团去年才在银镜湖边立起来，传说第一个圣武士就是它的创始人之一、信卡斯特洛斯的“正直者”德万爵士。',
-      1444: '阿德蕾西娅骑士团还在给皇帝当卫队，可二十年前一半年轻骑士违令去了东坎诺；那边科琳刚死在卡斯托纳斯，她的同伴正把自己编成科琳塔尔骑士团。',
-      1836: '科琳教立教三百多年，圣武士多半是科琳教徒，也有守着摄政王庭的老派骑士团；仗靠步枪队打，立了誓的人照样走在最前面。',
+      1022: '凯伦·长枪的骑士道刚传开。蓝宝石之眼骑士团去年才在银镜湖边成立，传说第一个圣武士就是它的创始人之一、信奉卡斯特洛斯的“正直者”德万爵士。',
+      1444: '阿德蕾西娅骑士团还在给皇帝当卫队，可二十年前有一半年轻骑士违令去了东坎诺。那边科琳刚死在卡斯托纳斯，她的同伴正把自己编成科琳塔尔骑士团。',
+      1836: '科琳教立教三百多年，圣武士多半是科琳教徒，也有守着摄政王庭的老派骑士团。如今打仗靠步枪队，立了誓的人照样走在最前面。',
     },
     enTerms: { '凯伦·长枪': 'Caylen Longlance', '蓝宝石之眼骑士团': 'Order of the Sapphire Eye', '银镜湖': 'Lake Silvermere', '卡斯特洛斯': 'Castellos', '“正直者”德万爵士': 'Ser Devan the Righteous', '阿德蕾西娅骑士团': 'Orda Aldresia', '东坎诺': 'Escann', '科琳': 'Corin', '卡斯托纳斯': 'Castonath', '科琳塔尔骑士团': 'Corintar Order', '科琳教': 'Corinite', '摄政王庭': 'Regent Court' },
     hitDie: 10, primary: 'str', saves: ['wis', 'cha'], caster: 'half', spellAbility: 'cha', tags: ['martial', 'caster', 'divine'],
@@ -41,13 +41,13 @@ export const CLASSES_HALF = {
     subclasses: [
       {
         id: 'paladin_aldresia', name: '阿德蕾西娅骑士', en: 'Knight of the Orda Aldresia',
-        desc: '骑士团以白色瘟疫年间战死的骑士阿德蕾西娅命名，专出咒刃骑士：剑就是法器，这门剑艺叫迪兰贝。他们立誓不领封地、不受爵位、不娶不嫁，给皇帝守门，跟魔导院一直不对付。',
+        desc: '骑士团以白色瘟疫年间战死的骑士阿德蕾西娅命名，专出咒刃骑士：剑就是法器，这门剑艺叫迪兰贝。他们立誓不领封地、不受爵位、不娶不嫁，给皇帝守门，同魔导院一向不和。',
         enTerms: { '白色瘟疫': 'White Pestilence', '阿德蕾西娅': 'Aldresia', '咒刃骑士': 'Arcane knight', '迪兰贝': 'Diranbe', '魔导院': 'Magisterium' },
         features: { 3: ['paladin_aldresian_drumbeat'], 6: ['paladin_aldresian_arc'], 10: ['paladin_aldresian_tearite'] },
       },
       {
         id: 'paladin_righteous', name: '正直之誓', en: 'Oath of the Righteous (Ser Devan; the Corintar)',
-        desc: '蓝宝石之眼的“正直者”德万爵士走的路数：看见恶事，先报名号，再动手。1444 年以后，科琳塔尔骑士团接过了这一路，信条只有一句：善而不行，等于没有。',
+        desc: '蓝宝石之眼的“正直者”德万爵士传下的做法：看见恶事，先报名号，再动手。1444 年以后，科琳塔尔骑士团接过了这一传统，信条只有一句：善而不行，等于没有。',
         enTerms: { '蓝宝石之眼': 'Order of the Sapphire Eye', '“正直者”德万爵士': 'Ser Devan the Righteous', '科琳塔尔骑士团': 'Corintar Order', '信条': 'The Corinite Creed' },
         features: { 3: ['paladin_righteous_vow', 'paladin_crusader_abjure'], 6: ['paladin_crusader_enmity'], 10: ['paladin_crusader_all_in'] },
       },
@@ -59,9 +59,9 @@ export const CLASSES_HALF = {
     id: 'ranger', name: '游侠', en: 'Ranger', short: '标记猎物，用弓箭或近身兵器追击',
     desc: '猎人、斥候和荒野向导里都有游侠。你能在远处用弓，也能拔刀近战。你掌握的自然法术能标记猎物、止血，还能唤起藤蔓缠住敌人。',
     era: {
-      1022: '荒野里的事多半归法拉赫的神殿管，披绿斗篷的猎人祭司替偏远村子打怪；北边马尔霍德的贵族从巨龙苏醒那时起就骑狮鹫。',
-      1444: '东坎诺遍地兽人和废墟，冒险团里最缺认路的斥候；隔壁深林的木精灵氏族刚结成翠绿盟约。他们的弓手不跟外人多说话。',
-      1836: '游侠多半在给军队当斥候、给勘测队领路，背线膛枪；北方联盟把法拉赫的老林子砍了盖工厂，神殿的人还守着剩下的。',
+      1022: '荒野里的事多半归狩猎女神法拉赫的神殿管，披绿斗篷的猎人祭司替偏远村子清剿怪物。北边马尔霍德的贵族从巨龙苏醒那时起就骑狮鹫。',
+      1444: '东坎诺遍地兽人和废墟，冒险团里最缺认路的斥候。相邻的深林里，木精灵氏族刚结成翠绿盟约，他们的弓手不跟外人多说话。',
+      1836: '游侠多半在给军队当斥候、给勘测队领路，背的是线膛枪。北方联盟砍了法拉赫的老林子盖工厂，神殿的人还守着剩下的。',
     },
     enTerms: { '法拉赫': 'Falah', '马尔霍德': 'Marrhold', '巨龙苏醒': 'Dragonwake', '狮鹫': 'Griffon', '东坎诺': 'Escann', '冒险团': 'Adventurer company', '深林': 'Deepwoods', '木精灵': 'Wood Elf', '翠绿盟约': 'Verdant Pact', '北方联盟': 'Northern League' },
     hitDie: 10, primary: 'dex', saves: ['str', 'dex'], caster: 'half', spellAbility: 'wis', tags: ['martial', 'caster', 'nature'],
@@ -90,7 +90,7 @@ export const CLASSES_HALF = {
     subclasses: [
       {
         id: 'ranger_falah', name: '法拉赫猎手', en: 'Hunter of Falah',
-        desc: '狩猎女神法拉赫的猎人祭司，替偏远的村子打怪物，也管着林子不被砍光。她的神殿看着像猎屋，闻着像屠宰场，箭库里什么怪配什么箭。',
+        desc: '狩猎女神法拉赫的猎人祭司，替偏远的村子清剿怪物，也管着林子不被砍光。她的神殿看着像猎屋，闻着像屠宰场，箭库里每种怪物都备着对应的箭。',
         enTerms: { '法拉赫': 'Falah' },
         features: { 3: ['ranger_falah_cloak', 'ranger_falah_bane_arrow'], 6: ['ranger_falah_first_hunt'], 10: ['ranger_falah_grand_hunt'] },
       },
@@ -108,9 +108,9 @@ export const CLASSES_HALF = {
     id: 'artificer', name: '奇械师', en: 'Artificer', short: '制作药剂、炮台和带电的兵器',
     desc: '奇械师用工具施展魔法。你能照图纸配出药剂，也能装配炸瓶、炮台和通电的枪。遇到同一个难题，你常常先伸手去拿扳手。',
     era: {
-      1022: '还没有“奇械师”这个叫法：尼姆斯科德的侏儒在岛上挖达姆斯塔尔、造器械，跟狗头人打了几百年，矮人山堡里的符文匠把字刻在门上和甲上。',
-      1444: '尼姆斯科德的工程学院管这门手艺叫奇械术，懂的人不多；这一年在卡斯托纳斯，一个侏儒枪匠的步枪和小炮替科琳开了路。',
-      1836: '奇械师成了一门正经行当，做火驱枪、修机械人、造本世纪初才飞上天的飞艇；黑火药叛乱以前，帝国把新奇械管得很严。',
+      1022: '还没有“奇械师”这个叫法。尼姆斯科德的侏儒在岛上开采魔晶（达姆斯塔尔）、造器械，跟狗头人打了几百年。矮人山堡里的符文匠把符文刻在门上和甲上。',
+      1444: '尼姆斯科德的工程学院把这门手艺称作奇械术，懂的人不多。这一年在卡斯托纳斯，一个侏儒枪匠的步枪和小炮替科琳开了路。',
+      1836: '奇械师成了一门正经行当，做火驱枪、修机械人，也造本世纪初才飞上天的飞艇。黑火药叛乱以前，帝国对新奇械管得很严。',
     },
     enTerms: { '奇械师': 'Artificer', '尼姆斯科德': 'Nimscodd', '达姆斯塔尔': 'Damestear', '狗头人': 'Kobold', '山堡': 'Dwarven hold', '符文匠': 'Runesmith', '奇械术': 'Artificery', '卡斯托纳斯': 'Castonath', '科琳': 'Corin', '火驱枪': 'Sparkdrive Rifle', '机械人': 'Mechanim', '飞艇': 'Airship', '黑火药叛乱': 'Blackpowder Rebellion', '帝国': 'Empire of Anbennar' },
     hitDie: 8, primary: 'int', saves: ['con', 'int'], caster: 'half', spellAbility: 'int', tags: ['caster', 'arcane', 'artificer'],
@@ -146,7 +146,7 @@ export const CLASSES_HALF = {
       },
       {
         id: 'artificer_inventor', name: '侏儒机巧师', en: 'Gnomish tinker (Nimscodd; later the Brilliant Inventors)',
-        desc: '尼姆斯科德一路传下来的侏儒手艺：先试，再量，再记。最后才拿去打仗。后来的“璀璨发明家”一派就出在这里，火驱枪是他们最出名的东西。',
+        desc: '尼姆斯科德一路传下来的侏儒手艺：先试，再量，再记，最后才拿去打仗。后来的“璀璨发明家”一派就出在这里，火驱枪是他们最出名的作品。',
         enTerms: { '尼姆斯科德': 'Nimscodd', '璀璨发明家': 'Philosophy of Brilliant Inventors', '火驱枪': 'Sparkdrive Rifle' },
         features: { 3: ['artificer_inventor_turret'], 6: ['artificer_inventor_sparkdrive'], 10: ['artificer_inventor_overload'] },
       },

@@ -37,7 +37,7 @@ export const ABILITIES_MARTIAL = {
   fighter_sunder: {
     id: 'fighter_sunder', name: '破甲', kind: 'maneuver', target: 'enemy', attack: 'weapon', ai: 'control',
     apply: { cond: 'sundered', turns: 3 }, cost: { res: 'stamina', n: 1 },
-    desc: '照着甲缝砸一下。命中后目标“破甲”3 回合：护甲等级 -3，全队都占便宜。这一下代替整个攻击动作。消耗 1 点战技。',
+    desc: '照着甲缝砸一下。命中后目标“破甲”3 回合：护甲等级 -3，全队都能受益。这一下代替整个攻击动作。消耗 1 点战技。',
   },
   fighter_weapon_mastery: P('fighter_weapon_mastery', '兵器精通', '什么兵器到了手里都知道往哪里使劲。武器伤害 +1。', { dmg: 1 }),
   fighter_improved_critical: P('fighter_improved_critical', '老手的眼力', '攻击骰掷出 19 或 20 都算重击。', { critRange: 19 }),
@@ -68,7 +68,7 @@ export const ABILITIES_MARTIAL = {
   fighter_company_rally: {
     id: 'fighter_company_rally', name: '跟我上', kind: 'feature', quick: true, target: 'allies', ai: 'buff',
     apply: { cond: 'emboldened', turns: 2 }, cost: { res: 'stamina', n: 2 },
-    desc: '附赠动作。一嗓子把全队喊起来。所有同伴（包括你）2 回合内武器命中 +2、伤害 +2。消耗 2 点战技。',
+    desc: '附赠动作。一声大喝，让全队振作起来。所有同伴（包括你）2 回合内武器命中 +2、伤害 +2。消耗 2 点战技。',
   },
   fighter_company_old_hand: P('fighter_company_old_hand', '老油条', '先动手的活得久，活得久的才领得到饷。先攻 +2，每级生命 +1。', { init: 2, hpPerLevel: 1 }),
   fighter_company_kill_order: {
@@ -94,7 +94,7 @@ export const ABILITIES_MARTIAL = {
   barbarian_war_cry: {
     id: 'barbarian_war_cry', name: '战吼', kind: 'feature', quick: true, target: 'enemies', dcAbil: 'str',
     save: { abil: 'wis' }, apply: { cond: 'frightened', turns: 2 }, cost: { res: 'fury', n: 1 },
-    desc: '附赠动作。吼一嗓子。所有敌人须进行感知豁免（DC 8+熟练+力量），失败则恐慌，攻击有劣势。恐慌最多 2 回合，每回合结束可再豁免。消耗 1 点蛮劲。',
+    desc: '附赠动作。放声怒吼。所有敌人须进行感知豁免（DC 8+熟练+力量），失败则恐慌，攻击有劣势。恐慌最多 2 回合，每回合结束可再豁免。消耗 1 点蛮劲。',
   },
   barbarian_extra_attack: P('barbarian_extra_attack', '额外攻击', '攻击动作可以打两下。', { extraAttack: 1 }),
   barbarian_wide_swing: {
@@ -108,7 +108,7 @@ export const ABILITIES_MARTIAL = {
     desc: '附赠动作。把伤口一按接着打，恢复 1d12+等级 点生命。消耗 1 点蛮劲。',
   },
   barbarian_feral_instinct: P('barbarian_feral_instinct', '野性直觉', '后颈发凉的时候你已经在动了。先攻 +3，察觉检定有优势。', { init: 3, skillAdv: ['perception'] }),
-  barbarian_brutal_critical: P('barbarian_brutal_critical', '残暴重击', '武器伤害 +1；重击时再加 2d6。', { dmg: 1, critDice: 2 }),
+  barbarian_brutal_critical: P('barbarian_brutal_critical', '残暴重击', '武器伤害 +1，重击时再加 2d6。', { dmg: 1, critDice: 2 }),
   barbarian_mindless_rage: P('barbarian_mindless_rage', '怒不可遏', '吓不住，也哄不走。武器伤害 +2，免疫恐慌和魅惑。', { dmg: 2, condImmune: ['frightened', 'charmed'] }),
   barbarian_primal_might: P('barbarian_primal_might', '原初之力', '力量和体质各 +2，可以超过 20。', { abil: { str: 2, con: 2 } }),
 
@@ -118,7 +118,7 @@ export const ABILITIES_MARTIAL = {
     cost: { res: 'fury', n: 1 },
     desc: '附赠动作。趁对方还没缓过来，用武器再砍一下。消耗 1 点蛮劲。',
   },
-  barbarian_reaver_north_blood: P('barbarian_reaver_north_blood', '北地身板', '南方人说格鲁迪亚人祖上有巨人的血。寒冷伤害减半，每级生命 +1。', { resist: ['cold'], hpPerLevel: 1 }, { en: 'Gerudian', enTerms: { '格鲁迪亚人': 'Gerudians' } }),
+  barbarian_reaver_north_blood: P('barbarian_reaver_north_blood', '北地身板', '南方人说，北地的格鲁迪亚人祖上有巨人的血。寒冷伤害减半，每级生命 +1。', { resist: ['cold'], hpPerLevel: 1 }, { en: 'Gerudian', enTerms: { '格鲁迪亚人': 'Gerudians' } }),
   barbarian_reaver_shieldbreaker: {
     id: 'barbarian_reaver_shieldbreaker', name: '破盾墙', kind: 'maneuver', target: 'enemies', maxTargets: 3, attack: 'weapon',
     apply: { cond: 'sundered', turns: 2 }, cost: { res: 'fury', n: 2 },
@@ -164,7 +164,7 @@ export const ABILITIES_MARTIAL = {
     cost: { res: 'tricks', n: 1 },
     desc: '附赠动作。就势一滚，再抬头人已经不在原地。立刻藏身，下一次攻击具有优势，并获得 1d8+等级 点临时生命。消耗 1 点诡计。',
   },
-  rogue_evasion: P('rogue_evasion', '反射闪避', '所有豁免 +1；战斗之外的敏捷豁免有优势。', { saveBonus: 1, saveAdv: ['dex'] }),
+  rogue_evasion: P('rogue_evasion', '反射闪避', '所有豁免 +1，战斗之外的敏捷豁免有优势。', { saveBonus: 1, saveAdv: ['dex'] }),
   rogue_wyvern_venom: {
     id: 'rogue_wyvern_venom', name: '飞龙毒刃', en: 'Wyvern venom', kind: 'maneuver', target: 'enemy', attack: 'weapon', dcAbil: 'dex',
     weaponExtra: '2d8', extraType: 'poison', apply: { cond: 'poisoned', turns: 3, save: { abil: 'con' } },
@@ -173,7 +173,7 @@ export const ABILITIES_MARTIAL = {
     enTerms: { '双足飞龙': 'Wyvern' },
   },
   rogue_street_wise: P('rogue_street_wise', '老江湖', '进门先看后门在哪，坐下先看谁的手不在桌面上。先攻 +2，每级生命 +1，察觉和洞悉检定 +2。', { init: 2, hpPerLevel: 1, skill: { perception: 2, insight: 2 } }),
-  rogue_reliable_talent: P('rogue_reliable_talent', '可靠才能', '拿手的活不会失手。武器命中 +1；隐匿、巧手、杂技、欺瞒检定 +2。', { hit: 1, skill: { stealth: 2, sleight: 2, acrobatics: 2, deception: 2 } }),
+  rogue_reliable_talent: P('rogue_reliable_talent', '可靠才能', '拿手的活不会失手。武器命中 +1，隐匿、巧手、杂技、欺瞒检定 +2。', { hit: 1, skill: { stealth: 2, sleight: 2, acrobatics: 2, deception: 2 } }),
   rogue_elusive: P('rogue_elusive', '滑不留手', '护甲等级 +1，免疫束缚。', { ac: 1, condImmune: ['restrained'] }),
 
   // —— 影手（维斯沃尔）
@@ -181,7 +181,7 @@ export const ABILITIES_MARTIAL = {
   rogue_shadowhand_dye_bomb: {
     id: 'rogue_shadowhand_dye_bomb', name: '染料弹', en: 'Viswall dyeworks', kind: 'maneuver', target: 'enemies', maxTargets: 3, dcAbil: 'dex', ai: 'control',
     save: { abil: 'dex' }, apply: { cond: 'blinded', turns: 2 }, cost: { res: 'tricks', n: 2 },
-    desc: '维斯沃尔染坊的下脚料灌进蛋壳，照脸砸。最多 3 名敌人过敏捷豁免（DC 8+熟练+敏捷），失败则目盲 2 回合。目盲的人攻击有劣势，打他有优势。这是主要行动。消耗 2 点诡计。',
+    desc: '维斯沃尔染坊的下脚料灌进蛋壳，照脸砸。最多 3 名敌人做敏捷豁免（DC 8+熟练+敏捷），失败则目盲 2 回合。目盲的人攻击有劣势，打他有优势。这是主要行动。消耗 2 点诡计。',
     enTerms: { '维斯沃尔': 'Viswall' },
   },
   rogue_shadowhand_second_story: P('rogue_shadowhand_second_story', '飞檐走壁', '二楼的窗户比大门好进。先攻 +2，运动和隐匿检定 +2。', { init: 2, skill: { athletics: 2, stealth: 2 } }),
@@ -237,7 +237,7 @@ export const ABILITIES_MARTIAL = {
     desc: '把气打进对方身子里。一次武器攻击，命中额外造成 2d6 钝击伤害。目标体质豁免（DC 8+熟练+敏捷）失败则震慑 1 回合：不能行动，打它有优势。这一下代替整个攻击动作。消耗 2 点气。',
   },
   monk_light_step: P('monk_light_step', '轻身', '脚下没声，起步比谁都快。护甲等级 +1，先攻 +2。', { ac: 1, init: 2 }),
-  monk_stillness: P('monk_stillness', '止念', '心里没有浪，就没有东西可以搅。免疫魅惑和恐慌；战斗之外的敏捷豁免有优势。', { condImmune: ['charmed', 'frightened'], saveAdv: ['dex'] }),
+  monk_stillness: P('monk_stillness', '止念', '心里没有浪，就没有东西可以搅。免疫魅惑和恐慌，战斗之外的敏捷豁免有优势。', { condImmune: ['charmed', 'frightened'], saveAdv: ['dex'] }),
   monk_ki_edge: P('monk_ki_edge', '气贯兵刃', '气顺着手走到刃上。武器命中 +1，武器伤害 +1。', { hit: 1, dmg: 1 }),
   monk_purity: P('monk_purity', '百毒不侵', '免疫中毒，毒素伤害减半。', { condImmune: ['poisoned'], resist: ['poison'] }),
   monk_diamond_soul: P('monk_diamond_soul', '金刚心', '所有豁免 +2。', { saveBonus: 2 }),
@@ -257,7 +257,7 @@ export const ABILITIES_MARTIAL = {
   monk_steward_test_of_light: {
     id: 'monk_steward_test_of_light', name: '试剑之光', en: 'Test of the Gleaming Blade', kind: 'maneuver', target: 'enemy', attack: 'weapon', hits: 2, ai: 'control',
     apply: { cond: 'blinded', turns: 2, save: { abil: 'con' } }, cost: { res: 'ki', n: 2 },
-    desc: '卡林达尔挨了打会放光，受不住的人当场瞎掉。守刃僧学的是拿刃面把光送进对方眼里。连做两次武器攻击。每次命中，目标都过体质豁免（DC 8+熟练+敏捷），失败则目盲 2 回合。目盲的人攻击有劣势，打他有优势。消耗 2 点气。',
+    desc: '卡林达尔这把剑挨了打会放光，受不住的人当场失明。守刃僧学的是拿刃面把光送进对方眼里。连做两次武器攻击。每次命中，目标都做体质豁免（DC 8+熟练+敏捷），失败则目盲 2 回合。目盲的人攻击有劣势，打他有优势。消耗 2 点气。',
     enTerms: { '卡林达尔': 'Calindal, the Gleaming Blade', '守刃僧': 'Order of the Blade Stewards' },
   },
   monk_steward_mind_eye: P('monk_steward_mind_eye', '心眼', '不拿眼睛看，反倒看得见破绽。攻击骰掷出 19 或 20 都算重击，护甲等级 +1。', { critRange: 19, ac: 1 }),

@@ -390,7 +390,7 @@ const LIST = [
   },
   {
     id: 'reaver_jarl', name: '掠夺者首领', en: 'Reaver Chieftain', type: 'humanoid', level: 3, era: E1022,
-    desc: '他戴着一顶缀满耳朵的熊皮帽，胡子里夹着铁环。黑冰纪元过去四十多年了。他还当这片海岸是他家的。',
+    desc: '他戴着一顶缀满耳朵的熊皮帽，胡子里夹着铁环。黑冰纪元过去四十多年了，他还当这片海岸是他家的。',
     enTerms: { '黑冰纪元': 'Era of Black Ice' },
     hp: 120, ac: 15, init: 1, saves: S(4, 1, 4, 0, 1, 2), xp: 300, ai: 'brute', traits: { boss: true },
     attacks: [
@@ -577,7 +577,7 @@ const LIST = [
     hp: 58, ac: 15, init: 4, saves: S(1, 5, 2, 2, 2, 1), xp: 250, ai: 'cunning',
     attacks: [
       { name: '双匕', hit: 7, dmg: '1d6+4', type: 'piercing', extra: { dmg: '1d6', type: 'poison' }, multi: 2, weight: 3 },
-      { name: '背刺', hit: 8, dmg: '4d6+4', type: 'piercing', recharge: 5, text: '{name}不见了。下一下来自你背后。' },
+      { name: '背刺', hit: 8, dmg: '4d6+4', type: 'piercing', recharge: 5, text: '{name}不见了。下一击来自你背后。' },
       { name: '毒针', hit: 7, dmg: '1d4', type: 'piercing', apply: { cond: 'paralyzed', turns: 1, save: { abil: 'con', dc: 14 } }, recharge: 6 },
     ],
   },
@@ -779,7 +779,7 @@ const LIST = [
     hp: 76, ac: 14, init: 3, saves: S(4, 3, 3, -4, 2, -1), xp: 350, ai: 'cunning',
     attacks: [
       { name: '喙与爪', hit: 7, dmg: '2d6+4', type: 'slashing', multi: 2, weight: 3 },
-      { name: '俯冲', hit: 8, dmg: '3d8+4', type: 'piercing', apply: { cond: 'prone', turns: 1, save: { abil: 'str', dc: 15 } }, recharge: 5, text: '{name}拔高，收翅，像石第一样砸下来。' },
+      { name: '俯冲', hit: 8, dmg: '3d8+4', type: 'piercing', apply: { cond: 'prone', turns: 1, save: { abil: 'str', dc: 15 } }, recharge: 5, text: '{name}拔高，收翅，像块石头似的砸下来。' },
     ],
   },
   {
@@ -793,7 +793,7 @@ const LIST = [
   },
   {
     id: 'war_mechanim', name: '战斗机械人', en: 'War Mechanim', type: 'construct', level: 6, era: E1836,
-    desc: '一人多高的铁人，胸口一块雕花的达姆斯塔尔核心发着蓝光，左臂是一挺旋转枪管。它的编号刷在背上，有一道被人用刀划掉了。',
+    desc: '一人多高的铁人，胸口一块雕花的魔晶核心发着蓝光，左臂是一挺旋转枪管。它的编号刷在背上，有一道被人用刀划掉了。',
     enTerms: { '达姆斯塔尔': 'Damestear', '核心': 'Kauga' },
     hp: 80, ac: 17, init: 0, saves: S(4, 0, 4, 1, 0, -3), xp: 350, ai: 'brute', ...CONSTRUCT, vuln: ['lightning'],
     attacks: [
@@ -841,7 +841,7 @@ const LIST = [
   },
   {
     id: 'hobgoblin_banneret', name: '命令秩序旗官', en: 'Command Banner-Officer', type: 'humanoid', level: 6, era: E1444,
-    desc: '背上插一面三角旗，旗上是一头老虎。他吹的哨子是铜的，吹一声。他手下的兵就换一个阵。',
+    desc: '背上插一面三角旗，旗上是一头老虎。他吹的哨子是铜的，吹一声，他手下的兵就换一个阵。',
     enTerms: { '命令秩序': 'The Command' },
     hp: 86, ac: 18, init: 2, saves: S(4, 2, 3, 2, 2, 2), xp: 350, ai: 'cunning',
     attacks: [
@@ -891,7 +891,7 @@ const LIST = [
   },
   {
     id: 'hag_mother', name: '鬼婆之母', en: 'Coven Mother (hag)', type: 'fey', level: 6, era: ANY,
-    desc: '她坐在一口能装下一头牛的锅边，锅里在煮东西。你不想知道是什么。鬼婆凑满三个才成一个巫会，她是另外两个的娘。',
+    desc: '她坐在一口能装下一头牛的锅边，锅里在煮东西。你不想知道是什么。鬼婆凑满三个才成一个巫会，她是另外两个的母亲。',
     hp: 320, ac: 16, init: 2, saves: S(4, 2, 4, 3, 4, 4), xp: 1050, ai: 'caster', traits: { boss: true }, resist: ['psychic', 'cold'], condImmune: ['charmed', 'frightened'],
     attacks: [
       { name: '铁指甲', hit: 8, dmg: '2d8+5', type: 'slashing', multi: 3, weight: 3 },
@@ -966,7 +966,7 @@ const LIST = [
   },
   {
     id: 'gorebeak', name: '血喙钩爪怪', en: 'Gorebeak', type: 'undead', level: 7, era: LATE,
-    desc: '一只钩爪怪，可是瘦得皮包骨，嘴边一圈干血。血灾逼它喝过自己的血。它就不再是活物了。',
+    desc: '一只钩爪怪，可是瘦得皮包骨，嘴边一圈干血。血灾逼它喝了自己的血，从那以后它就不再是活物了。',
     enTerms: { '血灾': 'Bloodscourge' },
     hp: 104, ac: 15, init: 2, saves: S(5, 2, 4, -2, 1, -1), xp: 550, ai: 'brute', ...UNDEAD, traits: { regen: 4 },
     attacks: [
@@ -991,7 +991,7 @@ const LIST = [
     attacks: [
       { name: '刀一样的指甲', hit: 8, dmg: '2d6+4', type: 'slashing', multi: 2, weight: 3 },
       { name: '一吻', hit: 8, dmg: '4d8', type: 'psychic', lifesteal: true, recharge: 4 },
-      { name: '魅惑', hit: 9, dmg: '1', type: 'psychic', apply: { cond: 'charmed', turns: 2, save: { abil: 'wis', dc: 15 } }, recharge: 5, text: '{name}叫了你一声小名。只有你娘这么叫过。' },
+      { name: '魅惑', hit: 9, dmg: '1', type: 'psychic', apply: { cond: 'charmed', turns: 2, save: { abil: 'wis', dc: 15 } }, recharge: 5, text: '{name}叫了你一声小名。只有你母亲这么叫过。' },
     ],
   },
   {
@@ -1105,7 +1105,7 @@ const LIST = [
   },
   {
     id: 'wroth_knight', name: '怒王子的骑士', en: 'Wroth Knight of Kazraiel', type: 'fiend', level: 8, era: ANY,
-    desc: '一身焦黑的板甲，接缝里往外冒火。头盔里没有脸，只有一团红光。它为怒王子卡兹拉伊尔打仗，从不问为什么？',
+    desc: '一身焦黑的板甲，接缝里往外冒火。头盔里没有脸，只有一团红光。它为怒王子卡兹拉伊尔打仗，从不问为什么。',
     enTerms: { '怒王子卡兹拉伊尔': 'Kazraiel, the Wroth Prince' },
     hp: 112, ac: 17, init: 1, saves: S(6, 1, 5, 1, 2, 3), xp: 700, ai: 'brute', resist: ['fire', 'cold'], immune: ['poison'], condImmune: ['poisoned', 'frightened'],
     attacks: [

@@ -42,7 +42,7 @@ export const ABILITIES_RACES = {
   race_kobold_snare: {
     id: 'race_kobold_snare', name: '下套', en: 'Snare', kind: 'feature', target: 'enemy', ai: 'control',
     save: { abil: 'dex' }, dcAbil: 'dex', apply: { cond: 'restrained', turns: 2 }, cost: { uses: 1, per: 'short' },
-    desc: '甩出一副夹子或者一根绊索。目标需进行敏捷豁免（DC 8+熟练加值+敏捷调整值），失败则被束缚，至多 2 回合：它攻击有劣势，打它有优势；它每回合结束时可以用力量豁免挣脱。消耗主要行动，每次短休后可以使用 1 次。',
+    desc: '甩出一副夹子或者一根绊索。目标需进行敏捷豁免（DC 8+熟练加值+敏捷调整值），失败则被束缚，至多 2 回合：它攻击有劣势，打它有优势，它每回合结束时可以用力量豁免挣脱。消耗主要行动，每次短休后可以使用 1 次。',
   },
   race_gnoll_bite: {
     id: 'race_gnoll_bite', name: '碎骨咬', en: 'Bone-cracking Bite', kind: 'feature', quick: true, target: 'enemy',
@@ -52,12 +52,12 @@ export const ABILITIES_RACES = {
   race_harpy_screech: {
     id: 'race_harpy_screech', name: '尖啸', en: 'Screech', kind: 'feature', target: 'enemies', ai: 'control',
     save: { abil: 'con', half: true }, dcAbil: 'cha', dmg: '1d8+lvl', dmgType: 'thunder', apply: { cond: 'dazed', turns: 1 }, cost: { uses: 1, per: 'short' },
-    desc: '张嘴一声尖啸。所有敌人受到 1d8+等级 点雷鸣伤害，体质豁免（DC 8+熟练加值+魅力调整值）成功则减半；豁免失败的还会晕眩，在其下一回合结束前攻击有劣势。消耗主要行动，每次短休后可以使用 1 次。',
+    desc: '张嘴一声尖啸。所有敌人受到 1d8+等级 点雷鸣伤害，体质豁免（DC 8+熟练加值+魅力调整值）成功则减半。豁免失败的还会晕眩，在其下一回合结束前攻击有劣势。消耗主要行动，每次短休后可以使用 1 次。',
   },
   race_ogre_hunger: {
     id: 'race_ogre_hunger', name: '饿劲', en: 'The Hunger', kind: 'feature', quick: true, target: 'self', ai: 'buff',
     selfApply: { cond: 'emboldened', turns: 2 }, cost: { uses: 1, per: 'long' },
-    desc: '附赠动作。放任肚子里那股饿劲冲上面：本回合和下一回合，武器命中 +2、伤害 +2。每次长休后可以使用 1 次。',
+    desc: '附赠动作。任由腹中那股饥饿冲昏头脑：本回合和下一回合，武器命中 +2、伤害 +2。每次长休后可以使用 1 次。',
   },
   race_centaur_charge: {
     id: 'race_centaur_charge', name: '冲撞', en: 'Charge', kind: 'maneuver', target: 'enemy', attack: 'weapon',

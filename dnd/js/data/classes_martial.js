@@ -47,7 +47,7 @@ export const CLASSES_MARTIAL = {
       },
       {
         id: 'fighter_company', name: '兵团老兵', en: 'Company veteran (mercenary and adventurer companies)',
-        desc: '拿饷打仗的人，认队长和合同，不认纹章。每场大战打完，路上都会多出一批这样的兵团。有的给人当保镖，有的落草，有的自己打下一块地。',
+        desc: '拿饷打仗的人，认队长和合同，不认纹章。每场大战打完，路上都会多出一批这样的兵团。有的给人当保镖，有的沦为盗匪，有的自己打下一块地。',
         enTerms: { '兵团': 'Company (mercenary / adventurer company)' },
         features: { 3: ['fighter_company_rally'], 6: ['fighter_company_old_hand'], 10: ['fighter_company_kill_order'] },
       },
@@ -92,13 +92,13 @@ export const CLASSES_MARTIAL = {
     subclasses: [
       {
         id: 'barbarian_reaver', name: '掠夺者', en: 'Gerudian Reaver',
-        desc: '格鲁迪亚海盗的老路数：长船靠岸，抢完就走。动手前要听斯卡尔德诗人念一段故事壮胆。黑冰纪元里，他们从巨龙海岸一路抢到达梅斯海德。',
+        desc: '格鲁迪亚海盗的传统：长船靠岸，抢完就走。动手前要听斯卡尔德诗人念一段故事壮胆。黑冰纪元里，他们从巨龙海岸一路抢到达梅斯海德。',
         enTerms: { '格鲁迪亚': 'Gerudia', '斯卡尔德诗人': 'Skald (Skald-Priests of the Skaldhyrric Faith)', '黑冰纪元': 'Era of Black Ice', '巨龙海岸': 'Dragon Coast', '达梅斯海德': 'Dameshead' },
         features: { 3: ['barbarian_reaver_frenzy'], 6: ['barbarian_reaver_north_blood'], 10: ['barbarian_reaver_shieldbreaker'] },
       },
       {
         id: 'barbarian_warband', name: '战帮斗士', en: 'Orcish warband fighter',
-        desc: '兽人战帮里练出来的人。战帮的规矩是：东西打得赢才算你的，位子靠荣誉决斗来换；够硬的外族人也收。绿潮之前，地面上难得见到。',
+        desc: '兽人战帮里练出来的人。战帮的规矩是：东西打得赢才算你的，位子靠荣誉决斗来换。够强悍的外族人也收。绿潮之前，地面上难得见到。',
         enTerms: { '战帮': 'Orcish warband', '荣誉决斗': "Ozarm'Chadash (duel for honor)", '绿潮': 'Greentide' },
         features: { 3: ['barbarian_warband_duel'], 6: ['barbarian_warband_scars'], 10: ['barbarian_warband_killing_blow'] },
       },
@@ -142,13 +142,13 @@ export const CLASSES_MARTIAL = {
     subclasses: [
       {
         id: 'rogue_shadowhand', name: '影手', en: 'Shadowhand (after Finnic Shadowhand; halfling thieves and Viswall agents)',
-        desc: '学的是芬尼克·影手那一路：摸东西、翻墙、脱身。这位半身人凭这手本事在术士王战争里出了名，还被推举成维斯沃尔的国王。小人国的贼和密探都学他。',
+        desc: '学的是芬尼克·影手的本事：扒窃、翻墙、脱身。这位半身人凭此在术士王战争里出了名，还被推举成维斯沃尔的国王。小人国的贼和密探都学他。',
         enTerms: { '芬尼克·影手': 'Finnic Shadowhand (Finnic síl Vis)', '术士王战争': 'War of the Sorcerer-King', '维斯沃尔': 'Viswall', '小人国': 'Small Country' },
         features: { 3: ['rogue_shadowhand_light_fingers', 'rogue_shadowhand_dye_bomb'], 6: ['rogue_shadowhand_second_story'], 10: ['rogue_shadowhand_vanish'] },
       },
       {
         id: 'rogue_shadowdancer', name: '影舞者', en: 'Shadowdancer (Nathalyne; Shadow Covenant)',
-        desc: '刺客和密探的路子，带一点东洲传来的影术。纳撒琳成神以后，这行人拜的就是这位“影舞者”；暗影盟约的杀手用的也是这一套。',
+        desc: '刺客和密探的路子，带一点东洲传来的影术。纳撒琳成神以后，这行人拜的就是这位“影舞者”，暗影盟约的杀手用的也是这一套。',
         enTerms: { '东洲': 'Haless', '影术': 'Shadowmancy (shadow magic)', '纳撒琳': 'Nathalyne', '影舞者': 'The Shadowdancer', '暗影盟约': 'Shadow Covenant' },
         features: { 3: ['rogue_shadowdancer_cloak'], 6: ['rogue_shadowdancer_assassinate'], 10: ['rogue_shadowdancer_death_mark'] },
       },
@@ -162,8 +162,8 @@ export const CLASSES_MARTIAL = {
     short: '徒手格斗，用气连击或防守',
     desc: '你靠身法闪避，在兵器攻击后还能补上一拳。消耗气可以连击、转为守势、调息或击晕对手。短休后，气会回满。',
     era: {
-      1022: '卡林达尔刚从试炼山找回来，刀锋边区复了国，守刃僧团重新管起试剑的规矩。东洲仙界的侠客离坎诺太远，这边几乎没人见过。',
-      1444: '卡林达尔被兽人瓦洛克打断，刀锋边区亡了国，守刃僧团成了没有剑也没有国的看守人。东洲的仙界里各门各派还守着自己的山头，命令秩序的大地精已经压到了北边。',
+      1022: '闪耀之刃卡林达尔刚从试炼山找回来，刀锋边区复了国，守刃僧团重新管起试剑的规矩。东洲仙界的侠客离坎诺太远，这边几乎没人见过。',
+      1444: '闪耀之刃卡林达尔被兽人瓦洛克打断，刀锋边区亡了国，守刃僧团成了没有剑也没有国的看守人。东洲的仙界里各门各派还守着自己的山头，命令秩序的大地精已经压到了北边。',
       1836: '坎诺的商船常年跑东洲，“气”和侠客门派的名字不再是奇闻。舞风一派的身法，据说躲得开子弹。',
     },
     enTerms: { '卡林达尔': 'Calindal, the Gleaming Blade', '试炼山': 'Trialmount', '刀锋边区': 'Blademarches', '守刃僧团': 'Order of the Blade Stewards', '试剑': 'Test of the Gleaming Blade', '东洲': 'Haless', '仙界': 'Xianjie', '侠客': 'Xiaken', '坎诺': 'Cannor', '瓦洛克': 'Varok Bladebreaker', '命令秩序': 'The Command', '大地精': 'Hobgoblin', '气': 'Chi', '舞风': 'Way of the Dancing Breeze' },

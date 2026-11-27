@@ -1,0 +1,2563 @@
+// s1022 / meta.js：数据文件。正文按 docs/STYLE_GUIDE.md（第二版）重写过，由 tools/rewrite-apply.mjs 写回。
+export const META = {
+ "id": "s1022",
+ "era": 1022,
+ "title": "无冕之年",
+ "coin": "金冠",
+ "startDate": "1022年卡斯坦月1日",
+ "intro": [
+  "灰元 1022 年卡斯坦月 1 日。术士王死了已经一年多，《安本科斯特条约》刚签下不久。安本科斯特旧斗兽场的拱廊底下支了一张登记桌，桌上摆着一本册子和一锅蜡，桌子后头的书记官冻得直跺脚。",
+  "照条约的规定，要派一批监誓人带着蜡印到各国去，亲眼看着各国照条约立誓。在条约上签字的有五家：两家打赢了，一家打输了，一家压根不打算入伙，还有一家夹在当中两头为难。你就是其中一家派出来的监誓人。",
+  "仗是打完了。可是南边的沼地里，每天夜里还有人推着车出门，出去的时候车是空的，回来的时候车上装着死人。"
+ ],
+ "tracks": [
+  {
+   "key": "unburied",
+   "name": "未葬者",
+   "desc": "还有多少死人没好好下葬。1040 年以前算的是战死的，往后算的是病死的。数越高越糟。",
+   "start": 6,
+   "min": 0,
+   "max": 10,
+   "labels": [
+    "各归其墓",
+    "坟比人少",
+    "沟里有人",
+    "村村挂白",
+    "死人当家"
+   ]
+  },
+  {
+   "key": "communion",
+   "name": "同席",
+   "desc": "精灵和人类还肯不肯坐到一张桌子上。数越高越和睦。",
+   "start": 5,
+   "min": 0,
+   "max": 10,
+   "labels": [
+    "各回各船",
+    "隔墙而居",
+    "同城分桌",
+    "同桌吃饭",
+    "骨血相连"
+   ]
+  },
+  {
+   "key": "mantle",
+   "name": "卡斯坦之名",
+   "desc": "试炼山上那个皇帝的位子，离有人坐上去还有多远。数越高越近。",
+   "start": 3,
+   "min": 0,
+   "max": 10,
+   "labels": [
+    "山已封死",
+    "没人敢提",
+    "有人惦记",
+    "群雄问山",
+    "新皇在位"
+   ]
+  },
+  {
+   "key": "writ",
+   "name": "法师之权",
+   "desc": "法师凭着手里的令状能管多少事。数越高，法师的权越大。",
+   "start": 2,
+   "min": 0,
+   "max": 10,
+   "labels": [
+    "各管各的",
+    "宫廷顾问",
+    "持令看守",
+    "法师断案",
+    "杖下太平"
+   ]
+  },
+  {
+   "key": "feud",
+   "name": "玫瑰与月",
+   "desc": "洛伦特的西洛瑞尔家和达梅里亚的西尔穆纳家结的仇有多深。数越高越糟。",
+   "start": 4,
+   "min": 0,
+   "max": 10,
+   "labels": [
+    "结成亲家",
+    "面上客气",
+    "各记各账",
+    "已经见血",
+    "世代为仇"
+   ]
+  }
+ ],
+ "reputations": [
+  {
+   "key": "moon",
+   "name": "月庭",
+   "desc": "达梅里亚的宫廷，白银大队的老兵，还有月神神殿。",
+   "start": 0
+  },
+  {
+   "key": "rose",
+   "name": "玫瑰摄政",
+   "desc": "洛伦特的伊奥瑞尔太后和她手下的人，恩特本的纯血派不算在里头。",
+   "start": 0
+  },
+  {
+   "key": "escann",
+   "name": "东坎诺诸王",
+   "desc": "北王国，南王国，刀锋边区，再加上蓝宝石之眼骑士团。",
+   "start": 0
+  },
+  {
+   "key": "dragon",
+   "name": "黑龙",
+   "desc": "乌霜边区，黑卡斯塔诺的老兵，还有那些至今认乌霜家的白湾人。",
+   "start": 0
+  },
+  {
+   "key": "wex",
+   "name": "威克斯与大墓地",
+   "desc": "小公爵的朝廷，还有边境地的收殓人。",
+   "start": 0
+  },
+  {
+   "key": "elders",
+   "name": "船上长老",
+   "desc": "伊贝瓦尔和残存舰队里那些不肯改名换姓的精灵。",
+   "start": 0
+  },
+  {
+   "key": "wise",
+   "name": "贤者会",
+   "desc": "加里昂、玛希尔达和他们带出来的学生。1040 年以后，指的就是瓦洛森。",
+   "start": 0
+  }
+ ],
+ "origins": [
+  {
+   "id": "dameria",
+   "name": "达梅里亚 · 月庭",
+   "region": "达梅斯海德",
+   "flag": "A58",
+   "nationName": "达梅里亚王国",
+   "blurb": "国王今年二十岁，是个半精灵，上礼拜才成的亲，城外的帐篷城到现在还没拆。你在他宫里当差，上任的头一件事，就是拦下一把冲着主桌去的切肉刀。",
+   "tags": [
+    "赢家",
+    "宫廷",
+    "初盟"
+   ],
+   "startScene": "p_dameria_01",
+   "start": {
+    "rep": {
+     "moon": 2,
+     "wise": 1,
+     "dragon": -1
+    },
+    "world": {},
+    "flags": [],
+    "items": {
+     "moon_badge": 1
+    },
+    "gold": 40
+   }
+  },
+  {
+   "id": "lorent",
+   "name": "洛伦特 · 玫瑰摄政",
+   "region": "伦瑟诺",
+   "flag": "A01",
+   "nationName": "洛伦特王国",
+   "blurb": "国王再过三天才满两岁，这会儿正在他父亲的王座上睡觉。替他拿主意的是太后，一位八十三岁的精灵，照她族里的算法还没成年。她交给你一枚印，另外还交代了一件和约上没写的事。",
+   "tags": [
+    "赢家",
+    "旧怨",
+    "摄政"
+   ],
+   "startScene": "p_lorent_01",
+   "start": {
+    "rep": {
+     "rose": 2,
+     "moon": -1
+    },
+    "world": {},
+    "flags": [],
+    "items": {
+     "ioriel_letter": 1
+    },
+    "gold": 50
+   }
+  },
+  {
+   "id": "ebonmarck",
+   "name": "乌霜边区 · 黑龙",
+   "region": "东坎诺",
+   "flag": "Z34",
+   "nationName": "乌霜边区",
+   "blurb": "你们打输了，这没什么好辩的。皇帝那些年身不由己，这话说出去也没人肯听。围城的营火一夜比一夜近，加雷克大人要你带句话出去：要么听我们把话讲完，要么就别再杀了。",
+   "tags": [
+    "输家",
+    "遗民",
+    "军团"
+   ],
+   "startScene": "p_ebonmarck_01",
+   "start": {
+    "rep": {
+     "dragon": 3,
+     "escann": -1,
+     "moon": -1,
+     "wex": -1
+    },
+    "world": {},
+    "flags": [],
+    "items": {
+     "legion_token": 1
+    },
+    "gold": 15
+   }
+  },
+  {
+   "id": "ibevar",
+   "name": "伊贝瓦尔 · 船上长老",
+   "region": "凄苦谷",
+   "flag": "A32",
+   "nationName": "伊贝瓦尔精灵国",
+   "blurb": "你们在海上漂了一千年，上岸到现在才二十二年。族里已经有人改了人类的名字，拜起了人类的神，亲王没改。他派你出去看看，人类这份和约到底值不值得你们打开行李住下来。",
+   "tags": [
+    "外人",
+    "长命",
+    "纯血"
+   ],
+   "startScene": "p_ibevar_01",
+   "start": {
+    "rep": {
+     "elders": 2,
+     "wise": 1,
+     "rose": -1
+    },
+    "world": {},
+    "flags": [],
+    "items": {
+     "ibenion_writ": 1
+    },
+    "gold": 30
+   }
+  },
+  {
+   "id": "wex",
+   "name": "威克斯 · 幼主之家",
+   "region": "边境地",
+   "flag": "A30",
+   "nationName": "威克斯丘陵公国",
+   "blurb": "威克斯的王冠三十年前就没了。如今的公爵才八岁，还是个扶正的私生子。底下几位摄政谁也不服谁，只在一件事上想到了一块儿：这枚印绝不能落到别的摄政手里。公爵自己只问了你一句，当监誓人发不发马。",
+   "tags": [
+    "夹缝",
+    "幼主",
+    "坟场"
+   ],
+   "startScene": "p_wex_01",
+   "start": {
+    "rep": {
+     "wex": 2,
+     "dragon": -2
+    },
+    "world": {},
+    "flags": [],
+    "items": {
+     "ledger_page": 1
+    },
+    "gold": 25
+   }
+  }
+ ],
+ "factions": [
+  {
+   "id": "sapphire",
+   "name": "蓝宝石之眼（剑）",
+   "motto": "先留人一条命，再来论理。",
+   "blurb": "规矩是凯伦·长枪定下的：打赢了要给人留活路，争地盘就各派一个人单挑，别拉上两个村子的人一块儿陪葬。骑士团去年才立起来，创始的那几位里头，有一半已经死在试炼山上了。",
+   "tags": [
+    "骑士",
+    "骑士裁决",
+    "留人"
+   ],
+   "art": "ev_adeanic_war",
+   "origins": [
+    "dameria",
+    "lorent",
+    "ebonmarck",
+    "wex"
+   ],
+   "start": {
+    "rep": {
+     "escann": 2,
+     "dragon": 1
+    },
+    "world": {},
+    "flags": [
+     "f_sapphire"
+    ]
+   }
+  },
+  {
+   "id": "rites",
+   "name": "旧礼（冠）",
+   "motto": "王冠是神给的，可总得有人替神递一下。",
+   "blurb": "和约上说，往后不管哪座神殿的祭司，都能给国王加冕。这一来，每座神殿都觉得该轮到自己了。你认的还是老规矩：王冠得有人递，死人得有人埋，逃进神殿里的人，得有人管他一顿饭。",
+   "tags": [
+    "祭司",
+    "下葬",
+    "涂油",
+    "庇护"
+   ],
+   "art": "ev_piety",
+   "start": {
+    "rep": {
+     "wex": 1,
+     "moon": 1
+    },
+    "world": {},
+    "flags": [
+     "f_rites"
+    ]
+   }
+  },
+  {
+   "id": "staff",
+   "name": "贤者门下（杖）",
+   "motto": "法师得有人看着，最好是法师来看。",
+   "blurb": "一个人做某件事的时候是不是自己做的主，有没有叫人慑住，只有法师看得出来。加里昂的学生们觉得，有这种本事的人得有人管着，最好由他们自己来管。",
+   "tags": [
+    "法师",
+    "验心",
+    "疫令"
+   ],
+   "art": "ev_mages_estate",
+   "origins": [
+    "dameria",
+    "lorent",
+    "ibevar",
+    "wex"
+   ],
+   "start": {
+    "rep": {
+     "wise": 2,
+     "dragon": -1
+    },
+    "world": {
+     "writ": 1
+    },
+    "flags": [
+     "f_staff"
+    ]
+   }
+  }
+ ],
+ "premades": [
+  {
+   "id": "pm_rianna",
+   "name": "精灵码头的莉安娜",
+   "gender": "f",
+   "race": "half_elf",
+   "cls": "sorcerer",
+   "background": "urchin",
+   "abil": {
+    "str": 8,
+    "dex": 15,
+    "con": 13,
+    "int": 10,
+    "wis": 12,
+    "cha": 17
+   },
+   "profs": [
+    "deception",
+    "insight",
+    "sleight",
+    "stealth"
+   ],
+   "portrait": "sun_elf_court_mage_f",
+   "origins": [
+    "dameria"
+   ],
+   "tags": [
+    "半精灵",
+    "天生施法"
+   ],
+   "blurb": "她是世上头一批半精灵，也是头一批生下来就带着魔法的人，满宫廷的人都盯着她看。",
+   "bio": "她 1004 年生在精灵上岸时扎下的营地里，也就是如今精灵码头那一带。父亲是白银大队的弓手，母亲是卖鱼的。十四岁那年她发了一回脾气，灶上的汤锅自己就烧开了。如今她在王宫里当侍童，宫廷法师一直想验一验她的血。"
+  },
+  {
+   "id": "pm_aucan",
+   "name": "奥坎·海月",
+   "gender": "m",
+   "race": "elf",
+   "subrace": "moon_elf",
+   "cls": "ranger",
+   "background": "soldier",
+   "abil": {
+    "str": 12,
+    "dex": 17,
+    "con": 13,
+    "int": 9,
+    "wis": 14,
+    "cha": 10
+   },
+   "profs": [
+    "perception",
+    "stealth",
+    "survival",
+    "athletics",
+    "intimidation"
+   ],
+   "portrait": "sun_elf_commandant",
+   "origins": [
+    "dameria"
+   ],
+   "tags": [
+    "老兵",
+    "长命"
+   ],
+   "blurb": "他是白银大队的老兵，听了穆纳斯的话，改了个人类的名字，取的是先王后的名字。",
+   "bio": "他本名叫阿多里安，880 年生在海上，后来跟着穆纳斯上了岸，在月神之牙那一仗里丢了半只耳朵。打完仗，他改名叫奥坎，是把先王后“奥琪”的名字改成了男人用的。族里的长老到今天还是只肯叫他的旧名。"
+  },
+  {
+   "id": "pm_alain",
+   "name": "大奥尔丁的阿兰",
+   "gender": "m",
+   "race": "human",
+   "subrace": "lorentish",
+   "cls": "paladin",
+   "background": "squire",
+   "abil": {
+    "str": 16,
+    "dex": 10,
+    "con": 14,
+    "int": 8,
+    "wis": 12,
+    "cha": 15
+   },
+   "profs": [
+    "persuasion",
+    "religion",
+    "athletics",
+    "animal"
+   ],
+   "portrait": "gen_human_knight_m",
+   "origins": [
+    "lorent"
+   ],
+   "tags": [
+    "平民",
+    "骑士",
+    "简单上手"
+   ],
+   "blurb": "他是平民出身，给独角兽骑士当扈从。凯伦那一套他是真信的：打赢了就该给人留活路。",
+   "bio": "他今年十九岁，父亲是养马的，他自己从十四岁起就给奥尔丁的莫冈大人牵马。打仗他没赶上，只赶上了埋人。太后挑中他，正是因为恩特本的老爷们看不上他。"
+  },
+  {
+   "id": "pm_barila",
+   "name": "巴丽拉·钢臂",
+   "gender": "f",
+   "race": "dwarf",
+   "subrace": "ruby_dwarf",
+   "cls": "artificer",
+   "background": "artisan",
+   "abil": {
+    "str": 12,
+    "dex": 10,
+    "con": 16,
+    "int": 15,
+    "wis": 13,
+    "cha": 9
+   },
+   "profs": [
+    "arcana",
+    "history",
+    "sleight",
+    "investigation"
+   ],
+   "portrait": "dwarven_artist_f",
+   "origins": [
+    "lorent"
+   ],
+   "tags": [
+    "符文匠",
+    "长命"
+   ],
+   "blurb": "红宝石关大门上的符文是她刻的，靠着它守住了两回。到了第三回，上头不用她了，派来了一位精灵法师。",
+   "bio": "她是红宝石领的符文匠，今年一百三十一岁。1001 年红宝石关那一仗，她刻过符的那扇门没让人攻破。可是仗一打完，她这门手艺倒成了别人嘴里的“土办法”。如今族人都在装箱子准备搬走，只有她还没动身。"
+  },
+  {
+   "id": "pm_hilde",
+   "name": "希尔德·半牌",
+   "gender": "f",
+   "race": "human",
+   "subrace": "gerudian",
+   "cls": "fighter",
+   "background": "soldier",
+   "abil": {
+    "str": 16,
+    "dex": 14,
+    "con": 15,
+    "int": 10,
+    "wis": 12,
+    "cha": 8
+   },
+   "profs": [
+    "perception",
+    "survival",
+    "athletics",
+    "intimidation"
+   ],
+   "portrait": "gen_human_knight_f",
+   "origins": [
+    "ebonmarck"
+   ],
+   "tags": [
+    "军团",
+    "简单上手"
+   ],
+   "blurb": "她是黑卡斯塔诺的军团兵。皇帝叫大家放下兵器，她就放下了。如今她那块军团牌只剩半块。",
+   "bio": "她今年三十四岁。沼泽堡那天她就在中军，皇帝下令停手，她就停了手。紧跟着术士王的火烧了过来，把她的军团牌熔成了两半，丢的那一半到现在还埋在泥里。如今她替加雷克守城门。"
+  },
+  {
+   "id": "pm_marcan",
+   "name": "万神道的马尔坎修士",
+   "gender": "m",
+   "race": "human",
+   "subrace": "escanni",
+   "cls": "cleric",
+   "background": "acolyte",
+   "abil": {
+    "str": 13,
+    "dex": 9,
+    "con": 13,
+    "int": 14,
+    "wis": 16,
+    "cha": 10
+   },
+   "profs": [
+    "history",
+    "persuasion",
+    "religion",
+    "insight"
+   ],
+   "portrait": "gen_human_mage_m",
+   "origins": [
+    "ebonmarck"
+   ],
+   "tags": [
+    "祭司",
+    "失势"
+   ],
+   "blurb": "他是卡斯特洛斯的祭司，自己没给谁加过冕，可给傀儡皇帝加冕的这笔账照样算到了他头上。",
+   "bio": "他今年三十五岁，是卡斯托纳斯万神道的祭司。当年给傀儡皇帝加冕的是他的上司，可和约罚起来，凡是穿这身袍子的一个都没放过。如今只有乌霜边区还肯请他去主持葬礼。"
+  },
+  {
+   "id": "pm_galindel",
+   "name": "加琳德尔·夜枝",
+   "gender": "f",
+   "race": "elf",
+   "subrace": "moon_elf",
+   "cls": "wizard",
+   "background": "scholar",
+   "abil": {
+    "str": 8,
+    "dex": 16,
+    "con": 12,
+    "int": 16,
+    "wis": 13,
+    "cha": 10
+   },
+   "profs": [
+    "insight",
+    "investigation",
+    "arcana",
+    "history"
+   ],
+   "portrait": "sun_elf_philosopher_f",
+   "origins": [
+    "ibevar"
+   ],
+   "tags": [
+    "法师",
+    "长命"
+   ],
+   "blurb": "她是月火号上看排钟的人。照她看，精灵和人类要是掺到一块儿过日子，到头来总是精灵替人类戴孝。",
+   "bio": "她 801 年生在月火号上，守了整整一百年的排钟。那些钟很脆，只有法师才护得住。后来钟搬去了瓦多塞德，她也跟着去了。上岸这二十二年里，她已经送走了三个人类朋友。"
+  },
+  {
+   "id": "pm_wren",
+   "name": "文达尔·金箭",
+   "gender": "m",
+   "race": "elf",
+   "subrace": "moon_elf",
+   "cls": "rogue",
+   "background": "sailor",
+   "abil": {
+    "str": 10,
+    "dex": 17,
+    "con": 12,
+    "int": 14,
+    "wis": 8,
+    "cha": 14
+   },
+   "profs": [
+    "stealth",
+    "sleight",
+    "acrobatics",
+    "persuasion",
+    "athletics",
+    "perception"
+   ],
+   "portrait": "sun_elf_spymaster",
+   "origins": [
+    "ibevar"
+   ],
+   "tags": [
+    "年少",
+    "长命"
+   ],
+   "blurb": "大伙儿都管他叫“鹪鹩”。他六十一岁，照精灵的算法还是个孩子。他挺喜欢人类，亲王不大喜欢他这一点。",
+   "bio": "他生在海上，四十岁才上岸，那时候才头一回见到会结冰的河。后来他在精灵码头混了二十年，学了一口达梅里亚的粗话。亲王这回派他出门，其实是想让他离酒馆远一点。"
+  },
+  {
+   "id": "pm_ottrac",
+   "name": "威克斯人奥特拉克",
+   "gender": "m",
+   "race": "human",
+   "subrace": "alenic",
+   "cls": "barbarian",
+   "background": "miner",
+   "abil": {
+    "str": 16,
+    "dex": 12,
+    "con": 15,
+    "int": 8,
+    "wis": 14,
+    "cha": 10
+   },
+   "profs": [
+    "intimidation",
+    "perception",
+    "athletics",
+    "nature"
+   ],
+   "portrait": "gen_human_rogue_m",
+   "origins": [
+    "wex"
+   ],
+   "tags": [
+    "正史人物",
+    "简单上手"
+   ],
+   "blurb": "1020 年去登试炼山的那些人里头有他一个，可他走到半山腰就下来了。这件事叫人在他耳边念叨了两年。",
+   "bio": "他是丘陵矿上出来的大个子，今年三十三岁。当年他在比武会上挣到了上山的资格，走到半路却陪着马里昂下了山，留在山上的人后来死了九个。从去年泪落月起，他就在马里昂的宫里吃饷。威克斯的几位摄政谁也不放心谁，干脆把印托给了他，一来各方都认得他，二来没人敢从他手里抢。"
+  },
+  {
+   "id": "pm_primrose",
+   "name": "普丽姆萝丝·花足",
+   "gender": "f",
+   "race": "halfling",
+   "cls": "cleric",
+   "background": "acolyte",
+   "abil": {
+    "str": 8,
+    "dex": 14,
+    "con": 13,
+    "int": 10,
+    "wis": 15,
+    "cha": 15
+   },
+   "profs": [
+    "medicine",
+    "persuasion",
+    "religion",
+    "insight"
+   ],
+   "portrait": "gnome_theologian_f",
+   "origins": [
+    "wex"
+   ],
+   "tags": [
+    "收殓人"
+   ],
+   "blurb": "她是大墓地的收殓人，福尔卡德大祭司的徒弟。她见了人总是先量量肩宽，再问一句将来谁继承。",
+   "bio": "她是个半身人，今年二十四岁，十二岁就进科塞顿学给死人束腰。屠夫原的账如今归她管。四百零六座坟她一座一座都对过，结果有十六座是空的。师父叫她出去找找，看到底是谁挖的。"
+  }
+ ],
+ "races": [
+  "human",
+  "elf",
+  "half_elf",
+  "dwarf",
+  "halfling",
+  "gnome",
+  "harpy"
+ ],
+ "companions": {
+  "liv": {
+   "id": "liv",
+   "name": "卡斯坦“五十四世”",
+   "gender": "f",
+   "race": "harpy",
+   "cls": "barbarian",
+   "abil": {
+    "str": 15,
+    "dex": 14,
+    "con": 14,
+    "int": 8,
+    "wis": 10,
+    "cha": 14
+   },
+   "profs": [
+    "performance",
+    "athletics",
+    "intimidation"
+   ],
+   "equip": {
+    "weapon": "greataxe",
+    "armor": "hide",
+    "offhand": null,
+    "trinket": null
+   },
+   "portrait": "harpy_commandant_f",
+   "blurb": "她是雅恩珂洛部的鹰身女妖，先帝卡斯坦五十三世没上家谱的女儿，如今是乌翼兵团的队长。喝了酒她就自称五十四世，没喝的时候自称“你们队长”。"
+  },
+  "barry": {
+   "id": "barry",
+   "name": "巴里·月华",
+   "gender": "m",
+   "race": "elf",
+   "subrace": "moon_elf",
+   "cls": "bard",
+   "abil": {
+    "str": 8,
+    "dex": 12,
+    "con": 13,
+    "int": 13,
+    "wis": 14,
+    "cha": 15
+   },
+   "profs": [
+    "persuasion",
+    "insight",
+    "performance",
+    "history"
+   ],
+   "equip": {
+    "weapon": "rapier",
+    "armor": "leather",
+    "offhand": null,
+    "trinket": null
+   },
+   "portrait": "sun_elf_diplomat",
+   "blurb": "他是在威克斯落了户的精灵，琥珀溪的男爵。小公爵身边的人里头，就数他最像个当爹的。他的篮子里永远多带着一份吃的。"
+  },
+  "vezina": {
+   "id": "vezina",
+   "name": "薇齐娜·马尔尼德",
+   "gender": "f",
+   "race": "human",
+   "subrace": "escanni",
+   "cls": "wizard",
+   "abil": {
+    "str": 9,
+    "dex": 14,
+    "con": 12,
+    "int": 15,
+    "wis": 15,
+    "cha": 10
+   },
+   "profs": [
+    "arcana",
+    "investigation",
+    "insight",
+    "history"
+   ],
+   "equip": {
+    "weapon": "quarterstaff",
+    "armor": null,
+    "offhand": null,
+    "trinket": null
+   },
+   "portrait": "gen_human_mage_f",
+   "blurb": "她是科尔巴里德人，渡鸦先知会外圈的见习先知。说起将来的事，她前头一定要加个“要是”。她不管走到哪儿都在数渡鸦。"
+  },
+  "valeran": {
+   "id": "valeran",
+   "name": "恩特本的瓦勒兰爵士",
+   "gender": "m",
+   "race": "human",
+   "subrace": "lorentish",
+   "cls": "fighter",
+   "subclass": "fighter_knight",
+   "abil": {
+    "str": 16,
+    "dex": 13,
+    "con": 15,
+    "int": 8,
+    "wis": 10,
+    "cha": 13
+   },
+   "profs": [
+    "athletics",
+    "animal",
+    "history",
+    "insight"
+   ],
+   "equip": {
+    "weapon": "longsword",
+    "armor": "chain_mail",
+    "offhand": "shield",
+    "trinket": null
+   },
+   "portrait": "gen_human_knight_m",
+   "blurb": "他是阿瑟利斯家的骑士，一来就明说自己是来盯着你的。要说不中听的话，他前头必定先加一句“恕我直言”。这人从不撒谎。"
+  }
+ },
+ "quests": {
+  "witness": {
+   "title": "印",
+   "desc": "和约派你到各国去，看着他们把誓发完。",
+   "stages": [
+    "看着各国把誓发完。",
+    "往东走，去看看打输的那一家怎么发誓。",
+    "有人从坟里爬出来了。",
+    "给十字军找一面旗。",
+    "最后一个冬天。"
+   ],
+   "doneText": "你把印交了回去，书记官却怎么也找不着那本登记册了。"
+  },
+  "sleepers": {
+   "title": "眼睛后面没人",
+   "desc": "有个老兵端着刀朝主桌走了过去。事后他只记得自己是出门打水。",
+   "stages": [
+    "查出是谁在操纵那个老兵。",
+    "去阿克罗姆顿，找那个会说旧口令的人。"
+   ],
+   "doneText": "操纵老兵的驯师是亚科布的学生，刀是阿克罗米斯出钱买的。可是空坟的事，他不肯认。"
+  },
+  "sixteen_graves": {
+   "title": "十六座空坟",
+   "desc": "屠夫原有四百零六座坟，束腰却只发出去三百九十副。",
+   "stages": [
+    "福尔卡德的账对不上，你替他再数一遍。",
+    "去看看夜里是谁在干活。",
+    "车辙往南边去了，可车上没人赶。",
+    "大墓地的死人把头转过来了，下去看看。"
+   ],
+   "doneText": "四百零六个名字，你在那本书上全都找着了。"
+  },
+  "lance": {
+   "title": "那一枪",
+   "desc": "太后要你查清楚，克雷格·达梅里斯那一枪到底是不是他自己刺的。",
+   "stages": [
+    "查清克雷格那一枪是不是他自己刺的。",
+    "比武场的围栏还立在那儿，去看看。",
+    "回太后的话。"
+   ],
+   "doneText": "你答了她的话。至于她怎么记这一笔，那是她的事了。"
+  },
+  "edith": {
+   "title": "谁都给",
+   "desc": "帐篷城里有个孩子，她不管跟谁要什么，人家都给。",
+   "stages": [
+    "帐篷城里有个孩子，她要什么，别人就给什么。",
+    "她得有个先生。",
+    "去看看她长成了什么样的人。"
+   ],
+   "doneText": "街口那一夜，她只要你点一下头。"
+  },
+  "dyren": {
+   "title": "公爵问发不发马",
+   "desc": "威克斯的公爵才八岁，几位摄政谁也不服谁。",
+   "stages": [
+    "威克斯的摄政们都在等你的印。",
+    "十八年过去了，他有话要跟你说。"
+   ],
+   "doneText": "你当初把他交给了谁，他后来就长成了谁的样子。"
+  },
+  "emperor_body": {
+   "title": "一口棺材",
+   "desc": "加雷克只要两样：他父亲的遗体，和一个下葬的准日子。",
+   "stages": [
+    "加雷克要你把他父亲找回来。",
+    "沼泽堡的人说，得去问林子里的驿站。",
+    "地砖底下是空的。"
+   ],
+   "doneText": "皇帝总算有了去处，守砖人也把勺子洗了。"
+  },
+  "mountain": {
+   "title": "山上的伤",
+   "desc": "试炼山遭了诅咒，谁也上不去了。",
+   "stages": [
+    "上山去看看，到底坏成了什么样。",
+    "誓石上挂着半句没说完的咒。",
+    "石头缺了一角，缺的那一角在一位半身人国王的兜里。"
+   ],
+   "doneText": "山有了交代。"
+  },
+  "canrec_trail": {
+   "title": "没药味",
+   "desc": "有个一身没药味的人，赶在你前头来问过遗体。",
+   "stages": [
+    "有人赶在你前头来问过遗体。",
+    "实验室里的账是从 980 年记起的。",
+    "他在等活人把山修好。"
+   ],
+   "doneText": "你见着了那个写信的人，他后脑勺正痒着。"
+  },
+  "white_year": {
+   "title": "白年",
+   "desc": "1040 年卡斯坦月 3 日，渡鸦山上有个刚死的人，从还没填土的坟里爬起来了。",
+   "stages": [
+    "去渡鸦山，看看那座没填土的坟。",
+    "外头的兵想进科乌里亚，得先有太阳王的印。",
+    "瓦洛森既要样本，也要权。"
+   ],
+   "doneText": "头一锅药只熬出三剂，你都分完了。"
+  },
+  "crusade": {
+   "title": "谁付账",
+   "desc": "最后一路十字军要去渡鸦山。",
+   "stages": [
+    "最后一路十字军在瓦洛森集结。",
+    "门口站着一位老熟人。"
+   ],
+   "doneText": "有人付了。"
+  },
+  "liv_claim": {
+   "title": "第五十四位",
+   "desc": "卡斯坦要上一趟试炼山，让那块谁也收买不了的誓石告诉她，她到底当不当得了皇帝。",
+   "stages": [
+    "她想看她爹一眼。",
+    "第九道试炼的石像到底认谁？",
+    "她问你，那个结到底解开了没有。"
+   ],
+   "doneText": "她总算得了一个答复。"
+  },
+  "barry_boy": {
+   "title": "我家那孩子",
+   "desc": "巴里替八岁的公爵来按手印。",
+   "stages": [
+    "八岁的孩子还不能立誓，巴里替他按手印。",
+    "那孩子签了一道驱逐精灵的令。"
+   ],
+   "doneText": "巴里选好了自己站在哪一边。"
+  },
+  "vezina_eye": {
+   "title": "不仁",
+   "desc": "薇齐娜想进先知会的内圈，还想换一只能预见将来的鸦眼。",
+   "stages": [
+    "她的师门在那棵树上蹲了十九年。"
+   ],
+   "doneText": "那只眼她要了，或者没要。"
+  },
+  "valeran_oath": {
+   "title": "恕我直言",
+   "desc": "恩特本派了瓦勒兰来盯着你。",
+   "stages": [
+    "恩特本派他来盯着你。",
+    "恩特本打出了“碎玫瑰”的旗号。"
+   ],
+   "doneText": "他对你发过的誓，总算有了个了结。"
+  }
+ },
+ "chapters": [
+  {
+   "title": "序章 · 达梅里亚",
+   "note": "达梅里斯堡，王室婚礼后第七天。",
+   "scene": "p_dameria_01",
+   "if": "origin == 'dameria'",
+   "effects": [
+    {
+     "if": "flag.f_rites && item.holy_oil < 1",
+     "then": [
+      "item +holy_oil"
+     ]
+    }
+   ]
+  },
+  {
+   "title": "序章 · 洛伦特",
+   "note": "洛伦泰内，国王两岁生日的前三天。",
+   "scene": "p_lorent_01",
+   "if": "origin == 'lorent'",
+   "effects": [
+    {
+     "if": "flag.f_rites && item.holy_oil < 1",
+     "then": [
+      "item +holy_oil"
+     ]
+    }
+   ]
+  },
+  {
+   "title": "序章 · 乌霜边区",
+   "note": "乌霜领，围城第九十一天。",
+   "scene": "p_ebonmarck_01",
+   "if": "origin == 'ebonmarck'",
+   "effects": [
+    {
+     "if": "flag.f_rites && item.holy_oil < 1",
+     "then": [
+      "item +holy_oil"
+     ]
+    }
+   ]
+  },
+  {
+   "title": "序章 · 伊贝瓦尔",
+   "note": "瓦多塞德，两条命。",
+   "scene": "p_ibevar_01",
+   "if": "origin == 'ibevar'",
+   "effects": [
+    {
+     "if": "flag.f_rites && item.holy_oil < 1",
+     "then": [
+      "item +holy_oil"
+     ]
+    }
+   ]
+  },
+  {
+   "title": "序章 · 威克斯",
+   "note": "去科塞顿的大路，一车尸首翻进了路沟。",
+   "scene": "p_wex_01",
+   "if": "origin == 'wex'",
+   "effects": [
+    {
+     "if": "flag.f_rites && item.holy_oil < 1",
+     "then": [
+      "item +holy_oil"
+     ]
+    }
+   ]
+  },
+  {
+   "title": "第一幕 · 谁的手",
+   "note": "1022 年埃斯玛月，安本科斯特旧斗兽场。2 级，领过印。",
+   "scene": "a1_01",
+   "effects": [
+    "level 2",
+    {
+     "if": "item.witness_seal < 1",
+     "then": [
+      "item +witness_seal"
+     ]
+    },
+    "quest witness start",
+    {
+     "if": "origin == 'dameria'",
+     "then": [
+      "flag saw_sleeper",
+      "flag met_edith",
+      "flag p_knife_hanged"
+     ]
+    },
+    {
+     "if": "origin == 'lorent'",
+     "then": [
+      "flag saw_empty_graves",
+      "flag p_hall_denied",
+      "flag p_met_valeran",
+      "quest lance start",
+      {
+       "if": "item.lance_ledger < 1",
+       "then": [
+        "item +lance_ledger"
+       ]
+      }
+     ]
+    },
+    {
+     "if": "origin == 'ebonmarck'",
+     "then": [
+      "flag saw_sleeper",
+      "flag p_old_coin",
+      "flag met_liv_early"
+     ]
+    },
+    {
+     "if": "origin == 'ibevar'",
+     "then": [
+      "flag saw_sleeper",
+      "flag p_ibevar_blood",
+      {
+       "if": "item.lunatein_plank < 1",
+       "then": [
+        "item +lunatein_plank"
+       ]
+      }
+     ]
+    },
+    {
+     "if": "origin == 'wex'",
+     "then": [
+      "flag saw_empty_graves",
+      "companion +barry",
+      "quest sixteen_graves start"
+     ]
+    },
+    {
+     "if": "flag.f_rites && item.holy_oil < 1",
+     "then": [
+      "item +holy_oil"
+     ]
+    }
+   ]
+  },
+  {
+   "title": "第二幕 · 地砖下的皇帝",
+   "note": "1023 年花始月，卡斯托纳斯西门。4 级，卡斯坦、巴里、薇齐娜在队。阿克罗米斯的事悄悄了结了，小公爵由男爵们带大。",
+   "scene": "a2_01",
+   "effects": [
+    "level 2",
+    {
+     "if": "item.witness_seal < 1",
+     "then": [
+      "item +witness_seal"
+     ]
+    },
+    "quest witness start",
+    {
+     "if": "origin == 'dameria'",
+     "then": [
+      "flag saw_sleeper",
+      "flag met_edith",
+      "flag p_knife_hanged"
+     ]
+    },
+    {
+     "if": "origin == 'lorent'",
+     "then": [
+      "flag saw_empty_graves",
+      "flag p_hall_denied",
+      "flag p_met_valeran",
+      "quest lance start",
+      {
+       "if": "item.lance_ledger < 1",
+       "then": [
+        "item +lance_ledger"
+       ]
+      }
+     ]
+    },
+    {
+     "if": "origin == 'ebonmarck'",
+     "then": [
+      "flag saw_sleeper",
+      "flag p_old_coin",
+      "flag met_liv_early"
+     ]
+    },
+    {
+     "if": "origin == 'ibevar'",
+     "then": [
+      "flag saw_sleeper",
+      "flag p_ibevar_blood",
+      {
+       "if": "item.lunatein_plank < 1",
+       "then": [
+        "item +lunatein_plank"
+       ]
+      }
+     ]
+    },
+    {
+     "if": "origin == 'wex'",
+     "then": [
+      "flag saw_empty_graves",
+      "companion +barry",
+      "quest sixteen_graves start"
+     ]
+    },
+    {
+     "if": "flag.f_rites && item.holy_oil < 1",
+     "then": [
+      "item +holy_oil"
+     ]
+    },
+    "level 4",
+    "companion +liv",
+    "companion +barry",
+    "companion +vezina",
+    {
+     "if": "item.ledger_page < 1",
+     "then": [
+      "item +ledger_page"
+     ]
+    },
+    "flag knows_watchword",
+    "flag knows_iacob_name",
+    "flag guardian_barons",
+    "flag acromis_quiet",
+    "flag melcor_dead",
+    "quest sleepers start",
+    "quest sleepers done",
+    "quest edith start",
+    "quest edith stage 2",
+    "quest witness stage 2",
+    "quest dyren start",
+    "quest dyren stage 2",
+    "quest barry_boy start",
+    "quest sixteen_graves stage 3",
+    {
+     "if": "origin == 'lorent'",
+     "then": [
+      "quest lance stage 2"
+     ]
+    }
+   ]
+  },
+  {
+   "title": "第三幕 · 白年",
+   "note": "间幕《十六年》开头。6 级，瓦勒兰入队。加雷克死了，皇帝的遗体没人收，亚科布被赦。",
+   "scene": "a3_01",
+   "effects": [
+    "level 2",
+    {
+     "if": "item.witness_seal < 1",
+     "then": [
+      "item +witness_seal"
+     ]
+    },
+    "quest witness start",
+    {
+     "if": "origin == 'dameria'",
+     "then": [
+      "flag saw_sleeper",
+      "flag met_edith",
+      "flag p_knife_hanged"
+     ]
+    },
+    {
+     "if": "origin == 'lorent'",
+     "then": [
+      "flag saw_empty_graves",
+      "flag p_hall_denied",
+      "flag p_met_valeran",
+      "quest lance start",
+      {
+       "if": "item.lance_ledger < 1",
+       "then": [
+        "item +lance_ledger"
+       ]
+      }
+     ]
+    },
+    {
+     "if": "origin == 'ebonmarck'",
+     "then": [
+      "flag saw_sleeper",
+      "flag p_old_coin",
+      "flag met_liv_early"
+     ]
+    },
+    {
+     "if": "origin == 'ibevar'",
+     "then": [
+      "flag saw_sleeper",
+      "flag p_ibevar_blood",
+      {
+       "if": "item.lunatein_plank < 1",
+       "then": [
+        "item +lunatein_plank"
+       ]
+      }
+     ]
+    },
+    {
+     "if": "origin == 'wex'",
+     "then": [
+      "flag saw_empty_graves",
+      "companion +barry",
+      "quest sixteen_graves start"
+     ]
+    },
+    {
+     "if": "flag.f_rites && item.holy_oil < 1",
+     "then": [
+      "item +holy_oil"
+     ]
+    },
+    "level 4",
+    "companion +liv",
+    "companion +barry",
+    "companion +vezina",
+    {
+     "if": "item.ledger_page < 1",
+     "then": [
+      "item +ledger_page"
+     ]
+    },
+    "flag knows_watchword",
+    "flag knows_iacob_name",
+    "flag guardian_barons",
+    "flag acromis_quiet",
+    "flag melcor_dead",
+    "quest sleepers start",
+    "quest sleepers done",
+    "quest edith start",
+    "quest edith stage 2",
+    "quest witness stage 2",
+    "quest dyren start",
+    "quest dyren stage 2",
+    "quest barry_boy start",
+    "quest sixteen_graves stage 3",
+    {
+     "if": "origin == 'lorent'",
+     "then": [
+      "quest lance stage 2"
+     ]
+    },
+    "level 6",
+    "companion +valeran",
+    "flag siege_certified",
+    "flag garrec_dead",
+    "flag body_left",
+    "flag liv_saw_body",
+    "flag knows_myrrh",
+    "flag golem_none",
+    "flag iacob_pardoned",
+    "flag lucan_alva",
+    "flag edith_none",
+    "world unburied 7",
+    "quest valeran_oath start",
+    "quest emperor_body start",
+    "quest emperor_body fail",
+    "quest liv_claim start",
+    "quest mountain start",
+    "quest canrec_trail start",
+    "quest witness stage 3",
+    "quest edith stage 3",
+    "quest mountain stage 2",
+    "quest liv_claim stage 2",
+    {
+     "if": "origin == 'lorent'",
+     "then": [
+      "quest lance stage 3"
+     ]
+    }
+   ]
+  },
+  {
+   "title": "第四幕 · 玫瑰与月的婚礼",
+   "note": "1040 年泰苏伦月，维斯沃尔。8 级。逐精灵令缓行，巴里离队。渡鸦山封了，当众谁也没怪。",
+   "scene": "a4_01",
+   "effects": [
+    "level 2",
+    {
+     "if": "item.witness_seal < 1",
+     "then": [
+      "item +witness_seal"
+     ]
+    },
+    "quest witness start",
+    {
+     "if": "origin == 'dameria'",
+     "then": [
+      "flag saw_sleeper",
+      "flag met_edith",
+      "flag p_knife_hanged"
+     ]
+    },
+    {
+     "if": "origin == 'lorent'",
+     "then": [
+      "flag saw_empty_graves",
+      "flag p_hall_denied",
+      "flag p_met_valeran",
+      "quest lance start",
+      {
+       "if": "item.lance_ledger < 1",
+       "then": [
+        "item +lance_ledger"
+       ]
+      }
+     ]
+    },
+    {
+     "if": "origin == 'ebonmarck'",
+     "then": [
+      "flag saw_sleeper",
+      "flag p_old_coin",
+      "flag met_liv_early"
+     ]
+    },
+    {
+     "if": "origin == 'ibevar'",
+     "then": [
+      "flag saw_sleeper",
+      "flag p_ibevar_blood",
+      {
+       "if": "item.lunatein_plank < 1",
+       "then": [
+        "item +lunatein_plank"
+       ]
+      }
+     ]
+    },
+    {
+     "if": "origin == 'wex'",
+     "then": [
+      "flag saw_empty_graves",
+      "companion +barry",
+      "quest sixteen_graves start"
+     ]
+    },
+    {
+     "if": "flag.f_rites && item.holy_oil < 1",
+     "then": [
+      "item +holy_oil"
+     ]
+    },
+    "level 4",
+    "companion +liv",
+    "companion +barry",
+    "companion +vezina",
+    {
+     "if": "item.ledger_page < 1",
+     "then": [
+      "item +ledger_page"
+     ]
+    },
+    "flag knows_watchword",
+    "flag knows_iacob_name",
+    "flag guardian_barons",
+    "flag acromis_quiet",
+    "flag melcor_dead",
+    "quest sleepers start",
+    "quest sleepers done",
+    "quest edith start",
+    "quest edith stage 2",
+    "quest witness stage 2",
+    "quest dyren start",
+    "quest dyren stage 2",
+    "quest barry_boy start",
+    "quest sixteen_graves stage 3",
+    {
+     "if": "origin == 'lorent'",
+     "then": [
+      "quest lance stage 2"
+     ]
+    },
+    "level 6",
+    "companion +valeran",
+    "flag siege_certified",
+    "flag garrec_dead",
+    "flag body_left",
+    "flag liv_saw_body",
+    "flag knows_myrrh",
+    "flag golem_none",
+    "flag iacob_pardoned",
+    "flag lucan_alva",
+    "flag edith_none",
+    "world unburied 7",
+    "quest valeran_oath start",
+    "quest emperor_body start",
+    "quest emperor_body fail",
+    "quest liv_claim start",
+    "quest mountain start",
+    "quest canrec_trail start",
+    "quest witness stage 3",
+    "quest edith stage 3",
+    "quest mountain stage 2",
+    "quest liv_claim stage 2",
+    {
+     "if": "origin == 'lorent'",
+     "then": [
+      "quest lance stage 3"
+     ]
+    },
+    "level 8",
+    "flag years_court",
+    "flag quarantine_held",
+    "flag vezina_stopped",
+    "flag knows_ravens_watched",
+    "flag sun_terms",
+    "flag edict_softened",
+    "companion -barry",
+    "flag blame_silent",
+    "flag law_limited",
+    "flag knows_roster",
+    "flag doses_split",
+    "world unburied 5",
+    "world communion 6",
+    {
+     "if": "flag.f_staff",
+     "then": [
+      "world writ 4"
+     ],
+     "else": [
+      "world writ 3"
+     ]
+    },
+    "quest white_year start",
+    "quest white_year done",
+    "quest vezina_eye start",
+    "quest vezina_eye done",
+    "quest dyren done",
+    "quest barry_boy done",
+    "quest edith done",
+    "quest witness stage 4",
+    "quest sixteen_graves stage 4",
+    "quest canrec_trail stage 2"
+   ]
+  },
+  {
+   "title": "终章 · 最后一个冬天",
+   "note": "间幕《十二个冬天》开头。10 级。克雷格派人代战，十字军是自由会盟，卡斯坦知道缰绳的事。",
+   "scene": "f_01",
+   "effects": [
+    "level 2",
+    {
+     "if": "item.witness_seal < 1",
+     "then": [
+      "item +witness_seal"
+     ]
+    },
+    "quest witness start",
+    {
+     "if": "origin == 'dameria'",
+     "then": [
+      "flag saw_sleeper",
+      "flag met_edith",
+      "flag p_knife_hanged"
+     ]
+    },
+    {
+     "if": "origin == 'lorent'",
+     "then": [
+      "flag saw_empty_graves",
+      "flag p_hall_denied",
+      "flag p_met_valeran",
+      "quest lance start",
+      {
+       "if": "item.lance_ledger < 1",
+       "then": [
+        "item +lance_ledger"
+       ]
+      }
+     ]
+    },
+    {
+     "if": "origin == 'ebonmarck'",
+     "then": [
+      "flag saw_sleeper",
+      "flag p_old_coin",
+      "flag met_liv_early"
+     ]
+    },
+    {
+     "if": "origin == 'ibevar'",
+     "then": [
+      "flag saw_sleeper",
+      "flag p_ibevar_blood",
+      {
+       "if": "item.lunatein_plank < 1",
+       "then": [
+        "item +lunatein_plank"
+       ]
+      }
+     ]
+    },
+    {
+     "if": "origin == 'wex'",
+     "then": [
+      "flag saw_empty_graves",
+      "companion +barry",
+      "quest sixteen_graves start"
+     ]
+    },
+    {
+     "if": "flag.f_rites && item.holy_oil < 1",
+     "then": [
+      "item +holy_oil"
+     ]
+    },
+    "level 4",
+    "companion +liv",
+    "companion +barry",
+    "companion +vezina",
+    {
+     "if": "item.ledger_page < 1",
+     "then": [
+      "item +ledger_page"
+     ]
+    },
+    "flag knows_watchword",
+    "flag knows_iacob_name",
+    "flag guardian_barons",
+    "flag acromis_quiet",
+    "flag melcor_dead",
+    "quest sleepers start",
+    "quest sleepers done",
+    "quest edith start",
+    "quest edith stage 2",
+    "quest witness stage 2",
+    "quest dyren start",
+    "quest dyren stage 2",
+    "quest barry_boy start",
+    "quest sixteen_graves stage 3",
+    {
+     "if": "origin == 'lorent'",
+     "then": [
+      "quest lance stage 2"
+     ]
+    },
+    "level 6",
+    "companion +valeran",
+    "flag siege_certified",
+    "flag garrec_dead",
+    "flag body_left",
+    "flag liv_saw_body",
+    "flag knows_myrrh",
+    "flag golem_none",
+    "flag iacob_pardoned",
+    "flag lucan_alva",
+    "flag edith_none",
+    "world unburied 7",
+    "quest valeran_oath start",
+    "quest emperor_body start",
+    "quest emperor_body fail",
+    "quest liv_claim start",
+    "quest mountain start",
+    "quest canrec_trail start",
+    "quest witness stage 3",
+    "quest edith stage 3",
+    "quest mountain stage 2",
+    "quest liv_claim stage 2",
+    {
+     "if": "origin == 'lorent'",
+     "then": [
+      "quest lance stage 3"
+     ]
+    },
+    "level 8",
+    "flag years_court",
+    "flag quarantine_held",
+    "flag vezina_stopped",
+    "flag knows_ravens_watched",
+    "flag sun_terms",
+    "flag edict_softened",
+    "companion -barry",
+    "flag blame_silent",
+    "flag law_limited",
+    "flag knows_roster",
+    "flag doses_split",
+    "world unburied 5",
+    "world communion 6",
+    {
+     "if": "flag.f_staff",
+     "then": [
+      "world writ 4"
+     ],
+     "else": [
+      "world writ 3"
+     ]
+    },
+    "quest white_year start",
+    "quest white_year done",
+    "quest vezina_eye start",
+    "quest vezina_eye done",
+    "quest dyren done",
+    "quest barry_boy done",
+    "quest edith done",
+    "quest witness stage 4",
+    "quest sixteen_graves stage 4",
+    "quest canrec_trail stage 2",
+    "level 10",
+    "flag crege_champions",
+    "flag valeran_stayed",
+    "flag wedding_blood",
+    "flag charter_league",
+    "flag knows_canrec_plan",
+    "flag liv_told",
+    {
+     "if": "item.jaher_letter < 1",
+     "then": [
+      "item +jaher_letter"
+     ]
+    },
+    "quest valeran_oath done",
+    "quest mountain done",
+    "quest liv_claim done",
+    "quest witness stage 5",
+    "quest canrec_trail stage 3",
+    {
+     "if": "origin == 'lorent'",
+     "then": [
+      "quest lance done"
+     ]
+    }
+   ]
+  }
+ ],
+ "flagNotes": {
+  "f_sapphire": "阵营：蓝宝石之眼",
+  "f_rites": "阵营：旧礼",
+  "f_staff": "阵营：贤者门下",
+  "saw_sleeper": "序章撞见过沉睡者",
+  "saw_empty_graves": "序章撞见过少掉的尸首",
+  "met_edith": "序章见过伊迪丝",
+  "p_knife_hanged": "达梅里亚：三个老兵绞了",
+  "p_knife_held": "达梅里亚：三个老兵押着",
+  "p_knife_released": "达梅里亚：三个老兵放了",
+  "p_hall_denied": "洛伦特：对大厅说没这回事",
+  "p_hall_truth": "洛伦特：对大厅说了实话",
+  "p_hall_inquiry": "洛伦特：答应大厅彻查",
+  "p_met_valeran": "洛伦特：在空棺材边见过瓦勒兰",
+  "p_old_coin": "乌霜边区：听说有人拿旧金币打听皇帝",
+  "p_gave_legionary": "乌霜边区：把申辩“受慑”的老兵交了出去",
+  "p_used_watchword": "乌霜边区：用旧口令使唤过沉睡者",
+  "met_liv_early": "乌霜边区：序章里卡斯坦救过你",
+  "p_laid_arms": "乌霜边区：沼泽堡那天放下了兵器",
+  "p_fought_on": "乌霜边区：沼泽堡那天没放下兵器",
+  "p_ibevar_blood": "伊贝瓦尔：两条命按血偿判",
+  "p_ibevar_weregild": "伊贝瓦尔：两条命按命价判",
+  "p_ibevar_held": "伊贝瓦尔：两条命押后再判",
+  "p_wex_buried_legionary": "威克斯：第十二具尸首埋了",
+  "p_wex_cast_out": "威克斯：第十二具尸首扔出了屠夫原",
+  "exam_precedent": "验心进了案卷，成了前例",
+  "knows_watchword": "听得懂、念得出那句旧口令",
+  "lance_asked": "洛伦特：当面问过克雷格",
+  "plumwall_plea": "收下了普卢姆沃尔的“受慑”申辩",
+  "plumwall_duel": "普卢姆沃尔的事用骑士裁决了结",
+  "aria_anoints": "判词由月神神殿涂油作保",
+  "alaria_for": "泛神会议上替阿拉莉亚作证",
+  "alaria_blocked": "泛神会议上拦下了阿拉莉亚",
+  "emil_struck": "删掉了埃米尔排挤精灵的条款",
+  "field_done": "屠夫原的迁葬做完了",
+  "guardian_barry": "巴里带大戴伦",
+  "guardian_crovan": "克洛万带大戴伦",
+  "guardian_marion": "马里昂做戴伦的监护人",
+  "guardian_barons": "男爵们带大戴伦",
+  "melcor_dead": "驯师梅尔科尔死了",
+  "melcor_wise": "驯师梅尔科尔交给了贤者会",
+  "knows_iacob_name": "知道驯师的师父是亚科布",
+  "acromis_exposed": "揭发了阿克罗米斯",
+  "acromis_quiet": "阿克罗米斯的事悄悄了结",
+  "acromis_traded": "拿阿克罗米斯的把柄换了令状",
+  "iacob_favor": "收过亚科布的通行文书",
+  "siege_certified": "围城：你给加雷克作了保",
+  "siege_hearing": "围城：你给加雷克争到了听证",
+  "siege_duel": "围城：用一场单挑了结",
+  "garrec_king": "加雷克称王，黑龙留在东坎诺",
+  "garrec_dead": "加雷克死了，寒行军北上",
+  "garrec_exile": "加雷克流亡",
+  "elrac_debt_paid": "威克斯：讨回了“屠夫”那笔债",
+  "knows_myrrh": "知道有个一身没药味的人先打听过遗体",
+  "keeper_hostile": "守砖人不信你",
+  "liv_saw_body": "卡斯坦看过她爹",
+  "body_westgate": "皇帝葬在西门",
+  "body_citadel": "皇帝葬在北要塞",
+  "body_pantheon": "皇帝葬在万神道",
+  "body_quiet": "皇帝悄悄埋了",
+  "body_burned": "皇帝火化了",
+  "body_left": "皇帝留在地砖下没人收",
+  "calindal_named": "告诉了克拉丽蒙德卡林达尔是谁家的手艺",
+  "clarimonde_pact": "答应帮克拉丽蒙德毁阶",
+  "lance_truth": "洛伦特：在比武场找到了凭据",
+  "map_drawn": "在石桌上画过“将来的疆界”",
+  "vow_liv": "在山上答应过让卡斯坦试",
+  "golem_pc": "魔像向你缴了械",
+  "golem_liv": "魔像向卡斯坦缴了械",
+  "golem_none": "谁也没缴下魔像的械",
+  "iacob_hanged": "亚科布绞死了",
+  "iacob_pardoned": "亚科布被赦了",
+  "iacob_wise": "亚科布交给了贤者会",
+  "knows_word": "你知道那个字（至少一半）",
+  "mended": "试炼动工修了",
+  "knot_alarian": "请阿拉里安解结",
+  "knot_ravens": "请渡鸦先知会解结",
+  "knot_iacob": "请亚科布解结",
+  "stair_down": "第二幕就把石阶毁了",
+  "mountain_sealed": "试炼山的石阶毁了",
+  "ravens_trust": "先知会内圈把你当自己人",
+  "lucan_alva": "卢坎跟着母亲阿尔瓦",
+  "lucan_garrec": "卢坎跟着舅舅加雷克",
+  "lucan_marion": "卢坎交给马里昂养",
+  "lucan_iacob": "卢坎交给亚科布养",
+  "edith_alarian": "伊迪丝跟阿拉里安学",
+  "edith_wise": "伊迪丝跟贤者会学",
+  "edith_ravens": "伊迪丝跟渡鸦先知会学",
+  "edith_iacob": "伊迪丝跟亚科布学",
+  "edith_none": "伊迪丝没有先生",
+  "years_watch": "十六年：在古塔办“守望”",
+  "years_court": "十六年：回本国当差",
+  "years_wards": "十六年：带大被监护的孩子",
+  "years_graves": "十六年：跟着收殓人埋人",
+  "edith_trusts": "彗星之夜你对伊迪丝说了实话",
+  "arrel_with_you": "达梅里亚：阿雷尔王子跟着你",
+  "quarantine_held": "渡鸦山封了",
+  "quarantine_open": "渡鸦山放人出城",
+  "knows_ravens_watched": "知道先知会十九年前就看见了白年",
+  "vezina_eye": "薇齐娜受了鸦眼",
+  "vezina_stopped": "你拦住了薇齐娜",
+  "vezina_left": "薇齐娜离队了",
+  "cure_early": "先知会早交出了实验室的位置",
+  "plague_samples": "从白旗船上取过样本",
+  "harpies_freed": "放了锡亚丹的鹰身女妖",
+  "sun_terms": "接了太阳王宫廷的条件",
+  "sun_refused": "没接太阳王宫廷的条件",
+  "edict_upheld": "逐精灵令照准",
+  "edict_overruled": "逐精灵令推翻",
+  "edict_softened": "逐精灵令缓行",
+  "edith_mob": "让伊迪丝慑住了暴民",
+  "blame_canrec": "当众怪坎雷克",
+  "blame_elves": "当众怪精灵",
+  "blame_ravens": "当众怪渡鸦先知会",
+  "blame_silent": "当众谁也没怪",
+  "law_full": "疫令全给",
+  "law_limited": "疫令限期",
+  "law_refused": "疫令不给",
+  "knows_roster": "知道那本书是花名册",
+  "doses_moon": "三剂药都给了达梅里亚",
+  "doses_rose": "三剂药都给了洛伦特",
+  "doses_split": "三剂药两家各一，剩的给了孩子",
+  "doses_children": "三剂药都给了车上的孩子",
+  "viswall_safe": "两国使者在芬尼克那间屋里许过诺",
+  "finnic_chip": "誓石碎片到了你手里",
+  "dwarves_thanked": "有人谢过管闸的红宝石矮人",
+  "lance_told_truth": "洛伦特：告诉太后那一枪是他自己的",
+  "lance_told_thrall": "洛伦特：告诉太后那一枪是受慑",
+  "crege_penance": "克雷格行了忏悔礼",
+  "crege_champions": "克雷格派人代战",
+  "crege_given": "克雷格交给了太后",
+  "valeran_champion": "瓦勒兰替精灵出战",
+  "valeran_released": "你解了瓦勒兰的誓",
+  "valeran_purist": "瓦勒兰跟纯血派走了",
+  "valeran_stayed": "瓦勒兰留在你身边",
+  "enteben_stopped": "恩特本的逼宫被拦下了",
+  "wedding_blood": "婚礼上见了血",
+  "charter_emperor": "十字军章程：奉皇帝",
+  "charter_league": "十字军章程：自由会盟",
+  "charter_writ": "十字军章程：凭瓦洛森令状",
+  "charter_muster": "十字军章程：各国出兵",
+  "wex_crown_promised": "威克斯：答应过替戴伦要王号",
+  "larthan_open": "拉尔桑防线说开了",
+  "knows_canrec_plan": "知道坎雷克在等活人修山",
+  "knows_why_watched": "知道先知会为什么坐着看",
+  "palehand_saluted": "对苍手行过旧礼",
+  "bridle_public": "把缰绳的事对诸王摊开讲了",
+  "liv_told": "卡斯坦知道缰绳的全部",
+  "knot_cut": "山上的结解成了",
+  "iacob_loop": "亚科布留了活扣",
+  "castan_crowned": "山上立过皇帝",
+  "castan_alive": "那位皇帝还活着",
+  "castan_garrec": "皇帝是加雷克",
+  "castan_lucan": "皇帝是卢坎",
+  "castan_liv": "皇帝是卡斯坦",
+  "castan_pc": "皇帝是你",
+  "liv_bridled": "卡斯坦不知情立了誓，被套上了",
+  "liv_north": "卡斯坦往北飞了",
+  "liv_dead": "卡斯坦死了",
+  "winters_crusade": "十二个冬天：跟着十字军打",
+  "winters_varlosen": "十二个冬天：守在瓦洛森",
+  "winters_home": "十二个冬天：回了本国",
+  "winters_squire": "十二个冬天：带阿德蕾西娅",
+  "temple_dug": "让人挖了苏雷尔神庙底下",
+  "temple_guarded": "派人守住了苏雷尔神庙",
+  "pyre_stopped": "拦下了沼地里的火刑",
+  "vezina_freed": "从笼子里放出了薇齐娜",
+  "bridle_pc": "缰绳在你手里",
+  "bridle_wise": "缰绳在贤者门下手里",
+  "price_aldresia": "付账的是阿德蕾西娅",
+  "price_pc": "付账的是你",
+  "price_companion": "付账的是同伴",
+  "price_emperor": "付账的是被牵的皇帝",
+  "price_names": "一页一页念名字",
+  "price_valeran": "替你付账的是瓦勒兰",
+  "price_liv": "替你付账的是卡斯坦",
+  "book_locked": "书封进了骑士团的库",
+  "book_wise": "书交给了加里昂",
+  "book_kept": "你接过了书上的记号",
+  "order_founder": "骑士团是你建的",
+  "god_camp": "神：在帐篷城治过人",
+  "god_on_agenda": "神：泛神会议把你排进了议程",
+  "god_truce": "神：乌霜领的仗是你一句话停的",
+  "golem_forever": "神：魔像向不会死的人下了跪",
+  "god_half_sentence": "神：你在的屋里没人撒得了谎",
+  "god_healed": "神：在渡鸦山治了病人",
+  "god_herald": "神：认下了“苏雷尔的使者”",
+  "god_promise_viswall": "神：在芬尼克那间屋里许过诺",
+  "god_wed": "神：那桩婚事是你证的",
+  "god_crusade": "神：十字军奉你的名出征",
+  "god_unseated": "神：哪张椅子都没坐"
+ },
+ "endings": {
+  "unseated": {
+   "title": "不肯落座的神",
+   "subtitle": "仗打完了，人人给你搬椅子",
+   "divine": true,
+   "text": [
+    "东坎诺的诸王请你上试炼山当皇帝，祭司们请你进神系。就连山上那座宅子里，坎雷克坐过的那张椅子也空着，垫子都换了新的。这几个位子，你一个也没去坐。",
+    "这一来，拖了三十年的第七次泛神会议只好复会。你的事排在“阿德蕾西娅算哪一位神的化身”后面，一连开了十一天，最后的决议是容后再议。各国倒是陆续订出了“神过境”的章程：谁出城去迎，摆不摆座，屋里的王座要不要先抬走，章程里都有说法。",
+    "你进了哪间屋，哪间屋里的王座就成了摆设。所以每个宫廷都盼着你早点走，又都怕你真的不来。往后每一代想当卡斯坦的人，上山之前都得先来问你答不答应。门外那个半精灵小孩，这会儿还在追那只鸡。"
+   ]
+  },
+  "quiet": {
+   "title": "寂静之冠",
+   "subtitle": "你叫死人躺下，他们都躺下了",
+   "text": [
+    "你接过了书主的记号。就在当天夜里，从渡鸦山到艾伦河，所有的死人全都躺下了，一个不剩。瘟疫也在这一夜停了，比别的哪一种办法都停得干净。",
+    "从此书里的魂只等你一句话。坎雷克的声音也还留在书里，隔三岔五就要抱怨一句后脑勺痒。边境地和科乌里亚多了一位谁也不敢得罪的守墓人。阿德蕾西娅活着，可她建的那个骑士团，头一条誓词就是盯住你。",
+    "魔典到底没有进库。四百年后谁想找它，就得先来找你。"
+   ]
+  },
+  "bridle": {
+   "title": "缰绳",
+   "subtitle": "山上有皇帝，皇帝脖子上有绳",
+   "text": [
+    "试炼山上如今坐着一位皇帝。他守誓守得一丝不差，因为牵着他的那根绳子攥在一个活人手里。",
+    "从此令行禁止。山上发下一道敕令，诸王就照办一道，没有哪一家回嘴。术士王尼奇默当年干过的事，如今有人原样又干了一遍，只是这一回说是为了大家好。",
+    "这么一来，1221 年也就不会有什么阿兰蒂尔大峰会了，用不着开了。"
+   ]
+  },
+  "fiftyfourth": {
+   "title": "第五十四位",
+   "subtitle": "结解了，山修了，有人立了誓",
+   "text": [
+    "结解开了。有人走完了十道试炼，站在誓石前头把誓词说完。石头烫了一下，誓词就烙在了这个人身上。这一回，听誓的只有石头。",
+    "东坎诺用不着再等三百年才等来一个卡斯泰利尔王国了。到 1424 年兽人的绿潮撞上来的那一天，它撞上的是一个帝国。",
+    "代价也是现成的。当年那场仗，本来就是为了不让东边再出一个皇帝才打的。达梅斯海德诸国连夜数了数自家有多少杆枪，数完就抱成了一团。"
+   ]
+  },
+  "parting": {
+   "title": "各回各船",
+   "subtitle": "杀停了，因为精灵走了",
+   "text": [
+    "伊贝瓦尔封死了拉尔桑，月港也收起了吊桥。凯尔马尔多的白港头一回派上了用场，真有几条小船又出了海。",
+    "迫害倒是没有了，因为精灵和人类连邻居都不做了。马里昂成了个两边都不认的国王。半精灵的孩子长到十几岁，就得挑一边去站。",
+    "“安本纳尔”成了别人嘴里的一个词，意思是“同席”，说的时候多半带着点讥讽。"
+   ]
+  },
+  "table": {
+   "title": "同席",
+   "subtitle": "主位空着，轮流管饭",
+   "text": [
+    "没有皇帝，没有傀儡，也没有哪一族走掉。每年到了兰斯日，各国各族的人就在安本科斯特的旧斗兽场里围坐一圈，主位空着，饭由大家轮流管。",
+    "瘟疫这笔账记在了坎雷克一个人头上。瓦洛森的令状十年一续，续的时候得有外人在旁边看着。洛伦特和达梅里亚结成了亲家，往后要吵架，也是在饭桌上吵。",
+    "这个办法漏洞很多，办事又慢，可它不是装出来的。后世的史家为了“1221 年的帝国到底算建立还是算改名”，吵了很久。"
+   ]
+  },
+  "ledger": {
+   "title": "监誓人的账",
+   "subtitle": "十三年，一字不差",
+   "text": [
+    "瘟疫是 1053 年冬天停的，解药出自瓦洛森，{?flag.book_wise:书在加里昂的塔上|书锁进了骑士团的库里}，{?flag.mountain_sealed:试炼山还封着|试炼山上没有皇帝}。这些事，史书上原本怎么写，如今还是怎么写。",
+    "不一样的只有一张不算长的名单，上面是因为你才活下来的人。{?(flag.price_pc || (flag.price_emperor && flag.castan_pc)) && is.mortal:这张名单是阿德蕾西娅从你的行李里翻出来的，她照着上面的名字，一个一个都去找过了。|这张名单没人来收，你就自己留着。}",
+    "监誓人这门差事，史书上一行字也没有，那本登记册后来也没找着。新起的那一页上，头一个名字写了两遍，头一遍写错了一笔。"
+   ]
+  }
+ },
+ "endingScenes": {
+  "unseated": "end_unseated",
+  "quiet": "end_quiet",
+  "bridle": "end_bridle",
+  "fiftyfourth": "end_fiftyfourth",
+  "parting": "end_parting",
+  "table": "end_table",
+  "ledger": "end_ledger"
+ },
+ "epilogues": [
+  {
+   "title": "未葬者",
+   "text": [
+    {
+     "if": "world.unburied <= 3",
+     "text": "在这条时间线上，白疫没能走出边境地。阿雷尔王子活了下来，老了以后常去瓦洛森的饭堂吃饭，吃完自己洗碗。卡奈特的克雷格也活着，看着儿女一个个成了家，卡奈特也就一直没有并进达梅里亚。"
+    },
+    {
+     "if": "world.unburied >= 4 && world.unburied <= 6",
+     "text": "死的还是史书上记的那几位。1050 年死的是卡奈特的克雷格和他的儿女{?flag.doses_rose || flag.doses_split:。|，还有洛伦特的雷安四世。}{?flag.doses_moon || flag.doses_split:|马里昂的长子阿雷尔也没能熬过去。}1053 年是加韦德的戈德拉克十一世，那年他才六岁。"
+    },
+    {
+     "if": "world.unburied >= 4 && world.unburied <= 6",
+     "text": "大墓地的账本上，这几行字写得比别的都大一号。"
+    },
+    {
+     "if": "world.unburied >= 7",
+     "text": "在这条时间线上，死者的名单又长了一截。克雷格一家{?flag.doses_moon || flag.doses_split:|，阿雷尔王子}{?flag.doses_rose || flag.doses_split:|，雷安四世}，六岁的戈德拉克十一世都在上面，后面还跟着整整一页小地方的人。"
+    },
+    {
+     "if": "world.unburied >= 7",
+     "text": "边境地的村名换了一半，新来的垦户说的是罗尔萨德话，见了路边的老坟，就管它叫“前面那家人的”。"
+    }
+   ]
+  },
+  {
+   "title": "艾伦纳斯的那条街",
+   "text": [
+    {
+     "if": "world.communion <= 5",
+     "text": "1042 年，艾伦纳斯烧了精灵街，火是从街东头的面包房烧起来的，烧了两天。后来瘟疫过去，人少地多，白银家族一家接一家地兴起来了。"
+    },
+    {
+     "if": "world.communion >= 6 && world.communion <= 7",
+     "text": "在这条时间线上，艾伦纳斯那条精灵街还是烧了。好在街上的人头一天夜里就从后巷走了，连锅都带走了，只留下门牌。"
+    },
+    {
+     "if": "world.communion >= 8",
+     "text": "在这条时间线上，艾伦纳斯那条精灵街到了十五世纪还在。街口卖的点心是两族的做法掺在一起的，人类嫌太淡，精灵嫌太甜，可两边都照买。"
+    }
+   ]
+  },
+  {
+   "if": "world.mantle <= 2 || flag.mountain_sealed || !(flag.castan_crowned && flag.castan_alive)",
+   "title": "试炼山",
+   "text": [
+    {
+     "if": "world.mantle <= 2 || flag.mountain_sealed",
+     "text": "那座山一直封到了十五世纪以后。1339 年南北两国合成了卡斯泰利尔，到 1424 年绿潮来的时候，东坎诺还是没有皇帝。"
+    },
+    {
+     "if": "!(world.mantle <= 2 || flag.mountain_sealed)",
+     "text": "在这条时间线上，每一代都有人去爬那座山。下来的人里头有几个从此再也撒不了谎，后来都成了很好的法官，只是没人愿意请他们吃饭。"
+    }
+   ]
+  },
+  {
+   "title": "法师之权",
+   "text": [
+    {
+     "if": "world.writ <= 3",
+     "text": "没人管法师，自然就有人出来替天行道。达拉万之愚里立起了一根又一根烧黑的柱子，卢西安也剿了渡鸦先知会。这笔账法师们记了一百八十年，到 1221 年，他们联起手来逼出了一个帝国。"
+    },
+    {
+     "if": "world.writ >= 4 && world.writ <= 6",
+     "text": "在这条时间线上，瓦洛森的令状有期限，还有外人在旁边看着。后来的魔导院就是照着这张纸立的规矩。1221 年的阿兰蒂尔大峰会开得很顺，更像是大家凑到一块儿签个字。"
+    },
+    {
+     "if": "world.writ >= 7",
+     "text": "在这条时间线上，法师管着一切，天下太平。街上没人闹事，因为闹事的念头还没到嘴边，就已经叫法师从脑子里拿走了。"
+    }
+   ]
+  },
+  {
+   "title": "玫瑰与月",
+   "text": [
+    {
+     "if": "world.feud <= 3",
+     "text": "在这条时间线上，西洛瑞尔家和西尔穆纳家成了亲家。后来的紫丁香战争也就成了表兄弟吵架，吵得不长，吵完了还坐到一块儿吃饭。"
+    },
+    {
+     "if": "world.feud >= 4 && world.feud <= 6",
+     "text": "伊奥瑞尔先是替孙子当家，后来又替重孙当家，面具戴了十年。再往后，就是打了一百年的紫丁香战争。"
+    },
+    {
+     "if": "world.feud >= 7",
+     "text": "在这条时间线上，婚礼上流的血没能擦干净。那场战争早来了两代人，头一仗就打在洛伦泰内城外的葡萄园里。"
+    }
+   ]
+  },
+  {
+   "title": "史书怎么写那场瘟疫",
+   "text": [
+    {
+     "if": "flag.blame_canrec",
+     "text": "史书上，这场瘟疫是有名有姓的。瓦洛森的教习讲到它，总要先在板上写下“坎雷克”三个字，然后才开始讲病。"
+    },
+    {
+     "if": "flag.blame_elves",
+     "text": "仗打得很快，可“瘟疫是精灵带来的”这句话，人们记了很久。在这条时间线上，1162 年以后加韦德出了位专杀精灵的国王，他引的就是你那年在瓦洛森说的话，一个字都没改。"
+    },
+    {
+     "if": "flag.blame_ravens",
+     "text": "在这条时间线上，先知会在瘟疫那些年里就垮了，往后再也没有人能预见什么了。"
+    },
+    {
+     "if": "flag.blame_silent",
+     "text": "那一年你一个字也没说。瘟疫该怪谁，各个村子只好自己编，一个编得比一个圆，四百年后还在用。"
+    },
+    {
+     "if": "flag.doses_children",
+     "text": "车上那十一个孩子里，有一个后来在渡鸦山开了间铁匠铺，她打的头一样东西是一口钟。"
+    },
+    {
+     "if": "flag.doses_moon",
+     "text": "阿雷尔王子喝下了那剂药，后来每年一到苏伦月，他都要往瓦洛森送一车柴，一直送到自己走不动为止。"
+    },
+    {
+     "if": "flag.doses_rose",
+     "text": "雷安国王喝下了那剂药，可他那一回到底是不是只着了点凉，直到他死也没人说得准。"
+    },
+    {
+     "if": "flag.doses_split",
+     "text": "两剂药一家一剂，都进了王宫。剩下的一剂给了车上最小的那个孩子。她长大以后在瓦洛森刷锅，刷的正是当年熬药的那口锅。"
+    }
+   ]
+  },
+  {
+   "if": "flag.price_aldresia || flag.price_pc || flag.price_companion || flag.price_emperor || flag.price_names",
+   "title": "谁付了账",
+   "text": [
+    {
+     "if": "flag.price_aldresia",
+     "text": "阿德蕾西娅数过了，去一个人就够，于是她去了，再也没回来。如今骑士团的新人入门头一天，都要到瓦洛森的饭堂吃一顿饭，她的剑就挂在那间饭堂里。"
+    },
+    {
+     "if": "flag.price_pc && is.mortal",
+     "text": "拿命去换的是你。书记官在登记册上替你补了一行。你的印由阿德蕾西娅收着，她从来不拿出来盖。"
+    },
+    {
+     "if": "flag.price_pc && !is.mortal",
+     "text": "去撕那一页的是你，可你没死成。阿德蕾西娅只说了一句“我说过您不算数”，就转身埋别人去了。"
+    },
+    {
+     "if": "flag.price_companion && flag.price_liv",
+     "text": "卡斯坦临死前要了一口酒，喝了一半，剩下的一半留给了你。史书上没有她的名字，瓦洛森的饭堂里有。"
+    },
+    {
+     "if": "flag.price_companion && !flag.price_liv",
+     "text": "瓦勒兰临死前说了一句“恕我直言”，后半句没能说完。史书上没有他的名字，瓦洛森的饭堂里有。"
+    },
+    {
+     "if": "flag.price_emperor",
+     "text": "那位皇帝挣回来半口气，亲手撕了那一页，跟五十三世当年在沼泽堡喊“放下兵器”的时候一样。后来北要塞给他立了块碑，碑上只刻了这一件事。"
+    },
+    {
+     "if": "flag.price_names",
+     "text": "你没有毁书，只是一页一页地念上面的名字，念一个就放走一个魂，全念完用了二十年。这二十年里，巫妖坎雷克一直关在书里，偶尔还要插一句嘴。"
+    }
+   ]
+  },
+  {
+   "title": "皇帝和他的儿子",
+   "text": [
+    {
+     "if": "flag.body_westgate || flag.body_citadel || flag.body_pantheon",
+     "text": "五十三世总算有了坟，年年都有人去{?flag.body_westgate:，站在西门那座坟前的多是卡斯托纳斯的老兵，来的时候都带着酒|}{?flag.body_citadel:，站在北要塞那座坟前的是守军，换岗的时候顺路行个礼|}{?flag.body_pantheon:，站在万神道那座坟前的是祭司，后来也来了些不认识他的香客|}。"
+    },
+    {
+     "if": "flag.body_quiet || flag.body_left",
+     "text": "那一年，他就坐在坎雷克的左手边。事后总算有人把他埋了，埋的地方没有立碑，只插了一根勺柄。"
+    },
+    {
+     "if": "flag.body_burned",
+     "text": "守砖人把骨灰撒进了艾伦河。从那以后，黑龙的老兵见了你都要说一句：你欠我们一座坟。"
+    },
+    {
+     "if": "flag.garrec_dead",
+     "text": "加雷克死在了突围北上的路上。乌尔维克带着残部走完了寒行军，乌霜家就在乌尔维克斯滕的雪里待了四百年。"
+    },
+    {
+     "if": "flag.garrec_king",
+     "text": "在这条时间线上，东坎诺的北边一直有个姓乌霜的王国，他们的钱币上刻着一口棺材。"
+    },
+    {
+     "if": "flag.garrec_exile",
+     "text": "在这条时间线上，加雷克流亡去了格鲁迪亚，活到了很老。他每年都给东坎诺写一封信，信里只问一件事：坟修好了没有。"
+    }
+   ]
+  },
+  {
+   "if": "met.vezina || flag.edith_none || flag.edith_wise || flag.edith_alarian || flag.edith_ravens || flag.edith_iacob",
+   "title": "伊迪丝",
+   "text": [
+    {
+     "if": "flag.edith_alarian",
+     "text": "伊迪丝后来在塞纳蒂尔当了教习，教的是怎么唱歌才不会叫人跟着哭。"
+    },
+    {
+     "if": "flag.edith_wise",
+     "text": "伊迪丝后来做了瓦洛森的典狱，管的是那些慑过人的法师。她自己那间屋子，门是不上锁的。"
+    },
+    {
+     "if": "flag.edith_ravens",
+     "text": "伊迪丝后来成了渡鸦先知会的最后一位长老。卢西安带兵来剿的那一天，她一句话，就叫一整队兵放下了兵器。"
+    },
+    {
+     "if": "flag.edith_iacob",
+     "text": "伊迪丝后来站到了某位国王的身后。史书上没有她的名字，可那位国王的每一道诏令都是她的意思。"
+    },
+    {
+     "if": "flag.edith_none",
+     "text": "伊迪丝后来在科塞顿开了间面包铺，客人从来不赊账，她也从来没开口要过。"
+    },
+    {
+     "if": "flag.edith_mob",
+     "text": "威克斯堡那条街口的人，一直到老也没想起来，那一夜自己手里为什么会拿着火把。"
+    }
+   ]
+  },
+  {
+   "title": "威克斯必须统治",
+   "text": [
+    "威克斯复了国，史称第四威克斯王国。四百年后有句话叫“威克斯必须统治”。",
+    {
+     "if": "flag.guardian_barry",
+     "text": "威克斯复国后的头一位国王是巴里带大的。他吃饭慢，判案也慢，判完了总要问一句大家吃了没有。"
+    },
+    {
+     "if": "flag.guardian_crovan",
+     "text": "威克斯复国后的头一位国王是克洛万带大的。他说话向来只说一半，另一半留给别人去猜。猜错了的人，后来都不在朝里了。"
+    },
+    {
+     "if": "flag.guardian_marion",
+     "text": "威克斯复国后的头一位国王是在达梅斯海德长大的，威克斯的老男爵们一直念叨他口音不对。"
+    },
+    {
+     "if": "flag.guardian_barons",
+     "text": "威克斯复国后的头一位国王是几位摄政轮流带大的。他学会的头一件事是谁也别信，第二件是这话千万别说出口。"
+    },
+    {
+     "if": "flag.edict_upheld",
+     "text": "他签过的那道逐精灵令，史书上记了一行，他自己一辈子也没再提过。"
+    },
+    {
+     "if": "flag.edict_overruled",
+     "text": "那道逐精灵令是你推翻的，他后来复了国，却一直没请你去吃过一顿饭。"
+    },
+    {
+     "if": "flag.edict_softened",
+     "text": "那道逐精灵令缓了又缓，缓到后来，都没人记得还有这么一道令了。"
+    }
+   ]
+  },
+  {
+   "if": "flag.iacob_hanged || flag.iacob_pardoned || flag.iacob_wise",
+   "title": "背叛者亚科布",
+   "text": [
+    {
+     "if": "flag.iacob_hanged",
+     "text": "在这条时间线上，亚科布是在卡斯托纳斯的西门外绞死的。上绞架之前他要了一杯茶，喝完把杯子还给了刽子手。福阿哈尔往后换了三任公爵，没有一个比他会管账。"
+    },
+    {
+     "if": "flag.iacob_pardoned",
+     "text": "亚科布活到了九十一岁，死在自己床上，床头的茶具摆得整整齐齐。最后那几年他在替谁办事，谁也说不准。"
+    },
+    {
+     "if": "flag.iacob_wise",
+     "text": "在这条时间线上，亚科布在瓦洛森的塔里关了一辈子，也替贤者会讲了一辈子的课。他讲缰绳的那一课，学生都抢着坐前排，可一下课，就没人敢同他说话了。"
+    }
+   ]
+  },
+  {
+   "if": "(flag.lucan_alva || flag.lucan_garrec || flag.lucan_marion || flag.lucan_iacob) && !(flag.castan_lucan && flag.castan_crowned)",
+   "title": "卢坎",
+   "text": [
+    {
+     "if": "flag.lucan_alva",
+     "text": "卢坎跟着母亲长大，后来做了乌里昂马尔的公爵。南王国的人见了他那对精灵耳朵，还是忍不住多看一眼。那座山，他从来不提。"
+    },
+    {
+     "if": "flag.lucan_garrec",
+     "text": "卢坎是舅舅加雷克带大的，学会的头一件事就是乌霜家的军礼。后来他做了乌里昂马尔的公爵，府里挂着一面黑龙旗，旗边镶着银。"
+    },
+    {
+     "if": "flag.lucan_marion",
+     "text": "卢坎在达梅斯海德长大，同马里昂的孩子们在一张桌上吃饭。后来他做了乌里昂马尔的公爵，口音一辈子没改过来，南王国的人都管他叫“西边来的”。"
+    },
+    {
+     "if": "flag.lucan_iacob",
+     "text": "卢坎是亚科布一手教出来的。后来他做了乌里昂马尔的公爵，倒茶的时候手跟他先生一样稳。东坎诺从此又多了一个亚科布。"
+    }
+   ]
+  },
+  {
+   "if": "flag.crege_penance || flag.crege_champions || flag.crege_given",
+   "title": "那一枪",
+   "text": [
+    {
+     "if": "flag.crege_penance",
+     "text": "克雷格行完了忏悔礼，又过了几年安生日子。每年泪落月 27 日这一天他都不出门。他家门厅里一直挂着一根断枪。"
+    },
+    {
+     "if": "flag.crege_champions",
+     "text": "克雷格的血债是在沙地上拿钝枪了结的。卡奈特的人说他这是还了一笔，洛伦特的人说他这是赖了一笔，这笔账也就一直挂着。"
+    },
+    {
+     "if": "flag.crege_given",
+     "text": "克雷格给交到了太后手里。往后的事，洛伦泰内的人不提，卡奈特的人也不问。"
+    }
+   ]
+  },
+  {
+   "if": "flag.temple_dug || flag.temple_guarded",
+   "title": "苏雷尔神庙底下",
+   "text": [
+    {
+     "if": "flag.temple_dug",
+     "text": "西奥多的人从苏雷尔神庙底下带上来一样东西，拿油布裹着，谁也没见他们当面打开过。从那以后，科乌里亚的贵族就不大晒太阳了。"
+    },
+    {
+     "if": "flag.temple_guarded",
+     "text": "在这条时间线上，苏雷尔神庙底下的那样东西又多睡了一阵子。西奥多爵士只好另找门路，这一来就晚了一代人。"
+    }
+   ]
+  },
+  {
+   "if": "flag.book_locked || flag.book_wise",
+   "title": "那本书",
+   "text": [
+    {
+     "if": "flag.book_locked",
+     "text": "魔典锁进了骑士团的库里，钥匙分给三个人拿着。四百年后，有个法师惦记上了它。"
+    },
+    {
+     "if": "flag.book_wise",
+     "text": "在这条时间线上，魔典交到了加里昂手里。瓦洛森的塔里从此多了一间不点灯的屋子，学生路过都绕着走。加里昂每年进去一回，出来以后一句话也不说。"
+    }
+   ]
+  },
+  {
+   "if": "flag.finnic_chip && item.oathstone_chip < 1",
+   "title": "誓石碎片",
+   "text": [
+    "誓石碎片放回了山上，维斯沃尔的议会里总算又有人敢开口了，头一句就是骂国王。芬尼克听完，叫人给骂他的那位添了一块饼。"
+   ]
+  },
+  {
+   "title": "拉尔桑",
+   "text": [
+    {
+     "if": "flag.larthan_open",
+     "text": "在这条时间线上，拉尔桑的墙矮了一截，后来墙根底下开了个集，精灵卖船板，人类卖腌菜。"
+    },
+    {
+     "if": "!flag.larthan_open",
+     "text": "拉尔桑的墙又立了几百年。墙那边的人记得是谁关的门，墙这边的人记得是谁没开门。"
+    }
+   ]
+  },
+  {
+   "if": "met.liv",
+   "title": "卡斯坦“五十四世”",
+   "text": [
+    {
+     "if": "!flag.price_liv && flag.castan_liv && flag.castan_alive && !flag.liv_bridled",
+     "text": "一个鹰身女妖坐上了屠兽者的椅子，东坎诺的神殿为这事吵了四十年。她自己加了第十一道试炼，就是喝酒喝赢她，到现在还没人过得了关。"
+    },
+    {
+     "if": "!flag.price_liv && flag.liv_bridled && !flag.liv_dead",
+     "text": "她照旧嚷着要酒，照旧见了谁都封官，可只要牵绳的人叫她停，她就停。这件事乌翼兵团的人谁也不提，提了要挨揍，只是动手的不会是她了。"
+    },
+    {
+     "if": "!flag.price_liv && flag.liv_dead",
+     "text": "她死在了山上。乌翼兵团把她埋在北要塞脚下，坟头上插了一只空酒壶。"
+    },
+    {
+     "if": "!flag.price_liv && flag.liv_north && !flag.liv_dead",
+     "text": "1053 年以前，有人在格鲁迪亚的雪山里见过一个灰翅膀的老鹰身女妖，正在教小的打架，教的头一句话是：先把账算清楚。"
+    },
+    {
+     "if": "flag.price_liv",
+     "text": "她替你去撕了那一页。乌翼兵团在北要塞脚下给她立了块碑，碑上刻的是“五十四世”，没人敢改。"
+    },
+    {
+     "if": "!flag.price_liv && !flag.castan_liv && !flag.liv_bridled && !flag.liv_dead && !flag.liv_north",
+     "text": "她把乌翼兵团交给了副手，自己在北要塞脚下开了间酒馆，招牌上画着一顶冠，冠是歪的。"
+    }
+   ]
+  },
+  {
+   "if": "met.barry",
+   "title": "巴里·月华",
+   "text": [
+    "1058 年巴里满一百岁，船上的长老总算肯叫他一声大人。他摆了三天席，第三天的菜是第一天剩的。",
+    {
+     "if": "world.communion <= 2",
+     "text": "精灵走的那一年，巴里是少数没走的。他留下来守着戴伦的坟，每年到了戴伦生日那天，都往坟前放一块三道卫的乳酪。"
+    },
+    {
+     "if": "world.communion >= 3",
+     "text": "1221 年阿兰蒂尔大峰会的席上，有个两百六十三岁的胖精灵带来了一篮子吃的，一进门先分给了门口的卫兵。"
+    }
+   ]
+  },
+  {
+   "if": "met.vezina",
+   "title": "薇齐娜·马尔尼德",
+   "text": [
+    {
+     "if": "flag.vezina_eye",
+     "text": "卢西安护国公剿先知会的时候，薇齐娜提前一天走掉了。往后的史书里，偶尔会有个独眼女人给国王托梦，她在梦里开口总是先说“要是”。"
+    },
+    {
+     "if": "flag.vezina_left && !flag.vezina_eye && (flag.vezina_freed || world.unburied <= 6)",
+     "text": "薇齐娜从狱里出来，头一件事就是数了数门口的渡鸦。往后她在瓦洛森教预言，一直教到六十八岁。"
+    },
+    {
+     "if": "flag.vezina_left && !flag.vezina_eye && !flag.vezina_freed && world.unburied >= 7",
+     "text": "薇齐娜死在山上那座宅子的一只笼子里。坎雷克的书上有她的名字，排在第十一页，笔迹很工整。"
+    },
+    {
+     "if": "!flag.vezina_left && !flag.vezina_eye",
+     "text": "薇齐娜在瓦洛森教预言，一直教到六十八岁。学生问她预言到底准不准，她说准，说完总要再补一句“理论上”。"
+    }
+   ]
+  },
+  {
+   "if": "met.valeran",
+   "title": "恩特本的瓦勒兰爵士",
+   "text": [
+    {
+     "if": "flag.valeran_purist && world.communion <= 5",
+     "text": "瓦勒兰跟着纯血派走了。1042 年，他死在艾伦纳斯那条烧着的精灵街上，怀里还抱着个别人家的孩子。"
+    },
+    {
+     "if": "flag.valeran_purist && world.communion >= 6",
+     "text": "瓦勒兰跟着纯血派走了。可是到了艾伦纳斯烧街的那一夜，是他替精灵开了后巷的门。恩特本的人到今天也不知道该怎么记他。"
+    },
+    {
+     "if": "!flag.valeran_purist && flag.price_valeran",
+     "text": "瓦勒兰替你去撕了那一页。阿瑟利斯家的族谱上，他那一行旁边多了一句小注，只有“守誓”两个字。"
+    },
+    {
+     "if": "!flag.valeran_purist && !flag.price_valeran && !flag.order_founder",
+     "text": "后来有人建了阿德蕾西娅骑士团，却没留下名字。恩特本的人都说那就是瓦勒兰。他听了只说一句“恕我直言”，就不往下说了。"
+    },
+    {
+     "if": "!flag.valeran_purist && !flag.price_valeran && flag.order_founder",
+     "text": "瓦勒兰在你建的骑士团里当了二十年教头，从没撒过一句谎。新人最怕听他讲评，因为他句句是实话。"
+    }
+   ]
+  },
+  {
+   "title": "故土",
+   "text": [
+    {
+     "if": "origin == 'dameria'",
+     "text": "马里昂活到了九十六岁，晚年最爱讲切肉刀那天的事，{?flag.p_knife_hanged:每回讲到绞架那一段，就停下来喝口水。|每回讲到那三个老兵后来回家种地去了，他就笑。}"
+    },
+    {
+     "if": "origin == 'lorent'",
+     "text": "洛伦特的王座后头，拿主意的还是那位太后。{?flag.lance_told_truth:你说的那句“是他自己刺的，是失手”，太后一直记到了她死的那一年|}{?flag.lance_told_thrall:你说克雷格那一枪是中了慑心术，太后点了点头，往后再也没提过他的名字|}{?!flag.lance_told_truth && !flag.lance_told_thrall:她问的那句话你始终没有回，她也始终没有再问|}。"
+    },
+    {
+     "if": "origin == 'ebonmarck'",
+     "text": "“黑卡斯塔诺人”这个词，{?flag.garrec_king:后来成了一支军团的番号。|后来成了骂人话，再后来又成了一个姓。}"
+    },
+    {
+     "if": "origin == 'ibevar'",
+     "text": "1084 年，伊贝瓦尔的亲王伊贝尼昂退了位。他那些行李{?flag.larthan_open && world.communion >= 6:打开了一大半，剩下的几只箱子他舍不得开|始终没有打开，箱子跟着他一起进了坟}。"
+    },
+    {
+     "if": "origin == 'wex'",
+     "text": "四百年后，在那些说“威克斯必须统治”的人家里，{?flag.guardian_barry:供的是一尊胖精灵的像。|供的是一位小公爵的像，像底下还压着一张发马的单子。}"
+    }
+   ]
+  },
+  {
+   "if": "flag.f_sapphire || flag.f_rites || flag.f_staff",
+   "title": "剑、冠、杖",
+   "text": [
+    {
+     "if": "flag.f_sapphire && flag.pyre_stopped",
+     "text": "圣武士在沼地里烧人的那几年，骑士团当着众人说过，那些人不是凯伦的门徒。你拦下来的那根柱子到今天还立在达拉万之愚，柱子上什么也没有。"
+    },
+    {
+     "if": "flag.f_sapphire && !flag.pyre_stopped",
+     "text": "圣武士在沼地里烧人的那几年，骑士团一直没说认不认他们。后来总算开口了，可已经晚了一代人。"
+    },
+    {
+     "if": "flag.f_rites && flag.temple_guarded",
+     "text": "在这条时间线上，阿德蕾西娅给认作了神的化身。奈拉特和阿德安两边的祭司坐在一张桌子上吵了整整一天，最后还是一起签了字。"
+    },
+    {
+     "if": "flag.f_rites && !flag.temple_guarded",
+     "text": "阿德蕾西娅到底没能给认作神的化身。奈拉特和阿德安两边的祭司都说她是自己这一家的，会议怎么也定不下来。"
+    },
+    {
+     "if": "flag.f_staff && world.writ >= 4",
+     "text": "你那张令状有个抄本，1221 年有人把它带进了阿兰蒂尔的会场，只是抄本上你的名字拼错了一个字。"
+    },
+    {
+     "if": "flag.f_staff && world.writ <= 3",
+     "text": "你那张令状的抄本，没有人带进阿兰蒂尔的会场。它一直压在瓦洛森的一只箱子底下，箱子上头还放着腌菜。"
+    }
+   ]
+  },
+  {
+   "if": "is.god",
+   "title": "容后再议",
+   "text": [
+    "在这条时间线上，第七次泛神会议为了你算不算神复了会，一连开了十一天，决议是容后再议。议事录有四十页，你的名字在里头出现了三百一十一次，没有哪两次用的是同一个称呼。"
+   ]
+  },
+  {
+   "if": "is.god && var.god_acts >= 4",
+   "title": "鼻子都不一样",
+   "text": [
+    "在这条时间线上，各国都给你立了像，可每一尊的鼻子都不一样。威克斯的那一尊手里还多了一篮子吃的，那是巴里出的钱。"
+   ]
+  },
+  {
+   "if": "is.god && flag.god_half_sentence",
+   "title": "当着神的面",
+   "text": [
+    "你进了哪间屋，哪间屋里就没人撒得了谎，所以各国都给你修了专门的偏厅，正事都挪到隔壁去谈。在这条时间线上，“当着神的面说”成了一句俗话，意思是说话不留情面。"
+   ]
+  },
+  {
+   "if": "is.god && flag.god_crusade",
+   "title": "柱子上的字",
+   "text": [
+    "在这条时间线上，沼地里烧人的那些年，柱子上刻的是你的神号。骑士团后来花了两代人的工夫去凿，到底没能凿干净。"
+   ]
+  },
+  {
+   "if": "is.god && flag.god_herald",
+   "title": "日轮旁边那颗小的",
+   "text": [
+    "在这条时间线上，布勒瓦尔的神殿在苏雷尔的日轮旁边添了一颗小太阳，那是你。贾赫一直没有回来，只在东边来的信里问过一句，墙上那颗小的是谁。"
+   ]
+  },
+  {
+   "if": "is.god && flag.god_promise_viswall",
+   "title": "请神吃饭",
+   "text": [
+    "在这条时间线上，小人国往后每回出了事，你都得回去一趟。芬尼克的孙子管这叫“请神吃饭”。四百年里你一共吃了十一回，回回都是派。"
+   ]
+  },
+  {
+   "if": "is.god && flag.golem_forever",
+   "title": "跪着的石像",
+   "text": [
+    "在这条时间线上，第九道试炼的石像到今天还跪着。它手里托着一颗头，北要塞的孩子往那颗头上放过果子，放过帽子，还放过一只猫，那只猫待了一下午才走。"
+   ]
+  },
+  {
+   "if": "is.god && flag.god_wed",
+   "title": "神证的婚",
+   "text": [
+    "在这条时间线上，神证过的婚没人敢解。这桩婚事后来不管出了什么事，西洛瑞尔家和西尔穆纳家都说，当初是对方求你证的。"
+   ]
+  },
+  {
+   "if": "is.god && flag.price_names",
+   "title": "一夜念完",
+   "text": [
+    "书上的名字，你一夜就念完了，书里的魂也在这一夜全放了出去。边境地有三年没人敢走夜路，到第四年才有人敢在门口挂灯。"
+   ]
+  },
+  {
+   "if": "is.god && flag.castan_pc && flag.castan_crowned && flag.castan_alive && flag.knot_cut",
+   "title": "不会死的卡斯坦",
+   "text": [
+    "在这条时间线上，试炼山上坐着一位不会死的卡斯坦。誓词里说的是“至我寿终之日”，可你没有那一日。坎雷克想要的那种皇帝，到头来是你自己当上了。"
+   ]
+  },
+  {
+   "if": "is.immortal",
+   "title": "欠一死",
+   "text": [
+    "在这条时间线上，奈拉特的收殓人在账上给你留了一行，写的是“欠一死”。大墓地每换一任大祭司，都要写信来问这笔账还挂不挂着，你每回都回信。"
+   ]
+  },
+  {
+   "if": "is.immortal && flag.price_pc",
+   "title": "后脑勺",
+   "text": [
+    "书在你身上留下的那道白印，过了多少年也没有淡。一到阴天，你就听得见有人在很远的地方抱怨后脑勺痒。"
+   ]
+  },
+  {
+   "if": "is.immortal",
+   "title": "两百年前的蜡印",
+   "text": [
+    "在这条时间线上，1221 年开阿兰蒂尔大峰会的时候，门口来了个人，拿着一枚两百年前的蜡印求见。卫兵进去问书记官，书记官翻了半天，还是没找着那本登记册。"
+   ]
+  }
+ ]
+};

@@ -1,0 +1,175 @@
+{
+ "skipLoading": [
+  "0"
+ ],
+ "aliases": {
+  "title": "load_21"
+ },
+ "flags": [
+  "A01",
+  "A02",
+  "A04",
+  "A13",
+  "A30",
+  "A32",
+  "A38",
+  "A58",
+  "A72",
+  "A85",
+  "B01",
+  "B02",
+  "B07",
+  "B17",
+  "B21",
+  "B55",
+  "G91",
+  "H33",
+  "H97",
+  "S15",
+  "Z01",
+  "Z34"
+ ],
+ "portraitRaces": {
+  "human": [
+   "human"
+  ],
+  "half_elf": [
+   "sun_elf",
+   "human"
+  ],
+  "elf": [
+   "sun_elf"
+  ],
+  "halfling": [
+   "human",
+   "gnome"
+  ],
+  "half_orc": [
+   "gray_orc"
+  ],
+  "orc": [
+   "green_orc",
+   "gray_orc",
+   "brown_orc",
+   "black_orc"
+  ],
+  "goblin": [
+   "exodus_goblin"
+  ],
+  "hobgoblin": [
+   "hobgoblin"
+  ],
+  "kobold": [
+   "redscale_kobold",
+   "bluescale_kobold",
+   "greenscale_kobold",
+   "goldscale_kobold"
+  ],
+  "dwarf": [
+   "dwarven"
+  ],
+  "gnome": [
+   "gnome"
+  ],
+  "harimari": [
+   "harimari"
+  ],
+  "gnoll": [
+   "gnoll"
+  ],
+  "harpy": [
+   "harpy"
+  ],
+  "ogre": [
+   "ogre"
+  ],
+  "troll": [
+   "giantkind"
+  ],
+  "lizardfolk": [
+   "lizardfolk",
+   "ashhana_lizardfolk"
+  ],
+  "ruinborn": [
+   "kheionai",
+   "taychendi",
+   "tuathak",
+   "caamas",
+   "selphereg",
+   "snecboth",
+   "peitar"
+  ],
+  "mechanim": [
+   "mechanim"
+  ],
+  "oni": [
+   "oni"
+  ],
+  "human:bulwari": [
+   "bulwari",
+   "sarhali"
+  ],
+  "human:raheni": [
+   "raheni"
+  ],
+  "human:yan": [
+   "halessi",
+   "southeast_halessi"
+  ],
+  "centaur": [
+   "human",
+   "bulwari"
+  ],
+  "ogre:horned_ogre": [
+   "oni"
+  ],
+  "orc:green_orc": [
+   "green_orc"
+  ],
+  "orc:gray_orc": [
+   "gray_orc"
+  ],
+  "orc:brown_orc": [
+   "brown_orc"
+  ],
+  "orc:black_orc": [
+   "black_orc"
+  ],
+  "kobold:redscale": [
+   "redscale_kobold"
+  ],
+  "kobold:bluescale": [
+   "bluescale_kobold"
+  ],
+  "kobold:greenscale": [
+   "greenscale_kobold"
+  ],
+  "kobold:goldscale": [
+   "goldscale_kobold"
+  ],
+  "ruinborn:taychendi": [
+   "taychendi"
+  ],
+  "ruinborn:kheionai": [
+   "kheionai"
+  ],
+  "ruinborn:eordan": [
+   "tuathak",
+   "caamas",
+   "selphereg",
+   "snecboth",
+   "peitar"
+  ],
+  "mechanim:insyaan_mechanim": [
+   "mechanim"
+  ]
+ },
+ "extra": {
+  "map_world": {
+   "kind": "scene",
+   "maxWidth": 2000,
+   "quality": 72
+  }
+ },
+ "patch": {}
+}

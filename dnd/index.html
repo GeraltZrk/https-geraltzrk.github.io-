@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN" data-text="m">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0c1418">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="命运之骰">
+<meta name="format-detection" content="telephone=no">
+<meta name="description" content="安本纳尔：命运之骰——以安本纳尔世界为舞台的同人跑团模拟器。三个时代，三场改变哈兰命运的战役。">
+<title>安本纳尔：命运之骰</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./assets/ui/icon-192.png">
+<link rel="apple-touch-icon" href="./assets/ui/icon-192.png">
+<link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+<div id="backdrop" aria-hidden="true"></div>
+<div id="app"><div class="title-screen"><div class="logo"><div class="over">正在展开卷轴……</div></div></div></div>
+<noscript><p style="padding:2em;color:#eee">这个游戏需要启用 JavaScript。</p></noscript>
+<script type="module">
+import { boot } from './js/app.js';
+boot();
+</script>
+</body>
+</html>
